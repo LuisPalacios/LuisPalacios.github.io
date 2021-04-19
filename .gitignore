@@ -1,0 +1,10 @@
+._*
+.DS_Store*
+ehthumbs.db
+Thumbs.db
+*~
+\#*\#
+*.autosave
+
+_site
+.jekyll-cache

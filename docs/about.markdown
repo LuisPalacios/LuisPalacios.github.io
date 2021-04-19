@@ -28,6 +28,7 @@ Hi, my name is Luis Palacios and I'm a varied guy, technology, art, hacker, phot
 
 Always hesitating between technology and art, in the end mixing it, when I rest is when I focus on my hobbies, when I program, research technologies or paint a picture or develop a digital photo.
 
-This blog is mainly dedicated to keep my technical notes, almost always in the Linux environment or software development.
+This blog is mainly dedicated to keep my technical notes, almost always in the Linux environment or software development. As you've probably noticed, **blog notes are written in Spanish** 🤗
 
 This site is [jekyll](http://jekyllrb.com) based and hosted on [GitHub Pages](https://pages.github.com). My original blog is still at [LuisPa's old site](https://www.luispa.com)
+
