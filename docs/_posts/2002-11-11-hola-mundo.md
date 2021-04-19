@@ -1,17 +1,14 @@
 ---
 title: "Bienvenido a mi Blog"
 date: "2002-11-11"
-categories: 
-  - "apuntes"
-  - "gentoo"
-  - "linux"
+categories: apuntes gentoo linux
 tags: 
   - "blog"
   - "nibbleblog"
 coverImage: "nimble.jpg"
 ---
 
-[![](images/nimble.jpg)](https://www.luispa.com/wp-content/uploads/2002/11/nimble.jpg)
+![nimble image](/assets/img/nimble.jpg){: width="150px" style="float:left; padding-right:10px" } 
 
 Este fué mi primer post en mi blog original con Nibbleblog, no con wordpress, ni recientemente con Jekyll, asi que lo dejo tal cual.
 
