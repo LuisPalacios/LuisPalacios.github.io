@@ -28,7 +28,8 @@ twitter_username: LuisPalacios
 github_username:  LuisPalacios
 
 # Build settings
-theme: jekyll-theme-cayman
+theme: minimal
+#jekyll-theme-cayman
 plugins:
   - jekyll-feed
 
