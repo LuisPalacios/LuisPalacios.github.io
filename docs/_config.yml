@@ -21,9 +21,7 @@
 title: LuisPa - apuntes técnicos
 #email: your-email@example.com
 description: >- # this means to ignore newlines until "baseurl:"
-  ¡Hola!, me llamo Luis Palacios y soy un tipo variado, tecnología, arte, 
-  hacker, fotografía, negocio, padre. Este blog está dedicado a guardar 
-  mis apuntes técnicos alrededor de Linux y desarrollo de software.
+  Sitio de Luis Palacios, dedicado a guardar mis apuntes técnicos. 
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: LuisPalacios
