@@ -444,12 +444,11 @@ that represents the root of the working copy. That is: the
 `alpha` directory. The last line is the commit
 message.
 
-![\`a1\` commit object pointing at its tree
-graph](/assets/img/git/2-a1-commit.png)
 
-::: {.image-caption}
-\`a1\` commit object pointing at its tree graph
-```
+| ![objeto commit ˋa1ˋ apuntando a su tree graph](/assets/img/git/2-a1-commit.png) | 
+|:--:| 
+| *objeto commit ˋa1ˋ apuntando a su tree graph* |
+
 
 ### Point the current branch at the new commit
 
