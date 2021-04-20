@@ -5,12 +5,23 @@ source "https://rubygems.org"
 #
 #     bundle exec jekyll serve
 #
+
+# Dependency versions
+# https://pages.github.com/versions/
+
 # This will help ensure the proper Jekyll version is running.
 # Happy Jekylling!
+# Comentada para que funcione con GitHub pages
+# Source: https://docs.github.com/es/pages/setting-up-a-github-pages-site-with-jekyll/creating-a-github-pages-site-with-jekyll
 #gem "jekyll", "~> 4.2.0"
 
 # This is the default theme for new Jekyll sites. You may change this to anything you like.
+#
+# Estudiar lo siguiente si quieres hacer un cambio de tema. No es sencillo...
+# https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 gem "minima", "~> 2.5"
+#gem "jekyll-theme-cayman", "~> 0.1.1"
+
 # If you want to use GitHub Pages, remove the "gem "jekyll"" above and
 # uncomment the line below. To upgrade, run `bundle update github-pages`.
 # gem "github-pages", group: :jekyll_plugins

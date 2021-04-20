@@ -2,10 +2,6 @@
 title: "Bienvenido a mi Blog"
 date: "2002-11-11"
 categories: apuntes gentoo linux
-tags: 
-  - "blog"
-  - "nibbleblog"
-coverImage: "nimble.jpg"
 ---
 
 ![nimble image](/assets/img/nimble.jpg){: width="150px" style="float:left; padding-right:10px" } 
@@ -17,6 +13,7 @@ Mi primer apunte lo hice con Nibbleblog En el 2002 instalé [NibbleBlog](http://
 La verdad es que esta gente ha hecho un excelente trabajo, sencillo, rápido y productivo. Qué más decir que lo recomiendo. Más adelante en el tiempo me pasé a WordPress, pero dejo aquí unas nociones la instalación de Nibbleblog a modo de referencia.
 
 Requisitos para su instalación en Gentoo El orden es sencillo: Instala Apache y PHP (USE: simplexml). Se acabó. ## Instalación Descargar de forma manual el ZIP de NibbleBlog desde su [página de descargas](http://www.nibbleblog.com/download/en/). Descomprimirlo y copiar todo su contenido a un directorio accesible por apache. Aquí pongo un ejemplo en mi caso:
+
 
 ```bash
 cd /data/www
