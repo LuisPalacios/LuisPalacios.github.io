@@ -110,7 +110,7 @@ alpha
 
 ### Inicializamos el repositorio
 
-Un **repositorio GIT** es como una carpeta dedicada para tu proyecto. El repositorio local de tu proyecto contendrá todos los archivos almacenando el historial de cada una de sus revisiones (versiones).
+Un **repositorio GIT** es como una carpeta dedicada para tu proyecto. Este repositorio es local y contendrá todos los archivos junto con cada una de sus revisiones (versiones).
 
 
 ```zsh
@@ -118,8 +118,7 @@ Un **repositorio GIT** es como una carpeta dedicada para tu proyecto. El reposit
 Initialized empty Git repository
 ```
 
-`git init` convierte el directorio actual en un repositorio Git. Para ello, crea un directorio `.git` y crea algunos archivos dentro él. Estos archivos definen la configuración de Git y la historia del proyecto. Son archivos ordinarios, sin ninguna magia, el usuario puede leerlos y editarlos con un editor de texto o un shell. Es decir: el usuario puede leer y editar
-la historia de su proyecto simplemente mirando esos ficheros (aunque casi nunca vas a hacerlo).
+El comando `git init` crea el subdirectorio `.git` con una estructura inicial creando así un nuevo repositorio local, definiendo la configuración de Git y la historia del proyecto. Son archivos ordinarios, sin ninguna magia, el usuario puede leerlos y editarlos con un editor de texto o un shell. 
 
 El directorio `alpha` tiene ahora este aspecto:
 
@@ -129,13 +128,13 @@ El directorio `alpha` tiene ahora este aspecto:
 | *Estructura de un proyecto con GIT* |
 
 
-Lo que hay dentro del directorio `.git` es propiedad de GIT (ahí van a estar todas las versiones del proyecto). El resto de ficheros se han convertido en la COPIA DE TRABAJO (WORKING COPY) y son propiedad del usuario. 
+Lo que hay dentro del directorio `.git` es propiedad de GIT (ahí van a estar todas las versiones del proyecto). El resto de ficheros (fuera de .git) se han convertido en la que GIT llama la COPIA DE TRABAJO (WORKING COPY) y son propiedad del usuario.
 
 <br/>
 
 ### Añadimos algunos ficheros
 
-Quiero decir que vamos a <ins>añadir ficheros **a GIT!!!**</ins> desde la Working Copy.
+Nuestro repositorio local empieza vacío (excepto los ficheros mínimos que vimos antes). Vamos a empezar a pasarle ficheros, es decir, vamos a <ins>añadir ficheros **a GIT!!!**</ins> desde la Working Copy.
 
 <br/>
 
@@ -145,11 +144,11 @@ Quiero decir que vamos a <ins>añadir ficheros **a GIT!!!**</ins> desde la Worki
 ➜  alpha git:(master) ✗ > git add data/letter.txt
 ```
 
-Al ejecutar `git add` sobre `data/letter.txt` tiene dos efectos
+Ejecutar `git add` sobre `data/letter.txt` tiene dos efectos
 
 <br/>
 
-**PRIMERO**, se crea un fichero "blob" (binary large object) en el directorio `.git/objects/`. Este fichero blob contiene el contenido comprimido (con la librearía zlib) de `data/letter.txt`. El blob se nombra con la suma de comprobación SHA-1 del contenido y su cabecera. Lo sitúa en una subcarpeta con los primeros 2 caracteres del SHA-1 (`.git/objects/2e/`) y dentro está el archivo con los restantes 38 caracteres.
+**PRIMERO**, se crea un fichero "blob" (binary large object) en el directorio `.git/objects/`. Se trata del contenido comprimido (con la librearía zlib) de `data/letter.txt`. El nombre del fichero blob se fabrica con el resultado de la comprobación SHA-1 sobre su contenido, es decir, un número de 40 bytes. El fichero se sitúa en una subcarpeta con los primeros 2 caracteres del SHA-1 (`.git/objects/2e/`) y dentro está el archivo con los restantes 38 caracteres.
 
 ```zsh
 alpha
@@ -160,13 +159,13 @@ alpha
 │   │   │   └── 65efe2a145dda7ee51d1741299f848e5bf752e
 ```
 
-Fíjate en que al añadir un archivo a Git se guarda su contenido en el directorio directorio `objects`, por lo tanto podrías incluso borrar tu "WORKING COPY" `data/carta.txt`. 
+Fíjate en que al añadir un archivo a Git se guarda su contenido en el directorio directorio `objects`, por lo tanto podrías incluso borrarlo de tu "WORKING COPY" `data/carta.txt`.
 
 <br/>
 
-**SEGUNDO**, `git add` añade el archivo al índice `.git/index`. El índice es una lista que contiene todos los archivos a los que hemos pedido hacer seguimiento. 
+**SEGUNDO**, `git add` añade el archivo al índice `.git/index`. El índice es una lista que contiene todos los archivos a los que hemos pedido hacer seguimiento/rastreo.
 
-El índice se utiliza como un área de espera (stage) entre tu directorio de trabajo y tu repositorio. Puedes usar el índice para construir un conjunto de cambios que quieras confirmar (commit) juntos. Cuando hagas la confirmación (commit), lo que se confirma es lo que está actualmente en el índice, no lo que está en tu directorio de trabajo.
+El índice se utiliza para controlar quién está en el área de espera (stage) entre tu directorio de trabajo y la confirmación (commit). Puedes usar el índice para construir un conjunto de cambios que más adelante quieras confirmar (commit). Cuando hagas la confirmación (commit), lo que se confirma es lo que está actualmente en el índice, no lo que está en tu directorio de trabajo.
 
 En cada línea del archivo índice (`.git/index`) tienes un archivo rastreado, con la información del hash de su contenido. Así que ahora nuestro indice es así: 
 
