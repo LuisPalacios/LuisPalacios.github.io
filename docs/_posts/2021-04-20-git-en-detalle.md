@@ -82,14 +82,14 @@ y el comportamiento que esta propiedad produce.
 
 ### Creación de un proyecto
 
-Vamos al lío, pezar este tutorial directamente en la línea de comandos, con la creación de un proyecto. Cada proyecto debería tener su propio sub
+Empezamos este tutorial directamente en la línea de comandos, con la creación de un proyecto. Cada proyecto debe estar en un directorio distinto.
 
 ```zsh
 ➜  ~ > clear
 ➜  ~ > mkdir alpha
 ```
 
-El usuario crea el directorio `alpha` para contener su proyecto. 
+Creamos el directorio `alpha` para contener el proyecto. 
 
 ```zsh
 ➜  ~ > cd alpha
@@ -97,7 +97,7 @@ El usuario crea el directorio `alpha` para contener su proyecto.
 ➜  alpha > echo 'a' > data/letter.txt
 ```
 
-Cambia al directorio `alpha` y se crea un directorio llamado "data". Dentro, crea un archivo
+Cambiamos al directorio `alpha` y se crea un directorio llamado "data". Dentro, crea un archivo
 llamado `letter.txt` que contiene el caracter `a`. El directorio tiene este aspecto:
 
 ```zsh
@@ -110,7 +110,7 @@ alpha
 
 ### Inicializamos el repositorio
 
-Un **repositorio** es como una carpeta dedicada para un proyecto. El repositorio de tu proyecto contiene todos los archivos del mismo y almacena el historial de cada una de las revisiones (versiones) de cada uno de los archivos.
+Un **repositorio GIT** es como una carpeta dedicada para tu proyecto. El repositorio local de tu proyecto contendrá todos los archivos almacenando el historial de cada una de sus revisiones (versiones).
 
 
 ```zsh
@@ -123,38 +123,13 @@ la historia de su proyecto simplemente mirando esos ficheros (aunque casi nunca 
 
 El directorio `alpha` tiene ahora este aspecto:
 
-```zsh
-alpha
-├── .git
-│   ├── HEAD
-│   ├── config
-│   ├── description
-│   ├── hooks
-│   │   ├── applypatch-msg.sample
-│   │   ├── commit-msg.sample
-│   │   ├── fsmonitor-watchman.sample
-│   │   ├── post-update.sample
-│   │   ├── pre-applypatch.sample
-│   │   ├── pre-commit.sample
-│   │   ├── pre-merge-commit.sample
-│   │   ├── pre-push.sample
-│   │   ├── pre-rebase.sample
-│   │   ├── pre-receive.sample
-│   │   ├── prepare-commit-msg.sample
-│   │   └── update.sample
-│   ├── info
-│   │   └── exclude
-│   ├── objects
-│   │   ├── info
-│   │   └── pack
-│   └── refs
-│       ├── heads
-│       └── tags
-└── data
-    └── letter.txt
-```
 
-TODO lo que hay dentro del directorio `.git` es propiedad de GIT (ahí van a estar todas las versiones del proyecto). El resto de ficheros se han convertido en la COPIA DE TRABAJO (WORKING COPY) y son propiedad del usuario. 
+| ![Estructura de un proyecto con GIT](/assets/img/git/0-project.png) | 
+|:--:| 
+| *Estructura de un proyecto con GIT* |
+
+
+Lo que hay dentro del directorio `.git` es propiedad de GIT (ahí van a estar todas las versiones del proyecto). El resto de ficheros se han convertido en la COPIA DE TRABAJO (WORKING COPY) y son propiedad del usuario. 
 
 <br/>
 
