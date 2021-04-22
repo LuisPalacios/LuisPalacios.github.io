@@ -267,9 +267,12 @@ Al cambiar el contenido `datos/número.txt` con un "1" y añadirlo a GIT realmen
 
 ### Hacemos un COMMIT (Confirmamos)
 
-Me adelanto un poco, es importante RECORDAR SIEMPRE que `git commit` trabaja en tu repositorio local (no en GitHub o similar), es algo que ocurre LOCALMENTE.
+Me adelanto un poco, es importante RECORDAR SIEMPRE que `git commit` trabaja en tu repositorio local (no en GitHub o similar), es algo que ocurre LOCALMENTE. Hacer un commit es "confirmar" todo lo que tenemos en el STAGING AREA (área de espera), **capturando una instantánea de los cambios preparados en ese momento del proyecto** y llevándola (guardándola como una versión) en tu repositorio LOCAL. Las instantáneas confirmadas pueden considerarse como versiones "seguras" de un proyecto. 
 
-Vamos a por ello, hacer un commit es "confirmar" todo lo que tenemos en el STAGING AREA (área de espera), **capturando una instantánea de los cambios preparados en ese momento del proyecto** y llevándola (guardándola como una versión) en tu repositorio LOCAL. Las instantáneas confirmadas pueden considerarse como versiones "seguras" de un proyecto. 
+Nota: Es obligatorio describir sobre qué va el commit, así que git nos fuerza a usar siempre la opción `-m "mensaje del porqué de este commit". Voy a aprovechare descripcion": 
+ los commits deben llevar un "mensaje" asociado, para informar sobre dicho commit. 
+
+Hacemos el commit que llamaremos `a1` (aprovechamos que todos) user makes the a1 commit. Git prints some data about the commit. These data will make sense shortly.
 
 
 ```zsh
