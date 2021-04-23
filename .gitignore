@@ -1,3 +1,6 @@
+# Ficheros a ignorar
+
+# General
 ._*
 .DS_Store*
 ehthumbs.db
@@ -6,11 +9,12 @@ Thumbs.db
 \#*\#
 *.autosave
 
+# Jekyll
 _site/
 .jekyll-cache/
-
-_site
 .sass-cache
 .jekyll-cache
 .jekyll-metadata
 vendor
+
+# 
