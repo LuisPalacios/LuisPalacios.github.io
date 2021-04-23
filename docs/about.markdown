@@ -16,7 +16,7 @@ Siempre dudando entre la tecnología y el arte, al final mezclándola, cuando de
 
 Este blog está principalmente dedicado a guardar mis apuntes técnicos, casi siempre en el entorno de Linux o desarrollo de software.
 
-Este sitio está basado en [jekyll](http://jekyllrb.com) y hospedado en [GitHub Pages](https://pages.github.com). Mi blog original sigue estando en [sitio antiguo de LuisPa](https://www.luispa.com)
+Los fuentes se encuentran en el repositorio [GitHub LuisPalacios/LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io). Este sitio está basado en [jekyll](http://jekyllrb.com) y hospedado en las [GitHub Pages](https://pages.github.com). Mi blog original sigue estando en [sitio antiguo de LuisPa](https://www.luispa.com)
 
 <br/>
 
@@ -30,5 +30,5 @@ Always hesitating between technology and art, in the end mixing it, when I rest 
 
 This blog is mainly dedicated to keep my technical notes, almost always in the Linux environment or software development. As you've probably noticed, **blog notes are written in Spanish** 🤗
 
-This site is [jekyll](http://jekyllrb.com) based and hosted on [GitHub Pages](https://pages.github.com). My original blog is still at [LuisPa's old site](https://www.luispa.com)
+Source repository can be found under [GitHub LuisPalacios/LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io). This site is [jekyll](http://jekyllrb.com) based and hosted on [GitHub Pages](https://pages.github.com). My original blog is still at [LuisPa's old site](https://www.luispa.com)
 
