@@ -156,7 +156,7 @@ alpha
 :   :
 │   ├── objects
 │   │   ├── 2e
-│   │   │   └── 65efe2a145dda7ee51d1741299f848e5bf752e
+│   │   │   └── 65efe2a145dda7ee51d1741299f848e5bf752e    <- letter.txt con a
 ```
 
 Fíjate en que al añadir un archivo a Git se guarda su contenido en el directorio directorio `objects`, por lo tanto podrías incluso borrarlo de tu "WORKING COPY" `data/carta.txt`.
@@ -174,7 +174,7 @@ En cada línea del archivo índice (`.git/index`) tienes un archivo rastreado, c
 DIRC`~ٳ���`~ٳ���	��}���.e��Eݧ�Q�t��H�u.data/letter.txt���;V��JަI�(7/7�%
 ````
 
-¿Pero qué es eso?. Ojo, ten en cuenta que el formato del archivo es binario, así que tenemos que usar otro tipo de comandos para ver su contenido. 
+¿Pero qué es eso?. Pues el fichero en formato binario, así que tenemos que usar otro tipo de comandos para ver su contenido. 
 
 ```zsh
 ➜  alpha git:(master) ✗ > git ls-files --stage
@@ -183,7 +183,7 @@ DIRC`~ٳ���`~ٳ���	��}���.e��Eݧ�Q�t��H�u.da
 ➜  alpha git:(master) ✗ > git status
 :
 Changes to be committed:
-  (use "git rm --cached <file>..." to unstage)
+:
 	new file:   data/letter.txt
 ```
 
@@ -243,17 +243,19 @@ alpha
 ├── .git
 │   ├── objects
 │   │   ├── 27
-│   │   │   └── 4c0052dd5408f8ae2bc8440029ff67d79bc5c3
+│   │   │   └── 4c0052dd5408f8ae2bc8440029ff67d79bc5c3    <- number.txt con 1234
 │   │   ├── 2e
-│   │   │   └── 65efe2a145dda7ee51d1741299f848e5bf752e
+│   │   │   └── 65efe2a145dda7ee51d1741299f848e5bf752e    <- letter.txt con a
 │   │   ├── 56
-│   │   │   └── a6051ca2b02b04ef92d5150c9ef600403cb1de
+│   │   │   └── a6051ca2b02b04ef92d5150c9ef600403cb1de    <- number.txt con 1
 :
 └── data
     ├── letter.txt
     └── number.txt
+```
 
 
+```zsh
 ➜  alpha git:(master) ✗ > git ls-files --stage
 100644 2e65efe2a145dda7ee51d1741299f848e5bf752e 0	data/letter.txt
 100644 56a6051ca2b02b04ef92d5150c9ef600403cb1de 0	data/number.txt
@@ -261,18 +263,15 @@ alpha
 
 Respuesta: 
 
-Al cambiar el contenido `datos/número.txt` con un "1" y añadirlo a GIT realmentes estamos 1) añadiendo el "nuevo" archivo al índice de nuevo y eso significa crear un nuevo blob con el nuevo contenido y además actualizar la entrada del índice "datos/número.txt" para que **apunte al nuevo blob**.
+Al cambiar `datos/número.txt` y hacer un `add` estamos añadiendo el "nuevo" archivo al índice, se crea un nuevo blob con el nuevo contenido y además actualiza la entrada del índice "datos/número.txt" para que **apunte al nuevo blob**.
 
 <br/>
 
 ### Hacemos un COMMIT (Confirmamos)
 
-Me adelanto un poco, es importante RECORDAR SIEMPRE que `git commit` trabaja en tu repositorio local (no en GitHub o similar), es algo que ocurre LOCALMENTE. Hacer un commit es "confirmar" todo lo que tenemos en el STAGING AREA (área de espera), **capturando una instantánea de los cambios preparados en ese momento del proyecto** y llevándola (guardándola como una versión) en tu repositorio LOCAL. Las instantáneas confirmadas pueden considerarse como versiones "seguras" de un proyecto. 
+Recuerda que `git commit` trabaja en tu repositorio local (no en GitHub). Hacer un commit consiste en "confirmar" lo que tenemos en el STAGING AREA (área de espera) y lo lleva a tu repositorio local, **capturando una instantánea de los cambios preparados en ese momento del proyecto** (guardándola como una versión). Las instantáneas confirmadas pueden considerarse como versiones "seguras" de un proyecto. Al hacer un commit es obligatorio describirlo con `-m "mensaje descriptivo sobre este commit"`.
 
-Nota: Es obligatorio describir sobre qué va el commit, así que git nos fuerza a usar siempre la opción `-m "mensaje del porqué de este commit". Voy a aprovechare descripcion": 
- los commits deben llevar un "mensaje" asociado, para informar sobre dicho commit. 
-
-Hacemos el commit que llamaremos `a1` (aprovechamos que todos) user makes the a1 commit. Git prints some data about the commit. These data will make sense shortly.
+En este tutorial aprovechamos estos mensajes usando una nomenclatura sencilla para seguir mejor el tutorial. Lo llamaremos `a1`. El usuario hace el commit `a1`. Git imprime algunos datos sobre la confirmación. Estos datos tendrán sentido en breve.
 
 
 ```zsh
@@ -281,57 +280,17 @@ Hacemos el commit que llamaremos `a1` (aprovechamos que todos) user makes the a1
  2 files changed, 2 insertions(+)
  create mode 100644 data/letter.txt
  create mode 100644 data/number.txt
- ```
-
-El usuario hace el commit `a1`. Git imprime algunos datos sobre la confirmación. Estos datos tendrán sentido en breve.
-
- ```zsh
- alpha
-├── .git
-│   ├── COMMIT_EDITMSG
-│   ├── HEAD
-│   ├── description
-│   ├── hooks
-│   ├── index
-│   ├── info
-│   │   └── exclude
-│   ├── logs
-│   │   ├── HEAD
-│   │   └── refs
-│   │       └── heads
-│   │           └── master
-│   ├── objects
-│   │   ├── 0e
-│   │   │   └── ed1217a2947f4930583229987d90fe5e8e0b74
-│   │   ├── 27
-│   │   │   └── 4c0052dd5408f8ae2bc8440029ff67d79bc5c3
-│   │   ├── 2e
-│   │   │   └── 65efe2a145dda7ee51d1741299f848e5bf752e
-│   │   ├── 56
-│   │   │   └── a6051ca2b02b04ef92d5150c9ef600403cb1de
-│   │   ├── 8c
-│   │   │   └── 80d787e43ca98d7a3f8465a5f323684899784c
-│   │   ├── ff
-│   │   │   └── e298c3ce8bb07326f888907996eaa48d266db4
-│   │   ├── info
-│   │   └── pack
-│   └── refs
-│       ├── heads
-│       │   └── master
-│       └── tags
-└── data
-    ├── letter.txt
-    └── number.txt
 ```
 
 <br/>
 
 ## Los tres pasos de un "Commit"
 
-El comando COMMIT (de confirmación) hace 3 cosas (tiene tres pasos):
 
-* Crea un **"tree graph"** (gráfico de árbol) para representar el contenido de la versión del proyecto que se está confirmando. 
-* Crea un **objeto commit**
+Vamos a analizar qué tres ficheros nuevos se crean (más info [aquí](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects)): 
+
+* Crea un **"tree graph"** (gráfico de árbol) que representa el contenido de la versión del proyecto que se está confirmando. 
+* Crea un **objeto commit** que define
 * Hace que la **rama actual apunte al nuevo objeto commit**.
 
 ```zsh
