@@ -18,9 +18,10 @@ Y a continuación ejecutar el servidor local de jekyll:
 
 ```
 > cd docs
+docs > bundle add webrick
+docs > bundle update
 docs > bundle exec jekyll serve
 ```
-
 
 <br/>
 
