@@ -8,7 +8,19 @@ Espero que te guste...
 
 ## Ubicación del Blog
 
-Todas las páginas del blog se encuentran en la rama `gh-pages`
+El blog se encuentran en la rama `gh-pages`. Para ejecutarlo en local puedes cambiar a la rama con: 
+
+```
+> git checkout gh-pages
+```
+
+Y a continuación ejecutar el servidor local de jekyll:
+
+```
+> cd docs
+docs > bundle exec jekyll serve
+```
+
 
 <br/>
 
