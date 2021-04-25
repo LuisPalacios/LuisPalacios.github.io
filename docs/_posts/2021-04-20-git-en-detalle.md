@@ -271,9 +271,11 @@ Al cambiar `datos/número.txt` y hacer un `add` estamos añadiendo el "nuevo" ar
 
 ### Hacemos un COMMIT (Confirmamos)
 
-Recuerda que `git commit` trabaja en tu repositorio local (no en GitHub). Hacer un commit consiste en "confirmar" lo que tenemos en el STAGING AREA (área de espera) y lo lleva a tu repositorio local, **capturando una instantánea de los cambios preparados en ese momento del proyecto** (guardándola como una versión). Las instantáneas confirmadas pueden considerarse como versiones "seguras" de un proyecto. Al hacer un commit es obligatorio describirlo con `-m "mensaje descriptivo sobre este commit"`.
+Recuerda que `git commit` trabaja en tu repositorio local (no en GitHub). Hacer un commit consiste en "confirmar" lo que tenemos en el STAGING AREA (área de espera) y lo lleva a tu repositorio local, **capturando una instantánea de los ficheros preparados en el área de espera** y guardándola como una versión. Las instantáneas confirmadas pueden considerarse como versiones "seguras" de un proyecto. Al hacer un commit es obligatorio describirlo con `-m "mensaje descriptivo sobre este commit"`.
 
-En este tutorial aprovechamos estos mensajes usando una nomenclatura sencilla para seguir mejor el tutorial. Lo llamaremos `a1`. El usuario hace el commit `a1`. Git imprime algunos datos sobre la confirmación. Estos datos tendrán sentido en breve.
+En este tutorial aprovechamos el mensaje del commit como una nomenclatura sencilla para seguir mejor el tutorial. A este primer commit lo llamaremos `a1`. 
+
+El usuario hace el commit `a1`. Git imprime algunos datos sobre la confirmación. Estos datos tendrán sentido en breve.
 
 
 ```zsh
@@ -291,24 +293,24 @@ En este tutorial aprovechamos estos mensajes usando una nomenclatura sencilla pa
 
 Vamos a analizar qué tres ficheros nuevos se crean (más info [aquí](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects)): 
 
-* Crea un **"tree graph"** (gráfico de árbol) que representa el contenido de la versión del proyecto que se está confirmando. 
-* Crea un **objeto commit** que define
+* Crea un **"tree graph"** (gráfico de árbol) que representa el contenido de este commit. 
+* Crea un **objeto commit**
 * Hace que la **rama actual apunte al nuevo objeto commit**.
 
 ```zsh
 │   ├── objects
 │   │   ├── 0e
-│   │   │   └── ed1217a2947f4930583229987d90fe5e8e0b74    <- Tree Graph
-│   │   ├── 27
-│   │   │   └── 4c0052dd5408f8ae2bc8440029ff67d79bc5c3    <- number.txt con 1234
-│   │   ├── 2e
-│   │   │   └── 65efe2a145dda7ee51d1741299f848e5bf752e    <- letter.txt con a
-│   │   ├── 56
-│   │   │   └── a6051ca2b02b04ef92d5150c9ef600403cb1de    <- number.txt con 1
-│   │   ├── 8c
-│   │   │   └── 80d787e43ca98d7a3f8465a5f323684899784c    <- Objeto COMMIT
-│   │   ├── ff
-│   │   │   └── e298c3ce8bb07326f888907996eaa48d266db4    <- ???
+│   │   │   └── ed1217a2947f4930583229987d90fe5e8e0b74    <- nuevo: TREE       ----+ <-+
+│   │   ├── 27                                                                     |   |
+│   │   │   └── 4c0052dd5408f8ae2bc8440029ff67d79bc5c3    <- number.txt con 1234 <-+   |
+│   │   ├── 2e                                                                     |   |
+│   │   │   └── 65efe2a145dda7ee51d1741299f848e5bf752e    <- letter.txt con a      |   |
+│   │   ├── 56                                                                     |   |
+│   │   │   └── a6051ca2b02b04ef92d5150c9ef600403cb1de    <- number.txt con 1 <----+   |
+│   │   ├── 8c                                                                     .   |
+│   │   │   └── 80d787e43ca98d7a3f8465a5f323684899784c    <- nuevo: COMMIT         .   |
+│   │   ├── ff                                                                         |
+│   │   │   └── e298c3ce8bb07326f888907996eaa48d266db4    <- nuevo: TREE   >---(data)--+
 ```
 
 <br/>
@@ -335,15 +337,13 @@ number.txt
 100644 blob 2e65efe2a145dda7ee51d1741299f848e5bf752e	letter.txt
 100644 blob 56a6051ca2b02b04ef92d5150c9ef600403cb1de	number.txt
 ```
-La primera línea registra todo lo necesario para reproducir `data/letter.txt`. La primera parte establece los permisos del archivo. La segunda parte indica que el contenido de esta entrada está
-representado por un blob, en lugar de un árbol. La tercera parte indica el hash del blob. La cuarta parte indica el nombre del archivo. La segunda línea es lo mismo pero para reproducir `data/number.txt`.
+
+La primera línea registra todo lo necesario para reproducir `data/letter.txt`. Contiene los permisos del archivo, tipo blob, el hash del fichero y el nombre del archivo. La segunda línea lo mismo pero para reproducir `data/number.txt`.
+
+<br/>
 
 A continuación tenemos el objeto Tree (`0eed...`), árbol para `alpha`, que es el directorio raiz del proyecto. 
 
-```zsh
-➜  alpha git:(master) > git --no-pager cat-file -p ffe2
-040000 tree 0eed1217a2947f4930583229987d90fe5e8e0b74	data
-```
 
 ```zsh
 ➜  alpha git:(master) > git --no-pager show  ffe2
@@ -352,13 +352,20 @@ tree ffe2
 data/
 ```
 
-La única línea de este tree apunta al directorio `data`.
+```zsh
+➜  alpha git:(master) > git --no-pager cat-file -p ffe2
+040000 tree 0eed1217a2947f4930583229987d90fe5e8e0b74	data
+```
+
+La única línea contiene un TREE que apunta al directorio `data`. Registra todo lo necesario para reproducir `data`. Contiene (PENDIENTE LUIS - 040000), que es de tipo tree, el hash del fichero TREE (que a su vez contiene a letter ya number) y el nombre del directorio `data` que los contiene.
+
 
 | ![Tree graph para el commit `a1`](/assets/img/git/1-a1-tree-graph.png) | 
 |:--:| 
 | *Tree graph para el commit `a1`* |
 
-En el gráfico anterior, el árbol `raíz` apunta al árbol `data`. El árbol `data` apunta a los blobs de `data/letter.txt` y `datos/número.txt`.
+
+En el gráfico anterior, el TREE `raíz` apunta al TREE `data`. El TREE `data` apunta a los blobs de `data/letter.txt` y `datos/número.txt`.
 
 <br/>
 
