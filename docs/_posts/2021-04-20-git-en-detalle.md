@@ -300,29 +300,29 @@ Vamos a analizar qué tres ficheros nuevos se crean (más info [aquí](https://g
 ```zsh
 │   ├── objects
 │   │   ├── 0e
-│   │   │   └── ed1217a2947f4930583229987d90fe5e8e0b74    <- nuevo: TREE       ----+ <-+
-│   │   ├── 27                                                                     |   |
-│   │   │   └── 4c0052dd5408f8ae2bc8440029ff67d79bc5c3    <- number.txt con 1234 <-+   |
-│   │   ├── 2e                                                                     |   |
-│   │   │   └── 65efe2a145dda7ee51d1741299f848e5bf752e    <- letter.txt con a      |   |
-│   │   ├── 56                                                                     |   |
-│   │   │   └── a6051ca2b02b04ef92d5150c9ef600403cb1de    <- number.txt con 1 <----+   |
-│   │   ├── 8c                                                                     .   |
-│   │   │   └── 80d787e43ca98d7a3f8465a5f323684899784c    <- nuevo: COMMIT         .   |
-│   │   ├── ff                                                                         |
-│   │   │   └── e298c3ce8bb07326f888907996eaa48d266db4    <- nuevo: TREE   >---(data)--+
+│   │   │   └── ed1217a2947f4930583229987d90fe5e8e0b74    <- nuevo: TREE  >--------+  <-+
+│   │   ├── 27                                                                     |    |
+│   │   │   └── 4c0052dd5408f8ae2bc8440029ff67d79bc5c3    <- number.txt con 1234 <-+    |
+│   │   ├── 2e                                                                     |    |
+│   │   │   └── 65efe2a145dda7ee51d1741299f848e5bf752e    <- letter.txt con a      |    |
+│   │   ├── 56                                                                     |    |
+│   │   │   └── a6051ca2b02b04ef92d5150c9ef600403cb1de    <- number.txt con 1 <----+    |
+│   │   ├── 8c                                                                          |
+│   │   │   └── 80d787e43ca98d7a3f8465a5f323684899784c    <- nuevo: COMMIT >--+         |
+│   │   ├── ff                                                                |         |
+│   │   │   └── e298c3ce8bb07326f888907996eaa48d266db4    <- nuevo: TREE <----+ -(data)-+
 ```
 
 <br/>
 
 ### Crea un "tree graph"
 
-Git registra el estado actual del proyecto creando un gráfico de árbol a partir del índice. Este tree graph registra la ubicación y el contenido de cada archivo del proyecto. El "tree graph" se compone de dos tipos de objetos: blobs y trees (árboles).
+Git registra el estado actual del proyecto creando un árbol virtual a partir del índice. Este árbol se denomina el "tree graph" y registra la ubicación y el contenido de los directorios (objetos TREE) con sus archivos (objetos BLOB). Por lo tanto, el "tree graph" se compone de dos tipos de objetos: trees y blobs: 
 
-* Los blobs son los que se almacenaron mediante `git add` y como ya vimos representan el contenido de los archivos. 
-* Los trees (árboles) se crean y guardan cuando se hace un commit. Un árbol representa un directorio en la Working Copy (copia de trabajo).
+* Los blobs son los archivos que añadimos con `git add` 
+* Los trees (árboles) se usan para apuntar a dichos archivos o directorios
 
-Primero veamos el contenido del objeto Tree Graph (`0eed...`), que contiene las referencias con la ubicación y el contenido de cada archivo respecto al directorio `data` para el commit nuevo que acabamos de realizar:
+Veamos el objeto objeto (`0eed...`), que contiene las referencias con la ubicación y el contenido de cada archivo respecto al directorio `data` para el commit nuevo que acabamos de realizar. Es de tipo TREE y contiene la información sobre los dos blobs:
 
 ```zsh
 ➜  alpha git:(master) > git --no-pager show 0eed
@@ -338,11 +338,11 @@ number.txt
 100644 blob 56a6051ca2b02b04ef92d5150c9ef600403cb1de	number.txt
 ```
 
-La primera línea registra todo lo necesario para reproducir `data/letter.txt`. Contiene los permisos del archivo, tipo blob, el hash del fichero y el nombre del archivo. La segunda línea lo mismo pero para reproducir `data/number.txt`.
+La primera línea registra todo lo necesario para reproducir `data/letter.txt`. Contiene los permisos del archivo, que es de tipo blob, el hash del fichero y el nombre del archivo. La segunda línea lo mismo pero para reproducir `data/number.txt`.
 
 <br/>
 
-A continuación tenemos el objeto Tree (`0eed...`), árbol para `alpha`, que es el directorio raiz del proyecto. 
+A continuación tenemos otro objeto (`ffe2...`) de tipo TREE para que `alpha`, que es el directorio raiz del proyecto, sepa que tiene un objeto "TREE" debajo con `data` (objeto `0eed`).
 
 
 ```zsh
@@ -357,7 +357,7 @@ data/
 040000 tree 0eed1217a2947f4930583229987d90fe5e8e0b74	data
 ```
 
-La única línea contiene un TREE que apunta al directorio `data`. Registra todo lo necesario para reproducir `data`. Contiene (PENDIENTE LUIS - 040000), que es de tipo tree, el hash del fichero TREE (que a su vez contiene a letter ya number) y el nombre del directorio `data` que los contiene.
+Solo tiene una única línea con un TREE que apunta al directorio `data`. Contiene (PENDIENTE LUIS - 040000), que es de tipo tree, el hash del fichero TREE (que a su vez contiene a `letter.txt` y a `number.txt`) y el nombre del directorio `data`.
 
 
 | ![Tree graph para el commit `a1`](/assets/img/git/1-a1-tree-graph.png) | 
@@ -370,24 +370,20 @@ En el gráfico anterior, el TREE `raíz` apunta al TREE `data`. El TREE `data` a
 <br/>
 
 
-### Create a commit object
+### Crea un objeto COMMIT
 
-`git commit` creates a commit object after creating
-the tree graph. The commit object is just another text file in
-`.git/objects/`:
+Además de los dos ficheros `tree` que componen el tree graph, se ha creado un fichero de tipo `commit` que también se guarda en `.git/objects/`:
 
 ```zsh
-    tree ffe298c3ce8bb07326f888907996eaa48d266db4
-    author Mary Rose Cook <mary@maryrosecook.com> 1424798436 -0500
-    committer Mary Rose Cook <mary@maryrosecook.com> 1424798436 -0500
+➜  alpha git:(master) > git --no-pager cat-file -p 8c80
+tree ffe298c3ce8bb07326f888907996eaa48d266db4
+author Luis Palacios <luis.palacios.derqui@gmail.com> 1618933917 +0200
+committer Luis Palacios <luis.palacios.derqui@gmail.com> 1618933917 +0200
 
-    a1
+a1
 ```
 
-The first line points at the tree graph. The hash is for the tree object
-that represents the root of the working copy. That is: the
-`alpha` directory. The last line is the commit
-message.
+La primera línea apunta al inicio del `tree graph`. El hash `ffe2` es el del objeto raíz `root` de la working copy, es decir, el directorio `alpha`. La última línea es el mensaje del commit. 
 
 
 | ![objeto commit ˋa1ˋ apuntando a su tree graph](/assets/img/git/2-a1-commit.png) | 
