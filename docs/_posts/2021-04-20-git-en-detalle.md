@@ -291,11 +291,11 @@ El usuario hace el commit `a1`. Git imprime algunos datos sobre la confirmación
 ## Los tres pasos de un "Commit"
 
 
-Vamos a analizar los tres ficheros nuevos que se crean (más info [aquí](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects)): 
+Vamos a analizar los tres pasos de un Commit (más info [aquí](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects)): 
 
-* Crea un **"tree graph"** (gráfico de árbol) que representa el contenido de este commit. 
-* Crea un **objeto commit**
-* Hace que la **rama actual apunte al nuevo objeto commit**.
+* Crea un **"tree graph"** que representa el contenido de este commit, en este caso un par de objetos `tree`. 
+* Crea un **objeto commit** con información sobre el mismo y apunta al inicio del "tree graph"
+* Hace que la **rama actual** (current branch) **apunte al nuevo objeto commit**
 
 ```zsh
 │   ├── objects
