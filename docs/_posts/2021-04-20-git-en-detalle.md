@@ -300,17 +300,17 @@ Vamos a analizar los tres pasos de un Commit (más info [aquí](https://git-scm.
 ```zsh
 │   ├── objects
 │   │   ├── 0e
-│   │   │   └── ed1217a2947f4930583229987d90fe5e8e0b74    <- nuevo: TREE  >--------+  <-+
-│   │   ├── 27                                                                     |    |
-│   │   │   └── 4c0052dd5408f8ae2bc8440029ff67d79bc5c3    <- number.txt con 1234 <-+    |
-│   │   ├── 2e                                                                     |    |
-│   │   │   └── 65efe2a145dda7ee51d1741299f848e5bf752e    <- letter.txt con a      |    |
-│   │   ├── 56                                                                     |    |
-│   │   │   └── a6051ca2b02b04ef92d5150c9ef600403cb1de    <- number.txt con 1 <----+    |
-│   │   ├── 8c                                                                          |
-│   │   │   └── 80d787e43ca98d7a3f8465a5f323684899784c    <- nuevo: COMMIT >--+         |
-│   │   ├── ff                                                                |         |
-│   │   │   └── e298c3ce8bb07326f888907996eaa48d266db4    <- nuevo: TREE <----+ -(data)-+
+│   │   │   └── ed12..0b74    <- nuevo: TREE  >--------+  <-+
+│   │   ├── 27                                         |    |
+│   │   │   └── 4c00..c5c3    <- number.txt con 1234 <-+    |
+│   │   ├── 2e                                         |    |
+│   │   │   └── 65ef..752e    <- letter.txt con a      |    |
+│   │   ├── 56                                         |    |
+│   │   │   └── a605..b1de    <- number.txt con 1 <----+    |
+│   │   ├── 8c                                              |
+│   │   │   └── 80d7..784c    <- nuevo: COMMIT >--+         |
+│   │   ├── ff                                    |         |
+│   │   │   └── e298..6db4    <- nuevo: TREE <----+ -(data)-+
 ```
 
 <br/>
