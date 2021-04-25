@@ -8,9 +8,7 @@ categories: apuntes git linux
 
 En pocas palabras, [GIT] es un sistema de control de versiones distribuido, gratuito y de código abierto, diseñado para gestionar desde proyectos pequeños a muy grandes con rapidez y eficacia.
 
-No depende de un repositorio central, múltiples usuarios pueden instalarse GIT y comunicarse entre ellos sin necesidad de conectar con un servidor central. Lo que pasa es que sería inmanejable, así que los "servidores o repositorios centrales (remotos)" son muy útiles y necesarios. 
-
-Podrías montarte el tuyo propio con [Gitolite] por ejemplo, o mejor todavía con [GitLab] (auto-gestionado). Ahora bien, **lo más sensato es usar los que están disponibles en internet como los famosos [GitHub] o [GitLab]**. 
+No depende de un repositorio central, múltiples usuarios pueden instalarse GIT y comunicarse entre ellos sin necesidad de conectar con un servidor central. Lo que pasa es que sería inmanejable, así que los "servidores o repositorios centrales (remotos)" son muy útiles y necesarios, **los más famosos son [GitHub] y [GitLab]**. 
 
 [Git]: https://git-scm.com
 [GitHub]: https://www.github.com
@@ -21,13 +19,13 @@ Podrías montarte el tuyo propio con [Gitolite] por ejemplo, o mejor todavía co
 
 ## Introducción
 
-Empezamos por algunos enlaces. Muy útil, la [Cheatsheet en Español](https://training.github.com/downloads/es_ES/github-git-cheat-sheet/) o la [Visual Git Cheat Sheet](https://ndpsoftware.com/git-cheatsheet.html) o este pequeño [Guía burros](https://rogerdudler.github.io/git-guide/index.es.html) o si quieres algo más oficial, tienes la [documentación oficial](https://git-scm.com/doc) o si te vas a cualqueir buscador en internet vas a encontrar cientos de videos, tutoriales, documentos, etc. 
+Muy útiles, la [Cheatsheet en Español](https://training.github.com/downloads/es_ES/github-git-cheat-sheet/) o la [Visual Git Cheat Sheet](https://ndpsoftware.com/git-cheatsheet.html) o este pequeño [Guía burros](https://rogerdudler.github.io/git-guide/index.es.html) o la [documentación oficial](https://git-scm.com/doc) o si te vas a cualqueir buscador en internet vas a encontrar cientos de videos, tutoriales y documentos. 
 
 ¿Porqué mola GIT?. Hay muchos motivos, como su velocidad, que lo hizo Linus Torvals, que es libre, que nos permite movernos, como si tuviéramos un puntero en el tiempo, por todas las revisiones de código y desplazarnos una manera muy ágil.
 
 Tiene un sistema de trabajo con ramas (branches) que lo hace especialmente potente. Están destinadas a provocar proyectos divergentes de un proyecto principal, para hacer experimentos o para probar nuevas funcionalidades.
 
-Antes de entrar en harina, tenemos dos formas de trabajar con Git. Una es con el cliente (programa) `git` para la línea de comandos. La otra es usar un cliente gráfico, muchísimo más sencillo y agradable. Aún así te recomiendo empezar por la línea de comandos (`git` a secas) y cuando entiendas cuatro cosillas importantes te pases a un cliente GUI. Te recomiendo los primeros de esta lista, ojo que hay muchísimos.
+Antes de entrar en harina, tenemos dos formas de trabajar, con el cliente (programa) `git` para la línea de comandos o con un cliente gráfico, muchísimo más sencillo y agradable. Aún así te recomiendo empezar por la línea de comandos (`git` a secas) y cuando entiendas cuatro cosillas importantes te pases a un cliente GUI.
 
 * Cliente `git`, programa para línea de comandos
 * Cliente GUI [GitKraken](https://www.gitkraken.com) <- Este es el que uso yo 🤗
@@ -59,7 +57,7 @@ git version 2.24.3 (Apple Git-128)
 ```
 <br/>
 
-Uno de los mejores artículos técnicos **con detalle** que me encontré en el pasado para aprender GIT fue [Git from the inside out](https://codewords.recurse.com/issues/two/git-from-the-inside-out) **(GIT desde el interior)**. De hecho me gustó tanto que me he tomado la libertad de traducirlo y crear esta versión a medida con mis propias palabras. Por supuesto todo el crédito va para su Autora [Mary Rose Cook](https://maryrosecook.com), muchas gracias desde aquí!.
+Uno de los mejores artículos técnicos **con detalle** que me encontré en el pasado para aprender fue [Git from the inside out](https://codewords.recurse.com/issues/two/git-from-the-inside-out) **(GIT desde el interior)**. De hecho me gustó tanto que me he tomado la libertad de traducirlo y crear esta versión a medida con mis propias palabras. Por supuesto todo el crédito va para su Autora [Mary Rose Cook](https://maryrosecook.com), muchas gracias desde aquí!.
 
 <br/>
 
@@ -70,19 +68,19 @@ Uno de los mejores artículos técnicos **con detalle** que me encontré en el p
 ## GIT desde el interior
 
 
-Este apunte explica cómo funciona Git. Asume que has dedicado algo de tiempo a entender más o menos de qué va y quieres usarlo para el control de versiones de tus proyectos. Puede ser fácil de aprender pero hay que dedicarle algo de tiempo y merece mucho la pena. 
+Este apunte explica cómo funciona y asume que has dedicado algo de tiempo a entender más o menos de qué va y quieres usarlo para el control de versiones de tus proyectos. Puede ser fácil pero hay que dedicarle algo de tiempo.
 
 Supera a otras herramientas de control de versiones (SCM-Source code management) como Subversion, CVS, Perforce y ClearCase por sus características como la **ramificación local (ramas/branches)**, las **áreas de preparación (staging)** y los **múltiples flujos de trabajo**.
 
 El apunte se centra en la estructura de grafos que sustenta a Git y en la forma en que
 sus propiedades dictan su comportamiento. Vas a ver una serie de comandos Git ejecutados en un único proyecto, con observaciones sobre la estructura gráfica para ilustrar una propiedad
-y el comportamiento que esta propiedad produce.
+y el resultado que produce.
 
 <br/>
 
 ### Creación de un proyecto
 
-Empezamos este tutorial directamente en la línea de comandos, con la creación de un proyecto. Cada proyecto debe estar en un directorio distinto.
+Empezamos directamente en la línea de comandos, con la creación de un proyecto. Cada proyecto debe estar en un directorio distinto.
 
 ```zsh
 ➜  ~ > clear
@@ -97,20 +95,20 @@ Creamos el directorio `alpha` para contener el proyecto.
 ➜  alpha > echo 'a' > data/letter.txt
 ```
 
-Cambiamos al directorio `alpha` y se crea un directorio llamado "data". Dentro, crea un archivo
-llamado `letter.txt` que contiene el caracter `a`. El directorio tiene este aspecto:
+Cambiamos al directorio `alpha` y creamos un directorio llamado "data" con un archivo
+llamado `letter.txt` que contiene el caracter `a`, quedará con este aspecto:
 
 ```zsh
 alpha
 └── data
-    └── letter.txt        
+    └── letter.txt        <- Contiene la letra 'a'
 ```
 
 <br/>
 
 ### Inicializamos el repositorio
 
-Un **repositorio GIT** es como una carpeta dedicada para tu proyecto. Este repositorio es local y contendrá todos los archivos junto con cada una de sus revisiones (versiones).
+Un **repositorio GIT** es una carpeta dedicada dentro de tu proyecto (directorio). Este repositorio es local y contendrá todos los archivos que queremos 'versionar'.
 
 
 ```zsh
@@ -118,7 +116,7 @@ Un **repositorio GIT** es como una carpeta dedicada para tu proyecto. Este repos
 Initialized empty Git repository
 ```
 
-El comando `git init` crea el subdirectorio `.git` con una estructura inicial creando así un nuevo repositorio local, definiendo la configuración de Git y la historia del proyecto. Son archivos ordinarios, sin ninguna magia, el usuario puede leerlos y editarlos con un editor de texto o un shell. 
+El comando `git init` crea el subdirectorio `.git` con una estructura inicial, formándose así un nuevo repositorio local, definiendo la configuración de Git y la historia del proyecto. Son archivos ordinarios, sin ninguna magia, el usuario puede leerlos y editarlos con un editor de texto o un shell. 
 
 El directorio `alpha` tiene ahora este aspecto:
 
@@ -128,7 +126,7 @@ El directorio `alpha` tiene ahora este aspecto:
 | *Estructura de un proyecto con GIT* |
 
 
-Lo que hay dentro del directorio `.git` es propiedad de GIT (ahí van a estar todas las versiones del proyecto). El resto de ficheros (fuera de .git) se han convertido en la que GIT llama la COPIA DE TRABAJO (WORKING COPY) y son propiedad del usuario.
+Lo que hay dentro de `.git` es propiedad de GIT (ahí van a estar todas las versiones del proyecto y todo dentro de él se manipula usando el comando). El resto de ficheros (fuera de .git) se han convertido en la que GIT llama la COPIA DE TRABAJO (WORKING COPY) y son propiedad del usuario.
 
 <br/>
 
@@ -148,7 +146,7 @@ Ejecutar `git add` sobre `data/letter.txt` tiene dos efectos
 
 <br/>
 
-**PRIMERO**, se crea un fichero "blob" (binary large object) en el directorio `.git/objects/`. Se trata del contenido comprimido (con la librearía zlib) de `data/letter.txt`. El nombre del fichero blob se fabrica con el resultado de la comprobación SHA-1 sobre su contenido, es decir, un número de 40 bytes. El fichero se sitúa en una subcarpeta con los primeros 2 caracteres del SHA-1 (`.git/objects/2e/`) y dentro está el archivo con los restantes 38 caracteres.
+**PRIMERO**, se crea un fichero "blob" (binary large object) en el directorio `.git/objects/`. Se trata del contenido comprimido de `data/letter.txt` (lo comprime con zlib). El nombre del fichero blob se fabrica con el resultado de la comprobación SHA-1 sobre su contenido, es decir, un número de 40 bytes. El fichero se sitúa en una subcarpeta con los primeros 2 caracteres del nombre (`.git/objects/2e/`) y dentro el comprimido con un nombre con el resto de los 38 caracteres.
 
 ```zsh
 alpha
@@ -156,7 +154,7 @@ alpha
 :   :
 │   ├── objects
 │   │   ├── 2e
-│   │   │   └── 65efe2a145dda7ee51d1741299f848e5bf752e    <- letter.txt con a
+│   │   │   └── 65efe2a145dda7ee51d1741299f848e5bf752e    <- versión comprimida de letter.txt con a
 ```
 
 Fíjate en que al añadir un archivo a Git se guarda su contenido en el directorio directorio `objects`, por lo tanto podrías incluso borrarlo de tu "WORKING COPY" `data/carta.txt`.
@@ -174,7 +172,7 @@ En cada línea del archivo índice (`.git/index`) tienes un archivo rastreado, c
 DIRC`~ٳ���`~ٳ���	��}���.e��Eݧ�Q�t��H�u.data/letter.txt���;V��JަI�(7/7�%
 ````
 
-¿Pero qué es eso?. Pues el fichero en formato binario, así que tenemos que usar otro tipo de comandos para ver su contenido. 
+¿Pero qué es eso?. recuerda con los ficheros se guardan como blobs, en formato binario, no puedes verlos como ficheros de texto, hay que usar otro tipo de comandos para ver su contenido. 
 
 ```zsh
 ➜  alpha git:(master) ✗ > git ls-files --stage
@@ -189,7 +187,7 @@ Changes to be committed:
 
 <br/>
 
-**Creamos el fichero number.txt**
+**Creamos un segundo fichero, number.txt**
 
 Creamos un fichero llamado `data/number.txt` con un contenido `1234`.
 
@@ -216,7 +214,7 @@ El suuario añade el fichero `number.txt` a GIT
 ➜  alpha git:(master) ✗ > git add data
 ```
 
-Como vimos antes, de nuevo, el comando `git add` crea un objeto blob que contiene el contenido de `data/number.txt`. Añade una entrada de índice para `datos/número.txt` que apunta al blob. Este es el índice después de que el comando `git add` se ejecute por segunda vez:
+Como vimos antes, de nuevo, el comando `git add` crea un objeto blob que contiene el contenido de `data/number.txt`. Añade una entrada de índice para `datos/número.txt` que apunta al blob. Este es el nuevo contenido del índice:
 
 
 ```zsh
@@ -225,18 +223,21 @@ Como vimos antes, de nuevo, el comando `git add` crea un objeto blob que contien
 100644 274c0052dd5408f8ae2bc8440029ff67d79bc5c3 0	data/number.txt
 ```
 
-Observa que sólo los archivos del directorio `data` aparecen en el índice, aunque el usuario haya ejecutado `git add data`. El directorio `data`
-no aparece por separado.
+Observa que sólo los archivos del directorio `data` aparecen en el índice, aunque el usuario haya ejecutado `git add data` el directorio `data` no aparece por ningún sitio... paciencia.
 
-Cuando el usuario creó originalmente `datos/número.txt`, quería escribir "1", no
-`1234`. 
+Vamos a hacer un pequeño cambio. Cuando el usuario creó originalmente `datos/número.txt`, quería escribir `1`, no `1234`. 
 
 ```zsh
 ➜  alpha git:(master) ✗ > echo '1' > data/number.txt
+```
+
+Añadimos de nuevo `number.txt` a Git.
+
+```zsh
 ➜  alpha git:(master) ✗ > git add data
 ```
 
-Ahora bien, fíjate que tenemos 3 blobs... ¿podrías decirme porqué?. Además, en el índice solo aparecen dos ficheros ¿Podrías decirme porqué?
+Fíjate que tenemos 3 blobs... ¿podrías decirme porqué?. 
 
 ```zsh
 alpha
@@ -254,6 +255,7 @@ alpha
     └── number.txt
 ```
 
+Además, en el índice solo aparecen dos ficheros ¿Podrías decirme porqué?
 
 ```zsh
 ➜  alpha git:(master) ✗ > git ls-files --stage
@@ -263,7 +265,7 @@ alpha
 
 Respuesta: 
 
-Al cambiar `datos/número.txt` y hacer un `add` estamos añadiendo el "nuevo" archivo al índice, se crea un nuevo blob con el nuevo contenido y además actualiza la entrada del índice "datos/número.txt" para que **apunte al nuevo blob**.
+Al cambiar `datos/número.txt` y hacer un `add` estamos añadiendo el "nuevo" archivo al índice, se crea un nuevo blob con el nuevo contenido y además actualiza la entrada del índice "datos/número.txt" para que **apunte al nuevo blob**. El indice en la zona de espera contiene un puntero a la última versión de cada archivo agregado.
 
 <br/>
 
