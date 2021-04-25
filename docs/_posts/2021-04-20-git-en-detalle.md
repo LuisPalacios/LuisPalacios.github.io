@@ -370,15 +370,15 @@ En el gráfico anterior, el TREE `raíz` apunta al TREE `data`. El TREE `data` a
 <br/>
 
 
-### Crea un objeto COMMIT
+### Crea un objeto Commit
 
 Además de los dos ficheros `tree` que componen el tree graph, se ha creado un fichero de tipo `commit` que también se guarda en `.git/objects/`:
 
 ```zsh
 ➜  alpha git:(master) > git --no-pager cat-file -p 8c80
 tree ffe298c3ce8bb07326f888907996eaa48d266db4
-author Luis Palacios <luis.palacios.derqui@gmail.com> 1618933917 +0200
-committer Luis Palacios <luis.palacios.derqui@gmail.com> 1618933917 +0200
+author Luis Palacios <luis@mail.com> 1618933917 +0200
+committer Luis Palacios <luis@mail.com> 1618933917 +0200
 
 a1
 ```
