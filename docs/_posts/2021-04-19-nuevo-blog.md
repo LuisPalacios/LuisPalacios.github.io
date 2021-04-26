@@ -212,3 +212,11 @@ Actualizar bundle
 ➜  ~ > cd prog.git/github-luispa/LuisPalacios.github.io/docs
 ➜  docs git:(gh-pages) > bundle update
 ```
+
+
+### Enlaces interesantes
+
+Para mejorar mi sitio de apuntes, algunos enlaces interesantes: 
+
+- [Setup a blog using Jekyll](https://blog.codecut.de/2019/06/11/how-to-setup-a-blog-using-jekyll)
+
