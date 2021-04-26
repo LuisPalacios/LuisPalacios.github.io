@@ -2,13 +2,16 @@
 title: "Mi primer blog"
 date: "2002-11-11"
 categories: apuntes gentoo linux
+excerpt_separator: <!--more-->
 ---
 
 ![nimble image](/assets/img/original/nimble.jpg){: width="150px" style="float:left; padding-right:10px" } 
 
-Este fué mi primer post en mi blog original con Nibbleblog, no con wordpress, ni recientemente con Jekyll, asi que lo dejo tal cual.
+Hace tiempo (2002) me dió por empezar a compartir apuntes técnicos a través de un blog. Quizá por nostalgia he migrado el que fué mi primer post donde usé un software muy sencillo, ni era wordpress, ni mucho menos Jekyll, lo dejo tal cual.
 
-Mi primer apunte lo hice con Nibbleblog En el 2002 instalé [NibbleBlog](http://www.nibbleblog.com), un motor muy sencillo para la creación y manipulación de mi bitácora, basado en archivos XML.
+<!--more-->
+
+Mi primer `apunte` lo hice con [NibbleBlog](http://www.nibbleblog.com), un motor muy sencillo para la creación y manipulación de mi bitácora, basado en archivos XML.
 
 La verdad es que esta gente ha hecho un excelente trabajo, sencillo, rápido y productivo. Qué más decir que lo recomiendo. Más adelante en el tiempo me pasé a WordPress, pero dejo aquí unas nociones la instalación de Nibbleblog a modo de referencia.
 

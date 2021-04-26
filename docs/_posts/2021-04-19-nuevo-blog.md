@@ -2,11 +2,14 @@
 title: "Nuevo blog con Jekyll"
 date: "2021-04-19"
 categories: apuntes github jekyll
+excerpt_separator: <!--more-->
 ---
 
 ![Logo Jekyll](/assets/img/post/logo-jekyll.png){: width="150px" style="float:left; padding-right:20px" } 
 
-En este apunte describo cómo he montado este sitio, mi nuevo blog. Los fuentes se encuentran en el repositorio [GitHub LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io). El blog es estático, basado en [jekyll](http://jekyllrb.com) y hospedado en las [GitHub Pages](https://pages.github.com). 
+En este apunte describo cómo he montado este mi nuevo blog estático basado en [jekyll](http://jekyllrb.com) y hospedado en las [GitHub Pages](https://pages.github.com). Los fuentes se encuentran en el repositorio [GitHub LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io). 
+
+<!--more-->
 
 **Jekyll** es un generador simple para sitios web estáticos con capacidades de blog; adecuado para sitios web personales. Está escrito en Ruby (su creador es Tom Preston-Werner, el cofundador de GitHub).
 

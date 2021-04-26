@@ -2,11 +2,14 @@
 title: "GIT en detalle"
 date: "2021-04-17"
 categories: apuntes git linux
+excerpt_separator: <!--more-->
 ---
 
 ![Logo GIT](/assets/img/post/logo-git.png){: width="150px" style="float:left; padding-right:20px" } 
 
-En pocas palabras, [GIT] es un sistema de control de versiones distribuido, gratuito y de código abierto, diseñado para gestionar desde proyectos pequeños a muy grandes con rapidez y eficacia.
+[GIT] es un sistema de control de versiones distribuido, gratuito y de código abierto, diseñado para gestionar desde proyectos pequeños a muy grandes con rapidez y eficacia.
+
+<!--more-->
 
 No depende de un repositorio central, múltiples usuarios pueden instalarse GIT y comunicarse entre ellos sin necesidad de conectar con un servidor central. Lo que pasa es que sería inmanejable, así que los "servidores o repositorios centrales (remotos)" son muy útiles y necesarios, **los más famosos son [GitHub] y [GitLab]**. 
 
