@@ -6,48 +6,47 @@ categories: apuntes github jekyll
 
 ![Logo Jekyll](/assets/img/post/logo-jekyll.png){: width="150px" style="float:left; padding-right:20px" } 
 
-En este apunte describo cómo he hospedado mi nuevo blog en GitHub, generando las páginas con Jekyll. Los fuentes se encuentran en el repositorio [GitHub LuisPalacios/LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io). El blog es estático, basado en [jekyll](http://jekyllrb.com) y hospedado en las [GitHub Pages](https://pages.github.com). 
+En este apunte describo cómo he montado este sitio, mi nuevo blog. Los fuentes se encuentran en el repositorio [GitHub LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io). El blog es estático, basado en [jekyll](http://jekyllrb.com) y hospedado en las [GitHub Pages](https://pages.github.com). 
 
 **Jekyll** es un generador simple para sitios web estáticos con capacidades de blog; adecuado para sitios web personales. Está escrito en Ruby (su creador es Tom Preston-Werner, el cofundador de GitHub).
 
-
-
-<br/>
-
-## Preparo Brew, Ruby, Jekyll y los Bundles en el MacOS
-
-Utilizo [Homebrew](https://brew.sh/index_es) en vez del Ruby que viene con el Mac para evitar problemas con SIP (Systems Integrity Protection) [fuente](https://jekyllrb.com/docs/troubleshooting/#jekyll--macos). Otros enlaces interesantes: [Jekyll Installation](https://jekyllrb.com/docs/installation/), [Set up Git con GitHub](https://docs.github.com/en/articles/set-up-git) y [Bundler](https://bundler.io)
+Preparo Brew, Ruby, Jekyll y los Bundles en el MacOS: Utilizo [Homebrew](https://brew.sh/index_es) en vez del Ruby que viene con el Mac para evitar problemas con SIP (Systems Integrity Protection) [fuente](https://jekyllrb.com/docs/troubleshooting/#jekyll--macos). Otros enlaces interesantes: [Jekyll Installation](https://jekyllrb.com/docs/installation/), [Set up Git con GitHub](https://docs.github.com/en/articles/set-up-git), [Git en detalle](2021-04-17-git-en-detalle.md) y [Bundler](https://bundler.io)
 
 <br/>
 
-## Homebrew brew
+## Homebrew
 
 La instalación de Homebrew (o brew por resumir) es bastante sencilla. Homebrew es un sistema de gestión de paquetes que simplifica la instalación, actualización y eliminación de programas en los sistemas operativos Mac OS de Apple y GNU/Linux. Creado originalmente por Max Howell, el programa ha ganado popularidad en la comunidad de Ruby on Rails. Lo que más me gusta es que te permite acceder a las últimas versiones de un montón de software libre.
 
 Instalación
+
 ```
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
 Ver qué está instalado:
+
 ```
 brew list
 brew cask list
 ```
 
-Actualizar Brew
+Actualizar `brew`
+
 ```
 brew [-v] update
 brew [-v] upgrade
 ```
 
 Instalaciones
+
 ```
 brew install wget
 brew install imagemagick
 ```
 
 Me aseguro que *brew* está correctamente instalado y actulalizado
+
 ```
 ~ brew update
 ~ brew doctor
@@ -60,7 +59,7 @@ Homebrew 3.1.2
 
 <br/>
 
-## Ruby
+## Ruby
 
 Ruby es un lenguaje de programación interpretado, reflexivo y orientado a objetos, creado por el programador japonés Yukihiro "Matz" Matsumoto, quien comenzó a trabajar en Ruby en 1993, y lo presentó públicamente en 1995. Necesitamos Ruby para ejecutar Jekyll, así que voy a instalarlo utilizando Homebrew:
 
@@ -79,7 +78,9 @@ export GEM_HOME=$HOME/gems
 export PATH=$HOME/gems/bin:$PATH
 ```
 
-## Bundler
+<br/>
+
+## Bundler
 
 Es un gestor de paquetes de software que va a facilitar el trabajo con Jekyll y sus dependencias. 
 
@@ -87,12 +88,15 @@ Es un gestor de paquetes de software que va a facilitar el trabajo con Jekyll y 
 ~ gem install jekyll bundler
 ```
 
-## Jekyll
+<br/>
+
+## Jekyll
 
 Jekyll es un generador simple para sitios web estáticos con capacidades de blog; está escrito en Ruby por Tom Preston-Werner (cofundador de GitHub) y es rapidísimo. 
 
 Para instalarlo en mi Mac he seguido esta [fuente](https://jekyllrb.com/docs/troubleshooting/#jekyll--macos)
 
+<br/>
 
 ## Prueba de concepto
 
@@ -190,7 +194,7 @@ Al cabo de un rato debería estar disponible en
 <br/>
 
 
-## Futuros UPDATES
+### Actualizaciones futuras
 
 Actualizar Homebrew
 
