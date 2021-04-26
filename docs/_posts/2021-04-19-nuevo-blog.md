@@ -119,7 +119,7 @@ Realizo un clone en local y cambio al directorio.
 ```
 ➜  ~ > cd github/LuisPalacios.github.io
 ➜  LuisPalacios.github.io git:(master) >
-````
+```
 
 Creo la nueva rama, sin history ni contenido, con el nombre `gh-pages` y cambio (checkout) a dicha rama. Decido que el directorio raiz ([GitHub sources](GitHub sources)) sea el “subdirectorio `./docs`”, así que tengo que crearlo y después crear la rama (branch) “gh-pages” y hacer un checkout hacia ella (cambiar a dicha rama). Github publicará desde dicha rama.
 
