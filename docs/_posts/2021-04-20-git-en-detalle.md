@@ -291,11 +291,11 @@ El usuario hace el commit `a1`. Git imprime algunos datos sobre la confirmación
 ## Los tres pasos de un "Commit"
 
 
-Vamos a analizar los tres pasos de un Commit (más info [aquí](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects)): 
+Cuando haces un commit ocurren tres cosas (más info [aquí](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects)): 
 
-* Crea un **"tree graph"** que representa el contenido de este commit, en este caso un par de objetos `tree`. 
-* Crea un **objeto commit** con información sobre el mismo y apunta al inicio del "tree graph"
-* Hace que la **rama actual** (current branch) **apunte al nuevo objeto commit**
+* Se crea un **"tree graph"** representando los directorios y ficheros afectados. En este ejemplo que nos ocupa vemos que se crean dos objetos de tipo `tree` vinculados a dos objetos ya existentes de tipo `blob`. 
+* Se crea un **objeto commit** con tocda la información sobre el mismo, el autor, el committer, el comentario y por último el puntero al objeto `tree` raíz del "tree graph"
+* Se conecta la **rama actual** (branch) para que **apunte al dicho objeto commit** que se ha creado
 
 ```zsh
 │   ├── objects
@@ -315,14 +315,14 @@ Vamos a analizar los tres pasos de un Commit (más info [aquí](https://git-scm.
 
 <br/>
 
-### Crea un "tree graph"
+#### Se crea el "tree graph"
 
-Git registra el estado actual del proyecto creando un árbol virtual a partir del índice. Este árbol se denomina el "tree graph" y registra la ubicación y el contenido de los directorios (objetos TREE) con sus archivos (objetos BLOB). Por lo tanto, el "tree graph" se compone de dos tipos de objetos: trees y blobs: 
+Git registra el estado actual del proyecto creando un árbol virtual a partir del índice. Este árbol se denomina el "tree graph" y contiene la información necesaria sobre la ubicación y contenido de los punteros (objetos `tree`) y los archivos (objetos `blob`). Por lo tanto, el "tree graph" se compone de dos tipos de objetos: 
 
-* Los blobs son los archivos que añadimos con `git add` 
-* Los trees (árboles) se usan para apuntar a dichos archivos o directorios
+* Los blobs, que son los archivos que habíamos añadido con `git add` 
+* Los trees, se usan para apuntar a otros objetos (por ejemplo los subdirectorios que contienen archivos)
 
-Veamos el objeto objeto (`0eed...`), que contiene las referencias con la ubicación y el contenido de cada archivo respecto al directorio `data` para el commit nuevo que acabamos de realizar. Es de tipo TREE y contiene la información sobre los dos blobs:
+Veamos uno de los objetos `tree` que se ha creado: `0eed...`. Este fichero contiene un puntero a los archivos dentro del directorio `data`:
 
 ```zsh
 ➜  alpha git:(master) > git --no-pager show 0eed
@@ -338,11 +338,11 @@ number.txt
 100644 blob 56a6051ca2b02b04ef92d5150c9ef600403cb1de	number.txt
 ```
 
-La primera línea registra todo lo necesario para reproducir `data/letter.txt`. Contiene los permisos del archivo, que es de tipo blob, el hash del fichero y el nombre del archivo. La segunda línea lo mismo pero para reproducir `data/number.txt`.
+La primera línea registra todo lo necesario para reproducir `data/letter.txt`: los permisos del archivo, su tipo (blob), el hash del fichero y el nombre del archivo. La segunda línea lo mismo para reproducir `data/number.txt`.
 
 <br/>
 
-A continuación tenemos otro objeto (`ffe2...`) de tipo TREE para que `alpha`, que es el directorio raiz del proyecto, sepa que tiene un objeto "TREE" debajo con `data` (objeto `0eed`).
+Veamos el otro puntero `tree`: `ffe2...`. Es el del directorio raíz del proyecto (`alpha`), por lo tanto contiene la el puntero al objeto anterior (el que apunta a `data`), el otro objeto de tipo tree que se acababa de crear, `0eed`.
 
 
 ```zsh
@@ -357,7 +357,7 @@ data/
 040000 tree 0eed1217a2947f4930583229987d90fe5e8e0b74	data
 ```
 
-Solo tiene una única línea con un TREE que apunta al directorio `data`. Contiene (PENDIENTE LUIS - 040000), que es de tipo tree, el hash del fichero TREE (que a su vez contiene a `letter.txt` y a `number.txt`) y el nombre del directorio `data`.
+Tiene una línea apuntando al directorio `data`. Contiene el valor 040000 (directorio)), el tipo (tree), el hash del objeto tree que vimos antes y el nombre del directorio `data`.
 
 
 | ![Tree graph para el commit `a1`](/assets/img/git/1-a1-tree-graph.png) | 
@@ -365,14 +365,14 @@ Solo tiene una única línea con un TREE que apunta al directorio `data`. Contie
 | *Tree graph para el commit `a1`* |
 
 
-En el gráfico anterior, el TREE `raíz` apunta al TREE `data`. El TREE `data` apunta a los blobs de `data/letter.txt` y `datos/número.txt`.
+Lo mismo visto gráficamente nos muestra cómo el objeto tree `raíz (root)` apunta al objeto tree `data` que apunta a los dos objetos blobs `data/letter.txt` y `datos/número.txt`.
 
 <br/>
 
 
-### Crea un objeto Commit
+#### Se crea el objeto Commit
 
-Además de los dos ficheros `tree` que componen el tree graph, se ha creado un fichero de tipo `commit` que también se guarda en `.git/objects/`:
+Además de los dos objetos (ficheros) `tree` que componen el tree graph, se ha creado un nuevo objeto (fichero) de tipo `commit` que también se guarda en `.git/objects/`:
 
 ```zsh
 ➜  alpha git:(master) > git --no-pager cat-file -p 8c80
@@ -383,63 +383,45 @@ committer Luis Palacios <luis@mail.com> 1618933917 +0200
 a1
 ```
 
-La primera línea apunta al inicio del `tree graph`. El hash `ffe2` es el del objeto raíz `root` de la working copy, es decir, el directorio `alpha`. La última línea es el mensaje del commit. 
+La primera línea apunta al inicio del `tree graph`, al objeto raíz `raíz (root)` de la working copy, es decir, el directorio `alpha`. La última línea es el mensaje del commit. 
 
 
 | ![objeto commit ˋa1ˋ apuntando a su tree graph](/assets/img/git/2-a1-commit.png) | 
 |:--:| 
-| *objeto commit ˋa1ˋ apuntando a su tree graph* |
+| *objeto commit ˋa1ˋ apuntando a la raíz (root) del tree graph* |
 
 
-### Point the current branch at the new commit
 
-Finally, the commit command points the current branch at the new commit
-object.
+#### Se conecta la rama actual con el commit
 
-Which is the current branch? Git goes to the `HEAD`
-file at `.git/HEAD` and finds:
+La tercera acción consiste en conectar la rama actual con el objeto commit recién creado. GIT tiene el nombre de la rama actual en el archivo `.git/HEAD`:
+
 
 ```zsh
-    ref: refs/heads/master
+➜  alpha git:(master) ✗ cat .git/HEAD
+ref: refs/heads/master
 ```
 
-This says that `HEAD` is pointing at
-`master`. `master` is the
-current branch.
-
-`HEAD` and `master` are both
-refs. A ref is a label used by Git or the user to identify a specific
-commit.
-
-The file that represents the `master` ref does not
-exist, because this is the first commit to the repository. Git creates
-the file at `.git/refs/heads/master` and sets its
-content to the hash of the commit object:
+Vemos que `HEAD` (una referencia) está apuntando a `master` (otra referencia), por lo tanto `master` es la rama actual. Las referencias son etiquetas utilizada por Git o por el usuario para identificar un commit. El archivo que representa la referencia `master` debe contener un puntero al hash del commit (`8c80`) y dicha conexión se crea en el archivo `.git/refs/heads/master`
 
 ```
-    74ac3ad9cde0b265d2b4f1c778b283a6e2ffbafd
+➜  alpha git:(master) ✗ cat .git/refs/heads/master
+8c80d787e43ca98d7a3f8465a5f323684899784c
 ```
 
-(If you are typing in these Git commands as you read, the hash of your
-`a1` commit will be different from the hash of mine.
-Content objects like blobs and trees always hash to the same value.
-Commits do not, because they include dates and the names of their
-creators.)
+(No lo he dicho antes, pero todos ciertos HASHs que estás viendo no van a coincidir con los tuyos, los objetos con contenido como los blobs y los tress siempre hacen un hash al mismo valor, pero los commits cambian porque contienen fechas y nombres distintos)
 
-Let's add `HEAD` and `master` to
-the Git graph:
+Ahora ya tenemos la conexión completa, vamos a añadir `HEAD` y `master` a nuestro gráfico: 
 
-![\`master\` pointing at the \`a1\`
-commit](/assets/img/git/3-a1-refs.png)
 
-::: {.image-caption}
-\`HEAD\` pointing at \`master\` and \`master\` pointing at the \`a1\`
-commit
-```
+| ![\`master\` apunta al commit \`a1\`](/assets/img/git/3-a1-refs.png) | 
+|:--:| 
+| `HEAD\` apuntando a \`master\` apuntando al commit \`a1\` |
 
-`HEAD` points at `master`, as it
-did before the commit. But `master` now exists and
-points at the new commit object.
+Ya tenemos todo conectado: `HEAD` apunta a `master`, ya lo hacía, pero ahora se ha creado el hash que apunta al `objeto commit`, que apunta al objeto tree raíz `root (alpha)` que a su vez apunta a `data` que apunta a `letter.txt`y `number.txt`.
+
+Esto explicadi de otra forma podría decirse como "Estoy viendo la rama `master` que contiene un directorio llamado `data` con un par de ficheros y sus versiones son las de la fecha en la que se hizo el commit anteerior".
+
 
 ## Make a commit that is not the first commit
 
