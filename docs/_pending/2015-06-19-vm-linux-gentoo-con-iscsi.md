@@ -1,0 +1,753 @@
+---
+title: "VM Linux con iSCSI"
+date: "2015-06-19"
+categories: 
+  - "apuntes"
+  - "gentoo"
+  - "virtualizacion"
+tags: 
+  - "backup"
+  - "iscsi"
+  - "kvm"
+  - "linux"
+---
+
+En este apunte describo cómo crear una máquina virtual Linux (Gentoo) en un [Hypervisor KVM](https://www.luispa.com/?p=3221) con la particularidad de que su disco duro residirá en una NAS vía iSCSI. El Host es un NUC5i5RYK con 16GB de RAM y dedicaré un core virtual y 2GB de RAM a la VM.
+
+[![linuxiscsi](https://www.luispa.com/wp-content/uploads/2015/06/linuxiscsi.png)](https://www.luispa.com/wp-content/uploads/2015/06/linuxiscsi.png)
+
+iSCSI, de Internet SCSI, permite usar el protocolo SCSI sobre redes TCP/IP para acceder al almacenamiento, se trata de una alternativa a las soluciones SAN basadas en Fibre Channel.
+
+ 
+
+# NAS con soporte iSCSI
+
+En este apunte vamos a ver cómo una NAS casera (QNAP) es capaz de entregar almacenamiento a través de iSCSI. Para situarnos, en terminología iSCSI un Target es un grupo de volúmenes (LUNs). Puedes optar por crear un único target con múltiples LUNs o varios targets donde cada uno solo tienen una única LUN. Esta última es la opción por la que he optado, para cada VM creo un "Target(grupo) con una única LUN". Las voy a crear desde el administrador web de QNAP.
+
+Veamos un ejemplo donde creo un Target con su LUN asignándole 15GB de espacio libre a nivel de bloque (acceso en modo directo al disco, en vez de en modo fichero), que además se presentará al sistema operativo como si fuese un disco físico.
+
+[![disco-iscsi-1](https://www.luispa.com/wp-content/uploads/2015/06/disco-iscsi-1.png)](https://www.luispa.com/wp-content/uploads/2015/06/disco-iscsi-1.png)
+
+[![disco-iscsi-2](https://www.luispa.com/wp-content/uploads/2015/06/disco-iscsi-2.png)](https://www.luispa.com/wp-content/uploads/2015/06/disco-iscsi-2.png)
+
+[![disco-iscsi-3](https://www.luispa.com/wp-content/uploads/2015/06/disco-iscsi-3.png)](https://www.luispa.com/wp-content/uploads/2015/06/disco-iscsi-3.png)
+
+[![disco-iscsi-4](https://www.luispa.com/wp-content/uploads/2015/06/disco-iscsi-4.png)](https://www.luispa.com/wp-content/uploads/2015/06/disco-iscsi-4.png)
+
+Lo anterior era un ejemplo, veamos a continuación los tres Targets, cada uno con su LUN, que he creado para que puedan ser consumidos por las futuras VM's de KVM.
+
+[![kvm-vm-gentoo-iscsi-1](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-1-1024x619.png)](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-1.png)
+
+Los nombres de los **Targets** son realmente impronunciables, pero es lo que hay... así que fíjate bien en cual es el nombre de tu Target porque lo usaremos a continuación. Para este ejemplo voy a usar el Target que llamé "TVMgentoo" y que el QNAP tradujo a: iqn.2004-04.com.qnap:ts-569pro:iscsi.tvmgentoo.d70ea1.
+
+ 
+
+# iSCSI en virt-manager
+
+Antes de iniciar la instalción de la VM, lo primero es configurar las fuentes iSCSI en el Host y para hacerlo la forma más sencilla es utilizar el programa virt-manager, nos conectaremos con el o los grupos (Targets) para que puedan ser consumidos por la VM más adelante.
+
+Esto se hace obviamente en el Host (Hypervisor) y es muy importante que su Kernel soporte iSCSI (es Linux quien debe soportarlo, no KVM), así que asegúrate de tenerlo bien configurado (consulta este otro [apunte sobre KVM](https://www.luispa.com/?p=3221) donde explico cómo hacerlo. Asumiendo que tengo configurados los targets y que mi Host soporta iSCSI, arranco el gesto de VM's virt-manager, selecciono mi propio hypervisor KVM, botón derecho y entro en **Detalles**.
+
+[![kvm-vm-gentoo-iscsi-2](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-2.png)](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-2.png)
+
+Desde la lengüeta "Almacenamiento", pulsamos en el símbolo "+" para añadir un nuevo grupo (datastore) de tipo Target iSCSI (destino iSCSI).
+
+[![kvm-vm-gentoo-iscsi-3](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-3.png)](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-3.png)
+
+[![kvm-vm-gentoo-iscsi-4](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-4.png)](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-4.png)
+
+[![kvm-vm-gentoo-iscsi-5](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-5.png)](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-5.png)
+
+Debes poner la dirección IP del NAS, en vez del nombre DNS, en el campo "Nombre del equipo".
+
+[![kvm-vm-gentoo-iscsi-6](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-6.png)](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-6.png)
+
+Si todo ha ido bien, deberías ver lo siguiente:
+
+[![kvm-vm-gentoo-iscsi-7](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-7.png)](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-7.png)
+
+Ya tengo un disco adicional disponible que usaré durante la instalación de la máquina virtual
+
+ 
+
+### Comandos útiles iSCSI
+
+Dejo aquí unos comandos útiles que te pueden venir bien cuando trabajas con discos iSCSI.
+
+- Conectar disco iSCSI, desde línea de comandos o virt-manager
+
+marte ~ # iscsiadm -m node -T iqn.2004-04.com.qnap:ts-569pro:iscsi.tvmgentoo.d70ea1 -p 192.168.1.2 --login
+Logging in to \[iface: default, target: iqn.2004-04.com.qnap:ts-569pro:iscsi.tvmgentoo.d70ea1, portal: 192.168.1.2,3260\]
+Login to \[iface: default, target: iqn.2004-04.com.qnap:ts-569pro:iscsi.tvmgentoo.d70ea1, portal: 192.168.1.2,3260\] successful.
+
+[![iSCSI-Start](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Start.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Start.png) \* Desconectar disco iSCSI, desde línea de comandos o virt-manager
+
+marte ~ # iscsiadm -m node -T iqn.2004-04.com.qnap:ts-569pro:iscsi.tvmgentoo.d70ea1 -p 192.168.1.2 --logout
+Logging out of session \[sid: 1, target: iqn.2004-04.com.qnap:ts-569pro:iscsi.tvmgentoo.d70ea1, portal: 192.168.1.2,3260\]
+Logout of \[sid: 1, target: iqn.2004-04.com.qnap:ts-569pro:iscsi.tvmgentoo.d70ea1, portal: 192.168.1.2,3260\] successful.
+
+[![iSCSI-Stop](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Stop.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Stop.png)
+
+ 
+
+# Instalar la máquina virtual
+
+Ya estamos listos para crear la máquina virtual, así que nos vamos a virt-manager y la creamos utilizando el ISO de instalación del sistema operativo como disco de arranque. Como es "gentoo" voy a darle bastante memoria (8GB) y cpu (4 vCores) para que las compilaciones vayan rápido. Al terminar modificaré la VM para dejarla con 2GB y 1 vCore
+
+[![fastvm-1](https://www.luispa.com/wp-content/uploads/2015/06/fastvm-1.png)](https://www.luispa.com/wp-content/uploads/2015/06/fastvm-1.png)
+
+[![fastvm-2](https://www.luispa.com/wp-content/uploads/2015/06/fastvm-2.png)](https://www.luispa.com/wp-content/uploads/2015/06/fastvm-2.png)
+
+[![fastvm-3](https://www.luispa.com/wp-content/uploads/2015/06/fastvm-3.png)](https://www.luispa.com/wp-content/uploads/2015/06/fastvm-3.png)
+
+Selecciono la opción **Elija administrado, o algún otro tipo de almacenamiento existente** [![kvm-vm-gentoo-iscsi-8](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-8.png)](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-8.png)
+
+Selecciono la unidad que apunta a mi Target [![kvm-vm-gentoo-iscsi-9](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-9.png)](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-9.png)
+
+[![kvm-vm-gentoo-iscsi-10](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-10.png)](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-10.png)
+
+Selecciono la interfaz de red virtual adecuada y la opción "Personalizar configuración antes de instalar" y hago clic en Finalizar [![kvm-vm-gentoo-iscsi-11](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-11.png)](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-11.png)
+
+Ahora podemos parametrizar la VM antes de arrancarla.
+
+- Añado "input->Tableta Gráfica USB EvTouch" para que el ratón responda correctametne cuando manipulo más adelante la VM desde virt-manager.
+
+[![kvm-vm-gentoo-iscsi-12](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-12.png)](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-12.png)
+
+- **MUY IMPORTANTE:** Cambiar los controladores de Disco y Red a VirtIO. Ambos ofrecen un rendimiento mejor y es mucho mejor cambiarlo ahora (sobre todo el de disco) que más adelante.
+
+[![kvm-vm-gentoo-iscsi-13](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-13.png)](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-13.png)
+
+[![kvm-vm-gentoo-iscsi-13.1](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-13.1.png)](https://www.luispa.com/wp-content/uploads/2015/06/kvm-vm-gentoo-iscsi-13.1.png)
+
+Ya puedo aplicar los cambios y hacer clic en **Iniciar instalación**
+
+[![fastvm-6](https://www.luispa.com/wp-content/uploads/2015/06/fastvm-6.png)](https://www.luispa.com/wp-content/uploads/2015/06/fastvm-6.png)
+
+[![fastvm-7](https://www.luispa.com/wp-content/uploads/2015/06/fastvm-7-1024x878.png)](https://www.luispa.com/wp-content/uploads/2015/06/fastvm-7.png)
+
+Te recomiendo que dejes de trabajar en la consola y pases a un puesto de trabajo remoto vía SSH, asigno una contraseña a root y arranco el daemon:
+
+ 
+livecd ~ # passwd
+:
+livecd ~ # /etc/init.d/sshd start 
+
+ 
+obelix:~ luis$ ssh -l root 192.168.1.107
+
+  **Crear las particiones del disco con Parted**
+
+El disco que KVM presenta a la VM realmente está en la NAS (vía iSCSI), pero esto es transparente para la VM, que lo reconoce como un disco real físico y le asigna el nombre de dispositivo /dev/vda (recuerda que usamos el driver Virtio)
+
+  
+livecd ~ # fdisk -l
+
+Disk /dev/vda: 10 GiB, 10737418240 bytes, 20971520 sectors
+Units: sectors of 1 \* 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+Empiezo a preparar las particiones. Notar que voy a usar UEFI y GPT (en vez de MBR):
+
+  
+livecd ~ # parted -a optimal /dev/vda
+:
+GNU Parted 3.2
+Using /dev/vda
+Welcome to GNU Parted! Type 'help' to view a list of commands.
+(parted) mklabel gpt
+(parted) unit mib
+(parted) mkpart primary 1 3
+(parted) name 1 grub
+(parted) set 1 bios\_grub on
+(parted) mkpart primary 3 131
+(parted) name 2 boot
+(parted) mkpart primary 131 643
+(parted) name 3 swap
+(parted) mkpart primary 643 -1
+(parted) name 4 rootfs
+(parted) print
+Model: Virtio Block Device (virtblk)
+Disk /dev/vda: 10.7GB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name    Flags
+ 1      1049kB  3146kB  2097kB               grub    bios\_grub
+ 2      3146kB  137MB   134MB                boot
+ 3      137MB   674MB   537MB                swap
+ 4      674MB   10.7GB  10.1GB               rootfs
+
+(parted) quit
+
+A continuación creo los file systems
+
+  
+
+livecd ~ # fdisk -l
+
+Disk /dev/vda: 10 GiB, 10737418240 bytes, 20971520 sectors
+Units: sectors of 1 \* 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: DFA5DB69-5DA5-4AAB-8C4F-0266592CFB48
+
+Device           Start          End   Size Type
+/dev/vda1         2048         6143     2M BIOS boot partition
+/dev/vda2         6144       268287   128M Linux filesystem
+/dev/vda3       268288      1316863   512M Linux filesystem
+/dev/vda4      1316864     20969471   9.4G Linux filesystem
+
+livecd ~ # mkfs.ext2 /dev/vda2
+livecd ~ # mkfs.ext4 /dev/vda4
+livecd ~ # mkswap /dev/vda3
+livecd ~ # swapon /dev/vda3 
+
+**Montamos los file systems**
+
+  
+livecd ~ # mount /dev/vda4 /mnt/gentoo
+livecd ~ # mkdir /mnt/gentoo/boot
+livecd ~ # mount /dev/vda2 /mnt/gentoo/boot 
+
+**Ajustar la hora**
+
+ 
+livecd ~ # date 060711572015   <== MMDDHHMMAAAA 
+
+**Descarga de Stage 3**
+
+El "Stage 3" es un "paquete" que contiene un entorno Gentoo mínimo (ya compilado) que facilita el proceso de instalación. Te recomiendo consultar en paralelo el [Gentoo Handbook](https://wiki.gentoo.org/wiki/Handbook:Main_Page) que encontrarás en la [Wiki de Gentoo](https://wiki.gentoo.org/wiki/Main_Page).
+
+  
+livecd ~ # cd /mnt/gentoo
+livecd gentoo # links http://distfiles.gentoo.org
+
+Descargo el último "stage3", el último "portage":
+
+  
+../releases/amd64/autobuilds/current-stage3-amd64/ --> stage3-amd64-<FECHA>.tar.bz2
+../snapshots --> portage-latest.tar.bz2
+:
+livecd gentoo # tar xjpf stage3-\*.tar.bz2
+livecd gentoo # cd /mnt/gentoo/usr
+livecd usr # tar xjpf ../portage-\*.tar.bz2 
+
+**chroot al nuevo entorno**
+
+A partir de ahora "/" (root) apuntará al disco SSD que hemos formateado y donde hemos descomprimido Stage 3 y Portage. Antes de hacer el chroot debes copiar el /etc/resolv.conf para que la red siga funcionando (sobre todo la resolución de nombres :-))
+
+  
+
+\_\_\_ NO OLVIDES COPIAR RESOLV.CONF \_\_\_\_
+
+cp /etc/resolv.conf /mnt/gentoo/etc
+
+\_\_\_ COMANDOS PARA HACER EL CHROOT \_\_\_\_
+ 
+mount -t proc none /mnt/gentoo/proc
+mount --rbind /sys /mnt/gentoo/sys
+mount --rbind /dev /mnt/gentoo/dev
+chroot /mnt/gentoo /bin/bash
+source /etc/profile
+export PS1="(chroot) $PS1"
+
+(chroot) livecd / #
+
+Modificamos el fichero make.conf
+
+#
+# Opciones de compilacion, by LuisPa. -l'n' n=+1 CPUs
+CFLAGS="-O2 -march=native -pipe"
+CXXFLAGS="${CFLAGS}"
+MAKEOPTS="-j5 -l10"
+EMERGE\_DEFAULT\_OPTS="--nospinner --keep-going --jobs=5 --load-average=10"
+
+# CHOST
+CHOST="x86\_64-pc-linux-gnu"
+
+# USE Flags (NOTAR QUE QUITO udev, porque usaré "mdev"/busybox)
+USE="aes avx fma3 mmx mmxext popcnt sse sse2 sse3 sse4\_1 sse4\_2 ssse3 -gnome -kde -bindist"
+
+# Nuevo CPU Flags
+CPU\_FLAGS\_X86="aes avx fma3 mmx mmxext popcnt sse sse2 sse3 sse4\_1 sse4\_2 ssse3"
+
+# Ubicaciones de portage
+PORTDIR="/usr/portage"
+DISTDIR="${PORTDIR}/distfiles"
+PKGDIR="${PORTDIR}/packages"
+
+# Lenguaje
+LINGUAS="es en"
+
+# Mirrors
+GENTOO\_MIRRORS="http://gentoo-euetib.upc.es/mirror/gentoo/"
+
+# Teclado y graficos
+INPUT\_DEVICES="keyboard mouse vmmouse evdev"
+VIDEO\_CARDS="fbdev nv vesa vmware intel"
+
+# PHP TARGETS
+PHP\_TARGETS="php5-6"
+
+**Leemos todas las "News"**
+
+(chroot) livecd ~ # eselect news list
+(chroot) livecd ~ # eselect news read ’n’
+
+**Establecemos la Zona horaria**
+
+(chroot) livecd ~ # cd /
+(chroot) livecd / # cp /usr/share/zoneinfo/Europe/Madrid /etc/localtime
+(chroot) livecd / # echo "Europe/Madrid" > /etc/timezone
+
+**Preparo el /etc/fstab**
+
+/dev/vda2 /boot ext2 noauto,noatime 1 2
+/dev/vda3 none swap sw 0 0
+/dev/vda4 / ext4 noatime 0 1
+
+**Instalo herramientas útiles**
+
+Instalo herramientas útiles a la hora de trabajar con Portage y con el sistema en general.
+
+(chroot) livecd ~ # emerge -v eix genlop pciutils gentoolkit
+(chroot) livecd ~ # eix-update
+
+**Instalo v86d y Python**
+
+(chroot) livecd / # emerge -v v86d
+(chroot) livecd / # eselect python set --python3 python3.3 
+
+**Instalo DHCP Cliente**
+
+Para el futuro arranque tras el primer boot, mejor instalar ahora el paquete cliente de DHCP
+
+(chroot) livecd / # emerge -v dhcpcd
+
+**Preparo portage**
+
+Preparo los ficheros de portage
+
+\# Virtualizador Docker
+app-emulation/docker ~amd64
+
+# New Kernel
+sys-kernel/gentoo-sources ~amd64
+
+# Benchmark
+app-benchmarks/phoronix-test-suite ~amd64
+
+net-misc/iputils -caps -filecaps
+
+dev-lang/php truetype curl gd pcntl zip
+
+**Descargo y compilo el último Kernel**
+
+Primero nos bajamos los fuentes del Kernel con el comando siguiente:
+
+(chroot) livecd / # emerge -v gentoo-sources
+
+Los fuentes quedan instalados en /usr/src/linux (realmente es un link simbólico), a continuación lo parametrizas con "make menuconfig" y luego compilas con "make" y "make modules\_install".
+
+Si tienes experiencia en parametrizar el kernel, adelante con ello. Si lo prefieres y para facilitarte el trabajo, empieza por un kernel "ya probado" para esta versión concreta de kernel. Este que comparto a continuación tiene soporte para ejecutarse en KVM. Lo dejo en mi repositorio de [GitHub](https://github.com/LuisPalacios/Linux-Kernel-configs), en concreto tienes que bajarte el fichero [2015-05-07-config-4.0.4-Gentoo\_KVM\_Guest.txt](https://raw.githubusercontent.com/LuisPalacios/Linux-Kernel-configs/master/configs/2015-05-07-config-4.0.4-Gentoo_KVM_Guest.txt) y copiarlo como /usr/src/linux/.config. Luego compilas e instalas el kernel.
+
+ cd /usr/src/linux
+
+ wget https://raw.githubusercontent.com/LuisPalacios/Linux-Kernel-configs/master/configs/2015-05-07-config-4.0.4-Gentoo\_KVM\_Guest.txt -O .config 
+
+ make && make modules\_install
+ cp arch/x86\_64/boot/bzImage /boot/kernel-4.0.4-gentoo
+ cp System.map /boot/System.map-4.0.4-gentoo
+
+ 
+
+## Instalo "systemd"
+
+**Selecciono el Perfil systemd**
+
+Voy a configurar esta VM con systemd, así que selecciono el perfil adecuado:
+
+(chroot) livecd / # eselect profile list
+:
+\[5\] default/linux/amd64/13.0/desktop/gnome/systemd
+:
+(chroot) livecd / # eselect profile set 5
+ 
+
+**Recompilo con el nuevo Profile systemd**
+
+Una vez que se selecciona un Profile distinto lo que ocurre es que cambias los valores USE de por defecto del sistema y esto significa que tenemos que "recompilarlo" por completo, así que lo siguiente que vamos a hacer es un emerge que actualice "world" :
+
+# emerge -avDN @world
+
+\[dropshadowbox align="center" effect="lifted-both" width="550px" height="" background\_color="#ffffff" border\_width="1" border\_color="#dddddd" \]
+
+**NOTA**: El proceso re-compila más de 150 paquetes y es normal que tarde varias horas (2 en mi caso), por eso asigné 4 virtual cpu's a esta VM, para acortar este tiempo al máximo.
+
+\[/dropshadowbox\]  
+
+**Hostname**
+
+Con systemd se deja de usar /etc/conf.d/hostname, así que voy a editar a mano directamente los dos ficheros que emplea systemd. - Llamé a mi servidor "**edaddepiedrix**" (como siempre haciendo alusión a la aldea gala)
+
+gentoo
+
+PRETTY\_NAME="KVM Gentoo Linux"
+ICON\_NAME="gentoo"
+
+**Contraseña de root**
+
+Antes de rearrancar es importante que cambies la contraseña de root.
+
+(chroot) livecd ~ # passwd
+New password:
+Retype new password:
+passwd: password updated successfully
+
+**Fichero mtab**
+
+Es necesario realizar un link simbólico especial:
+
+\# rm /etc/mtab
+# ln -sf /proc/self/mounts /etc/mtab
+
+**Grub 2**
+
+Necesitamos un "boot loader" y nada mejor que Grub2.
+
+\# emerge -v grub:2
+
+Instalamos el boot loader en el disco
+
+\# grub2-install /dev/vda
+
+Modifico el fichero de configuración de Grub /etc/default/grub, la siguientes son las líneas importantes:
+
+GRUB\_CMDLINE\_LINUX="init=/usr/lib/systemd/systemd quiet rootfstype=ext4" GRUB\_TERMINAL=console GRUB\_DISABLE\_LINUX\_UUID=true
+
+Ah!, en el futuro, cuando te sientas confortable, cambia el timeout del menu que muestra Grub a "0", de modo que ganarás 5 segundos en cada rearranque de tu servidor Gentoo desde vSphere Client :-)
+
+GRUB\_TIMEOUT=0
+
+Cada vez que se modifica el fichero /etc/default/grub hay que ejecutar el programa grub2-mkconfig -o /boot/grub/grub.cfg porque es él el que crea la versión correcta del fichero de configuración de Grub: /boot/grub/grub.cfg.
+
+\# mount /boot (por si acaso se te había olvidado :-))
+# grub2-mkconfig -o /boot/grub/grub.cfg
+
+Nota, si en el futuro tienes que modificar el Kernel, no olvides ejecutar grub2-mkconfig tras la compilación (y posterior copiado a /boot) del kernel, tampoco te olvides de haber montado /boot (mount /boot) previamente.
+
+**Preparo la red**
+
+Uso "nombres de interfaces predecibles", un servicio de **udevd** bien descrito [upstream](http://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/). Asigno un nombre específico a la interfaz principal (cambia la MAC a la de tu interfaz).
+
+\# Interfaz conectada a la red ethernet
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?\*", ATTR{address}=="b8:ae:ed:12:34:56", ATTR{dev\_id}=="0x0", ATTR{type}=="1", KERNEL=="eth\*", NAME="eth0"
+
+En la sección de KVM veremos la configuración completa de La Red. De momento creo un fichero bajo /etc/systemd/network, el nombre puede ser cualquiera pero debe terminar en .network. En este caso solo tengo una interfaz física:
+
+#
+# Interfaz principal de la VM
+#
+\[Match\]
+Name=eth0
+
+\[Network\]
+Address=192.168.1.24/24
+DNS=192.168.1.1
+Gateway=192.168.1.1
+
+A continuación debes habilitar el servicio para el próximo arranque con: systemctl enable systemd-networkd
+
+Otras opciones: \* Arrancar manualmente: systemctl start systemd-networkd \* Re-arrancar (si cambias algo): systemctl restart systemd-networkd \* Verificar: networkctl
+
+ 
+
+### Reboot
+
+Salgo del chroot, desmonto y rearranco el equipo...
+
+ 
+# exit
+# cd
+# umount -l /mnt/gentoo/dev{/shm,/pts,}
+# umount -l /mnt/gentoo{/boot,/proc,}
+:
+# reboot
+
+ 
+
+### Terminar la configuración
+
+Tras el primer reboot nos faltan piezas importantes, vamos a arreglarlo empezando por lo básico, el teclado :-)
+
+**Teclado y Locale**
+
+Parametrizo con systemd el teclado y los locales ejecutando los tres comandos siguientes:
+
+El primer comando modifica /etc/vconsole.conf
+
+ localectl set-keymap es
+
+El siguiente modifica /etc/X11/xorg.conf.d/00-keyboard.conf
+
+ localectl set-x11-keymap es 
+
+El siguiente modifica /etc/locale.conf
+
+ localectl set-locale LANG=es\_ES.UTF-8 
+
+El ultimo simplemente para comprobar
+
+ localectl
+System Locale: LANG=es\_ES.UTF-8
+VC Keymap: es
+X11 Layout: es
+
+Preparo el fichero locale.gen
+
+en\_US ISO-8859-1
+en\_US.UTF-8 UTF-8
+es\_ES ISO-8859-1
+es\_ES@euro ISO-8859-15
+es\_ES.UTF-8 UTF-8
+en\_US.UTF-8@euro UTF-8
+es\_ES.UTF-8@euro UTF-8
+
+Compilo los "locales"
+
+edaddepiedrix ~ # locale-gen
+
+**Activo SSHD**
+
+Otro indispensable, habilito y arranco el daemon de SSH para poder conectar vía ssh. Si en el futuro quieres poder hacer forward de X11 recuerda poner X11Forwarding yes en el fichero /etc/ssh/sshd\_config
+
+\# systemctl enable sshd.service
+
+**Vixie-cron**
+
+Instalo, habilito y arranco el cron
+
+edaddepiedrix ~ # emerge -v vixie-cron
+edaddepiedrix ~ # systemctl enable vixie-cron.service
+edaddepiedrix ~ # systemctl start vixie-cron.service
+
+**Fecha y hora**
+
+Para configurar fecha/hora debe utilizarse "timedatectl". No te pierdas este apunte sobre cómo montar además el [servicio NTP](https://www.luispa.com/?p=881).
+
+edaddepiedrix ~ # timedatectl set-local-rtc 0
+edaddepiedrix ~ # timedatectl set-timezone Europe/Madrid
+edaddepiedrix ~ # timedatectl set-time 2012-10-30 18:17:16 <= Ponerlo primero en hora.
+edaddepiedrix ~ # timedatectl set-ntp true <= Activar NTP
+
+ 
+
+**Actualizo portage**
+
+Lo primero es hacer un "perl-cleaner" y luego un update completo.
+
+:
+edaddepiedrix ~ # perl-cleaner --reallyall
+:
+edaddepiedrix ~ # emerge --sync
+edaddepiedrix ~ #
+edaddepiedrix ~ # emerge -DuvN system world
+
+**Usuario y rearranque**
+
+Desde una shell añado un usuario normal y por último rearranco el equipo. Mira un ejemplo:
+
+edaddepiedrix ~ # groupadd -g 1400 luis
+edaddepiedrix ~ # useradd -u 1400 -g luis -m -G cron,audio,cdrom,cdrw,users,wheel -d /home/luis -s /bin/bash luis
+:
+edaddepiedrix ~ # passwd luis
+Nueva contraseña:
+Vuelva a escribir la nueva contraseña:
+:
+
+**Instalo herramientas y paquetes adicionales**
+
+x11-libs/cairo X
+dev-libs/libxml2 python
+
+edaddepiedrix ~ # emerge -v mlocate sudo  emacs tcpdump traceroute mlocate xclock gparted procmail net-snmp bmon dosfstools sys-boot/syslinux
+
+**nfs-utils para montar volúmenes remotos desde mi NAS**
+
+# emerge -v nfs-utils
+:
+
+Tienes dos opciones, utilizar **/etc/fstab** o **automount**.
+
+Ejemplo con /etc/fstab para acceder a recursos remotos NFS.
+
+\# Recursos en la NAS via NFS
+nas.parchis.org:/NAS  /mnt/NAS  nfs auto,user,exec,rsize=8192,wsize=8192,hard,intr,timeo=5   0 0
+
+Ejemplo usando automount
+
+\[Unit\]
+Description=Montar por NFS el directorio NAS
+Wants=network.target rpc-statd.service
+After=network.target rpc-statd.service
+
+\[Mount\]
+What=panoramix.parchis.org:/NAS
+Where=/mnt/NAS
+Options=
+Type=nfs
+StandardOutput=syslog
+StandardError=syslog
+
+\[Install\]
+WantedBy=multi-user.target
+
+\[Unit\]
+Description=Automount /mnt/NAS
+
+\[Automount\]
+Where=/mnt/NAS
+
+\[Install\]
+WantedBy=multi-user.target
+
+En mi caso prefiero el segundo método:
+
+ 
+edaddepiedrix ~ # systemctl enable rpcbind.service
+edaddepiedrix ~ # systemctl enable mnt-NAS.mount
+edaddepiedrix ~ # systemctl enable mnt-NAS.automount
+edaddepiedrix ~ # mkdir /mnt/NAS
+
+Por fin, rearranco de nuevo el equipo, deberías tener ya todos los servicios que hemos configurado.
+
+edaddepiedrix ~ # reboot.  (O bien "halt" para pararla)
+
+   
+
+# Pruebas de rendimiento
+
+ 
+
+### Benchmark con Phoronix
+
+Si quieres comprobar el rendimiento te recomiendo el benchmark pts/aio-stress de Phoronix:
+
+ 
+
+# emerge -v phoronix-test-suite
+
+# phoronix-test-suite benchmark pts/aio-stress
+
+Los resultados del benchmark está disponibles [aquí](http://openbenchmarking.org/result/1506191-SO-20150619236), pero como se puede ver el rendimiento no está nada mal.
+
+[![phoronix-vm-iscsi](https://www.luispa.com/wp-content/uploads/2015/06/phoronix-vm-iscsi-1024x324.png)](https://www.luispa.com/wp-content/uploads/2015/06/phoronix-vm-iscsi.png)
+
+   
+
+# Backup y Recuperación
+
+### Backup de la VM
+
+Para hacer backup de este tipo de VM lo que hacemos es backup del "disco iSCSI" usando las herramientas de la propia NAS guardándolo en un fichero en un NFS externo.
+
+- Antes de empezar, configuro el servidor NFS. En mi caso iMAC OSX que incluye el servidor NFS y está siempre activo, lo único que tienes que hacer es modificar el fichero /etc/exports y automáticamente empezará a exportar: [![iSCSI-Backup0](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Backup0.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Backup0.png)
+    
+- Apago la máquina virtual desde virt-manager o ejecutando un shudown o halt en el Linux.
+    
+- Desconecto el disco iSCSI desde virt-manager [![kvm-storage-options](https://www.luispa.com/wp-content/uploads/2015/06/kvm-storage-options.png)](https://www.luispa.com/wp-content/uploads/2015/06/kvm-storage-options.png) [![iSCSI-Stop](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Stop.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Stop.png)
+    
+- Desde un navegador y el interfaz GUI de mi NAS creo un trabajo de Backup instantáneo hacia un fichero en un directorio NFS remoto (/Volumes/Terabyte/0.BACKUP/iSCSI) en mi OSX (obelix.parchis.org):
+    
+
+[![iSCSI-Backup_1](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Backup_1-1024x497.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Backup_1.png)
+
+[![iSCSI-Backup2](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Backup2.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Backup2.png)
+
+[![iSCSI-Backup3](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Backup3.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Backup3.png)
+
+[![iSCSI-Backup4](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Backup4.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Backup4.png)
+
+[![iSCSI-Backup5](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Backup5.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Backup5.png)
+
+[![iSCSI-Backup6](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Backup6.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Backup6.png)
+
+- Se pondrá inmediatamente a trabajar. Observa el resultado final, tanto en la pantalla de configuración del QNAP como en el Finder de mi iMAC, vemos un fichero de ~10GB que contiene el backup completo del disco físico utilizado para esta máquina virtual.
+
+[![iSCSI-Backup7](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Backup7-1024x468.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Backup7.png)
+
+- Conecto de nuevo el disco iSCSI desde virt-manager para poder volver a trabajar con la VM.
+
+[![kvm-storage-restart](https://www.luispa.com/wp-content/uploads/2015/06/kvm-storage-restart.png)](https://www.luispa.com/wp-content/uploads/2015/06/kvm-storage-restart.png)
+
+Nota: En el caso de haber activado la compresión (mientras indicas la ubicación del fichero destino) el proceso tarda mucho más, pero obtendrás a cambio un fichero mucho más pequeño, mira la diferencia:
+
+[![iSCSI-Backup8](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Backup8.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Backup8.png)
+
+ 
+
+### Restaurar la VM
+
+Para restaurar la VM volvemos a usar las herramientas que incluye la propia NAS. Voy a mostrar un ejemplo simulando que hemos perdido por completo el NAS, así que parto de una instalación de un NAS vacío donde tengo que volver a crear los grupos (targets) y LUN's de nuevo para recuperar el BACKUP desde el fichero en el servidor NFS remoto que utilicé en el paso anterior. Recomiendo hacer este tipo de pruebas para verificar que efectivamente tus backups funcionan :-)
+
+- Desde el QNAP, creo un nuevo target/LUN de 10GB.
+
+[![iSCSI-Restaura-1](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-1-1024x600.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-1.png)
+
+[![iSCSI-Restaura-2](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-2-1024x599.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-2.png)
+
+[![iSCSI-Restaura-3](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-3-1024x600.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-3.png)
+
+[![iSCSI-Restaura-4](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-4-1024x598.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-4.png)
+
+[![iSCSI-Restaura-5](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-5-1024x600.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-5.png)
+
+[![iSCSI-Restaura-6](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-6-1024x599.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-6.png)
+
+[![iSCSI-Restaura-9](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-9-1024x599.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-9.png)
+
+[![iSCSI-Restaura-10](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-10-1024x601.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-10.png)
+
+- Desde el QNAP, nuevo trabajo de recuperación para restaurar desde el fichero de backup
+
+[![iSCSI-Restaura-11](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-11-1024x598.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-11.png)
+
+[![iSCSI-Restaura-12](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-12-1024x599.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-12.png)
+
+[![iSCSI-Restaura-13](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-13-1024x600.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-13.png)
+
+[![iSCSI-Restaura-14](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-14-1024x601.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-14.png)
+
+[![iSCSI-Restaura-15](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-15-1024x600.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-15.png)
+
+[![iSCSI-Restaura-16](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-16-1024x600.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-16.png)
+
+[![iSCSI-Restaura-17](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-17-1024x601.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-17.png)
+
+- Desde el Host KVM y virt-manager elimino el Target/LUN antiguo, creo el nuevo iqn.2004-04.com.qnap:ts-569pro:iscsi.vmgentoo.d70ea1
+    
+    y en la VM borro el disco antiguo y creo uno nuevo asociando el nuevo recurso disponible.
+
+[![iSCSI-Restaura-18](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-18.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-18.png)
+
+[![iSCSI-Restaura-19](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-19.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-19.png)
+
+[![iSCSI-Restaura-20](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-20.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-20.png)
+
+[![iSCSI-Restaura-21](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-21.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-21.png)
+
+[![iSCSI-Restaura-22](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-22.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-22.png)
+
+[![iSCSI-Restaura-23](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-23.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-23.png)
+
+[![iSCSI-Restaura-24](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-24.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-24.png)
+
+- A partir de ahí ya puedo volver a arrancar la VM y ver que funciona correctamente.
+
+[![iSCSI-Restaura-25](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-25.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-Restaura-25.png)
+
+* * *
