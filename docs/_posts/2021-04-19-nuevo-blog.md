@@ -1,5 +1,5 @@
 ---
-title: "Nuevo Blog con Jekyll"
+title: "Nuevo blog con Jekyll"
 date: "2021-04-19"
 categories: apuntes github jekyll
 ---

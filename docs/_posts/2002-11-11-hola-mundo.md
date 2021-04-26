@@ -1,5 +1,5 @@
 ---
-title: "Bienvenido a mi Blog"
+title: "Mi primer blog"
 date: "2002-11-11"
 categories: apuntes gentoo linux
 ---
