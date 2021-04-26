@@ -4,7 +4,7 @@ date: "2002-11-11"
 categories: apuntes gentoo linux
 ---
 
-![nimble image](/assets/img/nimble.jpg){: width="150px" style="float:left; padding-right:10px" } 
+![nimble image](/assets/img/original/nimble.jpg){: width="150px" style="float:left; padding-right:10px" } 
 
 Este fué mi primer post en mi blog original con Nibbleblog, no con wordpress, ni recientemente con Jekyll, asi que lo dejo tal cual.
 

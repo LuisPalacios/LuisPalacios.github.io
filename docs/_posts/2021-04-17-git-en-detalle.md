@@ -1,10 +1,10 @@
 ---
 title: "GIT en detalle"
-date: "2021-04-20"
+date: "2021-04-17"
 categories: apuntes git linux
 ---
 
-![GIT Logo](/assets/img/Git-Logo-1788C-300x125.png){: width="150px" style="float:left; padding-right:20px" } 
+![Logo GIT](/assets/img/post/logo-git.png){: width="150px" style="float:left; padding-right:20px" } 
 
 En pocas palabras, [GIT] es un sistema de control de versiones distribuido, gratuito y de código abierto, diseñado para gestionar desde proyectos pequeños a muy grandes con rapidez y eficacia.
 
