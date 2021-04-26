@@ -1,7 +1,8 @@
 ---
 title: "Mi primer blog"
 date: "2002-11-11"
-categories: apuntes gentoo linux
+categories: nostalgia
+tags: blog linux
 excerpt_separator: <!--more-->
 ---
 

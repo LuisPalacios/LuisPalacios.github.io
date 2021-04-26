@@ -1,7 +1,8 @@
 ---
 title: "Nuevo blog con Jekyll"
 date: "2021-04-19"
-categories: apuntes github jekyll
+categories: general
+tags: blog github jekyll
 excerpt_separator: <!--more-->
 ---
 
@@ -156,8 +157,9 @@ Por último hago un bundle update
 ➜  docs git:(gh-pages) ✗ > bundle update
 ```
 
+<br/>
 
-## Acceso a mi blog en local
+## Acceso en local
 
 Una de las ventajas de todo esto es que puedo activar un "web server" en local en el mismo ordenador donde estoy editanto los ficheros Markdown. Para conseguirlo, cambio al directorio de los posts (./docs) y ejecuto lo siguiente: 
 
@@ -193,9 +195,7 @@ Al cabo de un rato debería estar disponible en
 
 [https://luispalacios.github.io](https://luispalacios.github.io)
 
-
 <br/>
-
 
 ### Actualizaciones futuras
 
@@ -213,10 +213,11 @@ Actualizar bundle
 ➜  docs git:(gh-pages) > bundle update
 ```
 
+<br/>
 
 ### Enlaces interesantes
 
 Para mejorar mi sitio de apuntes, algunos enlaces interesantes: 
 
 - [Setup a blog using Jekyll](https://blog.codecut.de/2019/06/11/how-to-setup-a-blog-using-jekyll)
-
+- [Setup tags](http://longqian.me/2017/02/09/github-jekyll-tag/)

@@ -36,6 +36,13 @@ theme: minima
 show_excerpts: true
 #theme: jekyll-theme-cayman
 
+# Cabecera
+header_pages:
+  - categories.md
+  - h_tags.md
+  - h_acerca.md
+  
+# Plugins
 plugins:
   - jekyll-feed
 

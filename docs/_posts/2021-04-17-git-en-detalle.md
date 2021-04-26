@@ -1,7 +1,8 @@
 ---
 title: "GIT en detalle"
 date: "2021-04-17"
-categories: apuntes git linux
+categories: desarrollo
+tags: git
 excerpt_separator: <!--more-->
 ---
 
