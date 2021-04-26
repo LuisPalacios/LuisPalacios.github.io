@@ -361,12 +361,13 @@ data/
 040000 tree 0eed1217a2947f4930583229987d90fe5e8e0b74	data
 ```
 
-Tiene una línea apuntando al directorio `data`. Contiene el valor 040000 (directorio)), el tipo (tree), el hash del objeto tree que vimos antes y el nombre del directorio `data`.
+Tiene una línea apuntando al directorio `data`. Contiene el valor 040000 (tipoe directorio), el tipo (tree), el hash del objeto tree que vimos antes y el nombre del directorio `data`.
 
+<br/>
 
-| ![Tree graph para el commit `a1`](/assets/img/git/1-a1-tree-graph.png) | 
+| ![Tree graph del primer commit](/assets/img/git/1-a1-tree-graph.png) | 
 |:--:| 
-| *Tree graph para el commit `a1`* |
+| *Tree graph del primer commit* |
 
 
 Lo mismo visto gráficamente nos muestra cómo el objeto tree `raíz (root)` apunta al objeto tree `data` que apunta a los dos objetos blobs `data/letter.txt` y `datos/número.txt`.
@@ -389,10 +390,11 @@ a1
 
 La primera línea apunta al inicio del `tree graph`, al objeto raíz `raíz (root)` de la working copy, es decir, el directorio `alpha`. La última línea es el mensaje del commit. 
 
+<br/>
 
-| ![objeto commit ˋa1ˋ apuntando a su tree graph](/assets/img/git/2-a1-commit.png) | 
+| ![Commit a1 apuntando a su tree graph](/assets/img/git/2-a1-commit.png) | 
 |:--:| 
-| *objeto commit ˋa1ˋ apuntando a la raíz (root) del tree graph* |
+| *Commit `a1` apuntando a la raíz `root` de su tree graph* |
 
 
 
@@ -415,129 +417,113 @@ Vemos que `HEAD` (una referencia) está apuntando a `master` (otra referencia), 
 
 (No lo he dicho antes, pero todos ciertos HASHs que estás viendo no van a coincidir con los tuyos, los objetos con contenido como los blobs y los tress siempre hacen un hash al mismo valor, pero los commits cambian porque contienen fechas y nombres distintos)
 
-Ahora ya tenemos la conexión completa, vamos a añadir `HEAD` y `master` a nuestro gráfico: 
+Ahora que tenemos todo conectado vamos a añadir `HEAD` y `master` a nuestro gráfico: 
 
+<br/>
 
 | ![\`master\` apunta al commit \`a1\`](/assets/img/git/3-a1-refs.png) | 
 |:--:| 
-| `HEAD\` apuntando a \`master\` apuntando al commit \`a1\` |
+| *`HEAD` apunta a `master` que apunta al commit `a1`* |
 
-Ya tenemos todo conectado: `HEAD` apunta a `master`, ya lo hacía, pero ahora se ha creado el hash que apunta al `objeto commit`, que apunta al objeto tree raíz `root (alpha)` que a su vez apunta a `data` que apunta a `letter.txt`y `number.txt`.
+Ya tenemos todo conectado: `HEAD` apunta a `master` con un hash apuntando al `objeto commit`, que apunta al objeto `root` (alpha) que a su vez apunta a `data` que apunta a `letter.txt`y `number.txt`.
 
-Esto explicadi de otra forma podría decirse como "Estoy viendo la rama `master` que contiene un directorio llamado `data` con un par de ficheros y sus versiones son las de la fecha en la que se hizo el commit anteerior".
+<br/>
 
+## Hacemo un commit adicional
 
-## Make a commit that is not the first commit
+Ahora vamos a ver qué pasa cuando se hace un commit que no es el primer commit.
 
-Below is the Git graph after the `a1` commit. The
-working copy and index are included.
+Nos fijamos en la siguiente gráfica que muestra el estado después del primer commit `a1`. Enseño a la derecha a quién apunta el índice y a la izquierda cual es el contenido de la working copy (qué hay actualmente fuera de Git, en el directorio de trabajo)
 
-![\`a1\` commit shown with the working copy and
-index](/assets/img/git/4-a1-wc-and-index.png)
+<br/>
 
-::: {.image-caption}
-\`a1\` commit shown with the working copy and index
-```
+| ![a1 con la working copy y el índice](/assets/img/git/4-a1-wc-and-index.png) | 
+|:--:| 
+| *`a1` con la working copy y el `indice`* |
 
-Notice that the working copy, index, and `a1` commit
-all have the same content for `data/letter.txt` and
-`data/number.txt`. The index and
-`HEAD` commit both use hashes to refer to blob
-objects, but the working copy content is stored as text in a different
-place.
+Fíjate que los ficheros que están en la copia de trabajo y los blob's que se apuntan desde el índice y los que se apuntan desde el commit `a1` apuntan todos a ficheros que tienen exáctamente el mismo contenido (los diferentes `data/letter.txt` y `data/number.txt` comparten contenido). Pero son ficheros disntintos. El índice y el commit `HEAD` utilizan hashes para referirse a los objetos blob pero el contenido de la copia de trabajo se almacena como texto en un lugar distinto (fuera de .git)
+
+Vamos a cambiar una cosilla... vamos a cambiar el contenido del fichero number.txt con un '2'.
 
 ```
-    ~/alpha $ echo '2' > data/number.txt
+➜  alpha git:(master) > echo 2 > data/number.txt
 ```
 
-The user sets the content of `data/number.txt` to
-`2`. This updates the working copy, but leaves the
-index and `HEAD` commit as they are.
+Esto ocurre en la working copy, pero se deja el índice y el commit (`HEAD`) intactos. 
 
-![\`data/number.txt\` set to \`2\` in the working
-copy](/assets/img/git/5-a1-wc-number-set-to-2.png)
+<br/>
 
-::: {.image-caption}
-\`data/number.txt\` set to \`2\` in the working copy
-```
+| ![cambiamos number.txt con un `2`](/assets/img/git/5-a1-wc-number-set-to-2.png) | 
+|:--:| 
+| *cambiamos number.txt con un `2` en la working copy* |
 
-```
-    ~/alpha $ git add data/number.txt
-```
+A continuación "añado" este fichero a la zona de espera (stagin area) o "índice", por lo tanto se añade un nuevo blob que contiene un `2` al directorio `.git/objects/` y además la entrada del índice apunta a este nuevo blob.
 
-The user adds the file to Git. This adds a blob containing
-`2` to the `objects` directory.
-It points the index entry for `data/number.txt` at
-the new blob.
-
-![\`data/number.txt\` set to \`2\` in the working copy and
-index](/assets/img/git/6-a1-wc-and-index-number-set-to-2.png)
-
-::: {.image-caption}
-\`data/number.txt\` set to \`2\` in the working copy and index
-```
 
 ```
-    ~/alpha $ git commit -m 'a2'
-              [master f0af7e6] a2
+➜  alpha git:(master) ✗ > git add data/number.txt
 ```
 
-The user commits. The steps for the commit are the same as before.
+Lo que ha ocurrido es lo siguiente: number.txt tiene un `2` en la working copy y en el índice (zona de espera)
 
-First, a new tree graph is created to represent the content of the
-index.
+| ![number.txt con un `2` en la working copy y en el índice](/assets/img/git/6-a1-wc-and-index-number-set-to-2.png) | 
+|:--:| 
+| *number.txt con un `2` en la working copy y en el índice* |
 
-The index entry for `data/number.txt` has changed.
-The old `data` tree no longer reflects the indexed
-state of the `data` directory. A new
-`data` tree object must be created:
+Ejecuto el segundo commit. 
 
 ```
-    100664 blob 2e65efe2a145dda7ee51d1741299f848e5bf752e letter.txt
-    100664 blob d8263ee9860594d2806b0dfd1bfd17528b0ba2a4 number.txt
+➜  alpha git:(master) ✗ > git commit -m 'a2'
+[master 850918e] a2
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 ```
 
-The new `data` tree hashes to a different value from
-the old `data` tree. A new
-`root` tree must be created to record this hash:
+Al hacer el commit los pasos son los mismos que la vez anteriore. 
+
+**Primero** se crea un NUEVO TREE GRAPH para representar el contenido del índice. Un nuevo BLOB para el tree `data` (porque `data/number.txt` ha cambiado el tree antigo ya nos nos vale)
 
 ```
-    040000 tree 40b0318811470aaacc577485777d7a6780e51f0b data
+➜  alpha git:(master) >  git ls-files --stage
+100644 2e65efe2a145dda7ee51d1741299f848e5bf752e 0	data/letter.txt
+100644 0cfbf08886fca9a91cb753ec8734c84fcbe52c9f 0	data/number.txt  <== Nuevo 
 ```
 
-Second, a new commit object is created.
+Un segundo BLOB nuevo para `root` que apunte al nuevo blob de `data` recién creado
 
 ```
-    tree ce72afb5ff229a39f6cce47b00d1b0ed60fe3556
-    parent 774b54a193d6cfdd081e581a007d2e11f784b9fe
-    author Mary Rose Cook <mary@maryrosecook.com> 1424813101 -0500
-    committer Mary Rose Cook <mary@maryrosecook.com> 1424813101 -0500
-
-    a2
+➜  alpha git:(master) > git --no-pager cat-file -p fbfd
+040000 tree b580fd166d4b75627577d2632ca7d806e07639d8	data
 ```
 
-The first line of the commit object points at the new
-`root` tree object. The second line points at
-`a1`: the commit's parent. To find the parent
-commit, Git went to `HEAD`, followed it to
-`master` and found the commit hash of
-`a1`.
+**Segundo**, se crea un nuevo objeto commit. 
 
-Third, the content of the `master` branch file is
-set to the hash of the new commit.
-
-![\`a2\` commit](/assets/img/git/7-a2.png)
-
-::: {.image-caption}
-\`a2\` commit
+```
+➜  alpha git:(master) > git --no-pager cat-file -p 8509
+tree fbfdfef0e0ad86ff61aedcc0a0d5643f7a54fea6
+parent 8c80d787e43ca98d7a3f8465a5f323684899784c
+author Luis Palacios <luis.palacios.derqui@gmail.com> 1619459710 +0200
+committer Luis Palacios <luis.palacios.derqui@gmail.com> 1619459710 +0200
+a2
 ```
 
-![Git graph without the working copy and
-index](/assets/img/git/8-a2-just-objects-commits-and-refs.png)
+La primera línea del commit apunta al nuevo objeto tree `root`, la segunda línea apunta al commit anterior `a1` (para poder encontrar el commit padre GIT se fue a `HEAD` y lo siguió hasta que dió con el hash del commit de `a1`)
 
-::: {.image-caption}
-Git graph without the working copy and index
-```
+**Tercero**, el contenido de la rama (brancho) `master` pasa a apuntar al hash del nuevo commit (`a2`)
+
+<br/>
+
+| ![commit `a2`](/assets/img/git/7-a2.png) | 
+|:--:| 
+| *commit `a2`* |
+
+Veamos la gráfica sin reflejar los datos de los ficheros: 
+
+<br/>
+
+| ![sin la working copy y el índice](/assets/img/git/8-a2-just-objects-commits-and-refs.png) | 
+|:--:| 
+| *commit `a2` (sin la información de su contenido)* |
+
 
 **Graph property**: content is stored as a tree of objects. This means
 that only diffs are stored in the objects database. Look at the graph
@@ -602,7 +588,11 @@ construct the meaning of a commit. But the further back they go, the
 less likely it is that someone will have changed history since they last
 looked^[5](git-from-the-inside-out.html#fn:5){.footnote}^.
 
-## Check out a commit
+<br/>
+
+## Hacer un "checkout" de un commit
+
+
 
 ```
     ~/alpha $ git checkout 37888c2
