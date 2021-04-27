@@ -150,7 +150,9 @@ Ejecutar `git add` sobre `data/letter.txt` tiene dos efectos
 
 <br/>
 
-**PRIMERO**, se crea un fichero "blob" (binary large object) en el directorio `.git/objects/`. Se trata del contenido comprimido de `data/letter.txt` (lo comprime con zlib). El nombre del fichero blob se fabrica con el resultado de la comprobación SHA-1 sobre su contenido, es decir, un número de 40 bytes. El fichero se sitúa en una subcarpeta con los primeros 2 caracteres del nombre (`.git/objects/2e/`) y dentro el comprimido con un nombre con el resto de los 38 caracteres.
+**PRIMERO**, se crea un fichero "blob" (binary large object) en el directorio `.git/objects/`. Se trata del contenido comprimido de `data/letter.txt` (lo comprime con zlib). El nombre del fichero blob se fabrica con el resultado de hacer un `hash` de tipo SHA-1 sobre su contenido. Hacer un `hash` de un fichero significa ejecutar un programa que lo convierte en un trozo de texto más pequeño [^1] (40bytes) que identifica de forma exclusiva [^2] al original. 
+
+El fichero se sitúa en una subcarpeta con los primeros 2 caracteres de su nombre (`.git/objects/2e/`) y dentro de dicha carpeta está el fichero, con un nombre con el resto de los 38 caracteres, con todo el contenido dentro en formato comprimido.
 
 ```zsh
 alpha
@@ -538,7 +540,7 @@ Veamos algunos conceptos interesantes respecto a los árboles dentro del directo
 * Las referencias son puntos de entrada a una parte del historial de commits. Esto significa que los commits pueden tener nombres significativos que nos digan algo interesante. El usuario organiza su trabajo en linajes que son significativos para su proyecto con referencias concretas como
 `fijo-para-el-bug-376`. Git se reserva y emplea referencias simbólicas como `HEAD`, `MERGE_HEAD` y `FETCH_HEAD` para soportar comandos que manipulan el historial de confirmaciones.
 
-* Los nodos en el directorio `objects/` son inmutables. Esto significa que el contenido se edita, no se borra. Cada objeto que se ha añadido y cada confirmación que se ha hecho está en algún lugar del directorio `objects`.
+* Los nodos en el directorio `objects/` son inmutables. Esto significa que el contenido se edita, no se borra. Cada objeto que se ha añadido y cada confirmación que se ha hecho está en algún lugar del directorio `objects` [^3].
 
 
 * Las referencias son mutables. Por lo tanto, el significado de una ref puede cambiar. El commit al que apunta `master` puede estar apuntando a una versión del proyecto ahora pero apuntar a otra dentro de un rato. 
@@ -553,234 +555,184 @@ Veamos algunos conceptos interesantes respecto a la facilidad o dificultad de re
 
 * La copia de trabajo es el punto de la historia más fácil de recuperar porque está en la raíz de tu directorio del proyecto. Acceder a la working copy ni siquiera requiere un comando Git. También es el punto menos permanente del historial. El usuario puede hacer una docena de versiones de un archivo que Git no registrará ninguna a menos que que se le añadan.
 
-* El commit al que apunta `HEAD` es muy fácil de recuperar. Normalmente apunta a la punta de la rama que se ha extraido (checkout). Si hemos modificado algo en la working copy y queremos volver a la versíon de `HEAD` el usuario puede hacer un `stash` (esconder la modificación en la working copy), examina lo que tenía y luego hace un `unstash` para volver a la versión de la copia de trabajo. Al mismo tiempo, `HEAD` es la referencia que cambia con más frecuencia.
+* El commit al que apunta `HEAD` es muy fácil de recuperar. Normalmente apunta a la punta de la rama que se ha extraido (checkout). Si hemos modificado algo en la working copy y queremos volver a la versíon de `HEAD` el usuario puede hacer un `git stash` (esconder la modificación en la working copy [^4]), examina lo que tenía y luego hace un `git stash pop` para volver a la versión de la copia de trabajo. Al mismo tiempo, `HEAD` es la referencia que cambia con más frecuencia.
 
 * El commit al que apunta una `ref` (referencia) concreta es fácil de recuperar. El usuario puede simplemente hacer un checkout de esa rama. La punta de una rama cambia con menos frecuencia que `HEAD`, pero con la suficiente frecuencia como para que tuviese sentido asignarle un nombre en su momento.
 
-* Es difícil recordar un commit que no esté señalado por ninguna `ref`, cuanto más se aleje el usuario de una referencia, más difícil le resultará reconstruir el significado de un commit (¿porqué hice aquel commit en su momento?). Pero cuanto más se remonte, menos probable es que alguien haya cambiado la historia desde la última vez que miró.
+* Es difícil recordar un commit que no esté señalado por ninguna `ref`, cuanto más se aleje el usuario de una referencia, más difícil le resultará reconstruir el significado de un commit (¿porqué hice aquel commit en su momento?). Por otro lado, cuanto más se remonte, menos probable es que alguien haya cambiado la historia desde la última vez que miró [^5].
 
-
-
-The working copy is the easiest point in history to recall because it is
-in the root of the repository. Recalling it doesn't even require a Git
-command. It is also the least permanent point in history. The user can
-make a dozen versions of a file but Git won't record any of them unless
-they are added.
-
-The commit that `HEAD` points at is very easy to
-recall. It is at the tip of the branch that is checked out. To see its
-content, the user can just
-stash^[4](git-from-the-inside-out.html#fn:4){.footnote}^ and then
-examine the working copy. At the same time, `HEAD`
-is the most frequently changing ref.
-
-The commit that a concrete ref points at is easy to recall. The user can
-simply check out that branch. The tip of a branch changes less often
-than `HEAD`, but often enough for the meaning of a
-branch name to be changeable.
-
-It is difficult to recall a commit that is not pointed at by any ref.
-The further the user goes from a ref, the harder it will be for them to
-construct the meaning of a commit. But the further back they go, the
-less likely it is that someone will have changed history since they last
-looked^[5](git-from-the-inside-out.html#fn:5){.footnote}^.
 
 <br/>
 
 ## Hacer un "checkout" de un commit
 
+El comando `git checkout` puede usarse para cambiarse a una rama o para irse a un commit concreto. Veamos un ejemplo de esto último, vamos a hacer un checkout a un commit concreto.
 
+De hecho vamos a hacer un checkout al commit en el que estamos. Ahora mismo tu `HEAD` está apuntando a través de `master` al commit `a2` y vamos a hacer un checkout de `a2`. Realmente no tiene ningún sentido práctico pero lo hacemos para formarnos y aprender cual es la implicación. 
 
-```
-    ~/alpha $ git checkout 37888c2
-              You are in 'detached HEAD' state...
-```
+<br/>
 
-The user checks out the `a2` commit using its hash.
-(If you are running these Git commands, this one won't work. Use
-`git log` to find the hash of your
-`a2` commit.)
-
-Checking out has four steps.
-
-First, Git gets the `a2` commit and gets the tree
-graph it points at.
-
-Second, it writes the file entries in the tree graph to the working
-copy. This results in no changes. The working copy already has the
-content of the tree graph being written to it because
-`HEAD` was already pointing via
-`master` at the `a2` commit.
-
-Third, Git writes the file entries in the tree graph to the index. This,
-too, results in no changes. The index already has the content of the
-`a2` commit.
-
-Fourth, the content of `HEAD` is set to the hash of
-the `a2` commit:
-
-```
-    f0af7e62679e144bb28c627ee3e8f7bdb235eee9
+```zsh
+➜  alpha git:(master) > git checkout 850918   <-- Este es el hash del commit `a2`
+Note: switching to '850918'.
+You are in 'detached HEAD' state...
+HEAD is now at 850918e a2
 ```
 
-Setting the content of `HEAD` to a hash puts the
-repository in the detached `HEAD` state. Notice in
-the graph below that `HEAD` points directly at the
-`a2` commit, rather than pointing at
-`master`.
+<br/>
 
-![Detached \`HEAD\` on \`a2\`
-commit](/assets/img/git/9-a2-detached-head.png)
+Hemos hecho un checkout thel commit `a2` **utilizando su hash**. Nota: Si estás siguiendo este tutorial debes mirar cual es el hash de tu commit `a2`, usa el comando `git log`. Este checkout provoca que ocurran cuatro cosas: 
 
-::: {.image-caption}
-Detached \`HEAD\` on \`a2\` commit
+- **1**. Git obtiene el commit `a2` y el tree graph (árbol) al que apunta.
+- **2**. Saca los archivos que hay en el tree graph y los copia a la working copy (directorio de trabajo) fuera de `.git/`. En nuestro caso no hay ningún cambio porque como decía ya teníamos ese contenido, recuerda que 
+`HEAD` ya estaba apuntando a través de `master` al commit `a2`. 
+- **3**. GIT escribe las entradas de los archivos del tree graph en el índice. Una vez más, ningún cambio, el índice ya tiene el contenido del commit `a2`.
+- **4**. El contenido de `HEAD` se establece en el hash del commit `a2`.
+
+<br/>
+
+```zsh
+➜  alpha git:(850918e) > cat .git/HEAD
+850918e87cb094f6f01f73d971619ed79f8cfb43
 ```
 
-```
-    ~/alpha $ echo '3' > data/number.txt
-    ~/alpha $ git add data/number.txt
-    ~/alpha $ git commit -m 'a3'
-              [detached HEAD 3645a0e] a3
-```
+<br/>
 
-The user sets the content of `data/number.txt` to
-`3` and commits the change. Git goes to
-`HEAD` to get the parent of the
-`a3` commit. Instead of finding and following a
-branch ref, it finds and returns the hash of the
-`a2` commit.
+Aquí está la diferencia. Cuando el contenido de `HEAD` contiene el hash de un commit vs referencia a la rama, lo que hace es poner al repositorio en el estado de `detached HEAD` (HEAD separado). Observe en el gráfico de abajo que `HEAD` apunta directamente a la confirmación a2, en lugar de apuntar a `master`
 
-Git updates `HEAD` to point directly at the hash of
-the new `a3` commit. The repository is still in the
-detached `HEAD` state. It is not on a branch because
-no commit points at either `a3` or one of its
-descendants. This means it is easy to lose.
+<br/>
 
-From now on, trees and blobs will mostly be omitted from the graph
-diagrams.
+| ![Detached HEAD apuntando al commit `a2`](/assets/img/git/9-a2-detached-head.png) | 
+|:--:| 
+| *Detached HEAD apuntando al commit `a2`* |
 
-![\`a3\` commit that is not on a
-branch](/assets/img/git/10-a3-detached-head.png)
+<br/>
 
-::: {.image-caption}
-\`a3\` commit that is not on a branch
+Si ahora tocamos la working copy, por ejemplo cambiamos `number.txt`, le ponemos un `3` y hacemos un commit...
+
+```zsh
+➜  alpha git:(850918e) > echo 3 > data/number.txt
+➜  alpha git:(850918e) ✗ > git add data/number.txt
+➜  alpha git:(850918e) ✗ > git commit -m 'a3'
+[detached HEAD 92ffe65] a3
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 ```
 
-## Create a branch
+<br/>
 
-```
-    ~/alpha $ git branch deputy
-```
+GIT se va a `HEAD` para obtener el que sería el padre del commit y lo que se encuentra  y devuelve es el hash al commit `a2`. Actualiza `HEAD` para que apunte directamente al hash del nuevo commit `a3`. Pero el repositorio sigue en el estado de `detached HEAD`. No estamos en una rama porque ningún commit apunta a `a3` o sus futuros descencientes, por lo que sería fácil perderlos.
 
-The user creates a new branch called `deputy`. This
-just creates a new file at `.git/refs/heads/deputy`
-that contains the hash that `HEAD` is pointing at:
-the hash of the `a3` commit.
+A partir de ahora, voy a omitir los `tree` y `blob` en la mayoría de los diagramas gráficos para simplificar.
 
-**Graph property**: branches are just refs and refs are just files. This
-means that Git branches are lightweight.
 
-The creation of the `deputy` branch puts the new
-`a3` commit safely on a branch.
-`HEAD` is still detached because it still points
-directly at a commit.
+| ![Commit `a3` que NO está en ninguna rama (branch)](/assets/img/git/10-a3-detached-head.png) | 
+|:--:| 
+| *HEAD apunta al commit `a3` que NO está en ninguna rama (branch)* |
 
-![\`a3\` commit now on the \`deputy\`
-branch](/assets/img/git/11-a3-on-deputy.png)
 
-::: {.image-caption}
-\`a3\` commit now on the \`deputy\` branch
+<br/>
+
+
+## Crear una rama (branch)
+
+Creamos una nueva rama llamada `deputy`. Lo que ocurre es que simplemente se crea un nuevo archivo en `.git/refs/heads/deputy` que contiene el hash al que apunta `HEAD`, en este caso el hash del commit `a3`.
+
+
+```zsh
+➜  alpha git:(92ffe65) > git branch deputy
 ```
 
-## Check out a branch
+Nota: Las ramas (branches) no son más que `refs` (referencias) y las referencias no son más que ficheros, hace que GIT sea ligero. 
+
+La creación La creación de la rama `deputy` pone al commit `a3` de forma segura en una rama, pero ojo porque la rama `HEAD` sigue estando separada porque sigue apuntando directamente a un commit.
+
+
+
+| ![Commit `a3` ahora en rama `deputy`](/assets/img/git/11-a3-on-deputy.png) | 
+|:--:| 
+| *El commit `a3` ahora está en la rama `deputy`* |
+
+
+## Checkout de una rama (branch)
+
+Vamos a ver qué pasa si le pedimos a GIT que haga un checkout de la rama `master`.
 
 ```
-    ~/alpha $ git checkout master
-              Switched to branch 'master'
+➜  alpha git:(92ffe65) > git checkout master
+Previous HEAD position was 92ffe65 a3
+Switched to branch 'master'
+➜  alpha git:(master) >
 ```
 
-The user checks out the `master` branch.
+Primero, GIT consigue el commit `a2` al que apunta `master` y por tanto consigue el tree graph (recuerda, estructura de subdirectorios y archivos) de dicho commit.
 
-First, Git gets the `a2` commit that
-`master` points at and gets the tree graph the
-commit points at.
+En segundo lugar, GIT saca los archivos desde el tree graph y los copia a la working copy (desde `.git`). Eso provoca que el contenido en la working copy de `data/number.txt` pase de ser `3` a `2`.
 
-Second, Git writes the file entries in the tree graph to the files of
-the working copy. This sets the content of
-`data/number.txt` to `2`.
+En tercer lugar, Git escribe las entradas de los archivos en el tree graph en el índice. Esto actualiza la entrada de `datos/número.txt` con el hash del blob `2`
 
-Third, Git writes the file entries in the tree graph to the index. This
-updates the entry for `data/number.txt` to the hash
-of the `2` blob.
+Cuarto, GIT hace que `HEAD` apunte a `master`, cambiando su contenido desde el hash anterior a `refs/heads/master`.
 
-Fourth, Git points `HEAD` at
-`master` by changing its content from a hash to:
+<br/>
 
 ```
-    ref: refs/heads/master
+➜  alpha git:(master) > cat .git/HEAD
+ref: refs/heads/master
 ```
 
-![\`master\` checked out and pointing at the \`a2\`
-commit](/assets/img/git/12-a3-on-master-on-a2.png)
+<br/>
 
-::: {.image-caption}
-\`master\` checked out and pointing at the \`a2\` commit
-```
+| ![Checkout de `master` que apuntaba a `a2`](/assets/img/git/12-a3-on-master-on-a2.png) | 
+|:--:| 
+| *Checkout de `master` que apuntaba a `a2`* |
 
-## Check out a branch that is incompatible with the working copy
+<br/>
 
-```
-    ~/alpha $ echo '789' > data/number.txt
-    ~/alpha $ git checkout deputy
-              Your changes to these files would be overwritten
-              by checkout:
-                data/number.txt
-              Commit your changes or stash them before you
-              switch branches.
-```
+## Checkout de rama incompatible
 
-The user accidentally sets the content of
-`data/number.txt` to `789`. They
-try to check out `deputy`. Git prevents the check
-out.
-
-`HEAD` points at `master` which
-points at `a2` where
-`data/number.txt` reads `2`.
-`deputy` points at `a3` where
-`data/number.txt` reads `3`. The
-working copy version of `data/number.txt` reads
-`789`. All these versions are different and the
-differences must be resolved.
-
-Git could replace the working copy version of
-`data/number.txt` with the version in the commit
-being checked out. But it avoids data loss at all costs.
-
-Git could merge the working copy version with the version being checked
-out. But this is complicated.
-
-So, Git aborts the check out.
+Vamos a ver un caso curioso, hacer un **checkout de una rama que es incompatible con nuestra working copy**. Si intentamos introducir los comandos siguientes, GIT nos avisa de una incompatibilidad y aborta el checkout.
 
 ```
-    ~/alpha $ echo '2' > data/number.txt
-    ~/alpha $ git checkout deputy
-              Switched to branch 'deputy'
+➜  alpha git:(master) > echo '789' > data/number.txt
+
+➜  alpha git:(master) ✗ > git checkout deputy
+error: Your local changes to the following files would be overwritten by checkout:
+	data/number.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+➜  alpha git:(master) ✗ >
 ```
 
-The user notices that they accidentally edited
-`data/number.txt` and sets the content back to
-`2`. They check out `deputy`
-successfully.
+<br/>
 
-![\`deputy\` checked
-out](/assets/img/git/13-a3ondeputy.png)
+Hemos modificado el contenido de `data/number.txt` con `789` y después intentado hacer un checkout de la rama `deputy`. Git aborta este último para evitar que perdamos dicho cambioen `number.txt`en nuestra copia local. 
 
-::: {.image-caption}
-\`deputy\` checked out
+`HEAD` apunta al `master` que apunta a `a2` donde `data/number.txt` contiene un `2`. La rama `deputy` apunta a `a3` donde `data/number.txt` contiene un `3`. La copia de trabajo tiene `data/number.txt` con `789`. Todas estas versiones son diferentes y las diferencias deben ser resueltas.
+
+GIT podría haber ignorado el rpoblema pero está diseñado para evitar la pérdida de datos. Otra opción es que GIT hubiese fusionado la copy version con la versión de `deputy`, pero sería un poco chapuza, así que aborta...
+
+El usuario se da cuenta que no quería dicha modificación, vuelve a poner el contenido original e intenta cambiarse a la rama `deputy`.
+
+```
+➜  alpha git:(master) ✗ > echo '2' > data/number.txt
+➜  alpha git:(master) > git checkout deputy
+Switched to branch 'deputy'
+➜  alpha git:(deputy) >
 ```
 
-## Merge an ancestor
+Ahora sí que funciona, no hay nada que se vaya a perder, por lo tanto GIT acepta el checkout de `deputy` y cambia al mismo, lo extrae, lo copia a la workign copy y hace que `HEAD`a punte a él.
+
+<br/>
+
+| ![Checkout de `deputy`](/assets/img/git/13-a3ondeputy.png) | 
+|:--:| 
+| *Checkout de `deputy`* |
+
+<br/>
+
+
+## Merge de un antepasado
+
+Vamos a por otro caso curioso y muy utilizado. Veamos cómo "fusionar" !!
 
 ```
     ~/alpha $ git merge master
@@ -1546,75 +1498,39 @@ to point at the `14` commit.
 \`14\` commit pushed from \`alpha\` to \`delta\`
 ```
 
-## Summary
+## Resumen
 
-Git is built on a graph. Almost every Git command manipulates this
-graph. To understand Git deeply, focus on the properties of this graph,
-not workflows or commands.
+GIT se estructura alrededor de un árbol gráfico y casi todos sus comandos lo manipulan. Para entenderlo en profundidad céntrate en las propiedades de dicho gráfico, no en los flujos de trabajo o los comandos.
 
-To learn more about Git, investigate the `.git`
-directory. It's not scary. Look inside. Change the content of files and
-see what happens. Create a commit by hand. Try and see how badly you can
-mess up a repo. Then repair it.
+Para aprender más sobre Git, investiga el directorio `.git`, que no te asuste, mira dentro, cambia el contenido de los archivos a ver qué pasa. Crea un commit, intenta estropear el repositorio para luego arregarlo. 
 
-::: {.footnotes}
-1.  ::: {#fn:1}
-    In this case, the hash is longer than the original content. But, all
-    pieces of content longer than the number of characters in a hash
-    will be expressed more concisely than the
-    original. [↩](git-from-the-inside-out.html#fnref:1){.reversefootnote}
-    ```
+<br/>
 
-2.  ::: {#fn:2}
-    There is a chance that two different pieces of content will hash to
-    the same value. But this chance [is
-    low](http://crypto.stackexchange.com/a/2584). [↩](git-from-the-inside-out.html#fnref:2){.reversefootnote}
-    ```
+---
 
-3.  ::: {#fn:3}
-    `git prune` deletes all objects that cannot be
-    reached from a ref. If the user runs this command, they may lose
-    content. [↩](git-from-the-inside-out.html#fnref:3){.reversefootnote}
-    ```
+<br/>
 
-4.  ::: {#fn:4}
-    `git stash` stores all the differences between
-    the working copy and the `HEAD` commit in a safe
-    place. They can be retrieved
-    later. [↩](git-from-the-inside-out.html#fnref:4){.reversefootnote}
-    ```
+[^1]:
+    <sup>*En este caso, el hash es más largo que el contenido original, pero este método unifica
+    la forma en la que GIT va a nombrar los archivos, de manera mucho más concisa que 
+    usando sus nombres originales.*</sup>
 
-5.  ::: {#fn:5}
-    The `rebase` command can be used to add, edit
-    and delete commits in the
-    history. [↩](git-from-the-inside-out.html#fnref:5){.reversefootnote}
-    ```
-```
+[^2]:
+    <sup>*Existe la posibilidad de que dos piezas de contenido diferentes tengan el mismo
+    valor, pero la probabilidad de que ocurra es realmente [insignificante](http://crypto.stackexchange.com/a/2584)*</sup>
 
-::: {.tweet-link}
-[ tweet this
-post](https://twitter.com/intent/tweet?text=Git%20from%20the%20inside%20out&url=https://codewords.recurse.com/issues/two/git-from-the-inside-out&via=recursecenter)
+[^3]:
+    <sup>*El comando `git prune` permite borrar objetos huérfanos (aquellos que están siendo 
+    apuntados por ninguna referencia). Solo debe usarse para tareas de mantenimiento. 
+    Si usas este comando sin saber lo que estás haciendo podrías llegar a perder contenido.*</sup>
 
-------------------------------------------------------------------------
+[^4]:
+    <sup>*El comando `git stash` almacena todas las diferencias entre la copia de trabajo y 
+    el commit `HEAD` en un lugar seguro. Puede ser recuperado más tarde con `git stash pop`.*</sup>
 
-::: {.next-post}
-Next: [How I learned to (stop worrying and) love
-HTTP](https://codewords.recurse.com/issues/two/how-i-learned-to-stop-worrying-and-love-http)
-```
-```
-```
-```
-```
-
-::: {.container}
-A publication from the [Recurse Center](https://www.recurse.com/)
-
--   ::: {#list-signup-container}
-    ```
-
--   [[Twitter]{.icon .twitter}](https://twitter.com/recursecenter)
-
--   [Past Issues](https://codewords.recurse.com/issues)
-
--   [About](https://codewords.recurse.com/about){.page-link}
-```
+[^5]:
+    <sup>*El comando `git rebase` puede utilizarse para añadir, editar y borrar commits en el
+    historial. Nos puede ayudar a evitar conflictos, aunque hay que entender bien cómo funciona
+    y mejor aplicarlo sobre sobre commits que están en local y no han sido subidos a ningún 
+    repositorio remoto*</sup>
+    
