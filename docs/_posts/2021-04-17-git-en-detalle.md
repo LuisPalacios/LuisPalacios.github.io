@@ -338,8 +338,8 @@ number.txt
 
 ```
 ➜  alpha git:(master) > git --no-pager cat-file -p 0eed
-100644 blob 2e65efe2a145dda7ee51d1741299f848e5bf752e	letter.txt
-100644 blob 56a6051ca2b02b04ef92d5150c9ef600403cb1de	number.txt
+100644 blob 2e65efe2a145dda7ee51d1741299f848e5bf752e	letter.txt  <- contiene 'a'
+100644 blob 56a6051ca2b02b04ef92d5150c9ef600403cb1de	number.txt  <- contiene '1'
 ```
 
 La primera línea registra todo lo necesario para reproducir `data/letter.txt`: los permisos del archivo, su tipo (blob), el hash del fichero y el nombre del archivo. La segunda línea lo mismo para reproducir `data/number.txt`.
@@ -484,8 +484,8 @@ Al hacer el commit los pasos son los mismos que la vez anteriore.
 
 ```
 ➜  alpha git:(master) >  git ls-files --stage
-100644 2e65efe2a145dda7ee51d1741299f848e5bf752e 0	data/letter.txt
-100644 0cfbf08886fca9a91cb753ec8734c84fcbe52c9f 0	data/number.txt  <== Nuevo 
+100644 2e65efe2a145dda7ee51d1741299f848e5bf752e 0	data/letter.txt <-- reutiliza blob. Contiene 'a'
+100644 0cfbf08886fca9a91cb753ec8734c84fcbe52c9f 0	data/number.txt <== nuevo blob, contiene '2'
 ```
 
 Un segundo BLOB nuevo para `root` que apunte al nuevo blob de `data` recién creado
@@ -525,44 +525,41 @@ Veamos la gráfica sin reflejar los datos de los ficheros:
 | *commit `a2` (sin la información de su contenido)* |
 
 
-**Graph property**: content is stored as a tree of objects. This means
-that only diffs are stored in the objects database. Look at the graph
-above. The `a2` commit reuses the
-`a` blob that was made before the
-`a1` commit. Similarly, if a whole directory doesn't
-change from commit to commit, its tree and all the blobs and trees below
-it can be reused. Generally, there are few content changes from commit
-to commit. This means that Git can store large commit histories in a
-small amount of space.
+<br/>
 
-**Graph property**: each commit has a parent. This means that a
-repository can store the history of a project.
+#### Características de los tree graphs 
 
-**Graph property**: refs are entry points to one part of the commit
-history or another. This means that commits can be given meaningful
-names. The user organizes their work into lineages that are meaningful
-to their project with concrete refs like
-`fix-for-bug-376`. Git uses symbolic refs like
-`HEAD`, `MERGE_HEAD` and
-`FETCH_HEAD` to support commands that manipulate the
-commit history.
+Veamos algunos conceptos interesantes respecto a los árboles dentro del directorio `objects/`
 
-**Graph property**: the nodes in the `objects/`
-directory are immutable. This means that content is edited, not deleted.
-Every piece of content ever added and every commit ever made is
-somewhere in the `objects`
-directory^[3](git-from-the-inside-out.html#fn:3){.footnote}^.
+* El contenido se almacena como un árbol de objetos. Esto significa que en la base de datos de objetos sólo se almacenan las diferencias. Observa el gráfico de arriba. El commit `a2` reutiliza el blob `letter.txt con 'a'` que se hizo antes del commit `a1`. Del mismo modo, si un directorio completo no cambia de un commit a otro, su árbol y todos los blobs y árboles por debajo se reutilizan. Generalmente, hay pocos cambios de contenido entre commits, por lo que GIT puede almacenar grandes historiales de commits ahorrando mucho espacio. 
 
-**Graph property**: refs are mutable. Therefore, the meaning of a ref
-can change. The commit that `master` points at might
-be the best version of a project at the moment, but, soon enough, it
-will be superseded by a newer and better commit.
+* Cada commit tiene un padre. Esto significa que un repositorio puede almacenar la historia completa de las modificaciones y versiones que ha tenido un proyecto.
 
-**Graph property**: the working copy and the commits pointed at by refs
-are readily available, but other commits are not. This means that recent
-history is easier to recall, but that it also changes more often. Or:
-Git has a fading memory that must be jogged with increasingly vicious
-prods.
+* Las referencias son puntos de entrada a una parte del historial de commits. Esto significa que los commits pueden tener nombres significativos que nos digan algo interesante. El usuario organiza su trabajo en linajes que son significativos para su proyecto con referencias concretas como
+`fijo-para-el-bug-376`. Git se reserva y emplea referencias simbólicas como `HEAD`, `MERGE_HEAD` y `FETCH_HEAD` para soportar comandos que manipulan el historial de confirmaciones.
+
+* Los nodos en el directorio `objects/` son inmutables. Esto significa que el contenido se edita, no se borra. Cada objeto que se ha añadido y cada confirmación que se ha hecho está en algún lugar del directorio `objects`.
+
+
+* Las referencias son mutables. Por lo tanto, el significado de una ref puede cambiar. El commit al que apunta `master` puede estar apuntando a una versión del proyecto ahora pero apuntar a otra dentro de un rato. 
+
+<br/>
+
+#### Características de moverse por la historia
+
+Veamos algunos conceptos interesantes respecto a la facilidad o dificultad de recuperar un determinado commit (ir a esa versión) que también podemos describir como "acceder a un momento en el tiempo" o moverse por la historia del proyecto.
+
+* La copia de trabajo y los commits a los que apuntan las referencias (`refs`) están fácilmente disponibles, pero otros commits (sin referencias) no lo están. Esto significa que la historia reciente es más fácil de recuperar.
+
+* La copia de trabajo es el punto de la historia más fácil de recuperar porque está en la raíz de tu directorio del proyecto. Acceder a la working copy ni siquiera requiere un comando Git. También es el punto menos permanente del historial. El usuario puede hacer una docena de versiones de un archivo que Git no registrará ninguna a menos que que se le añadan.
+
+* El commit al que apunta `HEAD` es muy fácil de recuperar. Normalmente apunta a la punta de la rama que se ha extraido (checkout). Si hemos modificado algo en la working copy y queremos volver a la versíon de `HEAD` el usuario puede hacer un `stash` (esconder la modificación en la working copy), examina lo que tenía y luego hace un `unstash` para volver a la versión de la copia de trabajo. Al mismo tiempo, `HEAD` es la referencia que cambia con más frecuencia.
+
+* El commit al que apunta una `ref` (referencia) concreta es fácil de recuperar. El usuario puede simplemente hacer un checkout de esa rama. La punta de una rama cambia con menos frecuencia que `HEAD`, pero con la suficiente frecuencia como para que tuviese sentido asignarle un nombre en su momento.
+
+* Es difícil recordar un commit que no esté señalado por ninguna `ref`, cuanto más se aleje el usuario de una referencia, más difícil le resultará reconstruir el significado de un commit (¿porqué hice aquel commit en su momento?). Pero cuanto más se remonte, menos probable es que alguien haya cambiado la historia desde la última vez que miró.
+
+
 
 The working copy is the easiest point in history to recall because it is
 in the root of the repository. Recalling it doesn't even require a Git
