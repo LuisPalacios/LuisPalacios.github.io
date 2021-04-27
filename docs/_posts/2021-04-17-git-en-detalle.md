@@ -71,7 +71,6 @@ Uno de los mejores artículos técnicos **con detalle** que me encontré en el p
 
 ## GIT desde el interior
 
-
 Este apunte explica cómo funciona y asume que has dedicado algo de tiempo a entender más o menos de qué va y quieres usarlo para el control de versiones de tus proyectos. Puede ser fácil pero hay que dedicarle algo de tiempo.
 
 Supera a otras herramientas de control de versiones (SCM-Source code management) como Subversion, CVS, Perforce y ClearCase por sus características como la **ramificación local (ramas/branches)**, las **áreas de preparación (staging)** y los **múltiples flujos de trabajo**.
@@ -296,7 +295,6 @@ El usuario hace el commit `a1`. Git imprime algunos datos sobre la confirmación
 
 ## Los tres pasos de un "Commit"
 
-
 Cuando haces un commit ocurren tres cosas (más info [aquí](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects)): 
 
 * Se crea un **"tree graph"** representando los directorios y ficheros afectados. En este ejemplo que nos ocupa vemos que se crean dos objetos de tipo `tree` vinculados a dos objetos ya existentes de tipo `blob`. 
@@ -376,7 +374,6 @@ Lo mismo visto gráficamente nos muestra cómo el objeto tree `raíz (root)` apu
 
 <br/>
 
-
 #### Se crea el objeto Commit
 
 Además de los dos objetos (ficheros) `tree` que componen el tree graph, se ha creado un nuevo objeto (fichero) de tipo `commit` que también se guarda en `.git/objects/`:
@@ -398,7 +395,7 @@ La primera línea apunta al inicio del `tree graph`, al objeto raíz `raíz (roo
 |:--:| 
 | *Commit `a1` apuntando a la raíz `root` de su tree graph* |
 
-
+<br/>
 
 #### Se conecta la rama actual con el commit
 
@@ -629,9 +626,7 @@ A partir de ahora, voy a omitir los `tree` y `blob` en la mayoría de los diagra
 |:--:| 
 | *HEAD apunta al commit `a3` que NO está en ninguna rama (branch)* |
 
-
 <br/>
-
 
 ## Crear una rama (branch)
 
@@ -652,6 +647,7 @@ La creación La creación de la rama `deputy` pone al commit `a3` de forma segur
 |:--:| 
 | *El commit `a3` ahora está en la rama `deputy`* |
 
+<br/>
 
 ## Checkout de una rama (branch)
 
@@ -729,144 +725,146 @@ Ahora sí que funciona, no hay nada que se vaya a perder, por lo tanto GIT acept
 
 <br/>
 
-
 ## Merge de un antepasado
 
-Vamos a por otro caso curioso y muy utilizado. Veamos cómo "fusionar" !!
+Vamos a adentrarnos en una de las funciones más interesantes de GIT, el poder "fusionar" datos entre commits. 
+
+Si recordamos, eshemos extraído la rama `deputy`, nos encontramos en ella. Vamos a ver qué pasa si le pedimos a GIT que se traiga y fusione los datos de `master` en esta rama en la que estoy (`deputy`). 
 
 ```
-    ~/alpha $ git merge master
-              Already up-to-date.
+➜  alpha git:(deputy) > git merge master
+Already up to date.
 ```
 
-The user merges `master` into
-`deputy`. Merging two branches means merging two
-commits. The first commit is the one that `deputy`
-points at: the receiver. The second commit is the one that
-`master` points at: the giver. For this merge, Git
-does nothing. It reports it is
-`Already up-to-date.`.
+El intento consiste en hacer una fusión (merge) de `master` dentro de `deputy`. El merge de dos ramas significa fusionar dos commits. El primer commit **receptor** es siempre en el que nos encontramos (`deputy`). El segundo commit es el **emisor**, aquel que indicamos en el comando git merge (`master`). En resumen, pedimos que el contenido de `master` se fusione dentro de `deputy`. 
 
-**Graph property**: the series of commits in the graph are interpreted
-as a series of changes made to the content of the repository. This means
-that, in a merge, if the giver commit is an ancestor of the receiver
-commit, Git will do nothing. Those changes have already been
-incorporated.
+En este caso GIT no hace nada, nos dice `Already up-to-date.`.
 
-## Merge a descendent
+Los commits del gráfico se interpretan como una serie de cambios realizados en el contenido del repositorio. Esto significa que, durante una fusión, si el commit emisor (dador) es un antepasado del commit receptor, GIT no hará nada. Dicho de otra forma, el commit de `deputy` venía desde `master (a2)`. Significa que nació desde `a2` y por lo tanto no necesita que le incorporemos nada, porque no hay nada nuevo a incorporar. 
 
-```
-    ~/alpha $ git checkout master
-              Switched to branch 'master'
+<br/>
+
+## Merge de un descendiente
+
+¿Pero qué pasa si intentamos hacer lo contrario?. Vámonos a la otra rama, cambiamos a `master`.
+
+```zsh
+➜  alpha git:(deputy) > git checkout master
+Switched to branch 'master'
+➜  alpha git:(master) >
 ```
 
-The user checks out `master`.
+<br/>
 
-![\`master\` checked out and pointing at the \`a2\`
-commit](/assets/img/git/14-a3-on-master-on-a2.png)
+| ![Checkout de `msater` que apunta al commit `a2`](/assets/img/git/14-a3-on-master-on-a2.png) | 
+|:--:| 
+| *Checkout de `msater` que apunta al commit `a2`* |
 
-::: {.image-caption}
-\`master\` checked out and pointing at the \`a2\` commit
+<br/>
+
+Intentamos fusionar pero ahora desde `deputy` dentro de `master`. El primer commit **receptor** es en el que nos encontramos (ahora es `mnsater`). El segundo commit es el **emisor**, aquel que indicamos en el comando git merge (`deputy`). En resumen, pedimos que el contenido de `deputy` se fusione dentro de `master`. 
+
+```zsh
+➜  alpha git:(master) > git merge deputy
+Updating 850918e..92ffe65
+Fast-forward
+ data/number.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+➜  alpha git:(master) >
 ```
 
-```
-    ~/alpha $ git merge deputy
-              Fast-forward
-```
+Se hace una fusión de `deputy` en `master`. GIT se da cuenta de que el **commit receptor**, `a2`, es más viejo qu e el **commit emisor**, `a3`, por lo tanto acepta la fusión, y provoca el `fast-forward merge` (fast-forward significa que lo adelanta en el tiempo, hace que `a2` se ponga a la altura temporal de `a3` con las modificaciones que este hubiese realizado posteriormente). Tan sencillo como que ahora `master` apunta a `a3`: Obtiene el commit del emisor (dador) y el tree graph al que apunta. Se sacan y escriben las entradas de los archivos desde el tree graph, se copian al working copy y al índice y se hace que `master` se "adelante" aapuntando a `a3`.
 
-They merge `deputy` into
-`master`. Git discovers that the receiver commit,
-`a2`, is an ancestor of the giver commit,
-`a3`. It can do a fast-forward merge.
 
-It gets the giver commit and gets the tree graph that it points at. It
-writes the file entries in the tree graph to the working copy and the
-index. It "fast-forwards" `master` to point at
-`a3`.
+| ![El commit `a3` de `deputy` se fusiona en `master` con un fast-forward](/assets/img/git/15-a3-on-master.png) | 
+|:--:| 
+| *El commit `a3` de `deputy` se fusiona en `master` con un fast-forward* |
 
-![\`a3\` commit from \`deputy\` fast-forward merged into
-\`master\`](/assets/img/git/15-a3-on-master.png)
+<br/>
 
-::: {.image-caption}
-\`a3\` commit from \`deputy\` fast-forward merged into \`master\`
-```
+Las series de commits en el gráfico se interpretan
+como una serie de cambios realizados en el contenido del repositorio. Esto significa
+que, en una fusión, si el dador es un descendiente del receptor, la historia
+no se modifica. Ya existe una secuencia de commits que describen el
+cambio a realizar: la secuencia de commits entre el receptor y el
+dador. Pero, aunque el historial de Git no cambia, el gráfico de Git sí
+cambia. La referencia concreta a la que apunta `HEAD` se
+se actualiza para apuntar al commit del dador (en este caso `a3`).
 
-**Graph property**: the series of commits in the graph are interpreted
-as a series of changes made to the content of the repository. This means
-that, in a merge, if the giver is a descendent of the receiver, history
-is not changed. There is already a sequence of commits that describe the
-change to make: the sequence of commits between the receiver and the
-giver. But, though the Git history doesn't change, the Git graph does
-change. The concrete ref that `HEAD` points at is
-updated to point at the giver commit.
+<br/>
 
-## Merge two commits from different lineages
+## Merge desde linajes distintos
 
-```
-    ~/alpha $ echo '4' > data/number.txt
-    ~/alpha $ git add data/number.txt
-    ~/alpha $ git commit -m 'a4'
-              [master 7b7bd9a] a4
+Vamos a ver otro caso, ahora vamos a intentar hacer una fusión de dos commits que están en linajes distintos.  Empezamos preparando un nuevo commit, cambiamos a `4` el contenido de `number.txt` y hacemos un commit `a4` en `master`.
+
+```zsh
+➜  alpha git:(master) > echo '4' > data/number.txt
+➜  alpha git:(master) ✗ > git add data/number.txt
+➜  alpha git:(master) ✗ > git commit -m 'a4'
+[master 3a8599e] a4
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+➜  alpha git:(master) >
 ```
 
-The user sets the content of `number.txt` to
-`4` and commits the change to
-`master`.
+<br/>
 
-```
-    ~/alpha $ git checkout deputy
-              Switched to branch 'deputy'
-    ~/alpha $ echo 'b' > data/letter.txt
-    ~/alpha $ git add data/letter.txt
-    ~/alpha $ git commit -m 'b3'
-              [deputy 982dffb] b3
-```
+Hacemos un checkout de `deputy`. Cambiamos el contenido de `data/letter.txt` a `b` y hacemos un commit `b3` en `deputy`.
 
-The user checks out `deputy`. They set the content
-of `data/letter.txt` to `b` and
-commit the change to `deputy`.
-
-![\`a4\` committed to \`master\`, \`b3\` committed to \`deputy\` and
-\`deputy\` checked
-out](/assets/img/git/16-a4-b3-on-deputy.png)
-
-::: {.image-caption}
-\`a4\` committed to \`master\`, \`b3\` committed to \`deputy\` and
-\`deputy\` checked out
+```zsh
+➜  alpha git:(master) > git checkout deputy
+Switched to branch 'deputy'
+➜  alpha git:(deputy) > echo 'b' > data/letter.txt
+➜  alpha git:(deputy) ✗ > git add data/letter.txt
+➜  alpha git:(deputy) ✗ > git commit -m 'b3'
+[deputy ce860c7] b3
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+➜  alpha git:(deputy) >
 ```
 
-**Graph property**: commits can share parents. This means that new
-lineages can be created in the commit history.
+<br/>
 
-**Graph property**: commits can have multiple parents. This means that
-separate lineages can be joined by a commit with two parents: a merge
-commit.
+| ![commit `a4` en master y `b3` en deputy, checkout de `deputy`](/assets/img/git/16-a4-b3-on-deputy.png) | 
+|:--:| 
+| *commit `a4` en master y `b3` en deputy, checkout de `deputy`* |
+
+<br/>
+
+Fíjate que ambos commits (`a4` y `b3`) parten del contenido del commit padre `a3`, por lo tanto: 
+
+- Los commits pueden compartir "padres". Eso significa que los nuevos linajes se crearon desde la misma historio (en este caso partían desde `a3`)
+
+- Los commits pueden tener múltiples padres. Esto significa que linajes separados pueden ser fusionados en un nuevo commit con dos padres con el comando `commit merge`
+
+Dicho de otra forma, si no hay conflicto (modificar mismo fichero) en ambos linajes, debería ser realtivamente sencillo fusionar ambos contenidos y crear un nuevo commit. Veamos cómo !! 
+
 
 ```
-    ~/alpha $ git merge master -m 'b4'
-              Merge made by the 'recursive' strategy.
+➜  alpha git:(deputy) > git merge master -m 'b4'
+Merge made by the 'recursive' strategy.
+ data/number.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+➜  alpha git:(deputy) >
 ```
 
-The user merges `master` into
-`deputy`.
+Recordamos, el primer commit **receptor** es siempre en el que nos encontramos (`deputy`). El segundo commit es el **emisor**, aquel que indicamos en el comando git merge (`master`). 
 
-Git discovers that the receiver, `b3`, and the
-giver, `a4`, are in different lineages. It makes a
-merge commit. This process has eight steps.
+En resumen, estamos pidiendo que el contenido de `master` (`a4`) se fusione dentro de `deputy` (`b3`). GIT descubre que están en linajes diferentes y ejecuta el merge siguiendo una estrategia "recursiva" que consiste en ocho pasos. 
 
-First, Git writes the hash of the giver commit to a file at
+<br/>
+
+**Paso #1**: Git writes the hash of the giver commit to a file at
 `alpha/.git/MERGE_HEAD`. The presence of this file
 tells Git it is in the middle of merging.
 
-Second, Git finds the base commit: the most recent ancestor that the
+<br/>
+
+**Paso #2**: Git finds the base commit: the most recent ancestor that the
 receiver and giver commits have in common.
 
-![\`a3\`, the base commit of \`a4\` and
-\`b3\`](/assets/img/git/17-a4-b3-on-deputy.png)
+| ![`a3` es el commit base de `a4` y `b3`](/assets/img/git/17-a4-b3-on-deputy.png) | 
+|:--:| 
+| *`a3` es el commit base de `a4` y `b3`* |
 
-::: {.image-caption}
-\`a3\`, the base commit of \`a4\` and \`b3\`
-```
 
 **Graph property**: commits have parents. This means that it is possible
 to find the point at which two lineages diverged. Git traces backwards
@@ -875,10 +873,14 @@ from `a4` to find all its ancestors. It finds the
 most recent ancestor shared by both lineages, `a3`.
 This is the base commit.
 
-Third, Git generates the indices for the base, receiver and giver
+<br/>
+
+**Paso #3**: Git generates the indices for the base, receiver and giver
 commits from their tree graphs.
 
-Fourth, Git generates a diff that combines the changes made to the base
+<br/>
+
+**Paso #4**: Git generates a diff that combines the changes made to the base
 by the receiver commit and the giver commit. This diff is a list of file
 paths that point to a change: add, remove, modify or conflict.
 
@@ -905,18 +907,25 @@ This means that, if a file has changed from the base in just the
 receiver or giver, Git can automatically resolve the merge of that file.
 This reduces the work the user must do.
 
-Fifth, the changes indicated by the entries in the diff are applied to
+<br/>
+
+**Paso #5**: the changes indicated by the entries in the diff are applied to
 the working copy. The content of `data/letter.txt`
 is set to `b` and the content of
 `data/number.txt` is set to `4`.
 
-Sixth, the changes indicated by the entries in the diff are applied to
+<br/>
+
+**Paso #6**: the changes indicated by the entries in the diff are applied to
 the index. The entry for `data/letter.txt` is
 pointed at the `b` blob and the entry for
 `data/number.txt` is pointed at the
 `4` blob.
 
-Seventh, the updated index is committed:
+
+<br/>
+
+**Paso #7**: the updated index is committed:
 
 ```
     tree 20294508aea3fb6f05fcc49adaecc2e6d60f7e7d
@@ -930,19 +939,23 @@ Seventh, the updated index is committed:
 
 Notice that the commit has two parents.
 
-Eighth, Git points the current branch, `deputy`, at
+
+<br/>
+
+**Paso #8**: Git points the current branch, `deputy`, at
 the new commit.
 
-![\`b4\`, the merge commit resulting from the recursive merge of \`a4\`
-into
-\`b3\`](/assets/img/git/18-b4-on-deputy.png)
 
-::: {.image-caption}
-\`b4\`, the merge commit resulting from the recursive merge of \`a4\`
-into \`b3\`
-```
+| ![`b4`: commit resultado de fusionar `a4` en `b3`](/assets/img/git/18-b4-on-deputy.png) | 
+|:--:| 
+| *`b4`: commit resultado de fusionar `a4` en `b3`* |
 
-## Merge two commits from different lineages that both modify the same file
+<br/>
+
+## Merge desde dos linajes con conflicto.
+
+Vamos a complicarlo un poco más, ahora vamos a intentar un merge desde dos commits de diferentes linajes donde ambos han modificado el mismo fichero. 
+
 
 ```
     ~/alpha $ git checkout master
@@ -957,14 +970,13 @@ fast-forwards `master` to the
 `b4` commit. `master` and
 `deputy` now point at the same commit.
 
-![\`deputy\` merged into \`master\` to bring \`master\` up to the latest
-commit,
-\`b4\`](/assets/img/git/19-b4-master-deputy-on-b4.png)
+<br/>
 
-::: {.image-caption}
-\`deputy\` merged into \`master\` to bring \`master\` up to the latest
-commit, \`b4\`
-```
+| ![`deputy` merged into `master` to bring `master` up to the latest commit `b4`](/assets/img/git/19-b4-master-deputy-on-b4.png) | 
+|:--:| 
+| *`deputy` merged into `master` to bring `master` up to the latest commit `b4`* |
+
+<br/>
 
 ```
     ~/alpha $ git checkout deputy
@@ -992,12 +1004,13 @@ The user checks out `master`. They set the content
 of `data/number.txt` to `6` and
 commit the change to `master`.
 
-![\`b5\` commit on \`deputy\` and \`b6\` commit on
-\`master\`](/assets/img/git/20-b5-on-deputy-b6-on-master.png)
+<br/>
 
-::: {.image-caption}
-\`b5\` commit on \`deputy\` and \`b6\` commit on \`master\`
-```
+| ![`b5` commit on `deputy` and `b6` commit on `master`](/assets/img/git/20-b5-on-deputy-b6-on-master.png) | 
+|:--:| 
+| *`b5` commit on `deputy` and `b6` commit on `master`* |
+
+<br/>
 
 ```
     ~/alpha $ git merge deputy
@@ -1019,12 +1032,13 @@ Let's go through the steps again and see what happens.
 First, Git writes the hash of the giver commit to a file at
 `.git/MERGE_HEAD`.
 
-![\`MERGE_HEAD\` written during merge of \`b5\` into
-\`b6\`](/assets/img/git/21-b6-on-master-with-merge-head.png)
+<br/>
 
-::: {.image-caption}
-\`MERGE_HEAD\` written during merge of \`b5\` into \`b6\`
-```
+| ![`MERGE_HEAD` written during merge of `b5` into `b6`](/assets/img/git/21-b6-on-master-with-merge-head.png) | 
+|:--:| 
+| *`MERGE_HEAD` written during merge of `b5` into `b6`* |
+
+<br/>
 
 Second, Git finds the base commit, `b4`.
 
@@ -1124,26 +1138,26 @@ the content of the resolved merge. It deletes the file at
 Eighth, Git points the current branch, `master`, at
 the new commit.
 
-![\`b11\`, the merge commit resulting from the conflicted, recursive
-merge of \`b5\` into
-\`b6\`](/assets/img/git/22-b11-on-master.png)
+<br/>
 
-::: {.image-caption}
-\`b11\`, the merge commit resulting from the conflicted, recursive merge
-of \`b5\` into \`b6\`
-```
+| ![`b11`, the merge commit resulting from the conflicted, recursive merge of `b5` into `b6`](/assets/img/git/22-b11-on-master.png) | 
+|:--:| 
+| *`b11`, the merge commit resulting from the conflicted, recursive merge of `b5` into `b6`* |
+
+<br/>
 
 ## Remove a file
 
 This diagram of the Git graph includes the commit history, the trees and
 blobs for the latest commit, and the working copy and index:
 
-![The working copy, index, \`b11\` commit and its tree
-graph](/assets/img/git/23-b11-with-objects-wc-and-index.png)
+<br/>
 
-::: {.image-caption}
-The working copy, index, \`b11\` commit and its tree graph
-```
+| ![The working copy, index, `b11` commit and its tree graph](/assets/img/git/23-b11-with-objects-wc-and-index.png) | 
+|:--:| 
+| *The working copy, index, `b11` commit and its tree graph* |
+
+<br/>
 
 ```
     ~/alpha $ git rm data/letter.txt
@@ -1154,12 +1168,14 @@ The user tells Git to remove `data/letter.txt`. The
 file is deleted from the working copy. The entry is deleted from the
 index.
 
-![After \`data/letter.txt\` \`rm\`ed from working copy and
-index](/assets/img/git/24-b11-letter-removed-from-wc-and-index.png)
+<br/>
 
-::: {.image-caption}
-After \`data/letter.txt\` \`rm\`ed from working copy and index
-```
+| ![After `data/letter.txt` `rm`ed from working copy and index](/assets/img/git/24-b11-letter-removed-from-wc-and-index.png) | 
+|:--:| 
+| *After `data/letter.txt` `rm`ed from working copy and index* |
+
+<br/>
+
 
 ```
     ~/alpha $ git commit -m '11'
@@ -1171,12 +1187,13 @@ graph that represents the content of the index.
 `data/letter.txt` is not included in the tree graph
 because it is not in the index.
 
-![\`11\` commit made after \`data/letter.txt\`
-\`rm\`ed](/assets/img/git/25-11.png)
+<br/>
 
-::: {.image-caption}
-\`11\` commit made after \`data/letter.txt\` \`rm\`ed
-```
+| ![`11` commit made after `data/letter.txt rm`ed](/assets/img/git/25-11.png) | 
+|:--:| 
+| *`11` commit made after `data/letter.txt rm`ed* |
+
+<br/>
 
 ## Copy a repository
 
@@ -1199,15 +1216,15 @@ the following directory structure:
             └── number.txt
 ```
 
-There is now another Git graph in the `bravo`
-directory:
+There is now another Git graph in the `bravo` directory:
 
-![New graph created when \`alpha\` \`cp\`ed to
-\`bravo\`](/assets/img/git/26-11-cp-alpha-to-bravo.png)
+<br/>
 
-::: {.image-caption}
-New graph created when \`alpha\` \`cp\`ed to \`bravo\`
-```
+| ![New graph created when `alpha` `cp`ed to `bravo`](/assets/img/git/26-11-cp-alpha-to-bravo.png) | 
+|:--:| 
+| *New graph created when `alpha` `cp`ed to `bravo`* |
+
+<br/>
 
 ## Link a repository to another repository
 
@@ -1230,6 +1247,8 @@ These lines specify that there is a remote repository called
 `bravo` in the directory at
 `../bravo`.
 
+<br/>
+
 ## Fetch a branch from a remote
 
 ```
@@ -1245,12 +1264,14 @@ the content of `data/number.txt` to
 `12` and commit the change to
 `master` on `bravo`.
 
-![\`12\` commit on \`bravo\`
-repository](/assets/img/git/27-12-bravo.png)
+<br/>
 
-::: {.image-caption}
-\`12\` commit on \`bravo\` repository
-```
+| ![`12` commit on `bravo` repository](/assets/img/git/27-12-bravo.png) | 
+|:--:| 
+| *`12` commit on `bravo` repository* |
+
+<br/>
+
 
 ```
     ~/bravo $ cd ../alpha
@@ -1288,15 +1309,15 @@ set to:
 ```
 
 This indicates that the most recent fetch command fetched the
-`12` commit of `master` from
-`bravo`.
+`12` commit of `master` from `bravo`.
 
-![\`alpha\` after \`bravo/master\`
-fetched](/assets/img/git/28-12-fetched-to-alpha.png)
+<br/>
 
-::: {.image-caption}
-\`alpha\` after \`bravo/master\` fetched
-```
+| ![`alpha` after `bravo/master` fetched](/assets/img/git/28-12-fetched-to-alpha.png) | 
+|:--:| 
+| *`alpha` after `bravo/master` fetched* |
+
+<br/>
 
 **Graph property**: objects can be copied. This means that history can
 be shared between repositories.
@@ -1306,6 +1327,8 @@ be shared between repositories.
 that a repository can record locally the state of a branch on a remote
 repository. It is correct at the time it is fetched but will go out of
 date if the remote branch changes.
+
+<br/>
 
 ## Merge FETCH_HEAD
 
@@ -1322,12 +1345,13 @@ points at the `11` commit, the receiver. Git does a
 fast-forward merge and points `master` at the
 `12` commit.
 
-![\`alpha\` after \`FETCH_HEAD\`
-merged](/assets/img/git/29-12-merged-to-alpha.png)
+<br/>
 
-::: {.image-caption}
-\`alpha\` after \`FETCH_HEAD\` merged
-```
+| ![`alpha` after `FETCH_HEAD` merged](/assets/img/git/29-12-merged-to-alpha.png) | 
+|:--:| 
+| *`alpha` after `FETCH_HEAD` merged* |
+
+<br/>
 
 ## Pull a branch from a remote
 
@@ -1341,6 +1365,8 @@ The user pulls `master` from
 shorthand for "fetch and merge `FETCH_HEAD`". Git
 does these two commands and reports that `master` is
 `Already up-to-date`.
+
+<br/>
 
 ## Clone a repository
 
@@ -1360,6 +1386,8 @@ called `charlie`. It inits
 `alpha` as a remote called
 `origin`, fetches `origin` and
 merges `FETCH_HEAD`.
+
+<br/>
 
 ## Push a branch to a checked-out branch on a remote
 
@@ -1409,6 +1437,8 @@ they can push to whenever they want. They want a central repository that
 they can push to and pull from, but that no one commits to directly.
 They want something like a GitHub remote. They want a bare repository.
 
+<br/>
+
 ## Clone a bare repository
 
 ```
@@ -1432,12 +1462,13 @@ root of the repository:
     └── refs
 ```
 
-![\`alpha\` and \`delta\` graphs after \`alpha\` cloned to
-\`delta\`](/assets/img/git/30-13-alpha-cloned-to-delta-bare.png)
+<br/>
 
-::: {.image-caption}
-\`alpha\` and \`delta\` graphs after \`alpha\` cloned to \`delta\`
-```
+| ![`alpha` and `delta` graphs after `alpha` cloned to `delta`](/assets/img/git/30-13-alpha-cloned-to-delta-bare.png) | 
+|:--:| 
+| *`alpha` and `delta` graphs after `alpha` cloned to `delta`* |
+
+<br/>
 
 ## Push a branch to a bare repository
 
@@ -1461,12 +1492,13 @@ They set the content of `data/number.txt` to
 `14` and commit the change to
 `master` on `alpha`.
 
-![\`14\` commit on
-\`alpha\`](/assets/img/git/31-14-alpha.png)
+<br/>
 
-::: {.image-caption}
-\`14\` commit on \`alpha\`
-```
+| ![`14` commit on `alpha`](/assets/img/git/31-14-alpha.png) | 
+|:--:| 
+| *`14` commit on `alpha`* |
+
+<br/>
 
 ```
     ~/alpha $ git push delta master
@@ -1491,12 +1523,13 @@ to point at the `14` commit.
 `alpha` has an up-to-date record of the state of
 `delta`.
 
-![\`14\` commit pushed from \`alpha\` to
-\`delta\`](/assets/img/git/32-14-pushed-to-delta.png)
+<br/>
 
-::: {.image-caption}
-\`14\` commit pushed from \`alpha\` to \`delta\`
-```
+| ![`14` commit pushed from `alpha` to `delta`](/assets/img/git/32-14-pushed-to-delta.png) | 
+|:--:| 
+| *`14` commit pushed from `alpha` to `delta`* |
+
+<br/>
 
 ## Resumen
 
