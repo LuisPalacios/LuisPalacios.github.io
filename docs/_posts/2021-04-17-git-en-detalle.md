@@ -12,7 +12,7 @@ excerpt_separator: <!--more-->
 
 <!--more-->
 
-No depende de un repositorio central, múltiples usuarios pueden instalarse GIT y comunicarse entre ellos sin necesidad de conectar con un servidor central. Lo que pasa es que sería inmanejable, así que los "servidores o repositorios centrales (remotos)" son muy útiles y necesarios, **los más famosos son [GitHub] y [GitLab]**. 
+No depende de un repositorio central, múltiples usuarios pueden instalarse GIT y comunicarse entre ellos sin pasar por dicho servidor central. Lo que pasa es que sería inmanejable, así que los "servidores o repositorios centrales (remotos)" son muy útiles y necesarios, **los más famosos son [GitHub] y [GitLab]**. 
 
 [Git]: https://git-scm.com
 [GitHub]: https://www.github.com
@@ -25,9 +25,9 @@ No depende de un repositorio central, múltiples usuarios pueden instalarse GIT 
 
 Muy útiles, la [Cheatsheet en Español](https://training.github.com/downloads/es_ES/github-git-cheat-sheet/) o la [Visual Git Cheat Sheet](https://ndpsoftware.com/git-cheatsheet.html) o este pequeño [Guía burros](https://rogerdudler.github.io/git-guide/index.es.html) o la [documentación oficial](https://git-scm.com/doc) o si te vas a cualqueir buscador en internet vas a encontrar cientos de videos, tutoriales y documentos. 
 
-¿Porqué mola GIT?. Hay muchos motivos, como su velocidad, que lo hizo Linus Torvals, que es libre, que nos permite movernos, como si tuviéramos un puntero en el tiempo, por todas las revisiones de código y desplazarnos una manera muy ágil.
+¿Porqué mola GIT?. Hay muchos motivos, como su velocidad, que lo hizo Linus Torvals, que es libre, que nos permite movernos, como si tuviéramos un puntero en el tiempo, por todas las revisiones de código y desplazarnos de una manera muy ágil.
 
-Tiene un sistema de trabajo con ramas (branches) que lo hace especialmente potente. Están destinadas a provocar proyectos divergentes de un proyecto principal, para hacer experimentos o para probar nuevas funcionalidades.
+Tiene un sistema de trabajo con ramas (branches) que lo hace especialmente potente. Permiten poder tener proyectos divergentes de un principal, hacer experimentos o para probar nuevas funcionalidades, entre otras cosas.
 
 Antes de entrar en harina, tenemos dos formas de trabajar, con el cliente (programa) `git` para la línea de comandos o con un cliente gráfico, muchísimo más sencillo y agradable. Aún así te recomiendo empezar por la línea de comandos (`git` a secas) y cuando entiendas cuatro cosillas importantes te pases a un cliente GUI.
 
@@ -41,12 +41,11 @@ Antes de entrar en harina, tenemos dos formas de trabajar, con el cliente (progr
 
 ### Instalación de Git
 
-Para trabajar con GIT te recomiendo que siempre te instales la versión de la línea de comandos (programa `git`) y que elijas UNO de los **clientes GUI anteriores (el que más te guste)**, lo descargues y lo instales en tu ordenador. 
+Para empezar, te recomiendo que siempre te instales la versión de la línea de comandos (programa `git`) y que apuestes por uno de los **clientes GUI anteriores**, el que más te guste, lo descargues y lo instales en tu ordenador. 
 
 * Aquí tienes una pequeña guía para [instalar](https://git-scm.com/book/es/v2/Inicio---Sobre-el-Control-de-Versiones-Instalación-de-Git) `git` en línea de comandos en Linux, Windows y Mac.
 
-Una vez que lo tengas instalado deberías funcionarte al menos lo siguiente: 
-
+Una vez que lo tengas instalado, comprueba que funciona:
 
 ```zsh
 ➜  ~ > git
@@ -61,7 +60,7 @@ git version 2.24.3 (Apple Git-128)
 ```
 <br/>
 
-Uno de los mejores artículos técnicos **con detalle** que me encontré en el pasado para aprender fue [Git from the inside out](https://codewords.recurse.com/issues/two/git-from-the-inside-out) **(GIT desde el interior)**. De hecho me gustó tanto que me he tomado la libertad de traducirlo y crear esta versión a medida con mis propias palabras. Por supuesto todo el crédito va para su Autora [Mary Rose Cook](https://maryrosecook.com), muchas gracias desde aquí!.
+Ahora al lio, este apunte (post) nace desde otro en inglés que me gustó mucho. Se trata de [Git from the inside out](https://codewords.recurse.com/issues/two/git-from-the-inside-out) **(GIT desde el interior)**. Me gustó tanto que me he tomado la libertad de traducirlo y crear esta versión a medida con mis propias palabras, revisado y en algunos puntos mejorado para que se entienda mejor. Por supuesto todo el crédito va para su Autora [Mary Rose Cook](https://maryrosecook.com), muchas gracias desde aquí!.
 
 <br/>
 
@@ -71,35 +70,31 @@ Uno de los mejores artículos técnicos **con detalle** que me encontré en el p
 
 ## GIT desde el interior
 
-Este apunte explica cómo funciona y asume que has dedicado algo de tiempo a entender más o menos de qué va y quieres usarlo para el control de versiones de tus proyectos. Puede ser fácil pero hay que dedicarle algo de tiempo.
+A partir de aquí vamos a explica cómo funciona, asumiendo que has dedicado algo de tiempo a entender más o menos de qué va y quieres usarlo para el control de versiones de tus proyectos. Git será fácil una vez que le hayas dedicado algo de tiempo.
 
-Supera a otras herramientas de control de versiones (SCM-Source code management) como Subversion, CVS, Perforce y ClearCase por sus características como la **ramificación local (ramas/branches)**, las **áreas de preparación (staging)** y los **múltiples flujos de trabajo**.
+Ha quedado patente después de unos añitos que supera a otras herramientas de control de versiones (SCM-Source code management) como Subversion, CVS, Perforce y ClearCase por sus características como la **ramificación local (ramas/branches)**, las **áreas de preparación (staging)** y los **múltiples flujos de trabajo**.
 
-El apunte se centra en la estructura de grafos que sustenta a Git y en la forma en que
-sus propiedades dictan su comportamiento. Vas a ver una serie de comandos Git ejecutados en un único proyecto, con observaciones sobre la estructura gráfica para ilustrar una propiedad
-y el resultado que produce.
+Veremos el **tree graph**, la estructura gráfica que refleja el árbol de conexiones entre ficheros que sustenta a Git. Vamos a empezar creando un único proyecto en local y cómo los comandos van afectando a dicha estructura gráfica.
 
 <br/>
 
 ### Creación de un proyecto
 
-Empezamos directamente en la línea de comandos, con la creación de un proyecto. Cada proyecto debe estar en un directorio distinto.
+Desde la línea de comandos creamos el directorio `alpha`, porque cada proyecto debe estar en un directorio distinto.
 
 ```zsh
 ➜  ~ > clear
 ➜  ~ > mkdir alpha
 ```
 
-Creamos el directorio `alpha` para contener el proyecto. 
+Nos metemos en `alpha` y creamos un (sub)directorio `data`. Dentro creamos un archivo llamado `letter.txt` que contiene el caracter `a`:
 
 ```zsh
 ➜  ~ > cd alpha
 ➜  alpha > mkdir data
 ➜  alpha > echo 'a' > data/letter.txt
 ```
-
-Cambiamos al directorio `alpha` y creamos un directorio llamado "data" con un archivo
-llamado `letter.txt` que contiene el caracter `a`, quedará con este aspecto:
+Aquí tenemos el resultado final: 
 
 ```zsh
 alpha
