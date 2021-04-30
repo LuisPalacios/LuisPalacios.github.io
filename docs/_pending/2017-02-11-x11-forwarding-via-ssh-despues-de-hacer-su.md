@@ -1,8 +1,9 @@
 ---
 title: "X11 forwarding vía ssh después de hacer \"su\""
 date: "2017-02-11"
-categories: 
-  - "apuntes"
+categories: apuntes
+tags: afp linux
+excerpt_separator: <!--more-->
 ---
 
 Me han preguntado últimamente cómo hacer que esto funcione así que mejor es explicarlo en un apunte y así me vale a mi porque siempre tengo que buscar cual era el comando o la mejor solución. Explico el problema, presento la solución técnica y luego un truco buenísimo que es el que uso yo (ver _Solución permanente_ al final).
@@ -43,7 +44,7 @@ root@marte:~# ls -al .Xauthority
 root@marte:~# xclock    <== FUNCIONA !!!!!!
 ^C
 
-[![](https://www.luispa.com/wp-content/uploads/2017/02/x11fwdsu.png)](https://www.luispa.com/wp-content/uploads/2017/02/x11fwdsu.png)
+![](/assets/img/original/x11fwdsu.png){: width="730px" padding:10px }
 
 Hasta aquí todo bien pero no es permanente, por ejemplo al re-arrancar el servidor, el sshd, etc... se regenerarán los cookies y tendríamos a volver a empezar.
 

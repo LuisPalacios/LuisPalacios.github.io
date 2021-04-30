@@ -1,14 +1,12 @@
 ---
 title: "Limpiar la caché del cliente DNS"
 date: "2014-12-13"
-categories: 
-  - "apuntes"
-tags: 
-  - "cache"
-  - "dns"
+categories: apuntes
+tags: cache dns
+excerpt_separator: <!--more-->
 ---
 
-[![dominios](https://www.luispa.com/wp-content/uploads/2014/12/dominios-150x150.png)](https://www.luispa.com/wp-content/uploads/2014/12/dominios.png)
+![dominios](/assets/img/original/dominios-150x150.png){: width="730px" padding:10px }
 
 Aunque esto mismo está ya muy trillado y documentado por internet, necesitaba tenerlo "cerca" y a mano, así que dejo un copia de lo que encontrarás por varias fuentes...
 
@@ -27,10 +25,10 @@ Aunque pocas, hay situaciones donde necesitamos limpiar dicha "caché" pero no t
 **OSX** 10.10
 
  
-\_\_\_Limpiar la Cache MDNS\_\_\_
+___Limpiar la Cache MDNS___
 discoveryutil mdnsflushcache
  
-\_\_\_Limpiar la Cache UDNS\_\_\_
+___Limpiar la Cache UDNS___
 discoveryutil udnsflushcaches
  
 

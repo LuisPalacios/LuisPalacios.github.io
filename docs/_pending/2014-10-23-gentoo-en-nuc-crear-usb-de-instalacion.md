@@ -1,26 +1,22 @@
 ---
 title: "Gentoo en NUC: Crear USB de instalación"
 date: "2014-10-23"
-categories: 
-  - "gentoo"
-tags: 
-  - "d54250wyk"
-  - "linux"
-  - "nuc"
-  - "usb"
+categories: gentoo
+tags: d54250wyk linux nuc usb
+excerpt_separator: <!--more-->
 ---
 
-Nota: Este post pertenece a una "colección", así que te recomiendo que empieces por la [instalación Gentoo GNU/Linux en un Intel® NUC D54250WYK](https://www.luispa.com/?p=7). En este artículo en concreto describo cómo preparar una USB para hacer la instalación
+Nota: Este post pertenece a una "colección", así que te recomiendo que empieces por la ![instalación Gentoo GNU/Linux en un Intel® NUC D54250WYK](/assets/img/original/?p=7){: width="730px" padding:10px }. En este artículo en concreto describo cómo preparar una USB para hacer la instalación
 
 # Crear USB "bootable" para instalar
 
-Lo primero que tienes que hacer es descargarte la última versión del ISO de instalación de Gentoo: install-amd64-minimal-AAAAMMDD.iso desde los [mirrors de gentoo,](https://www.gentoo.org/main/en/mirrors2.xml) que encontrarás en el directorio **releases/amd64/current-iso**
+Lo primero que tienes que hacer es descargarte la última versión del ISO de instalación de Gentoo: install-amd64-minimal-AAAAMMDD.iso desde los ![mirrors de gentoo,](/assets/img/original/mirrors2.xml){: width="730px" padding:10px } que encontrarás en el directorio **releases/amd64/current-iso**
 
-El siguiente paso es preparar un USB (te recomiendo mínimo 2.0 de 1GB) para instalar este ISO. El procedimiento que utilices tiene que asegurarte que finalmente hace boot. Hay decenas de métodos, algunos desde Linux, otros desde Windows, MacOSX, manuales, usando herramientas como unetbootin [http://unetbootin.sourceforge.net/](http://unetbootin.sourceforge.net/), etc.
+El siguiente paso es preparar un USB (te recomiendo mínimo 2.0 de 1GB) para instalar este ISO. El procedimiento que utilices tiene que asegurarte que finalmente hace boot. Hay decenas de métodos, algunos desde Linux, otros desde Windows, MacOSX, manuales, usando herramientas como unetbootin ![http://unetbootin.sourceforge.net/](/assets/img/original/){: width="730px" padding:10px }, etc.
 
-En mi caso he optado por un disco externo USB3.0 de 1TB, donde formatearé una pequeña partición para instalar gentoo en el NUC, me servirá de emergencia para hacer boot desde él en caso de problemas y además usaré el resto del disco para crear una partición de datos ([lo haré una vez termine de instalar el NUC, usando gparted](http://blog.luispa.com/index.php?controller=post&action=view&id_post=41)).
+![lo haré una vez termine de instalar el NUC, usando gparted](/assets/img/original/index.php?controller=post&action=view&id_post=41)){: width="730px" padding:10px }.
 
-[![usbgentoo](https://www.luispa.com/wp-content/uploads/2014/12/usbgentoo.png)](https://www.luispa.com/wp-content/uploads/2014/12/usbgentoo.png)
+![usbgentoo](/assets/img/original/usbgentoo.png){: width="730px" padding:10px }
 
 ### Instalación manual desde linux
 
@@ -33,7 +29,7 @@ Con mi USB externa insertada (en mi caso un disco enorme de 1TB), identifico el 
  
 # dmesg
 :
-\[425170.630067\] sd 3:0:0:0: \[sdb\] Attached SCSI removable disk
+[425170.630067] sd 3:0:0:0: [sdb] Attached SCSI removable disk
  
 
 Nota: Si el disco es reconocible por el comando fdisk también puedes usar "fdisk -l" para identificar la USB, en cualquier caso lo más seguro es usar dmesg. **En mi caso el dispositivo es el /dev/sdb**.
@@ -61,14 +57,14 @@ En mi caso creo una partición única que ocupa solo 4GB del USB. Donde pongo In
  
 # fdisk -l
 Disk /dev/sdb:  931,5 GiB, 1000170586112 bytes, 1953458176 sectors
-Units: sectors of 1 \* 512 = 512 bytes
+Units: sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
 Disklabel type: dos
 Disk identifier: 0xe4e671ce
 
 Disposit.  Inicio   Start    Final  Blocks   Id  System
-/dev/sdb1       \*    2048  8390655  4194304   b  W95 FAT32  
+/dev/sdb1       *    2048  8390655  4194304   b  W95 FAT32  
  
 
  
@@ -100,11 +96,11 @@ Montar la partición recien creada y el fichero ISO de instalación
 Copiar todo el contenido del ISO a la USB
 
  
-# cp -r /mnt/iso/\* /mnt/usb
+# cp -r /mnt/iso/* /mnt/usb
 # sync
-# mv /mnt/usb/isolinux/\* /mnt/usb
+# mv /mnt/usb/isolinux/* /mnt/usb
 # mv /mnt/usb/isolinux.cfg /mnt/usb/syslinux.cfg
-# rm -rf /mnt/usb/isolinux\*
+# rm -rf /mnt/usb/isolinux*
 # mv /mnt/usb/memtest86 /mnt/usb/memtest
  
 
@@ -132,4 +128,4 @@ Extraer el USB, ya está listo para ser utilizado
 
  
 
-Volver al paso anterior: [Preparar la BIOS](https://www.luispa.com/?p=740) o ir al siguiente: [Iniciar la instalación](https://www.luispa.com/?p=759)
+Volver al paso anterior: [Preparar la BIOS](https://www.luispa.com/?p=740) o ir al siguiente: ![Iniciar la instalación](/assets/img/original/?p=759){: width="730px" padding:10px }

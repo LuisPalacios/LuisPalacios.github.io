@@ -1,15 +1,16 @@
 ---
 title: "Capturar tráfico con WireShark de forma remota"
 date: "2016-06-05"
-categories: 
-  - "apuntes"
+categories: apuntes
+tags: linux nuc
+excerpt_separator: <!--more-->
 ---
 
-Un apunte rápido. Necesitaba capturar tráfico en un linux remoto, pero no quería pasar por la aro de hacer una instalación completa de Wireshark, es demasiado 'pesado' para equipos poco potentes (por ejemplo, [Pi2 con linux Gentoo](https://www.luispa.com/?p=3128)).
+Un apunte rápido. Necesitaba capturar tráfico en un linux remoto, pero no quería pasar por la aro de hacer una instalación completa de Wireshark, es demasiado 'pesado' para equipos poco potentes (por ejemplo, ![Pi2 con linux Gentoo](/assets/img/original/?p=3128)){: width="730px" padding:10px }.
 
 Solución: Ejecutar **`tcpdump`** en la **Pi con Linux** y ejecutar **Wireshark** **en iMac con OSX** y conseguir que la salida de tcpdump sea la entrada de Wireshark. Parece magia pero verás que es extremadamente sencillo. Asumo que conoces **SSH** y **sudo**, no lo describo aquí y son los únicos requisitos para que esto acabe siendo tan fácil.
 
-[![wireshark-remote](https://www.luispa.com/wp-content/uploads/2016/06/wireshark-remote.jpg)](https://www.luispa.com/wp-content/uploads/2016/06/wireshark-remote.jpg)
+![wireshark-remote](/assets/img/original/wireshark-remote.jpg){: width="730px" padding:10px }
 
 ### OPCIÓN 1 con mkfifo
 

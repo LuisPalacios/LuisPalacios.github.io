@@ -1,19 +1,14 @@
 ---
 title: "SMB2 en Linux"
 date: "2016-03-06"
-categories: 
-  - "apuntes"
-  - "gentoo"
-tags: 
-  - "cifs"
-  - "samba"
-  - "smb"
-  - "smb2"
+categories: apuntes gentoo
+tags: cifs samba smb smb2
+excerpt_separator: <!--more-->
 ---
 
-[![samba](https://www.luispa.com/wp-content/uploads/2016/06/samba.jpg)](https://www.luispa.com/wp-content/uploads/2016/06/samba.jpg)
+![samba](/assets/img/original/samba.jpg){: width="730px" padding:10px }
 
-En este apunte describo cómo entregar un servicio de ficheros a través de la red con SMB2 (Samba). Es un ejemplo muy sencillo, como servidor un equipo Linux y como cliente un Mac OSX. Tengo otro [apunte sobre SMB y QNAP](https://www.luispa.com/?p=665) muy parecido.
+En este apunte describo cómo entregar un servicio de ficheros a través de la red con SMB2 (Samba). Es un ejemplo muy sencillo, como servidor un equipo Linux y como cliente un Mac OSX. Tengo otro ![apunte sobre SMB y QNAP](/assets/img/original/?p=665){: width="730px" padding:10px } muy parecido.
 
 **SMB (Server Message Block)** es un "Protocolo" de red que entre otras cosas hace posible la compartición de archivos e impresoras entre nodos de una red. Lo inventó IBM, pero el que lo modificó, lo llevó a la fama y hoy en día mantiene y sigue ampliando es Microsoft. **CIFS (Common Internet File System)** es un "Dialecto" de SMB. Un dialecto es un conjunto de "mensajes" que definen una versión particular del protocolo SMB. Microsoft implementa SMB en sus equipos y añadió múltiples mejoras en su dialecto CIFS. **Samba** es una implementación libre del protocolo SMB (o llámalo CIFS si quieres) que está disponible en plataformas GNU/Linux (por ejemplo el QNAP), Mac OS X o Unix.
 
@@ -21,7 +16,7 @@ En este apunte describo cómo entregar un servicio de ficheros a través de la r
 - SAMBA >= 3.6.0 usa SMB2 (entró en pista en 2014 en QNAP, MacOSX, …)
 - SAMBA >= 4.0.0 usa SMB3 (ya por el 2014 estaba en “desarrollo", estable y poco implementado)
 
-El protocolo nativo de Apple de toda la vida eta AFP, desde OSX Mavericks incorpora y **recomienda** SMB2, ha pasado a considerarse el protocolo por defecto, en este PDF [OSX Mavericks Core Technology Overview, pagina 21](https://www.apple.com/media/us/osx/2013/docs/OSX_Mavericks_Core_Technology_Overview.pdf) encontrarás más información.
+El protocolo nativo de Apple de toda la vida eta AFP, desde OSX Mavericks incorpora y **recomienda** SMB2, ha pasado a considerarse el protocolo por defecto, en este PDF ![OSX Mavericks Core Technology Overview, pagina 21](/assets/img/original/OSX_Mavericks_Core_Technology_Overview.pdf){: width="730px" padding:10px } encontrarás más información.
 
  
 
@@ -29,8 +24,8 @@ El protocolo nativo de Apple de toda la vida eta AFP, desde OSX Mavericks incorp
 
 Se trata de un Linux con Gentoo e instalo Samba (versión 3.6.x // SMB2)
 
-\# emerge -v samba
-\[ebuild  N     \] net-fs/samba-3.6.25::gentoo  USE="acl aio client cups fam ldap netapi pam readline server smbclient winbind -addns -ads -avahi -caps -cluster -debug -dmapi -doc -examples -ldb -quota (-selinux) -smbsharemodes -swat -syslog" ABI\_X86="(64) -32 (-x32)" 33.323 KiB
+# emerge -v samba
+[ebuild  N     ] net-fs/samba-3.6.25::gentoo  USE="acl aio client cups fam ldap netapi pam readline server smbclient winbind -addns -ads -avahi -caps -cluster -debug -dmapi -doc -examples -ldb -quota (-selinux) -smbsharemodes -swat -syslog" ABI_X86="(64) -32 (-x32)" 33.323 KiB
 :
 
  
@@ -41,7 +36,7 @@ Preparo el fichero `smb.conf`. En este ejemplo voy a compartir un único directo
 
  # cd /etc/samba/
  # confcat smb.conf
-\[global\]
+[global]
    workgroup = WORKGROUP
    server string = Cloud Server
    security = user
@@ -53,15 +48,15 @@ Preparo el fichero `smb.conf`. En este ejemplo voy a compartir un único directo
    domain master = auto
    preferred master = no
    dns proxy = no
-   max protocol = SMB2\_10
+   max protocol = SMB2_10
    display charset = UTF8
    max xmit = 65535
-   socket options = TCP\_NODELAY IPTOS\_LOWDELAY SO\_SNDBUF=65535 SO\_RCVBUF=65535 SO\_KEEPALIVE
+   socket options = TCP_NODELAY IPTOS_LOWDELAY SO_SNDBUF=65535 SO_RCVBUF=65535 SO_KEEPALIVE
    read raw = yes
    write raw = yes
    max connections = 65535
    max open files = 65535
-\[Cloud\]
+[Cloud]
 comment = Disco Cloud
 path = /cloud
 browsable = yes
@@ -84,7 +79,7 @@ mangled names = yes
 
 Arranco el servicio y lo configuro para que arranque de forma automática en el próximo boot
 
-\# systemctl start smbd
+# systemctl start smbd
 # systemctl enable smbd
 
  
@@ -98,17 +93,17 @@ El backend para guardar el nombre/contraseña de los usuarios de Samba puede ser
 
 El siguiente paso es crear las cuentas en Samba, en este ejemplo creo solo una:
 
-\# pdbedit -a luis
+# pdbedit -a luis
 Unix username:        luis
 NT username:
-Account Flags:        \[U          \]
+Account Flags:        [U          ]
 User SID:             S-1-5-21-1234567-123456789-1234567890-1011
 Primary Group SID:    S-1-5-21-1234567-123456789-1234567890-523
 Full Name:
-Home Directory:       \\\\server\\luis
+Home Directory:       \\server\luis
 HomeDir Drive:
 Logon Script:
-Profile Path:         \\\\server\\luis\\profile
+Profile Path:         \\server\luis\profile
 Domain:               SERVER
 Account desc:
 Workstations:
@@ -129,8 +124,8 @@ Por si acaso lo necesitas, echa un ojo al comando \`pbedit\`, puedes borrar cuen
 
 Desde el Finder conecto con el servicio. Es tan sencillo como pulsar CMD+K en el Finder y escribir la notación apropiada
 
-[![SMB2-1](https://www.luispa.com/wp-content/uploads/2016/03/SMB2-1.png)](https://www.luispa.com/wp-content/uploads/2016/03/SMB2-1.png)
+![SMB2-1](/assets/img/original/SMB2-1.png){: width="730px" padding:10px }
 
 Nos pedirá la contraseña del usuario, que puedo guardar en el Llavero para que la próxima vez ya no la solicite
 
-[![SMB2-2](https://www.luispa.com/wp-content/uploads/2016/03/SMB2-2.png)](https://www.luispa.com/wp-content/uploads/2016/03/SMB2-2.png)
+![SMB2-2](/assets/img/original/SMB2-2.png){: width="730px" padding:10px }

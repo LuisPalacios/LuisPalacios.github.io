@@ -1,24 +1,20 @@
 ---
 title: "Dirección IP fija: Systemd + Gentoo"
 date: "2013-12-23"
-categories: 
-  - "gentoo"
-  - "linux"
-  - "systemd"
-tags: 
-  - "linux"
-  - "systemd"
+categories: gentoo linux systemd
+tags: linux systemd
+excerpt_separator: <!--more-->
 ---
 
-En este apunte explico cómo asignarle una IP fija a un sistema Linux que ha sido configurado con "Systemd". Nota que el nombre del interfaz puede que sea distinto en tu caso, te recomiendo averiguar cómo ha llamado el kernel usando los comandos "ifconfig, ip link o dmesg". Otro aviso: para poder crear ficheros que contienen el caracter @ en el nombre necesitarás normalmente usar \\@. [![IP](https://www.luispa.com/wp-content/uploads/2014/12/IP.jpg)](https://www.luispa.com/wp-content/uploads/2014/12/IP.jpg)**iproute2** Verifico que tengo iproute2 instalado, en su defecto lo instalo
+En este apunte explico cómo asignarle una IP fija a un sistema Linux que ha sido configurado con "Systemd". Nota que el nombre del interfaz puede que sea distinto en tu caso, te recomiendo averiguar cómo ha llamado el kernel usando los comandos "ifconfig, ip link o dmesg". Otro aviso: para poder crear ficheros que contienen el caracter @ en el nombre necesitarás normalmente usar \@. ![IP](/assets/img/original/IP.jpg){: width="730px" padding:10px }**iproute2** Verifico que tengo iproute2 instalado, en su defecto lo instalo
 
  
 # emerge -v iproute2
 :
 # ip link
-1: lo: <LOOPBACK,UP,LOWER\_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT
 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-2: eno16777736: <BROADCAST,MULTICAST,UP,LOWER\_UP> mtu 1500 qdisc pfifo\_fast state UP mode DEFAULT qlen 1000
+2: eno16777736: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT qlen 1000
 link/ether 00:0c:29:85:24:22 brd ff:ff:ff:ff:ff:ff
 :
  
@@ -42,14 +38,14 @@ netmask=24
 broadcast=192.168.1.255
 gateway=192.168.1.1
 
-\[Unit\]
+[Unit]
 Description=Network connectivity (%i)
 Wants=network.target
 Before=network.target
 BindsTo=sys-subsystem-net-devices-%i.device
 After=sys-subsystem-net-devices-%i.device
 
-\[Service\]
+[Service]
 Type=oneshot
 RemainAfterExit=yes
 EnvironmentFile=/etc/conf.d/network@%i
@@ -61,11 +57,11 @@ ExecStart=/bin/ip route add default via ${gateway}
 ExecStop=/bin/ip addr flush dev %i
 ExecStop=/bin/ip link set dev %i down
 
-\[Install\]
+[Install]
 WantedBy=multi-user.target
 
 **Habilito y arranco el nuevo servicio** Por último habilito y ordeno la ejecución del servicio que activará la IP fija.
 
  
-# systemctl enable network\\@eno16777736.service
-# systemctl start network\\@eno16777736.service
+# systemctl enable network\@eno16777736.service
+# systemctl start network\@eno16777736.service

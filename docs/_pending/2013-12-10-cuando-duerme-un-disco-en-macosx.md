@@ -1,14 +1,12 @@
 ---
 title: "Cuándo duerme un disco en MacOSX"
 date: "2013-12-10"
-categories: 
-  - "macos"
-tags: 
-  - "disco"
-  - "macosx"
+categories: macos
+tags: disco macosx
+excerpt_separator: <!--more-->
 ---
 
-[![duermetedisco](https://www.luispa.com/wp-content/uploads/2014/12/duermetedisco.png)](https://www.luispa.com/wp-content/uploads/2014/12/duermetedisco.png)
+![duermetedisco](/assets/img/original/duermetedisco.png){: width="730px" padding:10px }
 
 Necesito subir el tiempo que esperará el MacOSX antes de poner a dormir un disco duro externo Thunderbolt.
 
@@ -17,7 +15,7 @@ Por defecto son diez minutos. El comando para ver la configuración actual es:
  
 obelix:~ luis$ sudo pmset -g
 Active Profiles:
-AC Power 2\*
+AC Power 2*
 Currently in use:
  standby 1
  Sleep On Power Button 1

@@ -1,42 +1,40 @@
 ---
 title: "Gentoo en NUC: Finalizar la instalación"
 date: "2014-11-01"
-categories: 
-  - "gentoo"
-tags: 
-  - "linux"
-  - "nuc"
+categories: gentoo
+tags: linux nuc
+excerpt_separator: <!--more-->
 ---
 
-[![metas2](https://www.luispa.com/wp-content/uploads/2014/12/metas2.jpg)](https://www.luispa.com/wp-content/uploads/2014/12/metas2.jpg)
+![metas2](/assets/img/original/metas2.jpg){: width="730px" padding:10px }
 
-Este post pertenece a la colección sobre la [instalación de Gentoo GNU/Linux en un Intel® NUC D54250WYK](https://www.luispa.com/?p=7). Este es el último apunte de la serie donde describo cuales son los últimos retoques a realizar para dar por terminada la instalación.
+Este post pertenece a la colección sobre la ![instalación de Gentoo GNU/Linux en un Intel® NUC D54250WYK](/assets/img/original/?p=7){: width="730px" padding:10px }. Este es el último apunte de la serie donde describo cuales son los últimos retoques a realizar para dar por terminada la instalación.
 
 **Completar la instalación**
 
-Ya hemos terminado los [pasos necesarios antes del primer "reboot"](https://www.luispa.com/?p=842), arranca desde el disco duro SSD,. Cuando tengas el prompt y hagas login por primera vez podrás observar qué módulos se han cargado por defecto:
+Ya hemos terminado los ![pasos necesarios antes del primer "reboot"](/assets/img/original/?p=842){: width="730px" padding:10px }, arranca desde el disco duro SSD,. Cuando tengas el prompt y hagas login por primera vez podrás observar qué módulos se han cargado por defecto:
 
  
  
 totobo ~ # lsmod
 Module Size Used by
 usbhid 30803 0
-snd\_hda\_intel 15332 0
-snd\_hda\_controller 16221 1 snd\_hda\_intel
-snd\_hda\_codec 73489 2 snd\_hda\_intel,snd\_hda\_controller
-snd\_hwdep 5405 1 snd\_hda\_codec
-xhci\_hcd 90185 0
-ehci\_pci 3256 0
-ehci\_hcd 35032 1 ehci\_pci
-snd\_pcm 62259 3 snd\_hda\_codec,snd\_hda\_intel,snd\_hda\_controller
+snd_hda_intel 15332 0
+snd_hda_controller 16221 1 snd_hda_intel
+snd_hda_codec 73489 2 snd_hda_intel,snd_hda_controller
+snd_hwdep 5405 1 snd_hda_codec
+xhci_hcd 90185 0
+ehci_pci 3256 0
+ehci_hcd 35032 1 ehci_pci
+snd_pcm 62259 3 snd_hda_codec,snd_hda_intel,snd_hda_controller
 e1000e 138496 0
-x86\_pkg\_temp\_thermal 4285 0
-snd\_timer 15341 1 snd\_pcm
+x86_pkg_temp_thermal 4285 0
+snd_timer 15341 1 snd_pcm
 coretemp 5116 0
-usbcore 138617 4 ehci\_hcd,ehci\_pci,usbhid,xhci\_hcd
-snd 48425 5 snd\_hwdep,snd\_timer,snd\_pcm,snd\_hda\_codec,snd\_hda\_intel
-i2c\_i801 8461 0
-usb\_common 1480 1 usbcore
+usbcore 138617 4 ehci_hcd,ehci_pci,usbhid,xhci_hcd
+snd 48425 5 snd_hwdep,snd_timer,snd_pcm,snd_hda_codec,snd_hda_intel
+i2c_i801 8461 0
+usb_common 1480 1 usbcore
  
 
 La Red
@@ -52,15 +50,15 @@ Cuando terminamos de arrancar por primera vez podemos ver qué ha detectado el s
  
  
 totobo ~ # idmesg | grep -i e1000e
-\[ 2.020471\] e1000e: Intel(R) PRO/1000 Network Driver - 2.3.2-k
-\[ 2.020475\] e1000e: Copyright(c) 1999 - 2014 Intel Corporation.
-\[ 2.020640\] e1000e 0000:00:19.0: Interrupt Throttling Rate (ints/sec) set to dynamic conservative mode
-\[ 2.020662\] e1000e 0000:00:19.0: irq 58 for MSI/MSI-X
-\[ 2.443707\] e1000e 0000:00:19.0 eth0: registered PHC clock
-\[ 2.443713\] e1000e 0000:00:19.0 eth0: (PCI Express:2.5GT/s:Width x1) c0:3f:d5:65:2e:75
-\[ 2.443716\] e1000e 0000:00:19.0 eth0: Intel(R) PRO/1000 Network Connection
-\[ 2.443757\] e1000e 0000:00:19.0 eth0: MAC: 11, PHY: 12, PBA No: FFFFFF-0FF
-\[ 294.748405\] e1000e 0000:00:19.0: irq 58 for MSI/MSI-X
+[ 2.020471] e1000e: Intel(R) PRO/1000 Network Driver - 2.3.2-k
+[ 2.020475] e1000e: Copyright(c) 1999 - 2014 Intel Corporation.
+[ 2.020640] e1000e 0000:00:19.0: Interrupt Throttling Rate (ints/sec) set to dynamic conservative mode
+[ 2.020662] e1000e 0000:00:19.0: irq 58 for MSI/MSI-X
+[ 2.443707] e1000e 0000:00:19.0 eth0: registered PHC clock
+[ 2.443713] e1000e 0000:00:19.0 eth0: (PCI Express:2.5GT/s:Width x1) c0:3f:d5:65:2e:75
+[ 2.443716] e1000e 0000:00:19.0 eth0: Intel(R) PRO/1000 Network Connection
+[ 2.443757] e1000e 0000:00:19.0 eth0: MAC: 11, PHY: 12, PBA No: FFFFFF-0FF
+[ 294.748405] e1000e 0000:00:19.0: irq 58 for MSI/MSI-X
 
 Confirmar que el "kernel" sí tiene listo el interfaz (importante la opción -a)
 
@@ -79,16 +77,16 @@ Así pues, hago una primera configuración muy básica para "tener red", que con
 
 - Con cliente DHCP
 
-config\_eth0="dhcp"
-mtu\_eth0="8704" # Usa esto si tienes un switch que soporte y tenga configurado jumbo frames
+config_eth0="dhcp"
+mtu_eth0="8704" # Usa esto si tienes un switch que soporte y tenga configurado jumbo frames
  
 
 - Con IP Fija
 
  
-config\_eth0="192.168.1.245/24"
-routes\_eth0="default via 192.168.1.1"
-mtu\_eth0="8704"     # Usa esto si tienes un switch que soporte y tenga configurado jumbo frames
+config_eth0="192.168.1.245/24"
+routes_eth0="default via 192.168.1.1"
+mtu_eth0="8704"     # Usa esto si tienes un switch que soporte y tenga configurado jumbo frames
  
 
  
@@ -134,15 +132,15 @@ Limpiar tarballs
 
  
  
-# rm /stage3-\*.tar.bz2\*
-# rm /portage-\*.tar.bz2\*
+# rm /stage3-*.tar.bz2*
+# rm /portage-*.tar.bz2*
  
 
 Terminar la instalación
 
 Para terminar me gusta acelerar al máximo el arranque del equipo, así que voy a activar Fast Boot en la BIOS (recuerda, se entra pulsando F2 durante el arranque) y además voy a poner a '0' el tiempo de espera de GRUB:
 
-Modificar GRUB\_TIMEOUT=0 en /etc/default/grub
+Modificar GRUB_TIMEOUT=0 en /etc/default/grub
 
  
  
@@ -175,4 +173,4 @@ Aunque no voy a documentar como se parametrizan todos... sí que dejo aquí una 
 - app-emulation/docker     (Sobre Docker)
 - dev-tcltk/expect         USE=doc para "autoexpect" (se instala en /usr/share/doc/expect-x.yy/examples/)
 
-Se acabó, terminamos la instalación del NUC!!!.  Nota: Si lo deseas puedes volver al paso anterior: [antes del primer reboot del kernel](https://www.luispa.com/?p=842)
+Se acabó, terminamos la instalación del NUC!!!.  Nota: Si lo deseas puedes volver al paso anterior: ![antes del primer reboot del kernel](/assets/img/original/?p=842){: width="730px" padding:10px }

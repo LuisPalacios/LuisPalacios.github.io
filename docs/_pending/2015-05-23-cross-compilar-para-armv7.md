@@ -1,18 +1,19 @@
 ---
 title: "Cross compilar para ARMv7"
 date: "2015-05-23"
-categories: 
-  - "apuntes"
+categories: apuntes
+tags: cisco hiperconvergencia ucs
+excerpt_separator: <!--more-->
 ---
 
 ## Introducción
 
-El objetivo de este apunte es describir cómo montar un entorno de cross-compilación, de tal forma que desde un equipo con procesador Intel i5 pueda generar ejecutables para ARMv7. Tengo 2 casos de uso muy concretos: 1) **reducir los tiempos de compilación de [una Raspberry Pi2](https://www.luispa.com/?p=3128)** (**ARMv5 Processor rev 5 (v7l)**) **que ya tiene Gentoo instalado** y 2) poder compilar un programa muy concreto (tvheadend) para mi [servidor de Streaming IPTV casero](https://www.luispa.com/?p=2647) (MOI Pro con ARMv7 Processor rev 10 (v7l) que venía con un linux a medida)
+El objetivo de este apunte es describir cómo montar un entorno de cross-compilación, de tal forma que desde un equipo con procesador Intel i5 pueda generar ejecutables para ARMv7. Tengo 2 casos de uso muy concretos: 1) **reducir los tiempos de compilación de ![una Raspberry Pi2](https://www.luispa.com/?p=3128)** (**ARMv5 Processor rev 5 (v7l)**) **que ya tiene Gentoo instalado** y 2) poder compilar un programa muy concreto (tvheadend) para mi [servidor de Streaming IPTV casero](/assets/img/original/?p=2647) (MOI Pro con ARMv7 Processor rev 10 (v7l) que venía con un linux a medida){: width="730px" padding:10px }
 
 Si recapitulamos, voy a tener lo siguiente:
 
-- [PI2 con Gentoo Linux](https://www.luispa.com/?p=3128) (ARMv7).
-- [Servidor de Streaming IPTV casero](https://www.luispa.com/?p=2647) (MOIPro ARMv7)
+- ![PI2 con Gentoo Linux](/assets/img/original/?p=3128) (ARMv7){: width="730px" padding:10px }.
+- ![Servidor de Streaming IPTV casero](/assets/img/original/?p=2647) (MOIPro ARMv7){: width="730px" padding:10px }
 - Equipo Intel i5 con Linux Gentoo al que llamaré "**BUILD SERVER**".
 
  
@@ -30,9 +31,9 @@ sys-devel/distcc gtk crossdev
 
 Arranque del daemon vía systemd
 
-\# cat /etc/systemd/system/distccd.service.d/00gentoo.conf
-\[Service\]
-Environment="ALLOWED\_SERVERS=192.168.1.0/24"
+# cat /etc/systemd/system/distccd.service.d/00gentoo.conf
+[Service]
+Environment="ALLOWED_SERVERS=192.168.1.0/24"
 
 # systemctl daemon-reload
 # systemctl enable distccd
@@ -66,18 +67,18 @@ Convierto el fichero cortafuegix.qcow2 a RAW (tarda ~ 1min 15seg) - **Paso
 
 Interesante lectura tras hace r el emerge de distcc
 
-\* \* Tips on using distcc with Gentoo can be found at
- \* https://wiki.gentoo.org/wiki/Distcc
- \*
- \* How to use pump mode with Gentoo:
- \* # distcc-config --set-hosts "foo,cpp,lzo bar,cpp,lzo baz,cpp,lzo"
- \* # echo 'FEATURES="${FEATURES} distcc distcc-pump"' >> /etc/portage/make.conf
- \* # emerge -u world
- \*
- \* To use the distccmon programs with Gentoo you should use this command:
- \* # DISTCC\_DIR="/var/tmp/portage/.distcc" distccmon-text 5
- \* Or:
- \* # DISTCC\_DIR="/var/tmp/portage/.distcc" distccmon-gnome
+* * Tips on using distcc with Gentoo can be found at
+ * https://wiki.gentoo.org/wiki/Distcc
+ *
+ * How to use pump mode with Gentoo:
+ * # distcc-config --set-hosts "foo,cpp,lzo bar,cpp,lzo baz,cpp,lzo"
+ * # echo 'FEATURES="${FEATURES} distcc distcc-pump"' >> /etc/portage/make.conf
+ * # emerge -u world
+ *
+ * To use the distccmon programs with Gentoo you should use this command:
+ * # DISTCC_DIR="/var/tmp/portage/.distcc" distccmon-text 5
+ * Or:
+ * # DISTCC_DIR="/var/tmp/portage/.distcc" distccmon-gnome
 
  
 

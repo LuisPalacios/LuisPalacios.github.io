@@ -1,16 +1,14 @@
 ---
 title: "Despertar el Mac para hacer backup nocturno"
 date: "2014-06-23"
-categories: 
-  - "apuntes"
-tags: 
-  - "backup"
-  - "macosx"
+categories: apuntes
+tags: backup macosx
+excerpt_separator: <!--more-->
 ---
 
 "Hacer copias de seguridad es obligatorio". Por desgracia la mayoría hemos aprendido a lo largo de los años que la frase va en serio. El problema es que hacerlo es un verdadero rollo, así que cualquier programa o método que lo automatice es bienvenido.
 
-[![backup](https://www.luispa.com/wp-content/uploads/2014/12/backup.jpg)](https://www.luispa.com/wp-content/uploads/2014/12/backup.jpg)
+![backup](/assets/img/original/backup.jpg){: width="730px" padding:10px }
 
 En este artículo describo uno más de varios métodos que se usan para hacer copias de seguridad, lo dejo aquí documentado porque es bastante simple y a mi me viene genial, básicamente el Mac se despierta todos los días para hacer la copia. ¿Porqué no uso TimeCapsule?, prefiero hacer copias a un disco compartido NAS vía SMB, donde escribe también otro equipo que no es un MAC, sino un Linux.
 
@@ -24,23 +22,23 @@ Mi método consiste en asegurarme que el Mac se despierte por la noche a las 02:
 
 Ejecuto Automator, creo un nuevo "Flujo de Trabajo". Arrastro la acción “Ejecutar el script Shell” y configuro como Shell /bin/bash y como comando /usr/bin/caffeinate -t 2700 &
 
-[![back1](https://www.luispa.com/wp-content/uploads/2014/12/back1.png)](https://www.luispa.com/wp-content/uploads/2014/12/back1.png) [![back2](https://www.luispa.com/wp-content/uploads/2014/12/back2.png)](https://www.luispa.com/wp-content/uploads/2014/12/back2.png) [![back3](https://www.luispa.com/wp-content/uploads/2014/12/back3.png)](https://www.luispa.com/wp-content/uploads/2014/12/back3.png) [![back4](https://www.luispa.com/wp-content/uploads/2014/12/back4.png)](https://www.luispa.com/wp-content/uploads/2014/12/back4.png)
+[![back1](https://www.luispa.com/wp-content/uploads/2014/12/back1.png)](https://www.luispa.com/wp-content/uploads/2014/12/back1.png) [![back2](https://www.luispa.com/wp-content/uploads/2014/12/back2.png)](https://www.luispa.com/wp-content/uploads/2014/12/back2.png) [![back3](https://www.luispa.com/wp-content/uploads/2014/12/back3.png)](https://www.luispa.com/wp-content/uploads/2014/12/back3.png) ![back4](/assets/img/original/back4.png){: width="730px" padding:10px }
 
 Lo salvo como Aplicación en un directorio de mi propio usuario: /Users/luis/priv/bin/AppCaffeinate.app
 
-[![back5](https://www.luispa.com/wp-content/uploads/2014/12/back5.png)](https://www.luispa.com/wp-content/uploads/2014/12/back5.png)
+![back5](/assets/img/original/back5.png){: width="730px" padding:10px }
 
 ## Configuración de iCal
 
 Para diferenciarlo del resto de citas creo un calendario nuevo que he llamado "Wake up", añado en él una única cita a las 02:00 que se repite todos días. La duración de dicha cita no es importante, en mi caso 30 min, pero solo para que en pantalla se vea bien. Lo importante es la horar de inicio.
 
-[![back6](https://www.luispa.com/wp-content/uploads/2014/12/back6-1024x368.png)](https://www.luispa.com/wp-content/uploads/2014/12/back6.png)
+![back6](/assets/img/original/back6-1024x368.png){: width="730px" padding:10px }
 
 Modifico el "Aviso" de la cita, pulso en "Personalizar", "Abrir Archivo" (ejecutar un programa), "Otra" y selecciono mi aplicación creada con Automator: /Users/luis/priv/bin/AppCaffeinate.app
 
-[![back7](https://www.luispa.com/wp-content/uploads/2014/12/back7.png)](https://www.luispa.com/wp-content/uploads/2014/12/back7.png)
+![back7](/assets/img/original/back7.png){: width="730px" padding:10px }
 
-[![back8](https://www.luispa.com/wp-content/uploads/2014/12/back8.png)](https://www.luispa.com/wp-content/uploads/2014/12/back8.png) [![back9](https://www.luispa.com/wp-content/uploads/2014/12/back9.png)](https://www.luispa.com/wp-content/uploads/2014/12/back9.png)
+[![back8](https://www.luispa.com/wp-content/uploads/2014/12/back8.png)](https://www.luispa.com/wp-content/uploads/2014/12/back8.png) ![back9](/assets/img/original/back9.png){: width="730px" padding:10px }
 
 El equipo se despertará todos los días a las 02:00 am para ejecutar el comando /usr/bin/caffeinate -t 2700 &. De este modo se mantiene despierto durante 45min que es lo que necesito en mi caso para que GoodSync, que tiene programado empezar a las 02:00am, haga su backup incremental.
 

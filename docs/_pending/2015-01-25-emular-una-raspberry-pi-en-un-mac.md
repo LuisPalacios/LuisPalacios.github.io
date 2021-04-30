@@ -1,18 +1,19 @@
 ---
 title: "Emular una Raspberry Pi en un Mac"
 date: "2015-01-25"
-categories: 
-  - "apuntes"
+categories: apuntes
+tags: linux nuc
+excerpt_separator: <!--more-->
 ---
 
 Dejo aquí unos apuntes sobre cómo emular una Raspberry Pi en un MacOSX. Ojo que la Raspberry Pi tiene una GPU y eso no creo que se puede emular, así que distros como openelec no creo que funcionen...
 
-[![emurasp](https://www.luispa.com/wp-content/uploads/2015/01/emurasp.png)](https://www.luispa.com/wp-content/uploads/2015/01/emurasp.png)
+![emurasp](/assets/img/original/emurasp.png){: width="730px" padding:10px }
 
 - Instala Xcode y las command line tools desde el sitio de desarrollo de Apple (el registro es gratuito). Si ya tienes Xcode y solo te faltan las command line tools, se instalan con el comando xcode-select --install.
-- Instala [MacPorts](https://www.macports.org/). Si ya lo tenías, actualizalo a la última versión con sudo port selfupdate y de paso haz un upgrade a los paquetes que ya tenías instalados sudo port upgrade outdated
-- Instala QEMU con el compilador apropiado para el hardware de Raspberry Pi ([ARM1176JZF-S](http://infocenter.arm.com/help/topic/com.arm.doc.ddi0301h/DDI0301H_arm1176jzfs_r0p7_trm.pdf)) usando el comando siguiente: sudo port install qemu +target\_arm. Aunque no hace falta, aprovecho para poner python27 como la versión por defecto con sudo port select --set python python27
-- Creo una carpeta en mi Mac para poder depositar los ficheros de trabajo, básicamente dos: una [imagen para Raspberry](http://www.raspberrypi.org/downloads/) (raspbian funciona) y un [kernel que funcione](http://xecdesign.com/downloads/linux-qemu/kernel-qemu) (fuente: [aquí](http://xecdesign.com/qemu-emulating-raspberry-pi-the-easy-way/)). En mi caso puse todo bajo el directorio /Users/luis/priv/raspberry
+- Instala ![MacPorts](/assets/img/original/){: width="730px" padding:10px }. Si ya lo tenías, actualizalo a la última versión con sudo port selfupdate y de paso haz un upgrade a los paquetes que ya tenías instalados sudo port upgrade outdated
+![ARM1176JZF-S](/assets/img/original/DDI0301H_arm1176jzfs_r0p7_trm.pdf)){: width="730px" padding:10px } usando el comando siguiente: sudo port install qemu +target_arm. Aunque no hace falta, aprovecho para poner python27 como la versión por defecto con sudo port select --set python python27
+- Creo una carpeta en mi Mac para poder depositar los ficheros de trabajo, básicamente dos: una [imagen para Raspberry](http://www.raspberrypi.org/downloads/) (raspbian funciona) y un [kernel que funcione](http://xecdesign.com/downloads/linux-qemu/kernel-qemu) (fuente: ![aquí](/assets/img/original/)){: width="730px" padding:10px }. En mi caso puse todo bajo el directorio /Users/luis/priv/raspberry
 
 obelix:~ luis$ cd /Users/luis/priv/raspberry
 obelix:raspberry luis$ ls -al
@@ -30,7 +31,7 @@ obelix:raspberry luis$ qemu-system-arm -kernel kernel-qemu -cpu arm1176 -m 256 -
 
 - Editar el fichero /etc/ld.so.preload y comentar la primera línea (añadir un #) para que quede así:
 
-#/usr/lib/arm-linux-gnueabihf/libcofi\_rpi.so
+#/usr/lib/arm-linux-gnueabihf/libcofi_rpi.so
 
 - Salvar con ‘ctrl+x’ y en el prompt salir con exit, cerrar la ventana de QEMU
 - A partir de ahora ya se puede hacer boot normal, con el comando siguiente que puedes salvar en un script si lo deseas

@@ -10,6 +10,7 @@ excerpt_separator: <!--more-->
 
 En este apunte describo cómo he montado este mi nuevo blog estático basado en [jekyll](http://jekyllrb.com) y hospedado en las [GitHub Pages](https://pages.github.com). Los fuentes se encuentran en el repositorio [GitHub LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io). 
 
+<br clear="left"/>
 <!--more-->
 
 **Jekyll** es un generador simple para sitios web estáticos con capacidades de blog; adecuado para sitios web personales. Está escrito en Ruby (su creador es Tom Preston-Werner, el cofundador de GitHub).

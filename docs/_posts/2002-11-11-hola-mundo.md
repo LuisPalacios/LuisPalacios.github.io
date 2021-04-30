@@ -10,6 +10,7 @@ excerpt_separator: <!--more-->
 
 Hace tiempo (2002) me dió por empezar a compartir apuntes técnicos a través de un blog. Quizá por nostalgia he migrado el que fué mi primer post donde usé un software muy sencillo, ni era wordpress, ni mucho menos Jekyll, lo dejo tal cual.
 
+<br clear="left"/>
 <!--more-->
 
 Mi primer `apunte` lo hice con [NibbleBlog](http://www.nibbleblog.com), un motor muy sencillo para la creación y manipulación de mi bitácora, basado en archivos XML.

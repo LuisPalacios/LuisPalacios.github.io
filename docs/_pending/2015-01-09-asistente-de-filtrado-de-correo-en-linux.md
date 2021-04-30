@@ -1,17 +1,18 @@
 ---
 title: "Asistente de filtrado de correo en Linux"
 date: "2015-01-09"
-categories: 
-  - "apuntes"
+categories: apuntes
+tags: macosx peakhour snmp
+excerpt_separator: <!--more-->
 ---
 
 Este apunte trata sobre cómo automatizar el filtrado del correo electrónico con un sistema desatendido en Linux, es decir, delegarle la reorganización del correo y que nos ahorre algo de trabajo.
 
 Hay varias formas de conseguirlo y ésta es una de las más sencillas y productivas que conozco, me topé con este software hace unos meses y me ha dado muy buen resultado, así que he decidido documentarlo aprovechando que lo estoy migrando a un contenedor Docker.
 
-Se trata de [imapfilter](https://github.com/lefcha/imapfilter) (software libre bajo la licencia MIT/X11). Reconozco que al principio me costó hacerme con su fichero de configuración, pero una vez superado promete resolver todos los requisitos de filtrado, y lo que es mejor, no hace falta hacer prácticamente nada en los servidores de correo.
+Se trata de ![imapfilter](/assets/img/original/X11){: width="730px" padding:10px }. Reconozco que al principio me costó hacerme con su fichero de configuración, pero una vez superado promete resolver todos los requisitos de filtrado, y lo que es mejor, no hace falta hacer prácticamente nada en los servidores de correo.
 
-[![imapfilter](https://www.luispa.com/wp-content/uploads/2015/01/imapfilter1.png)](https://www.luispa.com/wp-content/uploads/2015/01/imapfilter1.png)
+![imapfilter](/assets/img/original/imapfilter1.png){: width="730px" padding:10px }
 
 ## Objetivo
 
@@ -21,7 +22,7 @@ El objetivo es ponerle algo de cordura, contar con un “asistente” único cen
 
 ## Imapfilter
 
-Imapfilter es un motor de filtrado de correo basado en [Lua](http://www.lua.org/). La arquitectura es simple: en un único sitio ejecutamos imapfilter que se irá conectando vía IMAP a cada uno de tus servidores, hará sus tareas de forma desatendida, analizará y actuará: marcar, mover o borrar. Una cosa que tiene que me gusta mucho es que puedes mover correos entre cuentas distintas (por ejemplo para tener centralizado el archivado de correos en una cuenta IMAP que dedicas solo para hacer backups)
+Imapfilter es un motor de filtrado de correo basado en ![Lua](/assets/img/original/). La arquitectura es simple: en un único sitio ejecutamos imapfilter que se irá conectando vía IMAP a cada uno de tus servidores, hará sus tareas de forma desatendida, analizará y actuará: marcar, mover o borrar. Una cosa que tiene que me gusta mucho es que puedes mover correos entre cuentas distintas (por ejemplo para tener centralizado el archivado de correos en una cuenta IMAP que dedicas solo para hacer backups){: width="730px" padding:10px }
 
 Soporta “imap-idle”, es decir, puede pedirle al servidor que le notifique cuando el inbox cambia, de modo que reaccionará de forma casi instantánea ante cambios.
 
@@ -29,10 +30,10 @@ Soporta “imap-idle”, es decir, puede pedirle al servidor que le notifique cu
 
 ## Instalación y configuración
 
-La instalación es sencilla, aunque depende de la distribución tengas, pero básicamente sería: Descarga [imapfilter](https://github.com/lefcha/imapfilter), crear el directorio ~/.imapfilter en tu usuario, crear el fichero de configuración ~/.imapfilter/config.lua y por último ejecutar imapfilter
+La instalación es sencilla, aunque depende de la distribución tengas, pero básicamente sería: Descarga ![imapfilter](/assets/img/original/imapfilter){: width="730px" padding:10px }, crear el directorio ~/.imapfilter en tu usuario, crear el fichero de configuración ~/.imapfilter/config.lua y por último ejecutar imapfilter
 
 - Instalación en Gentoo: emerge -v imapfilter
-- Instalación compilando desde los fuentes (así hago en mi [Dockerfile](https://github.com/LuisPalacios/base-imapfilter/blob/master/Dockerfile))
+- Instalación compilando desde los fuentes (así hago en mi ![Dockerfile](/assets/img/original/Dockerfile)){: width="730px" padding:10px }
 
  
 :
@@ -48,8 +49,8 @@ La instalación es sencilla, aunque depende de la distribución tengas, pero bá
 
 Como dije al principio, llevo tiempo con imapfilter en mi servidor con Gentoo pero llegó el momento de migrarlo a un contenedor basado en Docker:
 
-- Repositorio en el registry hub de Docker: [luispa/base-imapfilter](https://registry.hub.docker.com/u/luispa/base-imapfilter/)
-- Página del proyecto en GitHub: [base-imapfilter](https://github.com/LuisPalacios/base-imapfilter)
+- Repositorio en el registry hub de Docker: ![luispa/base-imapfilter](/assets/img/original/){: width="730px" padding:10px }
+- Página del proyecto en GitHub: ![base-imapfilter](/assets/img/original/base-imapfilter){: width="730px" padding:10px }
 
 ## Ejemplos de configuración
 
@@ -124,20 +125,20 @@ cuentaCuarentena = IMAP {
 -- modificar y este script se de cuenta.
 --
 
-\_, timestamp = pipe\_from('stat -c %Y /root/.imapfilter/config-personal-aux.lua')
+_, timestamp = pipe_from('stat -c %Y /root/.imapfilter/config-personal-aux.lua')
 while (true) do
 
     dofile('/root/.imapfilter/config-personal-aux.lua')
 
-    if not cuentaPersonal.INBOX:enter\_idle() then
+    if not cuentaPersonal.INBOX:enter_idle() then
        posix.sleep(300)
     else
-       print('salgo de enter\_idle()')    
+       print('salgo de enter_idle()')    
     end
 end
 
 \--
--- check\_status()
+-- check_status()
 -- --------------------------------------------------------------------
 -- 
 -- Obtiene el estado actual del mailbox y devuelve tres valores: 
@@ -145,8 +146,8 @@ end
 -- número de mensajes recientes no leidos. 
 -- número de mensajes no vistos
 -- 
-cuentaPersonal.INBOX:check\_status()
-cuentaCuarentena.INBOX:check\_status()
+cuentaPersonal.INBOX:check_status()
+cuentaCuarentena.INBOX:check_status()
 
 -----------------
 -- Funciones  --
@@ -159,10 +160,10 @@ cuentaCuarentena.INBOX:check\_status()
 --
 ruleMove = function ( res, ruleTable )
 local subresults = {}
-  for \_,entry in pairs(ruleTable) do
-    -- no uso match\_field porque se baja el mensaje entero y es lento
-    subresults = res:contain\_field(entry\["header"\], entry\["p"\])
-    if subresults:move\_messages( entry\["moveto"\] ) == false then
+  for _,entry in pairs(ruleTable) do
+    -- no uso match_field porque se baja el mensaje entero y es lento
+    subresults = res:contain_field(entry["header"], entry["p"])
+    if subresults:move_messages( entry["moveto"] ) == false then
       print("No puedo mover los menssajes !")
     end
   end
@@ -173,10 +174,10 @@ end
 --
 ruleDelete = function ( res, ruleTable )
 local subresults = {}
-  for \_,entry in pairs(ruleTable) do
-    -- no uso match\_field porque se baja el mensaje entero y es lento
-    subresults = res:contain\_field(entry\["header"\], entry\["p"\])
-    if subresults:delete\_messages() == false then
+  for _,entry in pairs(ruleTable) do
+    -- no uso match_field porque se baja el mensaje entero y es lento
+    subresults = res:contain_field(entry["header"], entry["p"])
+    if subresults:delete_messages() == false then
       print("No puedo borrar los mensajes !")
     end
   end
@@ -187,11 +188,11 @@ end
 --
 ruleFlag = function ( res, ruleTable )
 local subresults = {}
-  for \_,entry in pairs(ruleTable) do
-    -- no uso match\_field porque se baja el mensaje entero y es lento
-    subresults = res:contain\_field(entry\["header"\], entry\["p"\])
-    subresults:add\_flags({ 'Exec', '\\\\Seen' })
-    subresults:unmark\_seen()
+  for _,entry in pairs(ruleTable) do
+    -- no uso match_field porque se baja el mensaje entero y es lento
+    subresults = res:contain_field(entry["header"], entry["p"])
+    subresults:add_flags({ 'Exec', '\\Seen' })
+    subresults:unmark_seen()
   end
 end
 
@@ -200,15 +201,15 @@ end
 -----------------------
 --
 
-pre\_filtersMovePersonal = {
+pre_filtersMovePersonal = {
 
   -- Emisores y/o temas que se son SPAM y que automáticamente quiero cargarme... 
   --
-  { header = "From", p = "", moveto = cuentaCuarentena\['INBOX'\] },
-  { header = "Subject", p = "", moveto = cuentaCuarentena\['INBOX'\]  },
+  { header = "From", p = "", moveto = cuentaCuarentena['INBOX'] },
+  { header = "Subject", p = "", moveto = cuentaCuarentena['INBOX']  },
 }
 
-pre\_filtersDeletePersonal = {
+pre_filtersDeletePersonal = {
 
   -- Aquí pongo todos los mails que quiero cargarme directamente.. 
   --
@@ -222,11 +223,11 @@ pre\_filtersDeletePersonal = {
 --
 
 -- Leo todo el correo Personal
-    allmsgsPersonal  = cuentaPersonal.INBOX:select\_all()
+    allmsgsPersonal  = cuentaPersonal.INBOX:select_all()
 
 -- Aplico las reglas al correo Personal
-    ruleDelete(allmsgsPersonal, pre\_filtersDeletePersonal)
-    ruleMove(allmsgsPersonal, pre\_filtersMovePersonal)
+    ruleDelete(allmsgsPersonal, pre_filtersDeletePersonal)
+    ruleMove(allmsgsPersonal, pre_filtersMovePersonal)
     
 
 - Cuenta trabajo
@@ -297,20 +298,20 @@ cuentaArchivo = IMAP {
 -- modificar y este script se de cuenta.
 --
 
-\_, timestamp = pipe\_from('stat -c %Y /root/.imapfilter/config-trabajo-aux.lua')
+_, timestamp = pipe_from('stat -c %Y /root/.imapfilter/config-trabajo-aux.lua')
 while (true) do
 
     dofile('/root/.imapfilter/config-trabajo-aux.lua')
 
-    if not cuentaTrabajo.INBOX:enter\_idle() then
+    if not cuentaTrabajo.INBOX:enter_idle() then
        posix.sleep(300)
     else
-       print('salgo de enter\_idle()')    
+       print('salgo de enter_idle()')    
     end
 end
 
 \--
--- check\_status()
+-- check_status()
 -- --------------------------------------------------------------------
 -- 
 -- Obtiene el estado actual del mailbox y devuelve tres valores: 
@@ -318,8 +319,8 @@ end
 -- número de mensajes recientes no leidos. 
 -- número de mensajes no vistos
 -- 
-cuentaTrabajo.INBOX:check\_status()
-cuentaArchivo.INBOX:check\_status()
+cuentaTrabajo.INBOX:check_status()
+cuentaArchivo.INBOX:check_status()
             
 -----------------
 -- Funciones  --
@@ -332,10 +333,10 @@ cuentaArchivo.INBOX:check\_status()
 --
 ruleMove = function ( res, ruleTable )
 local subresults = {}
-  for \_,entry in pairs(ruleTable) do
-    -- no uso match\_field porque se baja el mensaje entero y es lento
-    subresults = res:contain\_field(entry\["header"\], entry\["p"\])
-    if subresults:move\_messages( entry\["moveto"\] ) == false then
+  for _,entry in pairs(ruleTable) do
+    -- no uso match_field porque se baja el mensaje entero y es lento
+    subresults = res:contain_field(entry["header"], entry["p"])
+    if subresults:move_messages( entry["moveto"] ) == false then
       print("No puedo mover los menssajes !")
     end
   end
@@ -346,10 +347,10 @@ end
 --
 ruleDelete = function ( res, ruleTable )
 local subresults = {}
-  for \_,entry in pairs(ruleTable) do
-    -- no uso match\_field porque se baja el mensaje entero y es lento
-    subresults = res:contain\_field(entry\["header"\], entry\["p"\])
-    if subresults:delete\_messages() == false then
+  for _,entry in pairs(ruleTable) do
+    -- no uso match_field porque se baja el mensaje entero y es lento
+    subresults = res:contain_field(entry["header"], entry["p"])
+    if subresults:delete_messages() == false then
       print("No puedo borrar los mensajes !")
     end
   end
@@ -360,11 +361,11 @@ end
 --
 ruleFlag = function ( res, ruleTable )
 local subresults = {}
-  for \_,entry in pairs(ruleTable) do
-    -- no uso match\_field porque se baja el mensaje entero y es lento
-    subresults = res:contain\_field(entry\["header"\], entry\["p"\])
-    subresults:add\_flags({ 'Exec', '\\\\Seen' })
-    subresults:unmark\_seen()
+  for _,entry in pairs(ruleTable) do
+    -- no uso match_field porque se baja el mensaje entero y es lento
+    subresults = res:contain_field(entry["header"], entry["p"])
+    subresults:add_flags({ 'Exec', '\\Seen' })
+    subresults:unmark_seen()
   end
 end
 
@@ -373,15 +374,15 @@ end
 -----------------------
 --
 
-pre\_filtersMoveTrabajo = {
+pre_filtersMoveTrabajo = {
 
   -- Ejemplo donde bloqueo IP's (ej. ficticias) que típicamente mandan spam
-  { header = "Received" , p = "85.11.111.58", moveto = acc1\['Trash'\] },
-  { header = "Received" , p = "176.16.16.16", moveto = acc1\['Trash'\] },
+  { header = "Received" , p = "85.11.111.58", moveto = acc1['Trash'] },
+  { header = "Received" , p = "176.16.16.16", moveto = acc1['Trash'] },
   
 }
 
-pre\_filtersDeleteTrabajo = {
+pre_filtersDeleteTrabajo = {
 
   -- Varias fuentes que borro directamente (algún día me daré de bajo :-)
   { header = "From", p = "tal-sitio.com" },
@@ -393,22 +394,22 @@ pre\_filtersDeleteTrabajo = {
 filtersMoveTrabajo = {
 
   -- Newsletters, las archivo...
-  { header = "From", p = "bounce@emisor-newsleteers.com", moveto = cuentaArchivo\['Archivo'\] },
+  { header = "From", p = "bounce@emisor-newsleteers.com", moveto = cuentaArchivo['Archivo'] },
 
   -- Mailing lists, me interesan pero no en el Inbox, las archivo
-  { header = "From", p = "noreply@servicios.talytal.com", moveto = cuentaArchivo\['Archivo\_TalTal'\] },
+  { header = "From", p = "noreply@servicios.talytal.com", moveto = cuentaArchivo['Archivo_TalTal'] },
 
   -- Departamentos
-  { header = "Subject", p = "\_Equipos\_Ventas", moveto = cuentaArchivo\['Ventas'\] },
-  { header = "Subject", p = "\_Reuniones", moveto = cuentaArchivo\['Reuniones'\] },
-  { header = "To", p = "mailinglist@empresa.com", moveto = cuentaArchivo\['Archivo'\] },
+  { header = "Subject", p = "_Equipos_Ventas", moveto = cuentaArchivo['Ventas'] },
+  { header = "Subject", p = "_Reuniones", moveto = cuentaArchivo['Reuniones'] },
+  { header = "To", p = "mailinglist@empresa.com", moveto = cuentaArchivo['Archivo'] },
 
 }
 
-post\_filtersMoveTrabajo = {
+post_filtersMoveTrabajo = {
 
   -- Añadir aquí cualquier otra regla que me interese... 
-  { header = "Subject" , p = "\[SPAM?\] ", moveto = cuentaArchivo\['Junk'\] },
+  { header = "Subject" , p = "[SPAM?] ", moveto = cuentaArchivo['Junk'] },
 
 }
 
@@ -418,32 +419,32 @@ post\_filtersMoveTrabajo = {
 --
 
 -- Leo todo el correo Trabajo
-   allmsgsTrabajo  = cuentaTrabajo.INBOX:select\_all()
+   allmsgsTrabajo  = cuentaTrabajo.INBOX:select_all()
 
 -- Aplico las reglas al correo del Trabajo
-   ruleMove(allmsgsTrabajo, pre\_filtersMoveTrabajo)
-   ruleDelete(allmsgsTrabajo, pre\_filtersDeleteTrabajo)
+   ruleMove(allmsgsTrabajo, pre_filtersMoveTrabajo)
+   ruleDelete(allmsgsTrabajo, pre_filtersDeleteTrabajo)
    ruleMove(allmsgsTrabajo, filtersMoveTrabajo)
-   ruleMove(allmsgsTrabajo, post\_filtersMoveTrabajo)
+   ruleMove(allmsgsTrabajo, post_filtersMoveTrabajo)
     
 -------------------------
 -- Mensajes complejos --
 -- 
 -- Operadores:
 -- +  OR
--- \*  AND
+-- *  AND
 -- - NOT
 -------------------------
 
-msgs = cuentaTrabajo.INBOX:is\_unseen() \*
-  cuentaTrabajo.INBOX:contain\_from('Nombre\_Persona') \*
-  cuentaTrabajo.INBOX:contain\_subject('Invitaciones:')
-msgs:move\_messages(cuentaArchivo\['Archivo'\])
+msgs = cuentaTrabajo.INBOX:is_unseen() *
+  cuentaTrabajo.INBOX:contain_from('Nombre_Persona') *
+  cuentaTrabajo.INBOX:contain_subject('Invitaciones:')
+msgs:move_messages(cuentaArchivo['Archivo'])
 
-msgs = cuentaTrabajo.INBOX:contain\_to('mi\_usuario') \*
-  cuentaTrabajo.INBOX:contain\_from('mi\_jefe') +
-  cuentaTrabajo.INBOX:contain\_from('mi\_superjefe')
-msgs:add\_flags({ 'Exec', '\\\\Seen' })
-msgs:unmark\_seen()
+msgs = cuentaTrabajo.INBOX:contain_to('mi_usuario') *
+  cuentaTrabajo.INBOX:contain_from('mi_jefe') +
+  cuentaTrabajo.INBOX:contain_from('mi_superjefe')
+msgs:add_flags({ 'Exec', '\\Seen' })
+msgs:unmark_seen()
 
 Como ves arriba, cada instancia tiene un par de ficheros de configuración, el principal que se le pasa a imapfilter como argumento y el auxiliar que se carga desde el principal y contiene las reglas en sí. Lo hago así para implementar un sistema que re-lea las reglas cada cierto tiempo. Permite editar de forma externa (desde mi Host) el fichero de reglas y evito parar/arrancar el contenedor cada vez que cambio una regla.

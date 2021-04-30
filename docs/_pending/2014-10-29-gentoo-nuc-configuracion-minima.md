@@ -1,15 +1,16 @@
 ---
 title: "Gentoo en NUC: Configuración mínima"
 date: "2014-10-29"
-categories: 
-  - "apuntes"
+categories: apuntes
+tags: macosx peakhour snmp
+excerpt_separator: <!--more-->
 ---
 
-Este apunte se centra en la configuración mínima que suelo hacer tras terminar la instalación del equipo y preparar las particiones del disco. Te recomiendo que eches un ojo a la [instalación de Gentoo GNU/Linux en un Intel® NUC D54250WYK](https://www.luispa.com/?p=7), si no lo has hecho ya.
+Este apunte se centra en la configuración mínima que suelo hacer tras terminar la instalación del equipo y preparar las particiones del disco. Te recomiendo que eches un ojo a la ![instalación de Gentoo GNU/Linux en un Intel® NUC D54250WYK](/assets/img/original/?p=7){: width="730px" padding:10px }, si no lo has hecho ya.
 
-[![minimo](https://www.luispa.com/wp-content/uploads/2014/12/minimo.png)](https://www.luispa.com/wp-content/uploads/2014/12/minimo.png)
+![minimo](/assets/img/original/minimo.png){: width="730px" padding:10px }
 
-Lo primero es lo primero, dejo aquí un [enlace a los ficheros](https://www.luispa.com/?p=785) que utilizo en mi instalación, después lo que tengo que hacer son algunos ajustes mínimos para dejar preparada la instalación:
+Lo primero es lo primero, dejo aquí un ![enlace a los ficheros](/assets/img/original/?p=785){: width="730px" padding:10px } que utilizo en mi instalación, después lo que tengo que hacer son algunos ajustes mínimos para dejar preparada la instalación:
 
 Leer las news
 
@@ -27,7 +28,7 @@ Zona horaria
 (chroot) livecd / # echo "Europe/Madrid" > /etc/timezone
 (chroot) livecd / # emerge --config sys-libs/timezone-data
 Configuring pkg...
-\* Updating /etc/localtime with /usr/share/zoneinfo/Europe/Madrid
+* Updating /etc/localtime with /usr/share/zoneinfo/Europe/Madrid
  
 
 Portage, elegir el Perfil adecuado
@@ -36,7 +37,7 @@ Portage, elegir el Perfil adecuado
  
 (chroot) livecd portage # eselect profile list
 Available profile symlink targets:
-\[1\] default/linux/amd64/13.0
+[1] default/linux/amd64/13.0
 :
 (chroot) livecd portage # eselect profile set 1
  
@@ -52,7 +53,7 @@ Sincronizar portage
 
 Preparar la compilación
 
-Antes de poder compilar nada hay que preparar al menos cuatro ficheros de Portage, así que revisa [los Ficheros de Configuración](https://www.luispa.com/?p=785)
+Antes de poder compilar nada hay que preparar al menos cuatro ficheros de Portage, así que revisa ![los Ficheros de Configuración](/assets/img/original/?p=785){: width="730px" padding:10px }
 
 Bloqueo de "systemd" y “udev”
 
@@ -61,7 +62,7 @@ Lo comenté antes, "NO" voy a usar systemd ni udev, sino la versión (fork) de G
 sys-apps/systemd
 sys-fs/udev
 
-Importante: En el paso anterior ([Stage3](https://www.luispa.com/?p=800)) copiamos el paquete al disco duro SSD y también Portage. Durante dicho proceso si te has fijado podrás observar que por defecto Stage3 incluye ambos systemd/udev, así que al bloquearlos vamos a tener que ejecutar un update (emerge -DuvN system world). De momento solo aviso, pero es importante y veremos cómo lo ejecuto justo antes de hacer el primer boot (desde SSD)
+![Stage3](/assets/img/original/udev, así que al bloquearlos vamos a tener que ejecutar un update (emerge -DuvN system world). De momento solo aviso, pero es importante y veremos cómo lo ejecuto justo antes de hacer el primer boot (desde SSD){: width="730px" padding:10px }
 
 Instalo eix y genlop
 
@@ -73,44 +74,44 @@ Instalo eix y genlop
 
 Configuro el locale
 
-en\_US ISO-8859-1
-en\_US.UTF-8 UTF-8
-es\_ES ISO-8859-1
-es\_ES@euro ISO-8859-15
-es\_ES.UTF-8 UTF-8
-en\_US.UTF-8@euro UTF-8
-es\_ES.UTF-8@euro UTF-8
+en_US ISO-8859-1
+en_US.UTF-8 UTF-8
+es_ES ISO-8859-1
+es_ES@euro ISO-8859-15
+es_ES.UTF-8 UTF-8
+en_US.UTF-8@euro UTF-8
+es_ES.UTF-8@euro UTF-8
 
  
  
 (chroot) livecd / # locale-gen
-\* Generating 7 locales (this might take a while) with 1 jobs
-\* (1/7) Generating en\_US.ISO-8859-1 ... \[ ok \]
-\* (2/7) Generating en\_US.UTF-8 ... \[ ok \]
-\* (3/7) Generating es\_ES.ISO-8859-1 ... \[ ok \]
-\* (4/7) Generating es\_ES.ISO-8859-15@euro ... \[ ok \]
-\* (5/7) Generating es\_ES.UTF-8 ... \[ ok \]
-\* (6/7) Generating en\_US.UTF-8.UTF-8@euro ... \[ ok \]
-\* (7/7) Generating es\_ES.UTF-8.UTF-8@euro ... \[ ok \]
-\* Generation complete
+* Generating 7 locales (this might take a while) with 1 jobs
+* (1/7) Generating en_US.ISO-8859-1 ... [ ok ]
+* (2/7) Generating en_US.UTF-8 ... [ ok ]
+* (3/7) Generating es_ES.ISO-8859-1 ... [ ok ]
+* (4/7) Generating es_ES.ISO-8859-15@euro ... [ ok ]
+* (5/7) Generating es_ES.UTF-8 ... [ ok ]
+* (6/7) Generating en_US.UTF-8.UTF-8@euro ... [ ok ]
+* (7/7) Generating es_ES.UTF-8.UTF-8@euro ... [ ok ]
+* Generation complete
  
 (chroot) livecd / # eselect locale list
 :
-\[10\] es\_ES.utf8
+[10] es_ES.utf8
  
 (chroot) livecd / # eselect locale set 10
-Setting LANG to es\_ES.utf8 ...
+Setting LANG to es_ES.utf8 ...
 Run ". /etc/profile" to update the variable in your shell.
  
 
-LC\_ALL="es\_ES.UTF-8"
-LC\_COLLATE="es\_ES.UTF-8"
-LC\_CTYPE="es\_ES.UTF-8"
-LC\_MESSAGES="es\_ES.UTF-8"
-LC\_MONETARY="es\_ES.UTF-8"
-LC\_NUMERIC="es\_ES.UTF-8"
-LC\_PAPER="es\_ES.UTF-8"
-LANG="es\_ES.UTF-8"
+LC_ALL="es_ES.UTF-8"
+LC_COLLATE="es_ES.UTF-8"
+LC_CTYPE="es_ES.UTF-8"
+LC_MESSAGES="es_ES.UTF-8"
+LC_MONETARY="es_ES.UTF-8"
+LC_NUMERIC="es_ES.UTF-8"
+LC_PAPER="es_ES.UTF-8"
+LANG="es_ES.UTF-8"
 
 Importante recargar el entorno de la shell antes de continuar
 
@@ -122,4 +123,4 @@ livecd / # export PS1="(chroot) $PS1"
 (chroot) livecd / #
  
 
-Volver al paso anterior: [Descargar Stage 3, Portage y entrar en el nuevo entorno (chroot)](https://www.luispa.com/?p=800) o ir al siguiente: [Instalación del kernel](https://www.luispa.com/?p=831)
+Volver al paso anterior: [Descargar Stage 3, Portage y entrar en el nuevo entorno (chroot)](https://www.luispa.com/?p=800) o ir al siguiente: ![Instalación del kernel](/assets/img/original/?p=831){: width="730px" padding:10px }

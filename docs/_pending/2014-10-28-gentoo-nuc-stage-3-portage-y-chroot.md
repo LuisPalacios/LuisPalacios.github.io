@@ -1,20 +1,18 @@
 ---
 title: "Gentoo en NUC: Stage 3, Portage y chroot"
 date: "2014-10-28"
-categories: 
-  - "gentoo"
-tags: 
-  - "linux"
-  - "nuc"
+categories: gentoo
+tags: linux nuc
+excerpt_separator: <!--more-->
 ---
 
-Este apunte pertenece a la [instalación de Gentoo GNU/Linux en un Intel® NUC D54250WYK](https://www.luispa.com/?p=7) y aquí voy a tratar sobre la instalación del paquete "Stage 3" y "Portage".
+Este apunte pertenece a la ![instalación de Gentoo GNU/Linux en un Intel® NUC D54250WYK](/assets/img/original/?p=7){: width="730px" padding:10px } y aquí voy a tratar sobre la instalación del paquete "Stage 3" y "Portage".
 
-[![spc](https://www.luispa.com/wp-content/uploads/2014/12/spc.png)](https://www.luispa.com/wp-content/uploads/2014/12/spc.png)
+![spc](/assets/img/original/spc.png){: width="730px" padding:10px }
 
 ## Stage 3
 
-El "Stage 3" es un "paquete" que encontrarás en los [mirrors](https://www.gentoo.org/main/en/mirrors2.xml) y contiene un entorno Gentoo mínimo (ya compilado), que nos bajamos y nos permite continuar la instalación de Gentoo siguiendo las instrucciones de instalación (no olvides el [HandBook de Gentoo](https://www.gentoo.org/doc/es/handbook/handbook-x86.xml))
+El "Stage 3" es un "paquete" que encontrarás en los [mirrors](https://www.gentoo.org/main/en/mirrors2.xml) y contiene un entorno Gentoo mínimo (ya compilado), que nos bajamos y nos permite continuar la instalación de Gentoo siguiendo las instrucciones de instalación (no olvides el ![HandBook de Gentoo](/assets/img/original/handbook-x86.xml)){: width="730px" padding:10px }
 
 Antes de bajar el Stage 3, montamos root y boot
 
@@ -57,9 +55,9 @@ drwx------ 2 root root 16384 Oct 28 22:05 lost+found
 -rw-r--r-- 1 root root 720 Oct 28 22:13 stage3-amd64-20141023.tar.bz2.DIGESTS.bz2
 :
 livecd ~ # cd /mnt/gentoo/
-livecd ~ # tar xvjpf stage3-\*.tar.bz2
+livecd ~ # tar xvjpf stage3-*.tar.bz2
 livecd ~ # cd /mnt/gentoo/usr
-livecd ~ # tar xvjpf ../portage-\*.tar.bz2
+livecd ~ # tar xvjpf ../portage-*.tar.bz2
  
 
  
@@ -82,4 +80,4 @@ livecd / # export PS1="(chroot) $PS1"
 (chroot) livecd / #
  
 
-Volver al paso anterior:  [Particionar el disco SSD](https://www.luispa.com/?p=774) o ir al siguiente: [Configuración mínima del nuevo sistema](https://www.luispa.com/?p=807)
+Volver al paso anterior:  [Particionar el disco SSD](https://www.luispa.com/?p=774) o ir al siguiente: ![Configuración mínima del nuevo sistema](/assets/img/original/?p=807){: width="730px" padding:10px }

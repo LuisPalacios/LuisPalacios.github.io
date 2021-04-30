@@ -8,11 +8,12 @@ excerpt_separator: <!--more-->
 
 ![ntp-dali](/assets/img/original/ntp-dali.jpg){: width="150px" style="float:left; padding-right:10px" }
 
-NTP es un protocolo de Internet para sincronizar los relojes de los sistemas informáticos conmutando paquetes de datos en redes con latencia variable. NTP utiliza el protocolo UDP como su capa de transporte (puerto 123). Está diseñado para resistir a los efectos de la latencia variable.
+NTP es un protocolo de Internet para sincronizar los relojes de los sistemas informáticos conmutando paquetes de datos en redes con latencia variable. NTP utiliza el protocolo UDP como su capa de transporte (puerto `123`). Está diseñado para resistir a los efectos de la latencia variable.
 
+En este apunte explico cómo configurar NTP en un equipo GNU/Linux (distribución Gentoo) para ajustar la hora y que se mantenga, a la vez que pueda hacer de servidor horario en tu red casera.
+
+<br clear="left"/>
 <!--more-->
-
-En este apunte voy a explicar cómo configurar NTP en un equipo GNU/Linux (distribución Gentoo) para ajustar la hora y que se mantenga, a la vez que pueda hacer de servidor horario en tu red casera.
 
 # NTP + NTP-CLIENT
 

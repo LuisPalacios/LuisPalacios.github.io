@@ -10,6 +10,7 @@ excerpt_separator: <!--more-->
 
 Con MacOS no se incluye una opción en FINDER para poder pre-visualizar archivos Markdown (.md). Existen varias opciones pero una de las más rápidas y sencillas consiste en instalar `qlmarkdown`
 
+<br clear="left"/>
 <!--more-->
 
 Ante la pregunta ¿cómo puedo hacer que "Quick Look" muestre vistas previas de archivos Markdown (.md)?, la respuesta es que existe un proyecto [qlmarkdown](https://github.com/toland/qlmarkdown) que puede instalarse con homebrew y que soluciona el problema. 

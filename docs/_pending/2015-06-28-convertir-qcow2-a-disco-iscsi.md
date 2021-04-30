@@ -1,19 +1,14 @@
 ---
 title: "Conversión  qcow2 <--> iSCSI"
 date: "2015-06-28"
-categories: 
-  - "apuntes"
-  - "gentoo"
-  - "virtualizacion"
-tags: 
-  - "convertir"
-  - "iscsi"
-  - "qcow2"
+categories: apuntes gentoo virtualizacion
+tags: convertir iscsi qcow2
+excerpt_separator: <!--more-->
 ---
 
 En este apunte describo cómo mover una VM (KVM) desde almacenamiento basado en fichero hacia almacenamiento basado en bloque (iSCSI). Dicho de otra forma, vamos a ver cómo mover el "contenido" del fichero .qcow2 a un disco RAW (entregado desde una NAS vía iSCSI). En este ejemplo el host KVM se llama marte y la VM se llama aplicacionix.
 
-[![conv-iSCSI-0](https://www.luispa.com/wp-content/uploads/2015/06/conv-iSCSI-0-1024x864.png)](https://www.luispa.com/wp-content/uploads/2015/06/conv-iSCSI-0.png)
+![conv-iSCSI-0](/assets/img/original/conv-iSCSI-0-1024x864.png){: width="730px" padding:10px }
 
 En este ejemplo la VM original ocupa 20GB (se averigua arrancándola y ejecutando el comando df), aprovecho y creo algo más de espacio (30GB) en mi nuevo disco iSCSI dede el GUI del NAS, por lo tanto el objetivo es copiar el fichero fuente al disco destino:
 
@@ -22,7 +17,7 @@ En este ejemplo la VM original ocupa 20GB (se averigua arrancándola y ejecutand
 - Destino: iqn.2004-04.com.qnap:ts-569pro:iscsi.vmaplicacionix.d70ea1
     
 
-[![convert-iSCSI-1](https://www.luispa.com/wp-content/uploads/2015/06/convert-iSCSI-1.png)](https://www.luispa.com/wp-content/uploads/2015/06/convert-iSCSI-1.png)
+![convert-iSCSI-1](/assets/img/original/convert-iSCSI-1.png){: width="730px" padding:10px }
 
 ### Acciones en el Host KVM (marte)
 
@@ -45,23 +40,23 @@ marte ~ # iscsiadm -m discovery --portal=192.168.1.2:3260 -t sendtargets
 marte ~ # iscsiadm -m node -T iqn.2004-04.com.qnap:ts-569pro:iscsi.vmaplicacionix.d70ea1 -p 192.168.1.2 --login
 marte ~ # dmesg
 :
-\[ 8951.352110\] scsi host4: iSCSI Initiator over TCP/IP
-\[ 8951.606632\] scsi 4:0:0:0: Direct-Access     QNAP     iSCSI Storage    4.0  PQ: 0 ANSI: 5
-\[ 8951.607761\] sd 4:0:0:0: Attached scsi generic sg4 type 0
-\[ 8951.608262\] sd 4:0:0:0: \[sde\] 62914560 512-byte logical blocks: (32.2 GB/30.0 GiB)
-\[ 8951.610556\] sd 4:0:0:0: \[sde\] Write Protect is off
-\[ 8951.610576\] sd 4:0:0:0: \[sde\] Mode Sense: 2f 00 10 00
-\[ 8951.611052\] sd 4:0:0:0: \[sde\] Write cache: enabled, read cache: enabled, supports DPO and FUA
-\[ 8951.634983\] sd 4:0:0:0: \[sde\] Attached SCSI disk
-\[ 8968.825116\] sd 4:0:0:0: \[sde\] Synchronizing SCSI cache
-\[10143.628578\] scsi host5: iSCSI Initiator over TCP/IP
-\[10143.882808\] scsi 5:0:0:0: Direct-Access     QNAP     iSCSI Storage    4.0  PQ: 0 ANSI: 5
-\[10143.883926\] sd 5:0:0:0: Attached scsi generic sg4 type 0
-\[10143.884628\] sd 5:0:0:0: \[sde\] 62914560 512-byte logical blocks: (32.2 GB/30.0 GiB)
-\[10143.886088\] sd 5:0:0:0: \[sde\] Write Protect is off
-\[10143.886094\] sd 5:0:0:0: \[sde\] Mode Sense: 2f 00 10 00
-\[10143.886583\] sd 5:0:0:0: \[sde\] Write cache: enabled, read cache: enabled, supports DPO and FUA
-\[10143.891977\] sd 5:0:0:0: \[sde\] Attached SCSI disk
+[ 8951.352110] scsi host4: iSCSI Initiator over TCP/IP
+[ 8951.606632] scsi 4:0:0:0: Direct-Access     QNAP     iSCSI Storage    4.0  PQ: 0 ANSI: 5
+[ 8951.607761] sd 4:0:0:0: Attached scsi generic sg4 type 0
+[ 8951.608262] sd 4:0:0:0: [sde] 62914560 512-byte logical blocks: (32.2 GB/30.0 GiB)
+[ 8951.610556] sd 4:0:0:0: [sde] Write Protect is off
+[ 8951.610576] sd 4:0:0:0: [sde] Mode Sense: 2f 00 10 00
+[ 8951.611052] sd 4:0:0:0: [sde] Write cache: enabled, read cache: enabled, supports DPO and FUA
+[ 8951.634983] sd 4:0:0:0: [sde] Attached SCSI disk
+[ 8968.825116] sd 4:0:0:0: [sde] Synchronizing SCSI cache
+[10143.628578] scsi host5: iSCSI Initiator over TCP/IP
+[10143.882808] scsi 5:0:0:0: Direct-Access     QNAP     iSCSI Storage    4.0  PQ: 0 ANSI: 5
+[10143.883926] sd 5:0:0:0: Attached scsi generic sg4 type 0
+[10143.884628] sd 5:0:0:0: [sde] 62914560 512-byte logical blocks: (32.2 GB/30.0 GiB)
+[10143.886088] sd 5:0:0:0: [sde] Write Protect is off
+[10143.886094] sd 5:0:0:0: [sde] Mode Sense: 2f 00 10 00
+[10143.886583] sd 5:0:0:0: [sde] Write cache: enabled, read cache: enabled, supports DPO and FUA
+[10143.891977] sd 5:0:0:0: [sde] Attached SCSI disk
 
 - Copio a nivel físico el fichero RAW al disco iSCSI (21GB tarda unos 35min al copiarse a una NAS con puertos de 1GbE)
 
@@ -78,27 +73,27 @@ marte luis # rm /home/luis/aplicacionix.raw
 - Logout del disco iSCSI
 
 marte ~ # iscsiadm -m node -T iqn.2004-04.com.qnap:ts-569pro:iscsi.vmaplicacionix.d70ea1 -p 192.168.1.2 --logout
-Logging out of session \[sid: 5, target: iqn.2004-04.com.qnap:ts-569pro:iscsi.vmaplicacionix.d70ea1, portal: 192.168.1.2,3260\]
+Logging out of session [sid: 5, target: iqn.2004-04.com.qnap:ts-569pro:iscsi.vmaplicacionix.d70ea1, portal: 192.168.1.2,3260]
 
 - Desde virt-manager, conecto con el disco iSCSI y configuro la VM para que lo utilice
 
-[![conv-iSCSI-2](https://www.luispa.com/wp-content/uploads/2015/06/conv-iSCSI-2-1024x719.png)](https://www.luispa.com/wp-content/uploads/2015/06/conv-iSCSI-2.png)
+![conv-iSCSI-2](/assets/img/original/conv-iSCSI-2-1024x719.png){: width="730px" padding:10px }
 
-[![conv-iSCSI-3](https://www.luispa.com/wp-content/uploads/2015/06/conv-iSCSI-3-1024x689.png)](https://www.luispa.com/wp-content/uploads/2015/06/conv-iSCSI-3.png)
+![conv-iSCSI-3](/assets/img/original/conv-iSCSI-3-1024x689.png){: width="730px" padding:10px }
 
-[![conv-iSCSI-4](https://www.luispa.com/wp-content/uploads/2015/06/conv-iSCSI-4-1024x694.png)](https://www.luispa.com/wp-content/uploads/2015/06/conv-iSCSI-4.png)
+![conv-iSCSI-4](/assets/img/original/conv-iSCSI-4-1024x694.png){: width="730px" padding:10px }
 
 - Arranco la nueva VM
 
 marte ~ # virsh start aplicacionix
 
-[![conv-iSCSI-5](https://www.luispa.com/wp-content/uploads/2015/06/conv-iSCSI-5.png)](https://www.luispa.com/wp-content/uploads/2015/06/conv-iSCSI-5.png)
+![conv-iSCSI-5](/assets/img/original/conv-iSCSI-5.png){: width="730px" padding:10px }
 
 ### Acciones en la VM (aplicacionix)
 
 - Amplío el file system principal para consumir el resto de GBs extra, recordar que el disco original tenía aprox. 20GB pero el nuevo es de 30GB. Es fácil, ejecutao gparted desde la propia VM (aplicacionix) y le asigno el espacio restante al filesystem principal.
 
-[![conv-iSCSI-6](https://www.luispa.com/wp-content/uploads/2015/06/conv-iSCSI-6.png)](https://www.luispa.com/wp-content/uploads/2015/06/conv-iSCSI-6.png)
+![conv-iSCSI-6](/assets/img/original/conv-iSCSI-6.png){: width="730px" padding:10px }
 
  
 

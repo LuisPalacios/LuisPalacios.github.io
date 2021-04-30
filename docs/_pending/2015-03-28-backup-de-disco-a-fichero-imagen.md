@@ -1,17 +1,12 @@
 ---
 title: "Linux: backup de disco físico a fichero"
 date: "2015-03-28"
-categories: 
-  - "apuntes"
-  - "gentoo"
-tags: 
-  - "backup"
-  - "disco"
-  - "imagen"
-  - "linux"
+categories: apuntes gentoo
+tags: backup disco imagen linux
+excerpt_separator: <!--more-->
 ---
 
-[![Hdd](https://www.luispa.com/wp-content/uploads/2015/03/Hdd-1024x419.png)](https://www.luispa.com/wp-content/uploads/2015/03/Hdd.png)
+![Hdd](/assets/img/original/Hdd-1024x419.png){: width="730px" padding:10px }
 
 Hace no mucho tuve que hacer un backup completo del disco duro de mi **Servidor** para instalar otro sistema operativo y opté por clonar el disco duro de arranque completo en un fichero comprimido (imagen byte a byte: **servidor.img.gz**). En caso de desastre (con el nuevo sistema operativo) podría fácilmente dar marcha atrás. Es un proceso sencillo pero siempre tardo un buen rato en encontrar en internet cómo hacerlo, así que he decidido documentarlo. Además añado un "extra", cómo montar la partición root dentro de dicha imagen para consultar ciertas cosas. Todo esto se consigue con estas herramientas:
 
@@ -26,7 +21,7 @@ Hace no mucho tuve que hacer un backup completo del disco duro de mi **Servidor*
 
 Es imposible hacer un backup del mismo disco con el que he arrancado el equipo, así que lo primero es hacer boot con un LiveCD Linux. Después de arrancar averiguamos el nombre de device del disco fuente (en mi caso el disco duro de arranque es **/dev/sdb**). Decido salvar tres ficheros: el MBR, el disco completo y la información sobre las paticiones. Notar que el importante es el "disco completo", los otros dos podrías obviarlos.
 
-# dd if=/dev/sdb of=servidor\_mbr.img bs=512 count=1
+# dd if=/dev/sdb of=servidor_mbr.img bs=512 count=1
 # dd if=/dev/sdb conv=sync,noerror bs=64K | gzip -c > servidor.img.gz
 # fdisk -l /dev/sda > servidor.fdiskinfo
 
@@ -61,7 +56,7 @@ Obtengo la información desde el fichero .fdiskinfo:
 
 # cat servidor.fdiskinfo
 Disk /dev/sda: 223.6 GiB, 240057409536 bytes, 468862128 sectors
-Units: sectors of 1 \* 512 = 512 bytes
+Units: sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 4096 bytes
 I/O size (minimum/optimal): 4096 bytes / 4096 bytes
 Disklabel type: gpt
@@ -80,13 +75,13 @@ Notar que cuando guardé esta información se usan unidades de 512 bytes (Units:
 
 Con esos datos puedo extraer el file system usando el comando dd indicando dónde empezar y cuanto copiar (en este caso indico dicha información en unidades de 512 bytes)
 
-# dd if=servidor.img of=servidor\_root.iso bs=512 skip=1316864 count=467543216
+# dd if=servidor.img of=servidor_root.iso bs=512 skip=1316864 count=467543216
 467543216+0 records in
 467543216+0 records out
 239382126592 bytes transferred in 5379.810398 secs (44496387 bytes/sec)
 
-# mkdir /mnt/servidor\_root
-# mount -o loop servidor\_root.iso /mnt/servidor\_root
+# mkdir /mnt/servidor_root
+# mount -o loop servidor_root.iso /mnt/servidor_root
 
  
 
@@ -100,7 +95,7 @@ Opción fdisk
 GPT PMBR size mismatch (468862127 != 468862207) will be corrected by w(rite).
 
 Disco totobo.iso: 223,6 GiB, 240057450496 bytes, 468862208 sectores
-Unidades: sectores de 1 \* 512 = 512 bytes
+Unidades: sectores de 1 * 512 = 512 bytes
 Tamaño de sector (lógico/físico): 512 bytes / 512 bytes
 Tamaño de E/S (mínimo/óptimo): 512 bytes / 512 bytes
 Tipo de etiqueta de disco: gpt
@@ -133,7 +128,7 @@ Partition Table: gpt
 Disk Flags:
 
 Numero  Inicio      Fin            Tamaño         Sistema de ficheros  Nombre  Banderas
- 1      1048576B    3145727B       2097152B                            grub    bios\_grub
+ 1      1048576B    3145727B       2097152B                            grub    bios_grub
  2      3145728B    137363455B     134217728B     ext2                 boot    msftdata
  3      137363456B  674234367B     536870912B     linux-swap(v1)       swap    msftdata
  4      674234368B  240056360959B  239382126592B  ext4                 rootfs  msftdata
@@ -145,10 +140,10 @@ Obtengo la siguiente información pero esta vez en Bytes, así que lo convierto 
 
 La extracción del file system y su posterior montaje es idéntico a como hicimos la vez anterior.
 
-# dd if=servidor.img of=servidor\_root.iso bs=512 skip=1316864 count=467543216
+# dd if=servidor.img of=servidor_root.iso bs=512 skip=1316864 count=467543216
 467543216+0 records in
 467543216+0 records out
 239382126592 bytes transferred in 5379.810398 secs (44496387 bytes/sec)
 
-# mkdir /mnt/servidor\_root
-# mount -o loop servidor\_root.iso /mnt/servidor\_root
+# mkdir /mnt/servidor_root
+# mount -o loop servidor_root.iso /mnt/servidor_root

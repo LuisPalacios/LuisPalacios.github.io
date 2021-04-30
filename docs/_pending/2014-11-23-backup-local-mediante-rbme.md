@@ -1,15 +1,14 @@
 ---
 title: "RBME: Backup incremental en Linux"
 date: "2014-11-23"
-categories: 
-  - "gentoo"
-tags: 
-  - "linux"
+categories: gentoo
+tags: linux
+excerpt_separator: <!--more-->
 ---
 
-En este artículo explico el metodo que uso para hacer backup de mis datos persistentes de mi servidor Linux a un disco externo. La técnica está basada en Rsync y backups [incrementales usando Hard Links](http://earlruby.org/2013/05/creating-differential-backups-with-hard-links-and-rsync/) mediante el script [RBME](https://github.com/schlomo/rbme) que facilita todo el proceso.
+En este artículo explico el metodo que uso para hacer backup de mis datos persistentes de mi servidor Linux a un disco externo. La técnica está basada en Rsync y backups [incrementales usando Hard Links](http://earlruby.org/2013/05/creating-differential-backups-with-hard-links-and-rsync/) mediante el script ![RBME](/assets/img/original/rbme){: width="730px" padding:10px } que facilita todo el proceso.
 
-[![backup](https://www.luispa.com/wp-content/uploads/2014/12/backup-1024x830.png)](https://www.luispa.com/wp-content/uploads/2014/12/backup.png)
+![backup](/assets/img/original/backup-1024x830.png){: width="730px" padding:10px }
 
 Voy a explicar dos "destinos físicos" de los backups, el primero es el obvio, usar un disco USB, pero el segundo es algo más ingenioso: emplear un disco iSCSI que reside en una NAS. En cualquier caso y para entender este apunte, quédate con los siguientes directorios que usaré como fuente (datos a salvar) y destino (ubicación donde los salvaré):
 
@@ -41,7 +40,7 @@ En mi caso me gusta cambiar una línea de este script para que el directorio tam
 
 :
 #today="$(date "+%Y-%m-%d")"
-today="$(date "+%Y-%m-%d\_%H-%M-%S")"
+today="$(date "+%Y-%m-%d_%H-%M-%S")"
 :
 
 Las configuraciones las detallo en cada opción de disco.
@@ -52,11 +51,11 @@ Las configuraciones las detallo en cada opción de disco.
 
 La primera opción, usar un disco externo USB para hacer backup. También valdría que fuese 2.0 pero hoy en día no merece la pena.
 
-[![usb](https://www.luispa.com/wp-content/uploads/2014/12/usb-300x162.png)](https://www.luispa.com/wp-content/uploads/2014/12/usb.png)
+![usb](/assets/img/original/usb-300x162.png){: width="730px" padding:10px }
 
 Utilizo un disco que ya tenía para otros menesteres y creo una partición de tipo EXT4 con el resto del espacio usando gparted.
 
-[![gparted](https://www.luispa.com/wp-content/uploads/2014/12/gparted.png)](https://www.luispa.com/wp-content/uploads/2014/12/gparted.png)
+![gparted](/assets/img/original/gparted.png){: width="730px" padding:10px }
 
 El proceso es muy sencillo, conectamos el USB, entramos como root y ejecutamos gparted. Seleccionamos el espacio libre y creamos una partición de tipo ext4.
 
@@ -67,38 +66,38 @@ Añado la nueva partición al /etc/fstab para que se monte en /mnt/Backup.
 - Monto el file system y creo un fichero de control para poder usarlo en mi script.
 
 marte ~ # mount /mnt/Backup
-marte ~ # touch /mnt/Backup/.Disco\_Backup\_USB.txt
+marte ~ # touch /mnt/Backup/.Disco_Backup_USB.txt
 
 - Veamos la configuración que utilizo para este caso
 
 Preparo el fichero de configuración de RBME /etc/rbme.conf Nota: Debes modificar y adaptar este fichero de configuración a tu caso concreto, este es solo un ejemplo.
 
-BACKUP\_PATH="/mnt/Backup"
-MIN\_FREE\_BEFORE\_HOST\_BACKUP="30000"
-MIN\_INODES\_BEFORE\_HOST\_BACKUP="100000"
-MIN\_FREE\_AFTER\_HOST\_BACKUP="40000"
-MIN\_INODES\_AFTER\_HOST\_BACKUP="300000"
-MIN\_KEEP\_OLD\_BACKUPS="30"
+BACKUP_PATH="/mnt/Backup"
+MIN_FREE_BEFORE_HOST_BACKUP="30000"
+MIN_INODES_BEFORE_HOST_BACKUP="100000"
+MIN_FREE_AFTER_HOST_BACKUP="40000"
+MIN_INODES_AFTER_HOST_BACKUP="300000"
+MIN_KEEP_OLD_BACKUPS="30"
 VERBOSE=${VERBOSE=}
 STATISTICS="yes"
 MAILTO="tusuario@tudominio.com"
 MAILFROM="root@tuhost"
 MAILSTYLE="all"
 LOGFILE=$(date +"/var/log/$ME.log.%d")
-RSYNC\_RSH="ssh -c blowfish-cbc”
+RSYNC_RSH="ssh -c blowfish-cbc”
 
-Preparo un script /etc/cron.daily/rbme\_daily.sh para que se ejecute diariamente desde el cron. Nota que este es solo un ejemplo, debes adaptar el script a tu configuración de directorio(s) y nombres de servidor.
+Preparo un script /etc/cron.daily/rbme_daily.sh para que se ejecute diariamente desde el cron. Nota que este es solo un ejemplo, debes adaptar el script a tu configuración de directorio(s) y nombres de servidor.
 
-/rbme\_daily.sh"\]
+/rbme_daily.sh"]
 #!/bin/bash
 #
-vm\_NAME="aplicacionix-file"
-iSCSI\_SERVER="192.168.1.2"
+vm_NAME="aplicacionix-file"
+iSCSI_SERVER="192.168.1.2"
 TARGET="iqn.2004-04.com.qnap:ts-569pro:iscsi.backuprbme.d70ea1"
 
 # mandar mensaje por correo
 #
-manda\_mensaje() {
+manda_mensaje() {
     # Get the IP Address from first argument
     mensaje=$1
     {
@@ -113,30 +112,30 @@ manda\_mensaje() {
 
 # Si la VM está arrancada la paro.
 #
-vm\_is\_on="0"
-vm\_was\_on="0"
+vm_is_on="0"
+vm_was_on="0"
 num="0"
 while true; do
 
     # Check if VM is up and running, if so shut it down
-    vm\_list=\`virsh list --all | grep -i aplicacionix-file\`
-    aplicacionix\_name=\`echo ${vm\_list} | gawk '{print $2}'\`
-    aplicacionix\_state=\`echo ${vm\_list} | gawk '{print $3}'\`
-    echo ${aplicacionix\_name}
-    echo ${aplicacionix\_state}
-    if \[ "${aplicacionix\_state}" == "ejecutando" \]; then
-        vm\_was\_on="1"
-        vm\_is\_on="1"
-        if \[ "${num}" == "3" \]; then
+    vm_list=\`virsh list --all | grep -i aplicacionix-file\`
+    aplicacionix_name=\`echo ${vm_list} | gawk '{print $2}'\`
+    aplicacionix_state=\`echo ${vm_list} | gawk '{print $3}'\`
+    echo ${aplicacionix_name}
+    echo ${aplicacionix_state}
+    if [ "${aplicacionix_state}" == "ejecutando" ]; then
+        vm_was_on="1"
+        vm_is_on="1"
+        if [ "${num}" == "3" ]; then
             break
         fi
         num=$((num+1))
-        echo "La VM '${aplicacionix\_name}' esta ejecutandose, ejecuto su apagado (intento ${num})"
-        virsh shutdown ${aplicacionix\_name}
+        echo "La VM '${aplicacionix_name}' esta ejecutandose, ejecuto su apagado (intento ${num})"
+        virsh shutdown ${aplicacionix_name}
         sleep 10
     else
-        if \[ "${aplicacionix\_state}" == "apagado" \]; then
-            vm\_is\_on="0"
+        if [ "${aplicacionix_state}" == "apagado" ]; then
+            vm_is_on="0"
             break
         fi
     fi
@@ -144,21 +143,21 @@ done
 
 # Si no consigo pararla me piro
 #
-if \[ "${vm\_is\_on}" = "1" \]; then
-    manda\_mensaje "He interrumpido el backup RBME porque no se ha podido parar la maquina virtual: ${aplicacionix\_name}"
+if [ "${vm_is_on}" = "1" ]; then
+    manda_mensaje "He interrumpido el backup RBME porque no se ha podido parar la maquina virtual: ${aplicacionix_name}"
     exit
 fi
 
 # Confirmo que tengo el directorio /mnt/Backup activo
 #
 found=\`iscsiadm -m session | grep -i ${TARGET}\`
-if \[ "${found}" = "" \]; then
+if [ "${found}" = "" ]; then
     echo "Login con el servidor iSCSI"
-    iscsiadm -m node -T ${TARGET} -p ${iSCSI\_SERVER} --login
+    iscsiadm -m node -T ${TARGET} -p ${iSCSI_SERVER} --login
 fi
 
 wasMounted="no"
-if \[ ! -f "/mnt/Backup/.Disco\_Backup\_iSCSI.txt" \];
+if [ ! -f "/mnt/Backup/.Disco_Backup_iSCSI.txt" ];
 then
     echo "Monto /mnt/Backup"
     mount /mnt/Backup
@@ -168,33 +167,33 @@ fi
 
 # Ejecuto el backup
 #
-if \[ -f "/mnt/Backup/.Disco\_Backup\_iSCSI.txt" \];
+if [ -f "/mnt/Backup/.Disco_Backup_iSCSI.txt" ];
 then
     echo "Backup desde /Apps a /mnt/Backup"
     rbme marte:/Apps
     #
     # Si no estaba originalmente montado pues lo vuelvo a desmontar
-    if \[ "${wasMounted}" = "no" \]; then
+    if [ "${wasMounted}" = "no" ]; then
         umount /mnt/Backup
     fi
 fi
 
 # Si la VM estaba arrancada la vuelvo a activar
 #
-if \[ "${vm\_was\_on}" = "1" \]; then
-    echo "Arranco '${aplicacionix\_name}'"
-    virsh start ${aplicacionix\_name}
+if [ "${vm_was_on}" = "1" ]; then
+    echo "Arranco '${aplicacionix_name}'"
+    virsh start ${aplicacionix_name}
 
     # La VM que estoy parando tiene mi servidor de correo asi que he creado 
     # un script para automandarme un mensaje dentro de un rato con el log
     # que genera el programa rbme
     sleep 90
-    /root/priv/bin/manda\_mail.sh
+    /root/priv/bin/manda_mail.sh
 fi
 
 La VM que estoy parando tiene mi servidor de correo asi que he modificado el ejecutable rbme (añado la lína: cat "$LOGFILE" > /tmp/mandar.txt) y he creado un script para automandarme un mensaje al terminar el script anterior:
 
-- /root/priv/bin/manda\_mail.sh"
+- /root/priv/bin/manda_mail.sh"
 
 <
 
@@ -208,21 +207,21 @@ pre>
 
 ## Backup a disco iSCSI
 
-Otra opción muy interesante es usar un disco remoto en una NAS a través de iSCSI. En mi caso tengo una NAS de QNAP, un [Hypervisor KVM](https://www.luispa.com/?p=3221) y mis máquinas virtuales ([un ejemplo](https://www.luispa.com/?p=3462)). Si mezclamos los ingredientes tenemos un caso de uso claro: entregar un espacio "físico" vía iSCSI desde la NAS al hypervisor, para que haga backups con RBME de los datos persistentes de las máquinas virtuales.
+Otra opción muy interesante es usar un disco remoto en una NAS a través de iSCSI. En mi caso tengo una NAS de QNAP, un ![Hypervisor KVM](https://www.luispa.com/?p=3221) y mis máquinas virtuales ([un ejemplo](/assets/img/original/?p=3462)){: width="730px" padding:10px }. Si mezclamos los ingredientes tenemos un caso de uso claro: entregar un espacio "físico" vía iSCSI desde la NAS al hypervisor, para que haga backups con RBME de los datos persistentes de las máquinas virtuales.
 
 ### Acciones en el QNAP
 
 - Creo un espacio libre de 250GB en mi QNAP (NAS)
 
-[![iSCSI-RBME-1](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-RBME-1-1024x595.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-RBME-1.png)
+![iSCSI-RBME-1](/assets/img/original/iSCSI-RBME-1-1024x595.png){: width="730px" padding:10px }
 
-[![iSCSI-RBME-2](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-RBME-2-1024x602.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-RBME-2.png)
+![iSCSI-RBME-2](/assets/img/original/iSCSI-RBME-2-1024x602.png){: width="730px" padding:10px }
 
-[![iSCSI-RBME-3](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-RBME-3-1024x602.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-RBME-3.png)
+![iSCSI-RBME-3](/assets/img/original/iSCSI-RBME-3-1024x602.png){: width="730px" padding:10px }
 
-[![iSCSI-RBME-4](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-RBME-4-1024x601.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-RBME-4.png)
+![iSCSI-RBME-4](/assets/img/original/iSCSI-RBME-4-1024x601.png){: width="730px" padding:10px }
 
-[![iSCSI-RBME-5](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-RBME-5-1024x591.png)](https://www.luispa.com/wp-content/uploads/2015/06/iSCSI-RBME-5.png)
+![iSCSI-RBME-5](/assets/img/original/iSCSI-RBME-5-1024x591.png){: width="730px" padding:10px }
 
 - Me apunto el target: iqn.2004-04.com.qnap:ts-569pro:iscsi.backuprbme.d70ea1
 
@@ -232,11 +231,11 @@ Otra opción muy interesante es usar un disco remoto en una NAS a través de iSC
 
 Como decía antes, estoy entregando un espacio "físico" vía iSCSI desde la NAS al hypervisor, para que haga backups con RBME de los datos persistentes de las máquinas virtuales. Esto significa que el Linux (hypervisor) tiene acceso a los datos persistentes que modifican sus VM's y tiene la capacidad de apagar las VM's, hacer backup y volver a arrancarlas, así que me ha parecido el sitio más adecuado.
 
-\[dropshadowbox align="center" effect="lifted-both" width="550px" height="" background\_color="#ffffff" border\_width="1" border\_color="#dddddd" \]
+[dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
 
-**NOTA**: En los comandos siguientes verás que aparece un segundo target con "vmgentoo" en su IQN, ignóralo porque no tiene nada que ver con el backup... es otro disco que uso para una de las máquinas virtuales ([este otro apunte](https://www.luispa.com/?p=3462)).
+![este otro apunte](/assets/img/original/?p=3462)){: width="730px" padding:10px }.
 
-\[/dropshadowbox\]
+[/dropshadowbox]
 
 - Para poder configurar discos iSCSI hay que hacer un discovery a ver que me ofrece el NAS
 
@@ -249,7 +248,7 @@ marte ~ # iscsiadm -m discovery --portal=192.168.1.2:3260 -t sendtargets
 marte ~ # iscsiadm -m node -T iqn.2004-04.com.qnap:ts-569pro:iscsi.vmgentoo.d70ea1 -p 192.168.1.2 --login
 marte ~ # iscsiadm -m node -T iqn.2004-04.com.qnap:ts-569pro:iscsi.backuprbme.d70ea1 -p 192.168.1.2 --login
 
-- Tras hacer login en un target pasa a añadirse a la base de datos persistente de open-iscsi, que reside en /etc/iscsi/nodes y /etc/iscsi/send\_targets. Puedes ver qué tienes en la base de datos con los comandos siguientes:
+- Tras hacer login en un target pasa a añadirse a la base de datos persistente de open-iscsi, que reside en /etc/iscsi/nodes y /etc/iscsi/send_targets. Puedes ver qué tienes en la base de datos con los comandos siguientes:
     
 - Comprobar la base de datos
     
@@ -263,12 +262,12 @@ discovery.type = sendtargets
 discovery.sendtargets.address = 192.168.1.2
 discovery.sendtargets.port = 3260
 discovery.sendtargets.auth.authmethod = None
-discovery.sendtargets.auth.username = discovery.sendtargets.auth.password = discovery.sendtargets.auth.username\_in = discovery.sendtargets.auth.password\_in = discovery.sendtargets.timeo.login\_timeout = 15
-discovery.sendtargets.use\_discoveryd = No
-discovery.sendtargets.discoveryd\_poll\_inval = 30
-discovery.sendtargets.reopen\_max = 5
-discovery.sendtargets.timeo.auth\_timeout = 45
-discovery.sendtargets.timeo.active\_timeout = 30
+discovery.sendtargets.auth.username = discovery.sendtargets.auth.password = discovery.sendtargets.auth.username_in = discovery.sendtargets.auth.password_in = discovery.sendtargets.timeo.login_timeout = 15
+discovery.sendtargets.use_discoveryd = No
+discovery.sendtargets.discoveryd_poll_inval = 30
+discovery.sendtargets.reopen_max = 5
+discovery.sendtargets.timeo.auth_timeout = 45
+discovery.sendtargets.timeo.active_timeout = 30
 discovery.sendtargets.iscsi.MaxRecvDataSegmentLength = 32768
 # END RECORD
 
@@ -281,22 +280,22 @@ marte ~ # iscsiadm -m node -T iqn.2004-04.com.qnap:ts-569pro:iscsi.backuprbme.d7
 node.name = iqn.2004-04.com.qnap:ts-569pro:iscsi.backuprbme.d70ea1
 node.tpgt = 1
 node.startup = manual
-iface.hwaddress = iface.ipaddress = iface.iscsi\_ifacename = default
-iface.net\_ifacename = iface.transport\_name = tcp
-iface.initiatorname = node.discovery\_address = 192.168.1.2
-node.discovery\_port = 3260
-node.discovery\_type = send\_targets
-node.session.initial\_cmdsn = 0
-node.session.initial\_login\_retry\_max = 8
-node.session.xmit\_thread\_priority = -20
-node.session.cmds\_max = 128
-node.session.queue\_depth = 32
+iface.hwaddress = iface.ipaddress = iface.iscsi_ifacename = default
+iface.net_ifacename = iface.transport_name = tcp
+iface.initiatorname = node.discovery_address = 192.168.1.2
+node.discovery_port = 3260
+node.discovery_type = send_targets
+node.session.initial_cmdsn = 0
+node.session.initial_login_retry_max = 8
+node.session.xmit_thread_priority = -20
+node.session.cmds_max = 128
+node.session.queue_depth = 32
 node.session.auth.authmethod = None
-node.session.auth.username = node.session.auth.password = node.session.auth.username\_in = node.session.auth.password\_in = node.session.timeo.replacement\_timeout = 120
-node.session.err\_timeo.abort\_timeout = 15
-node.session.err\_timeo.lu\_reset\_timeout = 30
-node.session.err\_timeo.tgt\_reset\_timeout = 30
-node.session.err\_timeo.host\_reset\_timeout = 60
+node.session.auth.username = node.session.auth.password = node.session.auth.username_in = node.session.auth.password_in = node.session.timeo.replacement_timeout = 120
+node.session.err_timeo.abort_timeout = 15
+node.session.err_timeo.lu_reset_timeout = 30
+node.session.err_timeo.tgt_reset_timeout = 30
+node.session.err_timeo.host_reset_timeout = 60
 node.session.iscsi.FastAbort = Yes
 node.session.iscsi.InitialR2T = No
 node.session.iscsi.ImmediateData = Yes
@@ -307,66 +306,66 @@ node.session.iscsi.DefaultTime2Wait = 2
 node.session.iscsi.MaxConnections = 1
 node.session.iscsi.MaxOutstandingR2T = 1
 node.session.iscsi.ERL = 0
-node.conn\[0\].address = 192.168.1.2
-node.conn\[0\].port = 3260
-node.conn\[0\].startup = manual
-node.conn\[0\].tcp.window\_size = 524288
-node.conn\[0\].tcp.type\_of\_service = 0
-node.conn\[0\].timeo.logout\_timeout = 15
-node.conn\[0\].timeo.login\_timeout = 15
-node.conn\[0\].timeo.auth\_timeout = 45
-node.conn\[0\].timeo.noop\_out\_interval = 5
-node.conn\[0\].timeo.noop\_out\_timeout = 5
-node.conn\[0\].iscsi.MaxXmitDataSegmentLength = 0
-node.conn\[0\].iscsi.MaxRecvDataSegmentLength = 262144
-node.conn\[0\].iscsi.HeaderDigest = None
-node.conn\[0\].iscsi.DataDigest = None
-node.conn\[0\].iscsi.IFMarker = No
-node.conn\[0\].iscsi.OFMarker = No
+node.conn[0].address = 192.168.1.2
+node.conn[0].port = 3260
+node.conn[0].startup = manual
+node.conn[0].tcp.window_size = 524288
+node.conn[0].tcp.type_of_service = 0
+node.conn[0].timeo.logout_timeout = 15
+node.conn[0].timeo.login_timeout = 15
+node.conn[0].timeo.auth_timeout = 45
+node.conn[0].timeo.noop_out_interval = 5
+node.conn[0].timeo.noop_out_timeout = 5
+node.conn[0].iscsi.MaxXmitDataSegmentLength = 0
+node.conn[0].iscsi.MaxRecvDataSegmentLength = 262144
+node.conn[0].iscsi.HeaderDigest = None
+node.conn[0].iscsi.DataDigest = None
+node.conn[0].iscsi.IFMarker = No
+node.conn[0].iscsi.OFMarker = No
 # END RECORD 
 
 #### Daemon y persistencia
 
-- Configuro el sistema para que arranque open-iscsi durante el boot, haga login a los targets y además configure los discos iSCSI con nombres persistentes en /dev/iscsi/disk\*
+- Configuro el sistema para que arranque open-iscsi durante el boot, haga login a los targets y además configure los discos iSCSI con nombres persistentes en /dev/iscsi/disk*
 
-\[Unit\]
+[Unit]
 Description=Open-iSCSI
 Documentation=man:iscsid(8) man:iscsiuio(8) man:iscsiadm(8)
 After=network.target NetworkManager-wait-online.service iscsiuio.service tgtd.service targetcli.service
 
-\[Service\]
+[Service]
 Type=forking
 PIDFile=/var/run/iscsid.pid
 ExecStart=/usr/sbin/iscsid
 ExecStop=/sbin/iscsiadm -k 0 2
 
-\[Install\]
+[Install]
 WantedBy=multi-user.target
 
-\[Unit\]
+[Unit]
 Description=Script post iSCSI
 Wants=iscsid.service
 After=iscsid.service
 
-\[Service\]
+[Service]
 Type=oneshot
-ExecStart=/bin/bash /root/iscsi/iscsi\_start.sh
+ExecStart=/bin/bash /root/iscsi/iscsi_start.sh
 RemainAfterExit=yes
 
-\[Install\]
+[Install]
 WantedBy=multi-user.target
 
 #!/bin/bash
 #
-iSCSI\_SERVER="192.168.1.2"
-TARGETS="iqn.2004-04.com.qnap:ts-569pro:iscsi.vmgentoo.d70ea1 \\
+iSCSI_SERVER="192.168.1.2"
+TARGETS="iqn.2004-04.com.qnap:ts-569pro:iscsi.vmgentoo.d70ea1 \
          iqn.2004-04.com.qnap:ts-569pro:iscsi.backuprbme.d70ea1"
 
 for TARGET in ${TARGETS}; do
 
     found=\`iscsiadm -m session | grep -i ${TARGET}\`
-    if \[ "${found}" = "" \]; then
-        iscsiadm -m node -T ${TARGET} -p ${iSCSI\_SERVER} --login
+    if [ "${found}" = "" ]; then
+        iscsiadm -m node -T ${TARGET} -p ${iSCSI_SERVER} --login
     fi
 done
 
@@ -379,8 +378,8 @@ marte ~ # systemctl enable post-iscsid
 
   
 marte ~ # iscsiadm -m session
-tcp: \[1\] 192.168.1.2:3260,1 iqn.2004-04.com.qnap:ts-569pro:iscsi.vmgentoo.d70ea1
-tcp: \[2\] 192.168.1.2:3260,1 iqn.2004-04.com.qnap:ts-569pro:iscsi.backuprbme.d70ea1
+tcp: [1] 192.168.1.2:3260,1 iqn.2004-04.com.qnap:ts-569pro:iscsi.vmgentoo.d70ea1
+tcp: [2] 192.168.1.2:3260,1 iqn.2004-04.com.qnap:ts-569pro:iscsi.backuprbme.d70ea1
 
 marte ~ # ls -al /dev/iscsi/
 total 0
@@ -401,28 +400,28 @@ A partir de aquí ya tengo mi disco iSCSI como /dev/iscsi/diskb y dicho nombre e
 
 - Creo las particiones y el file system
 
-\[dropshadowbox align="center" effect="lifted-both" width="550px" height="" background\_color="#ffffff" border\_width="1" border\_color="#dddddd" \]
+[dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
 
 **NOTA**: Voy a usar gparted que no utiliza el link simbólico que acabo de mostrar anterioremente, así que asegúrate que estás eligiendo el disco adecuado. En mi caso es el /dev/sdc
 
-\[/dropshadowbox\]
+[/dropshadowbox]
 
 marte ~ # gparted
 
-[![gparted-iscsi1](https://www.luispa.com/wp-content/uploads/2015/06/gparted-iscsi1.png)](https://www.luispa.com/wp-content/uploads/2015/06/gparted-iscsi1.png)
+![gparted-iscsi1](/assets/img/original/gparted-iscsi1.png){: width="730px" padding:10px }
 
-[![gparted-iscsi2](https://www.luispa.com/wp-content/uploads/2015/06/gparted-iscsi2.png)](https://www.luispa.com/wp-content/uploads/2015/06/gparted-iscsi2.png)
+![gparted-iscsi2](/assets/img/original/gparted-iscsi2.png){: width="730px" padding:10px }
 
-[![gparted-iscsi3](https://www.luispa.com/wp-content/uploads/2015/06/gparted-iscsi3.png)](https://www.luispa.com/wp-content/uploads/2015/06/gparted-iscsi3.png)
+![gparted-iscsi3](/assets/img/original/gparted-iscsi3.png){: width="730px" padding:10px }
 
-[![gparted-iscsi4](https://www.luispa.com/wp-content/uploads/2015/06/gparted-iscsi4.png)](https://www.luispa.com/wp-content/uploads/2015/06/gparted-iscsi4.png)
+![gparted-iscsi4](/assets/img/original/gparted-iscsi4.png){: width="730px" padding:10px }
 
 - Compruebo que todo es correcto, deberíamos ver que tenemos un disco con una partición 83 (linux) y aunque no se ve, el file system es de tipo EXT4.
 
 marte ~ # fdisk -l /dev/iscsi/diskb
 
 Disco /dev/iscsi/diskb: 250 GiB, 268435456000 bytes, 524288000 sectores
-Unidades: sectores de 1 \* 512 = 512 bytes
+Unidades: sectores de 1 * 512 = 512 bytes
 Tamaño de sector (lógico/físico): 512 bytes / 512 bytes
 Tamaño de E/S (mínimo/óptimo): 512 bytes / 33553920 bytes
 Tipo de etiqueta de disco: dos
@@ -433,28 +432,28 @@ Device            Boot Start       End   Sectors  Size Id Type
 
 Tal como dije al principio, el directorio destino donde montaré este file system es /mnt/Backup. Este sistema utiliza systemd, así que preparo un par de ficheros para que se automonte el directorio.
 
-\[Unit\]
+[Unit]
 Description=Automount /mnt/Backup
 
-\[Automount\]
+[Automount]
 Where=/mnt/Backup
 
-\[Install\]
+[Install]
 WantedBy=multi-user.target
 
-\[Unit\]
+[Unit]
 Description=Backup
 Wants=iscsid.service
 After=iscsid.service
 
-\[Mount\]
+[Mount]
 What=/dev/iscsi/diskb1
 Where=/mnt/Backup
 Type=ext4
 StandardOutput=syslog
 StandardError=syslog
 
-\[Install\]
+[Install]
 WantedBy=multi-user.target
 
 - Habilito su montaje durante el arranque del equipo.
@@ -465,52 +464,52 @@ marte system # systemctl enable mnt-Backup.mount
 - Monto el file system y creo un fichero de control para poder usarlo en mi script.
 
 marte ~ # mount /mnt/Backup
-marte ~ # touch /mnt/Backup/.Disco\_Backup\_iSCSI.txt
+marte ~ # touch /mnt/Backup/.Disco_Backup_iSCSI.txt
 
 - Veamos la configuración que utilizo para este caso
 
 Preparo el fichero de configuración de RBME. Nota: Debes modificar y adaptar este fichero de configuración a tu caso concreto, este es solo un ejemplo.
 
-BACKUP\_PATH="/mnt/Backup"
-MIN\_FREE\_BEFORE\_HOST\_BACKUP="30000"
-MIN\_INODES\_BEFORE\_HOST\_BACKUP="100000"
-MIN\_FREE\_AFTER\_HOST\_BACKUP="40000"
-MIN\_INODES\_AFTER\_HOST\_BACKUP="300000"
-MIN\_KEEP\_OLD\_BACKUPS="30"
+BACKUP_PATH="/mnt/Backup"
+MIN_FREE_BEFORE_HOST_BACKUP="30000"
+MIN_INODES_BEFORE_HOST_BACKUP="100000"
+MIN_FREE_AFTER_HOST_BACKUP="40000"
+MIN_INODES_AFTER_HOST_BACKUP="300000"
+MIN_KEEP_OLD_BACKUPS="30"
 VERBOSE=${VERBOSE=}
 STATISTICS="yes"
 MAILTO="tusuario@tudominio.com"
 MAILFROM="root@tuhost"
 MAILSTYLE="all"
 LOGFILE=$(date +"/var/log/$ME.log.%d")
-RSYNC\_RSH="ssh -c blowfish-cbc”
+RSYNC_RSH="ssh -c blowfish-cbc”
 
 Preparo un script para que se ejecute diariamente desde el cron. Nota que este es solo un ejemplo, debes adaptar el script a tu configuración de directorio(s) y nombres de servidor.
 
 #!/bin/bash
 #
-iSCSI\_SERVER="192.168.1.2"
+iSCSI_SERVER="192.168.1.2"
 TARGET="iqn.2004-04.com.qnap:ts-569pro:iscsi.backuprbme.d70ea1"
 
 # Si la VM está arrancada la paro.
 #
-aplicacionix\_on=\`virsh dominfo aplicacionix | grep -i Estado | grep -i ejecutando\`
-if \[ "${aplicacionix\_on}" != "" \]; then
+aplicacionix_on=\`virsh dominfo aplicacionix | grep -i Estado | grep -i ejecutando\`
+if [ "${aplicacionix_on}" != "" ]; then
     echo "Parro 'aplicacionix'"
-    vm\_was\_on="yes"
+    vm_was_on="yes"
     virsh shutdown aplicacionix
 fi
 
 # Confirmo que tengo el directorio /mnt/Backup activo
 #
 found=\`iscsiadm -m session | grep -i ${TARGET}\`
-if \[ "${found}" = "" \]; then
+if [ "${found}" = "" ]; then
     echo "Login con el servidor iSCSI"
-    iscsiadm -m node -T ${TARGET} -p ${iSCSI\_SERVER} --login
+    iscsiadm -m node -T ${TARGET} -p ${iSCSI_SERVER} --login
 fi
 
 wasMounted="no"
-if \[ ! -f "/mnt/Backup/.Disco\_Backup\_iSCSI.txt" \];
+if [ ! -f "/mnt/Backup/.Disco_Backup_iSCSI.txt" ];
 then
     echo "Monto /mnt/Backup"
     mount /mnt/Backup
@@ -520,18 +519,18 @@ fi
 
 # Ejecuto el backup
 #
-if \[ -f "/mnt/Backup/.Disco\_Backup\_iSCSI.txt" \];
+if [ -f "/mnt/Backup/.Disco_Backup_iSCSI.txt" ];
 then
     echo "Backup desde /Apps a /mnt/Backup"
     rbme marte:/Apps
-    if \[ "${wasMounted}" = "no" \]; then
+    if [ "${wasMounted}" = "no" ]; then
         umount /mnt/Backup
     fi
 fi
 
 # Si la VM estaba arrancada la vuelvo a activar
 #
-if \[ "${vm\_was\_on}" = "yes" \]; then
+if [ "${vm_was_on}" = "yes" ]; then
     echo "Arranco 'aplicacionix'"
     virsh start aplicacionix
 fi

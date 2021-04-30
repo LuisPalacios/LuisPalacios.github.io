@@ -1,13 +1,14 @@
 ---
 title: "OpenVPN Server en Linux"
 date: "2014-09-14"
-categories: 
-  - "apuntes"
+categories: apuntes
+tags: macosx peakhour snmp
+excerpt_separator: <!--more-->
 ---
 
-En este apunte técnico voy a describir cómo montar un VPN Server casero basado en **[OpenVPN](https://openvpn.net/)** que sigue siendo la mejor solución hoy en día, a pesar de que es más complejo de implementar. El objetivo es poder tener acceso a los servicios internos de mi red casera desde internet.
+![OpenVPN](/assets/img/original/){: width="730px" padding:10px }** que sigue siendo la mejor solución hoy en día, a pesar de que es más complejo de implementar. El objetivo es poder tener acceso a los servicios internos de mi red casera desde internet.
 
-  [![bvSrAN5aY53Ewcw9SKU4ovo6qI7mu4nlR9GiAFqsWSG0FCzNr2BL4vtRAk0nLMB2qAg=w300](https://www.luispa.com/wp-content/uploads/2015/04/bvSrAN5aY53Ewcw9SKU4ovo6qI7mu4nlR9GiAFqsWSG0FCzNr2BL4vtRAk0nLMB2qAgw300.png)](https://www.luispa.com/wp-content/uploads/2015/04/bvSrAN5aY53Ewcw9SKU4ovo6qI7mu4nlR9GiAFqsWSG0FCzNr2BL4vtRAk0nLMB2qAgw300.png)  
+  ![bvSrAN5aY53Ewcw9SKU4ovo6qI7mu4nlR9GiAFqsWSG0FCzNr2BL4vtRAk0nLMB2qAg=w300](/assets/img/original/bvSrAN5aY53Ewcw9SKU4ovo6qI7mu4nlR9GiAFqsWSG0FCzNr2BL4vtRAk0nLMB2qAgw300.png){: width="730px" padding:10px }  
 
 - OpenVPN es la mejor solución VPN a día de hoy. Es fiable, rápido y lo más importante, muy seguro, incluso contra organismos que dicen comprometieron otros protocolos. Como contrapartida, su configuración es más compleja y tiene el inconveniente de necesitar un software adicional en los clientes.
 - IKEv2 también es un protocolo rápido y seguro si se usa la implementación open source. Para lo usuarios móviles tiene la ventaja (sobre openvpn) de reconectarse. Es la única solución para usuarios de Blackberry.
@@ -22,31 +23,31 @@ En este apunte técnico voy a describir cómo montar un VPN Server casero basado
 
 ## Instalación del Software
 
-\# emerge -v app-crypt/easy-rsa
+# emerge -v app-crypt/easy-rsa
 
 net-misc/openvpn      lzo -pam plugins ssl systemd iproute2 examples
 
-\# emerge -v openvpn
+# emerge -v openvpn
 
  
 
 ## Infraestructura PKI
 
-Es la primera vez que instalo openvpn así que necesito crear mi propia infraestructura PKI desde el principio. PKI significa Public Key Infrastructure y es el conjunto de recursos necesarios para crear certificados digitales. Dejo [aquí](http://sobrebits.com/montar-un-servidor-casero-con-raspberry-pi-parte-7-instalacion-y-configuracion-de-openvpn/) y [aquí](https://wiki.gentoo.org/wiki/Create_a_Public_Key_Infrastructure_Using_the_easy-rsa_Scripts) un par de enlaces interesantes donde esta todo muy bien explicado. A continuación un registro de mi instalación:
+Es la primera vez que instalo openvpn así que necesito crear mi propia infraestructura PKI desde el principio. PKI significa Public Key Infrastructure y es el conjunto de recursos necesarios para crear certificados digitales. Dejo [aquí](http://sobrebits.com/montar-un-servidor-casero-con-raspberry-pi-parte-7-instalacion-y-configuracion-de-openvpn/) y ![aquí](/assets/img/original/Create_a_Public_Key_Infrastructure_Using_the_easy-rsa_Scripts){: width="730px" padding:10px } un par de enlaces interesantes donde esta todo muy bien explicado. A continuación un registro de mi instalación:
 
-\# cp -a /usr/share/easy-rsa /root/easy-rsa-servidor
+# cp -a /usr/share/easy-rsa /root/easy-rsa-servidor
 # cd /root/easy-rsa-servidor
 
-export KEY\_COUNTRY="ES"
-export KEY\_PROVINCE="Madrid"
-export KEY\_CITY="Madrid"
-export KEY\_ORG="Parchis"
-export KEY\_EMAIL="mi@correo.com"
-export KEY\_CN="servidor.dominio.com"
-export KEY\_NAME="LuisPa"
-export KEY\_OU="Parchis"
+export KEY_COUNTRY="ES"
+export KEY_PROVINCE="Madrid"
+export KEY_CITY="Madrid"
+export KEY_ORG="Parchis"
+export KEY_EMAIL="mi@correo.com"
+export KEY_CN="servidor.dominio.com"
+export KEY_NAME="LuisPa"
+export KEY_OU="Parchis"
 
-\# cd /root/easy-rsa-servidor
+# cd /root/easy-rsa-servidor
 # source ./vars
 # ./clean-all
 # ./build-ca
@@ -55,11 +56,11 @@ export KEY\_OU="Parchis"
 
 Creo la clave para cada los usuarios que se conectarán a este VPN Server, empiezo por la mía:
 
-\# ./build-key luis
+# ./build-key luis
 
 Genero la Hash-based Message Authentication Code (HMAC):
 
-\# openvpn --genkey --secret /root/easy-rsa-servidor/keys/ta.key
+# openvpn --genkey --secret /root/easy-rsa-servidor/keys/ta.key
 
 Los ficheros quedan en el directorio **keys**:
 
@@ -73,11 +74,11 @@ Los ficheros quedan en el directorio **keys**:
 
 Muevo el directorio creado con easy-rsa a /etc/openvpn
 
-\# mv /root/easy-rsa-servidor /etc/openvpn
+# mv /root/easy-rsa-servidor /etc/openvpn
 
 Edito y preparo el fichero de configuración que llamaré luispaVPN: /etc/openvpn/luispaVPN.conf
 
-\# server binding port
+# server binding port
 port 12112
 
 # openvpn protocol, could be tcp / udp / tcp6 / udp6
@@ -138,9 +139,9 @@ nobody   13080     1  0 17:13 ?        00:00:00 /usr/sbin/openvpn --daemon --wri
 
 ## MacOSX
 
-Para conectar desde un MacOSX necesitas instalar un cliente especial. Uno muy popular es [Tunnelblick](https://code.google.com/p/tunnelblick/):
+Para conectar desde un MacOSX necesitas instalar un cliente especial. Uno muy popular es ![Tunnelblick](/assets/img/original/){: width="730px" padding:10px }:
 
-- Descarga e instala el **cliente OpenVPN para MacOSX**: [Tunnelblick](https://code.google.com/p/tunnelblick/)
+- Descarga e instala el **cliente OpenVPN para MacOSX**: ![Tunnelblick](/assets/img/original/){: width="730px" padding:10px }
 - Ejecutar Tunnelblick
 
 El propio programa te guiará para que puedas crearte un fichero de configuración. Recuerda que tienes que hacerle llegar los ficheros ca.crt, luis.crt y luis.key.

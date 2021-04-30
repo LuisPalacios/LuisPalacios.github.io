@@ -1,36 +1,28 @@
 ---
 title: "Firewall+Router en máquina virtual linux"
 date: "2015-03-19"
-categories: 
-  - "apuntes"
-tags: 
-  - "esxi"
-  - "firewall"
-  - "iptables"
-  - "linux"
-  - "movistar"
-  - "netfilter"
-  - "router"
-  - "virtualizacion"
+categories: apuntes
+tags: esxi firewall iptables linux movistar netfilter router virtualizacion
+excerpt_separator: <!--more-->
 ---
 
-En este apunte describo cómo instalar una VM (máquina virtual) Linux que hará de router/firewall casero para conectar a Movistar Fusión Fibra + TV + VoIP. Es la "caja roja" en la imagen siguiente, se ejecutaba en mi hypervisor ESXi (usando como "base" [VM Linux en ESXi](https://www.luispa.com/?p=1803)). Nota: más adelante he abandonado ESXi y ahora uso [KVM](https://www.luispa.com/?p=3221) (con "base" [VM Linux en KVM, esta vez con iSCSI](https://www.luispa.com/?p=3462)), pero eso es otra historia...
+En este apunte describo cómo instalar una VM (máquina virtual) Linux que hará de router/firewall casero para conectar a Movistar Fusión Fibra + TV + VoIP. Es la "caja roja" en la imagen siguiente, se ejecutaba en mi hypervisor ESXi (usando como "base" [VM Linux en ESXi](https://www.luispa.com/?p=1803)). Nota: más adelante he abandonado ESXi y ahora uso [KVM](https://www.luispa.com/?p=3221) (con "base" ![VM Linux en KVM, esta vez con iSCSI](/assets/img/original/?p=3462)){: width="730px" padding:10px }, pero eso es otra historia...
 
-\[dropshadowbox align="center" effect="lifted-both" width="550px" height="" background\_color="#ffffff" border\_width="1" border\_color="#dddddd" \]
+[dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
 
-**NOTA**: Este caso de uso como router de internet está descrito en el apunte [Movistar Fusión Fibra + TV + VoIP con router Linux](https://www.luispa.com/?p=266). En dicho apunte usé un Linux sobre Mac Mini, mientras que ahora el servidor lo virtualizo y el tráfico de las VLAN's llega sin etiquetar (vlan-id).
+**NOTA**: Este caso de uso como router de internet está descrito en el apunte ![Movistar Fusión Fibra + TV + VoIP con router Linux](/assets/img/original/?p=266). En dicho apunte usé un Linux sobre Mac Mini, mientras que ahora el servidor lo virtualizo y el tráfico de las VLAN's llega sin etiquetar (vlan-id){: width="730px" padding:10px }.
 
-\[/dropshadowbox\]
+[/dropshadowbox]
 
-[![ESXi-Docker-Router](https://www.luispa.com/wp-content/uploads/2015/03/ESXi-Docker-Router-710x1024.png)](https://www.luispa.com/wp-content/uploads/2015/03/ESXi-Docker-Router.png)  
+![ESXi-Docker-Router](/assets/img/original/ESXi-Docker-Router-710x1024.png){: width="730px" padding:10px }  
 
-Para empezar, como decía arriba, lo primero es duplicar la plantilla que documenté en este otro apunte: [Gentoo VM](https://www.luispa.com/?p=1803) y crear una máquina virtual nueva. La voy a llamar "**Cortafuegix**", en alusión a la Aldea Gala de ASterix :-)
+Para empezar, como decía arriba, lo primero es duplicar la plantilla que documenté en este otro apunte: ![Gentoo VM](/assets/img/original/?p=1803) y crear una máquina virtual nueva. La voy a llamar "**Cortafuegix**", en alusión a la Aldea Gala de ASterix :-){: width="730px" padding:10px }
 
-[![Cortafuegix](https://www.luispa.com/wp-content/uploads/2015/04/Cortafuegix.jpg)](https://www.luispa.com/wp-content/uploads/2015/04/Cortafuegix.jpg)
+![Cortafuegix](/assets/img/original/Cortafuegix.jpg){: width="730px" padding:10px }
 
-Por cierto, hice algo parecido para mi máquina virtual para montar las aplicaciones que luego ejecuto en [Docker](https://www.luispa.com/?p=172), aunque no documento la instalación de Gentoo por ser muy parecida, amplía la imagen siguiente para echar un ojo a la configuración de la VM "**Aplicacionix**"
+Por cierto, hice algo parecido para mi máquina virtual para montar las aplicaciones que luego ejecuto en ![Docker](/assets/img/original/?p=172){: width="730px" padding:10px }, aunque no documento la instalación de Gentoo por ser muy parecida, amplía la imagen siguiente para echar un ojo a la configuración de la VM "**Aplicacionix**"
 
-[![Aplicacionix](https://www.luispa.com/wp-content/uploads/2015/04/Aplicacionix.jpg)](https://www.luispa.com/wp-content/uploads/2015/04/Aplicacionix.jpg)  
+![Aplicacionix](/assets/img/original/Aplicacionix.jpg){: width="730px" padding:10px }  
 
 ## La Red
 
@@ -38,94 +30,94 @@ Empiezo por el principio, la configuración de la red y vlan's.
 
 En casos como este es muy importante tener claro cual es el diseño físico de la red, qué NIC's tenemos y qué NIC's virtuales van a presentarse (desde ESXi) a la VM. Voy a configurar las vNICs con nombres predecibles, con IPs estáticas (sin dhcp) y que no cambie nada al hacer reboot.
 
-\[dropshadowbox align="center" effect="lifted-both" width="550px" height="" background\_color="#ffffff" border\_width="1" border\_color="#dddddd" \]
+[dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
 
 **NOTA**: Mi plantilla usaba cliente DHCP así que lo paro y lo deshabilito: systemctl stop dhcpcd.service y systemctl disable dhcpcd.service.
 
-\[/dropshadowbox\]   **Conexión física en ESXi**
+[/dropshadowbox]   **Conexión física en ESXi**
 
 Si empezamos por el diseño físico, es simple, mi Servidor casero, donde se ejecuta ESXi, tiene una única tarjeta de red, asi que conecto ese puerto al Switch externo por el cual entrega 4 x VLAN's: 2 (iptv), 3 (voip), 6 (internet), 100 (intranet).
 
-[![ESXiFisico](https://www.luispa.com/wp-content/uploads/2015/03/ESXiFisico-1024x851.png)](https://www.luispa.com/wp-content/uploads/2015/03/ESXiFisico.png)
+![ESXiFisico](/assets/img/original/ESXiFisico-1024x851.png){: width="730px" padding:10px }
 
 En el ESXi creo un único Virtual Switch con 4 x "Port Group's", uno por VLAN, que podré asociar a diferentes vNICs (virtual NIC's) en las máquinas virtuales. Veamos un ejemplo en la figura siguiente: Virtual Switch, los "Port Groups" y su asociación a las vNIC's de la máquina virtual "Cortafuegix"
 
-[![ESXiNet-1](https://www.luispa.com/wp-content/uploads/2015/03/ESXiNet-1-1024x806.png)](https://www.luispa.com/wp-content/uploads/2015/03/ESXiNet-1.png)
+![ESXiNet-1](/assets/img/original/ESXiNet-1-1024x806.png){: width="730px" padding:10px }
 
-\[dropshadowbox align="center" effect="lifted-both" width="550px" height="" background\_color="#ffffff" border\_width="1" border\_color="#dddddd" \]
+[dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
 
-**NOTA**: Ya comenté en [Movistar Fusión Fibra + TV + VoIP con router Linux](https://www.luispa.com/?p=266) que para este tipo de diseños es fundamental contar con un Switch Ethernet 10/100/1000 que tenga soporte de VLAN’s (802.1q) y Multicast (IGMP Snooping), y sobre todo que el Hardware de tu Servidor Casero tenga una NIC que soporte VLAN’s.
+**NOTA**: Ya comenté en ![Movistar Fusión Fibra + TV + VoIP con router Linux](/assets/img/original/1000 que tenga soporte de VLAN’s (802.1q) y Multicast (IGMP Snooping){: width="730px" padding:10px }, y sobre todo que el Hardware de tu Servidor Casero tenga una NIC que soporte VLAN’s.
 
-\[/dropshadowbox\]   **Conexiones ethernet en la VM**
+[/dropshadowbox]   **Conexiones ethernet en la VM**
 
 En esta configuración he decidido que sea el ESXi el que trate el VLAN-ID, de modo que el tráfico llegará "limpio" a las ma´quinas virtuales (sin vlanid). En la configuración de la VM "cortafuegix" creo varias tarjetas de red, todas con el driver E1000 y las asocio a los port groups. Veamos cómo recibimos dichas vNICs en la VM, cómo se ven en linux y si hace falta hacer algo más...
 
-Hace tiempo se introdujo el concepto de "nombres de interfaces predecibles", un servicio de **udevd** bien descrito [upstream](http://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/). Sin embargo, en mi caso, que quiero tener todo muy "atado", prefiero asignar nombres específicos a cada una de las interfaces hardware que se le están presentando a la máquina virtual.
+Hace tiempo se introdujo el concepto de "nombres de interfaces predecibles", un servicio de **udevd** bien descrito ![upstream](/assets/img/original/){: width="730px" padding:10px }. Sin embargo, en mi caso, que quiero tener todo muy "atado", prefiero asignar nombres específicos a cada una de las interfaces hardware que se le están presentando a la máquina virtual.
 
 Conseguirlo es muy fácil, lo primero es que asignes direcciones MAC estáticas a cada una de las tarjetas, desde vSphere Client, en la configuración de la máquina virtual.
 
-[![FixMac](https://www.luispa.com/wp-content/uploads/2015/03/FixMac.png)](https://www.luispa.com/wp-content/uploads/2015/03/FixMac.png)
+![FixMac](/assets/img/original/FixMac.png){: width="730px" padding:10px }
 
 A continuación creas un fichero con reglas para que **udev** cambie el nombre de las tarjetas usando dichas direcciones Mac y rearrancas la VM.
 
-\[dropshadowbox align="center" effect="lifted-both" width="550px" height="" background\_color="#ffffff" border\_width="1" border\_color="#dddddd" \]
+[dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
 
 **Truco**: Ya que pones las MAC's, aprovecha y que te digan algo, en mi caso he elegido que los dos últimos bytes coincidan con el número de la VLAN.
 
-\[/dropshadowbox\]
+[/dropshadowbox]
 
-\# South CASA vlan100
-SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?\*", ATTR{address}=="00:50:56:aa:01:00", ATTR{dev\_id}=="0x0", ATTR{type}=="1", KERNEL=="eth\*", NAME="vlan100"
+# South CASA vlan100
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="00:50:56:aa:01:00", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="eth*", NAME="vlan100"
 
 # North INTERNET vlan6
-SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?\*", ATTR{address}=="00:50:56:aa:00:06", ATTR{dev\_id}=="0x0", ATTR{type}=="1", KERNEL=="eth\*", NAME="vlan6"
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="00:50:56:aa:00:06", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="eth*", NAME="vlan6"
 
 # North INTERNET vlan2
-SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?\*", ATTR{address}=="00:50:56:aa:00:02", ATTR{dev\_id}=="0x0", ATTR{type}=="1", KERNEL=="eth\*", NAME="vlan2"
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="00:50:56:aa:00:02", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="eth*", NAME="vlan2"
 
 # North INTERNET vlan3
-SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?\*", ATTR{address}=="00:50:56:aa:00:03", ATTR{dev\_id}=="0x0", ATTR{type}=="1", KERNEL=="eth\*", NAME="vlan3"
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="00:50:56:aa:00:03", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="eth*", NAME="vlan3"
 
 Tras el próximo arranque podemos observar cómo han cambiado los nombres de las interfaces.
 
-[![GentooVM-Rules-1](https://www.luispa.com/wp-content/uploads/2015/03/GentooVM-Rules-1.png)](https://www.luispa.com/wp-content/uploads/2015/03/GentooVM-Rules-1.png)
+![GentooVM-Rules-1](/assets/img/original/GentooVM-Rules-1.png){: width="730px" padding:10px }
 
-  \[dropshadowbox align="center" effect="lifted-both" width="550px" height="" background\_color="#ffffff" border\_width="1" border\_color="#dddddd" \]
+  [dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
 
-**Recuerda**: Las vNICs van a recibir el tráfico "SIN" el VLAN-ID, no fue así en [Movistar Fusión Fibra + TV + VoIP con router Linux](https://www.luispa.com/?p=266).
+**Recuerda**: Las vNICs van a recibir el tráfico "SIN" el VLAN-ID, no fue así en ![Movistar Fusión Fibra + TV + VoIP con router Linux](/assets/img/original/?p=266){: width="730px" padding:10px }.
 
-\[/dropshadowbox\]   **systemd-networkd**
+[/dropshadowbox]   **systemd-networkd**
 
-Para asignar las direcciones IP a las tarjetas utilizo el servicio [systemd-networkd](https://wiki.archlinux.org/index.php/systemd-networkd). Hace falta crear un fichero para cada interfaz debajo de /etc/systemd/network, el nombre puede ser cualquiera pero debe terminar en .network:
+Para asignar las direcciones IP a las tarjetas utilizo el servicio ![systemd-networkd](/assets/img/original/systemd-networkd){: width="730px" padding:10px }. Hace falta crear un fichero para cada interfaz debajo de /etc/systemd/network, el nombre puede ser cualquiera pero debe terminar en .network:
 
 #
 # Interfaz para IPTV (IP Estática asignada a tu contrato)
 #
-\[Match\]
+[Match]
 Name=vlan2
 
-\[Network\]
+[Network]
 Address=10.214.XX.YY/9
 
 #
 # Interfaz para VoIP (recibirá su IP por DHCP usando "dhclient"
 #
-\[Match\]
+[Match]
 Name=vlan3
 
 #
 # Interfaz para DATOS Internet (recibirá su IP por PPPoE)
 #
-\[Match\]
+[Match]
 Name=vlan6
 
 #
 # Interfaz para la Intranet (IP estática)
 #
-\[Match\]
+[Match]
 Name=vlan100
 
-\[Network\]
+[Network]
 Address=192.168.1.1/24
 
 Notarás que no he especificado ningún gateway por defecto, ni tampoco el DNS server. Lo he hecho a proposito, el router por defecto se establecerá al activar PPPoE y la información del DNS Server la pondré de manera estática en el /etc/resolv.conf.
@@ -139,43 +131,43 @@ Puedes ejecutar systemctl start systemd-networkd y ver el estado de las interfac
 
   **PPP**
 
-Instalo el paquete PPP (recordemos que necesitamos PPPoE por el interfaz VLAN6 para recibir la IP desde Movistar). Antes tendrías que habilitar varios parámetros en el kernel, compilarlo y hacer reboot. Mi [plantilla](https://www.luispa.com/?p=1803) ya está preparada ([.config](https://raw.githubusercontent.com/LuisPalacios/Linux-Kernel-configs/master/configs/2015-03-19-config-3.18.7-Gentoo_VM_ESXi.txt)), así que no tengo que hacer nada, me lo salto.
+Instalo el paquete PPP (recordemos que necesitamos PPPoE por el interfaz VLAN6 para recibir la IP desde Movistar). Antes tendrías que habilitar varios parámetros en el kernel, compilarlo y hacer reboot. Mi ![plantilla](https://www.luispa.com/?p=1803) ya está preparada ([.config](/assets/img/original/2015-03-19-config-3.18.7-Gentoo_VM_ESXi.txt)){: width="730px" padding:10px }, así que no tengo que hacer nada, me lo salto.
 
 Preparo parámetros USE e instaloo net-dialup/ppp:
 
 net-dialup/ppp -ipv6
 
-\# emerge -v net-dialup/ppp
+# emerge -v net-dialup/ppp
 
-Creo el fichero /etc/systemd/system/ppp\_wait@.service
+Creo el fichero /etc/systemd/system/ppp_wait@.service
 
 #
 # Unit para gestión de PPP
 #
-\[Unit\]
+[Unit]
 Description=PPP link to %I wait
 After=network-online.target
 Wants=network-online.target
 After=sys-subsystem-net-devices-vlan6.device
 
-\[Service\]
+[Service]
 Type=forking
 PIDFile=/run/ppp-%i.pid
 ExecStart=/usr/sbin/pppd call %I linkname %i updetach
 Restart=on-abort
 
-\[Install\]
+[Install]
 WantedBy=multi-user.target
 
 Configuramos el fichero /etc/ppp/pap-secrets
 
-\# Secrets for authentication using PAP
+# Secrets for authentication using PAP
 # client                  server    secret         IP addresses
-adslppp@telefonicanetpa   pppd      adslppp        \*
+adslppp@telefonicanetpa   pppd      adslppp        *
 
 Creo un "peer" llamado movistar:
 
-\# Plugins
+# Plugins
 plugin rp-pppoe.so
 plugin passwordfd.so
 
@@ -200,9 +192,9 @@ noaccomp noccp nobsdcomp nodeflate nopcomp novj novjccomp
 # network interface
 vlan6
 
-Programo que el servicio arranqeu durante el boot (usar \\@movistar en el nombre del servicio):
+Programo que el servicio arranqeu durante el boot (usar \@movistar en el nombre del servicio):
 
-\# systemctl enable ppp\_wait\\@movistar.service
+# systemctl enable ppp_wait\@movistar.service
 
   **DHCLIENT**
 
@@ -220,12 +212,12 @@ Preparo las variables USE y ejecuto la instalación de ulogd.
 
 app-admin/ulogd                         mysql nfct nflog dbi nfacct pcap sqlite
 
-\# emerge -v ulogd
+# emerge -v ulogd
 
-A continuación un ejemplo de /etc/ulogd.conf, con múltiples stacks. Lee la [documentación oficial](http://www.netfilter.org/projects/ulogd/) para enteneder cómo funciona.
+A continuación un ejemplo de /etc/ulogd.conf, con múltiples stacks. Lee la ![documentación oficial](/assets/img/original/){: width="730px" padding:10px } para enteneder cómo funciona.
 
-\# Example configuration for ulogd
-# Adapted to Debian by Achilleas Kotsis \[global\]
+# Example configuration for ulogd
+# Adapted to Debian by Achilleas Kotsis [global]
 ######################################################################
 # GLOBAL OPTIONS
 ######################################################################
@@ -243,35 +235,35 @@ loglevel=5
 # We have to configure and load all the plugins we want to use
 
 # general rules:
-# 1. load the plugins \_first\_ from the global section
+# 1. load the plugins _first_ from the global section
 # 2. options for each plugin in seperate section below
 
-plugin="/usr/lib64/ulogd/ulogd\_inppkt\_NFLOG.so"
-#plugin="/usr/lib64/ulogd/ulogd\_inppkt\_ULOG.so"
-#plugin="/usr/lib64/ulogd/ulogd\_inppkt\_UNIXSOCK.so"
-plugin="/usr/lib64/ulogd/ulogd\_inpflow\_NFCT.so"
-plugin="/usr/lib64/ulogd/ulogd\_filter\_IFINDEX.so"
-plugin="/usr/lib64/ulogd/ulogd\_filter\_IP2STR.so"
-plugin="/usr/lib64/ulogd/ulogd\_filter\_IP2BIN.so"
-#plugin="/usr/lib64/ulogd/ulogd\_filter\_IP2HBIN.so"
-plugin="/usr/lib64/ulogd/ulogd\_filter\_PRINTPKT.so"
-plugin="/usr/lib64/ulogd/ulogd\_filter\_HWHDR.so"
-plugin="/usr/lib64/ulogd/ulogd\_filter\_PRINTFLOW.so"
-#plugin="/usr/lib64/ulogd/ulogd\_filter\_MARK.so"
-plugin="/usr/lib64/ulogd/ulogd\_output\_LOGEMU.so"
-plugin="/usr/lib64/ulogd/ulogd\_output\_SYSLOG.so"
-plugin="/usr/lib64/ulogd/ulogd\_output\_XML.so"
-#plugin="/usr/lib64/ulogd/ulogd\_output\_SQLITE3.so"
-plugin="/usr/lib64/ulogd/ulogd\_output\_GPRINT.so"
-#plugin="/usr/lib64/ulogd/ulogd\_output\_NACCT.so"
-#plugin="/usr/lib64/ulogd/ulogd\_output\_PCAP.so"
-#plugin="/usr/lib64/ulogd/ulogd\_output\_PGSQL.so"
-#plugin="/usr/lib64/ulogd/ulogd\_output\_MYSQL.so"
-#plugin="/usr/lib64/ulogd/ulogd\_output\_DBI.so"
-plugin="/usr/lib64/ulogd/ulogd\_raw2packet\_BASE.so"
-plugin="/usr/lib64/ulogd/ulogd\_inpflow\_NFACCT.so"
-plugin="/usr/lib64/ulogd/ulogd\_output\_GRAPHITE.so"
-#plugin="/usr/lib64/ulogd/ulogd\_output\_JSON.so"
+plugin="/usr/lib64/ulogd/ulogd_inppkt_NFLOG.so"
+#plugin="/usr/lib64/ulogd/ulogd_inppkt_ULOG.so"
+#plugin="/usr/lib64/ulogd/ulogd_inppkt_UNIXSOCK.so"
+plugin="/usr/lib64/ulogd/ulogd_inpflow_NFCT.so"
+plugin="/usr/lib64/ulogd/ulogd_filter_IFINDEX.so"
+plugin="/usr/lib64/ulogd/ulogd_filter_IP2STR.so"
+plugin="/usr/lib64/ulogd/ulogd_filter_IP2BIN.so"
+#plugin="/usr/lib64/ulogd/ulogd_filter_IP2HBIN.so"
+plugin="/usr/lib64/ulogd/ulogd_filter_PRINTPKT.so"
+plugin="/usr/lib64/ulogd/ulogd_filter_HWHDR.so"
+plugin="/usr/lib64/ulogd/ulogd_filter_PRINTFLOW.so"
+#plugin="/usr/lib64/ulogd/ulogd_filter_MARK.so"
+plugin="/usr/lib64/ulogd/ulogd_output_LOGEMU.so"
+plugin="/usr/lib64/ulogd/ulogd_output_SYSLOG.so"
+plugin="/usr/lib64/ulogd/ulogd_output_XML.so"
+#plugin="/usr/lib64/ulogd/ulogd_output_SQLITE3.so"
+plugin="/usr/lib64/ulogd/ulogd_output_GPRINT.so"
+#plugin="/usr/lib64/ulogd/ulogd_output_NACCT.so"
+#plugin="/usr/lib64/ulogd/ulogd_output_PCAP.so"
+#plugin="/usr/lib64/ulogd/ulogd_output_PGSQL.so"
+#plugin="/usr/lib64/ulogd/ulogd_output_MYSQL.so"
+#plugin="/usr/lib64/ulogd/ulogd_output_DBI.so"
+plugin="/usr/lib64/ulogd/ulogd_raw2packet_BASE.so"
+plugin="/usr/lib64/ulogd/ulogd_inpflow_NFACCT.so"
+plugin="/usr/lib64/ulogd/ulogd_output_GRAPHITE.so"
+#plugin="/usr/lib64/ulogd/ulogd_output_JSON.so"
 
 # this is a stack for logging packet send by system via LOGEMU
 stack=log1:NFLOG,base1:BASE,ifi1:IFINDEX,ip2str1:IP2STR,print1:PRINTPKT,emu1:LOGEMU
@@ -352,10 +344,10 @@ stack=log8:NFLOG,base1:BASE,ifi1:IFINDEX,ip2str1:IP2STR,print1:PRINTPKT,emu8:LOG
 #stack=ct1:NFCT,ip2str1:IP2STR,pgsql3:PGSQL
 
 # this is a stack for flow-based logging to SQLITE3
-#stack=ct1:NFCT,sqlite3\_ct:SQLITE3
+#stack=ct1:NFCT,sqlite3_ct:SQLITE3
 
 # this is a stack for logging packet to SQLITE3
-#stack=log1:NFLOG,sqlite3\_pkt:SQLITE3
+#stack=log1:NFLOG,sqlite3_pkt:SQLITE3
 
 # this is a stack for flow-based logging in NACCT compatible format
 #stack=ct1:NFCT,ip2str1:IP2STR,nacct1:NACCT
@@ -363,273 +355,273 @@ stack=log8:NFLOG,base1:BASE,ifi1:IFINDEX,ip2str1:IP2STR,print1:PRINTPKT,emu8:LOG
 # this is a stack for accounting-based logging via GPRINT
 #stack=acct1:NFACCT,gp1:GPRINT
 
-\[ct1\]
-#netlink\_socket\_buffer\_size=217088
-#netlink\_socket\_buffer\_maxsize=1085440
-#netlink\_resync\_timeout=60 # seconds to wait to perform resynchronization
+[ct1]
+#netlink_socket_buffer_size=217088
+#netlink_socket_buffer_maxsize=1085440
+#netlink_resync_timeout=60 # seconds to wait to perform resynchronization
 #pollinterval=10 # use poll-based logging instead of event-driven
 # If pollinterval is not set, NFCT plugin will work in event mode
 # In this case, you can use the following filters on events:
-#accept\_src\_filter=192.168.1.0/24,1:2::/64 # source ip of connection must belong to these networks
-#accept\_dst\_filter=192.168.1.0/24 # destination ip of connection must belong to these networks
-#accept\_proto\_filter=tcp,sctp # layer 4 proto of connections
+#accept_src_filter=192.168.1.0/24,1:2::/64 # source ip of connection must belong to these networks
+#accept_dst_filter=192.168.1.0/24 # destination ip of connection must belong to these networks
+#accept_proto_filter=tcp,sctp # layer 4 proto of connections
 
-\[ct2\]
-#netlink\_socket\_buffer\_size=217088
-#netlink\_socket\_buffer\_maxsize=1085440
+[ct2]
+#netlink_socket_buffer_size=217088
+#netlink_socket_buffer_maxsize=1085440
 #reliable=1 # enable reliable flow-based logging (may drop packets)
-hash\_enable=0
+hash_enable=0
 
 # Logging of system packet through NFLOG
-\[log1\]
+[log1]
 # netlink multicast group (the same as the iptables --nflog-group param)
 # Group O is used by the kernel to log connection tracking invalid message
 group=0
-#netlink\_socket\_buffer\_size=217088
-#netlink\_socket\_buffer\_maxsize=1085440
+#netlink_socket_buffer_size=217088
+#netlink_socket_buffer_maxsize=1085440
 # set number of packet to queue inside kernel
-#netlink\_qthreshold=1
+#netlink_qthreshold=1
 # set the delay before flushing packet in the queue inside kernel (in 10ms)
-#netlink\_qtimeout=100
+#netlink_qtimeout=100
 
 # packet logging through NFLOG for group 1
-\[log2\]
+[log2]
 # netlink multicast group (the same as the iptables --nflog-group param)
 group=1 # Group has to be different from the one use in log1
-#netlink\_socket\_buffer\_size=217088
-#netlink\_socket\_buffer\_maxsize=1085440
+#netlink_socket_buffer_size=217088
+#netlink_socket_buffer_maxsize=1085440
 # If your kernel is older than 2.6.29 and if a NFLOG input plugin with
 # group 0 is not used by any stack, you need to have at least one NFLOG
 # input plugin with bind set to 1. If you don't do that you may not
 # receive any message from the kernel.
 #bind=1
 
-# packet logging through NFLOG for group 2, numeric\_label is
+# packet logging through NFLOG for group 2, numeric_label is
 # set to 1
-\[log3\]
+[log3]
 # netlink multicast group (the same as the iptables --nflog-group param)
 group=2 # Group has to be different from the one use in log1/log2
-numeric\_label=1 # you can label the log info based on the packet verdict
-#netlink\_socket\_buffer\_size=217088
-#netlink\_socket\_buffer\_maxsize=1085440
+numeric_label=1 # you can label the log info based on the packet verdict
+#netlink_socket_buffer_size=217088
+#netlink_socket_buffer_maxsize=1085440
 #bind=1
 
-# packet logging through NFLOG for group 3, numeric\_label is
+# packet logging through NFLOG for group 3, numeric_label is
 # set to 1
-\[log4\]
+[log4]
 # netlink multicast group (the same as the iptables --nflog-group param)
 group=3 # Group has to be different from the one use in log1/log2
-#numeric\_label=1 # you can label the log info based on the packet verdict
-#netlink\_socket\_buffer\_size=217088
-#netlink\_socket\_buffer\_maxsize=1085440
+#numeric_label=1 # you can label the log info based on the packet verdict
+#netlink_socket_buffer_size=217088
+#netlink_socket_buffer_maxsize=1085440
 #bind=1
 
 # packet logging through NFLOG for group 4
-\[log5\]
+[log5]
 # netlink multicast group (the same as the iptables --nflog-group param)
 group=4 # Group has to be different from the one use in log1/log2
-#numeric\_label=1 # you can label the log info based on the packet verdict
-#netlink\_socket\_buffer\_size=217088
-#netlink\_socket\_buffer\_maxsize=1085440
+#numeric_label=1 # you can label the log info based on the packet verdict
+#netlink_socket_buffer_size=217088
+#netlink_socket_buffer_maxsize=1085440
 #bind=1
 
 # packet logging through NFLOG for group 5
-\[log6\]
+[log6]
 # netlink multicast group (the same as the iptables --nflog-group param)
 group=5 # Group has to be different from the one use in log1/log2
-#numeric\_label=1 # you can label the log info based on the packet verdict
-#netlink\_socket\_buffer\_size=217088
-#netlink\_socket\_buffer\_maxsize=1085440
+#numeric_label=1 # you can label the log info based on the packet verdict
+#netlink_socket_buffer_size=217088
+#netlink_socket_buffer_maxsize=1085440
 #bind=1
 
 # packet logging through NFLOG for group 6
-\[log7\]
+[log7]
 # netlink multicast group (the same as the iptables --nflog-group param)
 group=6 # Group has to be different from the one use in log1/log2
-#numeric\_label=1 # you can label the log info based on the packet verdict
-#netlink\_socket\_buffer\_size=217088
-#netlink\_socket\_buffer\_maxsize=1085440
+#numeric_label=1 # you can label the log info based on the packet verdict
+#netlink_socket_buffer_size=217088
+#netlink_socket_buffer_maxsize=1085440
 #bind=1
 
 # packet logging through NFLOG for group 6
-\[log8\]
+[log8]
 # netlink multicast group (the same as the iptables --nflog-group param)
 group=7 # Group has to be different from the one use in log1/log2
-#numeric\_label=1 # you can label the log info based on the packet verdict
-#netlink\_socket\_buffer\_size=217088
-#netlink\_socket\_buffer\_maxsize=1085440
+#numeric_label=1 # you can label the log info based on the packet verdict
+#netlink_socket_buffer_size=217088
+#netlink_socket_buffer_maxsize=1085440
 #bind=1
 
-\[ulog1\]
+[ulog1]
 # netlink multicast group (the same as the iptables --ulog-nlgroup param)
 nlgroup=1
-#numeric\_label=0 # optional argument
+#numeric_label=0 # optional argument
 
-\[nuauth1\]
-socket\_path="/run/nuauth\_ulogd2.sock"
+[nuauth1]
+socket_path="/run/nuauth_ulogd2.sock"
 
-\[emu1\]
-file="/var/log/ulogd/iptables\_all.log"
+[emu1]
+file="/var/log/ulogd/iptables_all.log"
 sync=1
 
-\[emu2\]
-file="/var/log/ulogd/iptables\_drop.log"
+[emu2]
+file="/var/log/ulogd/iptables_drop.log"
 sync=1
 
-\[emu3\]
-file="/var/log/ulogd/iptables\_dropblacklist.log"
+[emu3]
+file="/var/log/ulogd/iptables_dropblacklist.log"
 sync=1
 
-\[emu4\]
-file="/var/log/ulogd/iptables\_dnat.log"
+[emu4]
+file="/var/log/ulogd/iptables_dnat.log"
 sync=1
 
-\[emu5\]
-file="/var/log/ulogd/iptables\_servicios.log"
+[emu5]
+file="/var/log/ulogd/iptables_servicios.log"
 sync=1
 
-\[emu6\]
-file="/var/log/ulogd/iptables\_chrome.log"
+[emu6]
+file="/var/log/ulogd/iptables_chrome.log"
 sync=1
 
-\[emu7\]
-file="/var/log/ulogd/iptables\_mcast.log"
+[emu7]
+file="/var/log/ulogd/iptables_mcast.log"
 sync=1
 
-\[emu8\]
-file="/var/log/ulogd/iptables\_docker.log"
+[emu8]
+file="/var/log/ulogd/iptables_docker.log"
 sync=1
 
-\[op1\]
-file="/var/log/ulogd/ulogd\_oprint.log"
+[op1]
+file="/var/log/ulogd/ulogd_oprint.log"
 sync=1
 
-\[gp1\]
-file="/var/log/ulogd/ulogd\_gprint.log"
+[gp1]
+file="/var/log/ulogd/ulogd_gprint.log"
 sync=1
 timestamp=1
 
-\[xml1\]
+[xml1]
 directory="/var/log/ulogd/"
 sync=1
 
-\[json1\]
+[json1]
 sync=1
 #file="/var/log/ulogd/ulogd.json"
 #timestamp=0
 # device name to be used in JSON message
 #device="My awesome Netfilter firewall"
-# If boolean\_label is set to 1 then the numeric\_label put on packet
+# If boolean_label is set to 1 then the numeric_label put on packet
 # by the input plugin is coding the action on packet: if 0, then
 # packet has been blocked and if non null it has been accepted.
-#boolean\_label=1
+#boolean_label=1
 
-\[pcap1\]
+[pcap1]
 #default file is /var/log/ulogd/ulogd.pcap
 #file="/var/log/ulogd/ulogd.pcap"
 sync=1
 
-\[mysql1\]
+[mysql1]
 db="nulog"
 host="localhost"
 user="nupik"
 table="ulog"
 pass="changeme"
-procedure="INSERT\_PACKET\_FULL"
+procedure="INSERT_PACKET_FULL"
 # backlog configuration:
-# set backlog\_memcap to the size of memory that will be
+# set backlog_memcap to the size of memory that will be
 # allocated to store events in memory if data is temporary down
 # and insert them when the database came back.
-#backlog\_memcap=1000000
+#backlog_memcap=1000000
 # number of events to insert at once when backlog is not empty
-#backlog\_oneshot\_requests=10
+#backlog_oneshot_requests=10
 
-\[mysql2\]
+[mysql2]
 db="nulog"
 host="localhost"
 user="nupik"
 table="conntrack"
 pass="changeme"
-procedure="INSERT\_CT"
+procedure="INSERT_CT"
 
-\[pgsql1\]
+[pgsql1]
 db="nulog"
 host="localhost"
 user="nupik"
 table="ulog"
 #schema="public"
 pass="changeme"
-procedure="INSERT\_PACKET\_FULL"
+procedure="INSERT_PACKET_FULL"
 # connstring can be used to define PostgreSQL connection string which
 # contains all parameters of the connection. If set, this value has
 # precedence on other variables used to build the connection string.
 # See http://www.postgresql.org/docs/9.2/static/libpq-connect.html#LIBPQ-CONNSTRING
 # for a complete description of options.
 #connstring="host=localhost port=4321 dbname=nulog user=nupik password=changeme"
-#backlog\_memcap=1000000
-#backlog\_oneshot\_requests=10
+#backlog_memcap=1000000
+#backlog_oneshot_requests=10
 # If superior to 1 a thread dedicated to SQL request execution
 # is created. The value stores the number of SQL request to keep
 # in the ring buffer
-#ring\_buffer\_size=1000
+#ring_buffer_size=1000
 
-\[pgsql2\]
+[pgsql2]
 db="nulog"
 host="localhost"
 user="nupik"
-table="ulog2\_ct"
+table="ulog2_ct"
 #schema="public"
 pass="changeme"
-procedure="INSERT\_CT"
+procedure="INSERT_CT"
 
-\[pgsql3\]
+[pgsql3]
 db="nulog"
 host="localhost"
 user="nupik"
-table="ulog2\_ct"
+table="ulog2_ct"
 #schema="public"
 pass="changeme"
-procedure="INSERT\_OR\_REPLACE\_CT"
+procedure="INSERT_OR_REPLACE_CT"
 
-\[pgsql4\]
+[pgsql4]
 db="nulog"
 host="localhost"
 user="nupik"
 table="nfacct"
 #schema="public"
 pass="changeme"
-procedure="INSERT\_NFACCT"
+procedure="INSERT_NFACCT"
 
-\[dbi1\]
+[dbi1]
 db="ulog2"
 dbtype="pgsql"
 host="localhost"
 user="ulog2"
 table="ulog"
 pass="ulog2"
-procedure="INSERT\_PACKET\_FULL"
+procedure="INSERT_PACKET_FULL"
 
-\[sqlite3\_ct\]
-table="ulog\_ct"
+[sqlite3_ct]
+table="ulog_ct"
 db="/var/log/ulogd/ulogd.sqlite3db"
 buffer=200
 
-\[sqlite3\_pkt\]
-table="ulog\_pkt"
+[sqlite3_pkt]
+table="ulog_pkt"
 db="/var/log/ulogd/ulogd.sqlite3db"
 buffer=200
 
-\[sys2\]
-facility=LOG\_LOCAL2
+[sys2]
+facility=LOG_LOCAL2
 
-\[nacct1\]
+[nacct1]
 sync = 1
-#file = /var/log/ulogd/ulogd\_nacct.log
+#file = /var/log/ulogd/ulogd_nacct.log
 
-\[mark1\]
+[mark1]
 mark = 1
 
-\[acct1\]
+[acct1]
 pollinterval = 2
 # If set to 0, we don't reset the counters for each polling (default is 1).
 #zerocounter = 0
@@ -637,13 +629,13 @@ pollinterval = 2
 # interpreted by the output plugin.
 #timestamp = 1
 
-\[graphite1\]
+[graphite1]
 host="127.0.0.1"
 port="2003"
 # Prefix of data name sent to graphite server
 prefix="netfilter.nfacct" 
 
-También tienes que configurar el Kernel para soportar netfilter (iptables), compilarlo y hacer reboot. Mi [plantilla](https://www.luispa.com/?p=1803) ya está preparada ([.config](https://raw.githubusercontent.com/LuisPalacios/Linux-Kernel-configs/master/configs/2015-03-19-config-3.18.7-Gentoo_VM_ESXi.txt)), así que no tengo que hacer nada, me lo salto. Los scripts de iptables se instalaron con mi plantilla, en cualquier caso si lo necesitas, se instalan así: emerge -v iptables.
+También tienes que configurar el Kernel para soportar netfilter (iptables), compilarlo y hacer reboot. Mi ![plantilla](https://www.luispa.com/?p=1803) ya está preparada ([.config](/assets/img/original/2015-03-19-config-3.18.7-Gentoo_VM_ESXi.txt)){: width="730px" padding:10px }, así que no tengo que hacer nada, me lo salto. Los scripts de iptables se instalaron con mi plantilla, en cualquier caso si lo necesitas, se instalan así: emerge -v iptables.
 
 No voy a explicar iptables por completo pero dejo aquí un vistazo sobre cómo he hecho para cargar las reglas durante el boot. El comando "iptables" no es un daemon en sí, se trata de un programa que permite instalar Rules (reglas) en el Kernel. El truco consiste en ejecutar muchas veces iptables introduciendo una a una las reglas y cuando todo funciona salvas dichas "reglas o estado" en una fichero externo (con el comando iptables-save) y en el siguiente boot las recuperas desde dicho fichero (con iptables-restore).
 
@@ -651,30 +643,30 @@ Eso sería lo normal, pero en mi caso prefiero ejecutar dos scripts que tienen t
 
 Creo el directorio donde dejaré los script mkdir /root/firewall y los ficheros de servicios systemd
 
-\[Unit\]
+[Unit]
 Description=Activar reglas iptables antes que la red
 Wants=network-pre.target
 Before=network-pre.target
 
-\[Service\]
+[Service]
 Type=oneshot
-ExecStart=/bin/bash /root/firewall/router.ipv4.iptables\_pre\_network.sh
+ExecStart=/bin/bash /root/firewall/router.ipv4.iptables_pre_network.sh
 RemainAfterExit=yes
 
-\[Install\]
+[Install]
 WantedBy=multi-user.target
 
-\[Unit\]
+[Unit]
 Description=Activar reglas iptables despues de la red
 Wants=network-online.target dhcpd.service
 After=network-online.target dhcpd.service
 
-\[Service\]
+[Service]
 Type=oneshot
-ExecStart=/bin/bash /root/firewall/router.ipv4.iptables\_post\_network.sh
+ExecStart=/bin/bash /root/firewall/router.ipv4.iptables_post_network.sh
 RemainAfterExit=yes
 
-\[Install\]
+[Install]
 WantedBy=multi-user.target
 
 Este es el primer script. Como decía se ejecutará antes de que haya red e interfaces disponibles, pero no pasa nada, se instalarán las reglas correctamente. El objetivo es que haya reglas activa según se "enciende" el networking :-).
@@ -710,62 +702,62 @@ export LOGMCAST="no"
 # SYSLOG: "LOG --log-level info --log-prefix"
 # ULOG:   "ULOG --ulog-prefix"
 # NFLOG:  "NFLOG --nflog-group --nflog-prefix"
-export LOG\_ALL="NFLOG --nflog-group 0 --nflog-prefix"
-export LOG\_DROP="NFLOG --nflog-group 1 --nflog-prefix"
-export LOG\_SERVICIOS="NFLOG --nflog-group 4 --nflog-prefix"
-export LOG\_MCAST="NFLOG --nflog-group 6 --nflog-prefix"
+export LOG_ALL="NFLOG --nflog-group 0 --nflog-prefix"
+export LOG_DROP="NFLOG --nflog-group 1 --nflog-prefix"
+export LOG_SERVICIOS="NFLOG --nflog-group 4 --nflog-prefix"
+export LOG_MCAST="NFLOG --nflog-group 6 --nflog-prefix"
 
 # Variables para identificar direcciones IPs y rangos de forma más sencilla
 #
 #
-export YO\_IPV4\_PUBLIC="80.28.PPP.PPP"
-export YO\_IPV4\_VLAN\_100="192.168.1.1"
-export YO\_IPV4\_VLAN\_002="10.214.XX.YY"
+export YO_IPV4_PUBLIC="80.28.PPP.PPP"
+export YO_IPV4_VLAN_100="192.168.1.1"
+export YO_IPV4_VLAN_002="10.214.XX.YY"
 
 echo "ACTIVANDO IPTABLES"
 echo "============================================================================="
-echo "IP Pública : ${YO\_IPV4\_PUBLIC}"
-echo "   VLAN100 : ${YO\_IPV4\_VLAN\_100}"
-echo "     VLAN2 : ${YO\_IPV4\_VLAN\_002}"
+echo "IP Pública : ${YO_IPV4_PUBLIC}"
+echo "   VLAN100 : ${YO_IPV4_VLAN_100}"
+echo "     VLAN2 : ${YO_IPV4_VLAN_002}"
 echo "============================================================================="
 
-export YO\_IPV4="${YO\_IPV4\_PUBLIC}   \\
-                ${YO\_IPV4\_VLAN\_100} \\
-                ${YO\_IPV4\_VLAN\_002}"
-export ANTISPOOF\_IP="${YO\_IPV4\_VLAN\_100} \\
-                     ${YO\_IPV4\_VLAN\_002}"
-export ANTISPOOF\_NET="192.168.1.0/24 192.168.0.0/24 10.128.0.0/9"
+export YO_IPV4="${YO_IPV4_PUBLIC}   \
+                ${YO_IPV4_VLAN_100} \
+                ${YO_IPV4_VLAN_002}"
+export ANTISPOOF_IP="${YO_IPV4_VLAN_100} \
+                     ${YO_IPV4_VLAN_002}"
+export ANTISPOOF_NET="192.168.1.0/24 192.168.0.0/24 10.128.0.0/9"
 
-echo "       YO\_IPV4: \`echo ${YO\_IPV4}|sed 's/  \*/ /g'\`"
-echo "  ANTISPOOF\_IP: \`echo ${ANTISPOOF\_IP}|sed 's/  \*/ /g'\`"
-echo " ANTISPOOF\_NET: \`echo ${ANTISPOOF\_NET}|sed 's/  \*/ /g'\`"
+echo "       YO_IPV4: \`echo ${YO_IPV4}|sed 's/  */ /g'\`"
+echo "  ANTISPOOF_IP: \`echo ${ANTISPOOF_IP}|sed 's/  */ /g'\`"
+echo " ANTISPOOF_NET: \`echo ${ANTISPOOF_NET}|sed 's/  */ /g'\`"
 echo "============================================================================="
 
 # Redes de INTRANET a las que permito salir hacia cualquier sitio
 #
-export INTRANET="${ANTISPOOF\_NET}"
+export INTRANET="${ANTISPOOF_NET}"
 
-echo "    INTRANET: \`echo ${INTRANET}|sed 's/  \*/ /g'\`"
+echo "    INTRANET: \`echo ${INTRANET}|sed 's/  */ /g'\`"
 echo "============================================================================="
 
 # Destination NAT
 #
-export DO\_DNAT="yes"
+export DO_DNAT="yes"
 export LOGDNAT="no"
-export LOG\_DNAT="NFLOG --nflog-group 3 --nflog-prefix"
-export DNAT\_WEB\_PORTS="80"
-export DNAT\_WEB\_IP="192.168.1.ZZZ"  # IP del equipo donde está el Web Server interno
+export LOG_DNAT="NFLOG --nflog-group 3 --nflog-prefix"
+export DNAT_WEB_PORTS="80"
+export DNAT_WEB_IP="192.168.1.ZZZ"  # IP del equipo donde está el Web Server interno
 
 # =====================================================================================
 #                                  CLEAN IPTABLES
 #
-set\_table\_policy() {
+set_table_policy() {
     local chains table=$1 policy=$2
     case ${table} in
         nat)    chains="PREROUTING POSTROUTING OUTPUT";;
         mangle) chains="PREROUTING INPUT FORWARD OUTPUT POSTROUTING";;
         filter) chains="INPUT FORWARD OUTPUT";;
-        \*)      chains="";;
+        *)      chains="";;
     esac
     local chain
     for chain in ${chains} ; do
@@ -773,9 +765,9 @@ set\_table\_policy() {
     done
 }
 
-export iptables\_proc="/proc/net/ip\_tables\_names"
-for a in $(cat ${iptables\_proc}) ; do
-    set\_table\_policy $a ACCEPT
+export iptables_proc="/proc/net/ip_tables_names"
+for a in $(cat ${iptables_proc}) ; do
+    set_table_policy $a ACCEPT
     iptables -F -t $a
     iptables -X -t $a
 done
@@ -786,8 +778,8 @@ done
 
 # ========== Definir parametros TCP generales
 #
-echo 30 > /proc/sys/net/ipv4/tcp\_fin\_timeout
-echo 1800 > /proc/sys/net/ipv4/tcp\_keepalive\_intvl
+echo 30 > /proc/sys/net/ipv4/tcp_fin_timeout
+echo 1800 > /proc/sys/net/ipv4/tcp_keepalive_intvl
 
 # =====================================================================================
 #                                 PREPARAR LO MINIMO
@@ -800,7 +792,7 @@ iptables -P FORWARD DROP
 
 # ========== Flush de los chains existentes, vacio lo que haya activo ahora mismo.
 #
-cat /proc/net/ip\_tables\_names | while read table; do
+cat /proc/net/ip_tables_names | while read table; do
                                     iptables -t $table -L -n | while read c chain rest; do
                                                                    if test "X$c" = "XChain" ; then
                                                                        iptables -t $table -F $chain
@@ -825,8 +817,8 @@ iptables -A OUTPUT  -m conntrack --ctstate ESTABLISHED,RELATED -j established
 iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j established
 #
 # ...aceptar todo lo ESTABLISHED,RELATED
-if \[ "${LOGALL}" = "yes" \]; then
-    iptables -A established -j $LOG\_ALL "established -- OK "
+if [ "${LOGALL}" = "yes" ]; then
+    iptables -A established -j $LOG_ALL "established -- OK "
 fi
 iptables -A established -j ACCEPT
 
@@ -835,14 +827,14 @@ iptables -A established -j ACCEPT
 
 # Permito el trafico multicast, necesario para Movistar TV
 #
-iptables -N MCAST\_Traffic
-iptables -I INPUT -d 224.0.0.0/4 -j MCAST\_Traffic
-iptables -I OUTPUT -d 224.0.0.0/4 -j MCAST\_Traffic
-iptables -I FORWARD -d 224.0.0.0/4 -j MCAST\_Traffic
-if \[ "${LOGMCAST}" = "yes" \]; then
-    iptables -A MCAST\_Traffic -j $LOG\_MCAST "MCAST\_Traffic -- OK "
+iptables -N MCAST_Traffic
+iptables -I INPUT -d 224.0.0.0/4 -j MCAST_Traffic
+iptables -I OUTPUT -d 224.0.0.0/4 -j MCAST_Traffic
+iptables -I FORWARD -d 224.0.0.0/4 -j MCAST_Traffic
+if [ "${LOGMCAST}" = "yes" ]; then
+    iptables -A MCAST_Traffic -j $LOG_MCAST "MCAST_Traffic -- OK "
 fi
-iptables -A MCAST\_Traffic -j ACCEPT
+iptables -A MCAST_Traffic -j ACCEPT
 
 # =====================================================================================
 #                                    SNAT
@@ -861,23 +853,23 @@ iptables -t nat -A POSTROUTING -o ppp0  -s 192.168.1.0/24 -j SNAT --to-source 80
 
 # ========== Evito el anti-spoofing en la interfaz publica
 #
-iptables -N In\_AntiSpoof
-for antispoof\_ip in $ANTISPOOF\_IP
+iptables -N In_AntiSpoof
+for antispoof_ip in $ANTISPOOF_IP
 do
-    iptables -A INPUT    -i ppp0  -s $antispoof\_ip  -m conntrack --ctstate NEW  -j In\_AntiSpoof
-    iptables -A FORWARD  -i ppp0  -s $antispoof\_ip  -m conntrack --ctstate NEW  -j In\_AntiSpoof
+    iptables -A INPUT    -i ppp0  -s $antispoof_ip  -m conntrack --ctstate NEW  -j In_AntiSpoof
+    iptables -A FORWARD  -i ppp0  -s $antispoof_ip  -m conntrack --ctstate NEW  -j In_AntiSpoof
 done
-for antispoof\_net in $ANTISPOOF\_NET
+for antispoof_net in $ANTISPOOF_NET
 do
-    iptables -A INPUT    -i ppp0  -s $antispoof\_net  -m conntrack --ctstate NEW  -j In\_AntiSpoof
-    iptables -A FORWARD  -i ppp0  -s $antispoof\_net  -m conntrack --ctstate NEW  -j In\_AntiSpoof
+    iptables -A INPUT    -i ppp0  -s $antispoof_net  -m conntrack --ctstate NEW  -j In_AntiSpoof
+    iptables -A FORWARD  -i ppp0  -s $antispoof_net  -m conntrack --ctstate NEW  -j In_AntiSpoof
 done
 
-# Chain In\_AntiSpoof
-if \[ "${LOGDROP}" = "yes" \] || \[ "${LOGALL}" = "yes" \]; then
-    iptables -A In\_AntiSpoof  -j $LOG\_DROP "In\_AntiSpoof -- DROP "
+# Chain In_AntiSpoof
+if [ "${LOGDROP}" = "yes" ] || [ "${LOGALL}" = "yes" ]; then
+    iptables -A In_AntiSpoof  -j $LOG_DROP "In_AntiSpoof -- DROP "
 fi
-iptables -A In\_AntiSpoof  -j DROP
+iptables -A In_AntiSpoof  -j DROP
 
 # =====================================================================================
 #                                     LOOPBACK
@@ -889,8 +881,8 @@ iptables -N lo-in
 iptables -A INPUT    -i lo -m conntrack --ctstate NEW  -j lo-in
 
 # Chain "lo-in", aceptar todo lo recibido en la loopback
-if \[ "${LOGALL}" = "yes" \]; then
-    iptables -A lo-in    -j $LOG\_ALL "lo-in -- OK "
+if [ "${LOGALL}" = "yes" ]; then
+    iptables -A lo-in    -j $LOG_ALL "lo-in -- OK "
 fi
 iptables -A lo-in    -j ACCEPT
 
@@ -899,8 +891,8 @@ iptables -N lo-out
 iptables -A OUTPUT   -o lo -m conntrack --ctstate NEW  -j lo-out
 
 # Chain "lo-out", aceptar todo lo enviado desde la loopback
-if \[ "${LOGALL}" = "yes" \]; then
-    iptables -A lo-out    -j $LOG\_ALL "lo-out -- OK "
+if [ "${LOGALL}" = "yes" ]; then
+    iptables -A lo-out    -j $LOG_ALL "lo-out -- OK "
 fi
 iptables -A lo-out    -j ACCEPT
 
@@ -910,15 +902,15 @@ iptables -A lo-out    -j ACCEPT
 # ========== Permito que yo pueda salir hacia cualquier sitio
 # === Nuevo CHAIN
 iptables -N YoOk
-for yo\_ipv4 in $YO\_IPV4
+for yo_ipv4 in $YO_IPV4
 do
-    iptables -A INPUT    -s $yo\_ipv4 -m conntrack --ctstate NEW  -j YoOk
+    iptables -A INPUT    -s $yo_ipv4 -m conntrack --ctstate NEW  -j YoOk
 done
 iptables -A OUTPUT -m conntrack --ctstate NEW  -j YoOk
 
 # Chain YoOK
-if \[ "${LOGALL}" = "yes" \]; then
-    iptables -A YoOk  -j $LOG\_ALL "YoOk -- OK "
+if [ "${LOGALL}" = "yes" ]; then
+    iptables -A YoOk  -j $LOG_ALL "YoOk -- OK "
 fi
 iptables -A YoOk -j ACCEPT
 
@@ -926,26 +918,26 @@ iptables -A YoOk -j ACCEPT
 #                  ACCESO EXTERNO a mis Servicios en HOST interno DNATed
 #
 # === Activo el DNAT y permito la conmutación de los paquetes DNATed (a los que se les ha cambiado la ip destino)
-if \[ "${DO\_DNAT}" = "yes" \]; then
+if [ "${DO_DNAT}" = "yes" ]; then
 
-    # ABRO DNAT\_Servicios
-    iptables -N DNAT\_Servicios
+    # ABRO DNAT_Servicios
+    iptables -N DNAT_Servicios
 
     # DNAT WEB (80)
-    for dnatport in ${DNAT\_WEB\_PORTS}
+    for dnatport in ${DNAT_WEB_PORTS}
     do
         # primero cambio la ip destino
-        iptables -t nat -A PREROUTING -i ppp0 -p tcp --dport $dnatport -d ${YO\_IPV4\_PUBLIC} -j DNAT --to-destination ${DNAT\_WEB\_IP}
+        iptables -t nat -A PREROUTING -i ppp0 -p tcp --dport $dnatport -d ${YO_IPV4_PUBLIC} -j DNAT --to-destination ${DNAT_WEB_IP}
         # despues acepto este tipo de paquetes
-        iptables -A FORWARD -i ppp0 -p tcp --dport $dnatport -d ${DNAT\_WEB\_IP} -j DNAT\_Servicios
+        iptables -A FORWARD -i ppp0 -p tcp --dport $dnatport -d ${DNAT_WEB_IP} -j DNAT_Servicios
     done
 
-    # CIERRO DNAT\_Servicios
+    # CIERRO DNAT_Servicios
     # Si se requiere logging, pues toma logging...
-    if \[ "${LOGDNAT}" = "yes" \]; then
-        iptables -A DNAT\_Servicios -j $LOG\_DNAT "DNAT\_Servicios -- OK "
+    if [ "${LOGDNAT}" = "yes" ]; then
+        iptables -A DNAT_Servicios -j $LOG_DNAT "DNAT_Servicios -- OK "
     fi
-    iptables -A DNAT\_Servicios -j ACCEPT
+    iptables -A DNAT_Servicios -j ACCEPT
 fi
 
 # =====================================================================================
@@ -953,31 +945,31 @@ fi
 
 # ========== Permito acceso a ciertos puertos desde Internet
 # === OUTPUT
-iptables -N Out\_Servicios1
-iptables -A OUTPUT -p tcp -m tcp  -m multiport  --dports 80 -m conntrack --ctstate NEW  -j Out\_Servicios1
+iptables -N Out_Servicios1
+iptables -A OUTPUT -p tcp -m tcp  -m multiport  --dports 80 -m conntrack --ctstate NEW  -j Out_Servicios1
 
-# Chain Out\_Servicios 1 - aceptar solo si la IP destino es una de las mias
-iptables -N Out\_Servicios
-for yo\_ipv4 in $YO\_IPV4
+# Chain Out_Servicios 1 - aceptar solo si la IP destino es una de las mias
+iptables -N Out_Servicios
+for yo_ipv4 in $YO_IPV4
 do
-    iptables -A Out\_Servicios1 -d $yo\_ipv4 -j Out\_Servicios
+    iptables -A Out_Servicios1 -d $yo_ipv4 -j Out_Servicios
 done
 
-# Chain Out\_Serviciso, aceptar directamente y registrar en el LOG
-if \[ "${LOGSERVICIOS}" = "yes" \] || \[ "${LOGALL}" = "yes" \]; then
-   iptables -A Out\_Servicios  -j $LOG\_SERVICIOS "Out\_Servicios -- OK "
+# Chain Out_Serviciso, aceptar directamente y registrar en el LOG
+if [ "${LOGSERVICIOS}" = "yes" ] || [ "${LOGALL}" = "yes" ]; then
+   iptables -A Out_Servicios  -j $LOG_SERVICIOS "Out_Servicios -- OK "
 fi
-iptables -A Out\_Servicios -j ACCEPT
+iptables -A Out_Servicios -j ACCEPT
 
 # INPUT
-iptables -N In\_Servicios
-iptables -A INPUT -p tcp -m tcp  -m multiport  --dports 80 -m conntrack --ctstate NEW  -j In\_Servicios
+iptables -N In_Servicios
+iptables -A INPUT -p tcp -m tcp  -m multiport  --dports 80 -m conntrack --ctstate NEW  -j In_Servicios
 
-# Chain Out\_Servicios, aceptar directamente y registrar en el LOG
-if \[ "${LOGSERVICIOS}" = "yes" \] || \[ "${LOGALL}" = "yes" \]; then
-   iptables -A In\_Servicios  -j $LOG\_SERVICIOS "In\_Servicios -- OK "
+# Chain Out_Servicios, aceptar directamente y registrar en el LOG
+if [ "${LOGSERVICIOS}" = "yes" ] || [ "${LOGALL}" = "yes" ]; then
+   iptables -A In_Servicios  -j $LOG_SERVICIOS "In_Servicios -- OK "
 fi
-iptables -A In\_Servicios -j ACCEPT
+iptables -A In_Servicios -j ACCEPT
 
 # =====================================================================================
 #                             PERMITIR CUALQUIER TRAFICO INTRANET
@@ -992,8 +984,8 @@ do
 done
 
 # Chain Intranet
-if \[ "${LOGALL}" = "yes" \]; then
-    iptables -A Intranet -j $LOG\_ALL "Intranet -- OK "
+if [ "${LOGALL}" = "yes" ]; then
+    iptables -A Intranet -j $LOG_ALL "Intranet -- OK "
 fi
 iptables -A Intranet -j ACCEPT
 
@@ -1013,8 +1005,8 @@ iptables -A OUTPUT  -m conntrack --ctstate INVALID -j invalid
 iptables -A FORWARD -m conntrack --ctstate INVALID -j invalid
 
 # Chain "invalid", tirar todo lo que sea INVALID
-if \[ "${LOGDROP}" = "yes" \] || \[ "${LOGALL}" = "yes" \]; then
-    iptables -A invalid -j $LOG\_DROP "invalid -- DROP "
+if [ "${LOGDROP}" = "yes" ] || [ "${LOGALL}" = "yes" ]; then
+    iptables -A invalid -j $LOG_DROP "invalid -- DROP "
 fi
 iptables -A invalid -j DROP
 
@@ -1030,8 +1022,8 @@ iptables -A FORWARD  -j log
 iptables -A OUTPUT   -j log
 
 # Todos los paquetes se registran en "log"
-if \[ "${LOGDROP}" = "yes" \] || \[ "${LOGALL}" = "yes" \]; then
-    iptables -A log      -j $LOG\_DROP "Resto -- DROP "
+if [ "${LOGDROP}" = "yes" ] || [ "${LOGALL}" = "yes" ]; then
+    iptables -A log      -j $LOG_DROP "Resto -- DROP "
 fi
 iptables -A log      -j DROP 
 
@@ -1063,14 +1055,14 @@ export vlan6="vlan6"
 # lo mismo pero usando MASQUERADE (el efecto es el mismo pero en teoría es un poco
 # más rápido usar SNAT)
 #
-export YO\_IPV4\_VLAN\_003=\`ip addr show dev vlan3 | grep inet | awk '{print $2}' | sed 's;\\/.\*;;'\`
+export YO_IPV4_VLAN_003=\`ip addr show dev vlan3 | grep inet | awk '{print $2}' | sed 's;\/.*;;'\`
 echo "============================================================================="
-echo "     DIRECCION IP EN VLAN3: ${YO\_IPV4\_VLAN\_003}"
+echo "     DIRECCION IP EN VLAN3: ${YO_IPV4_VLAN_003}"
 echo "============================================================================="
 #
-if \[ ! -z ${YO\_IPV4\_VLAN\_003} \]
+if [ ! -z ${YO_IPV4_VLAN_003} ]
 then
-    iptables -t nat -A POSTROUTING -o ${vlan3} -s 192.168.1.0/24 -j SNAT --to-source ${YO\_IPV4\_VLAN\_003}
+    iptables -t nat -A POSTROUTING -o ${vlan3} -s 192.168.1.0/24 -j SNAT --to-source ${YO_IPV4_VLAN_003}
 else
     iptables -t nat -A POSTROUTING -o ${vlan3} -s 192.168.1.0/24 -j MASQUERADE
 fi
@@ -1078,28 +1070,28 @@ fi
 # =====================================================================================
 #                                ACTIVAR EL FORWARDING
 #
-echo 1 > /proc/sys/net/ipv4/ip\_forward
+echo 1 > /proc/sys/net/ipv4/ip_forward
 
 # =====================================================================================
 #                                  RPF
 #
-echo 0 > /proc/sys/net/ipv4/conf/all/rp\_filter
-echo 1 > /proc/sys/net/ipv4/conf/default/rp\_filter
-echo 1 > /proc/sys/net/ipv4/conf/${vlan100}/rp\_filter
-echo 1 > /proc/sys/net/ipv4/conf/${vlan6}/rp\_filter
-echo 0 > /proc/sys/net/ipv4/conf/${vlan2}/rp\_filter
-echo 1 > /proc/sys/net/ipv4/conf/${vlan3}/rp\_filter
-echo 0 > /proc/sys/net/ipv4/conf/lo/rp\_filter
-if \[ -f /proc/sys/net/ipv4/conf/ppp0/rp\_filter \]
+echo 0 > /proc/sys/net/ipv4/conf/all/rp_filter
+echo 1 > /proc/sys/net/ipv4/conf/default/rp_filter
+echo 1 > /proc/sys/net/ipv4/conf/${vlan100}/rp_filter
+echo 1 > /proc/sys/net/ipv4/conf/${vlan6}/rp_filter
+echo 0 > /proc/sys/net/ipv4/conf/${vlan2}/rp_filter
+echo 1 > /proc/sys/net/ipv4/conf/${vlan3}/rp_filter
+echo 0 > /proc/sys/net/ipv4/conf/lo/rp_filter
+if [ -f /proc/sys/net/ipv4/conf/ppp0/rp_filter ]
 then
-    echo 1 >     /proc/sys/net/ipv4/conf/ppp0/rp\_filter
+    echo 1 >     /proc/sys/net/ipv4/conf/ppp0/rp_filter
 fi
-echo 1 > /proc/sys/net/ipv4/conf/tunl0/rp\_filter
+echo 1 > /proc/sys/net/ipv4/conf/tunl0/rp_filter
 
 # MUESTRO EL RESULTADO FINAL
-valor=\`cat /proc/sys/net/ipv4/ip\_forward\`
-echo ${valor} /proc/sys/net/ipv4/ip\_forward
-for i in /proc/sys/net/ipv4/conf/\*/rp\_filter
+valor=\`cat /proc/sys/net/ipv4/ip_forward\`
+echo ${valor} /proc/sys/net/ipv4/ip_forward
+for i in /proc/sys/net/ipv4/conf/*/rp_filter
 do
     valor=\`cat $i\`
     echo ${valor} $i
@@ -1107,14 +1099,14 @@ done
 
 Activa los servicios para que arranquen durante el boot (de momento no hagas reboot)
 
-- Servicio Pre-Red: systemctl enable router\_iptables\_pre\_net.service
-- Servicio Post-Red: systemctl enable router\_iptables\_post\_net.service
+- Servicio Pre-Red: systemctl enable router_iptables_pre_net.service
+- Servicio Post-Red: systemctl enable router_iptables_post_net.service
 
   **Alternativa a iptables**
 
-Si esto de iptables es demasiado duro... échale un ojo a [pfSense](https://www.pfsense.org/), un proyecto fantástico que conocí hace poco: **Un Firewall Open Source "probado" con un interfaz sencillo Web para su administración**, que podrías ejecutar como máquina virtual en el ESXi.
+Si esto de iptables es demasiado duro... échale un ojo a ![pfSense](/assets/img/original/){: width="730px" padding:10px }, un proyecto fantástico que conocí hace poco: **Un Firewall Open Source "probado" con un interfaz sencillo Web para su administración**, que podrías ejecutar como máquina virtual en el ESXi.
 
-[![networking](https://www.luispa.com/wp-content/uploads/2015/03/networking.png)](https://www.luispa.com/wp-content/uploads/2015/03/networking.png)
+![networking](/assets/img/original/networking.png){: width="730px" padding:10px }
 
  
 
@@ -1124,35 +1116,35 @@ El siguiente paso es instalar BIND y DHCP para tener un Servidor de nombres y un
 
 net-dns/bind   dlz ipv6 -mysql ssl xml
 
-\# emerge -v net-misc/dhcp net-dns/bind
+# emerge -v net-misc/dhcp net-dns/bind
 
 **DNS Server**
 
 Si tienes un equipo Linux encendido 24 horas en tu intranet te recomiendo activar tu propio DNS Server, podrás asignar nombres a las direcciones IP y junto con un DHCP Server asignar direcciones IP estáticas sobre la base de la dirección MAC (usando el nombre DNS). Prepara el fichero **named.conf** y un par de ficheros más para tu dominio privado. Dejo un ejemplo para un dominio interno que he llamado "parchis.org". La ventaja que tiene es que hace de acelerador/proxy, cuando consultes un dominio desoncocido pues se irá a internet a buscar la respuesta.
 
-/\*
- \* Refer to the named.conf(5) and named(8) man pages, and the documentation
- \* in /usr/share/doc/bind-\* for more details.
- \* Online versions of the documentation can be found here:
- \* https://kb.isc.org/article/AA-01031
- \*
- \* If you are going to set up an authoritative server, make sure you
- \* understand the hairy details of how DNS works. Even with simple mistakes,
- \* you can break connectivity for affected parties, or cause huge amounts of
- \* useless Internet traffic.
- \*/
+/*
+ * Refer to the named.conf(5) and named(8) man pages, and the documentation
+ * in /usr/share/doc/bind-* for more details.
+ * Online versions of the documentation can be found here:
+ * https://kb.isc.org/article/AA-01031
+ *
+ * If you are going to set up an authoritative server, make sure you
+ * understand the hairy details of how DNS works. Even with simple mistakes,
+ * you can break connectivity for affected parties, or cause huge amounts of
+ * useless Internet traffic.
+ */
 
 acl "xfer" {
-    /\* Deny transfers by default except for the listed hosts.
-     \* If we have other name servers, place them here.
-     \*/
+    /* Deny transfers by default except for the listed hosts.
+     * If we have other name servers, place them here.
+     */
     none;
 };
 
-/\*
- \* You might put in here some ips which are allowed to use the cache or
- \* recursive queries
- \*/
+/*
+ * You might put in here some ips which are allowed to use the cache or
+ * recursive queries
+ */
 acl "trusted" {
     127.0.0.0/8;
     ::1/128;
@@ -1163,7 +1155,7 @@ options {
     directory "/var/bind";
     pid-file "/run/named/named.pid";
 
-    /\* https://www.isc.org/solutions/dlv >=bind-9.7.x only \*/
+    /* https://www.isc.org/solutions/dlv >=bind-9.7.x only */
     //bindkeys-file "/etc/bind/bind.keys";
 
     //listen-on-v6 { ::1; };
@@ -1171,47 +1163,47 @@ options {
         listen-on { 192.168.1.1; 10.55.138.142; 192.168.0.1; };
 
     allow-query {
-        /\*
-         \* Accept queries from our "trusted" ACL.  We will
-         \* allow anyone to query our master zones below.
-         \* This prevents us from becoming a free DNS server
-         \* to the masses.
-         \*/
+        /*
+         * Accept queries from our "trusted" ACL.  We will
+         * allow anyone to query our master zones below.
+         * This prevents us from becoming a free DNS server
+         * to the masses.
+         */
         trusted;
     };
 
     allow-query-cache {
-        /\* Use the cache for the "trusted" ACL. \*/
+        /* Use the cache for the "trusted" ACL. */
         trusted;
     };
 
         allow-recursion {
-        /\* Only trusted addresses are allowed to use recursion. \*/
+        /* Only trusted addresses are allowed to use recursion. */
         trusted;
     };
 
     allow-transfer {
-        /\* Zone tranfers are denied by default. \*/
+        /* Zone tranfers are denied by default. */
         none;
     };
 
     allow-update {
-        /\* Don't allow updates, e.g. via nsupdate. \*/
+        /* Don't allow updates, e.g. via nsupdate. */
         none;
     };
 
     dnssec-enable yes;
     //dnssec-validation yes;
 
-    /\*
-     \* As of bind 9.8.0:
-     \* "If the root key provided has expired,
-     \* named will log the expiration and validation will not work."
-     \*/
+    /*
+     * As of bind 9.8.0:
+     * "If the root key provided has expired,
+     * named will log the expiration and validation will not work."
+     */
     dnssec-validation auto;
 
-    /\* if you have problems and are behind a firewall: \*/
-    //query-source address \* port 53;
+    /* if you have problems and are behind a firewall: */
+    //query-source address * port 53;
 };
 
 include "/etc/bind/rndc.key";
@@ -1219,129 +1211,129 @@ controls {
     inet 127.0.0.1 port 953 allow { 127.0.0.1/32; ::1/128; } keys { "rndc-key"; };
 };
 
-/\*\*
- \*   ====================================================================================
- \*   LOG - Activo Log muy detallado junto con ulog
- \*   ====================================================================================
- \*/
+/**
+ *   ====================================================================================
+ *   LOG - Activo Log muy detallado junto con ulog
+ *   ====================================================================================
+ */
 logging {
-    channel default\_file {
+    channel default_file {
         file "/var/log/named/default.log" versions 3 size 5m;
         severity dynamic;
         print-time yes;
     };
-    channel general\_file {
+    channel general_file {
         file "/var/log/named/general.log" versions 3 size 5m;
         severity dynamic;
         print-time yes;
     };
-    channel database\_file {
+    channel database_file {
         file "/var/log/named/database.log" versions 3 size 5m;
         severity dynamic;
         print-time yes;
     };
-    channel security\_file {
+    channel security_file {
         file "/var/log/named/security.log" versions 3 size 5m;
         severity dynamic;
         print-time yes;
     };
-    channel config\_file {
+    channel config_file {
         file "/var/log/named/config.log" versions 3 size 5m;
         severity dynamic;
         print-time yes;
     };
-    channel resolver\_file {
+    channel resolver_file {
         file "/var/log/named/resolver.log" versions 3 size 5m;
         severity dynamic;
         print-time yes;
     };
-    channel xfer-in\_file {
+    channel xfer-in_file {
         file "/var/log/named/xfer-in.log" versions 3 size 5m;
         severity dynamic;
         print-time yes;
     };
-    channel xfer-out\_file {
+    channel xfer-out_file {
         file "/var/log/named/xfer-out.log" versions 3 size 5m;
         severity dynamic;
         print-time yes;
     };
-    channel notify\_file {
+    channel notify_file {
         file "/var/log/named/notify.log" versions 3 size 5m;
         severity dynamic;
         print-time yes;
     };
-    channel client\_file {
+    channel client_file {
         file "/var/log/named/client.log" versions 3 size 5m;
         severity dynamic;
         print-time yes;
     };
-    channel unmatched\_file {
+    channel unmatched_file {
         file "/var/log/named/unmatched.log" versions 3 size 5m;
         severity dynamic;
         print-time yes;
     };
-    channel queries\_file {
+    channel queries_file {
         file "/var/log/named/queries.log" versions 3 size 5m;
         severity dynamic;
         print-time yes;
     };
-    channel network\_file {
+    channel network_file {
         file "/var/log/named/network.log" versions 3 size 5m;
         severity dynamic;
         print-time yes;
     };
-    channel update\_file {
+    channel update_file {
         file "/var/log/named/update.log" versions 3 size 5m;
         severity dynamic;
         print-time yes;
     };
-    channel dispatch\_file {
+    channel dispatch_file {
         file "/var/log/named/dispatch.log" versions 3 size 5m;
         severity dynamic;
         print-time yes;
     };
-    channel dnssec\_file {
+    channel dnssec_file {
         file "/var/log/named/dnssec.log" versions 3 size 5m;
         severity dynamic;
         print-time yes;
     };
-    channel lame-servers\_file {
+    channel lame-servers_file {
         file "/var/log/named/lame-servers.log" versions 3 size 5m;
         severity dynamic;
         print-time yes;
     };
 
-    category default { default\_file; };
-    category general { general\_file; };
-    category database { database\_file; };
-    category security { security\_file; };
-    category config { config\_file; };
-    category resolver { resolver\_file; };
-    category xfer-in { xfer-in\_file; };
-    category xfer-out { xfer-out\_file; };
-    category notify { notify\_file; };
-    category client { client\_file; };
-    category unmatched { unmatched\_file; };
-    category queries { queries\_file; };
-    category network { network\_file; };
-    category update { update\_file; };
-    category dispatch { dispatch\_file; };
-    category dnssec { dnssec\_file; };
-    category lame-servers { lame-servers\_file; };
+    category default { default_file; };
+    category general { general_file; };
+    category database { database_file; };
+    category security { security_file; };
+    category config { config_file; };
+    category resolver { resolver_file; };
+    category xfer-in { xfer-in_file; };
+    category xfer-out { xfer-out_file; };
+    category notify { notify_file; };
+    category client { client_file; };
+    category unmatched { unmatched_file; };
+    category queries { queries_file; };
+    category network { network_file; };
+    category update { update_file; };
+    category dispatch { dispatch_file; };
+    category dnssec { dnssec_file; };
+    category lame-servers { lame-servers_file; };
 };
 
-/\*\*
- \*   ====================================================================================
- \*   ZONAS - Creo un view privado para la intranet
- \*   ====================================================================================
- \*/
+/**
+ *   ====================================================================================
+ *   ZONAS - Creo un view privado para la intranet
+ *   ====================================================================================
+ */
 
 view "privado" {
 
    match-clients { 192.168.1.0/24; 127.0.0.1; }; // LAN "Casera"
 
    allow-recursion {
-      /\* Only trusted addresses are allowed to use recursion. \*/
+      /* Only trusted addresses are allowed to use recursion. */
       trusted;
    };
 
@@ -1383,9 +1375,9 @@ view "privado" {
         forward first;
    };
 
-  /\*\*
-   \*   Zonas privadas
-   \*/
+  /**
+   *   Zonas privadas
+   */
 
   zone "parchis.org" {
     notify no;
@@ -1474,7 +1466,7 @@ Activo el servicio DNS Server, no necesitas crear ningún fichero .service, en e
 
 El DHCP Server también es muy sencillo de configurar, se basa en el fichero /etc/dhcp/dhcpd.conf y /etc/conf.d/dhcp.
 
-\# dhcpd.conf
+# dhcpd.conf
 #
 ddns-update-style none;
 authoritative;
@@ -1487,7 +1479,7 @@ shared-network lan {
     #------------------------------------------------------#
     #                                                      #
     #  Interface activa. Ver /etc/conf.d/dhcpd             #
-    #   DHCPD\_IFACE="vlan100"                              #
+    #   DHCPD_IFACE="vlan100"                              #
     #                                                      #
     #------------------------------------------------------#
     subnet 192.168.1.0 netmask 255.255.255.0 {
@@ -1532,22 +1524,22 @@ shared-network lan {
                 option opch ":::::239.0.2.10:22222:v6.0:239.0.2.30:22222";
         }
 
-DHCPD\_IFACE="vlan100"
+DHCPD_IFACE="vlan100"
 
 Creo el Unit porque el que trae el sistema no me vale:
 
-\[Unit\]
+[Unit]
 Description=DHCPv4 Server Daemon
 After=network-online.target
 Wants=network-online.target
 
-\[Service\]
+[Service]
 Type=forking
 EnvironmentFile=/etc/conf.d/dhcpd
-ExecStart=/usr/sbin/dhcpd -cf /etc/dhcp/dhcpd.conf -user dhcp -group dhcp --no-pid $DHCPD\_IFACE
+ExecStart=/usr/sbin/dhcpd -cf /etc/dhcp/dhcpd.conf -user dhcp -group dhcp --no-pid $DHCPD_IFACE
 Restart=on-abort
 
-\[Install\]
+[Install]
 WantedBy=multi-user.target
 
 Activo el servicio DHCP Server.
@@ -1560,18 +1552,18 @@ Lo comenté antes, hay que activar un cliente DHCP para la IP de VoIP en el inte
 
 Creo un unit specífico:
 
-\[Unit\]
+[Unit]
 Description=DHCP Client
-Wants=network-online.target router\_iptables\_post\_net.service
+Wants=network-online.target router_iptables_post_net.service
 After=network-online.target
-Before=router\_iptables\_post\_net.service
+Before=router_iptables_post_net.service
 
-\[Service\]
+[Service]
 Type=simple
 ExecStart=/sbin/dhclient -4 -d -v -cf /etc/dhcp/dhclient.conf vlan3
 Restart=on-abort
 
-\[Install\]
+[Install]
 WantedBy=multi-user.target
 
 IMPORTANTE: Creo el fichero de configuración de dhclient y sobre todo el fichero de "hook", no te olvides o te instalará una ruta por defecto adicional que te "destrozará" el routing :-)
@@ -1586,8 +1578,8 @@ interface "vlan3" {
  require subnet-mask;
  }
 
-\# Impido que se instalen rutas por defecto
-unset new\_routers
+# Impido que se instalen rutas por defecto
+unset new_routers
 
 Activo el servicio DHCP Cliente.
 
@@ -1597,70 +1589,70 @@ Activo el servicio DHCP Cliente.
 
 ### Servicios adicionales
 
-El resto de servicios (igmpproxy, udpxy, etc..) ya los documenté en este [apunte](https://www.luispa.com/?p=266) donde explico cómo instalarlos y configurarlos. En aquella ocasión usaba openrc para arrancar los servicios, dejo aquí los ficheros que necesitas para systemd.
+El resto de servicios (igmpproxy, udpxy, etc..) ya los documenté en este ![apunte](/assets/img/original/?p=266){: width="730px" padding:10px } donde explico cómo instalarlos y configurarlos. En aquella ocasión usaba openrc para arrancar los servicios, dejo aquí los ficheros que necesitas para systemd.
 
 **igmpproxy.service**
 
-\[Unit\]
+[Unit]
 Description=IGMP Proxy
 After=network-online.target zebra.service
 ConditionPathExists=/etc/igmpproxy.conf
 
-\[Service\]
+[Service]
 Type=simple
 ExecStart=/usr/sbin/igmpproxy /etc/igmpproxy.conf
 #Restart=on-abort
 
-\[Install\]
+[Install]
 WantedBy=multi-user.target
 
 **udpxy.service**
 
-\[Unit\]
+[Unit]
 Description=UDP-to-HTTP multicast traffic relay daemon
 After=network-online.target igmpproxy.service
 
-\[Service\]
+[Service]
 Type=forking
 EnvironmentFile=/etc/conf.d/udpxy
 ExecStart=/usr/bin/udpxy $UDPXYOPTS
 Restart=on-abort
 
-\[Install\]
+[Install]
 WantedBy=multi-user.target
 
 **zebra.service**
 
-\[Unit\]
+[Unit]
 Description=GNU Zebra routing manager
 After=syslog.target network.target
 ConditionPathExists=/etc/quagga/zebra.conf
 
-\[Service\]
+[Service]
 Type=forking
 EnvironmentFile=-/etc/conf.d/quagga
 ExecStartPre=/bin/ip route flush proto zebra
-ExecStart=/usr/sbin/zebra -d $ZEBRA\_OPTS -f /etc/quagga/zebra.conf
+ExecStart=/usr/sbin/zebra -d $ZEBRA_OPTS -f /etc/quagga/zebra.conf
 Restart=on-abort
 
-\[Install\]
+[Install]
 WantedBy=network.target
 
 **ripd.service**
 
-\[Unit\]
+[Unit]
 Description=RIP routing daemon
 BindTo=zebra.service
 After=syslog.target network.target zebra.service
 ConditionPathExists=/etc/quagga/ripd.conf
 
-\[Service\]
+[Service]
 Type=forking
 EnvironmentFile=/etc/conf.d/quagga
-ExecStart=/usr/sbin/ripd -d $RIPD\_OPTS -f /etc/quagga/ripd.conf
+ExecStart=/usr/sbin/ripd -d $RIPD_OPTS -f /etc/quagga/ripd.conf
 Restart=on-abort
 
-\[Install\]
+[Install]
 WantedBy=network.target
 
 - Servicio igmpproxy: systemctl enable igmpproxy.service
@@ -1674,17 +1666,17 @@ WantedBy=network.target
 
 Los directorios en /run y /var/run que necesitan los programas anteriores no se crean con systemd, así que he montado un "service" y un pequeño script para solucionarlo.
 
-\[Unit\]
+[Unit]
 Description=Crear directorios en /var/run
 Wants=network-pre.target
 Before=network-pre.target
 
-\[Service\]
+[Service]
 Type=oneshot
-ExecStart=/bin/bash /root/firewall/router.ipv4.run\_directory.sh
+ExecStart=/bin/bash /root/firewall/router.ipv4.run_directory.sh
 RemainAfterExit=yes
 
-\[Install\]
+[Install]
 WantedBy=multi-user.target
 
 #!/bin/bash
@@ -1706,7 +1698,7 @@ chown quagga:quagga /var/log/ripd.log
 
 Activo el servicio:
 
-- Servicio creación de directorios: systemctl enable router\_pre.service
+- Servicio creación de directorios: systemctl enable router_pre.service
 
  
 
@@ -1739,17 +1731,17 @@ Para terminar te dejo una herramienta que me he preparado para ver si todo va bi
 # Variables de trabajo
 temporal=/tmp/temp-parchis-verifica.sh
 
-# Usar las variables con "echo -e" para que interprete las secuencias \\escaped...
-NORMAL="\\033\[0;39m"
-ROJO="\\033\[1;31m"
-VERDE="\\033\[1;32m"
-AMARILLO="\\033\[1;33m"
+# Usar las variables con "echo -e" para que interprete las secuencias \escaped...
+NORMAL="\033[0;39m"
+ROJO="\033[1;31m"
+VERDE="\033[1;32m"
+AMARILLO="\033[1;33m"
 
 # Columna donde se muestra el mensaje de resultado (linea 1000, asi siempre
 # se ensena en la ultima linea de la shell... y columna 80)
-RESOK="\\033\[1000;80H\[${VERDE}OK${NORMAL}\]"
-RESWARN="\\033\[1000;75H\[${AMARILLO}warning${NORMAL}\]"
-RESERROR="\\033\[1000;77H\[${ROJO}ERROR${NORMAL}\]"
+RESOK="\033[1000;80H[${VERDE}OK${NORMAL}]"
+RESWARN="\033[1000;75H[${AMARILLO}warning${NORMAL}]"
+RESERROR="\033[1000;77H[${ROJO}ERROR${NORMAL}]"
 
 # Salir del programa
 salir() {
@@ -1761,7 +1753,7 @@ salir() {
 # En $1 nos pasan el nombre de la interfaz
 # En $2 el nivel de importancia que tiene (1-aviso, 2 o cualquier
 # otro numero entonces es critico) si la interfaz no esta disponible
-test\_intf() {
+test_intf() {
     # Get the IP Address from first argument
     intf=$1
     nivel=$2
@@ -1770,10 +1762,10 @@ test\_intf() {
     ip link show $intf 2>/dev/null | grep UP > /dev/null 2>/dev/null
     ret=$?
 
-    if \[ "$ret" = "0" \] ; then
+    if [ "$ret" = "0" ] ; then
         echo -e "${RESOK}"
     else
-        if \[ "$nivel" = "1" \]; then
+        if [ "$nivel" = "1" ]; then
             echo -e "${RESWARN}"
     else
             echo -e "${RESERROR}"
@@ -1785,7 +1777,7 @@ test\_intf() {
 # IP que nos pasan en '$1' y mostrando detras el mensajje en '$2'
 # En $2 el nivel de importancia que tiene (1-aviso, 2 o cualquier
 # otro numero entonces es critico) si la interfaz no esta disponible
-test\_ip() {
+test_ip() {
     # Get the IP Address from first argument
     ip=$1
     txt=$2
@@ -1795,11 +1787,11 @@ test\_ip() {
     ping -c 1 $ip > $temporal 2>/dev/null
     ret=$?
 
-    if \[ "$ret" = "0" \] ; then
+    if [ "$ret" = "0" ] ; then
         ms=\`cat $temporal | grep rtt | awk 'BEGIN{FS="/"};{printf $5}'\`
         echo -e "${RESOK} $ms ms"
     else
-        if \[ "$nivel" = "1" \]; then
+        if [ "$nivel" = "1" ]; then
             echo -e "${RESWARN}"
     else
             echo -e "${RESERROR}"
@@ -1810,7 +1802,7 @@ test\_ip() {
 # Comprobar estado de un unit en '$1' de systemd, mostrando mensaje '$2'.
 # En $2 el nivel de importancia que tiene (1-aviso, 2 o cualquier
 # otro numero entonces es critico)
-test\_unit() {
+test_unit() {
     unit=$1
     txt=$2
     nivel=$3
@@ -1819,10 +1811,10 @@ test\_unit() {
     systemctl is-active ${unit} > ${temporal} 2>/dev/null
     ret=$?
 
-    if \[ "$ret" = "0" \] ; then
+    if [ "$ret" = "0" ] ; then
         echo -e "${RESOK}"
     else
-        if \[ "$nivel" = "1" \]; then
+        if [ "$nivel" = "1" ]; then
             echo -e "${RESWARN}"
     else
             echo -e "${RESERROR}"
@@ -1833,35 +1825,35 @@ test\_unit() {
 #
 # Verificar units de systemd
 # ===============================
-test\_unit router\_iptables\_pre\_net.service "IPTABLES (pre-net)"
-test\_unit router\_iptables\_post\_net.service "IPTABLES (post-net)"
-test\_unit sshd.service "SSHD"
-test\_unit named.service "DNS Server"
-test\_unit dhcpd.service "DHCP Server"
-test\_unit ppp\_wait@movistar.service "PPP Movistar"
-test\_unit zebra.service "Quagga Zebra"
-test\_unit ripd.service "Quagga ripd"
-test\_unit igmpproxy.service "IGMPProxy Movistar TV"
-test\_unit udpxy.service "udpxy Movistar TV"
-test\_unit dhclient.service "DHCP Client vlan3"
-test\_unit router\_pr\_post\_iptables.service "Policy Routing"
+test_unit router_iptables_pre_net.service "IPTABLES (pre-net)"
+test_unit router_iptables_post_net.service "IPTABLES (post-net)"
+test_unit sshd.service "SSHD"
+test_unit named.service "DNS Server"
+test_unit dhcpd.service "DHCP Server"
+test_unit ppp_wait@movistar.service "PPP Movistar"
+test_unit zebra.service "Quagga Zebra"
+test_unit ripd.service "Quagga ripd"
+test_unit igmpproxy.service "IGMPProxy Movistar TV"
+test_unit udpxy.service "udpxy Movistar TV"
+test_unit dhclient.service "DHCP Client vlan3"
+test_unit router_pr_post_iptables.service "Policy Routing"
 
 #
 # Verificar interfaces
 # ===============================
-test\_intf lo 2
-test\_intf ppp0 2
-test\_intf vlan100 2
-test\_intf vlan2 2
-test\_intf vlan3 2
-test\_intf vlan6 2
+test_intf lo 2
+test_intf ppp0 2
+test_intf vlan100 2
+test_intf vlan2 2
+test_intf vlan3 2
+test_intf vlan6 2
 
 #
 # Verificar la conectividad IP
 # ===============================
-test\_ip localhost "localhost (lo)"
-test\_ip 192.168.1.253 "Switch en la intranet (vlan100)" 1
-test\_ip 130.206.1.2 "Equipo de Internet (ppp0)"
-test\_ip 172.26.23.3 "DNS Server de MOVISTAR TV"
+test_ip localhost "localhost (lo)"
+test_ip 192.168.1.253 "Switch en la intranet (vlan100)" 1
+test_ip 130.206.1.2 "Equipo de Internet (ppp0)"
+test_ip 172.26.23.3 "DNS Server de MOVISTAR TV"
 
-[![router-verifica](https://www.luispa.com/wp-content/uploads/2015/03/router-verifica.png)](https://www.luispa.com/wp-content/uploads/2015/03/router-verifica.png)
+![router-verifica](/assets/img/original/router-verifica.png){: width="730px" padding:10px }

@@ -1,13 +1,14 @@
 ---
 title: "Wordpress: notificaciones vía SMTP"
 date: "2015-06-14"
-categories: 
-  - "apuntes"
+categories: apuntes
+tags: afp linux
+excerpt_separator: <!--more-->
 ---
 
 La instalación original de Wordpress permite que el propietario de la instalación reciba un mail cuando se dejan comentarios en los post. Wordpress utilizar "mail" en vez de "smtp" así que podría pasarte que nunca te lleguen dichos avisos. Ten en cuenta que el "mail" de linux deja el correo en el equipo donde se ejecuta, es decir, no emplea ningún servidor SMTP externo.
 
-[![smtpwp](https://www.luispa.com/wp-content/uploads/2015/06/smtpwp.jpg)](https://www.luispa.com/wp-content/uploads/2015/06/smtpwp.jpg)
+![smtpwp](/assets/img/original/smtpwp.jpg){: width="730px" padding:10px }
 
  
 
@@ -19,10 +20,10 @@ Para cambiar a SMTP tienes dos opciones, una es instalar un plugin y la otra mod
 
 Es la opción fácil, dejo varias referencias:
 
-- [WP MAIL SMTP](https://wordpress.org/plugins/wp-mail-smtp/)
-- [Webriti SMTP Mail](https://wordpress.org/plugins/webriti-smtp-mail/)
-- [WP SMTP](https://wordpress.org/plugins/wp-smtp/)
-- [Easy WP SMTP](https://wordpress.org/plugins/easy-wp-smtp/)
+- ![WP MAIL SMTP](/assets/img/original/){: width="730px" padding:10px }
+- ![Webriti SMTP Mail](/assets/img/original/){: width="730px" padding:10px }
+- ![WP SMTP](/assets/img/original/){: width="730px" padding:10px }
+- ![Easy WP SMTP](/assets/img/original/){: width="730px" padding:10px }
 
 La que más me ha gustado es la primera: **WP MAIL SMTP**
 
@@ -32,7 +33,7 @@ La que más me ha gustado es la primera: **WP MAIL SMTP**
 
 La segunda opción es más complicada, necesitas acceso al directorio de instalación de Wordpress vía línea de comandos porque supone editar un par de ficheros.
 
-Sitúate en el subdirectorio wp-includes de tu instalación de Wordpress. En mi caso, una instalación basada en [contenedores](https://www.luispa.com/?p=172), los datos persistentes están alojados en:
+Sitúate en el subdirectorio wp-includes de tu instalación de Wordpress. En mi caso, una instalación basada en ![contenedores](/assets/img/original/?p=172){: width="730px" padding:10px }, los datos persistentes están alojados en:
 
 $ cd /Apps/data/web/www.luispa.com/wordpress/wp-includes/
 
@@ -47,13 +48,13 @@ Editar el fichero "class-phpmailer.php", buscar "public $Host = 'localhost';" y 
 
 - ../wordpress/wp-includes/class-phpmailer.php"
 
-    /\*\*
-     \* SMTP hosts.
-     \* Either a single hostname or multiple semicolon-delimited hostnames.
-     \* You can also specify a different port
-     \* for each host by using this format: \[hostname:port\]
-     \* (e.g. "smtp1.example.com:25;smtp2.example.com").
-     \* Hosts will be tried in order.
-     \* @type string
-     \*/
+    /**
+     * SMTP hosts.
+     * Either a single hostname or multiple semicolon-delimited hostnames.
+     * You can also specify a different port
+     * for each host by using this format: [hostname:port]
+     * (e.g. "smtp1.example.com:25;smtp2.example.com").
+     * Hosts will be tried in order.
+     * @type string
+     */
     public $Host = 'tu-servidor-smtp.tu-dominio.com';

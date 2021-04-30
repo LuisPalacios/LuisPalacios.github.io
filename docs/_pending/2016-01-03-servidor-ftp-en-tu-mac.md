@@ -1,12 +1,9 @@
 ---
 title: "Servidor FTP en tu Mac"
 date: "2016-01-03"
-categories: 
-  - "apuntes"
-tags: 
-  - "ftp"
-  - "ftpserver"
-  - "osx"
+categories: apuntes
+tags: ftp ftpserver osx
+excerpt_separator: <!--more-->
 ---
 
 Obviamente no es algo que vayas a necesitar a menudo, pero si por un casual requieres de un FTP Server para algo recuerda que puedes activarlo en tu Mac OSX (ésta documentación está basada en la versión **10.11 - El Capitán**) Veamos cómo activar y desactivar el servidor FTP en nuestro Mac.
@@ -21,13 +18,13 @@ sudo -s launchctl load -w /System/Library/LaunchDaemons/ftp.plist
 
  
 
-[![ftpdosx1](https://www.luispa.com/wp-content/uploads/2016/01/ftpdosx1.jpg)](https://www.luispa.com/wp-content/uploads/2016/01/ftpdosx1.jpg)
+![ftpdosx1](/assets/img/original/ftpdosx1.jpg){: width="730px" padding:10px }
 
 Ya está, ahora puedes consumir este servidor desde cualquier cliente FTP. Cuando conectes con él (puerto 21) utiliza el usuario y contraseña de tu usuario principal y verás que conecta con el directorio HOME del mismo.
 
-[![ftpdosx2](https://www.luispa.com/wp-content/uploads/2016/01/ftpdosx2.jpg)](https://www.luispa.com/wp-content/uploads/2016/01/ftpdosx2.jpg)
+![ftpdosx2](/assets/img/original/ftpdosx2.jpg){: width="730px" padding:10px }
 
-[![ftpdosx3](https://www.luispa.com/wp-content/uploads/2016/01/ftpdosx3.jpg)](https://www.luispa.com/wp-content/uploads/2016/01/ftpdosx3.jpg)
+![ftpdosx3](/assets/img/original/ftpdosx3.jpg){: width="730px" padding:10px }
 
  
 
@@ -37,4 +34,4 @@ Una vez que terminas de usar tu servidor FTP te recomiendo que inmediatamente lo
 
 sudo -s launchctl load -w /System/Library/LaunchDaemons/ftp.plist
 
-[![ftpdosx4](https://www.luispa.com/wp-content/uploads/2016/01/ftpdosx4.jpg)](https://www.luispa.com/wp-content/uploads/2016/01/ftpdosx4.jpg)
+![ftpdosx4](/assets/img/original/ftpdosx4.jpg){: width="730px" padding:10px }

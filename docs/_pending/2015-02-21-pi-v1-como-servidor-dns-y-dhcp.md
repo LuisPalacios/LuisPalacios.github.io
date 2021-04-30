@@ -1,21 +1,22 @@
 ---
 title: "RaspberryPi v1 como Servidor DNS y DHCP"
 date: "2015-02-21"
-categories: 
-  - "apuntes"
+categories: apuntes
+tags: linux nuc
+excerpt_separator: <!--more-->
 ---
 
 Un apunte rápido sobre cómo configurar mi antigua Raspberry Pi "1" como DNS Server y DHCP Server. Ambas son funciones críticas en la red "casera de todo hacker", así que he decidido delegarle esta función. Mucho mejor que tener la Pi1 guardada en un cajón.
 
-[![RaspDD](https://www.luispa.com/wp-content/uploads/2015/04/RaspDD.jpg)](https://www.luispa.com/wp-content/uploads/2015/04/RaspDD.jpg)
+![RaspDD](/assets/img/original/RaspDD.jpg){: width="730px" padding:10px }
 
-\[dropshadowbox align="center" effect="lifted-both" width="550px" height="" background\_color="#ffffff" border\_width="1" border\_color="#dddddd" \]
+[dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
 
 **AVISO**: Todas las direcciones IP y nombres de dominio o de hosts que utilizo son ejemplos que no deberías copiar tal cual, úsalo cómo referencia.
 
-\[/dropshadowbox\]
+[/dropshadowbox]
 
-- Instalo [Raspbian](http://www.raspberrypi.org/downloads/). En su momento estaba la versión de fecha 2015-02-16 con Kernel 3.18. El usuario por defecto es pi con password raspberry
+- Instalo ![Raspbian](/assets/img/original/){: width="730px" padding:10px }. En su momento estaba la versión de fecha 2015-02-16 con Kernel 3.18. El usuario por defecto es pi con password raspberry
 - Realizo el primer boot y la configuro siguiendo el asistente. La dejo en modo consola, sin gráficos, con el teclado, locales, timezone preparados para Madrid y Castellano...
 - Puedes cambiar múltiples parámetros con
     
@@ -48,15 +49,15 @@ iface eth0 inet static
 
 #allow-hotplug wlan0
 #iface wlan0 inet manual
-#wpa-roam /etc/wpa\_supplicant/wpa\_supplicant.conf
+#wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
 #iface default inet dhcp
 
 - En versiones más modernas hay que modificar el fichero /etc/dhcp/dhcpcd.conf
 
 interface eth0
-static ip\_address=192.168.1.253/24
+static ip_address=192.168.1.253/24
 static routers=192.168.1.1
-static domain\_name\_servers=127.0.0.1
+static domain_name_servers=127.0.0.1
 
 - Fichero resolv.conf
 
@@ -80,11 +81,11 @@ ff02::2     ip6-allrouters
 root@raspberrypi:~#
 root@raspberrypi:~# reboot
 
-\[dropshadowbox align="center" effect="lifted-both" width="550px" height="" background\_color="#ffffff" border\_width="1" border\_color="#dddddd" \]
+[dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
 
 **NOTA**: Al hacer reboot y conectar de nuevo vía SSH estoy comprobando que la dirección estática está funcionando correctamente, es importante :-).
 
-\[/dropshadowbox\]
+[/dropshadowbox]
 
 ### Instalación del software
 
@@ -101,11 +102,11 @@ root@raspberrypi:~# apt-get upgrade
 
 root@raspberrypi:~# apt-get install -y isc-dhcp-server bind9 bind9-doc dnsutils
 
-\[dropshadowbox align="center" effect="lifted-both" width="550px" height="" background\_color="#ffffff" border\_width="1" border\_color="#dddddd" \]
+[dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
 
 **NOTA**: Tras la instalación intenta arrancar el DHCP Server, no se a qué vienen tantas prisas, da un error obvio porque todavía no está configurado :-)
 
-\[/dropshadowbox\]
+[/dropshadowbox]
 
 ### Configuración DHCP
 
@@ -113,7 +114,7 @@ root@raspberrypi:~# apt-get install -y isc-dhcp-server bind9 bind9-doc dnsutils
 
 INTERFACES="eth0"
 
-\# dhcpd.conf
+# dhcpd.conf
 #
 ddns-update-style none;
 authoritative;
@@ -180,69 +181,69 @@ Voy a configurar el DNS server para que haga dos cosas. La primera es que sirva 
 - /etc/bind/named.conf.options: Opciones generales del DNS Server, lo modifico para indicar el comportamiento general del servicio.
     
 
-/\*
-\* Fichero named.conf.options de ejemplo
-\*/
+/*
+* Fichero named.conf.options de ejemplo
+*/
  
-/\*
-\* Equipos en los que confio, 
-\*/
+/*
+* Equipos en los que confio, 
+*/
 acl "trusted" {
     127.0.0.0/8;
     192.168.1/24;
 };
  
 options {
-        /\*
-         \* Directorio donde se almacenará la caché
-         \*/
+        /*
+         * Directorio donde se almacenará la caché
+         */
         directory "/var/cache/bind";
  
-        /\*
-         \* Direcciones en las que escucho
-         \*/
+        /*
+         * Direcciones en las que escucho
+         */
         listen-on-v6 { none; }; 
         listen-on { 127.0.0.1; };
         listen-on { 192.168.1.253; };
  
-         /\*
-          \* Equipos en los que confio, que podrán hacerme consultas
-          \*/
+         /*
+          * Equipos en los que confio, que podrán hacerme consultas
+          */
          allow-query {
              trusted;
          };
 
-         /\*
-          \* Hago caching para los "trusted"
-          \*/
+         /*
+          * Hago caching para los "trusted"
+          */
          allow-query-cache {
              trusted;
          };
 
-         /\*
-          \* Permito recursión solo a los "trusted"
-          \*/
+         /*
+          * Permito recursión solo a los "trusted"
+          */
          allow-recursion {
              trusted;
          };
   
-         /\*
-          \* Deshabilito transferencia de zonas por defecto
-          \*/
+         /*
+          * Deshabilito transferencia de zonas por defecto
+          */
          allow-transfer {
              none;
          };
  
-         /\*
-          \* Deshabilito updates por defecto
-          \*/
+         /*
+          * Deshabilito updates por defecto
+          */
          allow-update {
              none;
          };
  
-         /\*
-          \* Opciones para dnssec
-          \*/
+         /*
+          * Opciones para dnssec
+          */
          dnssec-enable yes;
          dnssec-validation auto; 
 
@@ -252,7 +253,7 @@ options {
 - /etc/bind/named.conf.local: Dominio(s)/Zona(s) privado(s).
 
    allow-recursion {
-      /\* Only trusted addresses are allowed to use recursion. \*/
+      /* Only trusted addresses are allowed to use recursion. */
       trusted;
    };
  
@@ -274,9 +275,9 @@ options {
         forward first;
    };
  
-  /\*\*
-   \*   Zonas privadas
-   \*/
+  /**
+   *   Zonas privadas
+   */
  
   zone "parchis.org" {
     notify no;
@@ -425,9 +426,9 @@ root@raspberrypi:~# apt-get install -y ntpdate
 
 El servicio NTPD se arranca y a partir de aquí podemos comprobar si ha alcanzado el estado de Stratum 3 con los comandos siguientes:
 
-\# ntpq -c readvar
+# ntpq -c readvar
 # ntpq -c peers
 
 ### Enlaces
 
-Después de instalarlo me encontré este [artículo](http://sobrebits.com/montar-un-servidor-casero-con-raspberry-pi-parte-0-objetivos-e-indice/), está muy bien y muy completo, os lo recomiendo.
+Después de instalarlo me encontré este ![artículo](/assets/img/original/){: width="730px" padding:10px }, está muy bien y muy completo, os lo recomiendo.

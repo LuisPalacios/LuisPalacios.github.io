@@ -1,14 +1,12 @@
 ---
 title: "Gentoo en NUC: Antes del primer boot"
 date: "2014-10-31"
-categories: 
-  - "gentoo"
-tags: 
-  - "linux"
-  - "nuc"
+categories: gentoo
+tags: linux nuc
+excerpt_separator: <!--more-->
 ---
 
-[![beforeboot](https://www.luispa.com/wp-content/uploads/2014/12/beforeboot.png)](https://www.luispa.com/wp-content/uploads/2014/12/beforeboot.png) Este apunte repasa ciertas instalaciones adicionales que recomiendo realizar tras [instalar Gentoo GNU/Linux en un Intel® NUC D54250WYK](https://www.luispa.com/?p=7) y que recomiendo hacer **justo antes del primer boot**.
+[![beforeboot](https://www.luispa.com/wp-content/uploads/2014/12/beforeboot.png)](https://www.luispa.com/wp-content/uploads/2014/12/beforeboot.png) Este apunte repasa ciertas instalaciones adicionales que recomiendo realizar tras ![instalar Gentoo GNU/Linux en un Intel® NUC D54250WYK](/assets/img/original/?p=7){: width="730px" padding:10px } y que recomiendo hacer **justo antes del primer boot**.
 
 Crea el script "confcat": recomiendo que crees un script en tu sistema,  muy útil para poder ver el contenido "no comentado" de los ficheros de configuración.
 
@@ -17,7 +15,7 @@ Crea el script "confcat": recomiendo que crees un script en tu sistema,  muy ú
 # confcat: quita las lineas con comentarios, muy util como sustituto
 # al programa "cat" cuando queremos ver solo las lineas efectivas,
 # no las lineas que tienen comentarios.
-grep -vh '^\[\[:space:\]\]\*#' "$@" | grep -v '^//' | grep -v '^;' | grep -v '^$' | grep -v '^!' | grep -v '^--'
+grep -vh '^[[:space:]]*#' "$@" | grep -v '^//' | grep -v '^;' | grep -v '^$' | grep -v '^!' | grep -v '^--'
 
  
  
@@ -65,20 +63,20 @@ Contraseña de root
 
 Ficheros rc.conf, keymaps, hwclock, metalog,
 
-rc\_shell=/sbin/sulogin
-rc\_depend\_strict="NO"
+rc_shell=/sbin/sulogin
+rc_depend_strict="NO"
 unicode="YES"
-rc\_tty\_number=12
+rc_tty_number=12
 
 keymap="-u es"
 windowkeys="YES"
-extended\_keymaps="backspace keypad euro2"
-dumpkeys\_charset=""
-fix\_euro="NO"
+extended_keymaps="backspace keypad euro2"
+dumpkeys_charset=""
+fix_euro="NO"
 
 clock="local"
-clock\_systohc="YES"
-clock\_args=""
+clock_systohc="YES"
+clock_args=""
 
 Instalo metalog,
 
@@ -89,9 +87,9 @@ Instalo metalog,
 (chroot) livecd ~ # rc-update add metalog default
  
 
-METALOG\_OPTS=""
+METALOG_OPTS=""
 CONSOLE="/dev/tty10"
-FORMAT='$1 \[$2\] $3'
+FORMAT='$1 [$2] $3'
 
 Instalo vixie-cron, mlocate, añado ssh a default, instalo dhcp, eix, etc...
 
@@ -163,4 +161,4 @@ livecd ~# umount /mnt/gentoo{/boot,/sys,/proc,}
 livecd ~# reboot
  
 
-Volver al paso anterior: [Instalación del kernel](https://www.luispa.com/?p=831) o ir al siguiente: [Finalizar la instalación](https://www.luispa.com/?p=861)
+Volver al paso anterior: [Instalación del kernel](https://www.luispa.com/?p=831) o ir al siguiente: ![Finalizar la instalación](/assets/img/original/?p=861){: width="730px" padding:10px }
