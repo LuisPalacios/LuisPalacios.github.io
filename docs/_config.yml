@@ -27,7 +27,7 @@ title: LuisPa - apuntes técnicos
 description: >- # this means to ignore newlines until "baseurl:"
   Sitio de Luis Palacios, dedicado a guardar mis apuntes técnicos.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://www.luispa.com" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: LuisPalacios
 github_username:  LuisPalacios
 
