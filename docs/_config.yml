@@ -69,5 +69,5 @@ plugins:
 # Implemento Paginación
 paginate: 3
 #paginate_path: '/apuntes/page-:num/'
-paginate_path: "/blog/page:num/"
+paginate_path: "/page:num/"
 

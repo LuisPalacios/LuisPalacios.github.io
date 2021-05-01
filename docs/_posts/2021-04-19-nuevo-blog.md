@@ -130,7 +130,11 @@ Realizo un clone en local y cambio al directorio.
 ➜  LuisPalacios.github.io git:(master) >
 ```
 
-Creo la nueva rama, sin history ni contenido, con el nombre `gh-pages` y cambio (checkout) a dicha rama. Decido que el directorio raiz ([GitHub sources](GitHub sources)) sea el “subdirectorio `./docs`”, así que tengo que crearlo y después crear la rama (branch) “gh-pages” y hacer un checkout hacia ella (cambiar a dicha rama). Github publicará desde dicha rama.
+Creo la nueva rama, sin history ni contenido, con el nombre `gh-pages` y cambio (checkout) a dicha rama. **Decido que el directorio raiz ([GitHub sources](GitHub sources)) sea el “subdirectorio `./docs`**, así que tengo que crearlo y después crear la rama (branch) “gh-pages” y hacer un checkout hacia ella (cambiar a dicha rama). Github publicará desde dicha rama.
+
+<br/>
+
+### Mi directorio raíz está en: "./docs"
 
 ```zsh
 ➜  docs git:(master) > git checkout --orphan gh-pages
@@ -209,22 +213,79 @@ Dado que tengo un dominio propio seguí la [guía para redirigir mi dominio](htt
 
 ## Paginación
 
-Activo la paginación.
+Activo la [paginación](https://jekyllrb.com/docs/pagination/). En muchos sitios web, especialmente en los blogs, es muy común dividir el listado principal de publicaciones en listas más pequeñas y mostrarlas en varias páginas. Jekyll ofrece un plugin de paginación, para que poder generar automáticamente un blog paginado. 
 
-Añado lo siguiente al fichero `_config.yml`
+
+* Activo la paginación en el fichero `_config.yml`
 
 ```
 paginate: 3
-paginate_path: '/apuntes/page-:num/'
+paginate_path: '/page-:num/'
 ```
 
-Creo el directorio `apuntes` y el fichero `index.html`
+* Elimino el fichero `index` original `./docs/index.markdown`
 
 ```
-➜  docs git:(gh-pages) ✗ > mkdir apuntes
-➜  docs git:(gh-pages) ✗ > cat > apuntes/index.html
+➜  docs git:(gh-pages) ✗ > mv index.markdown ..
 ```
 
+* Creo el fichero `./docs/index.html` en la raíz del sitio.
+
+```html
+{% raw %}
+---
+layout: default
+---
+
+<!-- Loop sobre los diferentes apuntes -->
+{% for post in paginator.posts %}
+  <h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
+  <p class="author">
+  <!-- Muestro la fecha en castellano -->
+  <span class="date">{% assign m = post.date | date: "%-m" %}
+                      {{ post.date | date: "%-d de" }}
+                      {% case m %}
+                      {% when '1' %}enero
+                      {% when '2' %}febrero
+                      {% when '3' %}marzo
+                      {% when '4' %}abril
+                      {% when '5' %}mayo
+                      {% when '6' %}junio
+                      {% when '7' %}julio
+                      {% when '8' %}agosto
+                      {% when '9' %}septiembre
+                      {% when '10' %}octubre
+                      {% when '11' %}noviembre
+                      {% when '12' %}diciembre
+                      {% endcase %}
+                      {{ post.date | date: "de %Y" }}</span>
+  </p>
+  <div class="content">
+    {{ post.excerpt }}
+  </div>
+{% endfor %}
+
+<!-- Enlaces a la paginación -->
+<div class="pagination">
+    Página:
+  {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path }}" class="previous">
+      Previa
+    </a>
+  {% else %}
+    <span class="previous"></span>
+  {% endif %}
+  <span class="page_number ">
+    ( {{ paginator.page }} de {{ paginator.total_pages }} )
+  </span>
+  {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path }}" class="next">Siguiente</a>
+  {% else %}
+    <span class="next ">Siguiente</span>
+  {% endif %}
+</div>
+{% endraw %}
+```
 
 <br/>
 
