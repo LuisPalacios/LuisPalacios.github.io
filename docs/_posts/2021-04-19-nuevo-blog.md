@@ -162,7 +162,7 @@ Por último hago un bundle update
 
 ## Acceso en local
 
-Una de las ventajas de todo esto es que puedo activar un "web server" en local en el mismo ordenador donde estoy editanto los ficheros Markdown. Para conseguirlo, cambio al directorio de los posts (./docs) y ejecuto lo siguiente: 
+Una de las ventajas es que puedo activar un "web server" en local en el mismo ordenador donde estoy editanto los ficheros Markdown. Para conseguirlo, cambio al directorio de los posts (./docs) y ejecuto lo siguiente: 
 
 ```zsh
 docs git:(gh-pages) ✗ > bundle add webrick             <== Esto solo una vez
@@ -192,9 +192,39 @@ En GitHub configuro el “[publishing source for your GitHub Pages site](https:/
 - En la barra lateral izquierda, clic en Páginas.
 - En Source selecciono la Branch gh-pages y el directorio /docs y lo salvo
 
-Al cabo de un rato debería estar disponible en
 
-[https://luispalacios.github.io](https://luispalacios.github.io)
+
+|Al cabo de unos minutos estará aquí disponible|
+|:---:|
+| [https://luispalacios.github.io](https://luispalacios.github.io) |
+
+
+Dado que tengo un dominio propio seguí la [guía para redirigir mi dominio](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site) a las páginas de github y activé SSL, por lo tanto mi sitio Blog se encuentra aquí (o se redirige aquí): 
+
+| Documentación sobre [cómo redirigir tu dominio](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site)| 
+|:---:|
+| [https://www.luispa.com](https://www.luispa.com) |
+
+<br/>
+
+## Paginación
+
+Activo la paginación.
+
+Añado lo siguiente al fichero `_config.yml`
+
+```
+paginate: 3
+paginate_path: '/apuntes/page-:num/'
+```
+
+Creo el directorio `apuntes` y el fichero `index.html`
+
+```
+➜  docs git:(gh-pages) ✗ > mkdir apuntes
+➜  docs git:(gh-pages) ✗ > cat > apuntes/index.html
+```
+
 
 <br/>
 

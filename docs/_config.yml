@@ -65,3 +65,9 @@ plugins:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+# Implemento Paginación
+paginate: 3
+#paginate_path: '/apuntes/page-:num/'
+paginate_path: "/blog/page:num/"
+
