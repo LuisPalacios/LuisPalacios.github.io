@@ -8,7 +8,7 @@ excerpt_separator: <!--more-->
 
 ![Logo Jekyll](/assets/img/post/logo-jekyll.png){: width="150px" style="float:left; padding-right:20px" } 
 
-En este apunte describo cómo he montado este mi nuevo blog estático basado en [jekyll](http://jekyllrb.com) y hospedado en las [GitHub Pages](https://pages.github.com). Los fuentes se encuentran en el repositorio [GitHub LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io). 
+En este apunte describo cómo he montado este blog estático basado en [jekyll](http://jekyllrb.com) y hospedado en las [GitHub Pages](https://pages.github.com). Los fuentes se encuentran en el repositorio [GitHub LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io). 
 
 <br clear="left"/>
 <!--more-->
