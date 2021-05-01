@@ -13,12 +13,17 @@ El original lo saqué conectándome con Chrome a mi site y activando el modo des
 -->
 
 <footer class="site-footer h-card">
+    <script src="https://unpkg.com/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js"></script>
+        <script>addBackToTop({
+        diameter: 56,
+        backgroundColor: 'rgb(255, 82, 82)',
+        textColor: '#fff'
+        })</script>
     <data class="u-url" href="/"></data>
   
     <div class="wrapper">
   
-      <h2 class="footer-heading">LuisPa - apuntes técnicos</h2>
-      
+      <h2 class="footer-heading"><a href="{{ site.url }}">Portada - apuntes técnicos</a></h2>
 
       <div class="footer-col-wrapper">
         <div class="footer-col footer-col-1">
@@ -49,7 +54,7 @@ El original lo saqué conectándome con Chrome a mi site y activando el modo des
         </div>
   
         <div class="footer-col footer-col-3">
-          <p>Sitio de Luis Palacios, dedicado a guardar mis apuntes técnicos. </p>
+          <p>Sitio dedicado a documentar mis apuntes técnicos. </p>
         </div>
       </div>
   
