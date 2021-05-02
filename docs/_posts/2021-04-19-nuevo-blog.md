@@ -211,6 +211,8 @@ Dado que tengo un dominio propio seguí la [guía para redirigir mi dominio](htt
 
 <br/>
 
+<a id="paginate">
+
 ## Paginación
 
 Activo la [paginación](https://jekyllrb.com/docs/pagination/). En muchos sitios web, especialmente en los blogs, es muy común dividir el listado principal de publicaciones en listas más pequeñas y mostrarlas en varias páginas. Jekyll ofrece un plugin de paginación, para que poder generar automáticamente un blog paginado. 
