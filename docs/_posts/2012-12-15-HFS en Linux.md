@@ -1,21 +1,31 @@
 ---
-title: "Filesystem HFS+ en Gentoo Linux"
+title: "HFS+ en Linux"
 date: "2012-12-15"
 categories: gentoo
 tags: hfs linux
 excerpt_separator: <!--more-->
 ---
 
-Para dar soporte a un filesystem de tipo HFS+ en linux es necesario configurar de forma adecuada el kernel
+![HFS+](/assets/img/posts/hfsplus.png){: width="150px" height="150px" style="float:left; padding-right:25px" } 
 
- 
+HFS+ (Hierarchical File System Plus), también conocido como MacOS Plus, es el formato usado por defecto en la partición donde está instalado el sistema operativo MacOS de Apple. Fué lanzado como una mejora del HFS original en el año 1998 e introducido en el sistema operativo macOS desde su versión 8.1
+
+
+<br clear="left"/>
+<!--more-->
+
+Para dar soporte a un filesystem de tipo HFS+ en linux es necesario configurar de forma adecuada el kernel.
+
+```
   File systems ---> 
    [*] Miscellaneous filesystems --->
       <*> Apple Macintosh file system support
       <*> Apple Extended HFS file system support
- 
+```
 
-Compilar, instalar y rearrancar el equipo. En mi caso tenía un disco externo FireWire con partición HFS+ creada en un antiguo iMac. He conectado este disco ![FireWire externo a mi Mac Mini 5,2](/assets/img/original/?p=484)  y ahora puedo acceder a sus datos al soportar HFS+ en Gentoo linux. Este es el aspecto de la tabla de particiones (visto con gparted){: width="730px" padding:10px }:
+Compilar, instalar y rearrancar el equipo. En mi caso tenía un disco externo FireWire con partición HFS+ creada en un antiguo iMac. He conectado este disco [FireWire externo a mi Mac Mini]({% post_url 2012-11-15-disco-firewire-en-gentoo-en-mac-mini %}) y ahora puedo acceder a sus datos al soportar HFS+ en Gentoo linux. Este es el aspecto de la tabla de particiones (visto con gparted)
+
+{: width="730px" padding:10px }:
 
 ![capturadepantalla2013-11-15ala(s)11.37.17_0_o](/assets/img/original/capturadepantalla2013-11-15alas11.37.17_0_o.png){: width="730px" padding:10px }
 
