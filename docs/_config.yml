@@ -13,6 +13,11 @@ github_username:  LuisPalacios
 
 # Tema
 theme: minima
+minima:
+  date_format: "%-d/%m/%Y"  # dd/mm/AAAA
+  time_format: "%H:%M"     # 24h
+
+# Mostrar resúmenes
 show_excerpts: true
 
 # Plugins
