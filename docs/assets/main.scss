@@ -1,0 +1,23 @@
+---
+---
+// Es necesario poner las dos lineas anteriores por el tema front matter
+
+// Importo el CSS Principal
+@import "minima";
+
+// Sección personalizada.
+
+// Usar gris como background para el código
+pre, code, .highlighter-rouge .highlight { background-color: #f8f8f8; }
+
+// Deshabilito resaltar errores en los códigos que se documenten
+.highlight .err { color: inherit; background-color: inherit; }
+
+// Añado el LOGO del sitio a la cabecera. 
+.site-title::before {
+	content: url("img/posts/drjal.svg");
+	display: inline-block;
+	position: relative;
+	width: 37px;
+	top: 5px;
+}
