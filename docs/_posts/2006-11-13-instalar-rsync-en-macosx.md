@@ -7,15 +7,12 @@ excerpt_separator: <!--more-->
 ---
 
 
-![logo rsync](/assets/img/original/rsync.jpg){: width="150px" style="float:left; padding-right:10px" } 
+![logo rsync](/assets/img/posts/rsync.svg){: width="150px" height="114px" style="float:left; padding-right:25px" } 
 
 El programa rsync viene incluido con Mac OSX pero si necesitas una versión más moderna y que soporte más funcionalidades, como por ejemplo preservar metadatos, soporte de caracteres extendidos o caracteres multiplataforma entonces vas a tener que instalarte una de las últimas versiones.
 
 <br clear="left"/>
 <!--more-->
-
-
-<br/>
 
 Para poder compilar la última versión necesitarás:
 
@@ -48,38 +45,48 @@ Los pasos para realizar la instalación son los siguientes. Cuando lo hice se tr
 
 Si lo consideras necesario puedes actualizar a la última versión de rsync tal como describo más arriba. En cualquier caso lo que describo a continuación vale tanto para la última versión como para versiones anteriores.
 
-En esta sección vamos a ver cómo configurar el MacOSX para que arranque "rsync" en modo daemon, o lo que es lo mismo, se ejecute el comando "rsync --daemon" en el background.
+En esta sección vamos a ver cómo configurar el MacOSX para que arranque "rsync" en modo daemon, o lo que es lo mismo, se ejecute el comando `rsync --daemon` en el background.
 
 Para poder ejecutar un "daemon" en el Mac y que arranque en cada boot hay que usar "launchd" y "launchdctl" para cargar un fichero XML que describa qué proceso quieres ejecutar en modo daemon. El fichero XML es un fichero "PLIST o property list" que se instala como root en /Library/LaunchDaemon.
 
-Así que allá vamos. Crear el fichero "org.samba.rsync.plist"
+Así que allá vamos. Crear el fichero `org.samba.rsync.plist`
 
-```plist
-      Disabled
-     
-     Label
-     org.samba.rsync
-     Program
-     /usr/bin/rsync
-     ProgramArguments
-     
-         /usr/bin/rsync
-         --daemon
-         --config=/etc/rsyncd.conf 
-     
-     inetdCompatibility
-     
-         Wait
-         
-     
-         Sockets
-         
-             Listeners
-             
-                 SockServiceName
-                 rsync
-                 SockType
-                 stream
+```xml
+{% raw %}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+        <key>Disabled</key>
+        <false/>
+        <key>Label</key>
+        <string>org.samba.rsync</string>
+        <key>Program</key>
+        <string>/usr/bin/rsync</string>
+        <key>ProgramArguments</key>
+        <array>
+                <string>/usr/bin/rsync</string>
+                <string>--daemon</string>
+		<string>--config=/etc/rsyncd.conf</string>      
+        </array>
+        <key>inetdCompatibility</key>
+        <dict>
+                <key>Wait</key>
+                <false/>
+        </dict>
+		<key>Sockets</key>
+		<dict>
+			<key>Listeners</key>
+			<dict>
+				<key>SockServiceName</key>
+				<string>rsync</string>
+				<key>SockType</key>
+				<string>stream</string>
+			</dict>
+		</dict>
+</dict>
+</plist>
+{% endraw %}
 ```          
          
 Desde Terminal.app y como root copio el fichero a /Library/LaunchDaemons

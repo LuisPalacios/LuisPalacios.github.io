@@ -6,7 +6,7 @@ tags: blog linux
 excerpt_separator: <!--more-->
 ---
 
-![nimble image](/assets/img/original/nimble.jpg){: width="150px" style="float:left; padding-right:10px" } 
+![nimble image](/assets/img/posts/logo-nibbleblog.svg){: width="150px" height="163px" style="float:left; padding-right:25px" } 
 
 Hace tiempo (2002) me dió por empezar a compartir apuntes técnicos a través de un blog. Quizá por nostalgia he migrado el que fué mi primer post donde usé un software muy sencillo, ni era wordpress, ni mucho menos Jekyll, lo dejo tal cual.
 

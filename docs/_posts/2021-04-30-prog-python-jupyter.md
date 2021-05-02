@@ -6,7 +6,7 @@ tags: macos
 excerpt_separator: <!--more-->
 ---
 
-![logo md](/assets/img/posts/logo-python.svg){: width="150" height="150" style="float:left; padding-right:10px" } 
+![logo md](/assets/img/posts/logo-python.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
 
 
 [Python](https://www.python.org) es un lenguaje de programación interpretado multiparadigma. [`pip`](https://pypi.org/project/pip/) permite gestionar paquetes desde PyPi (el [Python Package Index](https://pypi.org)). [PipEnv](https://pipenv.pypa.io/en/latest/) permite crear un entorno virtual para ejecutar tu aplicación de forma aislada con las librerías necesarias. [Jupyter Lab](https://jupyter.org) es una aplicación web que sirve a modo de puente entre el código y los textos explicativos. 
