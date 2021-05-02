@@ -309,6 +309,97 @@ layout: default
 
 <br/>
 
+### Búsqueda
+
+Una de las características más útiles de un blog es la posibilidad de buscar dentro de sus artículos pero por desgracia Jekyll no trae ni implementa dicha función. He encontrado una alternativa en este proyecto [Simple-Jekyll-Search](https://github.com/christian-fei/Simple-Jekyll-Search). 
+
+* Me bajo los scripts a mi ordenador: 
+
+```zsh
+➜  ~ > npm install simple-jekyll-search
+added 2 packages, and audited 3 packages in 708ms
+found 0 vulnerabilities
+```
+
+* Copio los scripts a `docs/assets/js`
+
+```
+➜  > cd $HOME/prog.git/github-luispa/LuisPalacios.github.io
+➜  > cp $HOME/node_modules/simple-jekyll-search/dest/simple-jekyll-search.* docs/assets/js
+
+➜  > ls -al docs/assets/js
+total 48
+drwxr-xr-x  5 luis  staff   160  2 may 13:37 .
+drwxr-xr-x@ 7 luis  staff   224  2 may 12:38 ..
+-rw-r--r--  1 luis  staff  9854  2 may 13:37 simple-jekyll-search.js
+-rw-r--r--  1 luis  staff  4379  2 may 13:37 simple-jekyll-search.min.js
+-rw-r--r--  1 luis  staff  2491  2 may 07:49 vanilla-back-to-top.min.js
+```
+
+* Creo el fichero `search.json` en el directorio raíz de mi blog (recuerdo que es `docs`)
+
+```
+➜  ~ > cd prog.git/github-luispa/LuisPalacios.github.io/docs
+➜  ✗ > cat > search.json
+{% raw %}
+---
+layout: none
+---
+[
+  {% for post in site.posts %}
+    {
+      "title"    : "{{ post.title | escape }}",
+      "category" : "{{ post.category }}",
+      "tags"     : "{{ post.tags | join: ', ' }}",
+      "url"      : "{{ site.baseurl }}{{ post.url }}",
+      "date"     : "{{ post.date }}"
+    } {% unless forloop.last %},{% endunless %}
+  {% endfor %}
+]
+{% endraw %}
+```
+
+Creo la página `docs/search.html`:
+
+```
+{% raw %}
+<!-- Html Elements for Search -->
+<div id="search-container">
+    <input type="text" id="search-input" placeholder="search...">
+    <ul id="results-container"></ul>
+</div>
+    
+<!-- or without installing anything 
+
+    <script src="https://unpkg.com/simple-jekyll-search@latest/dest/simple-jekyll-search.min.js"></script>
+
+-->
+
+<!-- Script pointing to search-script.js -->
+<script src="/assets/js/simple-jekyll-search.js" type="text/javascript"></script>
+  
+<!-- Configuration -->
+<script>
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('results-container'),
+      json: '/search.json'
+    })
+</script>
+{% endraw %}
+```
+
+A partir de aquí la página debería estar disponible como `/search.html`.
+
+Todavía tengo pendiente mejorar esta sección.
+
+
+<br/>
+
+---
+
+<br/>
+
 #### Actualizaciones futuras
 
 Actualizar Homebrew
