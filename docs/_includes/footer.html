@@ -1,24 +1,29 @@
 <!-- 
 
-Auto: Luis Palacios
+Autor: Luis Palacios
 
-El tema "minima" ofrece pocas funcionalidades. Para personalizar el pie de página 
-lo que hago es sobre-escribir su estructura de por defecto. 
+El tema "minima" trae pocas funcionalidades. Para personalizar el pie de página 
+lo que hago es sobre-escribir su estructura de por defecto, siguiendo la documentación.
 
-En la raiz de mi sitio (subdirectorio ./docs) crea un directorio llamado _includes
-y creo el fichero footer.html con el contenido final que deseo obtener. 
+En la raiz de mi sitio (subdirectorio ./docs) creo un directorio llamado "_includes"
+y debajo creo este fichero "footer.html" con el contenido final que deseo obtener. 
 
-El original lo saqué conectándome con Chrome a mi site y activando el modo desarrollador. 
+Saqué el original clonando el tema minima, lo copié aquí y lo modifiqué. 
 
 -->
 
 <footer class="site-footer h-card">
+
+    <!-- Issue: Botón "volver al principio" #3
+        https://github.com/LuisPalacios/LuisPalacios.github.io/issues/3 -->
     <script src="/assets/js/vanilla-back-to-top.min.js"></script>
         <script>addBackToTop({
         diameter: 56,
         backgroundColor: 'rgb(255, 82, 82)',
         textColor: '#fff'
         })</script>
+
+    <!-- Copia del original con pequeñas modificaciones -->
     <data class="u-url" href="/"></data>
   
     <div class="wrapper">
