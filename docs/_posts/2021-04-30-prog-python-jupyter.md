@@ -6,7 +6,7 @@ tags: macos
 excerpt_separator: <!--more-->
 ---
 
-![logo md](/assets/img/post/prog-python-jupyter-0.svg){: width="150px" style="float:left; padding-right:10px" } 
+![logo md](/assets/img/posts/logo-python.svg){: style="float:left; padding-right:10px" } 
 
 
 [Python](https://www.python.org) es un lenguaje de programación interpretado multiparadigma. [`pip`](https://pypi.org/project/pip/) permite gestionar paquetes desde PyPi (el [Python Package Index](https://pypi.org)). [PipEnv](https://pipenv.pypa.io/en/latest/) permite crear un entorno virtual para ejecutar tu aplicación de forma aislada con las librerías necesarias. [Jupyter Lab](https://jupyter.org) es una aplicación web que sirve a modo de puente entre el código y los textos explicativos. 
@@ -199,7 +199,7 @@ Arrancamos nuestro entorno de Jupyter Lab y seguimos desde el navegador:
 
 Nos prepara un servidor que se queda escuchando en el puerto `8888` y nos muestra una URL junto con un token para conectar con él. Normalmente nos arranca el navegador y conecta automáticamente, o bien hacemos CMD-click o copiamos/pegamos y conectamos con el entorno. 
 
-| ![Jupyter Lab](/assets/img/post/prog-python-jupyter-1.jpg) | 
+| ![Jupyter Lab](/assets/img/posts/prog-python-jupyter-1.jpg) | 
 |:--:| 
 | *Pantalla inicial del Jupyter Lab* |
 
@@ -209,7 +209,7 @@ Nos prepara un servidor que se queda escuchando en el puerto `8888` y nos muestr
 * Añadimos una celda de texto markdown y una de código y lo ejecutamos
 
 
-| ![Documentación, código y ejecución](/assets/img/post/prog-python-jupyter-2.jpg) | 
+| ![Documentación, código y ejecución](/assets/img/posts/prog-python-jupyter-2.jpg) | 
 |:--:| 
 | *Documentación, código y ejecución* |
 

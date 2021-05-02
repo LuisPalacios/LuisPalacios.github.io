@@ -6,7 +6,7 @@ tags: linux ntp
 excerpt_separator: <!--more-->
 ---
 
-![ntp-dali](/assets/img/original/ntp-dali.jpg){: width="150px" style="float:left; padding-right:10px" }
+![ntp-dali](/assets/img/posts/ntp-dali.jpg){: style="float:left; padding-right:10px" }
 
 NTP es un protocolo de Internet para sincronizar los relojes de los sistemas informáticos conmutando paquetes de datos en redes con latencia variable. NTP utiliza el protocolo UDP como su capa de transporte (puerto `123`). Está diseñado para resistir a los efectos de la latencia variable.
 

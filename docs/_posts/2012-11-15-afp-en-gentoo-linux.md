@@ -6,7 +6,7 @@ tags: afp linux
 excerpt_separator: <!--more-->
 ---
 
-![Apple AFP](/assets/img/post/AppleAFP.svg){: width="150px" style="float:left; padding-right:10px" } 
+![Apple AFP](/assets/img/posts/logo-AFP.svg){: style="float:left; padding-right:10px" } 
 
 Para poder compartir los discos de mi servidor Gentoo Linux con equipos Mac OS X en la red casera, el protocolo que voy a utilicé durante el 2012 fue el Apple Filling Protocol (AFP). Más adelante Apple empezó a recomendar SMB. 
 

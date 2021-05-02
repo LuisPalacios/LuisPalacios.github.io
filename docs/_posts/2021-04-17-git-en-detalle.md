@@ -6,7 +6,7 @@ tags: git
 excerpt_separator: <!--more-->
 ---
 
-![Logo GIT](/assets/img/post/logo-git.png){: width="150px" style="float:left; padding-right:20px" } 
+![Logo GIT](/assets/img/posts/logo-git.svg){: style="float:left; padding-right:20px" } 
 
 [GIT] es un sistema de control de versiones distribuido, gratuito y de código abierto, diseñado para gestionar desde proyectos pequeños a muy grandes con rapidez y eficacia.
 

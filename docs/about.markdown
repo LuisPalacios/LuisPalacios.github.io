@@ -8,7 +8,7 @@ permalink: /about/
 [comment]: # (This actually is the most platform independent comment)
 
 
-![myimg](/assets/img/post/about_luispa.jpg){: width="150px" style="float:left; padding-right:10px" } 
+![myimg](/assets/img/posts/about_luispa.jpf){: width="200px" style="float:left; padding-right:20px" } 
 
 ¡Hola!, me llamo Luis Palacios y soy un tipo variado, tecnología, arte, hacker, fotografía, negocio, padre.
 
@@ -18,7 +18,7 @@ Este blog está principalmente dedicado a guardar mis apuntes técnicos, casi si
 
 Los fuentes se encuentran en el repositorio [GitHub LuisPalacios/LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io). Está basado en [jekyll](http://jekyllrb.com) y hospedado en las [GitHub Pages](https://pages.github.com). Mi blog original empezó con [NibbleBlog](http://www.nibbleblog.com), depués lo migré a [wordpress](https://wordpress.org/) en un servidor propio (desde donde todavía estoy migrando sus posts antiguos).
 
-<br/>
+<br clear="left"/>
 
 ---
 
