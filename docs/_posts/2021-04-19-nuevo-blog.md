@@ -15,30 +15,32 @@ En este apunte describo cómo he montado este blog estático "fabricado" con [je
 
 Seguro que conoces GitHub, una plataforma de colaboración y compartición de código (mediante el sistema de control de versiones `git`). Por cierto, más info [en mi apunte]({% post_url 2021-04-17-git-en-detalle %}) sobre GIT.
 
-Bueno, pues tiene una característica muy útil llamada **GitHub Pages**, que te permite publicar tus propias páginas web para que las hospede el propio **GitHub**. Utiliza un generarod de sitios estáticos llamado **Jekyll**, con capacidades de blog y super adecuado para sitios web personales. Por cierto, está escrito en Ruby y su creador es Tom Preston-Werner, el cofundador de GitHub.
+Bueno, pues tiene una característica muy útil llamada **GitHub Pages**, que te permite publicar tus propias páginas web para que las hospede el propio **GitHub**. Se integra perfectamente con el generador de sitios estáticos llamado **Jekyll**, que tiene capacidades de blog y es super adecuado para montarte blogs o sitios web personales. Por cierto, está escrito en Ruby y su creador es Tom Preston-Werner, el cofundador de GitHub.
 
 ![Arquitectura GitHub Pages](/assets/img/posts/nuevo-blog.jpf){: width="730px" height="559px" } 
 
-El proceso muy, muy resumido sería algo como: 
+El proceso que he seguido, muy, muy resumido:
 
 * Preparar el Mac (instalarme: **Brew, Ruby, Jekyll, Bundler, GIT**),
 * Crear un directorio dedicado nuevo y un repositorio local para el futuro LuisPalacios.github.io
 * Escribir "apuntes" en formato **markdown** (nuevos o migrados desde mi blog antiguo) 
-* Hadcer un `git push` al repositorio remoto para crear ([LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io)
-* Ver cómo GitHub genera las páginas automáticamente. 
+* Conectar con la versión local del sitio en mi ordenador e ir probando...
+* Hacer un `git push` al repositorio remoto para crear [LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io)
+* Ver cómo GitHub genera las páginas automáticamente.
+* Conectar con la versión pública web del sitio
 
 
 <br/>
 
 ## Preparar el Mac
 
-Utilizo [Homebrew](https://brew.sh/index_es) en vez del Ruby que viene con el Mac para evitar problemas con SIP (Systems Integrity Protection) [fuente](https://jekyllrb.com/docs/troubleshooting/#jekyll--macos). Otros enlaces interesantes: [Jekyll Installation](https://jekyllrb.com/docs/installation/), [Montar Git con GitHub](https://docs.github.com/en/articles/set-up-git) y [Bundler](https://bundler.io)
+A continuación vemos paso a paso lo que he ido haciendo, pero para tener una visión global del proceso comentar que... uso la versión de Ruby que viene con [Homebrew](https://brew.sh/index_es) en vez de la que viene con el Mac para evitar problemas con SIP (Systems Integrity Protection - [fuente](https://jekyllrb.com/docs/troubleshooting/#jekyll--macos)). También he seguido un par de enlaces interesantes: [Jekyll Installation](https://jekyllrb.com/docs/installation/) o sobre [Git en GitHub](https://docs.github.com/en/articles/set-up-git) y también [Bundler](https://bundler.io). 
 
 <br/>
 
 ### Homebrew
 
-La instalación de Homebrew (o brew por resumir) es bastante sencilla. Homebrew es un sistema de gestión de paquetes que simplifica la instalación, actualización y eliminación de programas en los sistemas operativos Mac OS de Apple y GNU/Linux. Creado originalmente por Max Howell, el programa ha ganado popularidad en la comunidad de Ruby on Rails. Lo que más me gusta es que te permite acceder a las últimas versiones de un montón de software libre.
+Si trabajas en un Mac y eres desarrollador o necesitas programas de bajo nivel o de línea de commandos es muy, pero que muy probable que tengas que instalarte [Homebrew](https://brew.sh/index_es) (o brew por resumir). Se trata de un sistema de gestión de paquetes que simplifica la instalación, actualización y eliminación de programas en los sistemas operativos Mac OS de Apple y GNU/Linux. Creado originalmente por Max Howell, el programa ha ganado popularidad en la comunidad de Ruby on Rails. Lo que más me gusta es que te permite acceder a las últimas versiones de un montón de software libre.
 
 Instalación
 
@@ -220,7 +222,7 @@ En GitHub configuro el “[publishing source for your GitHub Pages site](https:/
 | [https://luispalacios.github.io](https://luispalacios.github.io) |
 
 
-Dado que tengo un dominio propio seguí la [guía para redirigir mi dominio](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site) a las páginas de github y activé SSL, por lo tanto mi sitio Blog se encuentra aquí (o se redirige aquí): 
+El siguiente paso es opcional. En mi caso tengo un dominio propio así que seguí la [guía para redirigir mi dominio](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site) a las páginas de GitHub (básicamente poner un CNAME en tu proveedor) y además activé SSL, por lo tanto mi sitio Blog ahora ya se encuentra aquí: 
 
 | Documentación sobre [cómo redirigir tu dominio](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site)| 
 |:---:|
@@ -232,8 +234,7 @@ Dado que tengo un dominio propio seguí la [guía para redirigir mi dominio](htt
 
 ### Paginación
 
-Activo la [paginación](https://jekyllrb.com/docs/pagination/). En muchos sitios web, especialmente en los blogs, es muy común dividir el listado principal de publicaciones en listas más pequeñas y mostrarlas en varias páginas. Jekyll ofrece un plugin de paginación, para que poder generar automáticamente un blog paginado. 
-
+En muchos sitios web, especialmente en los blogs, es muy común dividir el listado principal de publicaciones en listas más pequeñas y mostrarlas en varias páginas. Jekyll ofrece un plugin de paginación, para que poder generar automáticamente un blog paginado, así que he seguido el manual de Jekyll sobre cómo [configurar la paginación](https://jekyllrb.com/docs/pagination/):
 
 * Activo la paginación en el fichero `_config.yml`
 
