@@ -6,7 +6,7 @@ tags: blog github jekyll
 excerpt_separator: <!--more-->
 ---
 
-![Logo Jekyll](/assets/img/posts/logo-jekyll.svg){: style="float:left; padding-right:20px" } 
+![Logo Jekyll](/assets/img/posts/logo-jekyll.svg){: width="150" height="61" style="float:left; padding-right:20px" } 
 
 En este apunte describo cómo he montado este blog estático basado en [jekyll](http://jekyllrb.com) y hospedado en las [GitHub Pages](https://pages.github.com). Los fuentes se encuentran en el repositorio [GitHub LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io). 
 
