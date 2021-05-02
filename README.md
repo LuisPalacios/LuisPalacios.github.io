@@ -22,13 +22,4 @@ docs > bundle update
 docs > bundle exec jekyll serve
 ```
 
-## Work in progress
-
-* Done: Personalizar Footer. Apr'21
-* Done: Paginación. Implementado 1.5.2021
-* Done: Botón "back-to-top". Implementado 1.5.2021
-* Pdte: Habilitar comentarios vía GitHub issues. 
-* Pdte: Poder hacer búsquedas - pdte. de estudio [Simple-Jekyll-Search](https://github.com/christian-fei/Simple-Jekyll-Search)
-
 <br/>
-
