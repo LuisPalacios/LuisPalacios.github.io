@@ -6,7 +6,7 @@ tags: macos
 excerpt_separator: <!--more-->
 ---
 
-![logo md](/assets/img/post/logo-markdown.svg){: width="150px" style="float:left; padding-right:10px" } 
+![logo md](/assets/img/post/logo-markdown.svg){: style="float:left; padding-right:10px" } 
 
 Con MacOS no se incluye una opción en FINDER para poder pre-visualizar archivos Markdown (.md). Existen varias opciones pero una de las más rápidas y sencillas consiste en instalar `qlmarkdown`
 
