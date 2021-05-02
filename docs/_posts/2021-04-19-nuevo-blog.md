@@ -1,5 +1,5 @@
 ---
-title: "Nuevo blog con Jekyll"
+title: "Mi nuevo blog !!"
 date: "2021-04-19"
 categories: general
 tags: blog github jekyll
@@ -8,18 +8,35 @@ excerpt_separator: <!--more-->
 
 ![Logo Jekyll](/assets/img/posts/logo-jekyll.svg){: width="150px" height="61px" style="float:left; padding-right:25px" } 
 
-En este apunte describo cómo he montado este blog estático basado en [jekyll](http://jekyllrb.com) y hospedado en las [GitHub Pages](https://pages.github.com). Los fuentes se encuentran en el repositorio [GitHub LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io). 
+En este apunte describo cómo he montado este blog estático "fabricado" con [jekyll](http://jekyllrb.com) y hospedado en las [GitHub Pages](https://pages.github.com). Los fuentes se encuentran a su vez en el repositorio [LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io). El sitio ha quedado finalmente configurado en mi dominio: [https://www.luispa.com](https://www.luispa.com)
 
 <br clear="left"/>
 <!--more-->
 
-**Jekyll** es un generador simple para sitios web estáticos con capacidades de blog; adecuado para sitios web personales. Está escrito en Ruby (su creador es Tom Preston-Werner, el cofundador de GitHub).
+Seguro que conoces GitHub, una plataforma de colaboración y compartición de código (mediante el sistema de control de versiones `git`). Por cierto, más info [en mi apunte]({% post_url 2021-04-17-git-en-detalle %}) sobre GIT.
 
-Preparo Brew, Ruby, Jekyll y los Bundles en el MacOS: Utilizo [Homebrew](https://brew.sh/index_es) en vez del Ruby que viene con el Mac para evitar problemas con SIP (Systems Integrity Protection) [fuente](https://jekyllrb.com/docs/troubleshooting/#jekyll--macos). Otros enlaces interesantes: [Jekyll Installation](https://jekyllrb.com/docs/installation/), [Set up Git con GitHub](https://docs.github.com/en/articles/set-up-git) y [Bundler](https://bundler.io)
+Bueno, pues tiene una característica muy útil llamada **GitHub Pages**, que te permite publicar tus propias páginas web para que las hospede el propio **GitHub**. Utiliza un generarod de sitios estáticos llamado **Jekyll**, con capacidades de blog y super adecuado para sitios web personales. Por cierto, está escrito en Ruby y su creador es Tom Preston-Werner, el cofundador de GitHub.
+
+![Arquitectura GitHub Pages](/assets/img/posts/nuevo-blog.jpf){: width="730px" height="559px" } 
+
+El proceso muy, muy resumido sería algo como: 
+
+* Preparar el Mac (instalarme: **Brew, Ruby, Jekyll, Bundler, GIT**),
+* Crear un directorio dedicado nuevo y un repositorio local para el futuro LuisPalacios.github.io
+* Escribir "apuntes" en formato **markdown** (nuevos o migrados desde mi blog antiguo) 
+* Hadcer un `git push` al repositorio remoto para crear ([LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io)
+* Ver cómo GitHub genera las páginas automáticamente. 
+
 
 <br/>
 
-## Homebrew
+## Preparar el Mac
+
+Utilizo [Homebrew](https://brew.sh/index_es) en vez del Ruby que viene con el Mac para evitar problemas con SIP (Systems Integrity Protection) [fuente](https://jekyllrb.com/docs/troubleshooting/#jekyll--macos). Otros enlaces interesantes: [Jekyll Installation](https://jekyllrb.com/docs/installation/), [Montar Git con GitHub](https://docs.github.com/en/articles/set-up-git) y [Bundler](https://bundler.io)
+
+<br/>
+
+### Homebrew
 
 La instalación de Homebrew (o brew por resumir) es bastante sencilla. Homebrew es un sistema de gestión de paquetes que simplifica la instalación, actualización y eliminación de programas en los sistemas operativos Mac OS de Apple y GNU/Linux. Creado originalmente por Max Howell, el programa ha ganado popularidad en la comunidad de Ruby on Rails. Lo que más me gusta es que te permite acceder a las últimas versiones de un montón de software libre.
 
@@ -64,7 +81,7 @@ Homebrew 3.1.2
 
 <br/>
 
-## Ruby
+### Ruby
 
 Ruby es un lenguaje de programación interpretado, reflexivo y orientado a objetos, creado por el programador japonés Yukihiro "Matz" Matsumoto, quien comenzó a trabajar en Ruby en 1993, y lo presentó públicamente en 1995. Necesitamos Ruby para ejecutar Jekyll, así que voy a instalarlo utilizando Homebrew:
 
@@ -85,7 +102,7 @@ export PATH=$HOME/gems/bin:$PATH
 
 <br/>
 
-## Bundler
+### Bundler
 
 Es un gestor de paquetes de software que va a facilitar el trabajo con Jekyll y sus dependencias. 
 
@@ -95,7 +112,7 @@ Es un gestor de paquetes de software que va a facilitar el trabajo con Jekyll y 
 
 <br/>
 
-## Jekyll
+### Jekyll
 
 Jekyll es un generador simple para sitios web estáticos con capacidades de blog; está escrito en Ruby por Tom Preston-Werner (cofundador de GitHub) y es rapidísimo. 
 
@@ -103,7 +120,7 @@ Para instalarlo en mi Mac he seguido esta [fuente](https://jekyllrb.com/docs/tro
 
 <br/>
 
-## Prueba de concepto
+### Prueba de concepto
 
 Una vez que tengo todo lo anterior instalado, intento probar que todo va bien... 
 
@@ -119,9 +136,9 @@ Desde un browser conecto (y funciona) con mi propio ordenador en: [http://127.0.
 
 <br/>
 
-## Creo mi sitio luispalacios.github.io 
+## Creo luispalacios.github.io 
 
-Sigo las instrucciones de [pages.github.com](https://pages.github.com) y su [documentación oficial](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/creating-a-github-pages-site-with-jekyll) para crear mi sitio `luispalacios.github.io`
+Sigo las instrucciones de [pages.github.com](https://pages.github.com) y su [documentación oficial](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/creating-a-github-pages-site-with-jekyll) para crear mi [Mi repositorio LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io)
 
 Realizo un clone en local y cambio al directorio.
 
@@ -164,7 +181,7 @@ Por último hago un bundle update
 
 <br/>
 
-## Acceso en local
+### Acceso en local
 
 Una de las ventajas es que puedo activar un "web server" en local en el mismo ordenador donde estoy editanto los ficheros Markdown. Para conseguirlo, cambio al directorio de los posts (./docs) y ejecuto lo siguiente: 
 
@@ -213,7 +230,7 @@ Dado que tengo un dominio propio seguí la [guía para redirigir mi dominio](htt
 
 <a id="paginate">
 
-## Paginación
+### Paginación
 
 Activo la [paginación](https://jekyllrb.com/docs/pagination/). En muchos sitios web, especialmente en los blogs, es muy común dividir el listado principal de publicaciones en listas más pequeñas y mostrarlas en varias páginas. Jekyll ofrece un plugin de paginación, para que poder generar automáticamente un blog paginado. 
 
@@ -291,7 +308,7 @@ layout: default
 
 <br/>
 
-### Actualizaciones futuras
+#### Actualizaciones futuras
 
 Actualizar Homebrew
 
@@ -309,7 +326,7 @@ Actualizar bundle
 
 <br/>
 
-### Enlaces interesantes
+#### Enlaces interesantes
 
 Para mejorar mi sitio de apuntes, algunos enlaces interesantes: 
 
