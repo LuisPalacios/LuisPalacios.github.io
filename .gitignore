@@ -17,4 +17,6 @@ _site/
 .jekyll-metadata
 vendor
 
-# 
+# VSCode
+workspace.code-workspace
+ 
