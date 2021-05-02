@@ -1,6 +1,16 @@
 ---
 ---
 // Es necesario poner las dos lineas anteriores por el tema front matter
+// Nota: VSCode intenta validar este fichero .scss y las dos líneas 
+// anterior provocan un error (no son sintácticamente válidas en un .scss)
+// Se trata de un error cosmético dado que en Jekyll las necesitamos. 
+// En mi caso he implementado el workaround que está aquí documentado: 
+// https://talk.jekyllrb.com/t/fixing-vscode-scss-linting-errors-on-front-matter/1710
+//  - VSCode > File > Add forlder to Workspace 
+//    Añadir "assets"
+//  - VSCode > Preferences > Settings > Folder Settings > Extensios
+//  - SCSS > Desactivar VALIDATE
+//
 
 // Importo el CSS Principal
 @import "minima";
