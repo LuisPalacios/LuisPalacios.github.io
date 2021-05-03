@@ -2,7 +2,7 @@
 title: "Mi nuevo blog !!"
 date: "2021-04-19"
 categories: general
-tags: blog github jekyll
+tags: blog linux github jekyll
 excerpt_separator: <!--more-->
 ---
 

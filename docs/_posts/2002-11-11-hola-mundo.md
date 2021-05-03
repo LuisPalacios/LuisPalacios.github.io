@@ -1,7 +1,7 @@
 ---
 title: "Mi primer blog"
 date: "2002-11-11"
-categories: nostalgia
+categories: herramientas
 tags: blog linux
 excerpt_separator: <!--more-->
 ---

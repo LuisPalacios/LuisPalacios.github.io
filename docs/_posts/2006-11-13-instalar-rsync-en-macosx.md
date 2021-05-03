@@ -1,8 +1,8 @@
 ---
-title: "Instalar rsync en MacOSX"
+title: "Instalar rsync en MacOS"
 date: "2006-11-13"
 categories: herramientas
-tags: cliente servidor
+tags: cliente servidor mac linux
 excerpt_separator: <!--more-->
 ---
 
