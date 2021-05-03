@@ -69,12 +69,8 @@ Ahora ya puedo arrancar el servicio
 
 Y desde un mac cliente conectar con el disco. Al hacerlo debo introducir el nombre de usuario y contraseña del equipo linux.
 
-<!-- Esta sección la dejo comentada como ejemplo ...
-{:refdef: style="text-align: center;"}
-![afp](/assets/img/posts/afp.jpg){: width="300px" } 
-{: refdef}
- -->
-
-| *Acceso desde Finder* |
-|:--:| 
-| ![Acceso desde Finder](/assets/img/posts/afp.jpg){: width="369px" height="102px" } | 
+{% include showImagen.html 
+      src="/assets/img/posts/afp.jpg" 
+      caption="Acceso desde Finder" 
+      width="369px"
+      %}

@@ -214,5 +214,9 @@ drwxr-xr-x 9 root root 4096 nov 22 09:16 ..
 * Conexión con ntopng: http://192.168.1.1:3000/login.html
 
 <br/>
-![ntop](/assets/img/original/ntop.jpg){: width="730px" padding:10px }
 
+{% include showImagen.html 
+      src="/assets/img/original/ntop.jpg" 
+      caption="'ntopng' preaprado en http://192.168.1.1:3000/login.html" 
+      width="730px"
+      %}

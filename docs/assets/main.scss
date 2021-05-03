@@ -34,11 +34,21 @@ pre, code, .highlighter-rouge .highlight { background-color: #f8f8f8; }
 
 // Defino mis propias clases
 :root {
-  --screen_background: #cccccc;
+  --screen_background: #eeeeee;
   --screen_border: #666666;
 }
 
 // Para las capturas de pantalla
+.screen_caption {
+  text-align:center;
+  margin:1em auto;
+  font-style: italic;
+  font-size: 0.75em;
+//  border-radius: 0.2em;
+//  border-radius: 10px 140px 30px 140px;
+//  border:1px var(--screen_border) solid;
+}
+
 .screen_outer {
   height: 100%;
   display: flex;
@@ -56,5 +66,9 @@ pre, code, .highlighter-rouge .highlight { background-color: #f8f8f8; }
   background-color: var(--screen_background);
   border-radius: 1em;
   border:1px var(--screen_border) solid;
+//  box-shadow: 1px 1px 2px #aaaaaa, 0 0 10px #f8f8f8, 0 0 3px #cccccc;
+//  box-shadow: 10px 10px 5px #aaaaaa;
+//  box-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+//  box-shadow: 5px 10px #888888;
 }
 

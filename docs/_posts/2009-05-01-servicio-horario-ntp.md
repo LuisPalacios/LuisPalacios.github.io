@@ -1,8 +1,8 @@
 ---
 title: "Servicio horario NTP"
 date: "2009-05-01"
-categories: gentoo
-tags: linux ntp
+categories: linux
+tags: linux ntp gentoo
 excerpt_separator: <!--more-->
 ---
 

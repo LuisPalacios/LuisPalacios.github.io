@@ -24,6 +24,7 @@ show_excerpts: true
 plugins:
   - jekyll-feed
 
+
 # Implemento Paginación
 paginate: 3
 paginate_path: "/page:num/"

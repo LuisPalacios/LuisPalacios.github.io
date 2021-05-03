@@ -199,19 +199,21 @@ Arrancamos nuestro entorno de Jupyter Lab y seguimos desde el navegador:
 
 Nos prepara un servidor que se queda escuchando en el puerto `8888` y nos muestra una URL junto con un token para conectar con él. Normalmente nos arranca el navegador y conecta automáticamente, o bien hacemos CMD-click o copiamos/pegamos y conectamos con el entorno. 
 
-| ![Jupyter Lab](/assets/img/posts/prog-python-jupyter-1.jpg) | 
-|:--:| 
-| *Pantalla inicial del Jupyter Lab* |
-
+{% include showImagen.html 
+      src="/assets/img/posts/prog-python-jupyter-1.jpg" 
+      caption="Pantalla inicial del Jupyter Lab" 
+      width="600px"
+      %}
 
 * Creamos un notebook: File > New > Notebook (Python3)
 * Lo renombramos: botón derecho, rename > `plot.ipynb`
 * Añadimos una celda de texto markdown y una de código y lo ejecutamos
 
-
-| ![Documentación, código y ejecución](/assets/img/posts/prog-python-jupyter-2.jpg) | 
-|:--:| 
-| *Documentación, código y ejecución* |
+{% include showImagen.html 
+      src="/assets/img/posts/prog-python-jupyter-2.jpg" 
+      caption="Documentación, código y ejecución" 
+      width="600px"
+      %}
 
 <br/>
 

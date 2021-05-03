@@ -1,8 +1,8 @@
 ---
 title: "HFS+ en Linux"
 date: "2012-12-15"
-categories: gentoo
-tags: hfs linux
+categories: linux
+tags: hfs linux gentoo
 excerpt_separator: <!--more-->
 ---
 
@@ -25,40 +25,44 @@ Para dar soporte a un filesystem de tipo HFS+ en linux es necesario configurar d
 
 Compilar, instalar y rearrancar el equipo. En mi caso tenía un disco externo FireWire con partición HFS+ creada en un antiguo iMac. He conectado este disco [FireWire externo a mi Mac Mini]({% post_url 2012-11-15-disco-firewire-en-gentoo-en-mac-mini %}) y ahora puedo acceder a sus datos al soportar HFS+ en Gentoo linux. Este es el aspecto de la tabla de particiones (visto con gparted)
 
-{: width="730px" padding:10px }:
-
-![capturadepantalla2013-11-15ala(s)11.37.17_0_o](/assets/img/original/capturadepantalla2013-11-15alas11.37.17_0_o.png){: width="730px" padding:10px }
+{% include showImagen.html 
+      src="/assets/img/original/capturadepantalla2013-11-15alas11.37.17_0_o.png" 
+      caption="Programa GParted" 
+      width="730px"
+      %}
 
 Creo el punto de montaje y configuro el fichero /etc/fstab
 
- 
+```
 # mkdir /mnt/despensa
 # cat /etc/fstab
 :
 /dev/sdc3 /mnt/despensa hfsplus noauto,rw,exec,users,noatime 0 0
 :
- 
+```
+
 
 A partir de aquí ya puedo acceder a los datos
 
- 
+``` 
 # mount /mnt/despensa
- 
+```
 
 **OJO!, SOLO EN LECTURA!!**. Es decir, tenemos un problema, por desgracia el soporte en linux de particiones HFS+ con registro (o con Journaling) no está soportado así que la partición se ha montado en modo "Read Only"
 
 A partir de este momento ya puedo acceder a los datos SOLO EN LECTURA, lo cual suele ser un problema :)
 
- 
+``` 
 # mount
 :
 /dev/sdc3 on /mnt/despensa type hfsplus (ro,noatime,noexec,nosuid,nodev)
- 
+```
 
 Posible solución: eliminar el Journaling. En mi caso sí es aceptable, dado que no voy a conectar este disco nunca más a un MacOSX.
 
-  Veamos cómo **eliminar el registro (journaling) de una partición HFS+ desde linux**: Puedes usar el siguiente programa en C, lo compilas y ejecutas como root. Aquí tienes todo el proceso. Copia y pega lo siguiente en un archivo con nombre **disable_journal.c**
+Veamos cómo **eliminar el registro (journaling) de una partición HFS+ desde linux**: Puedes usar el siguiente programa en C, lo compilas y ejecutas como root. Aquí tienes todo el proceso. Copia y pega lo siguiente en un archivo con nombre **disable_journal.c**
 
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -111,29 +115,32 @@ int main(int argc, char *argv[])
  printf("journal has been disabled.\n");
  return 0;
 }
+```
 
-Compilo y ejecuto el programa
+#### Compilo y ejecuto el programa
 
- 
-# make disable_journal
+```
+make disable_journal
 :
-# disable_journal /dev/sdc3
+disable_journal /dev/sdc3
 :
 journal has been disabled.
- 
+```
 
 El último paso es hacer un "File System check". Necesitas instalar sys-fs/diskdev_cmds que incorpora tanto fsck.hfsplus (para comprobar una partición HFS+) como mkfs.hfsplus (para crear una partición HFS+)
-
  
-# emerge -v diskdev_cmds
-:
-# fsck /dev/sdc3
- 
+```bash
+emerge -v diskdev_cmds
+fsck /dev/sdc3
+```
 
 A partir de este momento ya puedo acceder a los datos en LECTURA/ESCRITURA
 
  
-# mount /mnt/despensa
-# mount
+```zsh
+mount /mnt/despensa
+mount
 :
 /dev/sdc3 on /mnt/despensa type hfsplus (**rw**,noatime,noexec,nosuid,nodev)
+```
+

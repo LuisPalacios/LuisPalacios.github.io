@@ -120,10 +120,11 @@ El comando `git init` crea el subdirectorio `.git` con una estructura inicial, f
 El directorio `alpha` tiene ahora este aspecto:
 
 
-| ![Estructura de un proyecto con GIT](/assets/img/git/0-project.png) | 
-|:--:| 
-| *Estructura de un proyecto con GIT* |
-
+{% include showImagen.html 
+      src="/assets/img/git/0-project.png" 
+      caption="Estructura de un proyecto con GIT" 
+      width="730px"
+      %}
 
 Lo que hay dentro de `.git` es propiedad de GIT (ahí van a estar todas las versiones del proyecto y todo dentro de él se manipula usando el comando). El resto de ficheros (fuera de .git) se han convertido en la que GIT llama la COPIA DE TRABAJO (WORKING COPY) y son propiedad del usuario.
 
@@ -361,10 +362,11 @@ Tiene una línea apuntando al directorio `data`. Contiene el valor 040000 (tipoe
 
 <br/>
 
-| ![Tree graph del primer commit](/assets/img/git/1-a1-tree-graph.png) | 
-|:--:| 
-| *Tree graph del primer commit* |
-
+{% include showImagen.html 
+      src="/assets/img/git/1-a1-tree-graph.png" 
+      caption="Tree graph del primer commit" 
+      width="730px"
+      %}
 
 Lo mismo visto gráficamente nos muestra cómo el objeto tree `raíz (root)` apunta al objeto tree `data` que apunta a los dos objetos blobs `data/letter.txt` y `datos/número.txt`.
 
@@ -387,10 +389,13 @@ La primera línea apunta al inicio del `tree graph`, al objeto raíz `raíz (roo
 
 <br/>
 
-| ![Commit a1 apuntando a su tree graph](/assets/img/git/2-a1-commit.png) | 
-| ![Commit a1 apuntando a su tree graph](/assets/img/git/2-a1-commit-gg.jpg) | 
-|:--:| 
-| *Commit `a1` apuntando a la raíz `root` de su tree graph* |
+
+{% include showImagen2.html 
+      src="/assets/img/git/2-a1-commit.png" 
+      src2="/assets/img/git/2-a1-commit-gg.jpg" 
+      caption="Commit `a1` apuntando a la raíz `root` de su tree graph" 
+      width="730px"
+      %}
 
 <br/>
 
@@ -417,9 +422,11 @@ Ahora que tenemos todo conectado vamos a añadir `HEAD` y `master` a nuestro gr�
 
 <br/>
 
-| ![\`master\` apunta al commit \`a1\`](/assets/img/git/3-a1-refs.png) | 
-|:--:| 
-| *`HEAD` apunta a `master` que apunta al commit `a1`* |
+{% include showImagen.html 
+      src="/assets/img/git/3-a1-refs.png" 
+      caption="`HEAD` apunta a `master` que apunta al commit `a1`" 
+      width="730px"
+      %}
 
 Ya tenemos todo conectado: `HEAD` apunta a `master` con un hash apuntando al `objeto commit`, que apunta al objeto `root` (alpha) que a su vez apunta a `data` que apunta a `letter.txt`y `number.txt`.
 

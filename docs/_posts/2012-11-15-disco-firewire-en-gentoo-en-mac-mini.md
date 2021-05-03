@@ -1,8 +1,8 @@
 ---
 title: "FireWire en Linux en Mac Mini"
 date: "2012-11-15"
-categories: gentoo
-tags: firewire linux
+categories: linux
+tags: firewire gentoo linux
 excerpt_separator: <!--more-->
 ---
 
