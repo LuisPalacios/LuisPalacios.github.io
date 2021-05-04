@@ -1,5 +1,5 @@
 #!/bin/zsh
 #
-# Script to run jekyll and to serve the pages locally on http://127.0.0.1:4000/
+# Script to run jekyll and to serve the pages locally 
 #
-bundle exec jekyll serve
+bundle exec jekyll serve --host idefix.parchis.org --port 4000
