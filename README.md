@@ -1,6 +1,6 @@
 ## LuisPalacios.github.io
 
-Este repositorio contiene mi "blog" basado en [jekyll](http://jekyllrb.com) hospedado en [GitHub Pages](https://pages.github.com).
+Este repositorio contiene mi "blog", basado en [jekyll](http://jekyllrb.com), hospedado en [GitHub Pages](https://pages.github.com).
 
 * [https://www.luispa.com](https://www.luispa.com)
 
