@@ -4,4 +4,4 @@ Este repositorio contiene mi "blog" basado en [jekyll](http://jekyllrb.com) hosp
 
 * [https://www.luispa.com](https://www.luispa.com)
 
-Cambia a la rama [gh-pages](/LuisPalacios/LuisPalacios.github.io/tree/gh-pages/docs/) para acceder a todo el contenido fuente.
+Cambia a la rama [gh-pages](https://github.com/LuisPalacios/LuisPalacios.github.io/tree/gh-pages) para acceder a todo el contenido fuente.
