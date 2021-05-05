@@ -24,8 +24,6 @@ No depende de un repositorio central, múltiples usuarios pueden instalarse GIT 
 
 ## Introducción
 
-Muy útiles, la [Cheatsheet en Español](https://training.github.com/downloads/es_ES/github-git-cheat-sheet/) o la [Visual Git Cheat Sheet](https://ndpsoftware.com/git-cheatsheet.html) o este pequeño [Guía burros](https://rogerdudler.github.io/git-guide/index.es.html) o la [documentación oficial](https://git-scm.com/doc) o si te vas a cualqueir buscador en internet vas a encontrar cientos de videos, tutoriales y documentos. 
-
 ¿Porqué mola GIT?. Hay muchos motivos, como su velocidad, que lo hizo Linus Torvals, que es libre, que nos permite movernos, como si tuviéramos un puntero en el tiempo, por todas las revisiones de código y desplazarnos de una manera muy ágil.
 
 Tiene un sistema de trabajo con ramas (branches) que lo hace especialmente potente. Permiten poder tener proyectos divergentes de un principal, hacer experimentos o para probar nuevas funcionalidades, entre otras cosas.
@@ -37,6 +35,30 @@ Antes de entrar en harina, tenemos dos formas de trabajar, con el cliente (progr
 * Cliente GUI [GitHub Desktop](https://desktop.github.com) desarrollado por GitHub.
 * Cliente GUI [SourceTree](https://www.sourcetreeapp.com)
 * Aquí tienes más.. [clientes GUI](https://git-scm.com/downloads/guis)
+
+<br/>
+
+| **Importante**: En este apunte *voy a usar la nomenclatura git en inglés*, evito traducir los palabros, Internet está plagada de ejempos, tutoriales y documentos sobre git y el 99% utilizan su nomenclatura en inglés, así que mejor no liarnos...|
+
+| Inglés | Español | Descripción |
+| -- | -- | -- |
+| staging area | área de preparación | Es una zona intermedia (dentro de `.git`)  donde se van **preparando archivos a la espera del ser usados** en el **siguiente commit** |
+| index | índice | Es la **lista de todos los archivos que se están preparando** a los que **hacemos seguimiento y están en la staging área** (entre tu working copy y el futuro commit). |
+| working copy | directorio de trabajo | Es tu directorio completo de tu proyecto todo aquello, la parte no controlada por git, es decir, **todos los ficheros que están fuera del subdirectorio `.git`** |
+| commit | confirmar, comprometer | Consiste en dar por bueno lo que tenemos en el Staging Area y pasarlo a un estado de "confirmado", identificándolo con un puntero numérico (hash del commit). Junto con sus antepasados conforman una instantánea o versión de tu proyecto. |
+| branch | rama | Es un `nombre` que actúa como puntero a una de los commit dentro de tu repositorio `.git` |
+| clone | clonar, copiar | Consiste en dubplicar un repositorio remoto completo  |
+| tree graph | grafo en árbol | Es una representación gráfica que refleja el árbol de conexiones entre los dos tipos de objetos que hay dentro de `.git`, los objetos fichero (blob) y los objetos directorio (tree). |
+| blob (binary large object) | fichero binario | Es como llama git a todos los ficheros que tiene bajo .git, y que resultan ser casi siempre binario, por eso los llama blob's |
+| tree | árbol | Es como llama git a todos los objetos directorio o contenedores que tiene bajo .git |
+| fetch | traer | Pedimos la última información de un *remote*, sin transferencia de archivos. Sirve para comprobar si hay algún cambio disponible. |
+| merge | fusión | Comando que realiza una fusión a tres bandas entre las dos últimas instantáneas de cada branch y el ancestro común a ambas, creando un nuevo commit con los cambios mezclados |
+| pull | tirar | Comando que para extraer y descargar contenido desde un repositorio remoto y actualizar al instante el repositorio local para reflejarlo. En realidad no es más que un `git fetch` segido de un `git merge` |
+| push | empujar | Se usa para cargar contenido desde mi repositorio local hacia un repositorio remoto. El envío es la forma de transferir commits desde tu repositorio local a un repositorio remoto |
+| stage | etapa | Durante un `merge` se identifican las entradas en el Index de los archivos con una combinación de su ruta de archivo y un número de `stage` para poder resolver posibles conflictos | 
+
+
+Hablando de documentación, además de este apunte te recomiendo la [Cheatsheet en Español](https://training.github.com/downloads/es_ES/github-git-cheat-sheet/) o la [Visual Git Cheat Sheet](https://ndpsoftware.com/git-cheatsheet.html) o este pequeño [Guía burros](https://rogerdudler.github.io/git-guide/index.es.html) o la [documentación oficial](https://git-scm.com/doc) o si te vas a cualqueir buscador en internet vas a encontrar cientos de videos, tutoriales y documentos. 
 
 <br/>
 
@@ -71,9 +93,9 @@ Ahora al lio, este apunte (post) nace desde otro en inglés que me gustó mucho.
 
 ## GIT desde el interior
 
-A partir de aquí vamos a explica cómo funciona, asumiendo que has dedicado algo de tiempo a entender más o menos de qué va y quieres usarlo para el control de versiones de tus proyectos. Git será fácil una vez que le hayas dedicado algo de tiempo.
+Asumo que has dedicado algo de tiempo a entender más o menos de qué va esto y quieres usarlo para el control de versiones de tus proyectos. Git será fácil una vez que le hayas dedicado algo de tiempo.
 
-Ha quedado patente después de unos añitos que supera a otras herramientas de control de versiones (SCM-Source code management) como Subversion, CVS, Perforce y ClearCase por sus características como la **ramificación local (ramas/branches)**, las **áreas de preparación (staging)** y los **múltiples flujos de trabajo**.
+Ha quedado patente después de unos añitos que supera a otras herramientas de control de versiones (SCM-Source code management) como Subversion, CVS, Perforce y ClearCase por sus características como la **ramificación local (branches)**, las **áreas de preparación (staging areas)** y los **múltiples flujos de trabajo**.
 
 Veremos el **tree graph**, la estructura gráfica que refleja el árbol de conexiones entre ficheros que sustenta a Git. Vamos a empezar creando un único proyecto en local y cómo los comandos van afectando a dicha estructura gráfica.
 
@@ -126,7 +148,7 @@ El directorio `alpha` tiene ahora este aspecto:
       width="730px"
       %}
 
-Lo que hay dentro de `.git` es propiedad de GIT (ahí van a estar todas las versiones del proyecto y todo dentro de él se manipula usando el comando). El resto de ficheros (fuera de .git) se han convertido en la que GIT llama la COPIA DE TRABAJO (WORKING COPY) y son propiedad del usuario.
+Lo que hay dentro de `.git` es propiedad de GIT (ahí van a estar todas las versiones del proyecto y todo dentro de él se manipula usando el comando). El resto de ficheros (fuera de .git) se han convertido en la que GIT llama la **working copy** y son propiedad del usuario.
 
 <br/>
 
@@ -159,15 +181,15 @@ alpha
 │   │   │   └── 65efe2a145dda7ee51d1741299f848e5bf752e    <- versión comprimida de letter.txt con a
 ```
 
-Fíjate en que al añadir un archivo a Git se guarda su contenido en el directorio directorio `objects`, por lo tanto podrías incluso borrarlo de tu "WORKING COPY" `data/carta.txt`.
+Fíjate en que al añadir un archivo a Git se guarda su contenido en el directorio directorio `objects`, por lo tanto podrías incluso borrarlo de tu working copy, `data/carta.txt`, que siempre tendrás opción de recuperarlo desde git...
 
 <br/>
 
-**SEGUNDO**, `git add` añade el archivo al índice `.git/index`. El índice es una lista que contiene todos los archivos a los que hemos pedido hacer seguimiento/rastreo.
+**SEGUNDO**, `git add` añade el archivo al Index, `.git/index`. El index es una lista que contiene todos los archivos a los que hemos pedido hacer seguimiento/rastreo.
 
-El índice se utiliza para controlar quién está en el área de espera (stage) entre tu directorio de trabajo y la confirmación (commit). Puedes usar el índice para construir un conjunto de cambios que más adelante quieras confirmar (commit). Cuando hagas la confirmación (commit), lo que se confirma es lo que está actualmente en el índice, no lo que está en tu directorio de trabajo.
+Se utiliza para controlar quién está en la staging area (zona de espera), entre tu working copy (directorio de trabajo) y el futuro commit. Puedes usar el index para construir un conjunto de cambios sobre los que más adelante harás un commit. Cuando lo hagas, lo que se confirma es lo que está actualmente en el index, no lo que está en tu working copy.
 
-En cada línea del archivo índice (`.git/index`) tienes un archivo rastreado, con la información del hash de su contenido. Así que ahora nuestro indice es así: 
+En cada unad e las líneas del archivo (`.git/index`) encontrarás una referencia a un archivo rastreado, con la información del hash de su contenido. Así que ahora nuestro fichero tiene...:
 
 ````zsh
 ➜  ~ > cat alpha/.git/index
@@ -197,7 +219,7 @@ Creamos un fichero llamado `data/number.txt` con un contenido `1234`.
 ➜  alpha git:(master) ✗ > echo 1234 > data/number.txt
 ```
 
-El WORKING COPY contiene lo siguiente: 
+En la working copy tenemos: 
 
 ```zsh
 alpha
@@ -216,7 +238,7 @@ El suuario añade el fichero `number.txt` a GIT
 ➜  alpha git:(master) ✗ > git add data
 ```
 
-Como vimos antes, de nuevo, el comando `git add` crea un objeto blob que contiene el contenido de `data/number.txt`. Añade una entrada de índice para `datos/número.txt` que apunta al blob. Este es el nuevo contenido del índice:
+Como vimos antes, de nuevo, el comando `git add` crea un objeto blob que contiene el contenido de `data/number.txt`. Añade una entrada al Index sobre `datos/número.txt` que apunta al blob. Este es el nuevo contenido del Index (`.git/index`):
 
 
 ```zsh
@@ -225,7 +247,7 @@ Como vimos antes, de nuevo, el comando `git add` crea un objeto blob que contien
 100644 274c0052dd5408f8ae2bc8440029ff67d79bc5c3 0	data/number.txt
 ```
 
-Observa que sólo los archivos del directorio `data` aparecen en el índice, aunque el usuario haya ejecutado `git add data` el directorio `data` no aparece por ningún sitio... paciencia.
+Observa que sólo aparecen los archivos del directorio `data`, aunque el usuario haya ejecutado `git add data` el directorio `data` no aparece por ningún sitio... paciencia.
 
 Vamos a hacer un pequeño cambio. Cuando el usuario creó originalmente `datos/número.txt`, quería escribir `1`, no `1234`. 
 
@@ -257,7 +279,7 @@ alpha
     └── number.txt
 ```
 
-Además, en el índice solo aparecen dos ficheros ¿Podrías decirme porqué?
+Además, en el Index solo aparecen dos ficheros ¿Podrías decirme porqué?
 
 ```zsh
 ➜  alpha git:(master) ✗ > git ls-files --stage
@@ -267,17 +289,15 @@ Además, en el índice solo aparecen dos ficheros ¿Podrías decirme porqué?
 
 Respuesta: 
 
-Al cambiar `datos/número.txt` y hacer un `add` estamos añadiendo el "nuevo" archivo al índice, se crea un nuevo blob con el nuevo contenido y además actualiza la entrada del índice "datos/número.txt" para que **apunte al nuevo blob**. El indice en la zona de espera contiene un puntero a la última versión de cada archivo agregado.
+Al cambiar `datos/número.txt` y hacer un `add` estamos añadiendo el "nuevo" archivo al Index, se crea un nuevo blob con el nuevo contenido y además actualiza la entrada de "datos/número.txt" para que **apunte al nuevo blob**. El Index en la staging area contiene un puntero a la última versión de cada archivo agregado.
 
 <br/>
 
 ### Primer commit 
 
-Recuerda que `git commit` trabaja en tu repositorio local (no en GitHub). Hacer un commit consiste en "confirmar" lo que tenemos en el STAGING AREA (área de espera) y lo lleva a tu repositorio local, **capturando una instantánea de los ficheros preparados en el área de espera** y guardándola como una versión. Las instantáneas confirmadas pueden considerarse como versiones "seguras" de un proyecto. Al hacer un commit es obligatorio describirlo con `-m "mensaje descriptivo sobre este commit"`.
+Recuerda que `git commit` trabaja en tu repositorio local (no en GitHub). Hacer un commit consiste en "confirmar" lo que tenemos en el staging area para llevarlo a tu repositorio local, **capturando una instantánea de los ficheros preparados en la staging area** y guardándola como una versión. Estos commits pueden considerarse como versiones "seguras" de un proyecto. AH, y al hacer un commit es obligatorio **describirlo**, y se hace con el argumento `-m "mensaje descriptivo sobre este commit"`.
 
-En este tutorial aprovechamos el mensaje del commit como una nomenclatura sencilla para seguir mejor el tutorial. A este primer commit lo llamaremos `a1`. 
-
-El usuario hace el commit `a1`. Git imprime algunos datos sobre la confirmación. Estos datos tendrán sentido en breve.
+En este tutorial aprovechamos el mensaje del commit como una nomenclatura sencilla para seguirlo. A este primer commit lo llamaremos `a1`. El usuario hace el commit `a1`. Git imprime algunos datos sobre el mismo que tendrán sentido en breve.
 
 
 ```zsh
@@ -296,7 +316,7 @@ Cuando haces un commit ocurren tres cosas (más info [aquí](https://git-scm.com
 
 * Se crea un **"tree graph"** representando los directorios y ficheros afectados. En este ejemplo que nos ocupa vemos que se crean dos objetos de tipo `tree` vinculados a dos objetos ya existentes de tipo `blob`. 
 * Se crea un **objeto commit** con tocda la información sobre el mismo, el autor, el committer, el comentario y por último el puntero al objeto `tree` raíz del "tree graph"
-* Se conecta la **rama actual** (branch) para que **apunte al dicho objeto commit** que se ha creado
+* Se conecta la **branch actual** (master) para que **apunte al objeto commit** recién creado.
 
 ```zsh
 │   ├── objects
@@ -318,12 +338,12 @@ Cuando haces un commit ocurren tres cosas (más info [aquí](https://git-scm.com
 
 #### Se crea el "tree graph"
 
-Git registra el estado actual del proyecto creando un árbol virtual a partir del índice. Este árbol se denomina el "tree graph" y contiene la información necesaria sobre la ubicación y contenido de los punteros (objetos `tree`) y los archivos (objetos `blob`). Por lo tanto, el "tree graph" se compone de dos tipos de objetos: 
+Git registra el estado actual del proyecto creando un árbol virtual a partir del Index. Este árbol se denomina el "tree graph" y contiene la información necesaria sobre la ubicación y contenido de los punteros (objetos `tree`) y los archivos (objetos `blob`). Por lo tanto, el "tree graph" se compone de dos tipos de objetos: 
 
 * Los blobs, que son los archivos que habíamos añadido con `git add` 
 * Los trees, se usan para apuntar a otros objetos (por ejemplo los subdirectorios que contienen archivos)
 
-Veamos uno de los objetos `tree` que se ha creado: `0eed...`. Este fichero contiene un puntero a los archivos dentro del directorio `data`:
+Veamos uno de los objetos `tree` que se ha creado: `0eed...0b74`. Este fichero contiene un puntero a los archivos dentro del directorio `data`:
 
 ```zsh
 ➜  alpha git:(master) > git --no-pager show 0eed
@@ -343,7 +363,7 @@ La primera línea registra todo lo necesario para reproducir `data/letter.txt`: 
 
 <br/>
 
-Veamos el otro puntero `tree`: `ffe2...`. Es el del directorio raíz del proyecto (`alpha`), por lo tanto contiene la el puntero al objeto anterior (el que apunta a `data`), el otro objeto de tipo tree que se acababa de crear, `0eed`.
+Veamos el otro puntero `tree`: `ffe2...6db4`. Es el del directorio raíz del proyecto (`alpha`), por lo tanto contiene la el puntero al objeto anterior (el que apunta a `data`), el otro objeto de tipo tree que se acababa de crear, `0eed`.
 
 
 ```zsh
@@ -399,17 +419,16 @@ La primera línea apunta al inicio del `tree graph`, al objeto raíz `raíz (roo
 
 <br/>
 
-#### Se conecta la rama actual con el commit
+#### Conecta la branch actual con el commit
 
-La tercera acción consiste en conectar la rama actual con el objeto commit recién creado. GIT tiene el nombre de la rama actual en el archivo `.git/HEAD`:
-
+La tercera acción consiste en conectar la branch actual con el objeto commit recién creado. GIT saca su nombre de la branch actual en el archivo `.git/HEAD`:
 
 ```zsh
 ➜  alpha git:(master) ✗ cat .git/HEAD
 ref: refs/heads/master
 ```
 
-Vemos que `HEAD` (una referencia) está apuntando a `master` (otra referencia), por lo tanto `master` es la rama actual. Las referencias son etiquetas utilizada por Git o por el usuario para identificar un commit. El archivo que representa la referencia `master` debe contener un puntero al hash del commit (`8c80`) y dicha conexión se crea en el archivo `.git/refs/heads/master`
+Vemos que `HEAD` (una referencia) está apuntando a `master` (otra referencia), por lo tanto `master` es la branch actual. Las referencias son etiquetas utilizada por Git o por el usuario para identificar un commit. El archivo que representa la referencia `master` debe contener un puntero al hash del commit (`8c80`) y dicha conexión se crea en el archivo `.git/refs/heads/master`
 
 ```
 ➜  alpha git:(master) ✗ cat .git/refs/heads/master
@@ -436,15 +455,17 @@ Ya tenemos todo conectado: `HEAD` apunta a `master` con un hash apuntando al `ob
 
 Ahora vamos a ver qué pasa cuando se hace un commit que no es el primer commit.
 
-Nos fijamos en la siguiente gráfica que muestra el estado después del primer commit `a1`. Enseño a la derecha a quién apunta el índice y a la izquierda cual es el contenido de la working copy (qué hay actualmente fuera de Git, en el directorio de trabajo)
+Nos fijamos en la siguiente gráfica que muestra el estado después del primer commit `a1`. Enseño a la derecha a quién apunta el Index y a la izquierda cual es el contenido de la working copy (qué hay actualmente fuera de Git, en la working copy)
 
 <br/>
 
-| ![a1 con la working copy y el índice](/assets/img/git/4-a1-wc-and-index.png) | 
-|:--:| 
-| *`a1` con la working copy y el `indice`* |
+{% include showImagen.html 
+      src="/assets/img/git/4-a1-wc-and-index.png" 
+      caption="`a1` con la working copy y el Index" 
+      width="730px"
+      %}
 
-Fíjate que los ficheros que están en la copia de trabajo y los blob's que se apuntan desde el índice y los que se apuntan desde el commit `a1` apuntan todos a ficheros que tienen exáctamente el mismo contenido (los diferentes `data/letter.txt` y `data/number.txt` comparten contenido). Pero son ficheros disntintos. El índice y el commit `HEAD` utilizan hashes para referirse a los objetos blob pero el contenido de la copia de trabajo se almacena como texto en un lugar distinto (fuera de .git)
+Fíjate que los ficheros que están en la copia de trabajo y los blob's que se apuntan desde el Index y los que se apuntan desde el commit `a1` apuntan todos a ficheros que tienen exáctamente el mismo contenido (los diferentes `data/letter.txt` y `data/number.txt` comparten contenido). Pero son ficheros disntintos. El Index y el commit `HEAD` utilizan hashes para referirse a los objetos blob pero el contenido de la copia de trabajo se almacena como texto en un lugar distinto (fuera de .git)
 
 Vamos a cambiar una cosilla... vamos a cambiar el contenido del fichero number.txt con un '2'.
 
@@ -452,26 +473,30 @@ Vamos a cambiar una cosilla... vamos a cambiar el contenido del fichero number.t
 ➜  alpha git:(master) > echo 2 > data/number.txt
 ```
 
-Esto ocurre en la working copy, pero se deja el índice y el commit (`HEAD`) intactos. 
+Esto ocurre en la working copy, pero se deja el Index y el commit (`HEAD`) intactos. 
 
 <br/>
 
-| ![cambiamos number.txt con un `2`](/assets/img/git/5-a1-wc-number-set-to-2.png) | 
-|:--:| 
-| *cambiamos number.txt con un `2` en la working copy* |
+{% include showImagen.html 
+      src="/assets/img/git/5-a1-wc-number-set-to-2.png" 
+      caption="cambiamos number.txt con un `2` en la working copy" 
+      width="730px"
+      %}
 
-A continuación "añado" este fichero a la zona de espera (stagin area) o "índice", por lo tanto se añade un nuevo blob que contiene un `2` al directorio `.git/objects/` y además la entrada del índice apunta a este nuevo blob.
+Añado `number.txt` a la staging area (Index), por lo tanto se añade un nuevo blob que contiene un `2` al directorio `.git/objects/` y además la entrada del Index apunta a este nuevo blob.
 
 
 ```
 ➜  alpha git:(master) ✗ > git add data/number.txt
 ```
 
-Lo que ha ocurrido es lo siguiente: number.txt tiene un `2` en la working copy y en el índice (zona de espera)
+Ahora `number.txt` tiene un `2` en la working copy y en el Index (staging area)
 
-| ![number.txt con un `2` en la working copy y en el índice](/assets/img/git/6-a1-wc-and-index-number-set-to-2.png) | 
-|:--:| 
-| *number.txt con un `2` en la working copy y en el índice* |
+{% include showImagen.html 
+      src="/assets/img/git/6-a1-wc-and-index-number-set-to-2.png" 
+      caption="number.txt con un `2` en la working copy y en el Index" 
+      width="730px"
+      %}
 
 Ejecuto el segundo commit. 
 
@@ -483,7 +508,7 @@ Ejecuto el segundo commit.
 
 Al hacer el commit los pasos son los mismos que la vez anteriore. 
 
-**Primero** se crea un NUEVO TREE GRAPH para representar el contenido del índice. Un nuevo BLOB para el tree `data` (porque `data/number.txt` ha cambiado el tree antigo ya nos nos vale)
+**Primero** se crea un NUEVO TREE GRAPH para representar el contenido del Index. Un nuevo BLOB para el tree `data` (porque `data/number.txt` ha cambiado el tree antigo ya nos nos vale)
 
 ```
 ➜  alpha git:(master) >  git ls-files --stage
@@ -511,22 +536,26 @@ a2
 
 La primera línea del commit apunta al nuevo objeto tree `root`, la segunda línea apunta al commit anterior `a1` (para poder encontrar el commit padre GIT se fue a `HEAD` y lo siguió hasta que dió con el hash del commit de `a1`)
 
-**Tercero**, el contenido de la rama (brancho) `master` pasa a apuntar al hash del nuevo commit (`a2`)
+**Tercero**, el contenido de la Branch `master` pasa a apuntar al hash del nuevo commit (`a2`)
 
 <br/>
 
-| ![commit `a2`](/assets/img/git/7-a2.png) | 
-| ![commit `a2`](/assets/img/git/7-a2-gitgraph.jpg) | 
-|:--:| 
-| *commit `a2`* |
+{% include showImagen2.html 
+      src="/assets/img/git/7-a2.png" 
+      src2="/assets/img/git/7-a2-gitgraph.jpg" 
+      caption="commit `a2`" 
+      width="730px"
+      %}
+
+<br/>
 
 Veamos la gráfica sin reflejar los datos de los ficheros: 
 
-<br/>
-
-| ![sin la working copy y el índice](/assets/img/git/8-a2-just-objects-commits-and-refs.png) | 
-|:--:| 
-| *commit `a2` (sin la información de su contenido)* |
+{% include showImagen.html 
+      src="/assets/img/git/8-a2-just-objects-commits-and-refs.png" 
+      caption="commit `a2` (sin la información de su contenido)" 
+      width="730px"
+      %}
 
 
 <br/>
@@ -540,9 +569,9 @@ Veamos algunos conceptos interesantes respecto a los árboles dentro del directo
 * Cada commit tiene un padre. Esto significa que un repositorio puede almacenar la historia completa de las modificaciones y versiones que ha tenido un proyecto.
 
 * Las referencias son puntos de entrada a una parte del historial de commits. Esto significa que los commits pueden tener nombres significativos que nos digan algo interesante. El usuario organiza su trabajo en linajes que son significativos para su proyecto con referencias concretas como
-`fijo-para-el-bug-376`. Git se reserva y emplea referencias simbólicas como `HEAD`, `MERGE_HEAD` y `FETCH_HEAD` para soportar comandos que manipulan el historial de confirmaciones.
+`fijo-para-el-bug-376`. Git se reserva y emplea referencias simbólicas como `HEAD`, `MERGE_HEAD` y `FETCH_HEAD` para soportar comandos que manipulan el historial de los commits.
 
-* Los nodos en el directorio `objects/` son inmutables. Esto significa que el contenido se edita, no se borra. Cada objeto que se ha añadido y cada confirmación que se ha hecho está en algún lugar del directorio `objects` [^3].
+* Los nodos en el directorio `objects/` son inmutables. Esto significa que el contenido se edita, no se borra. Cada objeto que se ha añadido y cada commit que se ha hecho está en algún lugar del directorio `objects` [^3].
 
 
 * Las referencias son mutables. Por lo tanto, el significado de una ref puede cambiar. El commit al que apunta `master` puede estar apuntando a una versión del proyecto ahora pero apuntar a otra dentro de un rato. 
@@ -557,20 +586,33 @@ Veamos algunos conceptos interesantes respecto a la facilidad o dificultad de re
 
 * La copia de trabajo es el punto de la historia más fácil de recuperar porque está en la raíz de tu directorio del proyecto. Acceder a la working copy ni siquiera requiere un comando Git. También es el punto menos permanente del historial. El usuario puede hacer una docena de versiones de un archivo que Git no registrará ninguna a menos que que se le añadan.
 
-* El commit al que apunta `HEAD` es muy fácil de recuperar. Normalmente apunta a la punta de la rama que se ha extraido (checkout). Si hemos modificado algo en la working copy y queremos volver a la versíon de `HEAD` el usuario puede hacer un `git stash` (esconder la modificación en la working copy [^4]), examina lo que tenía y luego hace un `git stash pop` para volver a la versión de la copia de trabajo. Al mismo tiempo, `HEAD` es la referencia que cambia con más frecuencia.
+* El commit al que apunta `HEAD` es muy fácil de recuperar. Normalmente apunta a la punta de la Branch que se ha extraido (checkout). Si hemos modificado algo en la working copy y queremos volver a la versíon de `HEAD` el usuario puede hacer un `git stash` (esconder la modificación en la working copy [^4]), examina lo que tenía y luego hace un `git stash pop` para volver a la versión de la copia de trabajo. Al mismo tiempo, `HEAD` es la referencia que cambia con más frecuencia.
 
-* El commit al que apunta una `ref` (referencia) concreta es fácil de recuperar. El usuario puede simplemente hacer un checkout de esa rama. La punta de una rama cambia con menos frecuencia que `HEAD`, pero con la suficiente frecuencia como para que tuviese sentido asignarle un nombre en su momento.
+* El commit al que apunta una `ref` (referencia) concreta es fácil de recuperar. El usuario puede simplemente hacer un checkout de esa Branch. La punta de una Branch cambia con menos frecuencia que `HEAD`, pero con la suficiente frecuencia como para que tuviese sentido asignarle un nombre en su momento.
 
 * Es difícil recordar un commit que no esté señalado por ninguna `ref`, cuanto más se aleje el usuario de una referencia, más difícil le resultará reconstruir el significado de un commit (¿porqué hice aquel commit en su momento?). Por otro lado, cuanto más se remonte, menos probable es que alguien haya cambiado la historia desde la última vez que miró [^5].
 
 
 <br/>
 
-## Hacer un "checkout" de un commit
+## Checkout (`git checkout`)
 
-El comando `git checkout` puede usarse para cambiarse a una rama o para irse a un commit concreto. Veamos un ejemplo de esto último, vamos a hacer un checkout a un commit concreto.
+El comando `git checkout` permite desplazarte por las diferentes punteros o versiones almacenados en .git, o dicho de otra forma, por las Branchs o los Commit's. "Checkout" significa "comprobar, consultar, revisar" y conceptualmente es lo que hacemos, le pedimos a git "revisar" y lo que hace es sacar un contenido en el tiempo desde `.git` y lo copia al working directory. 
 
-De hecho vamos a hacer un checkout al commit en el que estamos. Ahora mismo tu `HEAD` está apuntando a través de `master` al commit `a2` y vamos a hacer un checkout de `a2`. Realmente no tiene ningún sentido práctico pero lo hacemos para formarnos y aprender cual es la implicación. 
+Puede usarse para cualquier de las dos opciones siguientes: 
+
+* cambiarse a un *commit concreto*. 
+
+* cambiarse a una *branch* 
+
+Digo "cambiarse" porque así se entiendo mejor, visualmente estamos desplazándonos por el historial que tenemos en `git` y le estamos pidiendo "cambia esta branch o commit", sácala de git, que quiero revisarla...
+
+
+<br/>
+
+### Checkout de un commit
+
+Veamos un ejemplo de checkout de un commit específico. Ahora mismo tu `HEAD` está apuntando a través de `master` al commit `a2` y vamos a hacer un checkout de `a2`, que no tiene ningún sentido práctico, pero nos sirve para ver qué ocurre y para aprender. 
 
 <br/>
 
@@ -581,14 +623,15 @@ You are in 'detached HEAD' state...
 HEAD is now at 850918e a2
 ```
 
+Nota: En tu caso el hash que veas será distinto (búscalo con `git log`)
+
 <br/>
 
-Hemos hecho un checkout thel commit `a2` **utilizando su hash**. Nota: Si estás siguiendo este tutorial debes mirar cual es el hash de tu commit `a2`, usa el comando `git log`. Este checkout provoca que ocurran cuatro cosas: 
+Una vez hecho **utilizando su hash**, provoca que ocurran cuatro cosas: 
 
-- **1**. Git obtiene el commit `a2` y el tree graph (árbol) al que apunta.
-- **2**. Saca los archivos que hay en el tree graph y los copia a la working copy (directorio de trabajo) fuera de `.git/`. En nuestro caso no hay ningún cambio porque como decía ya teníamos ese contenido, recuerda que 
-`HEAD` ya estaba apuntando a través de `master` al commit `a2`. 
-- **3**. GIT escribe las entradas de los archivos del tree graph en el índice. Una vez más, ningún cambio, el índice ya tiene el contenido del commit `a2`.
+- **1**. Git obtiene el commit `a2` y el tree graph al que apunta.
+- **2**. Saca los archivos que hay en el tree graph y los copia a la working copy desde `.git/`. En nuestro caso no hay ningún cambio porque como decía ya teníamos ese contenido, recuerda que `HEAD` ya estaba apuntando a través de `master` al commit `a2`. 
+- **3**. GIT escribe las entradas de los archivos del tree graph en el Index. Una vez más, ningún cambio, el Index ya tiene el contenido del commit `a2`.
 - **4**. El contenido de `HEAD` se establece en el hash del commit `a2`.
 
 <br/>
@@ -600,17 +643,19 @@ Hemos hecho un checkout thel commit `a2` **utilizando su hash**. Nota: Si estás
 
 <br/>
 
-Aquí está la diferencia. Cuando el contenido de `HEAD` contiene el hash de un commit vs referencia a la rama, lo que hace es poner al repositorio en el estado de `detached HEAD` (HEAD separado). Observe en el gráfico de abajo que `HEAD` apunta directamente a la confirmación a2, en lugar de apuntar a `master`
+Aquí está la diferencia, `HEAD` apunta a un commit en vez de a una branch !!! y cuando `HEAD` tiene el hash de un commit en vez de la referencia a la branch, lo que hace es poner al repositorio en el estado de `detached HEAD` (HEAD separado. Mira en el gráfico de abajo que `HEAD` apunta directamente al commit `a2`, en lugar de apuntar a la branch `master`
 
 <br/>
 
-| ![Detached HEAD apuntando al commit `a2`](/assets/img/git/9-a2-detached-head.png) | 
-|:--:| 
-| *Detached HEAD apuntando al commit `a2`* |
+{% include showImagen.html 
+      src="/assets/img/git/9-a2-detached-head.png" 
+      caption="Detached HEAD apuntando al commit `a2`" 
+      width="730px"
+      %}
 
 <br/>
 
-Si ahora tocamos la working copy, por ejemplo cambiamos `number.txt`, le ponemos un `3` y hacemos un commit...
+Si ahora tocamos la working copy, le pongo un `3` a `number.txt`, y hacemos un commit.
 
 ```zsh
 ➜  alpha git:(850918e) > echo 3 > data/number.txt
@@ -622,43 +667,44 @@ Si ahora tocamos la working copy, por ejemplo cambiamos `number.txt`, le ponemos
 
 <br/>
 
-GIT se va a `HEAD` para obtener el que sería el padre del commit y lo que se encuentra  y devuelve es el hash al commit `a2`. Actualiza `HEAD` para que apunte directamente al hash del nuevo commit `a3`. Pero el repositorio sigue en el estado de `detached HEAD`. No estamos en una rama porque ningún commit apunta a `a3` o sus futuros descencientes, por lo que sería fácil perderlos.
+GIT se va a `HEAD` para obtener el que sería el padre del commit y lo que se encuentra  y devuelve es el hash al commit `a2`. Actualiza `HEAD` para que apunte directamente al hash del nuevo commit `a3`. Pero el repositorio sigue en el estado de `detached HEAD`. No estamos en una branch porque ningún commit apunta a `a3` o sus futuros descencientes, por lo que sería fácil perderlos.
 
 A partir de ahora, voy a omitir los `tree` y `blob` en la mayoría de los diagramas gráficos para simplificar.
 
-
-| ![Commit `a3` que NO está en ninguna rama (branch)](/assets/img/git/10-a3-detached-head.png) | 
-| ![Commit `a3` que NO está en ninguna rama (branch)](/assets/img/git/10-a3-detached-head-gitgraph.jpg) | 
-|:--:| 
-| *HEAD apunta al commit `a3` que NO está en ninguna rama (branch)* |
+{% include showImagen2.html 
+      src="/assets/img/git/10-a3-detached-head.png" 
+      src2="/assets/img/git/10-a3-detached-head-gitgraph.jpg" 
+      caption="HEAD apunta al commit `a3` que NO está en ninguna branch" 
+      width="730px"
+      %}
 
 <br/>
 
-## Crear una rama (branch)
+#### Crear una Branch
 
-Creamos una nueva rama llamada `deputy`. Lo que ocurre es que simplemente se crea un nuevo archivo en `.git/refs/heads/deputy` que contiene el hash al que apunta `HEAD`, en este caso el hash del commit `a3`.
+Creamos una nueva branch llamada `deputy`. Simplemente crea un nuevo archivo en `.git/refs/heads/deputy` que contiene el hash al que apunta `HEAD`, en este caso el hash del commit `a3`.
 
 
 ```zsh
 ➜  alpha git:(92ffe65) > git branch deputy
 ```
 
-Nota: Las ramas (branches) no son más que `refs` (referencias) y las referencias no son más que ficheros, hace que GIT sea ligero. 
+Nota: Las Branches no son más que referencias (`refs`) y las referencias no son más que ficheros de texto, lo cual contribuye aún más a que git sea tan ligero. 
 
-La creación La creación de la rama `deputy` pone al commit `a3` de forma segura en una rama, pero ojo porque la rama `HEAD` sigue estando separada porque sigue apuntando directamente a un commit.
+La creación de `deputy` pone al commit `a3` de vuelta de forma segura en una Branch, pero ojo porque `HEAD` sigue estando separada porque sigue apuntando directamente a un commit.
 
-
-
-| ![Commit `a3` ahora en rama `deputy`](/assets/img/git/11-a3-on-deputy.png) | 
-| ![Commit `a3` ahora en rama `deputy`](/assets/img/git/11-a3-on-deputy-gitgraph.jpg) | 
-|:--:| 
-| *El commit `a3` ahora está en la rama `deputy`* |
+{% include showImagen2.html 
+      src="/assets/img/git/11-a3-on-deputy.png" 
+      src2="/assets/img/git/11-a3-on-deputy-gitgraph.jpg" 
+      caption="El commit `a3` ahora está en la branch `deputy`" 
+      width="730px"
+      %}
 
 <br/>
 
-## Checkout de una rama (branch)
+#### Checkout de una Branch
 
-Vamos a ver qué pasa si le pedimos a GIT que haga un checkout de la rama `master`.
+Vamos a ver qué pasa si le pedimos a GIT que haga un checkout de la branch `master`.
 
 ```
 ➜  alpha git:(92ffe65) > git checkout master
@@ -671,7 +717,7 @@ Primero, GIT consigue el commit `a2` al que apunta `master` y por tanto consigue
 
 En segundo lugar, GIT saca los archivos desde el tree graph y los copia a la working copy (desde `.git`). Eso provoca que el contenido en la working copy de `data/number.txt` pase de ser `3` a `2`.
 
-En tercer lugar, Git escribe las entradas de los archivos en el tree graph en el índice. Esto actualiza la entrada de `datos/número.txt` con el hash del blob `2`
+En tercer lugar, Git escribe las entradas de los archivos en el tree graph en el Index. Esto actualiza la entrada de `datos/número.txt` con el hash del blob `2`
 
 Cuarto, GIT hace que `HEAD` apunte a `master`, cambiando su contenido desde el hash anterior a `refs/heads/master`.
 
@@ -690,9 +736,9 @@ ref: refs/heads/master
 
 <br/>
 
-## Checkout de rama incompatible
+#### Checkout de branch incompatible
 
-Vamos a ver un caso curioso, hacer un **checkout de una rama que es incompatible con nuestra working copy**. Si intentamos introducir los comandos siguientes, GIT nos avisa de una incompatibilidad y aborta el checkout.
+Vamos a ver un caso curioso, hacer un **checkout de una branch que es incompatible con nuestra working copy**. Si intentamos introducir los comandos siguientes, GIT nos avisa de una incompatibilidad y aborta el checkout.
 
 ```
 ➜  alpha git:(master) > echo '789' > data/number.txt
@@ -707,13 +753,13 @@ Aborting
 
 <br/>
 
-Hemos modificado el contenido de `data/number.txt` con `789` y después intentado hacer un checkout de la rama `deputy`. Git aborta este último para evitar que perdamos dicho cambioen `number.txt`en nuestra copia local. 
+Hemos modificado el contenido de `data/number.txt` con `789` y después intentado hacer un checkout de la branch `deputy`. Git aborta este último para evitar que perdamos dicho cambioen `number.txt`en nuestra copia local. 
 
-`HEAD` apunta al `master` que apunta a `a2` donde `data/number.txt` contiene un `2`. La rama `deputy` apunta a `a3` donde `data/number.txt` contiene un `3`. La copia de trabajo tiene `data/number.txt` con `789`. Todas estas versiones son diferentes y las diferencias deben ser resueltas.
+`HEAD` apunta al `master` que apunta a `a2` donde `data/number.txt` contiene un `2`. La branch `deputy` apunta a `a3` donde `data/number.txt` contiene un `3`. La copia de trabajo tiene `data/number.txt` con `789`. Todas estas versiones son diferentes y las diferencias deben ser resueltas.
 
 GIT podría haber ignorado el rpoblema pero está diseñado para evitar la pérdida de datos. Otra opción es que GIT hubiese fusionado la copy version con la versión de `deputy`, pero sería un poco chapuza, así que aborta...
 
-El usuario se da cuenta que no quería dicha modificación, vuelve a poner el contenido original e intenta cambiarse a la rama `deputy`.
+El usuario se da cuenta que no quería dicha modificación, vuelve a poner el contenido original e intenta cambiarse a la branch `deputy`.
 
 ```
 ➜  alpha git:(master) ✗ > echo '2' > data/number.txt
@@ -726,10 +772,12 @@ Ahora sí que funciona, no hay nada que se vaya a perder, por lo tanto GIT acept
 
 <br/>
 
-| ![Checkout de `deputy`](/assets/img/git/13-a3ondeputy.png) | 
-| ![Checkout de `deputy`](/assets/img/git/13-a3ondeputy-gitgraph.jpg) | 
-|:--:| 
-| *Checkout de `deputy`* |
+{% include showImagen2.html 
+      src="/assets/img/git/13-a3ondeputy.png" 
+      src2="/assets/img/git/13-a3ondeputy-gitgraph.jpg" 
+      caption="Checkout de `deputy`" 
+      width="730px"
+      %}
 
 <br/>
 
@@ -737,14 +785,14 @@ Ahora sí que funciona, no hay nada que se vaya a perder, por lo tanto GIT acept
 
 Vamos a adentrarnos en una de las funciones más interesantes de GIT, el poder "fusionar" datos entre commits. 
 
-Si recordamos, eshemos extraído la rama `deputy`, nos encontramos en ella. Vamos a ver qué pasa si le pedimos a GIT que se traiga y fusione los datos de `master` en esta rama en la que estoy (`deputy`). 
+Si recordamos, eshemos extraído la branch `deputy`, nos encontramos en ella. Vamos a ver qué pasa si le pedimos a GIT que se traiga y fusione los datos de `master` en esta branch en la que estoy (`deputy`). 
 
 ```
 ➜  alpha git:(deputy) > git merge master
 Already up to date.
 ```
 
-El intento consiste en hacer una fusión (merge) de algo del pasado, `master`, dentro de `deputy`. El merge de dos ramas significa fusionar dos commits. El primer commit **receptor** es siempre en el que nos encontramos (`deputy`). El segundo commit es el **emisor**, aquel que indicamos en el comando git merge (`master`). En resumen, pedimos que el contenido de `master` se fusione dentro de `deputy`. 
+El intento consiste en hacer una `merge` de algo del pasado, `master`, dentro de `deputy`. El merge de dos branchs significa fusionar dos commits. El primer commit **receptor** es siempre en el que nos encontramos (`deputy`). El segundo commit es el **emisor**, aquel que indicamos en el comando git merge (`master`). En resumen, pedimos que el contenido de `master` se fusione dentro de `deputy`. 
 
 En este caso GIT no hace nada, nos dice `Already up-to-date.` (ya estoy al día).
 
@@ -754,7 +802,7 @@ Lógico, el commit emisor (dador) es un antepasado del commit receptor, GIT no t
 
 ## Merge de un descendiente
 
-¿Pero qué pasa si intentamos hacer lo contrario?, por ejemplo fusionar algo del futuro (algo que se ha hecho un commit en el futuro y quiero llevarlo a una copia del pasado). Para provocarlo, vámonos a la otra rama, cambiamos a `master`.
+¿Pero qué pasa si intentamos hacer lo contrario?, por ejemplo fusionar algo del futuro (algo que se ha hecho un commit en el futuro y quiero llevarlo a una copia del pasado). Para provocarlo, vámonos a la otra branch, cambiamos a `master`.
 
 ```zsh
 ➜  alpha git:(deputy) > git checkout master
@@ -781,24 +829,25 @@ Fast-forward
 ➜  alpha git:(master) >
 ```
 
-Se hace una fusión de `deputy` en `master`. GIT se da cuenta de que el **commit receptor** `a2`, es más viejo que el **commit emisor**, `a3`, por lo tanto acepta la fusión, y provoca el `fast-forward merge` (avanzamos msater hacia el futuro, provocamos que `master` se ponga a la altura temporal de `a3` con las modificaciones que este commit contenga). Tan sencillo como que ahora `master` apunta a `a3`: Obtiene el commit del emisor (dador) y el tree graph al que apunta. Se sacan y escriben las entradas de los archivos desde el tree graph, se copian al working copy y al índice y se hace que `master` se "adelante" aapuntando a `a3`.
+Se hace merge de `deputy` en `master`. GIT se da cuenta de que el **commit receptor** `a2`, es más viejo que el **commit emisor**, `a3`, por lo tanto acepta el merge, y provoca el `fast-forward merge` (avanzamos msater hacia el futuro, provocamos que `master` se ponga a la altura temporal de `a3` con las modificaciones que este commit contenga). Tan sencillo como que ahora `master` apunta a `a3`: Obtiene el commit del emisor (dador) y el tree graph al que apunta. Se sacan y escriben las entradas de los archivos desde el tree graph, se copian al working copy y al Index y se hace que `master` se "adelante" apuntando a `a3`.
 
-
-| ![El commit `a3` de `deputy` se fusiona en `master` con un fast-forward](/assets/img/git/15-a3-on-master.png) | 
-| ![El commit `a3` de `deputy` se fusiona en `master` con un fast-forward](/assets/img/git/15-a3-on-master-gitgraph.jpg) | 
-|:--:| 
-| *El commit `a3` de `deputy` se fusiona en `master` con un fast-forward* |
+{% include showImagen2.html 
+      src="/assets/img/git/15-a3-on-master.png" 
+      src2="/assets/img/git/15-a3-on-master-gitgraph.jpg" 
+      caption="El commit `a3` de `deputy` se fusiona en `master` con un fast-forward" 
+      width="730px"
+      %}
 
 <br/>
 
-Las series de commits en el gráfico se interpretan como una serie de cambios realizados en el contenido del repositorio. Esto significa que, en una fusión, si el dador es un descendiente del receptor, la historia
+Las series de commits en el gráfico se interpretan como una serie de cambios realizados en el contenido del repositorio. Esto significa que, durante un merge, si el dador es un descendiente del receptor, la historia
 no se modifica. Ya existe una secuencia de commits que describen el cambio a realizar: la secuencia de commits entre el receptor y el dador. Pero, aunque el historial de Git no cambia, el gráfico de Git sí cambia. La referencia concreta a la que apunta `HEAD` se se actualiza para apuntar al commit del dador (en este caso `a3`).
 
 <br/>
 
 ## Merge desde linajes distintos
 
-Vamos a ver otro caso, ahora vamos a intentar hacer una fusión de dos commits que están en linajes distintos.  Empezamos preparando un nuevo commit, ponemos un `4` en `number.txt` y hacemos un commit `a4` en `master`.
+Vamos a ver otro caso, ahora vamos a intentar hacer un merge de dos commits que están en linajes distintos.  Empezamos preparando un nuevo commit, ponemos un `4` en `number.txt` y hacemos un commit `a4` en `master`.
 
 ```zsh
 ➜  alpha git:(master) > echo '4' > data/number.txt
@@ -831,10 +880,12 @@ Switched to branch 'deputy'
 
 <br/>
 
-| ![commit `a4` en master y `b3` en deputy, checkout de `deputy`](/assets/img/git/16-a4-b3-on-deputy.png) | 
-| ![commit `a4` en master y `b3` en deputy, checkout de `deputy`](/assets/img/git/16-a4-b3-on-deputy-gitgraph.jpg) | 
-|:--:| 
-| *commit `a4` en master y `b3` en deputy, checkout de `deputy`* |
+{% include showImagen2.html 
+      src="/assets/img/git/16-a4-b3-on-deputy.png" 
+      src2="/assets/img/git/16-a4-b3-on-deputy-gitgraph.jpg" 
+      caption="commit `a4` en master y `b3` en deputy, checkout de `deputy`" 
+      width="730px"
+      %}
 
 <br/>
 
@@ -861,34 +912,36 @@ En resumen, estamos pidiendo que el contenido de `master` (`a4`) se fusione dent
 
 <br/>
 
-- **Paso #1**: Git escribe el hash de la confirmación del dador (`master`) en `.git/MERGE_HEAD`. La presencia de este archivo indica a Git que está en medio de una fusión.
+- **Paso #1**: Git escribe el hash del commit del dador (`master`) en `.git/MERGE_HEAD`. La presencia de este archivo indica a Git que está en medio de una merge.
 
 <br/>
 
 - **Paso #2**: Git encuentra el `commit base` (del que partir, `a3`): el ancestro más reciente que tanto receptor (`deputy`) como dador (`master`) tienen en común. 
 
-| ![`a3` es el commit base de `a4` y `b3`](/assets/img/git/17-a4-b3-on-deputy.png) | 
-|:--:| 
-| *`a3` es el commit base de `a4` y `b3`* |
 
+{% include showImagen.html 
+      src="/assets/img/git/17-a4-b3-on-deputy.png" 
+      caption="`a3` es el commit base de `a4` y `b3`" 
+      width="730px"
+      %}
 
 Dado que los commits tienen padres es posible encontrar el punto en el que dos linajes divergen. Git rastrea hacia atrás desde `b3` para encontrar todos sus ancestros y hacia atrás desde `a4` para encontrar todos sus ancestros. Encuentra el ancestro más reciente compartido por ambos linajes, `a3`. Ese es el `commit base`
 
 <br/>
 
-- **Paso #3**: Git genera los índices de los commits base, receptor y dador a partir de sus tree graphs.
+- **Paso #3**: Git genera el Index de los commits base, receptor y dador a partir de sus tree graphs.
 
 <br/>
 
-- **Paso #4**: GIT genera un diff que combina los cambios realizados en la base por el commit receptor y el commit dador. Este diff es una lista de rutas de archivos que apuntan a un cambio: añadir, eliminar, modificar o entrar en conflicto. Git obtiene la lista de todos los archivos que aparecen en los índices base, receptor o
-giver. Para cada uno, compara las entradas del índice para decidir el para decidir el cambio a realizar en el archivo. Escribe una entrada correspondiente en el diff. En este caso, el diff tiene dos entradas.
+- **Paso #4**: GIT genera un diff que combina los cambios realizados en la base por el commit receptor y el commit dador. Este diff es una lista de rutas de archivos que apuntan a un cambio: añadir, eliminar, modificar o entrar en conflicto. Git obtiene la lista de todos los archivos que aparecen en el Index base, receptor o
+giver. Para cada uno, compara las entradas del Index para decidir el para decidir el cambio a realizar en el archivo. Escribe una entrada correspondiente en el diff. En este caso, el diff tiene dos entradas.
 
 - La primera entrada es para `data/letter.txt`. El contenido es `a` en la base, `b` en el receptor y `a` en
 el dador. El contenido es diferente en la base y en el receptor. Pero es el mismo en la base y en el dador. Git ve que el contenido fue modificado por el receptor, pero no por el dador. La entrada diff para `data/letter.txt` es una modificación, no un conflicto. La última en modificarse fue `deputy b3` con una `b` que se queda con versión final en el nuevo commit.
 
 - La segunda entrada en el diff es para `data/number.txt`. En este caso, el contenido es el mismo en la base y el receptor, y diferente en el dador. La entrada del diff para `data/number.txt` también es una modificación. La última en modificarse fue en el commit de `master a4` con una `4` que se queda como versión final en el nuevo commit.
 
-Nota: Dado que es posible encontrar el commit base de una fusión, si si un archivo ha cambiado desde la base sólo en el receptor o dador, Git puede resolver automáticamente la fusión de ese archivo. Esto reduce el trabajo que debe hacer el usuario.
+Nota: Dado que es posible encontrar el commit base de un merge, si un archivo ha cambiado desde la base sólo en el receptor o dador, Git puede resolver automáticamente el merge del mismo. Esto reduce el trabajo que debe hacer el usuario.
 
 <br/>
 
@@ -897,11 +950,11 @@ la copia de trabajo. El contenido de `data/letter.txt` se establece como `b` (ap
 
 <br/>
 
-- **Paso #6**: Los cambios indicados por las entradas en el diff se aplican a el índice. La entrada de `data/letter.txt` está apunta al blob `b` y la entrada de `data/number.txt` apunta al blob `4`.
+- **Paso #6**: Los cambios indicados por las entradas en el diff se aplican al Index. La entrada de `data/letter.txt` está apunta al blob `b` y la entrada de `data/number.txt` apunta al blob `4`.
 
 <br/>
 
-- **Paso #7**: Se hace un commit al índice actualizado
+- **Paso #7**: Se hace un commit al Index actualizado
 
 ```zsh
 ➜  alpha git:(deputy) > git --no-pager cat-file -p 7f66
@@ -918,13 +971,14 @@ Aquí te tienes que fijar que este commit tiene dos padres.
 
 <br/>
 
-- **Paso #8**: Git hace que la rama actual apunte a `deputy`, al último commit.
+- **Paso #8**: Git hace que la branch actual apunte a `deputy`, al último commit.
 
-
-| ![`b4` es el resultado de fusionar `a4` en `b3`](/assets/img/git/18-b4-on-deputy.png) | 
-| ![`b4` es el resultado de fusionar `a4` en `b3`](/assets/img/git/18-b4-on-deputy-gitgraph.jpg) | 
-|:--:| 
-| *`b4` es el resultado de fusionar `a4` en `b3`* |
+{% include showImagen2.html 
+      src="/assets/img/git/18-b4-on-deputy.png" 
+      src2="/assets/img/git/18-b4-on-deputy-gitgraph.jpg" 
+      caption="`b4` es el resultado de fusionar `a4` en `b3`" 
+      width="730px"
+      %}
 
 <br/>
 
@@ -950,10 +1004,12 @@ adelanta a "master" al "commit" de `b4`. `master` y
 
 <br/>
 
-| ![`master` y `deputy` apuntan ahora al mismo commit `b4`](/assets/img/git/19-b4-master-deputy-on-b4.png) | 
-| ![`master` y `deputy` apuntan ahora al mismo commit `b4`](/assets/img/git/19-b4-master-deputy-on-b4-gitgraph.jpg) | 
-|:--:| 
-| *`master` y `deputy` apuntan ahora al mismo commit `b4`* |
+{% include showImagen2.html 
+      src="/assets/img/git/19-b4-master-deputy-on-b4.png" 
+      src2="/assets/img/git/19-b4-master-deputy-on-b4-gitgraph.jpg" 
+      caption="`master` y `deputy` apuntan ahora al mismo commit `b4`" 
+      width="730px"
+      %}
 
 <br/>
 
@@ -984,14 +1040,16 @@ Switched to branch 'master'
 
 <br/>
 
-| ![`b5` en `deputy` y `b6` en `master`](/assets/img/git/20-b5-on-deputy-b6-on-master.png) | 
-| ![`b5` en `deputy` y `b6` en `master`](/assets/img/git/20-b5-on-deputy-b6-on-master-gitgraph.jpg) | 
-|:--:| 
-| *`b5` en `deputy` y `b6` en `master`* |
+{% include showImagen2.html 
+      src="/assets/img/git/20-b5-on-deputy-b6-on-master.png" 
+      src2="/assets/img/git/20-b5-on-deputy-b6-on-master-gitgraph.jpg" 
+      caption="`b5` en `deputy` y `b6` en `master`" 
+      width="730px"
+      %}
 
 <br/>
 
-Intentamos fusiona `deputy` (emisor) en `master` (receptor). Hay un conflicto y la fusión se pone en pausa. El proceso para una fusión conflictiva sigue los mismos seis pasos: establecer `git/MERGE_HEAD`, encontrar el commit base, generar los índices de los commits base, receptor y dador, crear un diff, actualizar la copia de trabajo y actualizar el índice. Pero debido al conflicto, el séptimo paso de commit y el octavo de actualización de referencia nunca se realizan.
+Intentamos hacer un merge de `deputy` (emisor) en `master` (receptor). Hay un conflicto y el merge se pone en pausa. El proceso para un merge conflictivo sigue los mismos seis pasos: establecer `git/MERGE_HEAD`, encontrar el commit base, generar el Index de los commits base, receptor y dador, crear un diff, actualizar la copia de trabajo y actualizar el Index. Pero debido al conflicto, el séptimo paso de commit y el octavo de actualización de referencia nunca se realizan.
 
 ```
 ➜  alpha git:(master) > git merge deputy
@@ -1007,7 +1065,7 @@ Automatic merge failed; fix conflicts and then commit the result.
 
 <br/>
 
-- **Paso #1**: Git escribe el hash de la confirmación del dador (`deputy`) en `.git/MERGE_HEAD`. 
+- **Paso #1**: Git escribe el hash de commit del dador (`deputy`) en `.git/MERGE_HEAD`. 
 
 ```zsh
 ➜  alpha git:(master) ✗ > cat .git/MERGE_HEAD
@@ -1016,14 +1074,16 @@ Automatic merge failed; fix conflicts and then commit the result.
 
 <br/>
 
-| ![Se crea el `MERGE_HEAD` durante el merge de `b5` en `b6`](/assets/img/git/21-b6-on-master-with-merge-head.png) | 
-|:--:| 
-| *Se crea el `MERGE_HEAD` durante el merge de `b5` en `b6`* |
+{% include showImagen.html 
+      src="/assets/img/git/21-b6-on-master-with-merge-head.png" 
+      caption="Se crea el `MERGE_HEAD` durante el merge de `b5` en `b6`" 
+      width="730px"
+      %}
 
 <br/>
 
 - **Paso #2**: Git encuentra el `commit base`: `b4`
-- **Paso #3**: Git genera los índices de los commits base, receptor y dador. 
+- **Paso #3**: Git genera el Index de los commits base, receptor y dador. 
 - **Paso #4**: GIT genera un diff que combina los cambios realizados en la base por el commit receptor y el commit dador. Este diff es una lista de rutas de archivos que apuntan a un cambio: añadir, eliminar, modificar o entrar en conflicto. En este caso, el diff contiene sólo una entrada: `data/number.txt`. La entrada está marcada como un conflicto porque el contenido de `data/number.txt` es diferente en el receptor, el dador y la base.
 - **Paso #5**: Los cambios indicados por las entradas en el diff se aplican a la copia de trabajo. 
 Cuando hay un conflicto GIT Git escribe ambas versiones en el archivo en la copia de trabajo. El contenido de
@@ -1042,7 +1102,7 @@ Cuando hay un conflicto GIT Git escribe ambas versiones en el archivo en la copi
 
 <br/>
 
-- **Paso #6**: En sexto lugar, los cambios indicados por las entradas en el diff se aplican al índice. Las entradas en el índice se identifican de forma única por una combinación de su ruta de archivo y etapa. La entrada de un fichero no conflictivo tiene un etapa `0`. Antes de esta fusión, el índice tenía el siguiente aspecto (con un "0" como valor de etapa):
+- **Paso #6**: En sexto lugar, los cambios indicados por las entradas en el diff se aplican al Index. Las entradas en el Index se identifican de forma única por una combinación de su ruta de archivo y `stage`. La entrada de un fichero no conflictivo tiene un `stage 0`. Antes del merge, el Index tenía el siguiente aspecto (con un `0` como valor de `stage`):
 
 <br/>
 
@@ -1060,9 +1120,9 @@ Después del merge y en mitad del conflicto, vemos la nueva situación:
 ```
 ➜  alpha git:(master) ✗ > git ls-files --stage
 100644 61780798228d17af2d34fce4cfbdf35556832472 0	data/letter.txt   <-- No tiene problema
-100644 b8626c4cff2849624fb67f87cd0ad72b163671ad 1	data/number.txt   <== '4' anterior
-100644 1e8b314962144c26d5e0e50fd29d2ca327864913 2	data/number.txt   <== '6' conflicto <-+
-100644 7ed6ff82de6bcc2a78243fc9c54d3ef5ac14da69 3	data/number.txt   <== '5' conflicto <-+
+100644 b8626c4cff2849624fb67f87cd0ad72b163671ad 1	data/number.txt   <== contiene un '4' anterior
+100644 1e8b314962144c26d5e0e50fd29d2ca327864913 2	data/number.txt   <== contiene un '6' conflicto <-+
+100644 7ed6ff82de6bcc2a78243fc9c54d3ef5ac14da69 3	data/number.txt   <== contiene un '5' conflicto <-+
 ```
 
 <br/>
@@ -1081,7 +1141,7 @@ El merge se queda en pausa. Vamos a resolverlo escribiendo el valor que queremos
 
 <br/>
 
-Resuelvo poniendo el contenido a mano del fichero `data/number.txt`, en este caso un `11` y lo añado al índice. GIT genera un nuevo blob para el fichero con el `11` y por el hecho de añadir un fichero nuevo que era el conflictivo le estamos diciendo que el conflicto se ha resuelto. GIT elimina las entradas con etapa `1`, `2` y `3` del índice y añade una nueva con etapa '0':
+Resuelvo poniendo el contenido a mano del fichero `data/number.txt`, en este caso un `11` y lo añado al Index. GIT genera un nuevo blob para el fichero con el `11` y por el hecho de añadir un fichero nuevo que era el conflictivo le estamos diciendo que el conflicto se ha resuelto. GIT elimina las entradas con `stages` `1`, `2` y `3` del Index y añade una nueva con `stage 0`:
 
 <br/>
 
@@ -1093,7 +1153,7 @@ Resuelvo poniendo el contenido a mano del fichero `data/number.txt`, en este cas
 
 <br/>
 
-- **Paso #7**: Se hace un commit. GIT se da cuenta de que tiene `.git/MERGE_HEAD` en el repositorio, lo que le indica que hay una fusión en curso. Comprueba el índice y encuentra que no hay conflictos. Crea una nueva confirmación, `b11`, para registrar el contenido de la fusión resuelta. Elimina el archivo en `.git/MERGE_HEAD`. Esto completa la fusión.
+- **Paso #7**: Se hace un commit. GIT se da cuenta de que tiene `.git/MERGE_HEAD` en el repositorio, lo que le indica que hay un merge en curso. Comprueba el Index y encuentra que no hay conflictos. Crea un nuevo commit, `b11`, para registrar el contenido del merge resuelto. Elimina el archivo en `.git/MERGE_HEAD` que completa el merge.
 
 <br/>
 
@@ -1113,30 +1173,34 @@ b11
 
 <br/>
 
-- **Paso #8**: Git hace que la rama actual, `master` apunte al nuevo commit. 
+- **Paso #8**: Git hace que la branch actual, `master` apunte al nuevo commit. 
 
 <br/>
 
-| ![commit `b11` tras resolver el conflicto](/assets/img/git/22-b11-on-master.png) | 
-| ![commit `b11` tras resolver el conflicto](/assets/img/git/22-b11-on-master-gitgraph.jpg) | 
-|:--:| 
-| *commit `b11` tras resolver el conflicto* |
+{% include showImagen2.html 
+      src="/assets/img/git/22-b11-on-master.png" 
+      src2="/assets/img/git/22-b11-on-master-gitgraph.jpg" 
+      caption="commit `b11` tras resolver el conflicto" 
+      width="730px"
+      %}
 
 <br/>
 
 ## Eliminar un fichero
 
-En el diagrama siguiente podemos ver el histórico de commits. Los trees y blobs de la última confirmación, así como la working copy (copia de trabajo) y el índice:
+En el diagrama siguiente podemos ver el histórico de commits. Los trees y blobs del último commit, así como la working copy y el index:
 
 <br/>
 
-| ![working copy, índice, commit `b11` y tree graph](/assets/img/git/23-b11-with-objects-wc-and-index.png) | 
-|:--:| 
-| *La working copy, índice, commit `b11` y tree graph* |
+{% include showImagen.html 
+      src="/assets/img/git/23-b11-with-objects-wc-and-index.png" 
+      caption="La working copy, Index, commit `b11` y tree graph" 
+      width="730px"
+      %}
 
 <br/>
 
-El usuario le dice a Git que elimine `data/letter.txt`. El archivo se elimina de la WORKING COPY y del ÍNDICE.
+El usuario le dice a Git que elimine `data/letter.txt`. El archivo se elimina de la WORKING COPY y del Index.
 
 ```zsh
 ➜  alpha git:(master) > git rm data/letter.txt
@@ -1145,13 +1209,15 @@ rm 'data/letter.txt'
 
 <br/>
 
-| ![Después de borrar `data/letter.txt` de la working copy y el índice](/assets/img/git/24-b11-letter-removed-from-wc-and-index.png) | 
-|:--:| 
-| *Después de borrar `data/letter.txt` de la working copy y el índice* |
+{% include showImagen.html 
+      src="/assets/img/git/24-b11-letter-removed-from-wc-and-index.png" 
+      caption="Después de borrar `data/letter.txt` de la working copy y el Index" 
+      width="730px"
+      %}
 
 <br/>
 
-Hacemos un commit. Como parte del mismo, como siempre, GIT construye un árbol que representa el contenido del índice. El archivo `data/letter.txt` no se incluye en el tree graph porque no está en el índice.
+Hacemos un commit. Como parte del mismo, como siempre, GIT construye un tree que representa el contenido del Index. El archivo `data/letter.txt` no se incluye en el tree graph porque no está en el Index.
 
 ```
 ➜  alpha git:(master) ✗ > git commit -m '11'
@@ -1162,10 +1228,13 @@ Hacemos un commit. Como parte del mismo, como siempre, GIT construye un árbol q
 
 <br/>
 
-| ![commit `11` después de borrar `data/letter.txt`](/assets/img/git/25-11.png) | 
-| ![commit `11` después de borrar `data/letter.txt`](/assets/img/git/25-11-gitgraph.jpg) | 
-|:--:| 
-| *commit `11` después de borrar `data/letter.txt`* |
+{% include showImagen2.html 
+      src="/assets/img/git/25-11.png" 
+      src2="/assets/img/git/25-11-gitgraph.jpg" 
+      caption="commit `11` después de borrar `data/letter.txt`" 
+      width="730px"
+      %}
+
 
 <br/>
 
@@ -1190,9 +1259,11 @@ Tenemos otro GIT graph en el directorio `bravo`:
 
 <br/>
 
-| ![Vista de ambos `alpha` copiado a `bravo`](/assets/img/git/26-11-cp-alpha-to-bravo.png) | 
-|:--:| 
-| *Vista de ambos `alpha` copiado a `bravo`* |
+{% include showImagen.html 
+      src="/assets/img/git/26-11-cp-alpha-to-bravo.png" 
+      caption="Vista de ambos `alpha` copiado a `bravo`" 
+      width="730px"
+      %}
 
 <br/>
 
@@ -1214,18 +1285,15 @@ Esto va a suponer que se añaden algunas líneas al fichero `alpha/.git/config`:
 	fetch = +refs/heads/*:refs/remotes/bravo/*
 ```
 
-Estas líneas especifican que hay un repositorio remoto llamado `bravo` en el directorio `../bravo`.
+Estas líneas especifican que hay un repositorio *remote* llamado `bravo` en el directorio `../bravo`.
 
 <br/>
 
-## Fetch (traer) una branch (rama) desde un remoto
+## Fetch desde un remoto
 
-Entramos en el repositorio `bravo`, cambio el contenido de `data/number.txt` a `12` y hago un commit en la rama `master` en `bravo`.
+En concreto vamos a hacer un Fetch de una branch desde un *remote*. 
 
-The user goes into the `bravo` repository. They set
-the content of `data/number.txt` to
-`12` and commit the change to
-`master` on `bravo`.
+Pero antes vamos a cambiar el contenido de `data/number.txt` a `12` en el repositorio `bravo` junto con su commit (que nombro como `12`). 
 
 ```
 ➜  alpha git:(master) > cd ../bravo
@@ -1239,13 +1307,15 @@ the content of `data/number.txt` to
 
 <br/>
 
-| ![Commit `12` en el repositorio `bravo`](/assets/img/git/27-12-bravo.png) | 
-|:--:| 
-| *Commit `12` en el repositorio `bravo`* |
+{% include showImagen.html 
+      src="/assets/img/git/27-12-bravo.png" 
+      caption="Commit `12` en el repositorio `bravo`" 
+      width="730px"
+      %}
 
 <br/>
 
-El usuario entra en el repositorio `alpha` y se trae (fetch) el `master` desde `bravo`. Se trata de un proceso con cuatro pasos.
+Ahora hacemos el **Fetch desde el remoto**. Entra en el repositorio `alpha` y se trae (fetch) el `master` desde el repositorio remoto `bravo`, un proceso que consta de cuatro pasos.
 
 ```
 ➜  alpha git:(master) > git fetch bravo master
@@ -1259,7 +1329,7 @@ From ../bravo
 ```
 
  - **Paso #1**: Git obtiene el hash del commit `12` al que está apuntando `master` en `bravo`.
- - **Paso #2**: Git hace una lista de todos los objetos de los que depende el commit `12`, el objeto commit en si mismo, los objetos del tree graph, los ancestros a dicho commit y los objetos en sus tree graphs. Elimina de su lista cualquier objeto que `alpha`ya tenga por si mismo y copia el resto de objetos a `.git/objects/`.
+ - **Paso #2**: Git hace una lista de todos los objetos de los que depende el commit `12`, el objeto commit en si mismo, los objetos del tree graph, los ancestros a dicho commit y los objetos en sus tree graphs. Elimina de su lista cualquier objeto que `alpha`ya tuviese por si mismo y copia el resto de objetos a `.git/objects/`.
  - **Paso #3**: El contenido del archivo de referencia concreto en `alpha/.git/refs/remotes/bravo/master` se ajusta al hash del commit `12`.
  - **Paso #4**: El contenido de `alpha/.git/FETCH_HEAD` se se establece en:
 
@@ -1268,25 +1338,32 @@ From ../bravo
 b3f3fca9a5f40c6ff21dddec1657d5d0c435ec61		branch 'master' of ../bravo
 ```
 
-Esto indica que el comando fetch más reciente obtuvo el `12` de `master` de `bravo`.
+**FETCH_HEAD** es una referencia (de corta duración) que nos indica lo que se acaba de obtener desde un repositorio remoto. Más técnicamente `FETCH_HEAD` apunta a la punta de esa branch remota (almacenando el SHA1 del commit, tal como hacen las branchs). git pull entonces invoca a git merge, fusionando FETCH_HEAD en la branch actual. Al ver su contenido observamos que el comando fetch más reciente viene del commit `12` de la branch `master` del repositorio `bravo`.
+
 
 <br/>
 
-| ![`alpha` after `bravo/master` fetched](/assets/img/git/28-12-fetched-to-alpha.png) | 
-|:--:| 
-| *`alpha` after `bravo/master` fetched* |
+{% include showImagen.html 
+      src="/assets/img/git/28-12-fetched-to-alpha.png" 
+      caption="`alpha` after `bravo/master` fetched" 
+      width="730px"
+      %}
+
 
 <br/>
 
 - Los objetos se pueden copiar, significa que la historia se puede compartir entre repositorios. 
-- Un repositorio puede almacenar referencias de ramas remotas como `git/refs/remotes/bravo/master`. Esto significa que un repositorio puede registrar localmente el estado de una rama en un repositorio
-remoto. Es correcto en el momento en que se obtiene, pero se desactualiza si la rama remota cambia.
+
+- Un repositorio puede almacenar referencias de branchs remotas como `git/refs/remotes/bravo/master`. Esto significa que un repositorio puede registrar localmente el estado de una branch en un repositorio
+remoto. Es correcto en el momento en que se obtiene, pero se desactualiza si la branch remota cambia.
 
 <br/>
 
 ## Merge FETCH_HEAD
 
-Si fusionamos `FETCH_HEAD`, que es una referencia más, resolverá siendo el **emisor/dador** el commit `12` y el **receptor** la `HEAD`con el commit `11`. Git hace una fusión rápida y apunta a `master` al commit `12`.
+Dijimos antes que `FETCH_HEAD` es una referencia (de corta duración) que nos indica lo que se acaba de obtener desde un repositorio remoto. 
+
+Cuando fusionamos `FETCH_HEAD` resolverá siendo el **emisor/dador** el commit `12` y el **receptor** el `HEAD`con el commit `11`. Git hace un merge rápido y apunta `master` al commit `12`.
 
 ```
 ➜  alpha git:(master) > git merge FETCH_HEAD
@@ -1298,18 +1375,19 @@ Fast-forward
 
 <br/>
 
-| ![`alpha` after `FETCH_HEAD` merged](/assets/img/git/29-12-merged-to-alpha.png) | 
-|:--:| 
-| *`alpha` after `FETCH_HEAD` merged* |
+{% include showImagen.html 
+      src="/assets/img/git/29-12-merged-to-alpha.png" 
+      caption="`alpha` after `FETCH_HEAD` merged" 
+      width="730px"
+      %}
 
 <br/>
 
-## Pull (tirar) de una branch (rama) desde un remoto
+## Pull de una branch remota
 
-Tiramos de `master` desde `bravo`. Pull es la abreviación de `fetch & merge the FETCH_HEAD` (traer y fusionar) el `FETCH_HEAD`. 
+Pull es la abreviación de `fetch & merge the FETCH_HEAD` (fetch y después merge del `FETCH_HEAD`). Es decir, hacemos un pull("tiramos") de una branch desde un repositorio remoto. 
 
-En el ejemplo GIT realiza estos dos comandos e informa de que `master` está `Ya está actualizado`; porque en los pasos anteriores ya habíamos hecho el `fetch`y el `merge`.
-
+En el siguiente ejemplo hacemos el pull de `master` desde el repositorio `bravo`. El comando `git` hace el fetch+merge pero nos informa que `master` ya estaba actualizado porque en los pasos anteriores ya habíamos hecho el `fetch` y el `merge` por separado.
 
 ```
 ➜  alpha git:(master) > git pull bravo master
@@ -1320,11 +1398,13 @@ Already up to date.
 
 <br/>
 
-## Clone (clonar) un repositorio. 
+## Clone de un repositorio. 
 
-Si deseas obtener una copia de un repositorio Git existente — por ejemplo, un proyecto en el que te gustaría contribuir — el comando que necesitas aprender es `git clone`. GIT recibirá una copia de casi todos los datos que tiene el servidor (o el repositorio remoto). Cada versión de cada archivo de la historia del proyecto es descargada (o se copia) cuando ejecutas git clone. 
+Clone viene de "clonar", consiste en obtener una copia de un repositorio existente.
 
-Subimos un directorio y "clonamos" alpha en un nuevo directorio llamado "charlie".
+Con `git clone` recibirás una copia de casi todos los datos que están en el repositorio remoto (aquí estamos jugando con directorios locales, pero lo normal es que sea un servidor remoto como GitHub o GitLab). Al clonar se descargará cada versión de cada archivo de la historia del proyecto. 
+
+Veamos como clonamos `alpha`, hacia un nuevo directorio llamado `charlie`. En este caso `alpha` es el repositorio que existe y lo estamos duplicando y llamándolo `charlie`
 
 ```zsh
 ➜  rep > git clone alpha charlie
@@ -1332,13 +1412,43 @@ Cloning into 'charlie'...
 done.
 ```
 
-Cambiamos al directorio anterior. Se clona `alpha` a `charlie`. La clonación tiene resultados similares a los de que el usuario hizo para producir el repositorio `bravo`. Git crea un nuevo directorio llamado `charlie`. Lo inicializa como un repositorio Git, añade `alpha` como un remoto llamado `origin`, hace un fetch desde `origin` y fusiona `FETCH_HEAD`.
+La clonación tiene resultados similares a los de que el usuario hizo para producir el repositorio `bravo`. Git crea un nuevo directorio llamado `charlie`. Lo inicializa y añade a `alpha` como un *remote* al que llama `origin` y lanza fetch desde `origin` pidiendo que se haga un merge de `FETCH_HEAD`.
+
+Si observamos el repositorio de `charlie` vemos que tiene configurado un *remote* hacia el repositorio `alpha`:
+
+```
+➜  rep > cat charlie/.git/config
+:
+[remote "origin"]
+	url = /Users/luis/rep/alpha
+	fetch = +refs/heads/*:refs/remotes/origin/*
+:
+
+➜  rep > tree -a charlie
+charlie
+├── .git
+:   :
+│   └── refs
+:       :
+│       ├── remotes
+│       │   └── origin
+│       │       └── HEAD
+
+➜  rep > cat charlie/.git/refs/remotes/origin/HEAD
+ref: refs/remotes/origin/master
+```
+
 
 <br/>
 
-## Push (empujar) una branch (rama) a una rama checked-out en un remoto
+## Push desde respositorio previamente clonado. 
 
-A continuación vamos a hacer un Push (empujar) de un branch (rama) a una rama checked-out en un remoto
+Veamos un caso curioso para entender mejor porqué son importantes los **respositorios vacíos, bare repository** que veremos en la siguiente sección. Volvemos sobre nuestros pasos, tenemos el respositorio `charlie` que había clonado a `alpha`. Vamos a intentar modificar el origen (`alpha`) y desde él vamos a intentar enviarle las modificaciones (push) a `charlie` (cambios en su .git sin su permiso 😂). 
+
+Para que `alpha` pueda hacer un push hacia `charlie` primero lo tendrá que añadir como *remote*. Claro que es posible, de hecho en GIT puedes/debes tener configurados los repositorios como *remotes* entre ellos para solicitar o enviar cambios. Al lio, repetimos: `charlie` clonó a `alpha`, alguien modifica este último y quiere enviarle las modificaciones con un push hacia `charlie`, git lo para y se queja !!
+
+
+Empezamos entrando en `alpha`. Modificamos `data/number.txt` con un `13` y hacemos commit en `master`.
 
 ```
 ➜  > cd alpha
@@ -1349,15 +1459,13 @@ A continuación vamos a hacer un Push (empujar) de un branch (rama) a una rama c
  1 file changed, 1 insertion(+), 1 deletion(-)
 ```
 
-Vuelvo a entrar en el repositorio `alpha`. Establece el contenido de `data/number.txt` con un `13` y hago un commit en `master`de `alpha`.
-
 Añado a `charlie` como un repositorio remoto de `alpha`.
 
 ```
 ➜  alpha git:(master) > git remote add charlie ../charlie
 ```
 
-Empuja `master` a `charlie`. Todos los objetos requeridos para el commit `13` se copian dentro de `charlie`
+Intentamos un Push de `master` hacia `charlie`. Todos los objetos requeridos para el commit `13` se mandan, pero al intentar actualizar la branch remota `git`se queja y para. 
 
 ```
 ➜  alpha git:(master) > git push charlie master
@@ -1372,17 +1480,17 @@ remote: with what you pushed, and will require 'git reset --hard' to match
 remote: the work tree to HEAD.
 ```
 
-En este punto, el proceso de Push se detiene. Git, como siempre, le dice al usuario lo que
-salió mal. Se niega a empujar una rama que se hizo commit en el remoto. Esto tiene sentido. Un push actualizaría el índice remoto y `HEAD`. Esto causaría confusión si alguien estuviera
-editando la copia de trabajo en el remoto.
+¿qué ha pasado?. Git, como siempre, le dice al usuario lo que salió mal. Se niega a hacer push sobre la branch *remote* (`charlie/master`) porque tocaría el Index remoto y el `HEAD` remoto y le causaría confusión si alguien estuviera editando la working copy de dicho *remote*
 
-En este punto, el usuario podría hacer una nueva rama, fusionar el `13` y empujar esa rama a `charlie`. Pero, realmente, ¿queremos un repositorio al que puedan empujar cuando quieran?. En realidad queremos un repositorio central al que se pueda hacer push y pull, pero que no acepte commits directamente. Una especie de GitHub remoto. Eso tiene un nombre, se conoce como un **bare repository** (repositorio vacío).
+Una opción para *colaborar* entre repositorios remotos interconectados entre ellos sería crear branches nuevas cada dos por tres y hacerles *push* entre ellos, pero sería inmanejable, demasiada confusión. Otra cosa a pensar es si queremos repositorios a los que se pueda hacer push en cualquier momento. 
+
+En realidad lo que queremos es un repositorio central al que se pueda hacer push y pull, pero que no acepte commits directamente, un intermediario. Eso tiene un nombre, se conoce como un **bare repository** (repositorio vacío).
 
 <br/>
 
-## Clonar un Bare Repository (repositorio vacío)
+## Clonar un Bare Repository 
 
-Nos cambiamos al directorio anterior. Clono `delta`como un repositorio vacío (bare). 
+Un Bare Repository es un repositorio vacío. Nos cambiamos al directorio anterior. Clono `delta` como un repositorio vacío (bare). 
 
 ```zsh
 ➜  alpha git:(master) > cd ..
@@ -1407,13 +1515,17 @@ delta
 
 <br/>
 
-| ![`alpha` and `delta` graphs after `alpha` cloned to `delta`](/assets/img/git/30-13-alpha-cloned-to-delta-bare.png) | 
-|:--:| 
-| *`alpha` and `delta` graphs after `alpha` cloned to `delta`* |
+{% include showImagen.html 
+      src="/assets/img/git/30-13-alpha-cloned-to-delta-bare.png" 
+      caption="`alpha` and `delta` graphs after `alpha` cloned to `delta`" 
+      width="730px"
+      %}
 
 <br/>
 
-## Push (empujar) una branch (rama) a un bare repository
+## Push hacia un bare repository
+
+Vamos a hacer un Push de una branch hacia un repositorio vacío `bare repository`.
 
 Vamos a repetir lo que antes nos fallo. Volvemos al repositorio `alpha`. Configuro a `delta` (repositorio vacío) como un repositorio remoto de `alfa`.
 
@@ -1435,9 +1547,11 @@ Modifico alpha, cambio el contenido de `data/number.txt` a un `14` y realizo un 
 
 <br/>
 
-| ![`14` commit on `alpha`](/assets/img/git/31-14-alpha.png) | 
-|:--:| 
-| *`14` commit on `alpha`* |
+{% include showImagen.html 
+      src="/assets/img/git/31-14-alpha.png" 
+      caption="14` commit on `alpha`" 
+      width="730px"
+      %}
 
 <br/>
 
@@ -1452,18 +1566,20 @@ To ../delta
 ➜  alpha git:(master) >
 ```
 
-Empujo (push) `master` hacia el repositorio remoto (vacío) `delta`. El push tiene tres pasos: 
+Push de `master` hacia el repositorio Bare `delta`. El push tiene tres pasos: 
 
-- **Paso #1**: Se copian todos los objetos necesarios para el commit `14` en la rama `master` en `.git/objects/` hacia `delta/objects/`.
+- **Paso #1**: Se copian todos los objetos necesarios para el commit `14` en la branch `master` en `.git/objects/` hacia `delta/objects/`.
 - **Paso #2**: Se actualiza `delta/refs/heads/master` para apuntar al commit `14`.
 - **Paso #3**: Se establece `alpha/.git/refs/remotes/delta/master` se establece para que apunte al commit `14` El `alpha` tiene un registro actualizado del estado de `delta`.
 
 <br/>
 
-| ![commit `14` empujado desde `alpha` a `delta`](/assets/img/git/32-14-pushed-to-delta.png) | 
-| ![commit `14` empujado desde `alpha` a `delta`](/assets/img/git/32-14-pushed-to-delta-gitgraph.jpg) | 
-|:--:| 
-| *commit `14` empujado desde `alpha` a `delta`* |
+{% include showImagen2.html 
+      src="/assets/img/git/32-14-pushed-to-delta.png" 
+      src2="/assets/img/git/32-14-pushed-to-delta-gitgraph.jpg" 
+      caption="Push del commit `14` desde `alpha` a `delta`" 
+      width="730px"
+      %}
 
 <br/>
 

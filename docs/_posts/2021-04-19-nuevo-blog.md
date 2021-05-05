@@ -18,7 +18,7 @@ Seguro que conoces GitHub, una plataforma de colaboración y compartición de c�
 Bueno, pues tiene una característica muy útil llamada **GitHub Pages**, que te permite publicar tus propias páginas web para que las hospede el propio **GitHub**. Se integra perfectamente con el generador de sitios estáticos llamado **Jekyll**, que tiene capacidades de blog y es super adecuado para montarte blogs o sitios web personales. Por cierto, está escrito en Ruby y su creador es Tom Preston-Werner, el cofundador de GitHub.
 
 {% include showImagen.html 
-      src="/assets/img/posts/nuevo-blog.jp2" 
+      src="/assets/img/posts/nuevo-blog.jpg" 
       caption="Arquitectura GitHub Pages" 
       width="730px"
       %}

@@ -8,7 +8,7 @@ permalink: /about/
 [comment]: # (This actually is the most platform independent comment)
 
 
-![myimg](/assets/img/posts/about_luispa.jp2){: width="200px" height="231px" style="float:left; padding-right:25px" } 
+![myimg](/assets/img/posts/about_luispa.jpg){: width="200px" height="231px" style="float:left; padding-right:25px" } 
 
 ¡Hola!, me llamo Luis Palacios y soy un tipo variado, tecnología, arte, hacker, fotografía, negocio, padre.
 

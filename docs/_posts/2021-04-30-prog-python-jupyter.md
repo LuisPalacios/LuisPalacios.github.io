@@ -244,6 +244,15 @@ Removing virtualenv (/Users/luis/.local/share/virtualenvs/plot-djKM4O4f)...
 
 ## Actualizaciones
 
-- **Python**: Descargar la última versión para [Mac OS X](https://www.python.org/downloads/mac-osx/) y sobreescribir la ya instalada.
-- **pip** `pip install --upgrade pip`
-- **Todo lo instalado con pip**: `pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U`
+Instalar es relativamente fácil, pero con tantos programas y módulos en tu sistema es importante saber cómo actualizarlos.
+
+- Actualiza **Python** en tu MacOS reinstalando la [última versión](https://www.python.org/downloads/mac-osx/).
+- Actualiza **pip** ejecutando el comando `pip install --upgrade pip`
+- Actualiza **todo lo que has instalado con `pip`** mediante: 
+
+````
+pip list --outdated --format=freeze |\
+    grep -v '^\-e' |\
+    cut -d = -f 1  |\
+    xargs -n1 pip install -U
+```

@@ -38,13 +38,27 @@ pre, code, .highlighter-rouge .highlight { background-color: #f8f8f8; }
   --screen_border: #666666;
 }
 
-// Para las capturas de pantalla
+// Modifico algunos valor de por defecto
+// ----------------------------------------------
+
+figure{
+  margin: 0px;
+}
+
+pre,
+code {
+  // Original: 0.9375em;
+  font-size: 0.9em;
+}
+
+// Para las imágenes que son Capturas de pantalla
+// ----------------------------------------------
 .screen_caption {
   text-align:center;
-  margin:1em auto;
+  margin: 0.7em auto;
   font-style: italic;
-  font-size: 0.75em;
-//  border-radius: 0.2em;
+  font-size: 0.8em;
+  border-radius: 0.2em;
 //  border-radius: 10px 140px 30px 140px;
 //  border:1px var(--screen_border) solid;
 }
@@ -54,21 +68,24 @@ pre, code, .highlighter-rouge .highlight { background-color: #f8f8f8; }
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1em;
+  padding: 0.5em;
 }
 
 .screen_inner {
-  height: 90%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1em;
+  padding-top: 1em;
+  padding-right: 1em;
+  padding-left: 1em;
+
   background-color: var(--screen_background);
   border-radius: 1em;
   border:1px var(--screen_border) solid;
-//  box-shadow: 1px 1px 2px #aaaaaa, 0 0 10px #f8f8f8, 0 0 3px #cccccc;
-//  box-shadow: 10px 10px 5px #aaaaaa;
-//  box-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
-//  box-shadow: 5px 10px #888888;
 }
 
+.screen_image {
+  box-shadow: 1px 1px 1px grey, 0 0 10px grey, 0 0 10px grey;
+}
+// ----------------------------------------------

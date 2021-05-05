@@ -1,9 +1,11 @@
 <div class="screen_outer">
     <div class="screen_inner">
-    <figure>
-            <img src="{{ include.src }}" 
-                 width="{{ include.width }}" 
-                 alt="{{ include.subtitulo }}" />
+        <figure>
+            <div class="screen_image">
+                <img src="{{ include.src }}" 
+                     width="{{ include.width }}" 
+                     alt="{{ include.subtitulo }}" />
+            </div>
             <figcaption class="screen_caption">{{ include.caption }}</figcaption>
         </figure>
     </div>
