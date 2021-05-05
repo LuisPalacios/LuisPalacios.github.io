@@ -141,7 +141,6 @@ El comando `git init` crea el subdirectorio `.git` con una estructura inicial, f
 
 El directorio `alpha` tiene ahora este aspecto:
 
-
 {% include showImagen.html 
       src="/assets/img/git/0-project.png" 
       caption="Estructura de un proyecto con GIT" 
@@ -380,8 +379,6 @@ data/
 
 Tiene una línea apuntando al directorio `data`. Contiene el valor 040000 (tipoe directorio), el tipo (tree), el hash del objeto tree que vimos antes y el nombre del directorio `data`.
 
-<br/>
-
 {% include showImagen.html 
       src="/assets/img/git/1-a1-tree-graph.png" 
       caption="Tree graph del primer commit" 
@@ -406,9 +403,6 @@ a1
 ```
 
 La primera línea apunta al inicio del `tree graph`, al objeto raíz `raíz (root)` de la working copy, es decir, el directorio `alpha`. La última línea es el mensaje del commit. 
-
-<br/>
-
 
 {% include showImagen2.html 
       src="/assets/img/git/2-a1-commit.png" 
@@ -439,8 +433,6 @@ Vemos que `HEAD` (una referencia) está apuntando a `master` (otra referencia), 
 
 Ahora que tenemos todo conectado vamos a añadir `HEAD` y `master` a nuestro gráfico: 
 
-<br/>
-
 {% include showImagen.html 
       src="/assets/img/git/3-a1-refs.png" 
       caption="`HEAD` apunta a `master` que apunta al commit `a1`" 
@@ -457,8 +449,6 @@ Ahora vamos a ver qué pasa cuando se hace un commit que no es el primer commit.
 
 Nos fijamos en la siguiente gráfica que muestra el estado después del primer commit `a1`. Enseño a la derecha a quién apunta el Index y a la izquierda cual es el contenido de la working copy (qué hay actualmente fuera de Git, en la working copy)
 
-<br/>
-
 {% include showImagen.html 
       src="/assets/img/git/4-a1-wc-and-index.png" 
       caption="`a1` con la working copy y el Index" 
@@ -474,8 +464,6 @@ Vamos a cambiar una cosilla... vamos a cambiar el contenido del fichero number.t
 ```
 
 Esto ocurre en la working copy, pero se deja el Index y el commit (`HEAD`) intactos. 
-
-<br/>
 
 {% include showImagen.html 
       src="/assets/img/git/5-a1-wc-number-set-to-2.png" 
@@ -538,16 +526,12 @@ La primera línea del commit apunta al nuevo objeto tree `root`, la segunda lín
 
 **Tercero**, el contenido de la Branch `master` pasa a apuntar al hash del nuevo commit (`a2`)
 
-<br/>
-
 {% include showImagen2.html 
       src="/assets/img/git/7-a2.png" 
       src2="/assets/img/git/7-a2-gitgraph.jpg" 
       caption="commit `a2`" 
       width="730px"
       %}
-
-<br/>
 
 Veamos la gráfica sin reflejar los datos de los ficheros: 
 
@@ -556,7 +540,6 @@ Veamos la gráfica sin reflejar los datos de los ficheros:
       caption="commit `a2` (sin la información de su contenido)" 
       width="730px"
       %}
-
 
 <br/>
 
@@ -644,8 +627,6 @@ Una vez hecho **utilizando su hash**, provoca que ocurran cuatro cosas:
 <br/>
 
 Aquí está la diferencia, `HEAD` apunta a un commit en vez de a una branch !!! y cuando `HEAD` tiene el hash de un commit en vez de la referencia a la branch, lo que hace es poner al repositorio en el estado de `detached HEAD` (HEAD separado. Mira en el gráfico de abajo que `HEAD` apunta directamente al commit `a2`, en lugar de apuntar a la branch `master`
-
-<br/>
 
 {% include showImagen.html 
       src="/assets/img/git/9-a2-detached-head.png" 
@@ -770,8 +751,6 @@ Switched to branch 'deputy'
 
 Ahora sí que funciona, no hay nada que se vaya a perder, por lo tanto GIT acepta el checkout de `deputy` y cambia al mismo, lo extrae, lo copia a la workign copy y hace que `HEAD`a punte a él.
 
-<br/>
-
 {% include showImagen2.html 
       src="/assets/img/git/13-a3ondeputy.png" 
       src2="/assets/img/git/13-a3ondeputy-gitgraph.jpg" 
@@ -877,8 +856,6 @@ Switched to branch 'deputy'
  1 file changed, 1 insertion(+), 1 deletion(-)
 ➜  alpha git:(deputy) >
 ```
-
-<br/>
 
 {% include showImagen2.html 
       src="/assets/img/git/16-a4-b3-on-deputy.png" 
@@ -1002,8 +979,6 @@ Cambiamos a `master` y fusiono`deputy` en `master`. Esto
 adelanta a "master" al "commit" de `b4`. `master` y
 `deputy` apuntan ahora al mismo commit.
 
-<br/>
-
 {% include showImagen2.html 
       src="/assets/img/git/19-b4-master-deputy-on-b4.png" 
       src2="/assets/img/git/19-b4-master-deputy-on-b4-gitgraph.jpg" 
@@ -1038,16 +1013,12 @@ Switched to branch 'master'
  1 file changed, 1 insertion(+), 1 deletion(-)
 ```
 
-<br/>
-
 {% include showImagen2.html 
       src="/assets/img/git/20-b5-on-deputy-b6-on-master.png" 
       src2="/assets/img/git/20-b5-on-deputy-b6-on-master-gitgraph.jpg" 
       caption="`b5` en `deputy` y `b6` en `master`" 
       width="730px"
       %}
-
-<br/>
 
 Intentamos hacer un merge de `deputy` (emisor) en `master` (receptor). Hay un conflicto y el merge se pone en pausa. El proceso para un merge conflictivo sigue los mismos seis pasos: establecer `git/MERGE_HEAD`, encontrar el commit base, generar el Index de los commits base, receptor y dador, crear un diff, actualizar la copia de trabajo y actualizar el Index. Pero debido al conflicto, el séptimo paso de commit y el octavo de actualización de referencia nunca se realizan.
 
@@ -1072,15 +1043,11 @@ Automatic merge failed; fix conflicts and then commit the result.
 84675baa2ee8e52a49c5a6b1b95885173a8aef42
 ```
 
-<br/>
-
 {% include showImagen.html 
       src="/assets/img/git/21-b6-on-master-with-merge-head.png" 
       caption="Se crea el `MERGE_HEAD` durante el merge de `b5` en `b6`" 
       width="730px"
       %}
-
-<br/>
 
 - **Paso #2**: Git encuentra el `commit base`: `b4`
 - **Paso #3**: Git genera el Index de los commits base, receptor y dador. 
@@ -1175,8 +1142,6 @@ b11
 
 - **Paso #8**: Git hace que la branch actual, `master` apunte al nuevo commit. 
 
-<br/>
-
 {% include showImagen2.html 
       src="/assets/img/git/22-b11-on-master.png" 
       src2="/assets/img/git/22-b11-on-master-gitgraph.jpg" 
@@ -1190,15 +1155,11 @@ b11
 
 En el diagrama siguiente podemos ver el histórico de commits. Los trees y blobs del último commit, así como la working copy y el index:
 
-<br/>
-
 {% include showImagen.html 
       src="/assets/img/git/23-b11-with-objects-wc-and-index.png" 
       caption="La working copy, Index, commit `b11` y tree graph" 
       width="730px"
       %}
-
-<br/>
 
 El usuario le dice a Git que elimine `data/letter.txt`. El archivo se elimina de la WORKING COPY y del Index.
 
@@ -1207,15 +1168,11 @@ El usuario le dice a Git que elimine `data/letter.txt`. El archivo se elimina de
 rm 'data/letter.txt'
 ```
 
-<br/>
-
 {% include showImagen.html 
       src="/assets/img/git/24-b11-letter-removed-from-wc-and-index.png" 
       caption="Después de borrar `data/letter.txt` de la working copy y el Index" 
       width="730px"
       %}
-
-<br/>
 
 Hacemos un commit. Como parte del mismo, como siempre, GIT construye un tree que representa el contenido del Index. El archivo `data/letter.txt` no se incluye en el tree graph porque no está en el Index.
 
@@ -1226,15 +1183,12 @@ Hacemos un commit. Como parte del mismo, como siempre, GIT construye un tree que
  delete mode 100644 data/letter.txt
 ```
 
-<br/>
-
 {% include showImagen2.html 
       src="/assets/img/git/25-11.png" 
       src2="/assets/img/git/25-11-gitgraph.jpg" 
       caption="commit `11` después de borrar `data/letter.txt`" 
       width="730px"
       %}
-
 
 <br/>
 
@@ -1257,7 +1211,6 @@ Vamos a cambiar de tercio. Ahora vamos a copiar el contenido del repositorio `al
 
 Tenemos otro GIT graph en el directorio `bravo`:
 
-<br/>
 
 {% include showImagen.html 
       src="/assets/img/git/26-11-cp-alpha-to-bravo.png" 
@@ -1305,15 +1258,11 @@ Pero antes vamos a cambiar el contenido de `data/number.txt` a `12` en el reposi
 ➜  bravo git:(master) >
 ```
 
-<br/>
-
 {% include showImagen.html 
       src="/assets/img/git/27-12-bravo.png" 
       caption="Commit `12` en el repositorio `bravo`" 
       width="730px"
       %}
-
-<br/>
 
 Ahora hacemos el **Fetch desde el remoto**. Entra en el repositorio `alpha` y se trae (fetch) el `master` desde el repositorio remoto `bravo`, un proceso que consta de cuatro pasos.
 
@@ -1340,17 +1289,11 @@ b3f3fca9a5f40c6ff21dddec1657d5d0c435ec61		branch 'master' of ../bravo
 
 **FETCH_HEAD** es una referencia (de corta duración) que nos indica lo que se acaba de obtener desde un repositorio remoto. Más técnicamente `FETCH_HEAD` apunta a la punta de esa branch remota (almacenando el SHA1 del commit, tal como hacen las branchs). git pull entonces invoca a git merge, fusionando FETCH_HEAD en la branch actual. Al ver su contenido observamos que el comando fetch más reciente viene del commit `12` de la branch `master` del repositorio `bravo`.
 
-
-<br/>
-
 {% include showImagen.html 
       src="/assets/img/git/28-12-fetched-to-alpha.png" 
       caption="`alpha` after `bravo/master` fetched" 
       width="730px"
       %}
-
-
-<br/>
 
 - Los objetos se pueden copiar, significa que la historia se puede compartir entre repositorios. 
 
@@ -1372,8 +1315,6 @@ Fast-forward
  data/number.txt | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 ```
-
-<br/>
 
 {% include showImagen.html 
       src="/assets/img/git/29-12-merged-to-alpha.png" 
@@ -1513,8 +1454,6 @@ delta
 └── refs
 ```
 
-<br/>
-
 {% include showImagen.html 
       src="/assets/img/git/30-13-alpha-cloned-to-delta-bare.png" 
       caption="`alpha` and `delta` graphs after `alpha` cloned to `delta`" 
@@ -1545,15 +1484,11 @@ Modifico alpha, cambio el contenido de `data/number.txt` a un `14` y realizo un 
  1 file changed, 1 insertion(+), 1 deletion(-)
 ```
 
-<br/>
-
 {% include showImagen.html 
       src="/assets/img/git/31-14-alpha.png" 
       caption="14` commit on `alpha`" 
       width="730px"
       %}
-
-<br/>
 
 ```
 ➜  alpha git:(master) > git push delta master
@@ -1571,8 +1506,6 @@ Push de `master` hacia el repositorio Bare `delta`. El push tiene tres pasos:
 - **Paso #1**: Se copian todos los objetos necesarios para el commit `14` en la branch `master` en `.git/objects/` hacia `delta/objects/`.
 - **Paso #2**: Se actualiza `delta/refs/heads/master` para apuntar al commit `14`.
 - **Paso #3**: Se establece `alpha/.git/refs/remotes/delta/master` se establece para que apunte al commit `14` El `alpha` tiene un registro actualizado del estado de `delta`.
-
-<br/>
 
 {% include showImagen2.html 
       src="/assets/img/git/32-14-pushed-to-delta.png" 

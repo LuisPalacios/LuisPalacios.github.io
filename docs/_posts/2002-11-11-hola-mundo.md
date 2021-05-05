@@ -19,7 +19,6 @@ La verdad es que esta gente ha hecho un excelente trabajo, sencillo, rápido y p
 
 Requisitos para su instalación en Gentoo El orden es sencillo: Instala Apache y PHP (USE: simplexml). Se acabó. ## Instalación Descargar de forma manual el ZIP de NibbleBlog desde su [página de descargas](http://www.nibbleblog.com/download/en/). Descomprimirlo y copiar todo su contenido a un directorio accesible por apache. Aquí pongo un ejemplo en mi caso:
 
-
 ```bash
 cd /data/www
 unzip /home/luis/Desktop/nibbleblogv11_editor.zip
