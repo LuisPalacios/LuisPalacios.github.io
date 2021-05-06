@@ -1,0 +1,34 @@
+// Utilizo VSCode como editor y este es un fichero "workspace" 
+// Lo abro con "code lp.code-workspace" en la raíz del repositorio
+//
+// Razón para usar un workspace en vez de hacer `code .`:
+//
+// Dentro de las validaciones (lint) de vscode se encuentra con un fichero en 
+// concreto (./docs/assets/main.scss) donde va a detectar un error que marca 
+// en rojo chillón !!, no le gustan nada las dos líneas con guiones del 
+// front matter dado que no son válidas en un .scss. 
+// 
+// Es error cosmético porque sí que hay que ponerlas, en Jekyll las necesitamos. 
+// 
+// En mi caso he implementado el workaround que está aquí documentado: 
+// https://talk.jekyllrb.com/t/fixing-vscode-scss-linting-errors-on-front-matter/1710
+//  - VSCode > File > Add forlder to Workspace 
+//    Añadir "assets"
+//  - VSCode > Preferences > Settings > Folder Settings > Extensios
+//  - SCSS > Desactivar VALIDATE
+//
+// Creé y añadí 'docs/assets' como workspace y luego lo renombré como lp.code-workspace
+// Para trabajar en el proyecto ejecuto "code lp.code-workspace" desde la raíz 
+// del repositorio 
+//
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "docs/assets"
+		}
+	],
+	"settings": {}
+}
