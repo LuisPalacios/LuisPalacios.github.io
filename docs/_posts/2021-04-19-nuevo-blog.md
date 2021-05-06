@@ -33,6 +33,8 @@ El proceso que he seguido, muy, muy resumido:
 * Ver cómo GitHub genera las páginas automáticamente.
 * Conectar con la versión pública web del sitio
 
+| Ah!, podrás encontrar trucos y documentación adicional sobre cómo he montado mi blog en los `issues` de GitHub, sobre todo en los haya [cerrado](https://github.com/LuisPalacios/LuisPalacios.github.io/issues?q=is%3Aissue+is%3Aclosed) y resuelto. |
+
 
 <br/>
 
@@ -363,39 +365,38 @@ layout: none
 {% endraw %}
 ```
 
-Creo la página `docs/search.html`:
+Modifico mi fichero [./docs/_includes/footer.html](/LuisPalacios/LuisPalacios.github.io/blob/gh-pages/docs/_includes/footer.html):
 
 ```
 {% raw %}
-<!-- Html Elements for Search -->
+<!-- Elemento HTML para realizar la búsqueda -->
 <div id="search-container">
-    <input type="text" id="search-input" placeholder="search...">
+    <input type="text" id="search-input" placeholder="buscar...">
     <ul id="results-container"></ul>
 </div>
-    
-<!-- or without installing anything 
 
-    <script src="https://unpkg.com/simple-jekyll-search@latest/dest/simple-jekyll-search.min.js"></script>
-
--->
-
-<!-- Script pointing to search-script.js -->
+<!-- Script apuntando al script JS que hará la búsqueda -->
 <script src="/assets/js/simple-jekyll-search.js" type="text/javascript"></script>
-  
-<!-- Configuration -->
+
+<!-- Configuración -->
 <script>
     SimpleJekyllSearch({
-      searchInput: document.getElementById('search-input'),
-      resultsContainer: document.getElementById('results-container'),
-      json: '/search.json'
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/search.json'
     })
 </script>
 {% endraw %}
 ```
 
-A partir de aquí la página debería estar disponible como `/search.html`.
+<br/>
 
-Todavía tengo pendiente mejorar esta sección.
+## Mejoras adicionales al Blog
+
+
+En vez de seguir ampliando este apunte lo que he hecho es crear `issues`en github con cada una de las modificaciones y mejoras que quería añadirle. 
+
+Puedes encontrarlas entre mis [issues cerrados sobre este blog](https://github.com/LuisPalacios/LuisPalacios.github.io/issues?q=is%3Aissue+is%3Aclosed)
 
 
 <br/>
