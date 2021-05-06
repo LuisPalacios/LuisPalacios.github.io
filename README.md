@@ -1,28 +1,11 @@
 ## LuisPalacios.github.io
 
-Este repositorio contiene todo lo necesario para crear un sitio "blog" basado en [jekyll](http://jekyllrb.com). Este es mi nuevo proyecto para mis Apuntes Técnicos y lo he hospedado en [GitHub Pages](https://pages.github.com). Mi blog original estaba basado en Wordpress y lo he discontinuado. Actualmente estoy migrando todas sus páginas a markdown para integrarlas en este blog. 
+Este repositorio contiene mi "blog", basado en [jekyll](http://jekyllrb.com), hospedado en [GitHub Pages](https://pages.github.com).
 
-El nuevo Blog está en [https://www.luispa.com](https://www.luispa.com) gracias al soporte de dominio personalizado. 
+* [https://www.luispa.com](https://www.luispa.com) 
 
-
-## Branch "gh-pages"
-
-El blog se encuentran en la rama `gh-pages`, para poder cambiar a dicha rama ejecuta: 
-
-```
-> git checkout gh-pages
-```
-
-Y si quieres echarle un vistazo en local: 
-
-```
-> cd docs
-docs > bundle add webrick
-docs > bundle update
-docs > bundle exec jekyll serve
-```
-
-<br/>
+El sitio está dentro de esta branch: `gh-pages` y puedes encontrar más información en el apunte [Mi nuevo blog !!](https://www.luispa.com/general/2021/04/19/nuevo-blog.html)
 
 
+![Arquitectura del blog](/docs/assets/img/posts/nuevo-blog.jpg?raw=true "Arquitectura del blog")
 
