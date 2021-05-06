@@ -10,16 +10,20 @@ Zona para los iconos y favicons
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
+
 {% comment %}
 Zona para conectar con Analytics en Plausible
 {% endcomment %}
+
 {% if jekyll.environment == "production" %}
     <script async defer data-domain="luispa.com" src="https://plausible.io/js/plausible.js"></script>
 {% endif %}
 
-% comment %}
+
+{% comment %}
 Zona para conectar con utteranc.es para soportar Comentarios
 {% endcomment %}
+
 {% if jekyll.environment == "production" %}
     <script src="https://utteranc.es/client.js"
             repo="LuisPalacios.github.io"
