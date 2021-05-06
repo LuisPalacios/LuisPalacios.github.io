@@ -8,12 +8,28 @@ excerpt_separator: <!--more-->
 
 Dejo aquí unos apuntes sobre cómo emular una Raspberry Pi en un MacOSX. Ojo que la Raspberry Pi tiene una GPU y eso no creo que se puede emular, así que distros como openelec no creo que funcionen...
 
-![emurasp](/assets/img/original/emurasp.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/emurasp.png"
+    caption="emurasp"
+    width="600px"
+    %}
 
 - Instala Xcode y las command line tools desde el sitio de desarrollo de Apple (el registro es gratuito). Si ya tienes Xcode y solo te faltan las command line tools, se instalan con el comando xcode-select --install.
-- Instala ![MacPorts](/assets/img/original/){: width="730px" padding:10px }. Si ya lo tenías, actualizalo a la última versión con sudo port selfupdate y de paso haz un upgrade a los paquetes que ya tenías instalados sudo port upgrade outdated
-![ARM1176JZF-S](/assets/img/original/DDI0301H_arm1176jzfs_r0p7_trm.pdf)){: width="730px" padding:10px } usando el comando siguiente: sudo port install qemu +target_arm. Aunque no hace falta, aprovecho para poner python27 como la versión por defecto con sudo port select --set python python27
-- Creo una carpeta en mi Mac para poder depositar los ficheros de trabajo, básicamente dos: una [imagen para Raspberry](http://www.raspberrypi.org/downloads/) (raspbian funciona) y un [kernel que funcione](http://xecdesign.com/downloads/linux-qemu/kernel-qemu) (fuente: ![aquí](/assets/img/original/)){: width="730px" padding:10px }. En mi caso puse todo bajo el directorio /Users/luis/priv/raspberry
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="MacPorts"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/DDI0301H_arm1176jzfs_r0p7_trm.pdf)"
+    caption="ARM1176JZF-S"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/)"
+    caption="aquí"
+    width="600px"
+    %}
 
 obelix:~ luis$ cd /Users/luis/priv/raspberry
 obelix:raspberry luis$ ls -al

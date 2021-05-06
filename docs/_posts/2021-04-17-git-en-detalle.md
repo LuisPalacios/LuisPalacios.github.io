@@ -791,9 +791,11 @@ Switched to branch 'master'
 
 <br/>
 
-| ![Checkout de `master` que apunta al commit `a2`](/assets/img/git/14-a3-on-master-on-a2.png) | 
-|:--:| 
-| *Checkout de `master` que apunta al commit `a2`* |
+{% include showImagen.html 
+      src="/assets/img/git/14-a3-on-master-on-a2.png" 
+      caption="Checkout de `master` que apunta al commit `a2" 
+      width="730px"
+      %}
 
 <br/>
 

@@ -8,12 +8,24 @@ excerpt_separator: <!--more-->
 
 ## Introducción
 
-El objetivo de este apunte es describir cómo montar un entorno de cross-compilación, de tal forma que desde un equipo con procesador Intel i5 pueda generar ejecutables para ARMv7. Tengo 2 casos de uso muy concretos: 1) **reducir los tiempos de compilación de ![una Raspberry Pi2](https://www.luispa.com/?p=3128)** (**ARMv5 Processor rev 5 (v7l)**) **que ya tiene Gentoo instalado** y 2) poder compilar un programa muy concreto (tvheadend) para mi [servidor de Streaming IPTV casero](/assets/img/original/?p=2647) (MOI Pro con ARMv7 Processor rev 10 (v7l) que venía con un linux a medida){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/?p=2647) (MOI Pro con ARMv7 Processor rev 10 (v7l) que venía con un linux a medida"
+    caption="una Raspberry Pi2](https://www.luispa.com/?p=3128)** (**ARMv5 Processor rev 5 (v7l)**) **que ya tiene Gentoo instalado** y 2) poder compilar un programa muy concreto (tvheadend) para mi [servidor de Streaming IPTV casero"
+    width="600px"
+    %}
 
 Si recapitulamos, voy a tener lo siguiente:
 
-- ![PI2 con Gentoo Linux](/assets/img/original/?p=3128) (ARMv7){: width="730px" padding:10px }.
-- ![Servidor de Streaming IPTV casero](/assets/img/original/?p=2647) (MOIPro ARMv7){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/?p=3128) (ARMv7"
+    caption="PI2 con Gentoo Linux"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/?p=2647) (MOIPro ARMv7"
+    caption="Servidor de Streaming IPTV casero"
+    width="600px"
+    %}
 - Equipo Intel i5 con Linux Gentoo al que llamaré "**BUILD SERVER**".
 
  

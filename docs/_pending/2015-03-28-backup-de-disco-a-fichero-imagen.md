@@ -6,7 +6,11 @@ tags: backup disco imagen linux
 excerpt_separator: <!--more-->
 ---
 
-![Hdd](/assets/img/original/Hdd-1024x419.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/Hdd-1024x419.png"
+    caption="Hdd"
+    width="600px"
+    %}
 
 Hace no mucho tuve que hacer un backup completo del disco duro de mi **Servidor** para instalar otro sistema operativo y opté por clonar el disco duro de arranque completo en un fichero comprimido (imagen byte a byte: **servidor.img.gz**). En caso de desastre (con el nuevo sistema operativo) podría fácilmente dar marcha atrás. Es un proceso sencillo pero siempre tardo un buen rato en encontrar en internet cómo hacerlo, así que he decidido documentarlo. Además añado un "extra", cómo montar la partición root dentro de dicha imagen para consultar ciertas cosas. Todo esto se consigue con estas herramientas:
 

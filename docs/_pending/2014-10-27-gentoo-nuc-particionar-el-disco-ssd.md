@@ -6,7 +6,11 @@ tags: linux nuc
 excerpt_separator: <!--more-->
 ---
 
-Nota: Este post pertenece a una "colección", así que te recomiendo que empieces por la instalación ![Gentoo GNU/Linux en un Intel® NUC D54250WYK](/assets/img/original/?p=7){: width="730px" padding:10px }. En este artículo en concreto describo cómo crear las particiones del disco SSD y los file systems
+{% include showImagen.html
+    src="/assets/img/original/?p=7"
+    caption="Gentoo GNU/Linux en un Intel® NUC D54250WYK"
+    width="600px"
+    %}
 
 ## Crear las particiones del disco
 
@@ -93,6 +97,14 @@ livecd ~ # swapon /dev/sda3
 
 Aunque todavía no podemos usar la versión gráfica "gparted", una vez que terminé la instalación así es como se ve desde dicho programa:
 
-![particionar](/assets/img/original/particionar.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/particionar.png"
+    caption="particionar"
+    width="600px"
+    %}
 
-Volver al paso anterior: [Iniciar la instalación](https://www.luispa.com/?p=759) o ir al siguiente: ![Stage 3, Portage y chroot](/assets/img/original/?p=800){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/?p=800"
+    caption="Stage 3, Portage y chroot"
+    width="600px"
+    %}

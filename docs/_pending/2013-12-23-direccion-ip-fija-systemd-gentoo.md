@@ -6,7 +6,11 @@ tags: linux systemd
 excerpt_separator: <!--more-->
 ---
 
-En este apunte explico cómo asignarle una IP fija a un sistema Linux que ha sido configurado con "Systemd". Nota que el nombre del interfaz puede que sea distinto en tu caso, te recomiendo averiguar cómo ha llamado el kernel usando los comandos "ifconfig, ip link o dmesg". Otro aviso: para poder crear ficheros que contienen el caracter @ en el nombre necesitarás normalmente usar \@. ![IP](/assets/img/original/IP.jpg){: width="730px" padding:10px }**iproute2** Verifico que tengo iproute2 instalado, en su defecto lo instalo
+{% include showImagen.html
+    src="/assets/img/original/IP.jpg"
+    caption="IP"
+    width="600px"
+    %}
 
  
 # emerge -v iproute2

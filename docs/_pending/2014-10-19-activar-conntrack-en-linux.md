@@ -6,11 +6,19 @@ tags: firewall iptables linux seguridad
 excerpt_separator: <!--more-->
 ---
 
-![Apps-Firewall-icon](/assets/img/original/Apps-Firewall-icon-300x300.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/Apps-Firewall-icon-300x300.png"
+    caption="Apps-Firewall-icon"
+    width="600px"
+    %}
 
 ## ¿Qué es Netfilter/iptables?
 
-![Netfilter/iptables](/assets/img/original/iptables){: width="730px" padding:10px } es un framework disponible en el kernel Linux que permite inspeccionar y manipular paquetes de red. Puede hacerlo en diferentes puntos y/o estados durante su viaje por el nucleo. También se encarga de ofrecer herramientas libres para montarte un Firewall basado en Linux.
+{% include showImagen.html
+    src="/assets/img/original/iptables"
+    caption="Netfilter/iptables"
+    width="600px"
+    %}
 
 ## ¿Qué es Conntrack?
 
@@ -18,7 +26,11 @@ El "Connection Tracking System" son los módulos del kernel que habilitan el "st
 
 Durante mucho tiempo se usaron en los firewalls políticas de filtrado basándose en la información de la cabecera de los paquetes, pero eso ha quedado obsoleto. Hoy en día los Firewalls necesitan mecanismos avanzados para hacer una inspección profunda basándose en el estado de las conexiones.
 
-Netfilter/iptables incorpora una implementación de un sistema basado en estados y de seguimiento de las conexiones (connection tracking system) que habilita el subsistema para poder hacer un "stateful firewall" basado en el Kernel de Linux. Recomiendo leer este ![artículo de Pablo Neira](/assets/img/original/login.pdf){: width="730px" padding:10px } al respecto.
+{% include showImagen.html
+    src="/assets/img/original/login.pdf"
+    caption="artículo de Pablo Neira"
+    width="600px"
+    %}
 
 La activación de "Conntrack" en tu kernel necesita como mínimo lo siguiente (notar que aquí lo cargo como módulos)
 
@@ -39,4 +51,8 @@ Además del soporte en el Kernel, también recomiendo instalar las conntrack-too
 # emerge -v conntrack-tools
  
 
-![Movistar TV: video bajo demanda con router Linux](/assets/img/original/?p=378){: width="730px" padding:10px }"
+{% include showImagen.html
+    src="/assets/img/original/?p=378"
+    caption="Movistar TV: video bajo demanda con router Linux"
+    width="600px"
+    %}

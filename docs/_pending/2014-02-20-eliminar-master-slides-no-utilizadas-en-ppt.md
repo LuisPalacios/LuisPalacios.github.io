@@ -8,7 +8,11 @@ excerpt_separator: <!--more-->
 
 En este apunte explico cómo crear una **Macro** para eliminar slides master (patrones) no utilizadas en un fichero Powerpoint, dedicado a mi amigo Alfonso. :-)
 
-![1hsYpTpH-vba-logo](/assets/img/original/1hsYpTpH-vba-logo-300x114.png){: width="730px" padding:10px } ha crecido sin control.
+{% include showImagen.html
+    src="/assets/img/original/1hsYpTpH-vba-logo-300x114.png"
+    caption="1hsYpTpH-vba-logo"
+    width="600px"
+    %}
 
 La solución es sencilla, borrar las no utilizadas, pero a veces es tal el número de slides "maestras" que el trabajo de ir borrando las no utilizadas a mano es muy tedioso.
 
@@ -30,6 +34,10 @@ End Sub [/code]
 
 En la barra de herramientas del editor de Visual Basic pulsar en el "PLAY" que ejecutará la macro. Dependiendo del tamaño de tu presentación y el número de slides patrones que tengas terminará en unos segundos o en minutos.
 
-![MasterSlides](/assets/img/original/MasterSlides.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/MasterSlides.png"
+    caption="MasterSlides"
+    width="600px"
+    %}
 
 Cuando termine, salvar el archivo, avisará que si lo haces se perderá la macro, seguir adelante dado que la Macro la podemos ignorar, ya no la necesitamos más, volver a abrirlo y veréis que los patrones han desaparecido, bueno, los no usados. Esta mañana lo ejecuté en un PPT de 50MB con cientos de slides master y tardó 7 min en terminar, así que paciencia. Por cierto, lo dejó en 33MB :-)

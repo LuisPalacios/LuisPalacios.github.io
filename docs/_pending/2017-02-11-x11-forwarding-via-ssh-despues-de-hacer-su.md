@@ -44,7 +44,11 @@ root@marte:~# ls -al .Xauthority
 root@marte:~# xclock    <== FUNCIONA !!!!!!
 ^C
 
-![](/assets/img/original/x11fwdsu.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/x11fwdsu.png"
+    caption=""
+    width="600px"
+    %}
 
 Hasta aquí todo bien pero no es permanente, por ejemplo al re-arrancar el servidor, el sshd, etc... se regenerarán los cookies y tendríamos a volver a empezar.
 

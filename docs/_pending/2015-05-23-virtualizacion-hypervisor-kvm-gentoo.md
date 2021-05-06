@@ -6,11 +6,23 @@ tags: hypervisor kvm vm
 excerpt_separator: <!--more-->
 ---
 
-En este artículo describo la instalación de un Host ![Hypervisor basado en KVM](/assets/img/original/Main_Page){: width="730px" padding:10px }, una solución de virtualización basada en el Kernel de Linux para hardware x86 con extensiones Intel VT o AMD-V. **Puedes usar cualquier distribución Linux** para hacerlo y casi cualquier hardware, en mi caso he optado por el NUC5i5RYK con 16GB de RAM.
+{% include showImagen.html
+    src="/assets/img/original/Main_Page"
+    caption="Hypervisor basado en KVM"
+    width="600px"
+    %}
 
-![HyperKVM](/assets/img/original/HyperKVM-1024x1002.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/HyperKVM-1024x1002.png"
+    caption="HyperKVM"
+    width="600px"
+    %}
 
-Después de tener ![funcionando con éxito el Hypervisor ESXi](/assets/img/original/?p=29) he decidido aprender KVM y darle una oportunidad por varios motivos: garantía de soporte del Hardware casero, menor consumo de memoria (ESXi consume aprox 2GB){: width="730px" padding:10px } y que todas mis VM's están basadas en Linux/FreeBSD por lo que previsiblemente sea más óptimo ejecutarlas en KVM.
+{% include showImagen.html
+    src="/assets/img/original/?p=29) he decidido aprender KVM y darle una oportunidad por varios motivos: garantía de soporte del Hardware casero, menor consumo de memoria (ESXi consume aprox 2GB"
+    caption="funcionando con éxito el Hypervisor ESXi"
+    width="600px"
+    %}
 
  
 
@@ -18,7 +30,11 @@ Después de tener ![funcionando con éxito el Hypervisor ESXi](/assets/img/origi
 
 Aquí tienes los pasos necesarios para preparar un Host KVM con Gentoo Linux.
 
-![Crea un USB](/assets/img/original/?p=9){: width="730px" padding:10px } para instalar, haz boot con ella y una vez que aparezca el prompt de arranque pulsa TAB para ver las opciones disponibles, en nuestro caso escribimos “gentoo” y pulsamos Intro. Código de teclado usa “13” para Español.
+{% include showImagen.html
+    src="/assets/img/original/?p=9"
+    caption="Crea un USB"
+    width="600px"
+    %}
 
 Una de las ventajas del NUC NUC5i5RYK es que trae un Hardware muy bien soportado por linux, así que tras el primer boot el equipo activa la tarjeta Ethernet y recibe una dirección IP vía DHCP.
 
@@ -975,7 +991,11 @@ livecd ~ # swapon /dev/sda3
 
 Aunque todavía no podemos usar la versión gráfica "gparted", una vez que terminé la instalación así es como se ve desde dicho programa:
 
-![particionar](/assets/img/original/particionar.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/particionar.png"
+    caption="particionar"
+    width="600px"
+    %}
 
 **Montamos root y boot**
 
@@ -991,7 +1011,11 @@ livecd ~ # date 102822082014   <== MMDDHHMMAAAA
 
 **Descarga de Stage 3**
 
-El "Stage 3" es un "paquete" que contiene un entorno Gentoo mínimo (ya compilado) que facilita el proceso de instalación. Te recomiendo consultar en paralelo el [Gentoo Handbook](https://wiki.gentoo.org/wiki/Handbook:Main_Page) que encontrarás en la ![Wiki de Gentoo](/assets/img/original/Main_Page){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/Main_Page"
+    caption="Wiki de Gentoo"
+    width="600px"
+    %}
 
   
 livecd ~ # cd /mnt/gentoo
@@ -1128,7 +1152,11 @@ net-misc/iputils -caps -filecaps
 
 (chroot) livecd / # emerge -v gentoo-sources
 
-Los fuentes quedan instalados en /usr/src/linux , a continuación tendrías que parametrizarlo con make menuconfig y luego compilarlo. Si tienes experiencia en parametrizar el kernel, adelante con ello. No olvides activar el soporte de iSCSI en el caso de querer configurar ese tipo de targets (consulta la sección iSCSI al final de este apunte). Si lo prefieres utiliza mi copia del fichero ![.config para Kernel 4.0.4 para NUC5i5RYK](/assets/img/original/2015-06-07-config-4.0.4-NUC5i5RYK_KVM.txt){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/2015-06-07-config-4.0.4-NUC5i5RYK_KVM.txt"
+    caption=".config para Kernel 4.0.4 para NUC5i5RYK"
+    width="600px"
+    %}
 
 (chroot) livecd ~ # cd /usr/src/linux
 (chroot) livecd linux # wget https://raw.githubusercontent.com/LuisPalacios/Linux-Kernel-configs/master/configs/2015-05-22-config-4.0.4-NUC5i5RYK_KVM.txt -O .config 
@@ -1203,7 +1231,11 @@ Nota, si en el futuro tienes que modificar el Kernel, no olvides ejecutar grub2-
 
 **Preparo la red**
 
-Uso "nombres de interfaces predecibles", un servicio de **udevd** bien descrito ![upstream](/assets/img/original/). Asigno un nombre específico a la interfaz principal (cambia la MAC a la de tu interfaz){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/). Asigno un nombre específico a la interfaz principal (cambia la MAC a la de tu interfaz"
+    caption="upstream"
+    width="600px"
+    %}
 
 # Interfaz conectada a la red ethernet
 SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="b8:ae:ed:12:34:56", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="eth*", NAME="eth0"
@@ -1298,7 +1330,11 @@ edaddepiedrix ~ # systemctl start vixie-cron.service
 
 **Fecha y hora**
 
-Para configurar fecha/hora debe utilizarse "timedatectl". No te pierdas este apunte sobre cómo montar además el ![servicio NTP](/assets/img/original/?p=881){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=881"
+    caption="servicio NTP"
+    width="600px"
+    %}
 
 edaddepiedrix ~ # timedatectl set-local-rtc 0
 edaddepiedrix ~ # timedatectl set-timezone Europe/Madrid
@@ -1392,7 +1428,11 @@ edaddepiedrix ~ # reboot.  (O bien "halt" para pararla)
 
 * * *
 
-  ![kvm](/assets/img/original/kvm-1024x324.png){: width="730px" padding:10px }  
+{% include showImagen.html
+    src="/assets/img/original/kvm-1024x324.png"
+    caption="kvm"
+    width="600px"
+    %}
 
 # Configurar la Virtualización con KVM
 
@@ -1496,7 +1536,11 @@ Primero hay que tener claro el diseño físico de la red, qué NIC's tenemos y q
 
 Si empezamos por el diseño físico, es simple, mi Servidor casero, donde se ejecuta Linux Gentoo y el hypervisor KVM, tiene una única tarjeta de red, asi que conecto ese puerto al Switch externo por el cual se entregarán 4 x VLAN's: 2 (iptv), 3 (voip), 6 (internet), 100 (intranet).
 
-![hyprevisor-kvm-fisico](/assets/img/original/hyprevisor-kvm-fisico.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/hyprevisor-kvm-fisico.png"
+    caption="hyprevisor-kvm-fisico"
+    width="600px"
+    %}
 
 Como voy a recibir 4 VLAN's tengo que configurar 4 virtual switches, cada uno asociado a una VLAN y así poder ofrecérselos a las máquinas virtuales. Es posible hacerlo con Network Manager y de hecho no es demasiado complejo.
 
@@ -1504,7 +1548,11 @@ Como voy a recibir 4 VLAN's tengo que configurar 4 virtual switches, cada uno as
 
 El Hypervisor (KVM) necesita usar el código del Kernel "Bridge", que implementa el estándar ANSI/IEEE 802.1d (en realidad un subconjunto de dicho estándar). Permite crear uno o más bridges lógicos a los que conectaremos las interfaces físicas que deseemos y las lógicas de las máquinas virtuales. En mi caso voy a recibir múltiples VLAN's por una única interfaz física, así que tan sencillo como crear un virtual Switch para cada VLAN y más adelante presentarle al menos una al propio equipo para poder gestionarlo y el resto a la las VM's como desee.
 
-![kvmvlan](/assets/img/original/kvmvlan-743x1024.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvmvlan-743x1024.png"
+    caption="kvmvlan"
+    width="600px"
+    %}
 
 Veamos un ejemplo donde el Hypervisor recibe 4 VLAN's:
 
@@ -1818,41 +1866,105 @@ Ya queda menos, el siguiente paso consiste en crear, modificar, borrar, etc. las
 
 Ten en cuenta que las interfaces que he configurado en el Host (Hypervisor) con soporte de VLAN's se presentarán a las máquinas virtuales sin el tag VLAN y podrás conectar a cualquiera de ellas (o a todas) desde virt-manager
 
-![intfVirtuales](/assets/img/original/intfVirtuales.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/intfVirtuales.png"
+    caption="intfVirtuales"
+    width="600px"
+    %}
 
 ### virt-manager
 
 Con virt-manager las VM's se crearán por defecto en el directorio /var/lib/libvirt/images. Recordemos que tendrán la extensión .qcow2. Veamos el ejemplo completo:
 
-![kvm-new-vm1](/assets/img/original/kvm-new-vm1.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-new-vm1.png"
+    caption="kvm-new-vm1"
+    width="600px"
+    %}
 
-![kvm-new-vm2](/assets/img/original/kvm-new-vm2.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-new-vm2.png"
+    caption="kvm-new-vm2"
+    width="600px"
+    %}
 
-![kvm-new-vm3](/assets/img/original/kvm-new-vm3.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-new-vm3.png"
+    caption="kvm-new-vm3"
+    width="600px"
+    %}
 
-![kvm-new-vm4](/assets/img/original/kvm-new-vm4.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-new-vm4.png"
+    caption="kvm-new-vm4"
+    width="600px"
+    %}
 
-![kvm-new-vm5](/assets/img/original/kvm-new-vm5.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-new-vm5.png"
+    caption="kvm-new-vm5"
+    width="600px"
+    %}
 
-![kvm-new-vm6](/assets/img/original/kvm-new-vm6.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-new-vm6.png"
+    caption="kvm-new-vm6"
+    width="600px"
+    %}
 
-![kvm-new-vm7](/assets/img/original/kvm-new-vm7.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-new-vm7.png"
+    caption="kvm-new-vm7"
+    width="600px"
+    %}
 
-![kvm-new-vm8-1](/assets/img/original/kvm-new-vm8-1.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-new-vm8-1.png"
+    caption="kvm-new-vm8-1"
+    width="600px"
+    %}
 
-![kvm-new-vm8-2](/assets/img/original/kvm-new-vm8-2.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-new-vm8-2.png"
+    caption="kvm-new-vm8-2"
+    width="600px"
+    %}
 
-![kvm-new-vm8-3](/assets/img/original/kvm-new-vm8-3.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-new-vm8-3.png"
+    caption="kvm-new-vm8-3"
+    width="600px"
+    %}
 
-![kvm-new-vm9](/assets/img/original/kvm-new-vm9.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-new-vm9.png"
+    caption="kvm-new-vm9"
+    width="600px"
+    %}
 
-![kvm-new-vm10](/assets/img/original/kvm-new-vm10-1024x915.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-new-vm10-1024x915.png"
+    caption="kvm-new-vm10"
+    width="600px"
+    %}
 
-![kvm-new-vm12](/assets/img/original/kvm-new-vm12-1024x919.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-new-vm12-1024x919.png"
+    caption="kvm-new-vm12"
+    width="600px"
+    %}
 
-![kvm-new-vm13](/assets/img/original/kvm-new-vm13-1024x918.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-new-vm13-1024x918.png"
+    caption="kvm-new-vm13"
+    width="600px"
+    %}
 
-![kvm-new-vm14](/assets/img/original/kvm-new-vm14.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-new-vm14.png"
+    caption="kvm-new-vm14"
+    width="600px"
+    %}
 
  
 
@@ -1900,7 +2012,11 @@ edaddepiedrix ~ # virsh edit centos7
 
 [/dropshadowbox]
 
-![kvmConfigs](/assets/img/original/kvmConfigs.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvmConfigs.png"
+    caption="kvmConfigs"
+    width="600px"
+    %}
 
 - Mostrar información sobre una máquina virtual
 
@@ -1955,7 +2071,11 @@ El dominio centos7 está siendo apagado
 
 luis@edaddepiedrix ~ $ virt-viewer --connect qemu:///system
 
-![virtviewer](/assets/img/original/virtviewer-1024x829.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/virtviewer-1024x829.png"
+    caption="virtviewer"
+    width="600px"
+    %}
 
 - Redimensionar el disco duro de la VM
 
@@ -1968,7 +2088,11 @@ Redimensionar la imagen del disco duro
 luis@edaddepiedrix ~ $ qemu-img resize aplicacionix.qcow2 +10GB
 Image resized.
 
-**Redimensionar la partición**. Tienes varias opciones, la más sencilla es si tu VM tenía gparted, hagas boot y redimensiones la partición, funciona en "vivo". Otra opción es que modifiques el grub.cfg, añadas init=/bin/sh y uses parted + resize2fs para redimensionarla. La más compleja sería si usas un ![LiveCD de GParted](/assets/img/original/download.php){: width="730px" padding:10px }, lo asocias a la VM, haces boot con él y particionas desde ahí.
+{% include showImagen.html
+    src="/assets/img/original/download.php"
+    caption="LiveCD de GParted"
+    width="600px"
+    %}
 
 luis@edaddepiedrix ~ # virsh edit aplicacionix
 
@@ -1980,7 +2104,11 @@ Añadir un CDROM después del disco duro:
 
 Arrancar la máquina virtual y usar GParted para redimensionar la partición. Una vez que terminas ya puedes desahacer la configuración anterior y boot de forma normal.
 
-![livegparted](/assets/img/original/livegparted.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/livegparted.png"
+    caption="livegparted"
+    width="600px"
+    %}
 
  
 
@@ -2000,7 +2128,11 @@ edaddepiedrix ~ # qemu-img convert -O qcow2 Gentoo_403-disk1.vmdk gentoo.qcow2
 
 ## Gestión de las máquinas virtuales
 
-Está fuera del ámbito de este apunte, pero si estás buscando alternativas a virt-manager, echa un ojo a ![esta página](/assets/img/original/Management_Tools){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/Management_Tools"
+    caption="esta página"
+    width="600px"
+    %}
 
 * * *
 
@@ -2084,4 +2216,8 @@ done
 
 #### Backup datos persistentes en disco iSCSI
 
-En este apunte ![RBME: Backup incremental en Linux](/assets/img/original/?p=18){: width="730px" padding:10px } tienes un ejemplo sobre cómo hacer backup en un disco remoto que se presenta al Linux vía iSCSI.
+{% include showImagen.html
+    src="/assets/img/original/?p=18"
+    caption="RBME: Backup incremental en Linux"
+    width="600px"
+    %}

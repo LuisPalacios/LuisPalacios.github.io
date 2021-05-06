@@ -6,9 +6,17 @@ tags: macosx peakhour snmp
 excerpt_separator: <!--more-->
 ---
 
-![OpenVPN](/assets/img/original/){: width="730px" padding:10px }** que sigue siendo la mejor solución hoy en día, a pesar de que es más complejo de implementar. El objetivo es poder tener acceso a los servicios internos de mi red casera desde internet.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="OpenVPN"
+    width="600px"
+    %}
 
-  ![bvSrAN5aY53Ewcw9SKU4ovo6qI7mu4nlR9GiAFqsWSG0FCzNr2BL4vtRAk0nLMB2qAg=w300](/assets/img/original/bvSrAN5aY53Ewcw9SKU4ovo6qI7mu4nlR9GiAFqsWSG0FCzNr2BL4vtRAk0nLMB2qAgw300.png){: width="730px" padding:10px }  
+{% include showImagen.html
+    src="/assets/img/original/bvSrAN5aY53Ewcw9SKU4ovo6qI7mu4nlR9GiAFqsWSG0FCzNr2BL4vtRAk0nLMB2qAgw300.png"
+    caption="bvSrAN5aY53Ewcw9SKU4ovo6qI7mu4nlR9GiAFqsWSG0FCzNr2BL4vtRAk0nLMB2qAg=w300"
+    width="600px"
+    %}
 
 - OpenVPN es la mejor solución VPN a día de hoy. Es fiable, rápido y lo más importante, muy seguro, incluso contra organismos que dicen comprometieron otros protocolos. Como contrapartida, su configuración es más compleja y tiene el inconveniente de necesitar un software adicional en los clientes.
 - IKEv2 también es un protocolo rápido y seguro si se usa la implementación open source. Para lo usuarios móviles tiene la ventaja (sobre openvpn) de reconectarse. Es la única solución para usuarios de Blackberry.
@@ -33,7 +41,11 @@ net-misc/openvpn      lzo -pam plugins ssl systemd iproute2 examples
 
 ## Infraestructura PKI
 
-Es la primera vez que instalo openvpn así que necesito crear mi propia infraestructura PKI desde el principio. PKI significa Public Key Infrastructure y es el conjunto de recursos necesarios para crear certificados digitales. Dejo [aquí](http://sobrebits.com/montar-un-servidor-casero-con-raspberry-pi-parte-7-instalacion-y-configuracion-de-openvpn/) y ![aquí](/assets/img/original/Create_a_Public_Key_Infrastructure_Using_the_easy-rsa_Scripts){: width="730px" padding:10px } un par de enlaces interesantes donde esta todo muy bien explicado. A continuación un registro de mi instalación:
+{% include showImagen.html
+    src="/assets/img/original/Create_a_Public_Key_Infrastructure_Using_the_easy-rsa_Scripts"
+    caption="aquí"
+    width="600px"
+    %}
 
 # cp -a /usr/share/easy-rsa /root/easy-rsa-servidor
 # cd /root/easy-rsa-servidor
@@ -139,9 +151,17 @@ nobody   13080     1  0 17:13 ?        00:00:00 /usr/sbin/openvpn --daemon --wri
 
 ## MacOSX
 
-Para conectar desde un MacOSX necesitas instalar un cliente especial. Uno muy popular es ![Tunnelblick](/assets/img/original/){: width="730px" padding:10px }:
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="Tunnelblick"
+    width="600px"
+    %}
 
-- Descarga e instala el **cliente OpenVPN para MacOSX**: ![Tunnelblick](/assets/img/original/){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="Tunnelblick"
+    width="600px"
+    %}
 - Ejecutar Tunnelblick
 
 El propio programa te guiará para que puedas crearte un fichero de configuración. Recuerda que tienes que hacerle llegar los ficheros ca.crt, luis.crt y luis.key.

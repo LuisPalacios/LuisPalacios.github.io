@@ -6,21 +6,41 @@ tags: docker
 excerpt_separator: <!--more-->
 ---
 
-![Docker](/assets/img/original/)", por lo que entendí se trata de una herramienta que permite empaquetar "aplicaciones Linux y todas sus dependencias" en un contenedor virtual (algo así como sandboxes) autocontenido. Dicho "container" (contenedor){: width="730px" padding:10px } queda desacoplado del Hardware por completo y lo puedes ejecutar donde te de la gana, bueno donde tengas una "daemon Docker". ¿Dónde puedes tener un Daemon Docker?, pues solo necesitas un kernel linux, así que funciona obviamente en Linux.
+{% include showImagen.html
+    src="/assets/img/original/)", por lo que entendí se trata de una herramienta que permite empaquetar "aplicaciones Linux y todas sus dependencias" en un contenedor virtual (algo así como sandboxes) autocontenido. Dicho "container" (contenedor"
+    caption="Docker"
+    width="600px"
+    %}
 
 Eso no nos dice mucho, pero si te digo que puedes ejecutar el daemon Docker (y por tanto tus aplicaciones) en otras plataformas como Windows o MacOsx poniendo una máquina virtual super ligera (estilo VirtualBox), que plataformas como Amazon EC, Google Cloud, Rackspace Cloud, etc. ya soportan contenedores Docker, entonces empezará a interesante. De hecho hay más, los contenedores Docker y todo lo que se está desarrollando a su alrededor está acelerando a una velocidad impresionante, no se trata de un Host Hypervisor al estilo ESX, KVM, Hyper-V vinculado al hardware con sus máquinas virtuales, sino que se trata de un virtualizador que ejecuta containers con aplicaciones aisladas autocontenidas en casi cualquier sitio, ofreciendo una flexibilidad y agilidad IT impresionante. Si tienes aplicaciones (linux) piensa que las puedes ejecutar en cualquier sitio, cientos de ellas por servidor, con una escalabiilidad impresionante
 
-Como tiene pinta de ser una solución muy flexible, ágil y portable, pensé en aprender sobre ello y qué mejor forma que usarlo para instalar mis Servicios en modo contenedores en mi nuevo ![servidor casero](/assets/img/original/index.php?controller=post&action=view&id_post=27){: width="730px" padding:10px }. Un ejemplo sobre lo que quiero decir: en vez de instalar el servidor web apache junto con este blog encima del propio Gentoo de mi servidor, lo que haré es crearlo como un contenedor Docker.
+{% include showImagen.html
+    src="/assets/img/original/index.php?controller=post&action=view&id_post=27"
+    caption="servidor casero"
+    width="600px"
+    %}
 
-![why-docker2bisv4-130725202710-phpapp01-thumbnail-4_2_o](/assets/img/original/why-docker2bisv4-130725202710-phpapp01-thumbnail-4_2_o.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/why-docker2bisv4-130725202710-phpapp01-thumbnail-4_2_o.jpg"
+    caption="why-docker2bisv4-130725202710-phpapp01-thumbnail-4_2_o"
+    width="600px"
+    %}
 
 Una de las ventajas de Docker que veo de forma inmediata: ahora que migrando mi servidor supone reinstalar todos mis servicios en el nuevo Hardware, si tuviese todo en "contenedores" la migración hubiese sido infinitamente más sencilla y rápida.
 
-Por otro lado me interesa aprender algo nuevo, me ha llamado la atención que también permite ejecutar contenedores en la nube pública y que la comunidad de desarrolladores está compartiendo los suyos propios, así que rápidamente me he dado de alta en el ![Docker Hub](/assets/img/original/){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="Docker Hub"
+    width="600px"
+    %}
 
 ## ¿qué es Docker?
 
-Más en detalle (fuente ![WikipediA](/assets/img/original/Docker_%28software%29)){: width="730px" padding:10px }, Docker es un proyecto de código abierto que automatiza el despliegue de aplicaciones situadas dentro de "contenedores". Crea una capa de abstracción y automatización virtualizando el Sistema Operativo Linux.
+{% include showImagen.html
+    src="/assets/img/original/Docker_%28software%29)"
+    caption="WikipediA"
+    width="600px"
+    %}
 
 Virtualiza el sistema operativo gracias a que usa recursos de aislamiento que ofrece el Kernel de Linux, tales como cgroups y espacios de nombres, y permite ejecutar "contenedores independientes" dentro de una única instancia de Linux. Atención: ni es un hypervisor ni se ejecutan máquinas virtuales.
 
@@ -34,9 +54,17 @@ Docker incluye la biblioteca **libcontainer** como una implementación de refere
 
 ## Docker Host con Gentoo Linux
 
-Mi objetivo es instalar Docker en mi [nuevo servidor basado en Gentoo GNU/Linux](https://www.luispa.com/?p=7). Está bastante bien documentado en la ![página de instalación de Gentoo](/assets/img/original/docker){: width="730px" padding:10px }:
+{% include showImagen.html
+    src="/assets/img/original/docker"
+    caption="página de instalación de Gentoo"
+    width="600px"
+    %}
 
-![.config](/assets/img/original/?p=831){: width="730px" padding:10px } completo
+{% include showImagen.html
+    src="/assets/img/original/?p=831"
+    caption=".config"
+    width="600px"
+    %}
 
 # OBLIGATORIOS
 
@@ -99,7 +127,11 @@ totobo ~ # /etc/init.d/docker start
  * /var/log/docker.log: correcting owner
  * Starting docker daemon ...
 
-![Servidor "gitolite" en Contenedor Docker](/assets/img/original/?p=184){: width="730px" padding:10px }"
+{% include showImagen.html
+    src="/assets/img/original/?p=184"
+    caption="Servidor "gitolite" en Contenedor Docker"
+    width="600px"
+    %}
 
 **Nota**: Hay algunas cosas que no hice y que de momento no me han afectado. No he activado LVM, durante la instalación de docker se instalan su dependencia LVM y me sugiere que añada lvm al runlevel boot (rc-update add lvm boot) y que habilite "lvmetad" en el /etc/lvm/lvm.conf (si quiero lvm autoactivation + metadata caching). Tampoco he instalado ni tengo activo systemd: Docker dice que tiene dependencia con systemd en sus páginas.
 
@@ -107,9 +139,17 @@ totobo ~ # /etc/init.d/docker start
 
 ## Docker en Host basado en MacOSX
 
-Otra opción con la que también estoy probando es ![instalarme Docker en mi iMac](/assets/img/original/){: width="730px" padding:10px }, así podré verificar y probar a trabajar con "hosts" diferentes, una vez vaya creando mis propios contenedores.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="instalarme Docker en mi iMac"
+    width="600px"
+    %}
 
-Dado que Docker depende del kernel de Linux, la versión de Mac realmente es una Virtual Machine con Virtual Box que por dentro contiene Linux y Docker. La última versión que me bajo es el instalador ![boot2docker (última versión)](/assets/img/original/releases){: width="730px" padding:10px } que monta Docker en Linux dentro de una máquina virtual VirtualBox.
+{% include showImagen.html
+    src="/assets/img/original/releases"
+    caption="boot2docker (última versión)"
+    width="600px"
+    %}
 
 **El instalador boot2docker**
 
@@ -155,7 +195,11 @@ El resultado es... espectacular, se baja Ubuntu (~200MB) y entra en él, y funci
 
 ## **Siguientes pasos...**
 
-Hay más [ideas y ejemplos en la guía del usuario de Docker](http://docs.docker.com/userguide/), te recomiendo que dediques tiempo a leer los manuales de Docker y a hacer pruebas, aquí [registry oficial, un repositorio con cientos de imágenes](https://registry.hub.docker.com). También te dejo aquí un artículo sobre cómo he hecho mi primer contenedor para un servicio real que he activado en mi Host Linux: ![Servidor "gitolite" en Contenedor Docker](/assets/img/original/index.php?controller=post&action=view&id_post=39){: width="730px" padding:10px }  
+{% include showImagen.html
+    src="/assets/img/original/index.php?controller=post&action=view&id_post=39"
+    caption="Servidor "gitolite" en Contenedor Docker"
+    width="600px"
+    %}
 
 # ¿Imágenes en disco NFS?
 
@@ -173,7 +217,11 @@ totobo linux # make menuconfig
 
 ### /etc/fstab
 
-Modifico el fichero fstab (notar que mi NAS se llama panoramix). Notar que en mi equipo utilizo jumbo frames (ver configuración de ![/etc/conf.d/net aquí](/assets/img/original/?p=785)){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/?p=785)"
+    caption="/etc/conf.d/net aquí"
+    width="600px"
+    %}
 
 /etc/fstab
 :

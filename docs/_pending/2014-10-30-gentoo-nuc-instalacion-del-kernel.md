@@ -6,9 +6,17 @@ tags: kernel linux nuc
 excerpt_separator: <!--more-->
 ---
 
-Un apunte sobre la instalación del kernel en Gentoo, que pertenece a la colección sobre la ![instalación de Gentoo GNU/Linux en un Intel® NUC D54250WYK](/assets/img/original/?p=7){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=7"
+    caption="instalación de Gentoo GNU/Linux en un Intel® NUC D54250WYK"
+    width="600px"
+    %}
 
-![kernel](/assets/img/original/kernel.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kernel.png"
+    caption="kernel"
+    width="600px"
+    %}
 
 Lo primero es descargar el Kernel
 
@@ -3258,4 +3266,8 @@ Y finalmente su instalación
 (chroot) livecd linux # cp .config /boot/config-3.16.5-gento
  
 
-Volver a la [Configuración mínima del nuevo sistema](https://www.luispa.com/?p=807) o continuar con los ![pasos justo anteriores al primer boot](/assets/img/original/?p=842){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/?p=842"
+    caption="pasos justo anteriores al primer boot"
+    width="600px"
+    %}

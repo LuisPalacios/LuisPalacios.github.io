@@ -12,7 +12,11 @@ Necesito poder, independientemente de qué aplicación tenga el foco, abrir un p
 
 ### Caso de uso
 
-El que me interesa es [Path Finder](http://www.cocoatech.com/pathfinder/), como alternativa a Finder. Se trata de una aplicación muy prometedora, tiene funcionalidades que he echado de menos en Finder durante años, entre ellas que **no crea ficheros “.DS_Store”**, mantiene toda la información en una base de datos propia (una bendición :-) ). ![pathfinder](/assets/img/original/pathfinder-150x150.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/pathfinder-150x150.png"
+    caption="pathfinder"
+    width="600px"
+    %}
 
 Path Finder
 
@@ -20,16 +24,28 @@ Path Finder
 
 Para configurar una HotKey para arrancar una aplicación simplemente tenemos que usar el Automator y las Preferencias del teclado del sistema. Arranca Automator
 
-![automator1](/assets/img/original/automator1.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/automator1.png"
+    caption="automator1"
+    width="600px"
+    %}
 - Crea un Servicio nuevo,
 
-![automator2](/assets/img/original/automator2-1024x824.png){: width="730px" padding:10px } Asóciale una única acción: **abrir aplicación** y con condiciones: **El servicio recibe: sin datos de entrada" en "cualquier aplicación"**.
+{% include showImagen.html
+    src="/assets/img/original/automator2-1024x824.png"
+    caption="automator2"
+    width="600px"
+    %}
 
 - Automator: Documento nuevo
 - Seleccionar las condiciones: sin datos de entrada, en cualquier aplicación
 - Arrastrar *Abrir Aplicación* y seleccionar la aplicación a abrir
 - Salvar el Servicio coo "Arrancar Path Finder"
 
-[![automator3](https://www.luispa.com/wp-content/uploads/2016/03/automator3.png)](https://www.luispa.com/wp-content/uploads/2016/03/automator3.png) Salir de Automator e ir al panel de Preferencias del Sistema, Teclado, Funciones rápidas, Servicios, "Arrancar Path Finder", asignarle una combinación de teclas (Hotkey). ![automator4](/assets/img/original/automator4.png){: width="730px" padding:10px }, se arrancará Path Finder.
+{% include showImagen.html
+    src="/assets/img/original/automator4.png"
+    caption="automator4"
+    width="600px"
+    %}
 
 * * *

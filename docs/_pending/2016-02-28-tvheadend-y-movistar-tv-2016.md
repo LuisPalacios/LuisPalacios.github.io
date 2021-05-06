@@ -6,15 +6,27 @@ tags: firewire linux
 excerpt_separator: <!--more-->
 ---
 
-En este apunte describo cómo instalar Tvheadend en un servidor Linux (**basado en Gentoo**) para ver canales IPTV que recibo a través de mi contrato Movistar Fusión TV. En esta versión utilizo **Tvheadend 4.1-1566** y un **nuevo método de descarga del EPG**. Hace un año hice la ![versión del 2015](/assets/img/original/?p=1225){: width="730px" padding:10px } que he dejado como referencia aunque ha quedado obsoleta.
+{% include showImagen.html
+    src="/assets/img/original/?p=1225"
+    caption="versión del 2015"
+    width="600px"
+    %}
 
-El motivo de hacer un apunte tan parecido es que han cambiado algunas cosas, pero antes me gustaría recordar una vez más que no utilizo el router oficial ni el deco de Movistar, lo he sustituido todo por un equipo linux que hace de router y agregador de canales y empleo como cliente *Kodi en Raspberry* para ver la televisión, así que todo lo descrito aquí está pensado, orientado y probado para funcionar así; quiero decir que no lo he probado con un router "oficial", ni con un Deco. Para entender mejor mi *setup* te recomiendo echarle un ojo a este apunte: ![Movistar Fusión Fibra + TV + VoIP con router Linux.](/assets/img/original/?p=266). Después del aviso: eso no significa que no te va a funcionar con el router+deco's de Movistar TV, por supuesto que debería funcionar, pero yo no lo he probado y si sigues dicha opción recuerda que utiliza UDP y en este apunte todo lo hago con TCP (como veremos más adelante){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=266). Después del aviso: eso no significa que no te va a funcionar con el router+deco's de Movistar TV, por supuesto que debería funcionar, pero yo no lo he probado y si sigues dicha opción recuerda que utiliza UDP y en este apunte todo lo hago con TCP (como veremos más adelante"
+    caption="Movistar Fusión Fibra + TV + VoIP con router Linux."
+    width="600px"
+    %}
 
 ## Tvheadend como agregador de canales de Movistar TV
 
 Tvheadend es un fantástico agregador de diferentes fuentes (Satélite, Tdt, IPTV). Aquí me concentro en usarlo exclusivamente como agregador de canales de Movistar TV.
 
-![fuentesstb2016](/assets/img/original/fuentesstb2016.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/fuentesstb2016.png"
+    caption="fuentesstb2016"
+    width="600px"
+    %}
 
 **MUY importante: En este apunte describo como configurar todos los canales, el epg, los logos, etc. Te recomiendo encarecidamente que si no tienes experiencia con Tvheadend hagas todo lo que está aquí descrito pero SOLO CON UN ÚNICO CANAL. Si ya has hecho una configuración y algo no te funciona (por ejemplo el EPG), mi recomendación es que empieces de nuevo desde cero (Mira cómo limpiar la configuración al final en *trucos de mantenimiento*) y vuelve a empezar, configura solo un único canal, ten siempre un terminal mirando el LOG del programa. Es muy importante, no intentes correr, primero verifica que te funciona todo con un único canal, que recibes el logo, que se asocia el EPG, en definitiva que aprendas a conocer cómo reacciona el programa, cómo algunas cosas no se ejecutan de manera instantánea, etc. Creo que una vez conozcas bien el programa te será más fácil pasar a configurar todos los canales.**
 
@@ -46,7 +58,11 @@ Si trabajas con otra distribución no deberías tener ningún problema, solo ase
 
 ### Fichero .service para systemd
 
-Aquí tienes el fichero **.service**, verás que hay una dependencia a un servicio que llamé \`igmpproxy.service\`, y es que, una vez más, está vinulado al montaje que uso en mi casa y que describí hace tiempo en ![Movistar Fusión Fibra + TV + VoIP con router Linux](/assets/img/original/?p=266){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=266"
+    caption="Movistar Fusión Fibra + TV + VoIP con router Linux"
+    width="600px"
+    %}
 
 tv ~ # cat /etc/systemd/system/tvheadend.service
 
@@ -106,7 +122,11 @@ drwx------ 2 tvheadend video 4096 feb 27 09:11 profile
 
 ### Preparar Logos, fichero M3U y EPG
 
-Antes de arrancar Tvheadend y configurarlo vamos a preparar tres cosas: los logos (picons) de los canales, el fichero M3U que importaré (y quedará vinculado) y los scripts que necesito para descargar y preparar el EPG. Por cierto, he dejado copia de todo esto en ![este repositorio en GitHub](/assets/img/original/tvheadend_movistar){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/tvheadend_movistar"
+    caption="este repositorio en GitHub"
+    width="600px"
+    %}
 
 **ESTOS TRES (Logos, fichero M3U y EPG) ESTÁN MUY VINCULADOS ENTRE SÍ. Por ejemplo, el nombre de los canales, el nombre de los ficheros, el identificativo del EPG, etc... fíjate bien en las descripciones que hago en estos apuntes, si te despistas puede que haya cosas que no te funcionen. Iré avisando con ejemplos.**
 
@@ -143,11 +163,19 @@ Para poder crear los canales en Tvheadend tienes de nuevo múltiples mecanismos.
 
 El proceso es sencillo y más adelante en la sección *Configuración de Tvheadend* lo describo, no lo hagas ahora pero te adelanto cómo se hace: Creas una \`NETWORK\` de tipo \`IPTV AUTOMATIC NETWORK\`, vinculada a un fichero M3U del disco duro y si construyes de forma adecuada el fichero .m3u puedes ahorrarte muchas horas de trabajo.
 
-Aquí tienes una copia de mi fichero [tv.m3u](https://raw.githubusercontent.com/LuisPalacios/tvheadend_movistar/master/2016/tv.m3u), está preparado para mi demarcación (verás que tengo configurado Telemadrid porque estoy en Madrid), está diseñado para mi *setup* donde empleo ![http gracias a udpxy](/assets/img/original/?p=266#udpxy){: width="730px" padding:10px } y por supuesto tiene mis canales contratados.
+{% include showImagen.html
+    src="/assets/img/original/?p=266#udpxy"
+    caption="http gracias a udpxy"
+    width="600px"
+    %}
 
 Importante: si te bajas el fichero anterior verás que tiene la NUMERACIÓN DE CANALES que emplea oficialmente Movistar TV. Una de las ventajas de Tvheadend es que puedes hacer lo que quieras con la numeración de los canales y para evitar tener que asignar uno a uno el número apropiado, lo que hago es añadir (en la línea EXTINF) el número final que quiero que tenga cada canal en el fichero M3U.
 
-![LISTA ACTUALIZADA DE CANALES PARA VLC](/assets/img/original/postt350532.html){: width="730px" padding:10px }" disponible en ADSL ZONE. Lo dicho, adáptalo a tu instalación. Dejo una línea comentada a continuación para explicar qué significa cada cosa:
+{% include showImagen.html
+    src="/assets/img/original/postt350532.html"
+    caption="LISTA ACTUALIZADA DE CANALES PARA VLC"
+    width="600px"
+    %}
 
 :
 #EXTINF:-1 tvh-epg="disable" tvh-chnum="1" tvh-tags="tv|Ocio y cultura",La 1 HD
@@ -179,24 +207,48 @@ tv ~ # chown tvheadend:video /etc/tvheadend/tv.m3u
 Siempre he creido que el mejor método para bajarme el EPG sería el que corresponde con mi contrato, pedirlo por la VLAN2 directamente a Movistar TV utilizando su API, pero por desgracia no lo tienen documentado, el resumen de alternativas que conozco:
 
 - Usar el API a través de la VLAN2 (no tengo la documentación)
-- El trabajo ![movistartv2xmltv](/assets/img/original/?p=1225) (que por desgracia ya **no funciona**){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/?p=1225) (que por desgracia ya **no funciona**"
+    caption="movistartv2xmltv"
+    width="600px"
+    %}
 - Bajarse el XMLTV desde algún sitio (**funciona**).
 - Exportación desde web de Movistar TV (**funciona,** *descubierto* en 2017).
-- Usar técnicas complejas como ![WebGrab+Plus](/assets/img/original/1587) (en mi caso lo uso para complementar){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/1587) (en mi caso lo uso para complementar"
+    caption="WebGrab+Plus"
+    width="600px"
+    %}
 
-![Add-on para KODI](/assets/img/original/)){: width="730px" padding:10px } pero por desgracia el autor no ha liberado los fuentes a la fecha de escribir este apunte.
+{% include showImagen.html
+    src="/assets/img/original/)"
+    caption="Add-on para KODI"
+    width="600px"
+    %}
 
 #### Opciones:
 
 Aquí un resumen de las últimas dos opciones que he utilizado en mi caso:
 
-- _(2016) Empecé con los Ficheros pre-creados_: La solución que he estado utilizando durante el 2016 consiste en bajarse directamente el fichero XMLTV dirariamente desde algún sitio donde "alguien" sea tan generoso como para dejarlo. Hasta Julio/2016 utilizaba este [proyecto que descarga el fichero desde rytec en la comunidad vuplus](http://www.iptvsaga.com/xmltv-epg-graber-batch-script-for-windows/), a partir de esa fecha dejó de funcionar y he pasado, gracias **Josu** (zona comentarios), a usar [esta otra fuente desde tododream](http://epg.tododream.com/latinmunich_xmltv-movistar-spain.gz) que viene de este ![apunte hecho por el usuario latinmunic en el foro de tododream](/assets/img/original/177073-nuevo-epg-movistar-enigma2-crossepg.html){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/177073-nuevo-epg-movistar-enigma2-crossepg.html"
+    caption="apunte hecho por el usuario latinmunic en el foro de tododream"
+    width="600px"
+    %}
 
-![WebGrab+Plus](/assets/img/original/?p=1587){: width="730px" padding:10px } para completar los canales que me faltan.
+{% include showImagen.html
+    src="/assets/img/original/?p=1587"
+    caption="WebGrab+Plus"
+    width="600px"
+    %}
 
 #### Ficheros pre-creados
 
-Creo una serie de scripts que se encargan de descargar el EPG directamente a un fichero XMLTV. Puedes **[encontrar los scripts en mi repositorio de GitHub](https://github.com/LuisPalacios/tvheadend_movistar)**. El script principal se llama ![descarga_guia.sh](/assets/img/original/instalado en un usuario normal donde además configuro el cron para que se ejecute una vez al día, a las 07:00 am (es más que suficiente){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/instalado en un usuario normal donde además configuro el cron para que se ejecute una vez al día, a las 07:00 am (es más que suficiente"
+    caption="descarga_guia.sh"
+    width="600px"
+    %}
 
 luis@tv ~ $ crontab -e     ((( Añade la línea siguiente))) 
 0 7 * * * /home/luis/guia/descarga_guia.sh
@@ -212,17 +264,29 @@ luis@tv ~ $ /home/luis/guia/descarga_guia.sh
 
 Después de ejecutarlo deberías tener el fichero \`/tu/directorio/destino/guia.xml\` perfectamente creado y con contenido.
 
-NOTA: Recuerda, hasta Julio/2016 estaba usando el script [descarga_guia_vuplus.sh](https://github.com/LuisPalacios/tvheadend_movistar/blob/master/2016/descarga_guia_vuplus.sh) pero dejó de funcionar. He creado una versión llamada ![descarga_guia_tododream.sh](/assets/img/original/descarga_guia_tododream.sh) gracias a un enlace que nos ha pasado Josu (sección comentarios){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/descarga_guia_tododream.sh) gracias a un enlace que nos ha pasado Josu (sección comentarios"
+    caption="descarga_guia_tododream.sh"
+    width="600px"
+    %}
 
 #### Descarga web Movistar TV (2017)
 
 Esto es nuevo en el 2017, gracias a **Neoshinji** (zona comentarios, 4 de enero) nos ha dado una pista muy buena sobre un método que desconocía.
 
-Movistar TV tiene una página desde la cual se puede ![EXPORTAR LA PROGRAMACIÓN](/assets/img/original/exportarProgramacion), si conectas verás que puedes seleccionar qué cadenas y formato (xml, csv, excel, texto){: width="730px" padding:10px } prefieres. Mirando en más detalle vemos que se trata de un programa en Javascript y dicho programa, una vez eliges lo que quieres, realizará un **POST** parametrizado a dicha web para solicitar la exportación.
+{% include showImagen.html
+    src="/assets/img/original/exportarProgramacion), si conectas verás que puedes seleccionar qué cadenas y formato (xml, csv, excel, texto"
+    caption="EXPORTAR LA PROGRAMACIÓN"
+    width="600px"
+    %}
 
 Después de un par de días investigando he creado un programa en Javascript para **node.js** que voy a ejecutar periódicamente en mi mismo servidor linux donde ejecuto Tvheadend:
 
-- Proyecto ![**tvhstar** en GitHub](/assets/img/original/tvhstar){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/tvhstar"
+    caption="**tvhstar** en GitHub"
+    width="600px"
+    %}
 
 El objetivo era que crease el fichero epg en formato XMLTV: **guia.xml**,  pero ya puestos le he ido añadiendo más cosas:
 
@@ -234,7 +298,11 @@ El objetivo era que crease el fichero epg en formato XMLTV: **guia.xml**,  per
 
 Una vez que tengo el fichero XMLTV usando el proyecto anterior estoy completando algunos canales que me faltan (como por ejemplo Telemadrid) apoyándome en WebGrab+Plus. Estos scripts crean un fichero adicional XMLTV (guia-wg.xml).
 
-![**tvhwg en GitHub**](/assets/img/original/tvhwg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/tvhwg"
+    caption="**tvhwg en GitHub**"
+    width="600px"
+    %}
 
 #### Configurar Tvheadend para "leer" los ficheros XMLTV
 
@@ -260,7 +328,11 @@ tv # systemctl start tvheadend
 
 #### Configuración general
 
-![ng-tvh-0](/assets/img/original/ng-tvh-0-1024x755.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/ng-tvh-0-1024x755.png"
+    caption="ng-tvh-0"
+    width="600px"
+    %}
 
 Verás como automáticamente **arranca el asistente para realizar una configuración guiada. Yo prefiero cancelarlo** y hacer una configuración manual. Lo primero que hago es cambiar parámetros de la configuración general: Configuración->General->Base.
 
@@ -271,23 +343,39 @@ Verás como automáticamente **arranca el asistente para realizar una configurac
 
 El parámetro "Channel Icon Path" sirve para decirle a Tvheadend: Busca los logos de los programas en el directorio /etc/tvheadend y que tengan como nombre del fichero el nombre del programa, sin espacios, sin símbolos raros, todo en minúsculas. Puedes usar %c o %C (apropiada para canales con caracteres diacríticos, he empezado a usarla recientemente). La opción "Service name picons" es la que elimina los espacios en el nombre.
 
-![ng-tvh-10](/assets/img/original/ng-tvh-10.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/ng-tvh-10.png"
+    caption="ng-tvh-10"
+    width="600px"
+    %}
 
 Este path al icono del canal lo verás más adelante en la opción **User Icon** en Configuración->Channel/EPG->Channels. Verás cómo Tvheadend "pre-rellena" dicho campo con lo mismo que pone en Channel Icon Path pero obviamente sustituyendo %c o %C por el nombre del canal. Lo que quiero anticiparte es que siempre podrás volver aquí a cambiar "Channel Icon path / Channel icon name scheme" y desde Configuración->Channel/EPG->Channels podrás pedir que se regeneren todos los User Icon's con el cambio que hagas aquí.
 
 #### Configuro el EPG Grabber
 
-![por cierto, aquí tienes más información sobre el Epgdb](/assets/img/original/Epgdb)){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/Epgdb)"
+    caption="por cierto, aquí tienes más información sobre el Epgdb"
+    width="600px"
+    %}
 
 Nota: Si tienes más de un fichero XMLTV simplemente repite exactamente lo mismo y crea un segundo grabber interno, de hecho es lo que yo hago para añadir el que genero con WebGrab+Plus.
 
 Por lo tanto, lo que vamos a hacer es configurar Tvheadend para indicarle que a partir de ahora debe hacer *EPG Grabbing*. Entra en \`Configuration->Channel/EPG->EPG Grabber Modules\`. Deberías ver el grabber de movistar (tvheadend escanea el directorio /usr/bin en busca de ficheros que empiezan por tv_grab*). Áctivalo (enable) y desactiva el resto (disable). Ojo!, en cuanto le das al botón del Save verás en el log (journalctl -f) cómo hace el parse del EPG.
 
-![](/assets/img/original/tvhgrabbers2-1024x452.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/tvhgrabbers2-1024x452.png"
+    caption=""
+    width="600px"
+    %}
 
 Configura la periodicidad en la que Tvheadend ejecuta el grabber. ¿Qué es esto?, simplemente estás diciendole a Tvheadend cada cuanto tiempo debe ejecutar el programa \`/usr/bin/tv_grab*\`. Observa que usa el mismo formato que crontab. En mi caso recordarás que tengo un script que se va a internet a bajarse el EPG, así que configuro el *grabber* de Tvheadend para que lo leo aproximadamente media hora después.
 
-![ng-tvh-13](/assets/img/original/ng-tvh-13.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/ng-tvh-13.png"
+    caption="ng-tvh-13"
+    width="600px"
+    %}
 
 Vale, ya tenemos *programado y configurado* el EPG Grabber, pero obviamente no funciona nada todavía, porque hay que crear las fuentes de los canales, los propios canales, asociarlos al EPG. Nota: *el orden NO es importante*, yo estoy siguiendo un orden que te *ahorrará tiempo*, simplemente.
 
@@ -303,15 +391,27 @@ Añado una red nueva de tipo **IPTV Automática** (significa que va a importar d
 - **EIT time offset: Local server time**
 - **Re-fetch period (mins): 60** No lo cambio, pero podrías poner un 1
 
-![ng-tvh-11](/assets/img/original/ng-tvh-11.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/ng-tvh-11.png"
+    caption="ng-tvh-11"
+    width="600px"
+    %}
 
 En cuanto le das al botón "create" lo que ocurre es lo siguiente. Tvheadend analiza el fichero M3U, importa cada una de las líneas en MUXES. Gracias a tener "input streams: 3" y "idle scan muxes: activo" estamos pidiendo que se quede analizando de forma continua los muxes, que lo haga de tres en tres, compruebe si funcionan y si es así los "añada" como SERVICEs. En mi caso, mi fichero m3u, tengo 108 líneas que se escanean de 3 en 3, por lo tanto tarda unos cuantos minutos en terminar. Termina cuando tienes el mismo número de SERVICES que MUXES.
 
 Nota sobre el parámetro "Re-fetch period". Indica cada cuanto tiempo debe releer el fichero M3U para configurar los cambios que detecte. Muy interesante ponerlo a '1min' si estás haciendo pruebas.
 
-![tvh-14](/assets/img/original/tvh-14.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/tvh-14.png"
+    caption="tvh-14"
+    width="600px"
+    %}
 
-![tvh-15](/assets/img/original/tvh-15.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/tvh-15.png"
+    caption="tvh-15"
+    width="600px"
+    %}
 
 Una vez que termina (el número de MUXES==número de SERVICES) ya puedes cambiar la configuración del NETWORK, es decir volver a dejar en sus valors de por defecto parámetros como input streams, idle scan muxes, maximum timeout, etc.
 
@@ -322,15 +422,27 @@ Una vez que termina (el número de MUXES==número de SERVICES) ya puedes cambiar
 
 El siguiente paso consiste en crear los canales. Entra en SERVICES y haz click en Mapp All Services
 
-![ng-tvh-16](/assets/img/original/ng-tvh-16.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/ng-tvh-16.png"
+    caption="ng-tvh-16"
+    width="600px"
+    %}
 
 Ve a CHANNELS, verás que tienen asignado el logo adecuado (según el nombre del canal, en minúsculas y sin espacios...); **pero nos falta el EPG**
 
-![ng-tvh-17](/assets/img/original/ng-tvh-17.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/ng-tvh-17.png"
+    caption="ng-tvh-17"
+    width="600px"
+    %}
 
 Podemos hacer un truco para que nos "autocomplete" el nombre del EPG. Si te fijas en los canales todos tienen la opción "Automatically Map EPG Source" así que: 1) abajo a la derecha donde pone "per page" pon "all", 2) selecciona TODOS los canales, 3) haz click en Edit, deshabilitalos, 4) Apply, 5) sin salir habilitalos de nuevo, 6) Apply, Boom!! verás cómo automáticamente todos los canales cuyo nombre sea el mismo que el del EPG se auto-asociarán. Esto te evitará mucho trabajo, algunos quedarán pendientes de asociar, pero serán muy pocos, así que haz tú la asociación manualmente (no te olvides !!!!).
 
-![tvh-18](/assets/img/original/tvh-18.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/tvh-18.png"
+    caption="tvh-18"
+    width="600px"
+    %}
 
 #### ¿qué pasa con el EPG?
 
@@ -379,7 +491,11 @@ open -na /Applications/VLC.app/Contents/MacOS/VLC --args /Users/luis/priv/TV/0-M
 
 En el gráfico podemos ver todos los canales reproduciendose simultáneamente y cómo consume aproximadamente ~99.5Mbps en la vlan2 a través de mi router (linux). Los VLC's acceden directamente al router, no vía tvheadend.
 
-![9canales](/assets/img/original/9canales.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/9canales.jpg"
+    caption="9canales"
+    width="600px"
+    %}
 
 ### Prueba 2: tvheadend con canales configurados para usar RTP/Multicast
 
@@ -401,11 +517,19 @@ http://tvheadend.server.org:9981/stream/channelid/1433502725?ticket=0CCF3D5A07BC
 http://tvheadend.server.org:9981/stream/channelid/1373052221?ticket=FA06FE51437BCBCA504B71D9683D4DAE12345678&profile=pass
 :
 
-![11canalesHD](/assets/img/original/11canalesHD.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/11canalesHD.jpg"
+    caption="11canalesHD"
+    width="600px"
+    %}
 
 ### Prueba 3: tvheadend a través de udpxy
 
-No conseguía pasar de 3 canales y he descubierto que la razón no podía ser más simple, udpxy sirve un máximo de 3 clientes por defecto, y si quieres soportar más solo tienes que usar el argumento '-c'. He corregido mi apunte ![Movistar Fusión Fibra + TV + VoIP con router Linux](/assets/img/original/?p=266#udpxy){: width="730px" padding:10px } para reflejarlo.
+{% include showImagen.html
+    src="/assets/img/original/?p=266#udpxy"
+    caption="Movistar Fusión Fibra + TV + VoIP con router Linux"
+    width="600px"
+    %}
 
 Repito las pruebas desde OSX con VLC, le pido que conecte con el servidor Tvheadend y a este a su vez que vaya a través de UDPXY.
 
@@ -427,13 +551,21 @@ http://tvheadend.server.org:9981/stream/channelid/1433502725?ticket=0CCF3D5A07BC
 http://tvheadend.server.org:9981/stream/channelid/1373052221?ticket=FA06FE51437BCBCA504B71D9683D4DAE12345678&profile=pass
 :
 
-![11canalestcp](/assets/img/original/11canalestcp.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/11canalestcp.jpg"
+    caption="11canalestcp"
+    width="600px"
+    %}
 
 ### Prueba 4: ¿dónde está el límite? ¿núm. de canales o ancho de banda?
 
 Hago una última prueba concluyente. Intento abrir el número máximo de canales en SD y descubro que **no me deja pasar de 11 canales**, al intentar abrir el duodécimo da un error.
 
-![11canalesSD](/assets/img/original/11canalesSD.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/11canalesSD.jpg"
+    caption="11canalesSD"
+    width="600px"
+    %}
 
 ### Conclusión
 
@@ -477,7 +609,11 @@ abr 09 09:07:28 tv tvheadend[23245]: epggrab: module /usr/bin/tv_grab_movistartv
 
 Entro en la configuración de Tvheadend y fuerzo un EPG Scan.
 
-![epggrab](/assets/img/original/epggrab.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/epggrab.png"
+    caption="epggrab"
+    width="600px"
+    %}
 
 tv ~ # journalctl -f -u tvheadend
 :
@@ -493,7 +629,11 @@ abr 09 09:09:30 tv tvheadend[23245]: /usr/bin/tv_grab_movistartv:   broadcasts t
 
 Por último, échale un ojo a la captura siguiente, en esta sección de la configuración deberías ver todas las asociaciones que se han realizado pero es importante que conozca que esta parte NO la he tenido que configurar, sino que automáticamente ha quedado así configurada por el hecho de seguir todos los pasos que he documentado.
 
-![epggrabberchannels](/assets/img/original/epggrabberchannels.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/epggrabberchannels.png"
+    caption="epggrabberchannels"
+    width="600px"
+    %}
 
 ### Backup de la configuración
 

@@ -6,11 +6,23 @@ tags: centos host kvm linux virtualizacion
 excerpt_separator: <!--more-->
 ---
 
-En este artículo describo la instalación de un Centos 7 como ![Hypervisor basado en KVM](/assets/img/original/Main_Page), una solución de virtualización basada en el Kernel de Linux para hardware x86 que contenga las extensiones de virtualización Intel VT o AMD-V. Este equipo hará de Host para ejecutar múltiples Guests o VM's (Máquinas Virtuales){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/Main_Page), una solución de virtualización basada en el Kernel de Linux para hardware x86 que contenga las extensiones de virtualización Intel VT o AMD-V. Este equipo hará de Host para ejecutar múltiples Guests o VM's (Máquinas Virtuales"
+    caption="Hypervisor basado en KVM"
+    width="600px"
+    %}
 
-![HyperKVM](/assets/img/original/HyperKVM-1024x1002.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/HyperKVM-1024x1002.png"
+    caption="HyperKVM"
+    width="600px"
+    %}
 
-Después de tener ![funcionando con éxito el Hypervisor ESXi](/assets/img/original/?p=29) he decidido aprender KVM y darle una oportunidad por varios motivos: garantía de soporte del Hardware casero, menor consumo de memoria (ESXi consume aprox 2GB){: width="730px" padding:10px } y que todas mis VM's están basadas en Linux/FreeBSD por lo que previsiblemente sea más óptimo ejecutarlas en KVM.
+{% include showImagen.html
+    src="/assets/img/original/?p=29) he decidido aprender KVM y darle una oportunidad por varios motivos: garantía de soporte del Hardware casero, menor consumo de memoria (ESXi consume aprox 2GB"
+    caption="funcionando con éxito el Hypervisor ESXi"
+    width="600px"
+    %}
 
 [dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
 
@@ -24,8 +36,16 @@ Después de tener ![funcionando con éxito el Hypervisor ESXi](/assets/img/origi
 
 El optar por Centos 7 como distribución en vez de Gentoo (después de tantos años) es básicamente porque tengo ganar de "probar" otras cosas. Obviamente tiene la ventaja de que la instalación es infinitamente más sencilla, así que aquí solo dejo unas notas someras sobre la misma.
 
-- La primera parada técnica fue para echar un ojo al projecto ![Centos](/assets/img/original/). Se trata de una distribución soportada por la comunidad, estable y predecible y se deriba de los fuentes de Red Hat Enterprise Linux (RHEL){: width="730px" padding:10px }.
-- Lo siguiente fue descargar el ISO DVD (el último a finales de Abril del 2015 era el ![CentOS-7-x86_64-DVD-1503-01.iso](/assets/img/original/CentOS-7-x86_64-DVD-1503-01.iso)){: width="730px" padding:10px } y quemarlo en un USB
+{% include showImagen.html
+    src="/assets/img/original/). Se trata de una distribución soportada por la comunidad, estable y predecible y se deriba de los fuentes de Red Hat Enterprise Linux (RHEL"
+    caption="Centos"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/CentOS-7-x86_64-DVD-1503-01.iso)"
+    caption="CentOS-7-x86_64-DVD-1503-01.iso"
+    width="600px"
+    %}
 - Por fin arranco el servidor con el USB y realizo la instalación. Selección de Software: **“Host de Virtualización mínimo”**, con las opciones: Depuración, cliente archivos de red, admon remota, plataforma de virtualización, herramientas de desarrollo
 - Llamé a mi servidor "**edaddepiedrix**" (como siempre haciendo alusión a la aldea gala)
 - Al terminar la instalación compruebo y veo qué se ha instalado y qué falta:
@@ -72,7 +92,11 @@ root@edaddepiedrix ~]# osinfo-query os
 :
 :
 
-- Instalo ![EPEL](/assets/img/original/how-to-set-up-epel-repository-on-centos.html){: width="730px" padding:10px }, un repositorio con muchos más paquetes, como gparted, que necesito para poder reparticionar los discos de mi servidor de forma cómoda.
+{% include showImagen.html
+    src="/assets/img/original/how-to-set-up-epel-repository-on-centos.html"
+    caption="EPEL"
+    width="600px"
+    %}
 
 [root@edaddepiedrix ~]# yum install epel-release
 [root@edaddepiedrix ~]# yum repolist
@@ -158,9 +182,17 @@ Primero hay que tener claro el diseño físico de la red, qué NIC's tenemos y q
 
 **Conexiones físicas con KVM**
 
-Si empezamos por el diseño físico, es simple, mi Servidor casero, donde se ejecuta Centos 7 y KVM tiene una única tarjeta de red, asi que conecto ese puerto al Switch externo por el cual entrega 4 x VLAN's: 2 (iptv), 3 (voip), 6 (internet), 100 (intranet). ¿Porqué tantas VLAN's? pues porque es un servidor en pruebas para sustituir al que configuré ![aquí](/assets/img/original/?p=266){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/?p=266"
+    caption="aquí"
+    width="600px"
+    %}
 
-![hyprevisor-kvm-fisico](/assets/img/original/hyprevisor-kvm-fisico.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/hyprevisor-kvm-fisico.png"
+    caption="hyprevisor-kvm-fisico"
+    width="600px"
+    %}
 
 Veamos cómo funciona la red en la distribución que he elegido. CentOS 7, Fedora o RedHat utilizan los scripts /etc/sysconfig/network-scripts/ifcfg-* para controlar y programar **La Red**. Al estar basadas en systemd lo que hacen es conectar Network Manager con sus propios scripts de networking mediante el uso del plugin ifcfg-rh:
 
@@ -179,7 +211,11 @@ Muestro a modo de ejercicio cómo se haría de forma manual y más adelante de m
 
 [dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
 
-**Nota**: El nombre del bridge "virbr0" es el que se usa por defecto, pero en este ejercicio lo llamaré "vSwitch0" ![tal como hice con el Hypervisor ESXi](/assets/img/original/?p=2033){: width="730px" padding:10px }, de modo que puedas ver la equivalencia.
+{% include showImagen.html
+    src="/assets/img/original/?p=2033"
+    caption="tal como hice con el Hypervisor ESXi"
+    width="600px"
+    %}
 
 [/dropshadowbox]  
 
@@ -263,7 +299,11 @@ A continuación puedes encontrar la configuración utilizando los ficheros /etc/
 
 [dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
 
-**Nota**: Para hacerlo más sencillo es necesario usar como nombre de bridge el de por defecto "virbr0", que sería equivalente a "vSwitch0" ![en el ejemplo de Hypervisor ESXi](/assets/img/original/?p=2033){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=2033"
+    caption="en el ejemplo de Hypervisor ESXi"
+    width="600px"
+    %}
 
 [/dropshadowbox]
 
@@ -354,17 +394,53 @@ Arranco virt-manager y creo una nueva VM, con los siguientes parámetros:
 
 [root@edaddepiedrix ~]# virt-manager
 
-![kvm-guest-install](/assets/img/original/kvm-guest-install.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-guest-install.jpg"
+    caption="kvm-guest-install"
+    width="600px"
+    %}
 
  
 
 ### Enlaces
 
-- ![oVirt](/assets/img/original/Home){: width="730px" padding:10px }
-- ![Ejemplos, casos de uso KVM](/assets/img/original/Networking){: width="730px" padding:10px }
-- ![Linux bridge](/assets/img/original/bridge) (Linux Foundation){: width="730px" padding:10px }
-- ![Installar KVM en Centos7](/assets/img/original/?p=207){: width="730px" padding:10px }
-- ![Configuración equivalente con ESXi](/assets/img/original/ESXiNet-1.png){: width="730px" padding:10px }
-- ![Ubuntu y KVM](/assets/img/original/Networking){: width="730px" padding:10px }
-- ![iproute2](/assets/img/original/#Connected%20routes){: width="730px" padding:10px }
-- ![Configurar una interfaz de red usando ifcfg-*](/assets/img/original/sec-Using_the_Command_Line_Interface.html#sec-Configuring_a_Network_Interface_Using_ifcg_Files){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/Home"
+    caption="oVirt"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/Networking"
+    caption="Ejemplos, casos de uso KVM"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/bridge) (Linux Foundation"
+    caption="Linux bridge"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/?p=207"
+    caption="Installar KVM en Centos7"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/ESXiNet-1.png"
+    caption="Configuración equivalente con ESXi"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/Networking"
+    caption="Ubuntu y KVM"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/#Connected%20routes"
+    caption="iproute2"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/sec-Using_the_Command_Line_Interface.html#sec-Configuring_a_Network_Interface_Using_ifcg_Files"
+    caption="Configurar una interfaz de red usando ifcfg-*"
+    width="600px"
+    %}

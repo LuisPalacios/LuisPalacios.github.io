@@ -6,7 +6,11 @@ tags: disco macosx
 excerpt_separator: <!--more-->
 ---
 
-![duermetedisco](/assets/img/original/duermetedisco.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/duermetedisco.png"
+    caption="duermetedisco"
+    width="600px"
+    %}
 
 Necesito subir el tiempo que esperará el MacOSX antes de poner a dormir un disco duro externo Thunderbolt.
 

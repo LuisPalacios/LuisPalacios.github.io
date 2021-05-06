@@ -6,7 +6,11 @@ tags: linux nuc
 excerpt_separator: <!--more-->
 ---
 
-Nota: Este post pertenece a una "colección", así que te recomiendo que empieces por la instalación ![Gentoo GNU/Linux en un Intel® NUC D54250WYK](/assets/img/original/?p=7){: width="730px" padding:10px }. En este artículo en concreto describo cómo iniciar el proceso de instalación arrancando desde una USB
+{% include showImagen.html
+    src="/assets/img/original/?p=7"
+    caption="Gentoo GNU/Linux en un Intel® NUC D54250WYK"
+    width="600px"
+    %}
 
 # Boot con USB de instalación
 
@@ -14,13 +18,21 @@ Insertamos la USB que hemos creado en el paso anterior, arrancamos el equipo y p
 
 **Nota**: la primera vez que arranques el NUC y como no tienes todavía instalado el SSD, solo podrá hacer boot desde la USB.
 
-![boot0](/assets/img/original/boot0-1024x187.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/boot0-1024x187.png"
+    caption="boot0"
+    width="600px"
+    %}
 
 Una vez que aparezca el prompt de arranque pulsar TAB para ver las opciones disponibles, en nuestro caso escribimos "gentoo" y pulsamos Intro, veremos algo parecido a lo siguiente.
 
 **Nota**: Cuando te pregunte el código de teclado usa "13" para Español
 
-[![boot1_0_o](https://www.luispa.com/wp-content/uploads/2014/12/boot1_0_o.jpg)](https://www.luispa.com/wp-content/uploads/2014/12/boot1_0_o.jpg) [![boot2_1_o](https://www.luispa.com/wp-content/uploads/2014/12/boot2_1_o.jpg)](https://www.luispa.com/wp-content/uploads/2014/12/boot2_1_o.jpg) [![boot3_1_o](https://www.luispa.com/wp-content/uploads/2014/12/boot3_1_o.jpg)](https://www.luispa.com/wp-content/uploads/2014/12/boot3_1_o.jpg) ![boot4_0_o](/assets/img/original/boot4_0_o.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/boot4_0_o.jpg"
+    caption="boot4_0_o"
+    width="600px"
+    %}
 
 ## Configuración de red
 
@@ -925,4 +937,8 @@ tlb_flushall_shift: 6
 [ 22.432721] IPv6: ADDRCONF(NETDEV_CHANGE): eno1: link becomes ready
  
 
-Volver al paso anterior: [crear usb para instalar](https://www.luispa.com/?p=9) o ir al siguiente: ![particionar el disco](/assets/img/original/?p=774){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/?p=774"
+    caption="particionar el disco"
+    width="600px"
+    %}

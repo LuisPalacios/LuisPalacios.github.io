@@ -6,13 +6,25 @@ tags: linux nuc
 excerpt_separator: <!--more-->
 ---
 
-Este apunte pertenece a la ![instalación de Gentoo GNU/Linux en un Intel® NUC D54250WYK](/assets/img/original/?p=7){: width="730px" padding:10px } y aquí voy a tratar sobre la instalación del paquete "Stage 3" y "Portage".
+{% include showImagen.html
+    src="/assets/img/original/?p=7"
+    caption="instalación de Gentoo GNU/Linux en un Intel® NUC D54250WYK"
+    width="600px"
+    %}
 
-![spc](/assets/img/original/spc.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/spc.png"
+    caption="spc"
+    width="600px"
+    %}
 
 ## Stage 3
 
-El "Stage 3" es un "paquete" que encontrarás en los [mirrors](https://www.gentoo.org/main/en/mirrors2.xml) y contiene un entorno Gentoo mínimo (ya compilado), que nos bajamos y nos permite continuar la instalación de Gentoo siguiendo las instrucciones de instalación (no olvides el ![HandBook de Gentoo](/assets/img/original/handbook-x86.xml)){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/handbook-x86.xml)"
+    caption="HandBook de Gentoo"
+    width="600px"
+    %}
 
 Antes de bajar el Stage 3, montamos root y boot
 
@@ -80,4 +92,8 @@ livecd / # export PS1="(chroot) $PS1"
 (chroot) livecd / #
  
 
-Volver al paso anterior:  [Particionar el disco SSD](https://www.luispa.com/?p=774) o ir al siguiente: ![Configuración mínima del nuevo sistema](/assets/img/original/?p=807){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/?p=807"
+    caption="Configuración mínima del nuevo sistema"
+    width="600px"
+    %}

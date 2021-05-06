@@ -6,21 +6,49 @@ tags: moi moipro tvheadend
 excerpt_separator: <!--more-->
 ---
 
-Por fin he dado con la mejor alternativa para montar un Servidor de Streaming IPTV casero. Si has seguido estos apuntes habrás observado que llevo tiempo investigando y documentando varias alternativas. Actualizo (Julio 2016): es el mejor Servidor si tienes MUCHAS fuentes externas (SAT o TDT y/o IPTV), pero si solo vas a usar fuentes IPTV (sin sintonizadoras) te recomiendo también explorar la opción de montarlo en tu propio Linux (mira este otro ![apunte](/assets/img/original/4571)){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/4571)"
+    caption="apunte"
+    width="600px"
+    %}
 
-![MoiProTvheadend](/assets/img/original/MoiProTvheadend-830x1024.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/MoiProTvheadend-830x1024.png"
+    caption="MoiProTvheadend"
+    width="600px"
+    %}
 
-Se trata de ![MOI Pro](/assets/img/original/tbs2911-moi-pro.html) + **Tvheadend**, un servidor de Streaming IP basado en Linux capaz de entregar entre 80-100 canales, es uno de los mejores servidores de IPTV que he encontrado en el mercado y además con un precio asequible (equiparable a equipos de gama alta estilo Dreambox, VUPlus basados en Linux){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/tbs2911-moi-pro.html) + **Tvheadend**, un servidor de Streaming IP basado en Linux capaz de entregar entre 80-100 canales, es uno de los mejores servidores de IPTV que he encontrado en el mercado y además con un precio asequible (equiparable a equipos de gama alta estilo Dreambox, VUPlus basados en Linux"
+    caption="MOI Pro"
+    width="600px"
+    %}
 
-Una alternativa algo más barata, si te vale con una única sintonizadora (o SIN sintonizadoras si solo quieres IPTV) es el ![MOI+](/assets/img/original/1Gb (también incluye Wifi: 802.11n aunque no la uso){: width="730px" padding:10px }, soporta hasta 2 tarjetas sintonizadoras y como decía, su firmware está basado en Linux.
+{% include showImagen.html
+    src="/assets/img/original/1Gb (también incluye Wifi: 802.11n aunque no la uso"
+    caption="MOI+"
+    width="600px"
+    %}
 
-Respecto al Linux, no lo se a ciencia cierta pero creo que está basado en Ubuntu (tienen otro producto llamado ![MatrixTV](/assets/img/original/tbs-2910-matrix-arm-mini-pc.html) y parece que usan la misma fuente. Eso sí, el Linux del MOI está muy limitado (incluye muy pocas cosas, no trae compilador, ni el gestor de paquetes){: width="730px" padding:10px }, pero puedes conectar vía SSH y meterle bastante mano, hacerte scripts, retocar/manipular las configuraciones desde línea de comandos, como veremos a continuación.
+{% include showImagen.html
+    src="/assets/img/original/tbs-2910-matrix-arm-mini-pc.html) y parece que usan la misma fuente. Eso sí, el Linux del MOI está muy limitado (incluye muy pocas cosas, no trae compilador, ni el gestor de paquetes"
+    caption="MatrixTV"
+    width="600px"
+    %}
 
 **Lo mejor** de este equipo es que **incluye Tvheadend** **y soporta** tarjetas de **Satélite, Cable o TDT**, así como fuentes **IPTV**. Esto me permite aunar en un solo sitio la agregación de todas mis fuentes de video para poder servirlas a los equipos IP de mi red (Raspberry's, ordenadores, tablets, móviles, TV con KODI, etc..). He instalado dos tarjetas, una para Satélite (con dos sintonizadores) y una para TDT (también con dos sintonizadores):
 
-![MOIPRO-Sintonizadores](/assets/img/original/MOIPRO-Sintonizadores.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/MOIPRO-Sintonizadores.png"
+    caption="MOIPRO-Sintonizadores"
+    width="600px"
+    %}
 
-**Combinar el "MOI" + Tvheadend y clientes ![RaspberryPiv2 + KODI](/assets/img/original/?p=1284) en la(s){: width="730px" padding:10px } TV de tu casa es de momento mi solución ideal para un servicio de TV IP casero multi-cliente**, es decir, que puedes ver varios canales o contenidos multmedia simultaneamente en varias TV's, tablets, teléfonos, ordenadores, etc.
+{% include showImagen.html
+    src="/assets/img/original/?p=1284) en la(s"
+    caption="RaspberryPiv2 + KODI"
+    width="600px"
+    %}
 
  
 
@@ -34,15 +62,27 @@ Primero voy a describir la configuración básica del equipo MOI, después entra
 
 Una vez que terminas de montar el hardware del equipo (las tarjetas sintonizadoras vienen por separado) lo conectas a tu red, lo normal es que reciba una IP vía DHCP (puedes ver cual ha sido en el frontal del equipo). Conecta con ella desde un navegador, el usuario es root y la contraseña root. Lo primero que te recomiendo que hagas es cambiarle a una dirección IP fija.
 
-![MOIPro-01](/assets/img/original/MOIPro-01-1024x765.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/MOIPro-01-1024x765.png"
+    caption="MOIPro-01"
+    width="600px"
+    %}
 
 Configura una dirección IP estática, la puerta de enlace y la dirección de tu DNS Server interno (si lo tienes), en caso contratrio deberás usar siempre direcciones IP en vez de nombres.
 
-[![MOIPro-02](https://www.luispa.com/wp-content/uploads/2015/05/MOIPro-02-1024x765.png)](https://www.luispa.com/wp-content/uploads/2015/05/MOIPro-02.png) ![MOIPro-03](/assets/img/original/MOIPro-03-1024x730.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/MOIPro-03-1024x730.png"
+    caption="MOIPro-03"
+    width="600px"
+    %}
 
 hago click en Tvheadend y al cabo de unos segundos arranca el servicio, conectacto automáticamente por el puerto 9981 con el Web UI del mismo.
 
-![TvheadendConf](/assets/img/original/TvheadendConf.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/TvheadendConf.png"
+    caption="TvheadendConf"
+    width="600px"
+    %}
 
 ## Retocar el MOI Pro desde Linux
 
@@ -181,29 +221,49 @@ Lo primero que hago es quitar el OTA a nivel general y después en cada una de l
 
 Desde **Configuration->Channel/EPG->EPG Grabber**, desactivo Over-the-air Grabbers:
 
-![EPGnoOTA](/assets/img/original/EPGnoOTA.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/EPGnoOTA.png"
+    caption="EPGnoOTA"
+    width="600px"
+    %}
 
 Desde **Configuration->DVB Inputs->TV Adapters**, desactivo Over-the-air Grabbers en las tarjetas sintonizadoras.
 
-![noOTA](/assets/img/original/noOTA.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/noOTA.png"
+    caption="noOTA"
+    width="600px"
+    %}
 
 Al final del apunte explico cómo hacer la inserción del EPG (Guía) mediante Scripts.
 
 # Fuentes
 
-A partir de aquí describo cómo he configurado las tres fuentes (TDT, Movistar TV y Satélite), notar que este artículo está parcialmente "Work in Progress" porque el proyecto ![Tvheadend](/assets/img/original/){: width="730px" padding:10px } es joven y está muy activo, así que iré actualizando según continúe mi investigación.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="Tvheadend"
+    width="600px"
+    %}
 
 ## Fuentes TDT
 
 Para poder sintonizar las frecuencias TDT he instalado la tarjeta "TBS6281 DVB-T2/T/C Dual Tuner PCIe Card" que incluye dos sintonizadores.
 
-[![MoiPHTS-TDT](https://www.luispa.com/wp-content/uploads/2015/05/MoiPHTS-TDT-1024x675.png)](https://www.luispa.com/wp-content/uploads/2015/05/MoiPHTS-TDT.png) ![MOI-TDT-card](/assets/img/original/MOI-TDT-card.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/MOI-TDT-card.png"
+    caption="MOI-TDT-card"
+    width="600px"
+    %}
 
 ### Preparar Muxes Pre-Definidos
 
 Tvheadend permite, cuando se configuran las sintonizadoras, seleccionar **muxes predefinidos** y es recomendable actualizar los que incluye el paquete de sofware con los originales, que están disponibles en internet.
 
-Baja una copia de las ![DTV Scan Tables](/assets/img/original/){: width="730px" padding:10px } y copialas al servidor MOIPro.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="DTV Scan Tables"
+    width="600px"
+    %}
 
 En otro ordenador donde tengas git instalado: 
 $ cd tmp
@@ -216,7 +276,11 @@ Conecta con el MOIPro vía SSH:
 # ln -s /usr/share/tvheadend/data/dvb-scan /usr/share/dvb
 # systemctl restart tvheadend
 
-Además en el caso de TDT puede que te interese actualizar el fichero concreto de tu zona donde vives. En este ejemplo enseño cómo hacer el de Madrid, ya que el que he bajado de internet está desactualizado. Actualizo el fichero con las frecuencias actualizadas a fecha de Mayo de 2015 para Madrid. Nota que tienes todos los datos para hacerte el tuyo propio en esta ![fuente](/assets/img/original/){: width="730px" padding:10px }:
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="fuente"
+    width="600px"
+    %}
 
 #------------------------------------------------------------------------------
 # Fichero generado por LuisPa desde el original generado por w_scan
@@ -398,17 +462,29 @@ El siguiente paso consiste en Añadir una "Network" de tipo TDT usando el listad
 - Pre-defined Muxes: es-Madrid
 - Ok
 
-[![MOI-TDT1](https://www.luispa.com/wp-content/uploads/2015/05/MOI-TDT1.png)](https://www.luispa.com/wp-content/uploads/2015/05/MOI-TDT1.png) [![MOI-TDT2](https://www.luispa.com/wp-content/uploads/2015/05/MOI-TDT2.png)](https://www.luispa.com/wp-content/uploads/2015/05/MOI-TDT2.png) ![MOI-TDT3](/assets/img/original/MOI-TDT3.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/MOI-TDT3.png"
+    caption="MOI-TDT3"
+    width="600px"
+    %}
 
 ### Vincular la "Network" TDT con la Sintonizadora
 
 Vinculamos esta "Network" recién creada con la sintonizadora TDT del equipo.
 
-![MOI-TDT4](/assets/img/original/MOI-TDT4.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/MOI-TDT4.png"
+    caption="MOI-TDT4"
+    width="600px"
+    %}
 
 Si dejas un Terminal conectado por SSH con el MOI Pro y visualizas el "log" (journalctl -f) observarás cómo se van "descubriendo" servicios nuevos. Otra forma de "ver" cómo va detectando los servicios es porque así nos lo va indicando en las diferentes lengüetas debajo de DVB-Inputs: verás cómo poco a poco se incrementa el número de Servicios en "Networks" o en "Services".
 
-![MOI-TDT5](/assets/img/original/MOI-TDT5.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/MOI-TDT5.png"
+    caption="MOI-TDT5"
+    width="600px"
+    %}
 
 Si te encuentras con que Services tienen como resultado de Scan "Fallido (Fail)", ignóralo de momento, lo importante es ir viendo cómo algunos otros dicen "OK" y crece el número de servicios detectados.
 
@@ -435,17 +511,29 @@ Una vez que los **Muxes** han descubierto y "creado" los **Services** ya podemos
 
 Desde **Configuration->DVB Input->Services**, haz una selección múltiple en el navegador de todas las líneas con los Servicios que te interesan, haz click en **Map Selected**, a continuación haz clic en todos los campos y pulsa en **Map**:
 
-![MOI-TDT6](/assets/img/original/MOI-TDT6-1024x450.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/MOI-TDT6-1024x450.png"
+    caption="MOI-TDT6"
+    width="600px"
+    %}
 
 En la sección **Configuration->Channels/EPG->Channels** podrás observar cómo se han creado automáticamente los canales. A partir de aquí puedes cambiar los Tags y el número de canal a tu gusto.
 
-![MOI-TDT8](/assets/img/original/MOI-TDT8-1024x637.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/MOI-TDT8-1024x637.png"
+    caption="MOI-TDT8"
+    width="600px"
+    %}
 
 Fíjate en un dato importante, Tvheadend ha asignado un nombre de icono muy especial a cada canal. Es correcto, déjalo tal cual. Lo que ha hecho es usar como nombre de icono una combinación de los detalles técnicos del canal. En internet hay paquetes que incluyen todos los logos de los canales usando dicha nomenclatura y va a sernos muy útil en el siguiente paso.
 
 ### Iconos de los canales
 
-Vamos con los iconos. Tienes que buscar un "pack" de logos que contenga todos los canales TDT. Para facilitarlo dejo aquí uno que te vale, descárgalo: ![LuisPa-Picon-TDT.tgz](/assets/img/original/LuisPa-Picon-TDT.tgz)){: width="730px" padding:10px }. Copia todos los logos debajo el directorio /root/.hts/picon del MOI Pro y por último le indicarás dicho directorio a la configuraicón de Tvheadend.
+{% include showImagen.html
+    src="/assets/img/original/LuisPa-Picon-TDT.tgz)"
+    caption="LuisPa-Picon-TDT.tgz"
+    width="600px"
+    %}
 
 - Copia todos los ficheros PNG al directorio de picons
 
@@ -464,13 +552,21 @@ $ ssh -l root moipro.parchis.org
 
 - Configuration->General->Picon path:
 
-[![MOI-TDT9](https://www.luispa.com/wp-content/uploads/2015/05/MOI-TDT91.png)](https://www.luispa.com/wp-content/uploads/2015/05/MOI-TDT91.png) ![MHTSLogos](/assets/img/original/MHTSLogos.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/MHTSLogos.png"
+    caption="MHTSLogos"
+    width="600px"
+    %}
 
 - Rearranca Tvheadend
 
 [root@MOIPro ~]# systemctl restart tvheadend
 
-![MOI-TDT10](/assets/img/original/MOI-TDT10.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/MOI-TDT10.png"
+    caption="MOI-TDT10"
+    width="600px"
+    %}
 
 ### Usar más de un sintonizador TDT
 
@@ -480,7 +576,11 @@ La tarjeta "TBS6281 DVB-T2/T/C Dual Tuner PCIe Card" incluye un unico conector p
 
 Selecciono el segundo adaptador y le asigno el mismo network que al primero, es decir: "Network" TDT-Madrid. Esta es la forma correcta de configurarlo, en vez de utilizar la opción de "Linked input".
 
-![MOI-TDT11](/assets/img/original/MOI-TDT11.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/MOI-TDT11.png"
+    caption="MOI-TDT11"
+    width="600px"
+    %}
 
 Con dos o más sintonizadores es posible ver al menos dos (o más) canales (de distintas frecuencias) simultáneamente, o incluso grabar uno y visualizar otro.
 
@@ -490,17 +590,33 @@ Solo nos queda el EPG, pero eso lo vemos en la sección final de este apunte.
 
 Para poder sintonizar los canales IPTV de Movistar TV necesitas tener un contrato de Fusión o Fusión Fibra. Si es el caso, puede usar el equipo MOI Pro como un agregador único para todas las fuentes, incluidos los canales IPTV.
 
-[![MoiPHTS-IPTV](https://www.luispa.com/wp-content/uploads/2015/05/MoiPHTS-IPTV-1024x675.png)](https://www.luispa.com/wp-content/uploads/2015/05/MoiPHTS-IPTV.png) ![cableeth](/assets/img/original/cableeth.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/cableeth.jpg"
+    caption="cableeth"
+    width="600px"
+    %}
 
 Al usar como fuente los canales IPTV no es necesario instalar ningun sintonizador (El MOI Pro usará su tarjeta NIC para conectar por TCP/IP a las fuentes). Lo que sí es importante es que tengas bien configurado el acceso a los canales, es decir, el MOI tiene que ser capaz de "hablar" con el router de Movistar.
 
-En ![este apunte: Movistar Fusión Fibra + TV + VoIP con router Linux](/assets/img/original/239.0.0.76:8208 donde 192.168.1.1:4022 es la dirección:puerto del udpxy y 239.0.0.76:8288 vuelve a ser TVE, Tvheadend también soporta HTTP){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/239.0.0.76:8208 donde 192.168.1.1:4022 es la dirección:puerto del udpxy y 239.0.0.76:8288 vuelve a ser TVE, Tvheadend también soporta HTTP"
+    caption="este apunte: Movistar Fusión Fibra + TV + VoIP con router Linux"
+    width="600px"
+    %}
 
 El udpxy es una Daemon que se ejecuta en Linux y permite hacer relay del tráfico multicast UDP hacia clientes TCP (HTTP). Es decir, él va a tratar por un lado el tráfico/protocolo multicast (hacia el ONT/Movistar) y por otro nos ofrecerá los canales en HTTP (hacia la red casera y el Tvheadend/MOI).
 
-Utilizo udpxy porque yo uso este ![router linux](/assets/img/original/?p=266){: width="730px" padding:10px }, así que tenlo en cuenta cuando veas más adelante HTTP en mi configuración de los **Muxes**.
+{% include showImagen.html
+    src="/assets/img/original/?p=266"
+    caption="router linux"
+    width="600px"
+    %}
 
-Da igual el protocolo que uses para acceder a los canales, el problema es que hay que dar de alta bastantes y manualmente sería una pesadilla, voy enseñarte cómo crearlos de forma automática con un par de scripts disponibles aquí: ![luispa/iptv2hts](/assets/img/original/iptv2hts) (son forks de dos proyectos independientes: **movistartv2xmltv** e **iptv2hts**){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/iptv2hts) (son forks de dos proyectos independientes: **movistartv2xmltv** e **iptv2hts**"
+    caption="luispa/iptv2hts"
+    width="600px"
+    %}
 
 ### 1\. Parar Tvheadend y hacer un backup
 
@@ -991,11 +1107,19 @@ Conecta con el Interfaz Web de Tvheadend y edita **Configuration->DVB Inputs->Ne
 - Activar Idle Scan Muxes
 - Poner "4" en el número de Max Input Streams
 
-![MTV-1](/assets/img/original/MTV-1.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/MTV-1.png"
+    caption="MTV-1"
+    width="600px"
+    %}
 
 Verás en el logging cómo empieza el scanning. En la sección Status podrás ver cómo se van escaneando cuatro canales de forma simultánea (esa es la razón por la que pongo el Max Input Streams en '4', para no saturar). Observa en la ventana Web cómo, poco a poco, se van añadiendo servicios (puede llegar a tardar bastante tiempo, en mi caso fue casi una hora).
 
-![MTV-2](/assets/img/original/MTV-2.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/MTV-2.png"
+    caption="MTV-2"
+    width="600px"
+    %}
 
 ### 5\. Asociación de los Canales
 
@@ -1005,7 +1129,11 @@ Una vez que ha terminado de hacer el scan y tenemos el mismo número de Muxes qu
 
 **AVISO**: No te olvides de Seleccionar los Services que quieres asociar a canales antes de hacer el Map.
 
-[/dropshadowbox] [![MTV-3](https://www.luispa.com/wp-content/uploads/2015/05/MTV-3-1024x582.png)](https://www.luispa.com/wp-content/uploads/2015/05/MTV-3.png) ![MTV-4](/assets/img/original/MTV-41.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/MTV-41.png"
+    caption="MTV-4"
+    width="600px"
+    %}
 
 Recuerda que durante la ejecución de iptv2hts.py había usado la opción \-o canales para que se creasen los **Canales**. Ahora, durante el **Map Services**, los ha encontrado y asociado automáticamente a cada **Service**, ahorrándonos mucho trabajo.
 
@@ -1013,19 +1141,31 @@ Recuerda que durante la ejecución de iptv2hts.py había usado la opción \-o ca
 
 Una vez que terminas de configurar los canales ya puedes eliminar los que no deseas y tendrás todo configurado. Puedes deshabilitar el Network Discovery, Idle Scan Muxes y quitar el límite al número de streams disponibles:
 
-![MTV-5](/assets/img/original/MTV-5.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/MTV-5.png"
+    caption="MTV-5"
+    width="600px"
+    %}
 
 Solo nos queda el EPG, pero eso lo vemos en la sección final de este apunte.
 
 ## Fuentes Satélite
 
-Para los canales que se reciben por Satélite utilizo la "TBS6991SE PCI-E DVB-S2 Dual Tuner TV card", una tarjeta soportada en el MOI Pro que además permite conectar la tarjeta de abonado. ![MoiPHTS-SAT](/assets/img/original/MoiPHTS-SAT-1024x675.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/MoiPHTS-SAT-1024x675.png"
+    caption="MoiPHTS-SAT"
+    width="600px"
+    %}
 
 ### Preparar Muxes Pre-Definidos
 
 Tvheadend permite, cuando se configuran las sintonizadoras, seleccionar **muxes predefinidos** y es recomendable actualizar los que incluye el paquete de sofware con los originales, que están disponibles en internet.
 
-Baja una copia de las ![DTV Scan Tables](/assets/img/original/){: width="730px" padding:10px } y copialas al servidor MOIPro.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="DTV Scan Tables"
+    width="600px"
+    %}
 
  
 
@@ -1063,11 +1203,19 @@ Hay un pequeño problema, no puedo ejecutar los scripts Python en el propio MOI 
 
 ## 1\. Generar el fichero guia.xml
 
-He preparado un script llamado do_grab.sh que se apoya en ![WebGrab+Plus](/assets/img/original/){: width="730px" padding:10px } para recolectar el EPG de TDT y Satélite y en **movistartv2xmltv** para la parte de Movistar TV. Además combina ambos en un único fichero de salida: guia.xml
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="WebGrab+Plus"
+    width="600px"
+    %}
 
 ### 1.1. EPG de TDT/Satélite con **WebGrab+Plus**
 
-Para ver un ejemplo sobre cómo instalarlo, consulta este apunte: ![WebGrab+Plus con TVHeadEnd en Linux](/assets/img/original/?p=1587){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=1587"
+    caption="WebGrab+Plus con TVHeadEnd en Linux"
+    width="600px"
+    %}
 
 Script para ejecutarlo y ejemplo del fichero de configuración.
 
@@ -1107,7 +1255,11 @@ mono Webgrab+Plus.exe "/home/luis/wg++"
 
 ### 1.2. EPG de Movistar TV con **movistartv2xmltv**
 
-El script **movistartv2xmltv** lo vimos antes, está disponible aquí: ![luispa/iptv2hts](/assets/img/original/iptv2hts){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/iptv2hts"
+    caption="luispa/iptv2hts"
+    width="600px"
+    %}
 
 Lo descargo e instalo en mi equipo externo Linux (con Gentoo).
 
@@ -1137,7 +1289,11 @@ luis@aplicacionix ~/iptv2hts-master/movistartv2xmltv $ cat tv_grab_es_movistar.c
 
 Ejecuta los dos "grabbers" o recolectores anteriores, cada uno genera un fichero XMLTV como salida que combino en un único fichero XMLTV final para que sea consumido por Tvheadend. El resultado se llama guia.xml y se copia en el directorio NFS.
 
-Tienes una copia de este script en el proyecto ![luispa/iptv2hts](/assets/img/original/iptv2hts){: width="730px" padding:10px } en GitHub. Descárgalo, copialo en cualquier directorio de tu Linux externo, adáptalo para que apunte a los directorios donde tienes instalado tanto WebGrab+Plus como movistartv2xmltv, el nombre del directorio destino NFS, etc... y prográmalo con crontab.
+{% include showImagen.html
+    src="/assets/img/original/iptv2hts"
+    caption="luispa/iptv2hts"
+    width="600px"
+    %}
 
 [dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
 
@@ -1221,7 +1377,11 @@ exit
 
 Conecta a través del interfaz Web y modifica **Configuration-> Channel/EPG-> EPG Grabber-> Internal Grabber**. Selecciona el ejecutable tv_grab_guia y cambia la programación sobre "cuando" debe ejecutarse:
 
-![MTV-66](/assets/img/original/MTV-66.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/MTV-66.png"
+    caption="MTV-66"
+    width="600px"
+    %}
 
 #### Ajuste fino del EPG
 
@@ -1229,21 +1389,37 @@ Probablemente tengas varios canales de Movistar TV que no muestran el EPG. Eso s
 
 Un ejemplo: El canal Divinity NO me mostraba el EPG, desde el configurador desactivé la asociación incorrecta (rojo) y activé la asociación correcta (verde).
 
-[![div0](https://www.luispa.com/wp-content/uploads/2015/05/div0-1024x265.png)](https://www.luispa.com/wp-content/uploads/2015/05/div0.png) El resultado final es el siguiente: ![div1](/assets/img/original/div1-1024x268.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/div1-1024x268.png"
+    caption="div1"
+    width="600px"
+    %}
 
 Después forcé que Tvheadend re-ejecutase el Grabber. El truco para hacerlo es sencillo. Ve a la ventana de configuración, modifica cualquier campo de la sección Multi-grabber, por ejemplo añade un punto al final de la línea de comentario "Cron multi-line" y vuelve a borrarlo (es decir, en realidad no estás cambiando nada pero Tvheadend creeará que lo has hecho), después pulsa el botón de "Save", en ese momento se ejecuta el grabber de nuevo. En los clientes KODI: Programa->Configuración->TV->EPG/Guía->"Reset DB guía". Cuando vuelvas a la lista de canales deberías ver la Guía que antes te faltaba.
 
 Hay más casos donde necesitarás ajuste fino: uno es si asoció dos EPG's (en vez de uno). Puedes eliminar la asociación redundante, por ejemplo: El canal Baby TV que ves a continuación, tiene como ID EPG del canal el código "BABTV" y estaba asociado a un EPG con un uuid muy largo (rojo), que he quitado para dejar solo el bueno (verde).
 
-![babtv](/assets/img/original/babtv-1024x55.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/babtv-1024x55.png"
+    caption="babtv"
+    width="600px"
+    %}
 
 Hay otro caso que despista bastante, por ejemplo donde el código a asociar es distinto al lógico, mira en este caso donde el canal Movistar F1 tiene como código (DEP1), bueno, pues funciona.
 
-![mf1](/assets/img/original/mf1-1024x37.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/mf1-1024x37.png"
+    caption="mf1"
+    width="600px"
+    %}
 
 # Compilar Tvheadend desde GitHub
 
-Si quieres aventurarte a actualizar tú mismo el ejecutable de Tvheadend solo necesitas un equipo ARM donde puedas instalar el entorno de desarrollo. Puedes optar por montarte un sistema de crosscompilación (desde un x86) o bien instalarte Linux en un equipo nativo ARM. En mi caso he optado por esto último usando una Raspberry Pi2. En el apunte ![Gentoo en Raspberry Pi 2](/assets/img/original/?p=3128){: width="730px" padding:10px } tienes descrito todo el proceso. Además, al final del mismo encontrarás una sección llamada **Compilar Tvheadend para MOI Pro**.
+{% include showImagen.html
+    src="/assets/img/original/?p=3128"
+    caption="Gentoo en Raspberry Pi 2"
+    width="600px"
+    %}
 
 # Reboot automático diario
 
@@ -1395,7 +1571,11 @@ Habilito en Unit y rearranco el equipo.
 [root@MOIPro /etc/systemd/system]# systemctl enable media-backup.mount
 [root@MOIPro /etc/systemd/system]# reboot
 
-Para el backup usaré la técnica ![descrita en este apunte](/assets/img/original/?p=18){: width="730px" padding:10px }, basada en Rsync y backups incrementales usando Hard Links con un script llamado rbme que facilita todo el proceso.
+{% include showImagen.html
+    src="/assets/img/original/?p=18"
+    caption="descrita en este apunte"
+    width="600px"
+    %}
 
  
 [root@MOIPro ~]# cd /usr/bin

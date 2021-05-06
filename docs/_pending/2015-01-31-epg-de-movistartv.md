@@ -6,11 +6,23 @@ tags: linux nuc
 excerpt_separator: <!--more-->
 ---
 
-Veremos cómo instalar Tvheadend en un servidor Linux (Gentoo) para ver canales IPTV que recibo a través de mi contrato Movistar Fusión TV. Aunque esta información fue válida durante el 2015 tanto Tvheadend (nueva versión) como el propio Movistar TV (EPG) han evolucionado, así que dejo este apunte como documentación de referencia pero te recomiendo consultar el nuevo apunte ![Tvheadend y Movistar TV (2016)](/assets/img/original/?p=4571){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=4571"
+    caption="Tvheadend y Movistar TV (2016)"
+    width="600px"
+    %}
 
-Aviso a navegantes: En mi caso no utilizo el router de Movistar, lo he sustituido por un equipo linux, por lo tanto todo lo descrito en este artículo es válido para esta forma de trabajar, te recomiendo echarle un ojo también a este apunte: [Movistar Fusión Fibra + TV + VoIP con router Linux.](https://www.luispa.com/?p=266) Quizá también te podrían interesar otros apuntes cómo el que va sobre [WebGrab+Plus con TVHeadEnd en Linux](https://www.luispa.com/?p=1587), mi ![Media Center casero](https://www.luispa.com/?p=1025) y por último la "[Raspberry Pi OpenElec con XBMC](/assets/img/original/?p=1284){: width="730px" padding:10px }".
+{% include showImagen.html
+    src="/assets/img/original/?p=1284"
+    caption="Media Center casero](https://www.luispa.com/?p=1025) y por último la "[Raspberry Pi OpenElec con XBMC"
+    width="600px"
+    %}
 
-![fuentesstb2015](/assets/img/original/fuentesstb2015.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/fuentesstb2015.png"
+    caption="fuentesstb2015"
+    width="600px"
+    %}
 
 ## Tvheadend y Movistar TV + XBMC/KODI
 
@@ -18,7 +30,11 @@ Aviso a navegantes: En mi caso no utilizo el router de Movistar, lo he sustituid
 
 ### Instalación de Tvheadend en Linux Gentoo (systemd)
 
-Estas son las opciones que utilicé en el 2015, el comando para instalar [Tvheadend](https://tvheadend.org/) en un linux Gentoo con **systemd**. Si prefieres **openrc** consulta ![este otro apunte](/assets/img/original/?p=266){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=266"
+    caption="este otro apunte"
+    width="600px"
+    %}
 
 [code language="bash" light="true"] lunatv # cat /etc/portage/package.accept_keywords # tvheadend ~media-tv/tvheadend-9999 **
 
@@ -34,7 +50,11 @@ Si en el futuro quieres actualizar simplemente ejecuta lo siguiente:
 
  
 
-Aquí tienes el fichero **.service**. Ten en cuenta que esta versión está ligeramente retocada, dependo del servicio igmpproxy (más ![aquí](/assets/img/original/?p=266)){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=266)"
+    caption="aquí"
+    width="600px"
+    %}
 
 [code language="bash" light="true"] lunatv ~ # cat /etc/systemd/system/tvheadend.service
 
@@ -62,21 +82,45 @@ Estos son los comandos necesarios para habilitar, arrancar y parar el servicio
 
    
 
-### ![TVheadEnd](/assets/img/original/tvheadend){: width="730px" padding:10px } + Add-On "Tvheadend HTSP Client"
+{% include showImagen.html
+    src="/assets/img/original/tvheadend"
+    caption="TVheadEnd"
+    width="600px"
+    %}
 
-En este artículo documento la siguiente opción: TVHeadEnd + Add-On "Tvheadend HTSP Client". Es una opción muy buena con una arquitectura sencilla: El XBMC usa el addon Tvheadend HTSP Client para conectar vía [HTSP](https://tvheadend.org/projects/tvheadend/wiki/Htsp) con el daemon TVHeadEnd que se ejecuta en el Linux que a su vez se suscribe a la fuente multicast para recibir y reenviar el canal de TV. Además soporta intepretar el EPG en formato ![XMLTV](/assets/img/original/Main_Page){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/Main_Page"
+    caption="XMLTV"
+    width="600px"
+    %}
 
 En cada uno de los XBMC se añade el Add-On “Tvheadend HTSP Client” y se configura para acceder por HTSP al servidor donde se ejecuta el daemon de TVHeadEnd, por donde recibirá “lista” de canales, cómo llegar hasta ellos y más adelante el EPG.
 
-![tvheaden_cl1](/assets/img/original/tvheaden_cl1-1024x578.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/tvheaden_cl1-1024x578.png"
+    caption="tvheaden_cl1"
+    width="600px"
+    %}
 
-![tvheaden_cl2](/assets/img/original/tvheaden_cl2-1024x578.png){: width="730px" padding:10px }  
+{% include showImagen.html
+    src="/assets/img/original/tvheaden_cl2-1024x578.png"
+    caption="tvheaden_cl2"
+    width="600px"
+    %}
 
 ## Lista de canales y EPG
 
-A continuación vamos a bajarnos el listado de canales y el EPG y para conseguirlo contamos con un script fantástico llamado ![movistartv2xmltv](/assets/img/original/movistartv2xmltv), un proyecto muy activo que es capaz de conectar con el servicio SD&S (Service Discovery & Selection) de Movistar TV para recoger la información de canales y programación (EPG){: width="730px" padding:10px }. Una vez tenga ambos alimentaré a TVHeadEnd y será el quien los presente a los clientes XBMC.
+{% include showImagen.html
+    src="/assets/img/original/movistartv2xmltv), un proyecto muy activo que es capaz de conectar con el servicio SD&S (Service Discovery & Selection) de Movistar TV para recoger la información de canales y programación (EPG"
+    caption="movistartv2xmltv"
+    width="600px"
+    %}
 
-Instalo el script en mi ![servidor Linux casero](/assets/img/original/?p=725){: width="730px" padding:10px }, primero instalo como root unas dependencias para después, como un usuario normal, bajarme el script.
+{% include showImagen.html
+    src="/assets/img/original/?p=725"
+    caption="servidor Linux casero"
+    width="600px"
+    %}
 
 [code language="bash" light="true"] totobo ~ # emerge -v xmltv totobo ~ # export EPYTHON=python2.7 totobo ~ # easy_install --upgrade pytz : totobo ~ $ curl -L -Ok https://github.com/ese/movistartv2xmltv/archive/master.zip totobo ~ $ unzip master.zip totobo ~ $ rm master.zip totobo ~ $ mv movistartv2xmltv-master/ movistartv2xmltv totobo ~ $ cd movistartv2xmltv/ totobo movistartv2xmltv $ chmod 755 *.py [/code]
 
@@ -359,7 +403,11 @@ rtp://@239.0.0.5:8208
 #EXTTV:POLICIACAS;es;CA13;http://172.26.22.23:2001/appclient/incoming/epg/MAY_1/imSer/1706.jpg
 rtp://@239.0.0.13:8208
 
-TVHeadEnd no entiende esta lista en formato .m3u, así que vamos a convertirla a su formato. Una vez más, otro genial script disponible en ![GitHub m3u2hts](/assets/img/original/m3u2hts){: width="730px" padding:10px } se encarga de la tarea.
+{% include showImagen.html
+    src="/assets/img/original/m3u2hts"
+    caption="GitHub m3u2hts"
+    width="600px"
+    %}
 
 [code language="bash" light="true"] totobo movistartv2xmltv $ mkdir tvheadend totobo movistartv2xmltv $ cd tvheadend/
 
@@ -395,21 +443,45 @@ Una vez que tengo los canales pasados a los directorios de TVHeadEnd ya puedo ar
 
 [code language="bash" light="true"] totobo tvheadend # /etc/init.d/tvheadend start [/code]
 
-![tvheadlist](/assets/img/original/tvheadlist-1024x578.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/tvheadlist-1024x578.png"
+    caption="tvheadlist"
+    width="600px"
+    %}
 
 Lo iconos los entrega TVHeadEnd porque él se los baja desde el servidor de Movistar TV, si te fijas en la lista de canales también obtuvo el lugar desde el cual bajarse el icono.
 
-![tvheadendchannels](/assets/img/original/tvheadendchannels-1024x527.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/tvheadendchannels-1024x527.png"
+    caption="tvheadendchannels"
+    width="600px"
+    %}
 
  
 
 Nota: he creado un contenedor Docker para ejecutar Tvheadend, ya está 100% operativo, échale un ojo, estos son los proyectos donde tienes todo lo necesario:
 
-- Registry Hub de Docker ![luispa/base-tvheadend](/assets/img/original/){: width="730px" padding:10px }
-- Conectado (Automatizado) con el proyecto en ![GitHub base-tvheadend](/assets/img/original/base-tvheadend){: width="730px" padding:10px }
-- Relacionado con este otro proyecto en GitHub para ejecutarlo a través de FIG: ![GitHub servicio-tvheadend](/assets/img/original/servicio-tvheadend){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="luispa/base-tvheadend"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/base-tvheadend"
+    caption="GitHub base-tvheadend"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/servicio-tvheadend"
+    caption="GitHub servicio-tvheadend"
+    width="600px"
+    %}
 
-Si no conoces Docker, te dejo estos enlaces: [¿qué es Docker?](https://www.luispa.com/?p=874) y ![otros casos de uso de Docker](/assets/img/original/?p=172){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/?p=172"
+    caption="otros casos de uso de Docker"
+    width="600px"
+    %}
 
  
 
@@ -488,23 +560,39 @@ totobo movistartv2xmltv $ tail -f movistartv.log
 2015-01-30 22:29:47,659 - movistarxmltv - INFO - Parsing 241_717
 2015-01-30 22:29:51,507 - movistarxmltv - INFO - Grabbed 192 channels and 24411 programmes
 
-Que no te extrañe, tarda unos 30 minutos en un ![servidor (Intel Core i5)](/assets/img/original/?p=725) (también probé a hacerlo en el linux del receptor VU+ ultimo pero tardaba unos 60 minutos){: width="730px" padding:10px }, así que he decidido usar mi servidor casero.
+{% include showImagen.html
+    src="/assets/img/original/?p=725) (también probé a hacerlo en el linux del receptor VU+ ultimo pero tardaba unos 60 minutos"
+    caption="servidor (Intel Core i5)"
+    width="600px"
+    %}
 
 El fichero resultante: /home/luis/movistartv2xmltv/movistartv-guia.xml ocupa unos 15MB:
 
-![Captura de pantalla 2015-01-30 a las 22.58.26](/assets/img/original/Captura-de-pantalla-2015-01-30-a-las-22.58.26-1024x416.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/Captura-de-pantalla-2015-01-30-a-las-22.58.26-1024x416.png"
+    caption="Captura de pantalla 2015-01-30 a las 22.58.26"
+    width="600px"
+    %}
 
 Ahora que tenemos el EPG en /home/luis/movistartv2xmltv/movistartv-guia.xml se lo enviamos al daemon TVHeadEnd a través de un **socket**, pero antes debo instalar el programa socat y configurar TVHeadEnd para que acepte la información EPG a través de un interfaz externo (socket xmltv.sock), conectamos con el programa a través del interfaz Web y modificamos Configuración-> Channel/EPG-> EPG Grabber-> Interfaz Externo
 
 [code language="bash" light="true"] totobo epggrab # emerge -v socat [/code]
 
-![xmltv-sock](/assets/img/original/xmltv-sock.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/xmltv-sock.png"
+    caption="xmltv-sock"
+    width="600px"
+    %}
 
 Por fin podemos mandar el fichero EPG a TVHeadEnd on el comando siguiente:
 
 [code language="bash" light="true"] # cat /home/luis/movistartv2xmltv/movistartv-guia.xml | socat - UNIX-CONNECT:/etc/tvheadend/epggrab/xmltv.sock [/code]   Al cabo de un minuto empezaremos a ver cómo aparece el EPG en los canales en XBMC.
 
-![movistarepg](/assets/img/original/movistarepg-1024x578.png){: width="730px" padding:10px }  
+{% include showImagen.html
+    src="/assets/img/original/movistarepg-1024x578.png"
+    caption="movistarepg"
+    width="600px"
+    %}
 
 #### Automatizar todo el proceso
 
@@ -526,7 +614,11 @@ El tráfico hacia los servidores de Movistar TV que se origina desde el daemon T
 
 Fácil decirlo pero puede ser complicado hacerlo, de hecho si no lo tienes bien configurado puede darte problemas como los scripts dando timeout o algunas cosas funcionen y otras no (por ejemplo, que sí descargues el EPG pero los iconos no puedan ser descargados por TVHeadEnd).
 
-En mi caso lo tengo resuelto porque he ![sustituido el router de Telefónica por un equipo linux](/assets/img/original/?p=266){: width="730px" padding:10px } que se encarga de todo, en ese apunte encontrarás documentación relacionada con el routing, y además he añadido lo siguiente en la configuración de BIND del equipo:
+{% include showImagen.html
+    src="/assets/img/original/?p=266"
+    caption="sustituido el router de Telefónica por un equipo linux"
+    width="600px"
+    %}
 
    zone "svc.imagenio.telefonica.net" in {
         type forward;

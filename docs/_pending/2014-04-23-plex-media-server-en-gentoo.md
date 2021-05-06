@@ -6,11 +6,19 @@ tags: linux plex
 excerpt_separator: <!--more-->
 ---
 
-![Plex-Logo](/assets/img/original/Plex-Logo.png){: width="730px" padding:10px } No es muy habitual, pero si tienes un servidor Linux con Gentoo siempre encendido y además quieres ofrecer un fantástico gestor multimedia en tu casa, te recomiendo Plex Media Server.
+{% include showImagen.html
+    src="/assets/img/original/Plex-Logo.png"
+    caption="Plex-Logo"
+    width="600px"
+    %}
 
 ## Instalación
 
-Necesitas tener instalado Layman. El proceso es sencillo, ![gracias al ebuild que ha creado François-Xavier Payet disponible en GitHub](/assets/img/original/fouxlay){: width="730px" padding:10px } puedes realizarlo sin apenas trabajo:
+{% include showImagen.html
+    src="/assets/img/original/fouxlay"
+    caption="gracias al ebuild que ha creado François-Xavier Payet disponible en GitHub"
+    width="600px"
+    %}
 
  
 # layman -a fouxlay
@@ -22,7 +30,11 @@ Necesitas tener instalado Layman. El proceso es sencillo, ![gracias al ebuild qu
 
  
 * Plex Media Server is now fully installed. Please check the configuration file in /etc/plex if the defaults please your needs.
-* To start please call '/etc/init.d/plex-media-server start'. You can manage your library afterwards by navigating to ![http://<ip>:32400/web/](/assets/img/original/){: width="730px" padding:10px } * Please note, that the URL to the library management has changed from http://<ip>:32400/manage to http://<ip>:32400/web!
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="http://<ip>:32400/web/"
+    width="600px"
+    %}
 * If the new management interface forces you to log into myPlex and afterwards gives you an error that you need to be a plex-pass subscriber please delete the folder WebClient.bundle inside the Plug-Ins folder found in your library!
  
 

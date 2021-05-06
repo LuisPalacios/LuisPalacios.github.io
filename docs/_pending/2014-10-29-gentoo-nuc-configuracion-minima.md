@@ -6,11 +6,23 @@ tags: macosx peakhour snmp
 excerpt_separator: <!--more-->
 ---
 
-Este apunte se centra en la configuración mínima que suelo hacer tras terminar la instalación del equipo y preparar las particiones del disco. Te recomiendo que eches un ojo a la ![instalación de Gentoo GNU/Linux en un Intel® NUC D54250WYK](/assets/img/original/?p=7){: width="730px" padding:10px }, si no lo has hecho ya.
+{% include showImagen.html
+    src="/assets/img/original/?p=7"
+    caption="instalación de Gentoo GNU/Linux en un Intel® NUC D54250WYK"
+    width="600px"
+    %}
 
-![minimo](/assets/img/original/minimo.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/minimo.png"
+    caption="minimo"
+    width="600px"
+    %}
 
-Lo primero es lo primero, dejo aquí un ![enlace a los ficheros](/assets/img/original/?p=785){: width="730px" padding:10px } que utilizo en mi instalación, después lo que tengo que hacer son algunos ajustes mínimos para dejar preparada la instalación:
+{% include showImagen.html
+    src="/assets/img/original/?p=785"
+    caption="enlace a los ficheros"
+    width="600px"
+    %}
 
 Leer las news
 
@@ -53,7 +65,11 @@ Sincronizar portage
 
 Preparar la compilación
 
-Antes de poder compilar nada hay que preparar al menos cuatro ficheros de Portage, así que revisa ![los Ficheros de Configuración](/assets/img/original/?p=785){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/?p=785"
+    caption="los Ficheros de Configuración"
+    width="600px"
+    %}
 
 Bloqueo de "systemd" y “udev”
 
@@ -62,7 +78,11 @@ Lo comenté antes, "NO" voy a usar systemd ni udev, sino la versión (fork) de G
 sys-apps/systemd
 sys-fs/udev
 
-![Stage3](/assets/img/original/udev, así que al bloquearlos vamos a tener que ejecutar un update (emerge -DuvN system world). De momento solo aviso, pero es importante y veremos cómo lo ejecuto justo antes de hacer el primer boot (desde SSD){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/udev, así que al bloquearlos vamos a tener que ejecutar un update (emerge -DuvN system world). De momento solo aviso, pero es importante y veremos cómo lo ejecuto justo antes de hacer el primer boot (desde SSD"
+    caption="Stage3"
+    width="600px"
+    %}
 
 Instalo eix y genlop
 
@@ -123,4 +143,8 @@ livecd / # export PS1="(chroot) $PS1"
 (chroot) livecd / #
  
 
-Volver al paso anterior: [Descargar Stage 3, Portage y entrar en el nuevo entorno (chroot)](https://www.luispa.com/?p=800) o ir al siguiente: ![Instalación del kernel](/assets/img/original/?p=831){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/?p=831"
+    caption="Instalación del kernel"
+    width="600px"
+    %}

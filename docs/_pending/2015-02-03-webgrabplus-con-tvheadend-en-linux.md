@@ -6,11 +6,23 @@ tags: cisco hiperconvergencia ucs
 excerpt_separator: <!--more-->
 ---
 
-_**[WebGrab+Plus](http://www.webgrabplus.com)**_ es un recolector de Guías EPG multi-sitio capaz de trabajar de manera incremental. Se baja la programación y genera un fichero en formato XMLTV que puedes usar para alimentar a tu media center o a Tvheadend. Primero probé a [instalarlo en un MacOSX](https://www.luispa.com/?p=1522) y ahora (este artículo) toca instalarlo en mi [servidor Linux](https://www.luispa.com/?p=7) y por supuesto **integrarlo con ![Tvheadend](/assets/img/original/){: width="730px" padding:10px }**.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="Tvheadend"
+    width="600px"
+    %}
 
-Este apunte está relacionado con este otro: ![Tvheadend y Movistar TV (2016)](/assets/img/original/4571) . Aquí describo como configurar WebGrab para bajarme el EPG desde otras fuentes. El programa WebGrab+Plus genera un fichero guide.xml en formato XMLTV que hay que pasarle a TVHeadEnd y que este a su vez actualiza a los XBMC (en Raspberri Pi en mi caso){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/4571) . Aquí describo como configurar WebGrab para bajarme el EPG desde otras fuentes. El programa WebGrab+Plus genera un fichero guide.xml en formato XMLTV que hay que pasarle a TVHeadEnd y que este a su vez actualiza a los XBMC (en Raspberri Pi en mi caso"
+    caption="Tvheadend y Movistar TV (2016)"
+    width="600px"
+    %}
 
-![twr-xbmc](/assets/img/original/twr-xbmc-1024x498.png){: width="730px" padding:10px } [dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
+{% include showImagen.html
+    src="/assets/img/original/twr-xbmc-1024x498.png"
+    caption="twr-xbmc"
+    width="600px"
+    %}
 
 **Importante**: He creado un contenedor Docker con Tvheadend ya listo para su uso, mira al final del artículo. El contenedor Docker con WebGrab+Plus es una asignatura que todavía tengo pendiente :-).
 
@@ -20,17 +32,29 @@ Este apunte está relacionado con este otro: ![Tvheadend y Movistar TV (2016)](/
 
 Pasos para realizar la instalación completa de WebGrab+Plus en un equipo linux:
 
-- Instalar ![Mono](/assets/img/original/){: width="730px" padding:10px } en Linux. En Gentoo la última disponible es la versión 3.2.8. Seguramente te funcione con cualquiera superior a la 2.10.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="Mono"
+    width="600px"
+    %}
 
 \=dev-lang/mono-3.2.8   ~amd64
 
 totobo ~ # emerge -v dev-lang/mono
 
-- Descarga la última versión de ![WebGrab+Plus (Linux)](/assets/img/original/WebGrabPlusV1.1.1LINUX.rar) (V1.1.1){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/WebGrabPlusV1.1.1LINUX.rar) (V1.1.1"
+    caption="WebGrab+Plus (Linux)"
+    width="600px"
+    %}
 
 Extraer el rar en el $HOME de tu usuario y renombrar el directorio a "**temp1**"
 
-- Descargar el ![fichero de upgrade patchexe_54.zip](/assets/img/original/54){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/54"
+    caption="fichero de upgrade patchexe_54.zip"
+    width="600px"
+    %}
 
 Extraer el ZIP en el $HOME de tu usuario y renombrar el directorio a "**temp2**"
 
@@ -42,7 +66,11 @@ Extraer el ZIP en el $HOME de tu usuario y renombrar el directorio a "**temp2**"
     
 - Copiar WebGrab+Plus.exe desde temp2 a /home/luis/wg++
     
-- Modifico la configuración, parto de [la lista de canales EPG](http://webgrabplus.com/node/94) que puedo descargar y utilizar con WG++. En mi caso concreto voy a usar ![fuentes disponibles en España](/assets/img/original/epg-channels#stc_33). Descargo por ejempo la del pais.com y al final el fichero de configuraicón de WG++ (WebGrab++.config.xml){: width="730px" padding:10px } que estoy usando es el siguiente:
+{% include showImagen.html
+    src="/assets/img/original/epg-channels#stc_33). Descargo por ejempo la del pais.com y al final el fichero de configuraicón de WG++ (WebGrab++.config.xml"
+    caption="fuentes disponibles en España"
+    width="600px"
+    %}
     
 
 totobo wg++ $ curl -Ok http://webgrabplus.com/sites/default/files/download/ini/info/zip/Spain_elpais.com.zip
@@ -234,7 +262,11 @@ A partir de ahora ya podrías ejecutar el programa y ver que todo funciona corre
 
 ## Integración con TVHeadEnd
 
-![fuente](/assets/img/original/376)), mejor dicho, vamos a pasarle todo el EPG para que él a su vez lo procese y pueda entregárselo a los "consumidores" (Raspberry's con XBMC){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/376)), mejor dicho, vamos a pasarle todo el EPG para que él a su vez lo procese y pueda entregárselo a los "consumidores" (Raspberry's con XBMC"
+    caption="fuente"
+    width="600px"
+    %}
 
 - Descargo el fichero "tv_grab" diseñado por WebGraph+Plus para interactuar con TVHeadEnd y lo salvo como /usr/bin/tv_grab_wg++
 
@@ -285,7 +317,11 @@ totobo ~ # /etc/init.d/tvheadend start
 
 - Configuro TVHeadEnd y selecciono el nuevo grabber "XMLTV: tv_grab_wg++".
 
-![webgrabconfig](/assets/img/original/webgrabconfig.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/webgrabconfig.png"
+    caption="webgrabconfig"
+    width="600px"
+    %}
 
 - Por último, programo en el cron que se ejecute el grabber diariamente, al hacerlo desde el directorio cron.daily será alrededor de las 3.00am.
 
@@ -299,8 +335,24 @@ cd /home/luis/wg++
 
 He creado un contenedor Docker para ejecutar Tvheadend, échale un ojo, estos son los proyectos donde tienes todo lo necesario:
 
-- Registry Hub de Docker ![luispa/base-tvheadend](/assets/img/original/){: width="730px" padding:10px }
-- Conectado (Automatizado) con el proyecto en ![GitHub base-tvheadend](/assets/img/original/base-tvheadend){: width="730px" padding:10px }
-- Relacionado con este otro proyecto en GitHub para ejecutarlo a través de FIG: ![GitHub servicio-tvheadend](/assets/img/original/servicio-tvheadend){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="luispa/base-tvheadend"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/base-tvheadend"
+    caption="GitHub base-tvheadend"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/servicio-tvheadend"
+    caption="GitHub servicio-tvheadend"
+    width="600px"
+    %}
 
-Si no conoces Docker, te dejo estos enlaces: [¿qué es Docker?](https://www.luispa.com/?p=874) y ![otros casos de uso de Docker](/assets/img/original/?p=172){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/?p=172"
+    caption="otros casos de uso de Docker"
+    width="600px"
+    %}

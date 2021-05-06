@@ -6,21 +6,41 @@ tags: esxi gentoo-2 guest linux vm vmware
 excerpt_separator: <!--more-->
 ---
 
-Este apunte está dedicado a la instalación de **Gentoo Linux (3.18.7 - 64 bits - systemd)** sobre **ESXi**. Se trata de mi primera VM y la voy a ejecutar en mi ESXi casero. Echa un ojo a este ![apunte sobre VMWare ESXi 5.5](/assets/img/original/?p=29){: width="730px" padding:10px } en un servidor casero.
+{% include showImagen.html
+    src="/assets/img/original/?p=29"
+    caption="apunte sobre VMWare ESXi 5.5"
+    width="600px"
+    %}
 
-![D54250WYK-ESX-Gentoo](/assets/img/original/D54250WYK-ESX-Gentoo.png){: width="730px" padding:10px }  
+{% include showImagen.html
+    src="/assets/img/original/D54250WYK-ESX-Gentoo.png"
+    caption="D54250WYK-ESX-Gentoo"
+    width="600px"
+    %}
 
 ## Crear la VM
 
-Inicio la creación de la nueva VM, desde el vSphere Client (en Windows) selecciono el ![Host](/assets/img/original/?p=29){: width="730px" padding:10px } y la opción "Create a new virtual machine".
+{% include showImagen.html
+    src="/assets/img/original/?p=29"
+    caption="Host"
+    width="600px"
+    %}
 
 Como datastore uso un NAS casero vía NFS, donde he reservado un directorio especial para las máquinas virtuales (y los ISO's de arranque).
 
-![ESXi-Create](/assets/img/original/ESXi-Create.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/ESXi-Create.png"
+    caption="ESXi-Create"
+    width="600px"
+    %}
 
 Recorro todas las opciones para configurar una nueva máquina virtual con estos parámetros que muestro a continuación, 2GB de RAM y 10GB de disco, una tarjeta de red E1000 y LSI Logic:
 
-![ESXi-Create2](/assets/img/original/ESXi-Create2.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/ESXi-Create2.png"
+    caption="ESXi-Create2"
+    width="600px"
+    %}
 
 [dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
 
@@ -28,19 +48,35 @@ Recorro todas las opciones para configurar una nueva máquina virtual con estos 
 
 [/dropshadowbox]  
 
-Antes de arrancar, descargo desde los ![mirrors](/assets/img/original/iso (un directorio que está en mi NAS a la que accedo vía NFS){: width="730px" padding:10px }:
+{% include showImagen.html
+    src="/assets/img/original/iso (un directorio que está en mi NAS a la que accedo vía NFS"
+    caption="mirrors"
+    width="600px"
+    %}
 
-![ejemplo en un mirror de España](/assets/img/original/)){: width="730px" padding:10px }:
+{% include showImagen.html
+    src="/assets/img/original/)"
+    caption="ejemplo en un mirror de España"
+    width="600px"
+    %}
     
     - /mirror/gentoo/releases/amd64/autobuilds/current-install-amd64-minimal
 
 Entro en "Edit Settings" y conecto el ISO que acabo de bajarme y dejé en el directorio del NAS. Dicho ISO debe conectarse al DVD de esta máquina virtual para hacer boot desde él. Aunque es opcional a mi me gusta hacerlo, entro en Network adapter y me apunto la dirección MAC (o le asigno una manual). Pongo dicha MAC en mi DHCP Server para que al arrancar reciba una IP concreta estática.
 
-![ESXi-Create3](/assets/img/original/ESXi-Create3.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/ESXi-Create3.png"
+    caption="ESXi-Create3"
+    width="600px"
+    %}
 
 Selecciono la VM, su lengüeta "Console" y hago el "Power On". Al hacer click en la Consola podremos controlar el proceso de arranque (Ctrl+Alt o Fn+Ctrl+Alt para salir). Pulso Intro para que arranque, "13" para el teclado Español, Intro para continuar hasta el prompt de Gentoo. A partir de aquí iniciamos el proceso de instalación estándar (bueno, con la particularidad de que estamos instalando en un Host ESXi).
 
-![ESXi-Create4](/assets/img/original/ESXi-Create4-1024x684.png){: width="730px" padding:10px }  
+{% include showImagen.html
+    src="/assets/img/original/ESXi-Create4-1024x684.png"
+    caption="ESXi-Create4"
+    width="600px"
+    %}
 
 ## Instalación de Gentoo
 
@@ -48,7 +84,11 @@ Selecciono la VM, su lengüeta "Console" y hago el "Power On". Al hacer click en
 
 Ya estamos listos para continuar, deberíamos tener "red" (ifconfig) y así poder arrancar "SSHD", cambiar la contraseña de root y a partir de ahora serguir desde otro terminal (vía ssh). Es mucho más cómodo que usar la consola del cliente vSphere:
 
-![ESXi-GentooInstall-1](/assets/img/original/ESXi-GentooInstall-1.png){: width="730px" padding:10px }  
+{% include showImagen.html
+    src="/assets/img/original/ESXi-GentooInstall-1.png"
+    caption="ESXi-GentooInstall-1"
+    width="600px"
+    %}
 
 ### Disco, stage3, portage
 
@@ -149,7 +189,11 @@ Este paso es importante, cambia la fecha al equipo y asegúrate de poner la actu
 
 **Descargar y descomprimir Stage3 y Portage**
 
-Descargo en /mnt/gentoo desde uno de los mirrors de gentoo el fichero "stage3" y el fichero "portage", los últimos disponibles para x86_64. Utilizo "links" para descargar desde los mirrors de Gentoo. Conecta desde tu navegador con www.gentoo.org, click en ![Mirrors](/assets/img/original/mirrors2.xml), apunta la URL de tu mirror preferido (busca por Spain){: width="730px" padding:10px } que vas a usar a continuación.
+{% include showImagen.html
+    src="/assets/img/original/mirrors2.xml), apunta la URL de tu mirror preferido (busca por Spain"
+    caption="Mirrors"
+    width="600px"
+    %}
 
 :
 # cd /mnt/gentoo/
@@ -262,7 +306,11 @@ Primero nos bajamos los fuentes del Kernel con el comando siguiente:
 
 Los fuentes quedan instalados en /usr/src/linux (realmente es un link simbólico), a continuación tendrías que parametrizarlo con "make menuconfig" y luego compilarlo.
 
-Si tienes experiencia en parametrizar el kernel, adelante con ello. Si lo prefieres, para facilitarte el trabajo, empieza por un kernel ya parametrizado. Puedes usar un ".config ya probado" para esta versión concreta de kernel. Este que comparto a continuación tiene soporte para ejecutarse en ESXi, para iptables (por si quieres hacerte un firewall) y para Docker (por si quieres dockerizar aplicaciones). Lo dejo en mi repositorio de [GitHub](https://github.com/LuisPalacios/Linux-Kernel-configs), en concreto tienes que bajarte el fichero ![2015-03-19-config-3.18.7-Gentoo_VM_ESXi.txt](/assets/img/original/2015-03-19-config-3.18.7-Gentoo_VM_ESXi.txt){: width="730px" padding:10px } y copiarlo como /usr/src/linux/.config. Luego compilas e instalas el kernel.
+{% include showImagen.html
+    src="/assets/img/original/2015-03-19-config-3.18.7-Gentoo_VM_ESXi.txt"
+    caption="2015-03-19-config-3.18.7-Gentoo_VM_ESXi.txt"
+    width="600px"
+    %}
 
  cd /usr/src/linux
 
@@ -476,7 +524,11 @@ Vamos a "contectar", instalo, habilito y arranco DHCP. Los servicios en "systemd
 # systemctl start dhcpcd.service
  
 
-![Aquí tienes un ejemplo](/assets/img/original/?p=581) de cómo hacer una configuración de dirección IP fija (manual){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=581) de cómo hacer una configuración de dirección IP fija (manual"
+    caption="Aquí tienes un ejemplo"
+    width="600px"
+    %}
 
 Si todo falla siempre puedes asignar una IP fija mientras solucionas el problema. Averigua cómo se llama el interfaz, un ejemplo:
 
@@ -512,7 +564,11 @@ Instalo, habilito y arranco el cron
 
 **Fecha y hora**
 
-Para configurar fecha/hora debe utilizarse "timedatectl". No te pierdas este apunte sobre cómo montar además el ![servicio NTP](/assets/img/original/?p=881){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=881"
+    caption="servicio NTP"
+    width="600px"
+    %}
 
 # timedatectl set-local-rtc 0
 # timedatectl set-timezone Europe/Madrid
@@ -586,7 +642,11 @@ gentoo ~ # systemctl start vmtoolsd.service
 
 Ya deberías poder ven cómo el cliente vSphere detecta que las vmware tools se han activado en tu VM
 
-![Gentoo-VMWare-Tools](/assets/img/original/Gentoo-VMWare-Tools.png){: width="730px" padding:10px }  
+{% include showImagen.html
+    src="/assets/img/original/Gentoo-VMWare-Tools.png"
+    caption="Gentoo-VMWare-Tools"
+    width="600px"
+    %}
 
 ## Aplicaciones extra y acabamos...
 
@@ -630,7 +690,11 @@ continúo con Docker,
 
 Ya hemos terminado, te recomiendo que apagues la VM y guardes una copia (a contiuación explico cómo se hace).
 
-  ![barra_separadora](/assets/img/original/barra_separadora.png){: width="730px" padding:10px }  
+{% include showImagen.html
+    src="/assets/img/original/barra_separadora.png"
+    caption="barra_separadora"
+    width="600px"
+    %}
 
 # Unos cuantos trucos
 
@@ -644,18 +708,30 @@ La primera opción es crear una plantilla en formato OVF (varios ficheros) o bie
 
 - IMPORTANTE: Para la máquina virtual desde vSphere Client.
     
-- Creo la plantilla ![esxi-cloneOVA1](/assets/img/original/esxi-cloneOVA1.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/esxi-cloneOVA1.png"
+    caption="esxi-cloneOVA1"
+    width="600px"
+    %}
     
 - A partir de ahora puedes usar dicha plantilla para crear VM's nuevas
     
 
-![newVM](/assets/img/original/newVM.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/newVM.jpg"
+    caption="newVM"
+    width="600px"
+    %}
 
  
 
 ### Clonar VM: copia manual
 
-![fuente](/assets/img/original/search.do?language=en_US&cmd=displayKC&externalId=1027876)){: width="730px" padding:10px }:
+{% include showImagen.html
+    src="/assets/img/original/search.do?language=en_US&cmd=displayKC&externalId=1027876)"
+    caption="fuente"
+    width="600px"
+    %}
 
 - IMPORTANTE: Para la máquina virtual desde vSphere Client.
     
@@ -681,7 +757,11 @@ Cloning disk '/vmfs/volumes/Panoramix-NFS-Apps/Gentoo/Gentoo.vmdk'...
 
 - Desde el vSphere Client crear una nueva máquina virtual tal como describo en este artículo pero esta vez al llegar a la parte del disco duro utiliza "Use an existing virtual disk"
 
-[![esxi-cloneVM1](https://www.luispa.com/wp-content/uploads/2015/03/esxi-cloneVM1.png)](https://www.luispa.com/wp-content/uploads/2015/03/esxi-cloneVM1.png) [![esxi-cloneVM3](https://www.luispa.com/wp-content/uploads/2015/03/esxi-cloneVM3.png)](https://www.luispa.com/wp-content/uploads/2015/03/esxi-cloneVM3.png) ![esxi-cloneVM2](/assets/img/original/esxi-cloneVM2.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/esxi-cloneVM2.png"
+    caption="esxi-cloneVM2"
+    width="600px"
+    %}
 
 **Boot desde el ISO de Instalación**
 
@@ -689,7 +769,11 @@ Una vez que terminas la instalación la VM siempre hará boot desde el disco dur
 
 **Montar un disco VMDK desde Linux**
 
-Si necesitas montar un disco VMDK desde un equipo externo (windows o linux) tienes que instalar una herramienta llamada vmware-mount que es parte del (vSphere 5 Disk Development Kit). En mi caso he desacargado la versión para LINUX y encontré dicho programa en la versión 5.1 (no en la 5.5) de dicho Kit VDDK, disponible en el sitio de desarrolladores de VMWare en la sección ![vSphere Disk Development Kit](/assets/img/original/vddk). A continuación muestro un ejemplo donde monto un VMDK desde un Linux (no usar Nombre-flat.vmdk, sino Nombre.vmdk){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/vddk). A continuación muestro un ejemplo donde monto un VMDK desde un Linux (no usar Nombre-flat.vmdk, sino Nombre.vmdk"
+    caption="vSphere Disk Development Kit"
+    width="600px"
+    %}
 
 bolica ~ # vmware-mount /Apps/datastore/Totobo/Totobo.vmdk 3 /mnt/totobo
 
@@ -763,11 +847,19 @@ Ver el log: journalctl Ver el log de forma contínua: journalctl -f Ver el log d
 
 Gentoo es una "distro" que está en actualización continua, todos los días suele haber algún "paquete" upstream que ha sido actualizado a una versión más moderna. Por lo tanto es muy conveniente que de vez en cuando (cada semana o cada mes) compruebes si deberías actualizar tu Gentoo y dejarlo a la última.
 
-¿qué hago yo?, cuando tengo el sistema estable y funcionando al 100% no necesito actualizarlo cada dos por tres sino que lo actualizo una vez al año o cuando hay algún fallo de [seguridad](https://www.gentoo.org/security/en/) grave. Estoy ![suscrito a la lista](/assets/img/original/lists.xml){: width="730px" padding:10px } **gentoo-announce**@gentoo.org y cuando veo que el tema es preocupante pues hago una Actualización.
+{% include showImagen.html
+    src="/assets/img/original/lists.xml"
+    caption="suscrito a la lista"
+    width="600px"
+    %}
 
 **Actualizar tu Gentoo**
 
-La teoría es que es muy sencillo, la práctica es que a veces, sobre todo si llevas mucho tiempo sin actualizar, se puede complicar bastante. Si estás empezando con Gentoo te recomiendo que actualices una vez por semana durante un par de meses, luego una vez al mes durante un año y luego pases a una vez al año. ¿Porqué?, pues porque a veces hay "conflictos" entre los paquetes a instalar y si eres nuevo puede ser un dolor de cabeza, así que empieza a actualizar de forma frecuente para perder el miedo y sobre todo ganar en práctica. Si alguna vez tienes problemas encontrarás la solución casi seguro en el ![Foro de Gentoo](/assets/img/original/){: width="730px" padding:10px }, no dejes de visitarlo.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="Foro de Gentoo"
+    width="600px"
+    %}
 
 Estos son los pasos:
 
@@ -779,7 +871,11 @@ Estos son los pasos:
 
 A continuación tienes un ejemplo donde compruebo qué tengo que actualizar, fíjate en cuantos paquetes y solo han pasado 10 días desde que hice la primera instalación.
 
-![emergeUpdate](/assets/img/original/emergeUpdate-901x1024.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/emergeUpdate-901x1024.png"
+    caption="emergeUpdate"
+    width="600px"
+    %}
 
 [dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
 
@@ -789,22 +885,46 @@ A continuación tienes un ejemplo donde compruebo qué tengo que actualizar, fí
 
 Portage es la herramienta que gestiona el software en Gentoo y lo hace a través del comando emerge
 
-- Documento en castellano sobre ![Portage](/assets/img/original/handbook-x86.xml?part=2&chap=1){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/handbook-x86.xml?part=2&chap=1"
+    caption="Portage"
+    width="600px"
+    %}
 - El manual de Portage: # man portage
-- Documento en inglés sobre ![cómo trabajar con Portage](/assets/img/original/Portage){: width="730px" padding:10px }
-- ![Proyecto Portage](/assets/img/original/Project:Portage){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/Portage"
+    caption="cómo trabajar con Portage"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/Project:Portage"
+    caption="Proyecto Portage"
+    width="600px"
+    %}
 
 **Actualizar el Kernel**
 
 Al actualizar Gentoo resulta que uno de los paquetes es el "Kernel", ¿qué hago?. Puedes hacer dos cosas, la primera es ignorarlo y seguir con tu Kernel actual y la segunda es actualizar también el Kernel. Mi consejo es que si tienes tu sistema estable y no necesitas nada del Kernel nuevo (un hardware nuevo o un update de seguridad), ni lo toques, deja el que tenías.
 
-Enseño a continuación cómo suelo hacerlo por si insistes :-) . Te recomiendo que leas el artículo de Gentoo sobre ![actualización del Kernel](/assets/img/original/kernel-upgrade.xml){: width="730px" padding:10px }. Veamos este caso concreto, notarás en la captura anterior que en mi caso se ha bajado un kernel nuevo.
+{% include showImagen.html
+    src="/assets/img/original/kernel-upgrade.xml"
+    caption="actualización del Kernel"
+    width="600px"
+    %}
 
-![emergeKernel](/assets/img/original/emergeKernel.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/emergeKernel.png"
+    caption="emergeKernel"
+    width="600px"
+    %}
 
 Si miro en el directorio /usr/src veo que ahora hay dos kernels, el que está activo (3.18.7) y el nuevo (3.18.9).
 
-![nuevoKernel](/assets/img/original/nuevoKernel.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/nuevoKernel.png"
+    caption="nuevoKernel"
+    width="600px"
+    %}
 
 Para actualizarlo ejecuto lo siguiente:
 
@@ -845,7 +965,23 @@ Si vas a utilizar esta imagen como fuente para clonar, te recomiendo que limpies
 
 ### Enlaces
 
-- ![Post sobre vmware-tools y open-vm-tools](/assets/img/original/viewtopic-p-6949882.html){: width="730px" padding:10px }.
-- ![Post sobre la optimización del kernel](/assets/img/original/viewtopic-t-961502.html){: width="730px" padding:10px }
-- ![Post muy antiguo (archivo) sobre Gentoo en ESX](/assets/img/original/HOWTO_Install_Gentoo_on_VMware_ESX_server){: width="730px" padding:10px }.
-- ![Apunte sobre systemd en Gentoo](/assets/img/original/Systemd){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/viewtopic-p-6949882.html"
+    caption="Post sobre vmware-tools y open-vm-tools"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/viewtopic-t-961502.html"
+    caption="Post sobre la optimización del kernel"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/HOWTO_Install_Gentoo_on_VMware_ESX_server"
+    caption="Post muy antiguo (archivo) sobre Gentoo en ESX"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/Systemd"
+    caption="Apunte sobre systemd en Gentoo"
+    width="600px"
+    %}

@@ -6,9 +6,17 @@ tags: linux nuc
 excerpt_separator: <!--more-->
 ---
 
-Entrada resumen sobre los ficheros de configuración relativos a la ![instalación de Gentoo GNU/Linux en un Intel® NUC D54250WYK](/assets/img/original/?p=7){: width="730px" padding:10px }..
+{% include showImagen.html
+    src="/assets/img/original/?p=7"
+    caption="instalación de Gentoo GNU/Linux en un Intel® NUC D54250WYK"
+    width="600px"
+    %}
 
-![conf](/assets/img/original/conf.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/conf.png"
+    caption="conf"
+    width="600px"
+    %}
 
 /dev/sda2 /boot ext2 noauto,noatime 1 2
 /dev/sda3 none swap sw 0 0

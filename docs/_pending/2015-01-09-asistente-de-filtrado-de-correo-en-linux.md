@@ -10,9 +10,17 @@ Este apunte trata sobre cómo automatizar el filtrado del correo electrónico co
 
 Hay varias formas de conseguirlo y ésta es una de las más sencillas y productivas que conozco, me topé con este software hace unos meses y me ha dado muy buen resultado, así que he decidido documentarlo aprovechando que lo estoy migrando a un contenedor Docker.
 
-Se trata de ![imapfilter](/assets/img/original/X11){: width="730px" padding:10px }. Reconozco que al principio me costó hacerme con su fichero de configuración, pero una vez superado promete resolver todos los requisitos de filtrado, y lo que es mejor, no hace falta hacer prácticamente nada en los servidores de correo.
+{% include showImagen.html
+    src="/assets/img/original/X11"
+    caption="imapfilter"
+    width="600px"
+    %}
 
-![imapfilter](/assets/img/original/imapfilter1.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/imapfilter1.png"
+    caption="imapfilter"
+    width="600px"
+    %}
 
 ## Objetivo
 
@@ -22,7 +30,11 @@ El objetivo es ponerle algo de cordura, contar con un “asistente” único cen
 
 ## Imapfilter
 
-Imapfilter es un motor de filtrado de correo basado en ![Lua](/assets/img/original/). La arquitectura es simple: en un único sitio ejecutamos imapfilter que se irá conectando vía IMAP a cada uno de tus servidores, hará sus tareas de forma desatendida, analizará y actuará: marcar, mover o borrar. Una cosa que tiene que me gusta mucho es que puedes mover correos entre cuentas distintas (por ejemplo para tener centralizado el archivado de correos en una cuenta IMAP que dedicas solo para hacer backups){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/). La arquitectura es simple: en un único sitio ejecutamos imapfilter que se irá conectando vía IMAP a cada uno de tus servidores, hará sus tareas de forma desatendida, analizará y actuará: marcar, mover o borrar. Una cosa que tiene que me gusta mucho es que puedes mover correos entre cuentas distintas (por ejemplo para tener centralizado el archivado de correos en una cuenta IMAP que dedicas solo para hacer backups"
+    caption="Lua"
+    width="600px"
+    %}
 
 Soporta “imap-idle”, es decir, puede pedirle al servidor que le notifique cuando el inbox cambia, de modo que reaccionará de forma casi instantánea ante cambios.
 
@@ -30,10 +42,18 @@ Soporta “imap-idle”, es decir, puede pedirle al servidor que le notifique cu
 
 ## Instalación y configuración
 
-La instalación es sencilla, aunque depende de la distribución tengas, pero básicamente sería: Descarga ![imapfilter](/assets/img/original/imapfilter){: width="730px" padding:10px }, crear el directorio ~/.imapfilter en tu usuario, crear el fichero de configuración ~/.imapfilter/config.lua y por último ejecutar imapfilter
+{% include showImagen.html
+    src="/assets/img/original/imapfilter"
+    caption="imapfilter"
+    width="600px"
+    %}
 
 - Instalación en Gentoo: emerge -v imapfilter
-- Instalación compilando desde los fuentes (así hago en mi ![Dockerfile](/assets/img/original/Dockerfile)){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/Dockerfile)"
+    caption="Dockerfile"
+    width="600px"
+    %}
 
  
 :
@@ -49,8 +69,16 @@ La instalación es sencilla, aunque depende de la distribución tengas, pero bá
 
 Como dije al principio, llevo tiempo con imapfilter en mi servidor con Gentoo pero llegó el momento de migrarlo a un contenedor basado en Docker:
 
-- Repositorio en el registry hub de Docker: ![luispa/base-imapfilter](/assets/img/original/){: width="730px" padding:10px }
-- Página del proyecto en GitHub: ![base-imapfilter](/assets/img/original/base-imapfilter){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="luispa/base-imapfilter"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/base-imapfilter"
+    caption="base-imapfilter"
+    width="600px"
+    %}
 
 ## Ejemplos de configuración
 

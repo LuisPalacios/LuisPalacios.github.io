@@ -6,9 +6,17 @@ tags: cifs samba smb smb2
 excerpt_separator: <!--more-->
 ---
 
-![samba](/assets/img/original/samba.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/samba.jpg"
+    caption="samba"
+    width="600px"
+    %}
 
-En este apunte describo cómo entregar un servicio de ficheros a través de la red con SMB2 (Samba). Es un ejemplo muy sencillo, como servidor un equipo Linux y como cliente un Mac OSX. Tengo otro ![apunte sobre SMB y QNAP](/assets/img/original/?p=665){: width="730px" padding:10px } muy parecido.
+{% include showImagen.html
+    src="/assets/img/original/?p=665"
+    caption="apunte sobre SMB y QNAP"
+    width="600px"
+    %}
 
 **SMB (Server Message Block)** es un "Protocolo" de red que entre otras cosas hace posible la compartición de archivos e impresoras entre nodos de una red. Lo inventó IBM, pero el que lo modificó, lo llevó a la fama y hoy en día mantiene y sigue ampliando es Microsoft. **CIFS (Common Internet File System)** es un "Dialecto" de SMB. Un dialecto es un conjunto de "mensajes" que definen una versión particular del protocolo SMB. Microsoft implementa SMB en sus equipos y añadió múltiples mejoras en su dialecto CIFS. **Samba** es una implementación libre del protocolo SMB (o llámalo CIFS si quieres) que está disponible en plataformas GNU/Linux (por ejemplo el QNAP), Mac OS X o Unix.
 
@@ -16,7 +24,11 @@ En este apunte describo cómo entregar un servicio de ficheros a través de la r
 - SAMBA >= 3.6.0 usa SMB2 (entró en pista en 2014 en QNAP, MacOSX, …)
 - SAMBA >= 4.0.0 usa SMB3 (ya por el 2014 estaba en “desarrollo", estable y poco implementado)
 
-El protocolo nativo de Apple de toda la vida eta AFP, desde OSX Mavericks incorpora y **recomienda** SMB2, ha pasado a considerarse el protocolo por defecto, en este PDF ![OSX Mavericks Core Technology Overview, pagina 21](/assets/img/original/OSX_Mavericks_Core_Technology_Overview.pdf){: width="730px" padding:10px } encontrarás más información.
+{% include showImagen.html
+    src="/assets/img/original/OSX_Mavericks_Core_Technology_Overview.pdf"
+    caption="OSX Mavericks Core Technology Overview, pagina 21"
+    width="600px"
+    %}
 
  
 
@@ -124,8 +136,16 @@ Por si acaso lo necesitas, echa un ojo al comando \`pbedit\`, puedes borrar cuen
 
 Desde el Finder conecto con el servicio. Es tan sencillo como pulsar CMD+K en el Finder y escribir la notación apropiada
 
-![SMB2-1](/assets/img/original/SMB2-1.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/SMB2-1.png"
+    caption="SMB2-1"
+    width="600px"
+    %}
 
 Nos pedirá la contraseña del usuario, que puedo guardar en el Llavero para que la próxima vez ya no la solicite
 
-![SMB2-2](/assets/img/original/SMB2-2.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/SMB2-2.png"
+    caption="SMB2-2"
+    width="600px"
+    %}

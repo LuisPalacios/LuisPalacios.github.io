@@ -6,9 +6,17 @@ tags: linux
 excerpt_separator: <!--more-->
 ---
 
-En este artículo explico el metodo que uso para hacer backup de mis datos persistentes de mi servidor Linux a un disco externo. La técnica está basada en Rsync y backups [incrementales usando Hard Links](http://earlruby.org/2013/05/creating-differential-backups-with-hard-links-and-rsync/) mediante el script ![RBME](/assets/img/original/rbme){: width="730px" padding:10px } que facilita todo el proceso.
+{% include showImagen.html
+    src="/assets/img/original/rbme"
+    caption="RBME"
+    width="600px"
+    %}
 
-![backup](/assets/img/original/backup-1024x830.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/backup-1024x830.png"
+    caption="backup"
+    width="600px"
+    %}
 
 Voy a explicar dos "destinos físicos" de los backups, el primero es el obvio, usar un disco USB, pero el segundo es algo más ingenioso: emplear un disco iSCSI que reside en una NAS. En cualquier caso y para entender este apunte, quédate con los siguientes directorios que usaré como fuente (datos a salvar) y destino (ubicación donde los salvaré):
 
@@ -51,11 +59,19 @@ Las configuraciones las detallo en cada opción de disco.
 
 La primera opción, usar un disco externo USB para hacer backup. También valdría que fuese 2.0 pero hoy en día no merece la pena.
 
-![usb](/assets/img/original/usb-300x162.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/usb-300x162.png"
+    caption="usb"
+    width="600px"
+    %}
 
 Utilizo un disco que ya tenía para otros menesteres y creo una partición de tipo EXT4 con el resto del espacio usando gparted.
 
-![gparted](/assets/img/original/gparted.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/gparted.png"
+    caption="gparted"
+    width="600px"
+    %}
 
 El proceso es muy sencillo, conectamos el USB, entramos como root y ejecutamos gparted. Seleccionamos el espacio libre y creamos una partición de tipo ext4.
 
@@ -207,21 +223,45 @@ pre>
 
 ## Backup a disco iSCSI
 
-Otra opción muy interesante es usar un disco remoto en una NAS a través de iSCSI. En mi caso tengo una NAS de QNAP, un ![Hypervisor KVM](https://www.luispa.com/?p=3221) y mis máquinas virtuales ([un ejemplo](/assets/img/original/?p=3462)){: width="730px" padding:10px }. Si mezclamos los ingredientes tenemos un caso de uso claro: entregar un espacio "físico" vía iSCSI desde la NAS al hypervisor, para que haga backups con RBME de los datos persistentes de las máquinas virtuales.
+{% include showImagen.html
+    src="/assets/img/original/?p=3462)"
+    caption="Hypervisor KVM](https://www.luispa.com/?p=3221) y mis máquinas virtuales ([un ejemplo"
+    width="600px"
+    %}
 
 ### Acciones en el QNAP
 
 - Creo un espacio libre de 250GB en mi QNAP (NAS)
 
-![iSCSI-RBME-1](/assets/img/original/iSCSI-RBME-1-1024x595.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-RBME-1-1024x595.png"
+    caption="iSCSI-RBME-1"
+    width="600px"
+    %}
 
-![iSCSI-RBME-2](/assets/img/original/iSCSI-RBME-2-1024x602.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-RBME-2-1024x602.png"
+    caption="iSCSI-RBME-2"
+    width="600px"
+    %}
 
-![iSCSI-RBME-3](/assets/img/original/iSCSI-RBME-3-1024x602.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-RBME-3-1024x602.png"
+    caption="iSCSI-RBME-3"
+    width="600px"
+    %}
 
-![iSCSI-RBME-4](/assets/img/original/iSCSI-RBME-4-1024x601.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-RBME-4-1024x601.png"
+    caption="iSCSI-RBME-4"
+    width="600px"
+    %}
 
-![iSCSI-RBME-5](/assets/img/original/iSCSI-RBME-5-1024x591.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-RBME-5-1024x591.png"
+    caption="iSCSI-RBME-5"
+    width="600px"
+    %}
 
 - Me apunto el target: iqn.2004-04.com.qnap:ts-569pro:iscsi.backuprbme.d70ea1
 
@@ -233,7 +273,11 @@ Como decía antes, estoy entregando un espacio "físico" vía iSCSI desde la NAS
 
 [dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
 
-![este otro apunte](/assets/img/original/?p=3462)){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=3462)"
+    caption="este otro apunte"
+    width="600px"
+    %}
 
 [/dropshadowbox]
 
@@ -408,13 +452,29 @@ A partir de aquí ya tengo mi disco iSCSI como /dev/iscsi/diskb y dicho nombre e
 
 marte ~ # gparted
 
-![gparted-iscsi1](/assets/img/original/gparted-iscsi1.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/gparted-iscsi1.png"
+    caption="gparted-iscsi1"
+    width="600px"
+    %}
 
-![gparted-iscsi2](/assets/img/original/gparted-iscsi2.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/gparted-iscsi2.png"
+    caption="gparted-iscsi2"
+    width="600px"
+    %}
 
-![gparted-iscsi3](/assets/img/original/gparted-iscsi3.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/gparted-iscsi3.png"
+    caption="gparted-iscsi3"
+    width="600px"
+    %}
 
-![gparted-iscsi4](/assets/img/original/gparted-iscsi4.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/gparted-iscsi4.png"
+    caption="gparted-iscsi4"
+    width="600px"
+    %}
 
 - Compruebo que todo es correcto, deberíamos ver que tenemos un disco con una partición 83 (linux) y aunque no se ve, el file system es de tipo EXT4.
 

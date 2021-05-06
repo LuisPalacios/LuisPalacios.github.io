@@ -6,13 +6,25 @@ tags: linux nuc
 excerpt_separator: <!--more-->
 ---
 
-![metas2](/assets/img/original/metas2.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/metas2.jpg"
+    caption="metas2"
+    width="600px"
+    %}
 
-Este post pertenece a la colección sobre la ![instalación de Gentoo GNU/Linux en un Intel® NUC D54250WYK](/assets/img/original/?p=7){: width="730px" padding:10px }. Este es el último apunte de la serie donde describo cuales son los últimos retoques a realizar para dar por terminada la instalación.
+{% include showImagen.html
+    src="/assets/img/original/?p=7"
+    caption="instalación de Gentoo GNU/Linux en un Intel® NUC D54250WYK"
+    width="600px"
+    %}
 
 **Completar la instalación**
 
-Ya hemos terminado los ![pasos necesarios antes del primer "reboot"](/assets/img/original/?p=842){: width="730px" padding:10px }, arranca desde el disco duro SSD,. Cuando tengas el prompt y hagas login por primera vez podrás observar qué módulos se han cargado por defecto:
+{% include showImagen.html
+    src="/assets/img/original/?p=842"
+    caption="pasos necesarios antes del primer "reboot""
+    width="600px"
+    %}
 
  
  
@@ -173,4 +185,8 @@ Aunque no voy a documentar como se parametrizan todos... sí que dejo aquí una 
 - app-emulation/docker     (Sobre Docker)
 - dev-tcltk/expect         USE=doc para "autoexpect" (se instala en /usr/share/doc/expect-x.yy/examples/)
 
-Se acabó, terminamos la instalación del NUC!!!.  Nota: Si lo deseas puedes volver al paso anterior: ![antes del primer reboot del kernel](/assets/img/original/?p=842){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/?p=842"
+    caption="antes del primer reboot del kernel"
+    width="600px"
+    %}

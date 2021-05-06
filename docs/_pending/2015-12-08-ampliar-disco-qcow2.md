@@ -8,7 +8,11 @@ excerpt_separator: <!--more-->
 
 En este apunte describo cómo ampliar el disco duro de una máquina virtual (VM) qcow2 (KVM).
 
-![qcow2grow](/assets/img/original/qcow2grow-1024x779.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/qcow2grow-1024x779.png"
+    caption="qcow2grow"
+    width="600px"
+    %}
 
 En este ejemplo la VM **cortafuegix** ocupa 10GB (se averigua arrancándola y ejecutando el comando df) y necesito ampliarla a 15GB. Seguimos los pasos siguientes:  
 

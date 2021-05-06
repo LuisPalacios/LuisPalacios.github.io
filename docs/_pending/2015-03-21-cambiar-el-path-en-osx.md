@@ -8,11 +8,19 @@ excerpt_separator: <!--more-->
 
 Varias veces me han preguntado **cómo cambiar el PATH de manera permanente en OSX**. Lo siguiente funciona en varias versiones de OSX: El Capitan, Yosemite, Mavericks y Lion.
 
-![bashosx](/assets/img/original/bashosx.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/bashosx.png"
+    caption="bashosx"
+    width="600px"
+    %}
 
 Para mocificarlo de manera permanente tienes que crear (o editar) el fichero .bash_profile en tu directorio $HOME.
 
-- Lanza Terminal.app desde Finder (/Aplicaciones/Utilidades/Terminal.app) o pulsa CMD-Espacio, escribe Terminal y pulsa Intro.   ![path-spotlight](/assets/img/original/path-spotlight.png){: width="730px" padding:10px }  
+{% include showImagen.html
+    src="/assets/img/original/path-spotlight.png"
+    caption="path-spotlight"
+    width="600px"
+    %}
     
 - Cambia al directorio HOME. Por defecto "caes" en él, asegúrate de todas formas con el comando cd:
     
@@ -25,7 +33,11 @@ obelix:~ luis$ pwd
 
 obelix:~ luis$ nano .bash_profile
 
-![path-bash_profile](/assets/img/original/path-bash_profile.png){: width="730px" padding:10px }  
+{% include showImagen.html
+    src="/assets/img/original/path-bash_profile.png"
+    caption="path-bash_profile"
+    width="600px"
+    %}
 
 - Sal salvando mediante CTRL-X, Y
     

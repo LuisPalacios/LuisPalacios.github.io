@@ -8,9 +8,17 @@ excerpt_separator: <!--more-->
 
 Instalar Linux Gentoo en NUC6i5SYK con un disco SSD Samsung SM951-NVMe no es tarea fácil. Algún día lo será, pero hoy (Feb'2016) estamos hablando de tecnología muy puntera (NVMe). La buena noticia es que al final lo he conseguido y puedo disfrutar de su rendimiento, sirva como ejemplo que tarda solo **5 segundos en hacer boot (desde BIOS al prompt de Login)**.
 
-![NUC6i5SYK](https://www.luispa.com/wp-content/uploads/2016/06/NUC6i5SYK-300x169.jpg)](https://www.luispa.com/wp-content/uploads/2016/06/NUC6i5SYK.jpg)[![mem16](/assets/img/original/mem16-300x129.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/mem16-300x129.jpg"
+    caption="NUC6i5SYK](https://www.luispa.com/wp-content/uploads/2016/06/NUC6i5SYK-300x169.jpg)](https://www.luispa.com/wp-content/uploads/2016/06/NUC6i5SYK.jpg)[![mem16"
+    width="600px"
+    %}
 
-![ssd256](/assets/img/original/ssd256-300x79.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/ssd256-300x79.jpg"
+    caption="ssd256"
+    width="600px"
+    %}
 
  
 
@@ -18,9 +26,17 @@ Instalar Linux Gentoo en NUC6i5SYK con un disco SSD Samsung SM951-NVMe no es tar
 
 Antes de describir el problema y la solución, aquí tienes el hardware utilizado
 
--  [NUC6i5SYK](http://ark.intel.com/products/89188/Intel-NUC-Kit-NUC6i5SYK) I5-6260U con BIOS ![SYSKLi35.86A](/assets/img/original/BIOS-Update-SYSKLi35-86A){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/BIOS-Update-SYSKLi35-86A"
+    caption="SYSKLi35.86A"
+    width="600px"
+    %}
 - Disco /www.samsung.com/semiconductor/products/flash-storage/client-ssd/MZVPV256HDGL?ia=831">SM951-NVMe M.2 SSD 256GB - MZVPV256HDGL-00000
-- 32GB de memoria con 2 x  ![G.Skill Ripjaws SO-DIMM DDR4 2133 PC4-17000 16GB CL15](/assets/img/original/f4-2133c15s-16grs){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/f4-2133c15s-16grs"
+    caption="G.Skill Ripjaws SO-DIMM DDR4 2133 PC4-17000 16GB CL15"
+    width="600px"
+    %}
 
  
 
@@ -42,10 +58,18 @@ BIOS NUC BIOS Devices SATA:
 
 ## Problemas
 
-Normalmente sigo [esta guía (con openrc)](https://www.luispa.com/?p=7) o esta otra ![para Hypervisor KVM (con systemd)](/assets/img/original/?p=3221) para los NUC's, en ambas empleo el **LiveCD de Gentoo**, particiono en modo GPT, creo 4 particiones (grub_bios, boot, swap y rootfs){: width="730px" padding:10px }. Por desgracia no es tan fácil.
+{% include showImagen.html
+    src="/assets/img/original/?p=3221) para los NUC's, en ambas empleo el **LiveCD de Gentoo**, particiono en modo GPT, creo 4 particiones (grub_bios, boot, swap y rootfs"
+    caption="para Hypervisor KVM (con systemd)"
+    width="600px"
+    %}
 
 - El **LiveCD** de Gentoo **NO** incluye soporte para discos NVMe, por lo tanto no los detecta.
-- La combinación GTP + NVMe + GRUB2 tiene de momento el ![bug #41883](/assets/img/original/?41883){: width="730px" padding:10px }: Booting from NVMe Device Enters GRUB rescue.
+{% include showImagen.html
+    src="/assets/img/original/?41883"
+    caption="bug #41883"
+    width="600px"
+    %}
 
  
 
@@ -53,7 +77,11 @@ Normalmente sigo [esta guía (con openrc)](https://www.luispa.com/?p=7) o esta o
 
 Esto es lo que tienes que cambiar, dejo las pistas necesarias para que no pierdas horas navegando por internet:
 
-- Uitliza ![SystemRescueCD](/assets/img/original/Sysresccd-manual-en_Booting_the_CD-ROM){: width="730px" padding:10px } como LiveCD, que sí soporta NVMe y no olvides escoger la opción **altker64** al hacer boot, de modo que detecte la tarjeta de red correctamente.
+{% include showImagen.html
+    src="/assets/img/original/Sysresccd-manual-en_Booting_the_CD-ROM"
+    caption="SystemRescueCD"
+    width="600px"
+    %}
 - Durante la instalación de Gento, a la hora de particionar, hazlo con MBR para la tabla de particiones en vez de GPT
 - Crea solo 2 particiones, una para root (/) y otra para Swap (512MB)
 - Utiliza GRUB2 de forma normal. Al no tener GPT ni partición separada de Boot dejará de hacerse un lio.
@@ -120,7 +148,11 @@ nuc ~ # cat /etc/fstab
 
 ## KERNEL
 
-Aquí encontrarás el ![Kernel 4.4.1](/assets/img/original/2016-02-13-config-4.4.1-NUC-NUC6i5SYK-SSD-NVMe-KVM.txt){: width="730px" padding:10px } utilizado para reconocer discos NVMe.
+{% include showImagen.html
+    src="/assets/img/original/2016-02-13-config-4.4.1-NUC-NUC6i5SYK-SSD-NVMe-KVM.txt"
+    caption="Kernel 4.4.1"
+    width="600px"
+    %}
 
  
 
@@ -128,9 +160,17 @@ Aquí encontrarás el ![Kernel 4.4.1](/assets/img/original/2016-02-13-config-4.4
 
 Configuración final de la BIOS.
 
-![BIOS-FastBoot](/assets/img/original/BIOS-FastBoot-300x130.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/BIOS-FastBoot-300x130.png"
+    caption="BIOS-FastBoot"
+    width="600px"
+    %}
 
-![BIOS-NVMe](/assets/img/original/BIOS-NVMe-300x217.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/BIOS-NVMe-300x217.png"
+    caption="BIOS-NVMe"
+    width="600px"
+    %}
 
 BIOS QUICK BOOT: SI  (IMPORTANTE para conseguir los 5 segundos)
 

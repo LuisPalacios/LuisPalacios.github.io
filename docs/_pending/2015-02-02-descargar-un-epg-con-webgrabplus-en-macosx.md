@@ -6,24 +6,52 @@ tags: linux nuc
 excerpt_separator: <!--more-->
 ---
 
-_**[WebGrab+Plus](http://www.webgrabplus.com)**_ es un recolector de Guías EPG multi-sitio capaz de trabajar de manera incremental. Se baja la programación y genera un fichero en formato XMLTV que puedes usar para alimentar a tu media center. Recomiendo leer este ![post](/assets/img/original/index.php?topic=485.0){: width="730px" padding:10px } donde documenta bastante bien su uso.
+{% include showImagen.html
+    src="/assets/img/original/index.php?topic=485.0"
+    caption="post"
+    width="600px"
+    %}
 
-  Nota: En Febrero de 2016 encontré una alternativa a conseguir el EPG, consiste en bajárselo directamente de un sitio donde lo publican, échale un ojo a [este apunte](https://www.luispa.com/?p=4571), busca por EPG.     ![EPG_fading](/assets/img/original/EPG_fading.jpg){: width="730px" padding:10px }  
+{% include showImagen.html
+    src="/assets/img/original/EPG_fading.jpg"
+    caption="EPG_fading"
+    width="600px"
+    %}
 
-En mi caso estoy usando la combinación de WebGrab+Plus para la recolecta, **TVHeadEnd** para gestionar los canales + el EPG y presentárselo a mi media center basado en ![Raspberry + XBMC](/assets/img/original/?p=1225){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=1225"
+    caption="Raspberry + XBMC"
+    width="600px"
+    %}
 
 ## Instalación y ejecución en MacOSX
 
-![fuente](/assets/img/original/os-x)){: width="730px" padding:10px } que he seguido para instalar y ejecutar WebGrab+Plus en MacOSX:
+{% include showImagen.html
+    src="/assets/img/original/os-x)"
+    caption="fuente"
+    width="600px"
+    %}
 
-- Descargar e instalar ![Mono MDK](/assets/img/original/) (Mono Development Kit que ya trae incluído el MRE). En mi caso he probado con Mono 3.12.2){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/) (Mono Development Kit que ya trae incluído el MRE). En mi caso he probado con Mono 3.12.2"
+    caption="Mono MDK"
+    width="600px"
+    %}
     
-- Descarga la ![WebGrab+Plus (Linux) última versión](/assets/img/original/WebGrabPlusV1.1.1LINUX.rar) (V1.1.1){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/WebGrabPlusV1.1.1LINUX.rar) (V1.1.1"
+    caption="WebGrab+Plus (Linux) última versión"
+    width="600px"
+    %}
     
 
 Extraer el rar en el escritorio y renombrar la carpeta a "**temp1**"
 
-- Descargar el ![fichero de upgrade patchexe_54.zip](/assets/img/original/54){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/54"
+    caption="fichero de upgrade patchexe_54.zip"
+    width="600px"
+    %}
 
 Extraer el ZIP en el escritorio y renombrar la carpeta a "**temp2**"
 
@@ -35,10 +63,18 @@ Extraer el ZIP en el escritorio y renombrar la carpeta a "**temp2**"
     
 - Copiar WebGrab+Plus.exe desde temp2 a /Users/luis/priv/wg++
     
-- Configurar WG++ (echa un ojo a la ![documentación oficial](/assets/img/original/324)){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/324)"
+    caption="documentación oficial"
+    width="600px"
+    %}
     
 
-Descargar el fichero ![dummy.ini](/assets/img/original/dummy.ini){: width="730px" padding:10px }, además modifica el fichero WebGrab++.config.xml. Al final debería quedarte lo siguiente en ambos ficheros:
+{% include showImagen.html
+    src="/assets/img/original/dummy.ini"
+    caption="dummy.ini"
+    width="600px"
+    %}
 
 <!--?xml version="1.0"?-->
 <settings>
@@ -159,7 +195,11 @@ job finished  ..  done in 1 seconds
   </programme>
 </tv>
 
-- Consulta [la lista de canales EPG](http://webgrabplus.com/node/94) que puedes descargar y utilizar con WG++. En mi caso concreto voy a usar ![fuentes disponibles en España](/assets/img/original/epg-channels#stc_33){: width="730px" padding:10px }. Descargo por ejempo la del pais.com
+{% include showImagen.html
+    src="/assets/img/original/epg-channels#stc_33"
+    caption="fuentes disponibles en España"
+    width="600px"
+    %}
 
 obelix:wg++ luis$ curl -Ok http://webgrabplus.com/sites/default/files/download/ini/info/zip/Spain_elpais.com.zip
 obelix:wg++ luis$ unzip Spain_elpais.com.zip
@@ -421,4 +461,8 @@ innnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 
  
 
-Una vez que tenemos el fichero xml ya podemos tratarlo con el programa que más nos guste y que sepa interpretarlo. Ahí no voy a entrar, en mi caso lo integro con TVHeadEnd y además todo lo que he descrito aquí lo hago en un equipo Linux (es prácticamente lo mismo), así que consulta el apunte ![WebGrab+Plus con TVHeadEnd en Linux](/assets/img/original/?p=1587&preview=true){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=1587&preview=true"
+    caption="WebGrab+Plus con TVHeadEnd en Linux"
+    width="600px"
+    %}

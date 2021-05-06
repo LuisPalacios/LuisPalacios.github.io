@@ -6,11 +6,23 @@ tags: media-center movistar raspberry xbmc
 excerpt_separator: <!--more-->
 ---
 
-Este apunte lo empecé a principios del 2015 pero lo he ido actualizando con el tiempo. En aquel entonces andaba yo buscando un ![Media Center casero](/assets/img/original/?p=1025) de siguiente generación conectado a mi TV, un “pata negra” que no sea demasiado caro, que pueda conectarse por cable ethernet a un “mundo” de múltiples fuentes que incluya música, fotos, videos familiares o películas o series (tanto SD o HD) y que sea capaz de reproducir TV en tiempo real (SD o HD), que soporte bitrates altos (~40Mbps) independiente de cual sea la fuente (antena, satélite, internet){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=1025) de siguiente generación conectado a mi TV, un “pata negra” que no sea demasiado caro, que pueda conectarse por cable ethernet a un “mundo” de múltiples fuentes que incluya música, fotos, videos familiares o películas o series (tanto SD o HD) y que sea capaz de reproducir TV en tiempo real (SD o HD), que soporte bitrates altos (~40Mbps) independiente de cual sea la fuente (antena, satélite, internet"
+    caption="Media Center casero"
+    width="600px"
+    %}
 
-![OpenElec](http://openelec.tv/) 4.0.5”, con la Pi2 y Pi3 las versiones "OpenElec 6.0.3 -> Kodi v15 Isengard" y "OpenElec 7.0B2 -> Kodi v16 Jarvis". También proble "[OSMC](/assets/img/original/)" aunque me he quedé con OpenElec (principalmente por el Skin, no me convence el de OSMC){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/)" aunque me he quedé con OpenElec (principalmente por el Skin, no me convence el de OSMC"
+    caption="OpenElec](http://openelec.tv/) 4.0.5”, con la Pi2 y Pi3 las versiones "OpenElec 6.0.3 -> Kodi v15 Isengard" y "OpenElec 7.0B2 -> Kodi v16 Jarvis". También proble "[OSMC"
+    width="600px"
+    %}
 
-En abril del 2017 nació ![LibreElec](/assets/img/original/), una bifurcación (fork) de OpenElec y desde entonces me he mantenido en ella (LibreElec){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/), una bifurcación (fork) de OpenElec y desde entonces me he mantenido en ella (LibreElec"
+    caption="LibreElec"
+    width="600px"
+    %}
 
 Nota1: ¿porqué no hablo de Wifi?: Pues porque busco el mejor rendimiento y eliminar posibles puntos de fallo o empeoramiento de las condiciones de ancho de banda. Una vez que pruebes y re-pruebes todo y estés convencido de que va "PERFECTO", entonces es cuando deberías añadir la "variable" Wifi y por supuesto probar de nuevo.
 
@@ -63,7 +75,11 @@ Pensé en usar un microventilador pero me ha ido muy bien con solo los disipador
 
  
 
-![RaspberryPiB+1.2](/assets/img/original/RaspberryPiB-1.2.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/RaspberryPiB-1.2.jpg"
+    caption="RaspberryPiB+1.2"
+    width="600px"
+    %}
 
  
 
@@ -71,23 +87,47 @@ Pensé en usar un microventilador pero me ha ido muy bien con solo los disipador
 
 Todos los paquetes de software que se ejecutan en la Raspberry son de software libre y hay múltiples distribuciones. En el área de Media Center tenemos dos: raspbmc (ahora OSMC), openelec y ahora LibreElec. Tras múltiples pruebas y pasar por OpenElec, ahora utilizo **LibreElec**.
 
-- Proyecto ![LibreElec](/assets/img/original/){: width="730px" padding:10px }
-- Proyecto [OpenELEC](http://openelec.tv/) y enlace a la raíz del proyecto [OpenELEC](https://github.com/OpenELEC) en GitHub y en particular a ![OpenElec.tv](/assets/img/original/OpenELEC.tv){: width="730px" padding:10px }
-- [Wiki](http://wiki.openelec.tv/index.php/Main_Page) de OpenELEC y ![documentación](/assets/img/original/Development_workflow) para compilar desde los fuentes (por si quieres trastear y cross-compilar directamente desde GitHub, interesante aprendizaje :-)){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="LibreElec"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/OpenELEC.tv"
+    caption="OpenElec.tv"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/Development_workflow) para compilar desde los fuentes (por si quieres trastear y cross-compilar directamente desde GitHub, interesante aprendizaje :-)"
+    caption="documentación"
+    width="600px"
+    %}
 
  
 
 #### Formatear la tarjeta SD
 
-Necesitas una tarjeta SD, recomiendo que sea al menos de 8GB y Clase 10 o superior. Formatear (quick format) con el programa ![SDFormatter.](/assets/img/original/) (que es el que yo uso para Mac){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/) (que es el que yo uso para Mac"
+    caption="SDFormatter."
+    width="600px"
+    %}
 
-![sdformatter](/assets/img/original/sdformatter-300x196.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/sdformatter-300x196.png"
+    caption="sdformatter"
+    width="600px"
+    %}
 
 **Raspberry Pi Versión 1: "OpenElec 4.0.5" desde NOOBS**
 
 Esta opción usa la instalación desde NOOBS, un paquete preparado por la gente de Raspberry directamente y dejará instalada la versión 4.0.5 de "openelec" que incluye XBMC 13.1 "Ghotam". Es la versión que mejor me ha funcionado en la Raspberry Pi Model B+ 1.2 (Versión 1). Estos son los pasos realizados en mi Mac:
 
-- Descargar el ZIP de la versión ![1.3.12 de NOOBs](/assets/img/original/){: width="730px" padding:10px }. Nota: para la nueva Raspberry Pi versión 2 necesitas que sea versión 1.3.12 o superior. Por otro lado, te recomiendo descargar y usar el torrent.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="1.3.12 de NOOBs"
+    width="600px"
+    %}
     
 - Descomprimir el archivo NOOBS_v1_3_12.zip
     
@@ -106,7 +146,11 @@ Para esta opción vamos a descargar la imagen directamente desde OpenElec, descr
 
 Nota: Con Pi 2 o 3 se soportan bitrates >40Mbps con muchísimo menor consumo de CPU, ahora bien, de ahí (40-45Mbps) no pasa sin sufrir microcortes y es debido a que el chip ethernet LAN9154 emplea el bus USB. En mi caso 99.99% de mi contenido va sobrado con dicho rendimiento (TV 1080 y videos en 1080).
 
-- Descargar la imagen [OpenELEC 5.0.8 (arm) Diskimage](http://releases.openelec.tv/OpenELEC-RPi2.arm-5.0.8.img.gz) desde la sección **_RaspberryPi-2 Builds_** en el sitio de ![OpenELEC](/assets/img/original/get-openelec){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/get-openelec"
+    caption="OpenELEC"
+    width="600px"
+    %}
     
 - Descomprimir: gunzip OpenELEC-RPi2.arm-5.0.8.img.gz
     
@@ -121,10 +165,18 @@ Nota: Con Pi 2 o 3 se soportan bitrates >40Mbps con muchísimo menor consumo de 
 
 **Raspberry Pi Versión 3: Ejemplo con "LibreElec"**
 
-- Descargo el ![LibreElec SD USB Creator](/assets/img/original/){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="LibreElec SD USB Creator"
+    width="600px"
+    %}
 - Ejecutar el programa y seguir cuatro sencillos pasos
 
-![](/assets/img/original/libreelec.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/libreelec.png"
+    caption=""
+    width="600px"
+    %}
 
  
 
@@ -168,7 +220,11 @@ Sistema
 
 #### Instalación de licencias MPEG-2 y VC1
 
-La Raspberry cuenta con soporte para codecs MPEG2 y VC1, pero están deshabilitados por defecto, si los necesitas (como en mi caso para ver los streams SD de la TV, o para reproducir .vob's extraídos de DVD's o videos familiares en ese formato) puedes adquirir las ![licencias a través de su tienda](/assets/img/original/){: width="730px" padding:10px }. Nota: Si no lo haces e intentas reproducir esas fuentes entonces solo tendrás el audio.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="licencias a través de su tienda"
+    width="600px"
+    %}
 
 Para adquirir la licencia, conecta vía SSH con tu raspberry como root, averigua el número de serie de la cpu, adquire la licencia para luego instalarla en el fichero config.txt
 
@@ -236,13 +292,21 @@ Después desde Videos, Archivos:
 
 Una de mis aficiones es comprar (o que me regalen) series de TV completas, las ripeo en Inglés con subtítulos en Inglés para seguir "estudiando" el idioma, la integración dentro del Media Center es perfecta:
 
-![series](/assets/img/original/series-1024x578.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/series-1024x578.png"
+    caption="series"
+    width="600px"
+    %}
 
  
 
 #### Sintonizador externo VU+ Ultimo
 
-![fuentes en GitHub](/assets/img/original/pvr.vuplus)){: width="730px" padding:10px } que viene incluido y se activa con:
+{% include showImagen.html
+    src="/assets/img/original/pvr.vuplus)"
+    caption="fuentes en GitHub"
+    width="600px"
+    %}
 
 :
 
@@ -256,17 +320,37 @@ Una de mis aficiones es comprar (o que me regalen) series de TV completas, las r
    Activado
 :
 
-![vuplus1](/assets/img/original/vuplus1-1024x578.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/vuplus1-1024x578.png"
+    caption="vuplus1"
+    width="600px"
+    %}
 
-![vuplus2](/assets/img/original/vuplus2-1024x578.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/vuplus2-1024x578.png"
+    caption="vuplus2"
+    width="600px"
+    %}
 
-![vuplus3](/assets/img/original/vuplus3-1024x578.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/vuplus3-1024x578.png"
+    caption="vuplus3"
+    width="600px"
+    %}
 
-![vuplus4](/assets/img/original/vuplus4-1024x578.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/vuplus4-1024x578.png"
+    caption="vuplus4"
+    width="600px"
+    %}
 
 #### Sintonizar Movistar TV con un plugin
 
-He descubierto un plugin que tiene muy buena pinta, no he tenido tiempo de probarlo, pero si lo único que quieres es ver los canales de Movistar TV en múltiples TV's aquí tienes una solución que promete: ![https://xbmcimagenio.codeplex.com/](/assets/img/original/){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="https://xbmcimagenio.codeplex.com/"
+    width="600px"
+    %}
 
  
 
@@ -275,11 +359,27 @@ He descubierto un plugin que tiene muy buena pinta, no he tenido tiempo de proba
 Si te has hecho con un equipo externo (como el MOI+ o MOI Pro que incluye el programa Tvheadend) o tienes **un servidor dedicado con Tvheadend** y quieres ver los canales de Movistar TV, puedes echar un vistazo a diferentes apuntes que he realizado al respecto. Fuí investigando poco a poco y los tienes a continuación, en orden de más antiguo a más moderno:
 
 - Soluciones con un servidor dedicado o semidedicado:
-    - Movistar Fusión TV. Conseguirlo no es tan directo como configurar un Add-on. Echa un ojo a estos apuntes: 1) [integración de Movistar TV en mi media center (2015)](https://www.luispa.com/?p=1225), 2) [integración de Movistar TV en mi media center (2015)](https://www.luispa.com/?p=1225) y 3) ![WebGrab+Plus con TVHeadEnd en Linux](/assets/img/original/?p=1587){: width="730px" padding:10px }.
-![TVheadend y Movistar TV (2016)](/assets/img/original/4571){: width="730px" padding:10px }**
-    - Ojo porque en mi caso he cambiado el router que te entregan por un Linux + un Switch, documentado aquí: ![Movistar Fusión con router Linux](/assets/img/original/?p=266){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=1587"
+    caption="WebGrab+Plus con TVHeadEnd en Linux"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/4571"
+    caption="TVheadend y Movistar TV (2016)"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/?p=266"
+    caption="Movistar Fusión con router Linux"
+    width="600px"
+    %}
 - Solución con un equipo externo
-![Servidor de streaming IPTV casero](/assets/img/original/2647){: width="730px" padding:10px }** es un MOI Pro funcionando de maravilla con Tvheadend si además de agregar IPTV quieres agregar otras fuentes.
+{% include showImagen.html
+    src="/assets/img/original/2647"
+    caption="Servidor de streaming IPTV casero"
+    width="600px"
+    %}
 
  
 
@@ -287,11 +387,19 @@ Si te has hecho con un equipo externo (como el MOI+ o MOI Pro que incluye el pro
 
 ### CEC
 
-![aquí tienes un ejempo, la oficial de XBMC/KODI](/assets/img/original/iOS)){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iOS)"
+    caption="aquí tienes un ejempo, la oficial de XBMC/KODI"
+    width="600px"
+    %}
 
 ### Remoto vía USB
 
-Otra opción es hacerte con un mando remoto que funciona por el puerto USB, tienes muchas opciones en el mercado. Una que a mi me ha gustado mucho y funciona nada más sacarlo de la caja es el HP MCE remote. ![Aquí](/assets/img/original/){: width="730px" padding:10px } tienes una buena comparativa.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="Aquí"
+    width="600px"
+    %}
 
 * * *
 
@@ -425,7 +533,11 @@ Continuamos con los tres recomendados. Instálalos a través de Ajustes->Add-ons
 
  
 
-[![kodiOnOff_2](https://www.luispa.com/wp-content/uploads/2016/07/kodiOnOff_2-1024x576.png)](https://www.luispa.com/wp-content/uploads/2016/07/kodiOnOff_2.png) [![kodiOnOff_3](https://www.luispa.com/wp-content/uploads/2016/07/kodiOnOff_3-1024x576.png)](https://www.luispa.com/wp-content/uploads/2016/07/kodiOnOff_3.png) [![kodiOnOff_4](https://www.luispa.com/wp-content/uploads/2016/07/kodiOnOff_4-1024x576.png)](https://www.luispa.com/wp-content/uploads/2016/07/kodiOnOff_4.png)  [![kodiOnOff_6](https://www.luispa.com/wp-content/uploads/2016/07/kodiOnOff_6-1024x576.png)](https://www.luispa.com/wp-content/uploads/2016/07/kodiOnOff_6.png) [![kodiOnOff_7](https://www.luispa.com/wp-content/uploads/2016/07/kodiOnOff_7-1024x576.png)](https://www.luispa.com/wp-content/uploads/2016/07/kodiOnOff_7.png) [![kodiOnOff_8](https://www.luispa.com/wp-content/uploads/2016/07/kodiOnOff_8-1024x576.png)](https://www.luispa.com/wp-content/uploads/2016/07/kodiOnOff_8.png) ![kodiOnOff_9](/assets/img/original/kodiOnOff_9-1024x576.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kodiOnOff_9-1024x576.png"
+    caption="kodiOnOff_9"
+    width="600px"
+    %}
 
 ### Configuración de los Plugins
 
@@ -435,15 +547,27 @@ Una vez instalados entramos a configurarlos:
 
 Entramos en la configuración de Kodi Callbacks, definimos como **`TASK #1`** el script `/storage/screen_off.sh` y como **`TASK #2`** el script `/storage/screen_on.sh`
 
-[![kodi_cb0](https://www.luispa.com/wp-content/uploads/2016/07/kodi_cb0-1024x576.jpg)](https://www.luispa.com/wp-content/uploads/2016/07/kodi_cb0.jpg) [![kodi_cb1](https://www.luispa.com/wp-content/uploads/2016/07/kodi_cb1-1024x576.jpg)](https://www.luispa.com/wp-content/uploads/2016/07/kodi_cb1.jpg) ![kodi_cb2](/assets/img/original/kodi_cb2-1024x576.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kodi_cb2-1024x576.jpg"
+    caption="kodi_cb2"
+    width="600px"
+    %}
 
 Definimos dos eventos, el **EVENTO #1** "`on Screensaver Activated`" que ejecute el **TASK #1** (script `/storage/screen_off.sh`) y el **EVENTO #2** "`on Screensaver Deactivated`" que ejecute el **TASK #2** (script `/storage/screen_on.sh`)
 
-[![kodi_cb3](https://www.luispa.com/wp-content/uploads/2016/07/kodi_cb3-1024x576.jpg)](https://www.luispa.com/wp-content/uploads/2016/07/kodi_cb3.jpg) ![kodi_cb4](/assets/img/original/kodi_cb4-1024x576.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kodi_cb4-1024x576.jpg"
+    caption="kodi_cb4"
+    width="600px"
+    %}
 
 El resto lo dejamos por defecto
 
-[![kodi_cb5](https://www.luispa.com/wp-content/uploads/2016/07/kodi_cb5-1024x576.jpg)](https://www.luispa.com/wp-content/uploads/2016/07/kodi_cb5.jpg) ![kodi_cb6](/assets/img/original/kodi_cb6-1024x576.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kodi_cb6-1024x576.jpg"
+    caption="kodi_cb6"
+    width="600px"
+    %}
 
  
 
@@ -451,15 +575,27 @@ El resto lo dejamos por defecto
 
 Entramos en la configuración,
 
-![kodi_st3](/assets/img/original/kodi_st3-1024x576.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kodi_st3-1024x576.jpg"
+    caption="kodi_st3"
+    width="600px"
+    %}
 
 Configuramos primero GENERAL, cómo iniciar el Sleep Timer
 
-![kodi_st0](/assets/img/original/kodi_st0-1024x576.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kodi_st0-1024x576.jpg"
+    caption="kodi_st0"
+    width="600px"
+    %}
 
 Después configuramos AUDIO/VIDEO SUPERVISIÓN, donde indicamos "cuando" queremos que se active el Timer.
 
-[![kodi_st1](https://www.luispa.com/wp-content/uploads/2016/07/kodi_st1-1024x576.jpg)](https://www.luispa.com/wp-content/uploads/2016/07/kodi_st1.jpg) ![kodi_st2](/assets/img/original/kodi_st2-1024x576.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kodi_st2-1024x576.jpg"
+    caption="kodi_st2"
+    width="600px"
+    %}
 
 En este ejemplo vemos que a los 90 minutos de inactividad (no iteración con Kodi) se hará un trigger del Timer y cuando venza el timeout del diálogo (nos da 45seg para abortar) se activará el "Screensaver", y ya vimos qué pasa cuando se activa el screensaver en el otro plugin (Kodi Callbacks), te lo recuerdo: el **EVENTO #1** "`on Screensaver Activated`" ejecuta el **TASK #1** (script `/storage/screen_off.sh`). Traducido significa que a la hora y media de no tocar el mando remoto muestra una caja de diálogo para abortar y si no lo hacemos en 45 segundos pues se apaga Kodi (se pone a dormir, NO apaga la raspberry).
 
@@ -471,7 +607,11 @@ El objetivo es que cada vez que xxxxx relea la libería. Activamos el plugin y e
 
  
 
-[![kodi_wd1](https://www.luispa.com/wp-content/uploads/2016/07/kodi_wd1-1024x576.jpg)](https://www.luispa.com/wp-content/uploads/2016/07/kodi_wd1.jpg) [![kodi_wd2](https://www.luispa.com/wp-content/uploads/2016/07/kodi_wd2-1024x576.jpg)](https://www.luispa.com/wp-content/uploads/2016/07/kodi_wd2.jpg) ![kodi_wd3](/assets/img/original/kodi_wd3-1024x576.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kodi_wd3-1024x576.jpg"
+    caption="kodi_wd3"
+    width="600px"
+    %}
 
  
 
@@ -503,10 +643,22 @@ Nota: El consumo de energía (eléctrica) de una Raspberry donde KODI está durm
 
 ## Cliente OpenVPN
 
-Si necesitas acceder desde un sitio remoto a tu instalación casera te recomiendo utilizar OpenVPN. Si es tu caso y tienes un servidor OpenVPN en un linux o similar puedes instalar un gestor de cliente OpenVPN que funciona muy bien en KODI, se trata de ![VPN Manager for OpenVPN](/assets/img/original/service.vpn.manager){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/service.vpn.manager"
+    caption="VPN Manager for OpenVPN"
+    width="600px"
+    %}
 
-- Proyecto ![VPN Manager for OpenVPN en GitHub](/assets/img/original/service.vpn.manager){: width="730px" padding:10px }
-- ![Wiki con instrucciones](/assets/img/original/wiki){: width="730px" padding:10px } para realizar una instalación "personalizada"
+{% include showImagen.html
+    src="/assets/img/original/service.vpn.manager"
+    caption="VPN Manager for OpenVPN en GitHub"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/wiki"
+    caption="Wiki con instrucciones"
+    width="600px"
+    %}
 
 Si conoces OpenVPN resumo el proceso:
 
@@ -525,11 +677,19 @@ Si conoces OpenVPN resumo el proceso:
 
 ### Monitorizar
 
-Durante la instalación y puesta en marcha me han venido bien una serie de herramientas, empiezo por la de monitorización. Para poder monitorizar la Raspberry recomiendo descargar el script ![bcmstat.sh desde aquí](/assets/img/original/bcmstat){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/bcmstat"
+    caption="bcmstat.sh desde aquí"
+    width="600px"
+    %}
 
 - Lanzar la monitorización: ./bcmstat.sh cgxd10
 
-![monitorizarraspberry copy](/assets/img/original/monitorizarraspberry-copy-1024x631.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/monitorizarraspberry-copy-1024x631.png"
+    caption="monitorizarraspberry copy"
+    width="600px"
+    %}
 
  
 
@@ -628,7 +788,11 @@ Puedes parametrizar las opciones avanzadas en el fichero advancesettings.xml.
 
 - Buffering
 
-Si quieres "jugar" con el buffering puedes activar la opción que más te apetezca. Aquí tienes la ![documentación con ejempos](/assets/img/original/HOW-TO:Modify_the_video_cache){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/HOW-TO:Modify_the_video_cache"
+    caption="documentación con ejempos"
+    width="600px"
+    %}
 
 - Otras opciones
 
@@ -673,7 +837,11 @@ obelix:Desktop luis$ sudo dd if=/dev/rdisk3 bs=1m | gzip > rasp-openelec-luispa.
 
 El proceso contrario, cuando quieras crear una nueva Micro-SD con una copia exacta de la fuente (la original), simplemente clonas la imagen anterior hacia la Micro-SD.
 
-No es necesario pero te recomiendo formatearla antes la Micro-SD destino con ![SDFormatter](/assets/img/original/){: width="730px" padding:10px }, usando formato rápido, así te aseguras que se reconoce bien en el sistema operativo. Una vez formateada el Mac la montará, por lo que podemos de nuevo comprobar qué nombre de "device" le ha sido asignado, a continuación ejecutamos el comando "dd" pero al revés. RECUERDA: FIJATE MUY BIEN porque "dd" no avisa y podrías cargarte tu disco principal si te equivocas.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="SDFormatter"
+    width="600px"
+    %}
 
 - Clonamos desde la imagen a la Micro-SD
 
@@ -697,9 +865,17 @@ Durante el proceso de copia verás simplemente un cursor parpadeando durante var
 
 El primero "**Nombre del Dispositivo**" (en SISTEMA -> Ajustes -> Servicios ->General) es el que se usa para anunciar servicios como UPnP, web, control remoto, zeroconf o AirPlay.
 
-![xbmc-nombre-dispositivo](/assets/img/original/xbmc-nombre-dispositivo-1024x578.png){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/xbmc-nombre-dispositivo-1024x578.png"
+    caption="xbmc-nombre-dispositivo"
+    width="600px"
+    %}
 
-![xbmc-nombre-sistema](/assets/img/original/xbmc-nombre-sistema-1024x578.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/xbmc-nombre-sistema-1024x578.png"
+    caption="xbmc-nombre-sistema"
+    width="600px"
+    %}
 
 - Limpiamos la configuración SSH borrando los certificados y rearrancamos el equipo.
 

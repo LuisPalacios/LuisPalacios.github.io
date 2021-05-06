@@ -8,7 +8,11 @@ excerpt_separator: <!--more-->
 
 La instalación original de Wordpress permite que el propietario de la instalación reciba un mail cuando se dejan comentarios en los post. Wordpress utilizar "mail" en vez de "smtp" así que podría pasarte que nunca te lleguen dichos avisos. Ten en cuenta que el "mail" de linux deja el correo en el equipo donde se ejecuta, es decir, no emplea ningún servidor SMTP externo.
 
-![smtpwp](/assets/img/original/smtpwp.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/smtpwp.jpg"
+    caption="smtpwp"
+    width="600px"
+    %}
 
  
 
@@ -20,10 +24,26 @@ Para cambiar a SMTP tienes dos opciones, una es instalar un plugin y la otra mod
 
 Es la opción fácil, dejo varias referencias:
 
-- ![WP MAIL SMTP](/assets/img/original/){: width="730px" padding:10px }
-- ![Webriti SMTP Mail](/assets/img/original/){: width="730px" padding:10px }
-- ![WP SMTP](/assets/img/original/){: width="730px" padding:10px }
-- ![Easy WP SMTP](/assets/img/original/){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="WP MAIL SMTP"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="Webriti SMTP Mail"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="WP SMTP"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="Easy WP SMTP"
+    width="600px"
+    %}
 
 La que más me ha gustado es la primera: **WP MAIL SMTP**
 
@@ -33,7 +53,11 @@ La que más me ha gustado es la primera: **WP MAIL SMTP**
 
 La segunda opción es más complicada, necesitas acceso al directorio de instalación de Wordpress vía línea de comandos porque supone editar un par de ficheros.
 
-Sitúate en el subdirectorio wp-includes de tu instalación de Wordpress. En mi caso, una instalación basada en ![contenedores](/assets/img/original/?p=172){: width="730px" padding:10px }, los datos persistentes están alojados en:
+{% include showImagen.html
+    src="/assets/img/original/?p=172"
+    caption="contenedores"
+    width="600px"
+    %}
 
 $ cd /Apps/data/web/www.luispa.com/wordpress/wp-includes/
 

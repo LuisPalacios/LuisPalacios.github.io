@@ -6,7 +6,11 @@ tags: linux nuc
 excerpt_separator: <!--more-->
 ---
 
-[![beforeboot](https://www.luispa.com/wp-content/uploads/2014/12/beforeboot.png)](https://www.luispa.com/wp-content/uploads/2014/12/beforeboot.png) Este apunte repasa ciertas instalaciones adicionales que recomiendo realizar tras ![instalar Gentoo GNU/Linux en un Intel® NUC D54250WYK](/assets/img/original/?p=7){: width="730px" padding:10px } y que recomiendo hacer **justo antes del primer boot**.
+{% include showImagen.html
+    src="/assets/img/original/?p=7"
+    caption="instalar Gentoo GNU/Linux en un Intel® NUC D54250WYK"
+    width="600px"
+    %}
 
 Crea el script "confcat": recomiendo que crees un script en tu sistema,  muy útil para poder ver el contenido "no comentado" de los ficheros de configuración.
 
@@ -161,4 +165,8 @@ livecd ~# umount /mnt/gentoo{/boot,/sys,/proc,}
 livecd ~# reboot
  
 
-Volver al paso anterior: [Instalación del kernel](https://www.luispa.com/?p=831) o ir al siguiente: ![Finalizar la instalación](/assets/img/original/?p=861){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/?p=861"
+    caption="Finalizar la instalación"
+    width="600px"
+    %}

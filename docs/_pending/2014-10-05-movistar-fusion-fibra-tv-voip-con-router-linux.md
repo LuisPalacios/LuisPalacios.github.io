@@ -12,7 +12,11 @@ Este apunte describe qué hay detrás (a nivel técnico) del servicio IP que nos
 
 Veamos cual es la instalación que nos queda cuando instalan "la fibra". El cable "negro" que nos llega a casa es una fibra (monomodo 657-A2) que el técnico "empalma" dentro de una roseta de tipo ICT-2, que a su vez ofrece un conector SC/APC de salida. De dicho conector sale un latiguillo de fibra estándar al ONT y desde ahí salen dos cables, uno de teléfono que normalmente conectan a la entrada de teléfono de tu casa y otro ethernet que se conecta al router. Ver el gráfico siguiente:
 
-![redold_0_o](/assets/img/original/redold_0_o-1024x893.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/redold_0_o-1024x893.png"
+    caption="redold_0_o"
+    width="600px"
+    %}
 
 El **ONT** es el equipo que termina la parte "óptica", sus siglas singnifican Optical Network Termination y se encarga de convertir la señal óptica a señal eléctrica, en concreto ofrece un interfaz Ethernet tradicional (utilizo el puerto ETH1). Salvando mucho, pero que mucho, las distancias, vendría a ser algo parecido al PTR de una línea de teléfono analógica cuando teníamos ADSL.
 
@@ -22,11 +26,23 @@ El siguiente equipo es el **Router**, que va a recibir, desde el ONT, tres VLAN'
 
 Consiste en sustituir el Router de Movistar por un equipo con Linux y un Switch Ethernet y poder ofrecer los tres servicios: Datos, IPTV y VoIP. ¿porqué un Switch Ethernet?, pues porque necesitas que alguien tenga los puertos ethernet y sobre todo porque es mucho más sencillo (y barato) que instalar tarjetas de puertos ethernet en tu Linux... Importantísimo que tu **Switch Ethernet 10/100/1000 tenga soporte de VLAN's (802.1q) y Multicast (IGMP Snooping), y sobre todo que tu equipo Linux tenga una NIC que soporte VLAN's** (es lo más habitual).
 
-Ah!, si tienes que adquirir dicho switch y ya puestos te recomiendo que aproveches y soporte "port mirroring" que te vendrá muy bien para hacer "troubleshooting" capturando y analizando el tráfico con ![WireShark](/assets/img/original/){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="WireShark"
+    width="600px"
+    %}
 
-![red_0_o](/assets/img/original/red_0_o-1024x758.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/red_0_o-1024x758.png"
+    caption="red_0_o"
+    width="600px"
+    %}
 
-En el gráfico anterior tienes la configuración final, en mi caso uso un Mac Mini "reconvertido" con Gentoo GNU/Linux (y que en breve voy a evolucionar a un equipo NUC de Intel, pero eso es otra historia), y un ![Switch Ethernet SG 200-08 de Cisco](/assets/img/original/data_sheet_c78-634369_Spanish.pdf), conecto la salida Ethernet (ETH1) del ONT al puerto del Switch (donde configuraré las vlan's 2, 3 y 6 tagged; en mi ejemplo he usado el puerto 1), conecto el Linux al puerto-2 (donde configuro las vlan's 2, 3, 6 y 100 Tagged) y el resto de puertos quedan configurados como de acceso de la vlan 100 (untagged){: width="730px" padding:10px }  donde conectaré los equipos de la Intranet: ordenador, punto de acceso wifi y Deco.
+{% include showImagen.html
+    src="/assets/img/original/data_sheet_c78-634369_Spanish.pdf), conecto la salida Ethernet (ETH1) del ONT al puerto del Switch (donde configuraré las vlan's 2, 3 y 6 tagged; en mi ejemplo he usado el puerto 1), conecto el Linux al puerto-2 (donde configuro las vlan's 2, 3, 6 y 100 Tagged) y el resto de puertos quedan configurados como de acceso de la vlan 100 (untagged"
+    caption="Switch Ethernet SG 200-08 de Cisco"
+    width="600px"
+    %}
 
 ## Configuración completa de la red
 
@@ -143,7 +159,11 @@ vlan100: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1504
 
 ### Routing (RIP pasivo)
 
-Me anticipo a algo que vas a necesitar y lo dejo ya documentado. Telefónica utiliza RIP Pasivo para mandarnos varias rutas para su servicio IPTV y una única ruta para su servicio VoIP. Es recomendable activar RIP (pasivo) en la interfaz VLAN2 y la VLAN3. Otra opción es configurarlas a “pelo” (rutas estáticas). En mi caso he preferido usar RIP, así que he instalado ![Quagga](/assets/img/original/) (fork de Zebra){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/) (fork de Zebra"
+    caption="Quagga"
+    width="600px"
+    %}
 
 Gentoo: emerge -v quagga
 
@@ -377,7 +397,11 @@ Para que puedas comprobar si lo estás configurando bien, estas son las rutas qu
 
 ## Clientes SIP
 
-Deberías estar ya preparado para probar con un cliente SIP desde un ordenador de la intranet (vlan100) o desde un teléfono SIP. Aquí tienes un ![artículo donde compara muchos clientes VoIP](/assets/img/original/Comparison_of_VoIP_software){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/Comparison_of_VoIP_software"
+    caption="artículo donde compara muchos clientes VoIP"
+    width="600px"
+    %}
 
 Los datos que necesitas son los siguientes:
 
@@ -388,21 +412,53 @@ STUN: [vacío]
 Nombre de usuario: [tu teléfono]
 Contraseña: [tu teléfono]
 
-![Zoiper](/assets/img/original/en){: width="730px" padding:10px }" para MacOSX, funciona pero no me ha dejado muy convencido. En cualquier caso, esta es mi configuración:
+{% include showImagen.html
+    src="/assets/img/original/en"
+    caption="Zoiper"
+    width="600px"
+    %}
 
-![zoiper_0_o](/assets/img/original/zoiper_0_o.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/zoiper_0_o.png"
+    caption="zoiper_0_o"
+    width="600px"
+    %}
 
-Otro cliente para MacOSX mucho más simple es ![Telephone](/assets/img/original/www.tlphn.com){: width="730px" padding:10px }, está disponible en la App Store, es gratuito y la verdad es que me ha gustado más, por simple, que el anterior.
+{% include showImagen.html
+    src="/assets/img/original/www.tlphn.com"
+    caption="Telephone"
+    width="600px"
+    %}
 
-![voip-1](/assets/img/original/voip-1.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/voip-1.png"
+    caption="voip-1"
+    width="600px"
+    %}
 
-![voip-2](/assets/img/original/voip-2.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/voip-2.png"
+    caption="voip-2"
+    width="600px"
+    %}
 
-![voip-3](/assets/img/original/voip-3.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/voip-3.png"
+    caption="voip-3"
+    width="600px"
+    %}
 
-![PhonerLite](/assets/img/original/index_en.htm)" para Windows (en mi caso ejecutado en Parallels para MacOSX), y tengo que decir que ha funcionado mucho mejor, (muy limpio y sin errores al ver el tráfico de registro, llamadas, recepción de llamadas){: width="730px" padding:10px }. Una pena que solo exista para Windows.
+{% include showImagen.html
+    src="/assets/img/original/index_en.htm)" para Windows (en mi caso ejecutado en Parallels para MacOSX), y tengo que decir que ha funcionado mucho mejor, (muy limpio y sin errores al ver el tráfico de registro, llamadas, recepción de llamadas"
+    caption="PhonerLite"
+    width="600px"
+    %}
 
-![phonerlite_0_o](/assets/img/original/phonerlite_0_o.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/phonerlite_0_o.jpg"
+    caption="phonerlite_0_o"
+    width="600px"
+    %}
 
 Durante las pruebas de VoIP me he quedado con una sensación de inestabilidad, aparentemente no se registra a veces, alguna llamada no llega a sonar en el Softphone, por lo que tengo seguir investigando. También he detectado mucha diferencia entre un software y otro (en cuanto a estabilidad). El tráfico entre el softphone y el servidor de registro ocurre en UDP y es importante que tengas activo SourceNAT en el linux tal como describí en la sección de red.
 
@@ -413,7 +469,11 @@ Durante las pruebas de VoIP me he quedado con una sensación de inestabilidad, a
 El tráfico IPTV es entregado desde el ONT a través de la VLAN-2, por donde encontraremos los servicios OPCH, DVBSTP y Streams Multicast.
 
 - OPCH: Servidores Imagenio que indican al deco la configuracion del portal, pelis, etc..
-- DVBSTP: Protocolo de transferencia para el servicio SD&S (Service Discovery & Selection), mediante el cual se manda a los decos información de programación y de canales. ![Aquí tienes un enlace al estándar](/assets/img/original/ts_102034v010401p.pdf){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/ts_102034v010401p.pdf"
+    caption="Aquí tienes un enlace al estándar"
+    width="600px"
+    %}
 - Streams Multicast: Son los flujos de tráfico con dirección destino "multicast", es decir entre otros, los streams MPEG con los datos del canal de televisión al que se haya suscrito el Deco.
 
 En la VLAN2 es importante que utilices la misma dirección IP estática asignada por Movistar al Router original, es decir, debes averiguar qué dirección del tipo 10.214.X.Y/9 tiene. Para encontrar dicha IP tienes un par de opciones: 1) acceder a la configuración del router original o 2) "espiar" con tcpdump o wireshark el tráfico de la van 2 (si tu switch soporta port-mirroring).
@@ -445,7 +505,11 @@ A continuación el tipo de tráfico que he visto en la vlan2 con WireShark:
 
 En la VLAN-100 tengo los equipos normales que acceden a internet, ordenador, portátil. Además tenemos el Decodificador (o decodificadores). Para facilitar el trabajo de provisión (asignación de IP's, etc...) empleo un DHCP server en Linux y entrego a cada equipo de la red su dirección IP, la IP del DNS server, etc. Creo un pool para los equipos normales y asigno IPs estáticas y específicas para cada dirección MAC del Deco (su dirección MAC la tienes en una pegatina en la parte de atrás del mismo). Verás que además le entrego la dirección del OPCH.
 
-Ejemplo de configuración usando el ![DHCP Server de ISC](/assets/img/original/DHCP){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/DHCP"
+    caption="DHCP Server de ISC"
+    width="600px"
+    %}
 
  
 :
@@ -483,7 +547,11 @@ host deco-cocina {
 
 ## IGMP Proxy
 
-![igmpproxy](/assets/img/original/){: width="730px" padding:10px }”.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="igmpproxy"
+    width="600px"
+    %}
 
 Este pequeño programa hace dos cosas:
 
@@ -526,7 +594,11 @@ ___ Pon a "0" la opción "All" ____
 ___ Pon a "0" el Interfaz Upstream ____
 # echo "0" > /proc/sys/net/ipv4/conf/vlan2/rp_filter
 
-¿Por qué debo desactivar ![RPF](/assets/img/original/Reverse_path_forwarding)?. Porque lo normal es que las fuentes envían su tráfico desde direcciones IP que no tengo en mi tabla de routing y en linux por defecto tenemos activo ("1") el RPF, así que se “bloquean” dichos paquetes. La forma más sencilla de solucionarlo es 1) insertar rutas a dichas fuentes a través de la vlan2 o 2) desactivar RPF (opción que he elegido en mi caso){: width="730px" padding:10px }, de modo que el Kernel permite "activarlas" y a partir de ese momento veremos como empieza a conmutar el tráfico.
+{% include showImagen.html
+    src="/assets/img/original/Reverse_path_forwarding)?. Porque lo normal es que las fuentes envían su tráfico desde direcciones IP que no tengo en mi tabla de routing y en linux por defecto tenemos activo ("1") el RPF, así que se “bloquean” dichos paquetes. La forma más sencilla de solucionarlo es 1) insertar rutas a dichas fuentes a través de la vlan2 o 2) desactivar RPF (opción que he elegido en mi caso"
+    caption="RPF"
+    width="600px"
+    %}
 
 Tienes que desactivar (0) en All y en vlan2, dejando el resto activas (1), donde el RPF seguirá actuando. Notarás que la loopback (lo) también está desactivado, es correcto.
 
@@ -694,9 +766,17 @@ Una vez que lo tengas encendido y conectado a tu TV debería funcionar todo, bue
 
 Otro método evidente y sencillo, usar el mejor cliente de video que existe: VLC. De hecho, antes de intentar otras opciones es la que te recomiendo, una vez arrancado en tu ordenador, selecciona “Abrir Red” y utiliza el URL siguiente: rtp://@239.0.0.76:8208, para ver TVE-1. Ya está, no hay mucho más que hacer, has utilizado VLC como cliente IPTV con protocolo multicast.
 
-![iptvvlc1](/assets/img/original/iptvvlc1.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iptvvlc1.png"
+    caption="iptvvlc1"
+    width="600px"
+    %}
 
-![iptvvlc2](/assets/img/original/iptvvlc2-1024x659.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iptvvlc2-1024x659.png"
+    caption="iptvvlc2"
+    width="600px"
+    %}
 
 Lista de canales, puedes salvarlas en un fichero con el nombre Movistar.m3u y usarlo desde VLC:
 
@@ -1146,11 +1226,23 @@ Lista de canales, puedes salvarlas en un fichero con el nombre Movistar.m3u y us
 
 ### TVHeadend (como cliente IPTV)
 
-Otra opción mucho mejor, pásate al mundo de los Media Center's, donde necesitaras clientes del estilo XBMC/KODI en ordenadores o en Raspberry's. Para poder "servirlos" el mejor que he probado hasta ahora es Tvheadend, así que te recomiendo instalar ![Tvheadend](https://tvheadend.org/projects/tvheadend) ([GitHub tvheadend](/assets/img/original/tvheadend)), se trata de un DVR (Digital Video Recorder) y un servidor de streaming de TV que soporta todo tipo de fuentes: DVB-C, DVB-T(2), DVB-S(2), ATSC y además "**IPTV (UDP o HTTP){: width="730px" padding:10px }**", siendo esta última precisamente la que me interesa.
+{% include showImagen.html
+    src="/assets/img/original/tvheadend)), se trata de un DVR (Digital Video Recorder) y un servidor de streaming de TV que soporta todo tipo de fuentes: DVB-C, DVB-T(2), DVB-S(2), ATSC y además "**IPTV (UDP o HTTP"
+    caption="Tvheadend](https://tvheadend.org/projects/tvheadend) ([GitHub tvheadend"
+    width="600px"
+    %}
 
-La pregunta sería ¿para qué quiero un Servidor de Streams de TV si "eso es precisamente" lo que ya tengo funcionando?. La respuesta es que no voy a usarlo para recibir fuentes de satelite ni TDT y convertirlas en streams multicast. Lo voy a usar como intermediario que lee los streams multicast de Movitar TV y los entrega en protocolo ![HTSP](/assets/img/original/Htsp){: width="730px" padding:10px } a clientes IPTV de mi red.
+{% include showImagen.html
+    src="/assets/img/original/Htsp"
+    caption="HTSP"
+    width="600px"
+    %}
 
-Una de sus ventajas es que puedes emplear Media Centers "baratos" como por ejemplo una [Raspberry Pi con OpenELEC (XBMC)](https://www.luispa.com/?p=1284) que trae de serie el cliente [HTSP](https://tvheadend.org/projects/tvheadend/wiki/Htsp) de Tvheadend (échale un ojo a este otro apunte sobre ![Media Center integrado con Movistar TV](/assets/img/original/?p=1225)){: width="730px" padding:10px }, y otra ventaja importante es que con TVHeadend podremos integrar el EPG de movistar TV.
+{% include showImagen.html
+    src="/assets/img/original/?p=1225)"
+    caption="Media Center integrado con Movistar TV"
+    width="600px"
+    %}
 
 El proceso de instalación es el siguinete, notar que estoy instalando la última versión disponible en GitHub porque me interesa que la versión sea 3.9+ para poder aprovechar toda su potencia:
 
@@ -1163,17 +1255,37 @@ totobo ~ # /etc/init.d/tvheadend start
 
 Una vez que lo he arrancado ya puedo conectar con su interfaz web usando el puerto 9981 (http://dirección_ip_de_tu_linux:9981), podré dar de alta las fuentes IPTV, los canales y "ver" quién está accediendo a ellos. En el ejemplo siguiente he configurado dos canales:
 
-![tvheadend1](/assets/img/original/tvheadend1.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/tvheadend1.png"
+    caption="tvheadend1"
+    width="600px"
+    %}
 
-![tvheadend2](/assets/img/original/tvheadend2.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/tvheadend2.png"
+    caption="tvheadend2"
+    width="600px"
+    %}
 
-A continuación configuro mi cliente ![Raspberry Pi con OpenElec](/assets/img/original/?p=1225){: width="730px" padding:10px } para que conecte con TVheadend usando el plugin "TVHeadend HTSP Client"
+{% include showImagen.html
+    src="/assets/img/original/?p=1225"
+    caption="Raspberry Pi con OpenElec"
+    width="600px"
+    %}
 
-[![tvheadend4](https://www.luispa.com/wp-content/uploads/2015/01/tvheadend4-1024x578.png)](https://www.luispa.com/wp-content/uploads/2015/01/tvheadend4.png) ![tvheadend5](/assets/img/original/tvheadend5-1024x578.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/tvheadend5-1024x578.png"
+    caption="tvheadend5"
+    width="600px"
+    %}
 
 Una de las ventajas que tenemos es la posibildiad de monitorizar quién está usando el servicio y cuando ancho de banda está consumiendo (un canal HD de movistar suelen ser ~10Mbps).
 
-![tvheadend3](/assets/img/original/tvheadend3-1024x186.png){: width="730px" padding:10px }Existen más opciones de clientes IPTV pero te dejo a ti que sigas investigando, ahora bien, en tu red quizá necesites poder acceder al servicio usando el protocolo HTTP en vez de multicast.
+{% include showImagen.html
+    src="/assets/img/original/tvheadend3-1024x186.png"
+    caption="tvheadend3"
+    width="600px"
+    %}
 
  
 
@@ -1651,9 +1763,17 @@ Programa una grabación del canal multicast 239.0.0.2:8208 a las 15:45 hoy, con 
 
 ### xupnpd
 
-![http://xupnpd.org/](/assets/img/original/#.VDrTD1v0Af4)) que permite anunciar canales y contenido multimedia a través de DLNA. Vía DLNA (UPnP){: width="730px" padding:10px } se entregará una lista personalizada con los canales de Imagenio a los dispositivos de la LAN. Existen múltiples cliente que pueden consumir este servicio, por ejemplo VLC y así no tener que crear un fichero .m3u en cada ordenador.
+{% include showImagen.html
+    src="/assets/img/original/#.VDrTD1v0Af4)) que permite anunciar canales y contenido multimedia a través de DLNA. Vía DLNA (UPnP"
+    caption="http://xupnpd.org/"
+    width="600px"
+    %}
 
-La instalación de xupnpd en Gentoo es un poco más complicada de lo normal, necesitas ![layman](/assets/img/original/Layman){: width="730px" padding:10px }, así que ahí va una guía rápida por si no lo tienes instalado:
+{% include showImagen.html
+    src="/assets/img/original/Layman"
+    caption="layman"
+    width="600px"
+    %}
 
 \=app-portage/layman-2.3.0 ~amd64
 
@@ -1702,7 +1822,11 @@ Ya lo tienes, ahora solo hay que consumir este servicio, con cualquier cliente U
 
 - Desde un SmartTV busca la opción de Plug’n’Play
 - VLC, selecciona Red local->Plug’n’Play Universal
-- [Media Center](https://www.luispa.com/?p=1025), por ejemplo basado en [Raspberry Pi + XBMC](https://www.luispa.com/?p=1284) y configurarlo con un ![Add-On "PVR IPTV Simple Client"](/assets/img/original/?p=1225){: width="730px" padding:10px } para acceder a este servicio.
+{% include showImagen.html
+    src="/assets/img/original/?p=1225"
+    caption="Add-On "PVR IPTV Simple Client""
+    width="600px"
+    %}
 
 En el caso de dicho PVR IPTV Simple Client se configura así:
 
@@ -1719,7 +1843,11 @@ General
 
 Falta un último detalle que he dejado para el final, el servicio de Video de Movistar Fusión permite seleccionar y ver videos bajo demanda en dos situaciones: 1) reproducir una grabación que hayamos programado o 2) reproducir un video desde la parrilla de Movistar TV.
 
-![Movistar: Video bajo demanda con router Linux](/assets/img/original/?p=378){: width="730px" padding:10px }"  
+{% include showImagen.html
+    src="/assets/img/original/?p=378"
+    caption="Movistar: Video bajo demanda con router Linux"
+    width="600px"
+    %}
 
 # Orden de arranque de los scripts
 
@@ -1738,4 +1866,8 @@ El orden de arranque de todos los scripts vistos en este artículo es el que tie
 
 Dejo aquí algunos enlaces interesantes:
 
-- Usar un ![QNAP con TVHeadend](/assets/img/original/MythTV_or_TVheadend_on_QNAP){: width="730px" padding:10px } para "consumir" Movistar TV. En el QNAP hay que ejecutar el servicio Digital TV
+{% include showImagen.html
+    src="/assets/img/original/MythTV_or_TVheadend_on_QNAP"
+    caption="QNAP con TVHeadend"
+    width="600px"
+    %}

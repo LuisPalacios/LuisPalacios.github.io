@@ -6,7 +6,11 @@ tags: cache dns
 excerpt_separator: <!--more-->
 ---
 
-![dominios](/assets/img/original/dominios-150x150.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/dominios-150x150.png"
+    caption="dominios"
+    width="600px"
+    %}
 
 Aunque esto mismo está ya muy trillado y documentado por internet, necesitaba tenerlo "cerca" y a mano, así que dejo un copia de lo que encontrarás por varias fuentes...
 

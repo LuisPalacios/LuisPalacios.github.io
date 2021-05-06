@@ -6,23 +6,51 @@ tags: esxi firewall iptables linux movistar netfilter router virtualizacion
 excerpt_separator: <!--more-->
 ---
 
-En este apunte describo cómo instalar una VM (máquina virtual) Linux que hará de router/firewall casero para conectar a Movistar Fusión Fibra + TV + VoIP. Es la "caja roja" en la imagen siguiente, se ejecutaba en mi hypervisor ESXi (usando como "base" [VM Linux en ESXi](https://www.luispa.com/?p=1803)). Nota: más adelante he abandonado ESXi y ahora uso [KVM](https://www.luispa.com/?p=3221) (con "base" ![VM Linux en KVM, esta vez con iSCSI](/assets/img/original/?p=3462)){: width="730px" padding:10px }, pero eso es otra historia...
+{% include showImagen.html
+    src="/assets/img/original/?p=3462)"
+    caption="VM Linux en KVM, esta vez con iSCSI"
+    width="600px"
+    %}
 
 [dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
 
-**NOTA**: Este caso de uso como router de internet está descrito en el apunte ![Movistar Fusión Fibra + TV + VoIP con router Linux](/assets/img/original/?p=266). En dicho apunte usé un Linux sobre Mac Mini, mientras que ahora el servidor lo virtualizo y el tráfico de las VLAN's llega sin etiquetar (vlan-id){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=266). En dicho apunte usé un Linux sobre Mac Mini, mientras que ahora el servidor lo virtualizo y el tráfico de las VLAN's llega sin etiquetar (vlan-id"
+    caption="Movistar Fusión Fibra + TV + VoIP con router Linux"
+    width="600px"
+    %}
 
 [/dropshadowbox]
 
-![ESXi-Docker-Router](/assets/img/original/ESXi-Docker-Router-710x1024.png){: width="730px" padding:10px }  
+{% include showImagen.html
+    src="/assets/img/original/ESXi-Docker-Router-710x1024.png"
+    caption="ESXi-Docker-Router"
+    width="600px"
+    %}
 
-Para empezar, como decía arriba, lo primero es duplicar la plantilla que documenté en este otro apunte: ![Gentoo VM](/assets/img/original/?p=1803) y crear una máquina virtual nueva. La voy a llamar "**Cortafuegix**", en alusión a la Aldea Gala de ASterix :-){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/?p=1803) y crear una máquina virtual nueva. La voy a llamar "**Cortafuegix**", en alusión a la Aldea Gala de ASterix :-"
+    caption="Gentoo VM"
+    width="600px"
+    %}
 
-![Cortafuegix](/assets/img/original/Cortafuegix.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/Cortafuegix.jpg"
+    caption="Cortafuegix"
+    width="600px"
+    %}
 
-Por cierto, hice algo parecido para mi máquina virtual para montar las aplicaciones que luego ejecuto en ![Docker](/assets/img/original/?p=172){: width="730px" padding:10px }, aunque no documento la instalación de Gentoo por ser muy parecida, amplía la imagen siguiente para echar un ojo a la configuración de la VM "**Aplicacionix**"
+{% include showImagen.html
+    src="/assets/img/original/?p=172"
+    caption="Docker"
+    width="600px"
+    %}
 
-![Aplicacionix](/assets/img/original/Aplicacionix.jpg){: width="730px" padding:10px }  
+{% include showImagen.html
+    src="/assets/img/original/Aplicacionix.jpg"
+    caption="Aplicacionix"
+    width="600px"
+    %}
 
 ## La Red
 
@@ -38,25 +66,45 @@ En casos como este es muy importante tener claro cual es el diseño físico de l
 
 Si empezamos por el diseño físico, es simple, mi Servidor casero, donde se ejecuta ESXi, tiene una única tarjeta de red, asi que conecto ese puerto al Switch externo por el cual entrega 4 x VLAN's: 2 (iptv), 3 (voip), 6 (internet), 100 (intranet).
 
-![ESXiFisico](/assets/img/original/ESXiFisico-1024x851.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/ESXiFisico-1024x851.png"
+    caption="ESXiFisico"
+    width="600px"
+    %}
 
 En el ESXi creo un único Virtual Switch con 4 x "Port Group's", uno por VLAN, que podré asociar a diferentes vNICs (virtual NIC's) en las máquinas virtuales. Veamos un ejemplo en la figura siguiente: Virtual Switch, los "Port Groups" y su asociación a las vNIC's de la máquina virtual "Cortafuegix"
 
-![ESXiNet-1](/assets/img/original/ESXiNet-1-1024x806.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/ESXiNet-1-1024x806.png"
+    caption="ESXiNet-1"
+    width="600px"
+    %}
 
 [dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
 
-**NOTA**: Ya comenté en ![Movistar Fusión Fibra + TV + VoIP con router Linux](/assets/img/original/1000 que tenga soporte de VLAN’s (802.1q) y Multicast (IGMP Snooping){: width="730px" padding:10px }, y sobre todo que el Hardware de tu Servidor Casero tenga una NIC que soporte VLAN’s.
+{% include showImagen.html
+    src="/assets/img/original/1000 que tenga soporte de VLAN’s (802.1q) y Multicast (IGMP Snooping"
+    caption="Movistar Fusión Fibra + TV + VoIP con router Linux"
+    width="600px"
+    %}
 
 [/dropshadowbox]   **Conexiones ethernet en la VM**
 
 En esta configuración he decidido que sea el ESXi el que trate el VLAN-ID, de modo que el tráfico llegará "limpio" a las ma´quinas virtuales (sin vlanid). En la configuración de la VM "cortafuegix" creo varias tarjetas de red, todas con el driver E1000 y las asocio a los port groups. Veamos cómo recibimos dichas vNICs en la VM, cómo se ven en linux y si hace falta hacer algo más...
 
-Hace tiempo se introdujo el concepto de "nombres de interfaces predecibles", un servicio de **udevd** bien descrito ![upstream](/assets/img/original/){: width="730px" padding:10px }. Sin embargo, en mi caso, que quiero tener todo muy "atado", prefiero asignar nombres específicos a cada una de las interfaces hardware que se le están presentando a la máquina virtual.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="upstream"
+    width="600px"
+    %}
 
 Conseguirlo es muy fácil, lo primero es que asignes direcciones MAC estáticas a cada una de las tarjetas, desde vSphere Client, en la configuración de la máquina virtual.
 
-![FixMac](/assets/img/original/FixMac.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/FixMac.png"
+    caption="FixMac"
+    width="600px"
+    %}
 
 A continuación creas un fichero con reglas para que **udev** cambie el nombre de las tarjetas usando dichas direcciones Mac y rearrancas la VM.
 
@@ -80,15 +128,27 @@ SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="00:50:56:aa:00:0
 
 Tras el próximo arranque podemos observar cómo han cambiado los nombres de las interfaces.
 
-![GentooVM-Rules-1](/assets/img/original/GentooVM-Rules-1.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/GentooVM-Rules-1.png"
+    caption="GentooVM-Rules-1"
+    width="600px"
+    %}
 
   [dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
 
-**Recuerda**: Las vNICs van a recibir el tráfico "SIN" el VLAN-ID, no fue así en ![Movistar Fusión Fibra + TV + VoIP con router Linux](/assets/img/original/?p=266){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=266"
+    caption="Movistar Fusión Fibra + TV + VoIP con router Linux"
+    width="600px"
+    %}
 
 [/dropshadowbox]   **systemd-networkd**
 
-Para asignar las direcciones IP a las tarjetas utilizo el servicio ![systemd-networkd](/assets/img/original/systemd-networkd){: width="730px" padding:10px }. Hace falta crear un fichero para cada interfaz debajo de /etc/systemd/network, el nombre puede ser cualquiera pero debe terminar en .network:
+{% include showImagen.html
+    src="/assets/img/original/systemd-networkd"
+    caption="systemd-networkd"
+    width="600px"
+    %}
 
 #
 # Interfaz para IPTV (IP Estática asignada a tu contrato)
@@ -131,7 +191,11 @@ Puedes ejecutar systemctl start systemd-networkd y ver el estado de las interfac
 
   **PPP**
 
-Instalo el paquete PPP (recordemos que necesitamos PPPoE por el interfaz VLAN6 para recibir la IP desde Movistar). Antes tendrías que habilitar varios parámetros en el kernel, compilarlo y hacer reboot. Mi ![plantilla](https://www.luispa.com/?p=1803) ya está preparada ([.config](/assets/img/original/2015-03-19-config-3.18.7-Gentoo_VM_ESXi.txt)){: width="730px" padding:10px }, así que no tengo que hacer nada, me lo salto.
+{% include showImagen.html
+    src="/assets/img/original/2015-03-19-config-3.18.7-Gentoo_VM_ESXi.txt)"
+    caption="plantilla](https://www.luispa.com/?p=1803) ya está preparada ([.config"
+    width="600px"
+    %}
 
 Preparo parámetros USE e instaloo net-dialup/ppp:
 
@@ -214,7 +278,11 @@ app-admin/ulogd                         mysql nfct nflog dbi nfacct pcap sqlite
 
 # emerge -v ulogd
 
-A continuación un ejemplo de /etc/ulogd.conf, con múltiples stacks. Lee la ![documentación oficial](/assets/img/original/){: width="730px" padding:10px } para enteneder cómo funciona.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="documentación oficial"
+    width="600px"
+    %}
 
 # Example configuration for ulogd
 # Adapted to Debian by Achilleas Kotsis [global]
@@ -635,7 +703,11 @@ port="2003"
 # Prefix of data name sent to graphite server
 prefix="netfilter.nfacct" 
 
-También tienes que configurar el Kernel para soportar netfilter (iptables), compilarlo y hacer reboot. Mi ![plantilla](https://www.luispa.com/?p=1803) ya está preparada ([.config](/assets/img/original/2015-03-19-config-3.18.7-Gentoo_VM_ESXi.txt)){: width="730px" padding:10px }, así que no tengo que hacer nada, me lo salto. Los scripts de iptables se instalaron con mi plantilla, en cualquier caso si lo necesitas, se instalan así: emerge -v iptables.
+{% include showImagen.html
+    src="/assets/img/original/2015-03-19-config-3.18.7-Gentoo_VM_ESXi.txt)"
+    caption="plantilla](https://www.luispa.com/?p=1803) ya está preparada ([.config"
+    width="600px"
+    %}
 
 No voy a explicar iptables por completo pero dejo aquí un vistazo sobre cómo he hecho para cargar las reglas durante el boot. El comando "iptables" no es un daemon en sí, se trata de un programa que permite instalar Rules (reglas) en el Kernel. El truco consiste en ejecutar muchas veces iptables introduciendo una a una las reglas y cuando todo funciona salvas dichas "reglas o estado" en una fichero externo (con el comando iptables-save) y en el siguiente boot las recuperas desde dicho fichero (con iptables-restore).
 
@@ -1104,9 +1176,17 @@ Activa los servicios para que arranquen durante el boot (de momento no hagas reb
 
   **Alternativa a iptables**
 
-Si esto de iptables es demasiado duro... échale un ojo a ![pfSense](/assets/img/original/){: width="730px" padding:10px }, un proyecto fantástico que conocí hace poco: **Un Firewall Open Source "probado" con un interfaz sencillo Web para su administración**, que podrías ejecutar como máquina virtual en el ESXi.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="pfSense"
+    width="600px"
+    %}
 
-![networking](/assets/img/original/networking.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/networking.png"
+    caption="networking"
+    width="600px"
+    %}
 
  
 
@@ -1589,7 +1669,11 @@ Activo el servicio DHCP Cliente.
 
 ### Servicios adicionales
 
-El resto de servicios (igmpproxy, udpxy, etc..) ya los documenté en este ![apunte](/assets/img/original/?p=266){: width="730px" padding:10px } donde explico cómo instalarlos y configurarlos. En aquella ocasión usaba openrc para arrancar los servicios, dejo aquí los ficheros que necesitas para systemd.
+{% include showImagen.html
+    src="/assets/img/original/?p=266"
+    caption="apunte"
+    width="600px"
+    %}
 
 **igmpproxy.service**
 
@@ -1856,4 +1940,8 @@ test_ip 192.168.1.253 "Switch en la intranet (vlan100)" 1
 test_ip 130.206.1.2 "Equipo de Internet (ppp0)"
 test_ip 172.26.23.3 "DNS Server de MOVISTAR TV"
 
-![router-verifica](/assets/img/original/router-verifica.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/router-verifica.png"
+    caption="router-verifica"
+    width="600px"
+    %}

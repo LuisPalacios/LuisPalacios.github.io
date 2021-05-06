@@ -8,7 +8,11 @@ excerpt_separator: <!--more-->
 
 Un apunte rápido sobre cómo configurar mi antigua Raspberry Pi "1" como DNS Server y DHCP Server. Ambas son funciones críticas en la red "casera de todo hacker", así que he decidido delegarle esta función. Mucho mejor que tener la Pi1 guardada en un cajón.
 
-![RaspDD](/assets/img/original/RaspDD.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/RaspDD.jpg"
+    caption="RaspDD"
+    width="600px"
+    %}
 
 [dropshadowbox align="center" effect="lifted-both" width="550px" height="" background_color="#ffffff" border_width="1" border_color="#dddddd" ]
 
@@ -16,7 +20,11 @@ Un apunte rápido sobre cómo configurar mi antigua Raspberry Pi "1" como DNS Se
 
 [/dropshadowbox]
 
-- Instalo ![Raspbian](/assets/img/original/){: width="730px" padding:10px }. En su momento estaba la versión de fecha 2015-02-16 con Kernel 3.18. El usuario por defecto es pi con password raspberry
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="Raspbian"
+    width="600px"
+    %}
 - Realizo el primer boot y la configuro siguiendo el asistente. La dejo en modo consola, sin gráficos, con el teclado, locales, timezone preparados para Madrid y Castellano...
 - Puedes cambiar múltiples parámetros con
     
@@ -431,4 +439,8 @@ El servicio NTPD se arranca y a partir de aquí podemos comprobar si ha alcanzad
 
 ### Enlaces
 
-Después de instalarlo me encontré este ![artículo](/assets/img/original/){: width="730px" padding:10px }, está muy bien y muy completo, os lo recomiendo.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="artículo"
+    width="600px"
+    %}

@@ -8,7 +8,11 @@ excerpt_separator: <!--more-->
 
 Apunte sobre la configuración en Linux de PlexConnect para poder usar Plex con un Apple TV3.
 
-![images](/assets/img/original/images.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/images.jpg"
+    caption="images"
+    width="600px"
+    %}
 
 Solo he tenido que modificar el DHCP Server, añadir 3 redirecciones con iptables y configurar/arrancar el programa PlexConnect. Estas son las direcciones IP para entender las instrucciones:
 
@@ -17,7 +21,11 @@ Solo he tenido que modificar el DHCP Server, añadir 3 redirecciones con iptable
 - Router: 192.168.1.1
 - DNS Server: 192.168.1.1
 
-Recomiendo leer la [página de documentación del proyecto PlexConnect](https://github.com/iBaa/PlexConnect/wiki/Install-guides) y sobre todo ![esta otra página donde define cómo generar los certificados](/assets/img/original/){: width="730px" padding:10px }. En el Apple TV3 no hay que hacer nada.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="esta otra página donde define cómo generar los certificados"
+    width="600px"
+    %}
 
  
 
@@ -33,7 +41,11 @@ Si tienes un DNS server en tu linux, no tienes que tocarlo dado que redirigimos 
 
 Obviamente es necesario tener un Plex Media Server funcionando en algún sitio. En mi caso en el mismo equipo Linux. Se trata de un servidor Gentoo Linux así que solo tuve que ejecutar la instalación desde portage y configurar PMS. Instalación en Gentoo: emerge -v plex-media-server
 
-![http://192.168.1.1:32400/web/index.html#!/setup](/assets/img/original/setup){: width="730px" padding:10px }  
+{% include showImagen.html
+    src="/assets/img/original/setup"
+    caption="http://192.168.1.1:32400/web/index.html#!/setup"
+    width="600px"
+    %}
 
 ## DHCP
 
@@ -69,7 +81,11 @@ iptables -t nat -A PREROUTING -i vlan100 -s 192.168.1.37 -d 192.168.1.1/32 -p ud
 
 ## Instalación de PlexConnect
 
-Descargo el ![software desde el proyecto PlexConnect en GitHub](/assets/img/original/PlexConnect), (uso el enlace que genera un fichero ZIP del repositorio){: width="730px" padding:10px } y lo descomprimo en /root/Plex
+{% include showImagen.html
+    src="/assets/img/original/PlexConnect), (uso el enlace que genera un fichero ZIP del repositorio"
+    caption="software desde el proyecto PlexConnect en GitHub"
+    width="600px"
+    %}
 
  
 # mkdir /root/Plex
@@ -87,7 +103,11 @@ Ejecuto una vez el programa, que terminará con un error. Lo hago para que se cr
 # EPYTHON="python2.7" ./PlexConnect.py
  
 
-Preparo los ficheros de certificados (recuerdo que ![es importantísimo, no dejes de visitar esta página](/assets/img/original/)){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/)"
+    caption="es importantísimo, no dejes de visitar esta página"
+    width="600px"
+    %}
 
  
 # ls -al assets/certificates/
@@ -165,7 +185,11 @@ Como en cualquier otro servicio, programo su ejecución durante el arranque del
 
 ## Configuración de PlexConnect
 
-Recomiendo una vez más leer ![la página de documentación del proyecto](https://github.com/iBaa/PlexConnect/wiki/Install-guides) y sobre todo cómo [seguir el proceso de generación de los certificados](/assets/img/original/){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="la página de documentación del proyecto](https://github.com/iBaa/PlexConnect/wiki/Install-guides) y sobre todo cómo [seguir el proceso de generación de los certificados"
+    width="600px"
+    %}
 
 [PlexConnect]
 logpath = .
@@ -289,4 +313,8 @@ En total debemos ver cuatro procesos, el principal "PlexConnect" que a su vez ar
 
 Ya está, ahora ya puedes ir a tu Apple TV3 y hacer click en el icono Trailers.
 
-![images_0_o](/assets/img/original/images_0_o.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/images_0_o.jpg"
+    caption="images_0_o"
+    width="600px"
+    %}

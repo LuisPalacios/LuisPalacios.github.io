@@ -6,9 +6,17 @@ tags: backup iscsi kvm linux
 excerpt_separator: <!--more-->
 ---
 
-En este apunte describo cómo crear una máquina virtual Linux (Gentoo) en un ![Hypervisor KVM](/assets/img/original/?p=3221){: width="730px" padding:10px } con la particularidad de que su disco duro residirá en una NAS vía iSCSI. El Host es un NUC5i5RYK con 16GB de RAM y dedicaré un core virtual y 2GB de RAM a la VM.
+{% include showImagen.html
+    src="/assets/img/original/?p=3221"
+    caption="Hypervisor KVM"
+    width="600px"
+    %}
 
-![linuxiscsi](/assets/img/original/linuxiscsi.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/linuxiscsi.png"
+    caption="linuxiscsi"
+    width="600px"
+    %}
 
 iSCSI, de Internet SCSI, permite usar el protocolo SCSI sobre redes TCP/IP para acceder al almacenamiento, se trata de una alternativa a las soluciones SAN basadas en Fibre Channel.
 
@@ -20,17 +28,37 @@ En este apunte vamos a ver cómo una NAS casera (QNAP) es capaz de entregar alma
 
 Veamos un ejemplo donde creo un Target con su LUN asignándole 15GB de espacio libre a nivel de bloque (acceso en modo directo al disco, en vez de en modo fichero), que además se presentará al sistema operativo como si fuese un disco físico.
 
-![disco-iscsi-1](/assets/img/original/disco-iscsi-1.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/disco-iscsi-1.png"
+    caption="disco-iscsi-1"
+    width="600px"
+    %}
 
-![disco-iscsi-2](/assets/img/original/disco-iscsi-2.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/disco-iscsi-2.png"
+    caption="disco-iscsi-2"
+    width="600px"
+    %}
 
-![disco-iscsi-3](/assets/img/original/disco-iscsi-3.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/disco-iscsi-3.png"
+    caption="disco-iscsi-3"
+    width="600px"
+    %}
 
-![disco-iscsi-4](/assets/img/original/disco-iscsi-4.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/disco-iscsi-4.png"
+    caption="disco-iscsi-4"
+    width="600px"
+    %}
 
 Lo anterior era un ejemplo, veamos a continuación los tres Targets, cada uno con su LUN, que he creado para que puedan ser consumidos por las futuras VM's de KVM.
 
-![kvm-vm-gentoo-iscsi-1](/assets/img/original/kvm-vm-gentoo-iscsi-1-1024x619.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-vm-gentoo-iscsi-1-1024x619.png"
+    caption="kvm-vm-gentoo-iscsi-1"
+    width="600px"
+    %}
 
 Los nombres de los **Targets** son realmente impronunciables, pero es lo que hay... así que fíjate bien en cual es el nombre de tu Target porque lo usaremos a continuación. Para este ejemplo voy a usar el Target que llamé "TVMgentoo" y que el QNAP tradujo a: iqn.2004-04.com.qnap:ts-569pro:iscsi.tvmgentoo.d70ea1.
 
@@ -40,25 +68,53 @@ Los nombres de los **Targets** son realmente impronunciables, pero es lo que hay
 
 Antes de iniciar la instalción de la VM, lo primero es configurar las fuentes iSCSI en el Host y para hacerlo la forma más sencilla es utilizar el programa virt-manager, nos conectaremos con el o los grupos (Targets) para que puedan ser consumidos por la VM más adelante.
 
-Esto se hace obviamente en el Host (Hypervisor) y es muy importante que su Kernel soporte iSCSI (es Linux quien debe soportarlo, no KVM), así que asegúrate de tenerlo bien configurado (consulta este otro ![apunte sobre KVM](/assets/img/original/?p=3221){: width="730px" padding:10px } donde explico cómo hacerlo. Asumiendo que tengo configurados los targets y que mi Host soporta iSCSI, arranco el gesto de VM's virt-manager, selecciono mi propio hypervisor KVM, botón derecho y entro en **Detalles**.
+{% include showImagen.html
+    src="/assets/img/original/?p=3221"
+    caption="apunte sobre KVM"
+    width="600px"
+    %}
 
-![kvm-vm-gentoo-iscsi-2](/assets/img/original/kvm-vm-gentoo-iscsi-2.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-vm-gentoo-iscsi-2.png"
+    caption="kvm-vm-gentoo-iscsi-2"
+    width="600px"
+    %}
 
 Desde la lengüeta "Almacenamiento", pulsamos en el símbolo "+" para añadir un nuevo grupo (datastore) de tipo Target iSCSI (destino iSCSI).
 
-![kvm-vm-gentoo-iscsi-3](/assets/img/original/kvm-vm-gentoo-iscsi-3.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-vm-gentoo-iscsi-3.png"
+    caption="kvm-vm-gentoo-iscsi-3"
+    width="600px"
+    %}
 
-![kvm-vm-gentoo-iscsi-4](/assets/img/original/kvm-vm-gentoo-iscsi-4.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-vm-gentoo-iscsi-4.png"
+    caption="kvm-vm-gentoo-iscsi-4"
+    width="600px"
+    %}
 
-![kvm-vm-gentoo-iscsi-5](/assets/img/original/kvm-vm-gentoo-iscsi-5.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-vm-gentoo-iscsi-5.png"
+    caption="kvm-vm-gentoo-iscsi-5"
+    width="600px"
+    %}
 
 Debes poner la dirección IP del NAS, en vez del nombre DNS, en el campo "Nombre del equipo".
 
-![kvm-vm-gentoo-iscsi-6](/assets/img/original/kvm-vm-gentoo-iscsi-6.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-vm-gentoo-iscsi-6.png"
+    caption="kvm-vm-gentoo-iscsi-6"
+    width="600px"
+    %}
 
 Si todo ha ido bien, deberías ver lo siguiente:
 
-![kvm-vm-gentoo-iscsi-7](/assets/img/original/kvm-vm-gentoo-iscsi-7.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-vm-gentoo-iscsi-7.png"
+    caption="kvm-vm-gentoo-iscsi-7"
+    width="600px"
+    %}
 
 Ya tengo un disco adicional disponible que usaré durante la instalación de la máquina virtual
 
@@ -74,13 +130,21 @@ marte ~ # iscsiadm -m node -T iqn.2004-04.com.qnap:ts-569pro:iscsi.tvmgentoo.d70
 Logging in to [iface: default, target: iqn.2004-04.com.qnap:ts-569pro:iscsi.tvmgentoo.d70ea1, portal: 192.168.1.2,3260]
 Login to [iface: default, target: iqn.2004-04.com.qnap:ts-569pro:iscsi.tvmgentoo.d70ea1, portal: 192.168.1.2,3260] successful.
 
-![iSCSI-Start](/assets/img/original/iSCSI-Start.png){: width="730px" padding:10px } * Desconectar disco iSCSI, desde línea de comandos o virt-manager
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Start.png"
+    caption="iSCSI-Start"
+    width="600px"
+    %}
 
 marte ~ # iscsiadm -m node -T iqn.2004-04.com.qnap:ts-569pro:iscsi.tvmgentoo.d70ea1 -p 192.168.1.2 --logout
 Logging out of session [sid: 1, target: iqn.2004-04.com.qnap:ts-569pro:iscsi.tvmgentoo.d70ea1, portal: 192.168.1.2,3260]
 Logout of [sid: 1, target: iqn.2004-04.com.qnap:ts-569pro:iscsi.tvmgentoo.d70ea1, portal: 192.168.1.2,3260] successful.
 
-![iSCSI-Stop](/assets/img/original/iSCSI-Stop.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Stop.png"
+    caption="iSCSI-Stop"
+    width="600px"
+    %}
 
  
 
@@ -88,37 +152,85 @@ Logout of [sid: 1, target: iqn.2004-04.com.qnap:ts-569pro:iscsi.tvmgentoo.d70ea1
 
 Ya estamos listos para crear la máquina virtual, así que nos vamos a virt-manager y la creamos utilizando el ISO de instalación del sistema operativo como disco de arranque. Como es "gentoo" voy a darle bastante memoria (8GB) y cpu (4 vCores) para que las compilaciones vayan rápido. Al terminar modificaré la VM para dejarla con 2GB y 1 vCore
 
-![fastvm-1](/assets/img/original/fastvm-1.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/fastvm-1.png"
+    caption="fastvm-1"
+    width="600px"
+    %}
 
-![fastvm-2](/assets/img/original/fastvm-2.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/fastvm-2.png"
+    caption="fastvm-2"
+    width="600px"
+    %}
 
-![fastvm-3](/assets/img/original/fastvm-3.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/fastvm-3.png"
+    caption="fastvm-3"
+    width="600px"
+    %}
 
-Selecciono la opción **Elija administrado, o algún otro tipo de almacenamiento existente** ![kvm-vm-gentoo-iscsi-8](/assets/img/original/kvm-vm-gentoo-iscsi-8.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-vm-gentoo-iscsi-8.png"
+    caption="kvm-vm-gentoo-iscsi-8"
+    width="600px"
+    %}
 
-Selecciono la unidad que apunta a mi Target ![kvm-vm-gentoo-iscsi-9](/assets/img/original/kvm-vm-gentoo-iscsi-9.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-vm-gentoo-iscsi-9.png"
+    caption="kvm-vm-gentoo-iscsi-9"
+    width="600px"
+    %}
 
-![kvm-vm-gentoo-iscsi-10](/assets/img/original/kvm-vm-gentoo-iscsi-10.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-vm-gentoo-iscsi-10.png"
+    caption="kvm-vm-gentoo-iscsi-10"
+    width="600px"
+    %}
 
-Selecciono la interfaz de red virtual adecuada y la opción "Personalizar configuración antes de instalar" y hago clic en Finalizar ![kvm-vm-gentoo-iscsi-11](/assets/img/original/kvm-vm-gentoo-iscsi-11.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-vm-gentoo-iscsi-11.png"
+    caption="kvm-vm-gentoo-iscsi-11"
+    width="600px"
+    %}
 
 Ahora podemos parametrizar la VM antes de arrancarla.
 
 - Añado "input->Tableta Gráfica USB EvTouch" para que el ratón responda correctametne cuando manipulo más adelante la VM desde virt-manager.
 
-![kvm-vm-gentoo-iscsi-12](/assets/img/original/kvm-vm-gentoo-iscsi-12.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-vm-gentoo-iscsi-12.png"
+    caption="kvm-vm-gentoo-iscsi-12"
+    width="600px"
+    %}
 
 - **MUY IMPORTANTE:** Cambiar los controladores de Disco y Red a VirtIO. Ambos ofrecen un rendimiento mejor y es mucho mejor cambiarlo ahora (sobre todo el de disco) que más adelante.
 
-![kvm-vm-gentoo-iscsi-13](/assets/img/original/kvm-vm-gentoo-iscsi-13.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-vm-gentoo-iscsi-13.png"
+    caption="kvm-vm-gentoo-iscsi-13"
+    width="600px"
+    %}
 
-![kvm-vm-gentoo-iscsi-13.1](/assets/img/original/kvm-vm-gentoo-iscsi-13.1.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-vm-gentoo-iscsi-13.1.png"
+    caption="kvm-vm-gentoo-iscsi-13.1"
+    width="600px"
+    %}
 
 Ya puedo aplicar los cambios y hacer clic en **Iniciar instalación**
 
-![fastvm-6](/assets/img/original/fastvm-6.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/fastvm-6.png"
+    caption="fastvm-6"
+    width="600px"
+    %}
 
-![fastvm-7](/assets/img/original/fastvm-7-1024x878.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/fastvm-7-1024x878.png"
+    caption="fastvm-7"
+    width="600px"
+    %}
 
 Te recomiendo que dejes de trabajar en la consola y pases a un puesto de trabajo remoto vía SSH, asigno una contraseña a root y arranco el daemon:
 
@@ -214,7 +326,11 @@ livecd ~ # date 060711572015   <== MMDDHHMMAAAA
 
 **Descarga de Stage 3**
 
-El "Stage 3" es un "paquete" que contiene un entorno Gentoo mínimo (ya compilado) que facilita el proceso de instalación. Te recomiendo consultar en paralelo el [Gentoo Handbook](https://wiki.gentoo.org/wiki/Handbook:Main_Page) que encontrarás en la ![Wiki de Gentoo](/assets/img/original/Main_Page){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/Main_Page"
+    caption="Wiki de Gentoo"
+    width="600px"
+    %}
 
   
 livecd ~ # cd /mnt/gentoo
@@ -347,7 +463,11 @@ Primero nos bajamos los fuentes del Kernel con el comando siguiente:
 
 Los fuentes quedan instalados en /usr/src/linux (realmente es un link simbólico), a continuación lo parametrizas con "make menuconfig" y luego compilas con "make" y "make modules_install".
 
-Si tienes experiencia en parametrizar el kernel, adelante con ello. Si lo prefieres y para facilitarte el trabajo, empieza por un kernel "ya probado" para esta versión concreta de kernel. Este que comparto a continuación tiene soporte para ejecutarse en KVM. Lo dejo en mi repositorio de [GitHub](https://github.com/LuisPalacios/Linux-Kernel-configs), en concreto tienes que bajarte el fichero ![2015-05-07-config-4.0.4-Gentoo_KVM_Guest.txt](/assets/img/original/2015-05-07-config-4.0.4-Gentoo_KVM_Guest.txt){: width="730px" padding:10px } y copiarlo como /usr/src/linux/.config. Luego compilas e instalas el kernel.
+{% include showImagen.html
+    src="/assets/img/original/2015-05-07-config-4.0.4-Gentoo_KVM_Guest.txt"
+    caption="2015-05-07-config-4.0.4-Gentoo_KVM_Guest.txt"
+    width="600px"
+    %}
 
  cd /usr/src/linux
 
@@ -436,7 +556,11 @@ Nota, si en el futuro tienes que modificar el Kernel, no olvides ejecutar grub2-
 
 **Preparo la red**
 
-Uso "nombres de interfaces predecibles", un servicio de **udevd** bien descrito ![upstream](/assets/img/original/). Asigno un nombre específico a la interfaz principal (cambia la MAC a la de tu interfaz){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/). Asigno un nombre específico a la interfaz principal (cambia la MAC a la de tu interfaz"
+    caption="upstream"
+    width="600px"
+    %}
 
 # Interfaz conectada a la red ethernet
 SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="b8:ae:ed:12:34:56", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="eth*", NAME="eth0"
@@ -531,7 +655,11 @@ edaddepiedrix ~ # systemctl start vixie-cron.service
 
 **Fecha y hora**
 
-Para configurar fecha/hora debe utilizarse "timedatectl". No te pierdas este apunte sobre cómo montar además el ![servicio NTP](/assets/img/original/?p=881){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=881"
+    caption="servicio NTP"
+    width="600px"
+    %}
 
 edaddepiedrix ~ # timedatectl set-local-rtc 0
 edaddepiedrix ~ # timedatectl set-timezone Europe/Madrid
@@ -637,9 +765,17 @@ Si quieres comprobar el rendimiento te recomiendo el benchmark pts/aio-stress de
 
 # phoronix-test-suite benchmark pts/aio-stress
 
-Los resultados del benchmark está disponibles ![aquí](/assets/img/original/1506191-SO-20150619236){: width="730px" padding:10px }, pero como se puede ver el rendimiento no está nada mal.
+{% include showImagen.html
+    src="/assets/img/original/1506191-SO-20150619236"
+    caption="aquí"
+    width="600px"
+    %}
 
-![phoronix-vm-iscsi](/assets/img/original/phoronix-vm-iscsi-1024x324.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/phoronix-vm-iscsi-1024x324.png"
+    caption="phoronix-vm-iscsi"
+    width="600px"
+    %}
 
    
 
@@ -649,38 +785,82 @@ Los resultados del benchmark está disponibles ![aquí](/assets/img/original/150
 
 Para hacer backup de este tipo de VM lo que hacemos es backup del "disco iSCSI" usando las herramientas de la propia NAS guardándolo en un fichero en un NFS externo.
 
-- Antes de empezar, configuro el servidor NFS. En mi caso iMAC OSX que incluye el servidor NFS y está siempre activo, lo único que tienes que hacer es modificar el fichero /etc/exports y automáticamente empezará a exportar: ![iSCSI-Backup0](/assets/img/original/iSCSI-Backup0.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Backup0.png"
+    caption="iSCSI-Backup0"
+    width="600px"
+    %}
     
 - Apago la máquina virtual desde virt-manager o ejecutando un shudown o halt en el Linux.
     
-- Desconecto el disco iSCSI desde virt-manager [![kvm-storage-options](https://www.luispa.com/wp-content/uploads/2015/06/kvm-storage-options.png)](https://www.luispa.com/wp-content/uploads/2015/06/kvm-storage-options.png) ![iSCSI-Stop](/assets/img/original/iSCSI-Stop.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Stop.png"
+    caption="iSCSI-Stop"
+    width="600px"
+    %}
     
 - Desde un navegador y el interfaz GUI de mi NAS creo un trabajo de Backup instantáneo hacia un fichero en un directorio NFS remoto (/Volumes/Terabyte/0.BACKUP/iSCSI) en mi OSX (obelix.parchis.org):
     
 
-![iSCSI-Backup_1](/assets/img/original/iSCSI-Backup_1-1024x497.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Backup_1-1024x497.png"
+    caption="iSCSI-Backup_1"
+    width="600px"
+    %}
 
-![iSCSI-Backup2](/assets/img/original/iSCSI-Backup2.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Backup2.png"
+    caption="iSCSI-Backup2"
+    width="600px"
+    %}
 
-![iSCSI-Backup3](/assets/img/original/iSCSI-Backup3.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Backup3.png"
+    caption="iSCSI-Backup3"
+    width="600px"
+    %}
 
-![iSCSI-Backup4](/assets/img/original/iSCSI-Backup4.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Backup4.png"
+    caption="iSCSI-Backup4"
+    width="600px"
+    %}
 
-![iSCSI-Backup5](/assets/img/original/iSCSI-Backup5.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Backup5.png"
+    caption="iSCSI-Backup5"
+    width="600px"
+    %}
 
-![iSCSI-Backup6](/assets/img/original/iSCSI-Backup6.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Backup6.png"
+    caption="iSCSI-Backup6"
+    width="600px"
+    %}
 
 - Se pondrá inmediatamente a trabajar. Observa el resultado final, tanto en la pantalla de configuración del QNAP como en el Finder de mi iMAC, vemos un fichero de ~10GB que contiene el backup completo del disco físico utilizado para esta máquina virtual.
 
-![iSCSI-Backup7](/assets/img/original/iSCSI-Backup7-1024x468.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Backup7-1024x468.png"
+    caption="iSCSI-Backup7"
+    width="600px"
+    %}
 
 - Conecto de nuevo el disco iSCSI desde virt-manager para poder volver a trabajar con la VM.
 
-![kvm-storage-restart](/assets/img/original/kvm-storage-restart.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/kvm-storage-restart.png"
+    caption="kvm-storage-restart"
+    width="600px"
+    %}
 
 Nota: En el caso de haber activado la compresión (mientras indicas la ubicación del fichero destino) el proceso tarda mucho más, pero obtendrás a cambio un fichero mucho más pequeño, mira la diferencia:
 
-![iSCSI-Backup8](/assets/img/original/iSCSI-Backup8.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Backup8.png"
+    caption="iSCSI-Backup8"
+    width="600px"
+    %}
 
  
 
@@ -690,58 +870,150 @@ Para restaurar la VM volvemos a usar las herramientas que incluye la propia NAS.
 
 - Desde el QNAP, creo un nuevo target/LUN de 10GB.
 
-![iSCSI-Restaura-1](/assets/img/original/iSCSI-Restaura-1-1024x600.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-1-1024x600.png"
+    caption="iSCSI-Restaura-1"
+    width="600px"
+    %}
 
-![iSCSI-Restaura-2](/assets/img/original/iSCSI-Restaura-2-1024x599.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-2-1024x599.png"
+    caption="iSCSI-Restaura-2"
+    width="600px"
+    %}
 
-![iSCSI-Restaura-3](/assets/img/original/iSCSI-Restaura-3-1024x600.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-3-1024x600.png"
+    caption="iSCSI-Restaura-3"
+    width="600px"
+    %}
 
-![iSCSI-Restaura-4](/assets/img/original/iSCSI-Restaura-4-1024x598.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-4-1024x598.png"
+    caption="iSCSI-Restaura-4"
+    width="600px"
+    %}
 
-![iSCSI-Restaura-5](/assets/img/original/iSCSI-Restaura-5-1024x600.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-5-1024x600.png"
+    caption="iSCSI-Restaura-5"
+    width="600px"
+    %}
 
-![iSCSI-Restaura-6](/assets/img/original/iSCSI-Restaura-6-1024x599.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-6-1024x599.png"
+    caption="iSCSI-Restaura-6"
+    width="600px"
+    %}
 
-![iSCSI-Restaura-9](/assets/img/original/iSCSI-Restaura-9-1024x599.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-9-1024x599.png"
+    caption="iSCSI-Restaura-9"
+    width="600px"
+    %}
 
-![iSCSI-Restaura-10](/assets/img/original/iSCSI-Restaura-10-1024x601.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-10-1024x601.png"
+    caption="iSCSI-Restaura-10"
+    width="600px"
+    %}
 
 - Desde el QNAP, nuevo trabajo de recuperación para restaurar desde el fichero de backup
 
-![iSCSI-Restaura-11](/assets/img/original/iSCSI-Restaura-11-1024x598.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-11-1024x598.png"
+    caption="iSCSI-Restaura-11"
+    width="600px"
+    %}
 
-![iSCSI-Restaura-12](/assets/img/original/iSCSI-Restaura-12-1024x599.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-12-1024x599.png"
+    caption="iSCSI-Restaura-12"
+    width="600px"
+    %}
 
-![iSCSI-Restaura-13](/assets/img/original/iSCSI-Restaura-13-1024x600.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-13-1024x600.png"
+    caption="iSCSI-Restaura-13"
+    width="600px"
+    %}
 
-![iSCSI-Restaura-14](/assets/img/original/iSCSI-Restaura-14-1024x601.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-14-1024x601.png"
+    caption="iSCSI-Restaura-14"
+    width="600px"
+    %}
 
-![iSCSI-Restaura-15](/assets/img/original/iSCSI-Restaura-15-1024x600.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-15-1024x600.png"
+    caption="iSCSI-Restaura-15"
+    width="600px"
+    %}
 
-![iSCSI-Restaura-16](/assets/img/original/iSCSI-Restaura-16-1024x600.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-16-1024x600.png"
+    caption="iSCSI-Restaura-16"
+    width="600px"
+    %}
 
-![iSCSI-Restaura-17](/assets/img/original/iSCSI-Restaura-17-1024x601.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-17-1024x601.png"
+    caption="iSCSI-Restaura-17"
+    width="600px"
+    %}
 
 - Desde el Host KVM y virt-manager elimino el Target/LUN antiguo, creo el nuevo iqn.2004-04.com.qnap:ts-569pro:iscsi.vmgentoo.d70ea1
     
     y en la VM borro el disco antiguo y creo uno nuevo asociando el nuevo recurso disponible.
 
-![iSCSI-Restaura-18](/assets/img/original/iSCSI-Restaura-18.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-18.png"
+    caption="iSCSI-Restaura-18"
+    width="600px"
+    %}
 
-![iSCSI-Restaura-19](/assets/img/original/iSCSI-Restaura-19.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-19.png"
+    caption="iSCSI-Restaura-19"
+    width="600px"
+    %}
 
-![iSCSI-Restaura-20](/assets/img/original/iSCSI-Restaura-20.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-20.png"
+    caption="iSCSI-Restaura-20"
+    width="600px"
+    %}
 
-![iSCSI-Restaura-21](/assets/img/original/iSCSI-Restaura-21.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-21.png"
+    caption="iSCSI-Restaura-21"
+    width="600px"
+    %}
 
-![iSCSI-Restaura-22](/assets/img/original/iSCSI-Restaura-22.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-22.png"
+    caption="iSCSI-Restaura-22"
+    width="600px"
+    %}
 
-![iSCSI-Restaura-23](/assets/img/original/iSCSI-Restaura-23.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-23.png"
+    caption="iSCSI-Restaura-23"
+    width="600px"
+    %}
 
-![iSCSI-Restaura-24](/assets/img/original/iSCSI-Restaura-24.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-24.png"
+    caption="iSCSI-Restaura-24"
+    width="600px"
+    %}
 
 - A partir de ahí ya puedo volver a arrancar la VM y ver que funciona correctamente.
 
-![iSCSI-Restaura-25](/assets/img/original/iSCSI-Restaura-25.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/iSCSI-Restaura-25.png"
+    caption="iSCSI-Restaura-25"
+    width="600px"
+    %}
 
 * * *

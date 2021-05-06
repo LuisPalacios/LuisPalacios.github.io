@@ -6,13 +6,25 @@ tags: bios linux
 excerpt_separator: <!--more-->
 ---
 
-Nota: Este post pertenece a una "colección", así que te recomiendo que empieces por la ![instalación Gentoo GNU/Linux en un Intel® NUC D54250WYK](/assets/img/original/?p=7){: width="730px" padding:10px }, si no lo has hecho ya. En este artículo en concreto describo cómo preparar la BIOS del equipo
+{% include showImagen.html
+    src="/assets/img/original/?p=7"
+    caption="instalación Gentoo GNU/Linux en un Intel® NUC D54250WYK"
+    width="600px"
+    %}
 
 ## La BIOS
 
-En el documento de [Compatibilidad del NUC con Linux](http://www.intel.com/support/sp/motherboards/desktop/sb/cs-034779.htm)  vienen explicados algunos ![cambios recomendados en la BIOS](/assets/img/original/cs-033935.htm){: width="730px" padding:10px } si vas a instalar GNU/Linux. Notar que en mi caso, que voy a usar UEFI y tabla de particiones GPT, he optado por una opción diferente que describo a continuación.
+{% include showImagen.html
+    src="/assets/img/original/cs-033935.htm"
+    caption="cambios recomendados en la BIOS"
+    width="600px"
+    %}
 
-Lo primero que recomiendo es actualizar la BIOS a su última versión (a fecha Oct/2014 era 0030), en este enlace tienes las [descargas para el NUC D54250WYK](https://downloadcenter.intel.com/SearchResult.aspx?lang=spa&ProductID=3744&ProdId=3744) y esta es la ![BIOS que yo instalé](/assets/img/original/Detail_Desc.aspx?DwnldID=24326&lang=spa&ProdId=3744){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/Detail_Desc.aspx?DwnldID=24326&lang=spa&ProdId=3744"
+    caption="BIOS que yo instalé"
+    width="600px"
+    %}
 
 Descargo el fichero wy0030.bio, me hago con un USB 2.0 de 4GB. En mi iMac inserto el USB y desde DiskUtility -> Formato MS-DOS FAT -> Nombre: "FAT32". Copio el fichero wy0030.bio al USB, lo inserto en el NUC, arranco y desde su menú principal de "Visual BIOS" realizo la actualización.
 
@@ -30,7 +42,11 @@ Una vez actualizado, vuelvo a arrancar y entro de nuevo para dejar esta configur
 - ADVANCED —> Boot —> Boot Configuration -> Fast Boot (INACTIVO)
 - ADVANCED —> Boot —> Boot Configuration -> Boot Devices: USB,Optical,Network (ACTIVO)
 
-![visual2_3_o](/assets/img/original/visual2_3_o.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/visual2_3_o.jpg"
+    caption="visual2_3_o"
+    width="600px"
+    %}
 
 Nota: Podrás acelerar el arranque una vez que termines la instalación (hacerlo solo cuando ya tengas todo instalado en el SSD y el arranque te funcione sin problemas). Consiste en usar una opción muy chula de la BIOS llamada "Fast Boot", que desactiva (ignora) cualquier dispositivo de arranque (por ejemplo USBs) y solo arranca desde el SSD interno.
 
@@ -42,4 +58,8 @@ Entro en la configuración de la tarjeta Ethernet y me apunto su device ID y dir
 
  
 
-Siguiente paso: ![Crear USB de instalación](/assets/img/original/?p=9){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/?p=9"
+    caption="Crear USB de instalación"
+    width="600px"
+    %}

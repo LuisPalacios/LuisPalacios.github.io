@@ -6,17 +6,29 @@ tags: docker git gitolite
 excerpt_separator: <!--more-->
 ---
 
-[![Git-Logo-1788C](https://www.luispa.com/wp-content/uploads/2014/11/Git-Logo-1788C-300x125.png)](https://www.luispa.com/wp-content/uploads/2014/11/Git-Logo-1788C.png)Descubrí hace unos días y empecé a dar mis [primeros pasos con Docker](https://www.luispa.com/archivos/874). En el post de hoy voy un paso más y describo cómo he creado mi primer contenedor real, un servidor GIT privado (con "gitolite"). Antes de empezar, [Git](http://es.wikipedia.org/wiki/Git) es un software de control de versiones y ![Gitolite](/assets/img/original/index.html){: width="730px" padding:10px } permite hospedar repositorios Git en tu propio servidor de forma sencilla y segura.
+{% include showImagen.html
+    src="/assets/img/original/index.html"
+    caption="Gitolite"
+    width="600px"
+    %}
 
 # Instalación
 
 Para poner en marcha un contenedor hay que partir de una "imagen" mínima con el Sistema Operativo, así que mi primera intención fue usar Gentoo, pero desistí porque fui incapaz de encontrar o crear yo mismo una imagen de menos de 750-900MB (lo ideal es quedarse por debajo de 100MB-200MB).
 
-Conclusión, como !["Host" uso GNU/Linux Gentoo](http://blog.luispa.com/index.php?controller=post&action=view&id_post=27) y para los contenedores desde "[Debian](/assets/img/original/){: width="730px" padding:10px }".
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption=""Host" uso GNU/Linux Gentoo](http://blog.luispa.com/index.php?controller=post&action=view&id_post=27) y para los contenedores desde "[Debian"
+    width="600px"
+    %}
 
 **Preparar el Host**
 
-Lo primero es tener instalado docker en el host, aquí tienes un ![artículo](/assets/img/original/874){: width="730px" padding:10px } sobre mi instalación.
+{% include showImagen.html
+    src="/assets/img/original/874"
+    caption="artículo"
+    width="600px"
+    %}
 
 **Disco de datos persistente en el Host**
 
@@ -31,7 +43,11 @@ He elegido el directorio /Apps de mi servidor como la raiz donde voy a dejar tan
 
 De esta forma tengo todo lo importante en un solo sitio "persistente", aunque borre el contenedor o imagen de docker los repositorios se mantienen y podré reinstalar (docker/imagen/contenedor) para tener el servicio funcionando literalmente en 5 minutos...
 
-![undefined](/assets/img/original/ff_3_o.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/ff_3_o.jpg"
+    caption="undefined"
+    width="600px"
+    %}
 
 **Usuarios en el Host**
 
@@ -61,8 +77,16 @@ totobo ~ # useradd -u 1600 -g git -G git -s /sbin/nologin git
 
 En los enlaces siguientes tienes todo lo necesario:
 
-- Imagen base:  ![GitHub: base-gitolite](https://github.com/LuisPalacios/base-gitolite) + [Docker Hub Registry: luispa/base-gitolite](/assets/img/original/){: width="730px" padding:10px }
-- Servicio: GitHub: ![servicio-gitolite](/assets/img/original/servicio-gitolite){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="GitHub: base-gitolite](https://github.com/LuisPalacios/base-gitolite) + [Docker Hub Registry: luispa/base-gitolite"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/original/servicio-gitolite"
+    caption="servicio-gitolite"
+    width="600px"
+    %}
 
 Solo tienes que bajarte este último:
 
@@ -159,7 +183,11 @@ obelix:~ luis$
 
 # Acceso y consumo de los repositorios
 
-Ahora que tenemos todo funcionando ya puedo consumir mis repositorios desde el programa "git". Mucho más sencillo y visual, recomiendo ![SourceTree](/assets/img/original/){: width="730px" padding:10px }, una maravilla para MacOSX.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="SourceTree"
+    width="600px"
+    %}
 
 **Línea de comandos**
 
@@ -168,7 +196,11 @@ $ git clone ssh://git@totobo.parchis.org:1600/espresso
 :
  
 
-**Herramienta gráfica SourceTree** ![undefined](/assets/img/original/st_0_o.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/st_0_o.jpg"
+    caption="undefined"
+    width="600px"
+    %}
 
 ## Arranque durante el boot del Host
 
@@ -242,4 +274,8 @@ Type=nfs
 StandardOutput=syslog
 StandardError=syslog
 
-No te pierdas el siguiente post sobre ![cómo configurar múltiples servicios en varios contenedores docker](/assets/img/original/?p=172){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=172"
+    caption="cómo configurar múltiples servicios en varios contenedores docker"
+    width="600px"
+    %}

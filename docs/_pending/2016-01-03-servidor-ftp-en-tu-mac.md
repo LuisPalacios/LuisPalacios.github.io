@@ -18,13 +18,25 @@ sudo -s launchctl load -w /System/Library/LaunchDaemons/ftp.plist
 
  
 
-![ftpdosx1](/assets/img/original/ftpdosx1.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/ftpdosx1.jpg"
+    caption="ftpdosx1"
+    width="600px"
+    %}
 
 Ya está, ahora puedes consumir este servidor desde cualquier cliente FTP. Cuando conectes con él (puerto 21) utiliza el usuario y contraseña de tu usuario principal y verás que conecta con el directorio HOME del mismo.
 
-![ftpdosx2](/assets/img/original/ftpdosx2.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/ftpdosx2.jpg"
+    caption="ftpdosx2"
+    width="600px"
+    %}
 
-![ftpdosx3](/assets/img/original/ftpdosx3.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/ftpdosx3.jpg"
+    caption="ftpdosx3"
+    width="600px"
+    %}
 
  
 
@@ -34,4 +46,8 @@ Una vez que terminas de usar tu servidor FTP te recomiendo que inmediatamente lo
 
 sudo -s launchctl load -w /System/Library/LaunchDaemons/ftp.plist
 
-![ftpdosx4](/assets/img/original/ftpdosx4.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/ftpdosx4.jpg"
+    caption="ftpdosx4"
+    width="600px"
+    %}

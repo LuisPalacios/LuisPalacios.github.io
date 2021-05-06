@@ -8,7 +8,11 @@ excerpt_separator: <!--more-->
 
 En este apunte describo cómo mover una VM (KVM) desde almacenamiento basado en fichero hacia almacenamiento basado en bloque (iSCSI). Dicho de otra forma, vamos a ver cómo mover el "contenido" del fichero .qcow2 a un disco RAW (entregado desde una NAS vía iSCSI). En este ejemplo el host KVM se llama marte y la VM se llama aplicacionix.
 
-![conv-iSCSI-0](/assets/img/original/conv-iSCSI-0-1024x864.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/conv-iSCSI-0-1024x864.png"
+    caption="conv-iSCSI-0"
+    width="600px"
+    %}
 
 En este ejemplo la VM original ocupa 20GB (se averigua arrancándola y ejecutando el comando df), aprovecho y creo algo más de espacio (30GB) en mi nuevo disco iSCSI dede el GUI del NAS, por lo tanto el objetivo es copiar el fichero fuente al disco destino:
 
@@ -17,7 +21,11 @@ En este ejemplo la VM original ocupa 20GB (se averigua arrancándola y ejecutand
 - Destino: iqn.2004-04.com.qnap:ts-569pro:iscsi.vmaplicacionix.d70ea1
     
 
-![convert-iSCSI-1](/assets/img/original/convert-iSCSI-1.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/convert-iSCSI-1.png"
+    caption="convert-iSCSI-1"
+    width="600px"
+    %}
 
 ### Acciones en el Host KVM (marte)
 
@@ -77,23 +85,43 @@ Logging out of session [sid: 5, target: iqn.2004-04.com.qnap:ts-569pro:iscsi.vma
 
 - Desde virt-manager, conecto con el disco iSCSI y configuro la VM para que lo utilice
 
-![conv-iSCSI-2](/assets/img/original/conv-iSCSI-2-1024x719.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/conv-iSCSI-2-1024x719.png"
+    caption="conv-iSCSI-2"
+    width="600px"
+    %}
 
-![conv-iSCSI-3](/assets/img/original/conv-iSCSI-3-1024x689.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/conv-iSCSI-3-1024x689.png"
+    caption="conv-iSCSI-3"
+    width="600px"
+    %}
 
-![conv-iSCSI-4](/assets/img/original/conv-iSCSI-4-1024x694.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/conv-iSCSI-4-1024x694.png"
+    caption="conv-iSCSI-4"
+    width="600px"
+    %}
 
 - Arranco la nueva VM
 
 marte ~ # virsh start aplicacionix
 
-![conv-iSCSI-5](/assets/img/original/conv-iSCSI-5.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/conv-iSCSI-5.png"
+    caption="conv-iSCSI-5"
+    width="600px"
+    %}
 
 ### Acciones en la VM (aplicacionix)
 
 - Amplío el file system principal para consumir el resto de GBs extra, recordar que el disco original tenía aprox. 20GB pero el nuevo es de 30GB. Es fácil, ejecutao gparted desde la propia VM (aplicacionix) y le asigno el espacio restante al filesystem principal.
 
-![conv-iSCSI-6](/assets/img/original/conv-iSCSI-6.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/conv-iSCSI-6.png"
+    caption="conv-iSCSI-6"
+    width="600px"
+    %}
 
  
 

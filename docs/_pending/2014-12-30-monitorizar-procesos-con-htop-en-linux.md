@@ -6,7 +6,11 @@ tags: htop linux top
 excerpt_separator: <!--more-->
 ---
 
-![htop-1.0-screenshot](/assets/img/original/htop-1.0-screenshot.png){: width="730px" padding:10px }htop** es un programa que visualiza los procesos de linux y permite interactuar con ellos, es una aplicación de "texto" que sustituye a "top" cuando queremos hacer un análisis más detallado.
+{% include showImagen.html
+    src="/assets/img/original/htop-1.0-screenshot.png"
+    caption="htop-1.0-screenshot"
+    width="600px"
+    %}
 
 Para instalarlo en Gentoo primero añado lo siguiente al kernel de linux y después instalo 'lsof' y 'htop':
 

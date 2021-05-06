@@ -8,7 +8,11 @@ excerpt_separator: <!--more-->
 
 En este apunte describo cómo instalar Gentoo Linux en una Raspberry Pi 2. Necesito poder "Compilar el programa Tvheadend para ARMv7 y copiarlo a un MOIPro" y se supone que es más rápido hacerlo desde una RPi2 que emular el chip ARM en un x86, así que he optado por usar Gentoo como un equipo de desarrollo para ARM. Independientemente del caso de uso, si sigues estos pasos tendrás un Gentoo Linux en una RPi2.
 
-![RPi2Gentoo](/assets/img/original/RPi2Gentoo.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/RPi2Gentoo.png"
+    caption="RPi2Gentoo"
+    width="600px"
+    %}
 
 Los **requisitos** son los siguientes:
 
@@ -19,13 +23,21 @@ Los **requisitos** son los siguientes:
 
 ## Formatear la Micro-SD
 
-Formatea la Micro-SD, usa el método que quieras, en mi caso uso un MacOSX y el programa ![SDFormatter.](/assets/img/original/) (opción Quick Format){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/) (opción Quick Format"
+    caption="SDFormatter."
+    width="600px"
+    %}
 
 - Insertar la tarjeta que se montará como “NO NAME”.
 - Averiguar device (resultó ser /dev/disk3): df -h
 - Ejecutar SDFormatter
 
-![Captura de pantalla 2015-05-17 a las 9.05.15](/assets/img/original/Captura-de-pantalla-2015-05-17-a-las-9.05.15.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/Captura-de-pantalla-2015-05-17-a-las-9.05.15.png"
+    caption="Captura de pantalla 2015-05-17 a las 9.05.15"
+    width="600px"
+    %}
 
 - Desmontar el volumen: sudo diskutil unmount /dev/disk3s1
 
@@ -35,7 +47,11 @@ Para preparar los File Systems de la Micro-SD usaré un **PC (o Máquina Virtual
 
 Para mi lo más sencillo ha sido usar una VM con Gentoo Linux (x86_64) corriendo en Parallels para MacOX. Tras arrancarla, conecto la Micro-SD a la máquina virtual, que la reconoce como /dev/sdb.
 
-[![MicroSD_Parallels1](https://www.luispa.com/wp-content/uploads/2015/05/MicroSD_Parallels1.png)](https://www.luispa.com/wp-content/uploads/2015/05/MicroSD_Parallels1.png) ![MicroSD_Parallels2](/assets/img/original/MicroSD_Parallels2-1024x836.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/MicroSD_Parallels2-1024x836.png"
+    caption="MicroSD_Parallels2"
+    width="600px"
+    %}
 
 Desde esta máquina virtual y usando fdisk creo tres particiones en la Micro-SD:
 
@@ -70,7 +86,11 @@ menhir ~ # mount /dev/sdb3 /mnt/sd_root/
 
 Como has visto antes, la partición de boot es de tipo VFAT (el formato nativo de MSDOS y Windows), y se utiliza para hacer boot del Linux que vamos a instalar en la Raspberry. Lo que haremos es aprovechar un proyecto que tienen los de Raspberry disponible en GitHub para facilitar todo este proceso de boot.
 
-![Fuente Github](/assets/img/original/boot)). Podrías hacer un clone completo del proyecto (ojo! es enorme) o mejor... usa svn para bajarte solo el directorio "boot" (GIT no permite bajarse directorios de un proyecto, pero tenemos la suerte de que GitHub soporta subversion){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/boot)). Podrías hacer un clone completo del proyecto (ojo! es enorme) o mejor... usa svn para bajarte solo el directorio "boot" (GIT no permite bajarse directorios de un proyecto, pero tenemos la suerte de que GitHub soporta subversion"
+    caption="Fuente Github"
+    width="600px"
+    %}
 
  
 
@@ -112,7 +132,11 @@ El siguiente paso es crear mi propio Kernel compilando para ARM para la RPi2. Lo
  
 menhir ~ # emerge -pv dev-vcs/git crossdev
 
-- Creo un "output overlay" local (más información ![aquí](/assets/img/original/Local_overlay)){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/Local_overlay)"
+    caption="aquí"
+    width="600px"
+    %}
 
 Los Overlays contienen ebuilds adicionales que no son parte del árbol principal de portage. El overlay que necesito crear es local a este Gentoo donde voy a hacer el "crossdev"
 
@@ -158,7 +182,11 @@ A continuación necesito **conseguir el fichero .config del Kernel**. Este paso 
 
 - Opción 1: Descarga esta versión del fichero .config.
     
-- Opción 2: Aprovechar el trabajo que ha hecho el equipo de Raspberry. Accedo a un RASPBIAN instalado en una RPi2, por ejemplo ![Raspbian 2015-05-05](/assets/img/original/){: width="730px" padding:10px }, extraigo el Kernel y lo copio al Linux que voy a usar para compilar el Kernel.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="Raspbian 2015-05-05"
+    width="600px"
+    %}
     
 
  
@@ -212,7 +240,11 @@ menhir linux # cp arch/arm/boot/Image /mnt/sd_boot/kernel7.img
 
 ## Instalar Stage3
 
-- Descargo el último Stage3 (consultar ![aquí](/assets/img/original/) cual es el último){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/) cual es el último"
+    caption="aquí"
+    width="600px"
+    %}
 
  
 menhir ~ # wget http://distfiles.gentoo.org/releases/arm/autobuilds/current-stage3-armv7a_hardfp/stage3-armv7a_hardfp-20150508.tar.bz2
@@ -267,7 +299,11 @@ Haz **Boot** con tu nueva Pi2 con Gentoo Linux. Insertar la Micro-SD en la Pi y 
 
 Una vez que el equipo rearranca tenemos que completar la instalación. Recomiendo migrar a systemd para acelerar el boot. Además hay que parametrizar muchas cosas todavía.
 
-![Systemd-204-Released-with-Two-Fixes](/assets/img/original/Systemd-204-Released-with-Two-Fixes.jpg){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/Systemd-204-Released-with-Two-Fixes.jpg"
+    caption="Systemd-204-Released-with-Two-Fixes"
+    width="600px"
+    %}
 
 - Pon en hora el equipo (MUY IMPORTANTE)
 
@@ -354,7 +390,11 @@ Vamos a "contectar", instalo, habilito y arranco DHCP. Los servicios en "systemd
 # systemctl start dhcpcd.service
  
 
-![Aquí tienes un ejemplo](/assets/img/original/?p=581) de cómo hacer una configuración de dirección IP fija (manual){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=581) de cómo hacer una configuración de dirección IP fija (manual"
+    caption="Aquí tienes un ejemplo"
+    width="600px"
+    %}
 
 Si todo falla siempre puedes asignar una IP fija mientras solucionas el problema. Averigua cómo se llama el interfaz, un ejemplo:
 
@@ -390,7 +430,11 @@ Instalo, habilito y arranco el cron
 
 **Fecha y hora**
 
-Para configurar fecha/hora debe utilizarse "timedatectl". No te pierdas este apunte sobre cómo montar además el ![servicio NTP](/assets/img/original/?p=881){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/?p=881"
+    caption="servicio NTP"
+    width="600px"
+    %}
 
 # timedatectl set-local-rtc 0
 # timedatectl set-timezone Europe/Madrid
@@ -426,9 +470,17 @@ Rearranco de nuevo...
 
 ## Compilar Tvheadend 4.1 para MOI Pro
 
-Ya lo comentaba al principio de este apunte, he construido un Linux (Gentoo) en una Raspberry Pi2 para tener una plataforma de desarrollo para ARM y conseguir ejecutables para esta plataforma. El caso de uso principal es poder compilar mi propia versión de Tvheadend para ![mi MOI Pro](/assets/img/original/?p=2647){: width="730px" padding:10px }. En mayo de 2015 la versión disponible en GitHub fue **HTS Tvheadend 4.1-49**.
+{% include showImagen.html
+    src="/assets/img/original/?p=2647"
+    caption="mi MOI Pro"
+    width="600px"
+    %}
 
-![Captura de pantalla 2015-05-24 a las 13.54.29](/assets/img/original/Captura-de-pantalla-2015-05-24-a-las-13.54.29.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/Captura-de-pantalla-2015-05-24-a-las-13.54.29.png"
+    caption="Captura de pantalla 2015-05-24 a las 13.54.29"
+    width="600px"
+    %}
 
 ### Compilación
 
@@ -530,7 +582,11 @@ Arranco el nuevo Tvheadend, detectará una configuración con formato antiguo (v
 
 [root@MOIPro ~]# systemctl start tv
 
-![tvheadend41](/assets/img/original/tvheadend41-1024x631.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/tvheadend41-1024x631.png"
+    caption="tvheadend41"
+    width="600px"
+    %}
 
 - Ver el Logging
 

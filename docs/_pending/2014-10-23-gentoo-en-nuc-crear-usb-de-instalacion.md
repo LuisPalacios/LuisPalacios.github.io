@@ -6,17 +6,37 @@ tags: d54250wyk linux nuc usb
 excerpt_separator: <!--more-->
 ---
 
-Nota: Este post pertenece a una "colección", así que te recomiendo que empieces por la ![instalación Gentoo GNU/Linux en un Intel® NUC D54250WYK](/assets/img/original/?p=7){: width="730px" padding:10px }. En este artículo en concreto describo cómo preparar una USB para hacer la instalación
+{% include showImagen.html
+    src="/assets/img/original/?p=7"
+    caption="instalación Gentoo GNU/Linux en un Intel® NUC D54250WYK"
+    width="600px"
+    %}
 
 # Crear USB "bootable" para instalar
 
-Lo primero que tienes que hacer es descargarte la última versión del ISO de instalación de Gentoo: install-amd64-minimal-AAAAMMDD.iso desde los ![mirrors de gentoo,](/assets/img/original/mirrors2.xml){: width="730px" padding:10px } que encontrarás en el directorio **releases/amd64/current-iso**
+{% include showImagen.html
+    src="/assets/img/original/mirrors2.xml"
+    caption="mirrors de gentoo,"
+    width="600px"
+    %}
 
-El siguiente paso es preparar un USB (te recomiendo mínimo 2.0 de 1GB) para instalar este ISO. El procedimiento que utilices tiene que asegurarte que finalmente hace boot. Hay decenas de métodos, algunos desde Linux, otros desde Windows, MacOSX, manuales, usando herramientas como unetbootin ![http://unetbootin.sourceforge.net/](/assets/img/original/){: width="730px" padding:10px }, etc.
+{% include showImagen.html
+    src="/assets/img/original/"
+    caption="http://unetbootin.sourceforge.net/"
+    width="600px"
+    %}
 
-![lo haré una vez termine de instalar el NUC, usando gparted](/assets/img/original/index.php?controller=post&action=view&id_post=41)){: width="730px" padding:10px }.
+{% include showImagen.html
+    src="/assets/img/original/index.php?controller=post&action=view&id_post=41)"
+    caption="lo haré una vez termine de instalar el NUC, usando gparted"
+    width="600px"
+    %}
 
-![usbgentoo](/assets/img/original/usbgentoo.png){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/usbgentoo.png"
+    caption="usbgentoo"
+    width="600px"
+    %}
 
 ### Instalación manual desde linux
 
@@ -128,4 +148,8 @@ Extraer el USB, ya está listo para ser utilizado
 
  
 
-Volver al paso anterior: [Preparar la BIOS](https://www.luispa.com/?p=740) o ir al siguiente: ![Iniciar la instalación](/assets/img/original/?p=759){: width="730px" padding:10px }
+{% include showImagen.html
+    src="/assets/img/original/?p=759"
+    caption="Iniciar la instalación"
+    width="600px"
+    %}
