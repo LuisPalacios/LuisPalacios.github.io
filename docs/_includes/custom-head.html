@@ -12,7 +12,7 @@ Zona para los iconos y favicons
 
 
 {% comment %}
-Zona para conectar con Analytics en Plausible
+    Zona para hacer Analytics en Plausible
 {% endcomment %}
 
 {% if jekyll.environment == "production" %}
@@ -20,17 +20,3 @@ Zona para conectar con Analytics en Plausible
 {% endif %}
 
 
-{% comment %}
-Zona para conectar con utteranc.es para soportar Comentarios
-{% endcomment %}
-
-{% if jekyll.environment == "production" %}
-    <script src="https://utteranc.es/client.js"
-            repo="LuisPalacios/LuisPalacios.github.io"
-            issue-term="pathname"
-            label="luispa"
-            theme="github-light"
-            crossorigin="anonymous"
-            async>
-    </script>
-{% endif %}

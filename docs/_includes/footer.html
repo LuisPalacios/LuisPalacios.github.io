@@ -20,7 +20,7 @@ Versión personalizada por Luis Palacios
     <data class="u-url" href="/"></data>
   
     <div class="wrapper">
-  
+        
       <h2 class="footer-heading">
           <a href="{{ site.url }}">Volver a la portada</a>
           <br/>
@@ -87,7 +87,18 @@ Versión personalizada por Luis Palacios
             </ul>
         </div>
       </div>
-  
+
+      {% if page.collection == 'posts' %}
+        <script src="https://utteranc.es/client.js"
+            repo="LuisPalacios/LuisPalacios.github.io"
+            issue-term="pathname"
+            label="luispa"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+        </script>
+      {% endif %}
+               
     </div>
   
   </footer>
