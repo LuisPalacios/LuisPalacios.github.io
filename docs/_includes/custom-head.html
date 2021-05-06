@@ -20,6 +20,7 @@ Zona para conectar con Analytics en Plausible
 % comment %}
 Zona para conectar con utteranc.es para soportar Comentarios
 {% endcomment %}
+{% if jekyll.environment == "production" %}
 <script src="https://utteranc.es/client.js"
         repo="LuisPalacios.github.io"
         issue-term="pathname"
@@ -28,4 +29,4 @@ Zona para conectar con utteranc.es para soportar Comentarios
         crossorigin="anonymous"
         async>
 </script>
-
+{% endif %}
