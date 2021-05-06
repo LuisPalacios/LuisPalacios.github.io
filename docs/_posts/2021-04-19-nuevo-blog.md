@@ -365,7 +365,8 @@ layout: none
 {% endraw %}
 ```
 
-Modifico mi fichero [./docs/_includes/footer.html](/LuisPalacios/LuisPalacios.github.io/blob/gh-pages/docs/_includes/footer.html):
+Modifico mi fichero [./docs/_includes/footer.html](https://github.com/LuisPalacios/LuisPalacios.github.io/blob/gh-pages/docs/_includes/footer.html):
+
 
 ```
 {% raw %}
