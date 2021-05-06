@@ -13,5 +13,7 @@ Zona para los iconos y favicons
 {% comment %}
 Zona para conectar con Analytics en Plausible
 {% endcomment %}
-<script async defer data-domain="luispa.com" src="https://plausible.io/js/plausible.js"></script>
+{% if jekyll.environment == "production" %}
+    <script async defer data-domain="luispa.com" src="https://plausible.io/js/plausible.js"></script>
+{% endif %}
 
