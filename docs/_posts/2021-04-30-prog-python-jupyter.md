@@ -217,9 +217,15 @@ Nos prepara un servidor que se queda escuchando en el puerto `8888` y nos muestr
 
 <br/>
 
-### Entorno con Pandas
+## Vitaminar Jupyter Lab
 
-Si queremos trabajar en un entorno más complicado, con varias librerías, por ejemplo para trabajar con pandas, tendríamos que crearnos el directorio e instalarlas previamente, por ejemplo: 
+Vamos ver cómo añadir funcionalidad extra al entorno.
+
+### Entorno con varias librerías
+
+Por ejemplo, si queremos trabajar con un entorno más complicado con múltiples librerías Pytho pues simplemente tienes que instalarlas con pipenv y pasarán a estar disponibles en JupyterLab. 
+
+Un ejemplo, queremos trabajar con pandas, entramos en nuestro nuevo proyecto (lo he llamado `proyecto_pandas`) e instalamos las librerías. 
 
 ```zsh
 ➜  > mkdir proyecto_pandas
@@ -227,6 +233,58 @@ Si queremos trabajar en un entorno más complicado, con varias librerías, por e
 ➜  proyecto_pandas > pipenv install pandas tabulate openpyxl lxml html5lib beautifulsoup4 sqlalchemy feather-format matplotlib xlrd scipy ipykernel pexpect ipython-sql Faker
 ➜  proyecto_pandas > pipenv install jupyterlab
 ```
+
+<br/>
+
+### Entorno con varias librerías
+
+Si queremos utilizar SQL con JupyterLab recomiendo usar la extensión hecha por Catherine Devlin, [IPython SQL Magic](https://github.com/catherinedevlin/ipython-sql).
+
+La extensión IPython SQL magic hace posible escribir consultas SQL directamente en las celdas de código, así como leer los resultados directamente en pandas DataFrames ([Fuente](http://news.datascience.org.ua/2019/01/11/unleash-the-power-of-jupyter-notebooks/)). Esto funciona tanto para los cuadernos tradicionales como para los modernos Jupyter Labs.
+
+Instalo IPython SQL Magic: 
+
+```zsh
+pipenv install ipython-sql
+```
+
+Además vamos a combinarlo con **los comandos mágicos**, un conjunto de funciones convenientes en Jupyter Notebooks que están diseñados para resolver algunos de los problemas comunes en el análisis de datos estándar. Puedes ver todas los comandos mágicos disponibles con la ayuda de %lsmagic
+
+Por lo tanto, a partir de ahora podré cargar en mis cuadernos esta extesión: 
+
+```
+%load_ext cql
+```
+
+Cargamos la base de datos
+
+```
+%sql sqlite:///tarjetasblack.db
+```
+
+Mostrar el contenido de la tablas
+
+```
+%tables
+```
+
+Ejecutar comandos
+
+```
+%sql select * from movimiento;
+```
+
+{% include showImagen.html 
+      src="/assets/img/posts/prog-python-jupyter-3.png" 
+      caption="Habilitamos SQL en Jupyter Labsd" 
+      width="600px"
+      %}
+
+<br/>
+
+## Administración del entorno. 
+
+Por último vamos a ver algunas acciones que vamos a necesitar
 
 <br/>
 
