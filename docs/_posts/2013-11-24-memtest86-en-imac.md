@@ -24,7 +24,7 @@ Ah!, hay una alternativa a todo esto, consiste en ejecutar memtest desde MacOSX,
 
 ## Instalación de rEFInd
 
-Vamos a por la opción "arriesgada :-)"... Descarga rEFInd, en concreto utilicé el "binary zip file", que es compatible con el iMac 27" (late 2013, también probado en mid 2011). Una vez que lo tengas bucea en el subdirectorio "refind-bin-0.7.5"
+Vamos a por la opción "arriesgada :-)"... Descarga rEFInd, en concreto utilicé el "binary zip file", que es compatible con el iMac 27" (late 2013, también probado en mid 2011). Una vez que lo tengas bucea en el subdirectorio `refind-bin-0.7.5`
 
 {% include showImagen.html 
       src="/assets/img/original/refind1.png" 
@@ -50,7 +50,7 @@ bless status with 'bless --info', since this is known to cause disk corruption
 on some systems!!
 
 Installation has completed successfully.
-``` 
+```
 
 Se instala en el directorio /EFI de tu equipo y "toca" el firmware, como avisé :-). La próxima vez que arranques lo harás con el nuevo Boot Manager rEFInd, pero espera, antes de arrancar tienes que instalar MemTest86...
 

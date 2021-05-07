@@ -23,7 +23,7 @@ Para dar soporte a un filesystem de tipo HFS+ en linux es necesario configurar d
       <*> Apple Extended HFS file system support
 ```
 
-Compilar, instalar y rearrancar el equipo. En mi caso tenía un disco externo FireWire con partición HFS+ creada en un antiguo iMac. He conectado este disco [FireWire externo a mi Mac Mini]({% post_url 2012-11-15-disco-firewire-en-gentoo-en-mac-mini %}) y ahora puedo acceder a sus datos al soportar HFS+ en Gentoo linux. Este es el aspecto de la tabla de particiones (visto con gparted)
+Compilar, instalar y rearrancar el equipo. En mi caso tenía un disco externo FireWire con partición HFS+ creada en un antiguo iMac. He conectado este disco [FireWire externo a mi Mac Mini]({% post_url 2012-11-15-firewire-en-gentoo %}) y ahora puedo acceder a sus datos al soportar HFS+ en Gentoo linux. Este es el aspecto de la tabla de particiones (visto con gparted)
 
 {% include showImagen.html 
       src="/assets/img/original/capturadepantalla2013-11-15alas11.37.17_0_o.png" 
