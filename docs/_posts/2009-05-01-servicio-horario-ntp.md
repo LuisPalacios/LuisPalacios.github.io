@@ -21,20 +21,20 @@ En este apunte explico cómo configurar NTP en un equipo GNU/Linux (distribució
 
 Voy a ejecutar el daemon NTP como un servicio y lo ejecutaré con un usuario diferente a root. Para poder ejecutar ntp como un usuario diferente a root es necesario configurar lo siguiente en ciertas versiones del Kernel y activar el USE "caps".
 
-```
+```conf
 Security options  --->
     [*] File POSIX Capabilities
 ```
 
 NTP
 
-```
+```conf
 net-misc/ntp                    ipv6 ssl zeroconf caps
 ```
 
 Requerido por NTP
 
-```
+```conf
 net-dns/avahi                   mdnsresponder-compat
 ```
 
@@ -42,7 +42,7 @@ net-dns/avahi                   mdnsresponder-compat
 
 Ejecuto la instalación de ntpd y ntpclient
 
-```
+```console
 # emerge -v ntp ntpclient
 ```
 
@@ -52,7 +52,7 @@ El programa ntpd tiene que ejecutarse como un servicio y el programa ntp-client 
 
 Configuro los ficheros de apoyo. El daemon ntpd utiliza por defecto el fichero /etc/ntp.conf
 
-```
+```conf
 #
 # Equipos que me dan la hora
 server 0.gentoo.pool.ntp.org
@@ -90,7 +90,7 @@ CLOCK_SYSTOHC="yes"
 
 Activación
 
-```
+```console
 # rc-update add ntpd default
 # rc-update add ntp-client default
 :
@@ -103,7 +103,7 @@ Activación
 
 Configuro los ficheros de apoyo. El daemon ntpd utiliza por defecto el fichero `/etc/ntp.conf` pero en mi caso he preferido cambiarle el nombre. NOTA: Esto es una decisión personal porque creo que tiene más sentido añadir la "d" de daemon, así que recordar que he cambiado el nombre del fichero de configuración a `/etc/ntpd.conf` e indicaré al ejecutable que lo utilice en el fichero ntpd.service.
 
-```
+```conf
 #
 # Equipos que me dan la hora
 server 0.gentoo.pool.ntp.org
@@ -138,7 +138,7 @@ NTPCLIENT_OPTS="-s -b -u \
 
 Programo el reloj y deshabilito el cliente NTP que trae systemd.
 
-```
+```console
 cortafuegix ~ # timedatectl set-local-rtc 0
 cortafuegix ~ # timedatectl set-timezone Europe/Madrid
 cortafuegix ~ # timedatectl set-time "2012-10-30 18:17:16" <= Ponerlo primero en hora.
@@ -147,7 +147,7 @@ cortafuegix ~ # timedatectl set-ntp false
 
 Configuro los .service de ntp y ntp-client
 
-```
+```conf
 [Unit]
 Description=Network Time Service
 After=ntp-client.service
@@ -161,7 +161,7 @@ PrivateTmp=true
 WantedBy=multi-user.target
 ```
 
-```
+```conf
 [Unit]
 Description=Set time via NTP using ntpdate
 After=network-online.target nss-lookup.target
@@ -181,7 +181,7 @@ WantedBy=multi-user.target
 
 Habilito el servicio
 
-```
+```console
 # systemctl enable ntp-client
 # systemctl enable ntpd
 :
@@ -192,7 +192,7 @@ Habilito el servicio
 
 Puede llegar a tardar hasta 4 horas calibrar el reloj antes de llegar al estado correcto de Stratum (dado que estás sincronzando con servidores stratum 2, tu estado debería ser de stratum 3). De hecho la razón por la que ejecuto ntp-client (antes que ntpd) es para poner el equipo en hora y que este proceso sea más rápido. Cuando ntpd arranque y vea que la hora del equipo coincide con la de sus servidores, tardará muy poco en sincronizar. Si el estado no ha cambiado tras un rato es que algo está fallando. Lo correcto es que diga que es "stratum=3"
 
-```
+```console
 $ ntpq -c readvar
 assID=0 status=06f4 leap_none, sync_ntp, 15 events, event_peer/strat_chg,
 version="ntpd 4.2.4p7@1.1607-o lun ago 17 07:38:15 UTC 2009 (1)",
@@ -207,7 +207,7 @@ stability=0.876, tai=0
 
 Si después de una horas tu servidor sigue en stratum 16 entonces es que algo está fallando. Mira [esta guía](https://support.ntp.org/bin/view/Support/TroubleshootingNTP). Puedes comprobar contra qué servidores estás conectados
 
-```zsh
+```console
 $ ntpq -c peers
      remote           refid      st t when poll reach   delay   offset  jitter
 ==============================================================================
@@ -227,15 +227,15 @@ OpenNTPD es una versión ligera del servidor NTP que se ha portado desde OpenBSD
 
 - Instalación
 
-```
-root #emerge --ask net-misc/openntpd
+```console
+root # emerge --ask net-misc/openntpd
 ```
 
 ### Configuración como Daemon
 
 - Programo el reloj y deshabilito el cliente NTP que trae systemd
 
-```
+```console
 cortafuegix ~ # timedatectl set-local-rtc 0
 cortafuegix ~ # timedatectl set-timezone Europe/Madrid
 cortafuegix ~ # timedatectl set-time "2012-10-30 18:17:16" <= Ponerlo primero en hora.
@@ -244,7 +244,7 @@ cortafuegix ~ # timedatectl set-ntp false
 
 - Configuro el fichero para que actúe como servidor
 
-```
+```conf
 # Configuración como Servidor NTP
 listen on *
 
@@ -257,7 +257,7 @@ servers 3.gentoo.pool.ntp.org
 
 - Programo el daemon para que arranque en el siguiente boot y lo activo
 
-```
+```console
 cortafuegix ~ # systemctl enable ntpd
 cortafuegix ~ # systemctl start ntpd
 :
@@ -282,7 +282,7 @@ NTP synchronized: yes                          <== En el Servidor aparece como "
 
 Para los equipos cliente utilizo el que incluye systemd
 
-```
+```conf
 #  This file is part of systemd.
 #
 #  systemd is free software; you can redistribute it and/or modify it
@@ -302,7 +302,7 @@ FallbackNTP=0.gentoo.pool.ntp.org 1.gentoo.pool.ntp.org 2.gentoo.pool.ntp.org 3.
 
 - Programo el reloj y deshabilito el cliente NTP que trae systemd
 
-```
+```console
 gentoo ~ # timedatectl set-local-rtc 0
 gentoo ~ # timedatectl set-timezone Europe/Madrid
 gentoo ~ # timedatectl set-time "2012-10-30 18:17:16" <= Ponerlo primero en hora.

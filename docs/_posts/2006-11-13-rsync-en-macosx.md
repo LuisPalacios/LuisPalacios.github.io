@@ -21,23 +21,23 @@ Para poder compilar la última versión necesitarás:
 
 Los pasos para realizar la instalación son los siguientes. Cuando lo hice se trataba de la versión 3.1.0 que compilé en MacOSX 10.8.5 en modo 64 bits. Como root:
 
-```zsh
- cd /tmp
- curl -O http://rsync.samba.org/ftp/rsync/rsync-3.1.0.tar.gz
- tar -xzvf rsync-3.1.0.tar.gz
- rm rsync-3.1.0.tar.gz
- curl -O http://rsync.samba.org/ftp/rsync/rsync-patches-3.1.0.tar.gz
- tar -xzvf rsync-patches-3.1.0.tar.gz
- rm rsync-patches-3.1.0.tar.gz
- cd rsync-3.1.0
- patch -p1 < patches/fileflags.diff
- patch -p1 < patches/crtimes.diff
- ./prepare-source
- ./configure
- make
- make install
- mv /usr/local/bin/rsync /usr/bin
-````
+```console
+# cd /tmp
+# curl -O http://rsync.samba.org/ftp/rsync/rsync-3.1.0.tar.gz
+# tar -xzvf rsync-3.1.0.tar.gz
+# rm rsync-3.1.0.tar.gz
+# curl -O http://rsync.samba.org/ftp/rsync/rsync-patches-3.1.0.tar.gz
+# tar -xzvf rsync-patches-3.1.0.tar.gz
+# rm rsync-patches-3.1.0.tar.gz
+# cd rsync-3.1.0
+# patch -p1 < patches/fileflags.diff
+# patch -p1 < patches/crtimes.diff
+# ./prepare-source
+# ./configure
+# make
+# make install
+# mv /usr/local/bin/rsync /usr/bin
+```
 
 <br/>
 
@@ -91,13 +91,13 @@ Así que allá vamos. Crear el fichero `org.samba.rsync.plist`
          
 Desde Terminal.app y como root copio el fichero a /Library/LaunchDaemons
 
-```zsh
-cp org.samba.rsync.plist /Library/LaunchDaemons/
+```console
+# cp org.samba.rsync.plist /Library/LaunchDaemons/
 ```
 
 Creo el fichero /etc/rsyncd.conf
 
-```
+```conf
 pid file = /var/run/rsyncd.pid
 use chroot = yes
 read only = yes
@@ -116,21 +116,21 @@ charset = utf-8
 
 Fichero de secretos /etc/rsync/rsyncd.secrets. Usar la misma contraseña (Clean) que usará el cliente.
 
-```
+```conf
 luis:CONTRASEÑA
 ```
 
-```
-chmod 400 rsyncd.secrets 
+```console
+# chmod 400 rsyncd.secrets 
 ```
 
 Cargo el plist en el registro de launchd. El proceso "rsync --daemon" no arranca, lo que estamos haciendo es que se registre el servicio y cuando llegue una petición al puerto 783 el proceso launchd se encargará de arrancar "rsync --daemon".
 
-```
-netstat -na|grep 873
+```console
+# netstat -na|grep 873
 ```
 
-```
+```console
 :
 # launchctl load -w /Library/LaunchDaemons/org.samba.rsync.plist 
 # netstat -na|grep 873
@@ -140,7 +140,7 @@ tcp4 0 0 \*.873 \*.\* LISTEN
 
 Desde un cliente podemos comprobar que está funcionando
 
-```
+```console
 $ rsync --stats luis@miservidor.midominio.com::Datos
 Password: 
 :
