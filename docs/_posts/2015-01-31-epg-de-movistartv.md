@@ -27,7 +27,7 @@ Apuntes de la serie o relacionados que tengo pendiente migrar:
 
 La instalación de Tvheadend puede hacerse directamente desde los fuentes o utilizando, en gentoo, el correspondiente paquete: 
 
-```bash
+```console
 # cat /etc/portage/package.accept_keywords 
 # tvheadend ~media-tv/tvheadend-9999 **
 # cat /etc/portage/package.use/tvheadend 
@@ -37,9 +37,13 @@ media-tv/tvheadend avahi capmt constcw cwc dbus dvb dvbscan ffmpeg -hdhomerun im
  
 Si en el futuro quieres actualizar simplemente ejecuta lo siguiente:
 
-```bash
+```console
 lunatv ~ # emerge -DuvNp system world 
-lunatv ~ # cat /etc/systemd/system/tvheadend.service
+``` 
+
+* Fichero: /etc/systemd/system/tvheadend.service
+
+```systemd
 [Unit] 
 Description=UDP-to-HTTP multicast traffic relay daemon After=network-online.target igmpproxy.service
 
@@ -53,7 +57,7 @@ WantedBy=multi-user.target
 
 Por último, el fichero de configuración. El parámetro más importante es el directorio al que apunta TVHEADEND_CONFIG. Ese directorio es en el que debes trabajar cuando quieras cambiar la configuración de tvheadend.
 
-```bash
+```console
 lunatv ~ # cat /etc/conf.d/tvheadend 
 # See the tvheadend(1) manpage for more info.
 # Run Tvheadend as this user. TVHEADEND_USER="tvheadend"
@@ -64,7 +68,7 @@ lunatv ~ # cat /etc/conf.d/tvheadend
 
 Estos son los comandos necesarios para habilitar, arrancar y parar el servicio
 
-```bash
+```console
 lunatv ~ # systemctl enable tvheadend 
 lunatv ~ # systemctl start tvheadend 
 lunatv ~ # systemctl stop tvheadend
@@ -88,7 +92,7 @@ En cada uno de los XBMC se añade el Add-On “Tvheadend HTSP Client” y se con
 
 En este [enlace](https://github.com/ese/movistartv2xmltv) tienes un proyecto que es capaz de conectar con el servicio SD&S (Service Discovery & Selection) de Movistar TV para recoger la información de canales y programación.
 
-```bash
+```console
 totobo ~ # emerge -v xmltv 
 totobo ~ # export EPYTHON=python2.7 
 totobo ~ # easy_install --upgrade pytz : 
@@ -134,7 +138,7 @@ Tras la primera ejecución el programa modifica el json y quedará tal que así:
 
 Necesito esta lista para alimentar a TVHeadEnd, para saber dónde están los iconos de los canales, etc.
 
-```bash
+```console
 totobo movistartv2xmltv $ export EPYTHON=python2.7 
 totobo movistartv2xmltv $ ./tv_grab_es_movistar.py -h : 
 totobo movistartv2xmltv $ ./tv_grab_es_movistar.py --m3u --output movistartv-canales.m3u
@@ -403,7 +407,7 @@ rtp://@239.0.0.5:8208
 rtp://@239.0.0.13:8208
 ```
 
-```bash
+```console
 totobo movistartv2xmltv $ mkdir tvheadend 
 totobo movistartv2xmltv $ cd tvheadend/
 totobo tvheadend $ curl -Ok https://raw.githubusercontent.com/grudolf/m3u2hts/master/m3u2hts.py 
@@ -418,19 +422,35 @@ Ejecuto el programa **m3u2hts** (nota que mi interfaz es el vlan100), dependiend
 
 Ejecuto el script y vemos cómo se generan cuatro directorios:
 
-```
-[code language="bash" light="true"] totobo tvheadend $ EPYTHON=python2.7 python m3u2hts.py -c utf-8 --iface vlan100 -r ../movistartv-canales.m3u OK totobo tvheadend $ ls -al total 36 drwxr-xr-x 6 luis luis 4096 ene 31 18:59 . drwxr-xr-x 3 luis luis 4096 ene 31 18:55 .. drwxr-xr-x 2 luis luis 4096 ene 31 18:59 channels drwxr-xr-x 2 luis luis 4096 ene 31 18:59 channeltags drwxr-xr-x 3 luis luis 4096 ene 31 18:59 epggrab drwxr-xr-x 2 luis luis 4096 ene 31 18:59 iptvservices -rwxr-xr-x 1 luis luis 11535 ene 31 18:54 m3u2hts.py [/code]
+```console
+totobo tvheadend $ EPYTHON=python2.7 python m3u2hts.py -c utf-8 --iface vlan100 -r ../movistartv-canales.m3u 
+OK 
+totobo tvheadend $ ls -al 
+total 36 
+drwxr-xr-x 6 luis luis 4096 ene 31 18:59 . 
+drwxr-xr-x 3 luis luis 4096 ene 31 18:55 .. 
+drwxr-xr-x 2 luis luis 4096 ene 31 18:59 channels 
+drwxr-xr-x 2 luis luis 4096 ene 31 18:59 channeltags 
+drwxr-xr-x 3 luis luis 4096 ene 31 18:59 epggrab 
+drwxr-xr-x 2 luis luis 4096 ene 31 18:59 iptvservices 
+ç-rwxr-xr-x 1 luis luis 11535 ene 31 18:54 m3u2hts.py 
 ```
 
 Copio los cuatro directorios al directorio de trabajo de TVHeadEnd (en mi caso en /etc), notar que esto solo hay que hacerlo la primera vez. Ah!, no olvides cambiar los permisos (mira el comando chown).
 
-```
-[code language="bash" light="true"] totobo tvheadend # /etc/init.d/tvheadend stop
+```console
+totobo tvheadend # /etc/init.d/tvheadend stop
 
-totobo tvheadend # cd /etc/tvheadend/ totobo tvheadend # cp -R /home/luis/movistartv2xmltv/tvheadend/channels . totobo tvheadend # cp -R /home/luis/movistartv2xmltv/tvheadend/channeltags . totobo tvheadend # cp -R /home/luis/movistartv2xmltv/tvheadend/epggrab . totobo tvheadend # cp -R /home/luis/movistartv2xmltv/tvheadend/iptvservices .
+totobo tvheadend # cd /etc/tvheadend/ 
+totobo tvheadend # cp -R /home/luis/movistartv2xmltv/tvheadend/channels . 
+totobo tvheadend # cp -R /home/luis/movistartv2xmltv/tvheadend/channeltags . 
+totobo tvheadend # cp -R /home/luis/movistartv2xmltv/tvheadend/epggrab . 
+totobo tvheadend # cp -R /home/luis/movistartv2xmltv/tvheadend/iptvservices .
 
-totobo tvheadend # chown -R tvheadend:video /etc/tvheadend/ [/code]   **M3U2HTS con TVHeadEnd 3.9**
+totobo tvheadend # chown -R tvheadend:video /etc/tvheadend/ 
 ```
+
+### M3U2HTS con TVHeadEnd 3.9
 
 En mi caso tengo instalada la versión 3.9+. Una vez que realicé la instalación ejecuté "tvheadend start" una única vez para que se creara la estructura de directorios, después lo paré con "tvheadend stop". A continuación ejecuto m3u2hts para importar los canales de Movistar TV.
 
@@ -438,21 +458,30 @@ No dejar de leer la nota respecto a la conversión para la versión 3.9+ en el s
 
 Elimino la '@' en las URL's de los canales multicast: 
 
-```bash
+```console
 totobo movistartv2xmltv $ sed -i "s/\/@/\//" movistartv-canales.m3u
 ```
 
 Convierto .m3u A FORMATO TVHEADEND 3.9+ 
 
-```bash
-totobo movistartv2xmltv $ cd tvheadend/ totobo tvheadend $ EPYTHON=python2.7 python m3u2hts.py --newformat -c utf-8 --iface vlan100 -r ../movistartv-canales.m3u -o channel OK totobo tvheadend $ ls -al total 32 drwxr-xr-x 5 luis luis 4096 feb 8 12:32 . drwxr-xr-x 3 luis luis 4096 feb 1 20:25 .. drwxr-xr-x 4 luis luis 4096 feb 8 12:32 channel drwxr-xr-x 3 luis luis 4096 feb 8 12:32 epggrab drwxr-xr-x 3 luis luis 4096 feb 8 12:32 input
+```console
+totobo movistartv2xmltv $ cd tvheadend/ 
+totobo tvheadend $ EPYTHON=python2.7 python m3u2hts.py --newformat -c utf-8 --iface vlan100 -r ../movistartv-canales.m3u -o channel 
+OK 
+totobo tvheadend $ ls -al 
+total 32 
+drwxr-xr-x 5 luis luis 4096 feb 8 12:32 . 
+drwxr-xr-x 3 luis luis 4096 feb 1 20:25 .. 
+drwxr-xr-x 4 luis luis 4096 feb 8 12:32 channel 
+drwxr-xr-x 3 luis luis 4096 feb 8 12:32 epggrab 
+drwxr-xr-x 3 luis luis 4096 feb 8 12:32 input
 
-totobo tvheadend $ sudo cp -R channel/ epggrab/ input/ /etc/tvheadend totobo tvheadend $ sudo chown -R tvheadend:video /etc/tvheadend/ totobo tvheadend $ sudo chmod go-rwx -R /etc/tvheadend/input/ /etc/tvheadend/epggrab/ /etc/tvheadend/channel/ [/code]
+totobo tvheadend $ sudo cp -R channel/ epggrab/ input/ /etc/tvheadend totobo tvheadend $ sudo chown -R tvheadend:video /etc/tvheadend/ totobo tvheadend $ sudo chmod go-rwx -R /etc/tvheadend/input/ /etc/tvheadend/epggrab/ /etc/tvheadend/channel/ 
 ```
 
 Una vez que tengo los canales pasados a los directorios de TVHeadEnd ya puedo arrancarlo e irme a XBMC a ver cómo los muestra ya disponibles.
 
-```bash
+```console
 totobo tvheadend # /etc/init.d/tvheadend start
 ```
 
@@ -473,37 +502,26 @@ Lo iconos los entrega TVHeadEnd porque él se los baja desde el servidor de Movi
 
 Nota: he creado un contenedor Docker para ejecutar Tvheadend, ya está 100% operativo, échale un ojo, estos son los proyectos donde tienes todo lo necesario:
 
-{% include showImagen.html
-    src="/assets/img/original/"
-    caption="luispa/base-tvheadend"
-    width="600px"
-    %}
-{% include showImagen.html
-    src="/assets/img/original/base-tvheadend"
-    caption="GitHub base-tvheadend"
-    width="600px"
-    %}
-{% include showImagen.html
-    src="/assets/img/original/servicio-tvheadend"
-    caption="GitHub servicio-tvheadend"
-    width="600px"
-    %}
+* [Docker luispa/base-tvheadend](https://hub.docker.com/r/luispa/base-tvheadend/)
+* [GitHub base-tvheadend](https://github.com/LuisPalacios/base-tvheadend)
+* [GitHub servicio-tvheadend](https://github.com/LuisPalacios/servicio-tvheadend)
+* LUISPA --> Texto: "Otros casos de uso de Docker" -- Pendiente de Migrar y enlace a documento Wordpress 172  
 
-{% include showImagen.html
-    src="/assets/img/original/?p=172"
-    caption="otros casos de uso de Docker"
-    width="600px"
-    %}
 
- 
+<br/>
 
 #### Segundo paso: descargar y activar el EPG
 
 El siguiente paso es ejecutar el programa (sin argumentos) para descargar el EPG. **Nota:** en el fichero de configuración indicamos el nombre del fichero de salida y al llamarlo sin argumentos por defecto se dedica a bajarse el EPG. La primera vez lo ejecuto manualmente para verificar su funcionamiento e ir viendo el Log en paralelo.
 
-```bash
-totobo movistartv2xmltv $ export EPYTHON=python2.7 totobo movistartv2xmltv $ nohup ./tv_grab_es_movistar.py &amp; [/code]   Observo en paralelo el log
+```console
+totobo movistartv2xmltv $ export EPYTHON=python2.7 
+totobo movistartv2xmltv $ nohup ./tv_grab_es_movistar.py &amp; 
+```
 
+Observo en paralelo el log
+
+```console
 totobo movistartv2xmltv $ tail -f movistartv.log
 2015-01-30 22:01:26,051 - movistarxmltv - INFO - Init. DEM=19 TVPACKS=[u'UTX6C', u'UTX8F'] ENTRY_MCAST=239.0.2.129:3937
 2015-01-30 22:01:28,018 - movistarxmltv - INFO - Getting channels source for DEM: 19
@@ -574,11 +592,8 @@ totobo movistartv2xmltv $ tail -f movistartv.log
 2015-01-30 22:29:51,507 - movistarxmltv - INFO - Grabbed 192 channels and 24411 programmes
 ```
 
-{% include showImagen.html
-    src="/assets/img/original/?p=725) (también probé a hacerlo en el linux del receptor VU+ ultimo pero tardaba unos 60 minutos"
-    caption="servidor (Intel Core i5)"
-    width="600px"
-    %}
+* LUISPA --> Texto: "También probé a hacerlo en el linux del receptor VU+ ultimo pero tardaba unos 60 minutos" -- Pendiente de Migrar y enlace a documento Wordpress 725  
+
 
 El fichero resultante: /home/luis/movistartv2xmltv/movistartv-guia.xml ocupa unos 15MB:
 
@@ -590,7 +605,7 @@ El fichero resultante: /home/luis/movistartv2xmltv/movistartv-guia.xml ocupa uno
 
 Ahora que tenemos el EPG en /home/luis/movistartv2xmltv/movistartv-guia.xml se lo enviamos al daemon TVHeadEnd a través de un **socket**, pero antes debo instalar el programa socat y configurar TVHeadEnd para que acepte la información EPG a través de un interfaz externo (socket xmltv.sock), conectamos con el programa a través del interfaz Web y modificamos Configuración-> Channel/EPG-> EPG Grabber-> Interfaz Externo
 
-```bash
+```console
 totobo epggrab # emerge -v socat [/code]
 ```
 
@@ -602,9 +617,11 @@ totobo epggrab # emerge -v socat [/code]
 
 Por fin podemos mandar el fichero EPG a TVHeadEnd on el comando siguiente:
 
-```bash
-[code language="bash" light="true"] # cat /home/luis/movistartv2xmltv/movistartv-guia.xml | socat - UNIX-CONNECT:/etc/tvheadend/epggrab/xmltv.sock [/code]   Al cabo de un minuto empezaremos a ver cómo aparece el EPG en los canales en XBMC.
+```console
+# cat /home/luis/movistartv2xmltv/movistartv-guia.xml | socat - UNIX-CONNECT:/etc/tvheadend/epggrab/xmltv.sock 
 ```
+
+Al cabo de un minuto empezaremos a ver cómo aparece el EPG en los canales en XBMC.
 
 {% include showImagen.html
     src="/assets/img/original/movistarepg-1024x578.png"
@@ -616,7 +633,7 @@ Por fin podemos mandar el fichero EPG a TVHeadEnd on el comando siguiente:
 
 Hemos visto todo el proceso paso por paso, ahora podemos automatizar la parte final, releer el EPG y enviárselo a TVHeadEnd, en mi caso lo hago a través del cron, creo un pequeño script y lo instalo en el directorio de ejecución diaria (/etc/cron.daily).
 
-```bash
+```console
 #!/bin/bash #
 
 # Preparo el PATH export PATH=/usr/sbin:/usr/bin:/sbin:/bin:.
@@ -634,7 +651,7 @@ El tráfico hacia los servidores de Movistar TV que se origina desde el daemon T
 
 Fácil decirlo pero puede ser complicado hacerlo, de hecho si no lo tienes bien configurado puede darte problemas como los scripts dando timeout o algunas cosas funcionen y otras no (por ejemplo, que sí descargues el EPG pero los iconos no puedan ser descargados por TVHeadEnd).
 
-```
+```json
    zone "svc.imagenio.telefonica.net" in {
         type forward;
         forwarders { 172.26.23.3; };
