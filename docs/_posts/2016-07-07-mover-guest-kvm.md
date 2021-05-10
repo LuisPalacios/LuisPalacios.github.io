@@ -6,6 +6,7 @@ tags: backup iscsi kvm linux
 excerpt_separator: <!--more-->
 ---
 
+![Logo Mover](/assets/img/original/logo-move.svg){: width="150px" style="float:left; padding-right:25px" } 
 
 Hace poco he tenido que mover una máquina virtual desde uno de mis servidores a otro en la misma red. Como siempre me he ayudado de google, aunque es una operación sencilla casi todo lo hago desde la shell, así que aquí dejo el proceso para acordarme...
 
