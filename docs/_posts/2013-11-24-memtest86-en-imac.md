@@ -1,7 +1,7 @@
 ---
 title: "MemTest86 en iMac"
 date: "2013-11-24"
-categories: apuntes
+categories: herramientas
 tags: macosx memtest86 boot
 excerpt_separator: <!--more-->
 ---

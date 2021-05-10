@@ -1,7 +1,7 @@
 ---
 title: "Mover guest KVM"
 date: "2016-07-07"
-categories: linux
+categories: virtualización
 tags: backup iscsi kvm linux
 excerpt_separator: <!--more-->
 ---

@@ -1,7 +1,7 @@
 ---
 title: "AFP en Gentoo Linux"
 date: "2012-11-15"
-categories: apuntes
+categories: linux
 tags: afp linux
 excerpt_separator: <!--more-->
 ---

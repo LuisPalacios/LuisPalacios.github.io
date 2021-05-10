@@ -1,7 +1,7 @@
 ---
 title: "Tvheadend y Movistar TV (2015)"
 date: "2015-01-31"
-categories: apuntes
+categories: tv
 tags: linux nuc
 excerpt_separator: <!--more-->
 ---
