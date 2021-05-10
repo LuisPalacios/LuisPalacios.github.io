@@ -6,7 +6,7 @@ tags: firewire gentoo linux
 excerpt_separator: <!--more-->
 ---
 
-![firewire](/assets/img/original/firewire.jpg){: width="150px" style="float:left; padding-right:25px" } 
+![firewire](/assets/img/posts/logo-firewire.svg){: width="150px" style="float:left; padding-right:25px" } 
 
 IEEE 1394 (Firewire) es un tipo de conexión para diversas plataformas, destinado a la entrada y salida de datos en serie a gran velocidad. Suele utilizarse para la interconexión de dispositivos digitales como cámaras digitales y videocámaras. Apple lo implementó para interconectar discos duros. 
 

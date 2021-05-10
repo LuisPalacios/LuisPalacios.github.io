@@ -7,7 +7,7 @@ excerpt_separator: <!--more-->
 ---
 
 
-![Logo memtest](/assets/img/posts/logo-memtest.jpg){: width="150px" style="float:left; padding-right:25px" } 
+![Logo memtest](/assets/img/posts/logo-memtest.png){: width="150px" style="float:left; padding-right:25px" } 
 
 Para mi nuevo iMac 27" (finales del 2013) compré una ampliación de 32GB de memoria. Apple soporta que instales memoria de terceros, compré la ampliación en Crucial.com y una de las cosas que quería hacer era probar la memoria en profundidad.
 

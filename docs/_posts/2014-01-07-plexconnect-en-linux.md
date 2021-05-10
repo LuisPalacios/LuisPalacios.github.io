@@ -6,10 +6,12 @@ tags: linux plex plexconnect
 excerpt_separator: <!--more-->
 ---
 
-![Plex](/assets/img/original/images.jpg){: width="150px" style="float:left; padding-right:25px" } 
+![Plex](/assets/img/posts/logo-plex.svg){: width="150px" style="float:left; padding-right:25px" } 
 
 Apunte sobre la configuración en Linux de PlexConnect para poder usar Plex con un Apple TV3. Solo he tenido que modificar el DHCP Server, añadir 3 redirecciones con iptables y configurar/arrancar el programa PlexConnect. 
 
+<br clear="left"/>
+<!--more-->
 
 ## Configuración
 
@@ -22,8 +24,8 @@ Estas son las direcciones IP para entender las instrucciones:
 
 {% include showImagen.html
     src="/assets/img/original/images.jpg"
-    caption="esta otra página donde define cómo generar los certificados"
-    width="600px"
+    caption="Proyecto [PlexConnect](https://www.plex.tv/)"
+    width="300px"
     %}
 
 Veamos la configuración en Linux

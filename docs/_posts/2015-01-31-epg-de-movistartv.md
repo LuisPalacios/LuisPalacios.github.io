@@ -6,7 +6,7 @@ tags: linux nuc
 excerpt_separator: <!--more-->
 ---
 
-![logo Tvheadend](/assets/img/posts/logo-tvh.jpg){: width="150px" style="float:left; padding-right:25px" } 
+![logo Tvheadend](/assets/img/posts/logo-tvh.svg){: width="150px" style="float:left; padding-right:25px" } 
 
 Este apunte lo publiqué en wordpress en enero de 2015. Lo dejo aquí como referencia, junto con otros apuntes relacionados. No están revisados y probablemente hayan quedado obsoletos. 
 

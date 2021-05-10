@@ -6,7 +6,7 @@ tags: hfs linux gentoo
 excerpt_separator: <!--more-->
 ---
 
-![HFS+](/assets/img/posts/hfsplus.png){: width="150px" height="150px" style="float:left; padding-right:25px" } 
+![HFS+](/assets/img/posts/logo-hfsplus.png){: width="150px" height="150px" style="float:left; padding-right:25px" } 
 
 HFS+ (Hierarchical File System Plus), también conocido como MacOS Plus, es el formato usado por defecto en la partición donde está instalado el sistema operativo MacOS de Apple. Fué lanzado como una mejora del HFS original en el año 1998 e introducido en el sistema operativo macOS desde su versión 8.1
 
