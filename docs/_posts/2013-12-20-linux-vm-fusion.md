@@ -1,5 +1,5 @@
 ---
-title: "Linux en Fusion para Mac"
+title: "Linux en 'Fusion para Mac'"
 date: "2013-12-20"
 categories: virtualización
 tags: fusion gentoo linux virtualizacion vmware
@@ -47,17 +47,14 @@ Device Boot Start End Blocks Id System
 # mkdir /mnt/gentoo/boot
 # mount /dev/sda1 /mnt/gentoo/boot
 ```
- 
 
 * Fecha
-
  
 ```console
 # date 121508312013
 ```
 
 **Seguir vía SSH** Puede que te interese seguir desde una sesión remota. En mi caso lo prefiero, abro un terminal (iTerm) en el Mac y conecto directamente contra la máquina virtual usando ssh, donde previamente he puesto una contraseña a root y arrancado el servicio. La razón: En VMWare Fusion todavía me captura el ratón y no tengo instaladas las tools así que prefiero la comodidad del entorno mac.
-
  
 ```console
 # passwd
@@ -82,7 +79,6 @@ Descargo en /mnt/gentoo desde uno de los mirrors de gentoo
 * Entrar en el nuevo entorno
 
 A partir de ahora entro ya directamente en el nuevo entorno con chroot, por lo tanto "/" (root) apuntará al nuevo disco que acabamos de formatear y donde hemos descomprimido todo el software. Importante copiar el resolv.conf :-)
-
  
 ```console
 # cp /etc/resolv.conf /mnt/gentoo/etc
@@ -256,7 +252,6 @@ Si quieres usar UVESA, aquí tienes el fichero .config para el modo de trabajo U
 
 Si esta es tu elección, aquí tienes el fichero .config para el modo de trabajo VMWGFX (es mi opción preferida). Porqué prefiero VMWGFX?. Porque prefiero usar un modo de arranque Silencioso y totalmente automatizado, estamos hablando de una máquinas virtual donde busco un arranque super rápido, por lo tanto no voy a ver los "splash" de todas formas (quizá durante una décima de segundo), así que mejor tener bien integrado X11 con las consolas. Instalación del Kernel
 
-
 **Descarga del kernel**
 
 ```console 
@@ -267,7 +262,6 @@ Si esta es tu elección, aquí tienes el fichero .config para el modo de trabajo
 ```
 
 Descarga del fichero .config Descarga una copia del fichero .config que prefieras de los dos anteriores. En mi caso uso el .config para VMWGFX, ambas son versiones para el kernel gentoo-sources-3.10.17 optimizadas para systemd y VMWare. Copia/Pega dicho contenido en el fichero /usr/src/inux/.config **Instalación de v86d**
-
  
 ```console
 # emerge -v v86d
@@ -277,23 +271,21 @@ Descarga del fichero .config Descarga una copia del fichero .config que prefiera
 **Instalación de Splashutils (solo si usas UVESA)**
 
 Los paquetes splash-themes-* se emplean para establecer el look durante el arranque y de las ventanas de consola. No los confundas con el tema de Grub que se usa antes del boot.
-
  
 ```console
 # emerge -v splashutils
 # emerge -v media-gfx/splash-themes-livecd media-gfx/splash-themes-gentoo
 ```
 
-Compilación e instalación
+**Compilación e instalación**
 
- 
 ```console
 # cd /usr/src/linux
 # make && make modules_install
 # cp arch/x86_64/boot/bzImage /boot/kernel-3.10.17-gentoo
 # cp System.map /boot/System.map-3.10.17-gentoo
  ```
- 
+
 **Grub 2**
 
 Instalo Grub
@@ -303,7 +295,7 @@ Instalo Grub
 # grub2-install /dev/sda
 ```
 
-Preparo Splash (solo si usas UVESA)
+**Preparo Splash (solo si usas UVESA)**
 
 La resolución 1680x1050 es la que yo he elegido, porque me encaja con mi monitor de 27". En tu caso adapta a la que más te convenga. Eso sí, ten en cuenta que en el siguiente reboot al cambiar a modo gráfico la ventana de VMWare se redimensiona a este tamaño.
 
@@ -377,8 +369,7 @@ GRUB_DISABLE_LINUX_UUID=true
 #GRUB_DISABLE_RECOVERY=true
 ```
 
-Configuración de grub.cfg
-
+**Instalar GRUB**
  
 ```console
 # grub2-mkconfig -o /boot/grub/grub.cfg
@@ -475,12 +466,6 @@ A "contectar"... Instalo, habilito y arranco DHCP. Los servicios en "systemd" se
 # systemctl enable dhcpcd.service
 # systemctl start dhcpcd.service
 ```
-
-{% include showImagen.html
-    src="/assets/img/original/?p=581) de cómo hacer una configuración de dirección IP fija (manual"
-    caption="Aquí tienes un ejemplo"
-    width="600px"
-    %}
 
 Otro indispensable, habilito y arranco el daemon de SSH para poder conectar con esta VM vía ssh.
 
