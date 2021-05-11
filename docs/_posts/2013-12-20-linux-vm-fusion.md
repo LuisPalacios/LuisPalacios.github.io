@@ -17,9 +17,11 @@ Anticipo que el tiempo de boot con systemd me ha dejado boquiabierto. Desde que 
 
 El manual oficial para este tipo de instalación es el Gentoo Linux AMD64 Handbook, un manual perfecto con mucho detalle. Considera este artículo munición extra que te servirá como ejemplo. Además te recomiendo leer también este par de enlaces importantes relacionados con el nuevo systemd en Gentoo y Gnome 3.8 en Gentoo.
 
+<br/>
+
 ## Preparar la máquina virtual
 
-Descarga el ISO install-amd64-minimal-<fecha del último>.iso desde los mirrors de gentoo. Para encontrarlo bucea hasta este directorio: `/mirror/gentoo/releases/amd64/autobuilds/current-iso`
+Descarga el ISO install-amd64-minimal-`fecha del último`.iso desde los mirrors de gentoo. Para encontrarlo bucea hasta este directorio: `/mirror/gentoo/releases/amd64/autobuilds/current-iso`.
 
 Arranca VMWare Fusion, crea una nueva máquina virtual, indica que usarás el ISO como disco de arranque, asígnale por lo menos 1GB de memoria RAM, 20GB de espacio en disco y la red en modo NAT.
 
@@ -33,7 +35,7 @@ Arranca VMWare Fusion, crea una nueva máquina virtual, indica que usarás el IS
 
 * Configuración del disco
 
-Crea la Partición 1 /boot de 50M, partición 2 SWAP de 512M y partición 3 ROOT con el resto hasta 20GB
+Crea la Partición 1 `/boot` de 50M, partición 2 `SWAP` de 512M y partición 3 `ROOT` con el resto hasta 20GB
 
 ```console 
 # fdisk /dev/sda
