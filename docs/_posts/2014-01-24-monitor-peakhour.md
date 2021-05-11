@@ -1,8 +1,8 @@
 ---
 title: "MacOSX: Monitorizar la red con PeakHour"
 date: "2014-01-24"
-categories: apuntes
-tags: macosx peakhour snmp
+categories: macos
+tags: monitor peakhour snmp
 excerpt_separator: <!--more-->
 ---
 

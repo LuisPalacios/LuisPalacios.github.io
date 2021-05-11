@@ -1,8 +1,8 @@
 ---
 title: "PlexConnect en Linux"
 date: "2014-01-07"
-categories: apuntes
-tags: linux plex plexconnect
+categories: linux
+tags: linux gentoo plex plexconnect
 excerpt_separator: <!--more-->
 ---
 
