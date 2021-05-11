@@ -29,8 +29,8 @@ Arranca VMWare Fusion, crea una nueva máquina virtual, indica que usarás el IS
 
 {% include showImagen.html
     src="/assets/img/original/fusiongentoo-1_3_o.jpg"
-    caption="fusiongentoo-1_3_o"
-    width="600px"
+    caption="Instalación de gentoo"
+    width="400px"
     %}
 
 * Configuración del disco
