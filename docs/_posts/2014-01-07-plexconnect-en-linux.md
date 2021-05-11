@@ -105,7 +105,7 @@ drwxr-xr-x 7 root root 4096 ene 5 19:08 ..
 -r-------- 1 root root 872 ene 7 15:50 trailers.cer
 -r-------- 1 root root 1679 ene 7 15:50 trailers.key
 -r-------- 1 root root 2916 ene 7 15:50 trailers.pem
-``` 
+```
 
 Para facilitar los arranques futuros he creado un par de ficheros:
 
