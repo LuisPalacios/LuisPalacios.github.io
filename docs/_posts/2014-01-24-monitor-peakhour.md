@@ -1,5 +1,5 @@
 ---
-title: "MacOSX: Monitorizar la red con PeakHour"
+title: "Monitorizar la red con PeakHour"
 date: "2014-01-24"
 categories: macos
 tags: monitor peakhour snmp
@@ -8,7 +8,7 @@ excerpt_separator: <!--more-->
 
 ![Plex](/assets/img/posts/logo-peakhour.png){: width="150px" style="float:left; padding-right:25px" } 
 
-Hace no mucho me encontré con PeakHour, una herramienta que vive en la barra de menú, con un look & feel muy agradable capaz de visualizar el tráfico de la red de tu casa en tiempo real. Para conseguirlo utiliza el protocolo SNMP, vas dando de alta todos los dispositivos que soportan dicho protocolo y los irá interrogando en serie y mostrando el tráfico que pasa por ellos.
+Hace no mucho me encontré con PeakHour, una herramienta que vive en la barra de menú de MacOS, con un look & feel muy agradable capaz de visualizar el tráfico de la red de tu casa en tiempo real. Para conseguirlo utiliza el protocolo SNMP, vas dando de alta todos los dispositivos que soportan dicho protocolo y los irá interrogando en serie y mostrando el tráfico que pasa por ellos.
 
 <br clear="left"/>
 <!--more-->
