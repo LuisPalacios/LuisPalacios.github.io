@@ -302,6 +302,6 @@ Ya está, ahora ya puedes ir a tu Apple TV3 y hacer click en el icono Trailers.
 
 {% include showImagen.html
     src="/assets/img/original/images_0_o.jpg"
-    caption="images_0_o"
-    width="600px"
+    caption="Logo de Plexconnect"
+    width="300px"
     %}
