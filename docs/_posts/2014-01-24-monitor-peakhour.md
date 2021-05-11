@@ -20,7 +20,7 @@ Mi caso de uso es proporcionarme un vistazo instantáneo de la actividad de la r
 {% include showImagen.html
     src="/assets/img/original/2014-01-2408-54-36_0_o.png"
     caption="Monitorización desde la barra de menús"
-    width="400px"
+    width="350px"
     %}
 
 Estos son los sitios habituales donde activar SNMP
