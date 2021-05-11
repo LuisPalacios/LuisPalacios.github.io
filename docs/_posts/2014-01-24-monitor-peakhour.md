@@ -6,7 +6,7 @@ tags: monitor peakhour snmp
 excerpt_separator: <!--more-->
 ---
 
-![Plex](/assets/img/original/2014-01-2408-54-36_0_o.png){: width="150px" style="float:left; padding-right:25px" } 
+![Plex](/assets/img/posts/logo-peakhour.png){: width="150px" style="float:left; padding-right:25px" } 
 
 Hace no mucho me encontré con PeakHour, una herramienta que vive en la barra de menú, con un look & feel muy agradable capaz de visualizar el tráfico de la red de tu casa en tiempo real. Para conseguirlo utiliza el protocolo SNMP, vas dando de alta todos los dispositivos que soportan dicho protocolo y los irá interrogando en serie y mostrando el tráfico que pasa por ellos.
 
@@ -15,9 +15,13 @@ Hace no mucho me encontré con PeakHour, una herramienta que vive en la barra de
 
 ## Monitorizar la Red
 
-Mi caso de uso es proporcionarme un vistazo instantáneo de la actividad de la red de mi casa. Como decía, aunque no todos soportan SNMP basta con tenerlo configurado en los Access Points y el Router para que se convierta en ideal para el control de la conexión a Internet o Wi-Fi, puede ayudar a determinar cuánto ancho de banda de los equipos y dispositivos están utilizando en un momento dado.
+Mi caso de uso es proporcionarme un vistazo instantáneo de la actividad de la red de mi casa. Como decía, aunque no todos soportan SNMP basta con tenerlo configurado en los Access Points y el Router para que se convierta en ideal para el control de la conexión a Internet o Wi-Fi, puede ayudar a determinar cuánto ancho de banda de los equipos y dispositivos están utilizando en un momento dado. 
 
- 
+{% include showImagen.html
+    src="/assets/img/original/2014-01-2408-54-36_0_o.png"
+    caption="Monitorización desde la barra de menús"
+    width="400px"
+    %}
 
 Estos son los sitios habituales donde activar SNMP
 
