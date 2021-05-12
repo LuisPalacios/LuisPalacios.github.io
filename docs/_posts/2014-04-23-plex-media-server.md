@@ -7,7 +7,7 @@ excerpt_separator: <!--more-->
 ---
 
 
-![logo Tvheadend](/assets/img/original/Plex-Logo.pn){: width="150px" style="float:left; padding-right:25px" } 
+![logo plex](/assets/img/posts/logo-pms.png){: width="150px" style="float:left; padding-right:25px" } 
 
 Plex Media Server te permite transformar el ordenador en un centro multimedia. Va a utilizar los contenidos y fuentes digitales que disponga, por ejemplo los archivos u otras fuentes multimedia. Organiza los contenidos en diferentes secciones para servirlos hacia los clientes.
 
