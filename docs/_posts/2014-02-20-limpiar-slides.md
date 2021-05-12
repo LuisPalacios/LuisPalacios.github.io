@@ -8,7 +8,7 @@ excerpt_separator: <!--more-->
 
 
 
-![logo Visualbasic](/assets/img/posts/logo-vg.svg){: width="150px" style="float:left; padding-right:25px" } 
+![logo Visualbasic](/assets/img/posts/logo-vb.svg){: width="150px" style="float:left; padding-right:25px" } 
 
 En este apunte explico cómo crear una **Macro VBA** para eliminar slides master (patrones) no utilizadas en un fichero Powerpoint, dedicado a mi amigo Alfonso. :-)
 
@@ -31,7 +31,7 @@ Con una Macro es mucho más fácil.
 Sub BorrarPatrones()
 
 End Sub
-ˋˋˋ 
+ˋˋˋ
 
 - **por lo siguiente**
 
