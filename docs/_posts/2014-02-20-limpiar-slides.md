@@ -21,21 +21,22 @@ La solución es sencilla, hay que borrar las no utilizadas, pero a veces es tal 
 Con una Macro es mucho más fácil.
 
 - **Herramienta->Macro->Macros**
-
-    - Darle un nombre: "BorrarPatrones" y pulsar en Crear.
-    - Lanza el editor Visual Basic, con una macro vacía.
+  - Darle un nombre: "BorrarPatrones" y pulsar en Crear.
+  - Lanza el editor Visual Basic, con una macro vacía.
 
 - **Sustituimos lo que nos presenta**
 
-ˋˋˋvba
+
+ˋˋˋ
 Sub BorrarPatrones()
 
 End Sub
 ˋˋˋ
 
+
 - **por lo siguiente**
 
-ˋˋˋvba
+ˋˋˋ
 Sub BorrarPatrones() 
 
 ' Preparar variables 
@@ -67,7 +68,7 @@ En la barra de herramientas del editor de Visual Basic pulsar en el "PLAY" para 
 {% include showImagen.html
     src="/assets/img/original/MasterSlides.png"
     caption="MasterSlides"
-    width="600px"
+    width="400px"
     %}
 
 Cuando termine, salvar el archivo, avisará que si lo haces se perderá la macro, seguir adelante dado que la Macro la podemos ignorar, ya no la necesitamos más, volver a abrirlo y veréis que los patrones han desaparecido, bueno, los no usados. 
