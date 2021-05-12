@@ -66,8 +66,8 @@ En la barra de herramientas del editor de Visual Basic pulsar en el "PLAY" para 
 
 {% include showImagen.html
     src="/assets/img/original/MasterSlides.png"
-    caption="MasterSlides"
-    width="400px"
+    caption="Master Slides"
+    width="300px"
     %}
 
 Cuando termine, salvar el archivo, avisará que si lo haces se perderá la macro, seguir adelante dado que la Macro la podemos ignorar, ya no la necesitamos más, volver a abrirlo y veréis que los patrones han desaparecido, bueno, los no usados. 
