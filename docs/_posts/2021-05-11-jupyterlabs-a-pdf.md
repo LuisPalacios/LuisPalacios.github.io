@@ -16,7 +16,7 @@ En este apunte describo cómo he conseguido, desde un MacOS, convertir a PDF cor
 
 ## Convertir cuadernos a PDF
 
-Lo descrito lo probé con un cuaderno con `neo4J` y `py2neo` cuando realizaba el ejercicio del **acertijo de Einstein: ¿quién es el propietario del pez?** en pythong con neo4j. En teoría debe funcionar con otro tipo de cuadernos, con imágenes embebidas. 
+Lo descrito lo probé con un cuaderno con `neo4J` y `py2neo` cuando realizaba el ejercicio del **acertijo de Einstein: ¿quién es el propietario del pez?**. En teoría debe funcionar cualquier otro tipo de cuadernos, con imágenes embebidas por ejemplo. 
 
 El proceso en resumen:
 
