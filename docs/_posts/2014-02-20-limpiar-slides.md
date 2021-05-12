@@ -27,16 +27,15 @@ Con una Macro es mucho más fácil.
 - **Sustituimos lo que nos presenta**
 
 
-ˋˋˋ
+```vba
 Sub BorrarPatrones()
 
 End Sub
-ˋˋˋ
-
+```
 
 - **por lo siguiente**
 
-ˋˋˋ
+```vba
 Sub BorrarPatrones() 
 
 ' Preparar variables 
@@ -61,7 +60,7 @@ With aPresentation
 End With 
 
 End Sub
-ˋˋˋ
+```
 
 En la barra de herramientas del editor de Visual Basic pulsar en el "PLAY" para que ejecute la macro. Dependiendo del tamaño de tu presentación y el número de slides patrones que tengas terminará en unos segundos o en minutos.
 
