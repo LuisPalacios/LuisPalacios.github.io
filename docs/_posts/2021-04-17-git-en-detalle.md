@@ -44,7 +44,7 @@ Antes de entrar en harina, tenemos dos formas de trabajar, con el cliente (progr
 | -- | -- | -- |
 | staging area | área de preparación | Es una zona intermedia (dentro de `.git`)  donde se van **preparando archivos a la espera del ser usados** en el **siguiente commit** |
 | index | índice | Es la **lista de todos los archivos que se están preparando** a los que **hacemos seguimiento y están en la staging área** (entre tu working copy y el futuro commit). |
-| working copy | directorio de trabajo | Es tu directorio completo de tu proyecto todo aquello, la parte no controlada por git, es decir, **todos los ficheros que están fuera del subdirectorio `.git`** |
+| working copy | directorio de trabajo | Es el directorio completo de tu proyecto, la parte no controlada por git, es decir, **todos los ficheros y directorios que están fuera del subdirectorio `.git`** |
 | commit | confirmar, comprometer | Consiste en dar por bueno lo que tenemos en el Staging Area y pasarlo a un estado de "confirmado", identificándolo con un puntero numérico (hash del commit). Junto con sus antepasados conforman una instantánea o versión de tu proyecto. |
 | branch | rama | Es un `nombre` que actúa como puntero a una de los commit dentro de tu repositorio `.git` |
 | clone | clonar, copiar | Consiste en dubplicar un repositorio remoto completo  |
