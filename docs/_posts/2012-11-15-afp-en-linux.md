@@ -17,7 +17,7 @@ Para implementar dicho protocolo hay que usar el paquete [Netatalk](https://neta
 
 ### Instalación en Gentoo
 
-``` 
+```console
 # emerge -v netatalk
 :
 [ebuild N ] net-fs/netatalk-3.0.5-r1 USE="acl avahi cracklib pam samba shadow ssl tcpd utils -debug -kerberos -ldap -pgp -quota -static-libs" PYTHON_TARGETS="python2_7 -python2_6" 1,674 kB
@@ -27,7 +27,7 @@ A continuación preparo el fichero de configuración y activo sólo lo que neces
 
 En mi caso voy a compartir un file system HFS+ dentro de un disco FireWire  mediante sistema de ficheros AFP, todo "muy apple" :-).
 
-```
+```conf
 ; Global server settings
 [Global]
 vol preset = default_for_all_vol
@@ -49,7 +49,7 @@ valid users = luis
 path = /mnt/despensa
 valid users = luis
 host allow = 192.168.1.4
-````
+```
 
 ### Permisos del File System HFS+
 
@@ -57,13 +57,13 @@ En mi caso voy a exportar via AFP un filesystem HFS+ (que fue creado en tiempos 
 
 Voy a cambiar al owner:group de todos los ficheros de `/mnt/despensa/*`(partición HFS+) para que el propietario sea un usuario del "linux". Recordemos que este disco viene de un antiguo iMac donde el owner:group era 501:20, lo que hago es un find para cambiarlo:
 
-```
+```console
 # find . -uid 501 -exec chown luis:luis {} \;
-``` 
+```
 
 Ahora ya puedo arrancar el servicio
 
-``` 
+```console
 # /etc/init.d/netatalk start
 ```
 

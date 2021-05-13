@@ -16,13 +16,13 @@ Con MacOS no se incluye una opción en el **Finder**, para poder pre-visualizar 
 Ante la pregunta ¿cómo puedo hacer que "Quick Look" muestre vistas previas de archivos Markdown (.md)?, la respuesta es que existe un proyecto [qlmarkdown](https://github.com/toland/qlmarkdown) que puede instalarse con homebrew y que soluciona el problema. 
 
 
-```zsh
+```console
 brew install --cask qlmarkdown
 ```
 
 A partir de ese momento se establece la asociación entre los archivos `.md` y el visor 
 
-```zsh
+```console
 ➜  ~ qlmanage -m | grep "md"
   com.unknown.md -> /Users/luis/Library/QuickLook/QLMarkdown.qlgenerator (1.3.5)
 ➜  ~
