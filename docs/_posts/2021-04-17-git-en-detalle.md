@@ -46,8 +46,8 @@ Antes de entrar en harina, tenemos dos formas de trabajar, con el cliente (progr
 | index | índice | Es la **lista de todos los archivos que se están preparando** a los que **hacemos seguimiento y están en la staging área** (entre tu working copy y el futuro commit). |
 | working copy | directorio de trabajo | Es el directorio completo de tu proyecto, la parte no controlada por git, es decir, **todos los ficheros y directorios que están fuera del subdirectorio `.git`** |
 | commit | confirmar, comprometer | Consiste en dar por bueno lo que tenemos en el Staging Area y pasarlo a un estado de "confirmado", identificándolo con un puntero numérico (hash del commit). Junto con sus antepasados conforman una instantánea o versión de tu proyecto. |
-| branch | rama | Es un `nombre` que actúa como puntero a una de los commit dentro de tu repositorio `.git` |
-| clone | clonar, copiar | Consiste en dubplicar un repositorio remoto completo  |
+| branch | rama | Es un `nombre` que actúa como puntero a un `commit` concreto dentro de tu repositorio `.git` |
+| clone | clonar, copiar | Consiste en traerme a local un repositorio remoto completo, creando un duplicado del mismo para poder trabajar en él.  |
 | tree graph | grafo en árbol | Es una representación gráfica que refleja el árbol de conexiones entre los dos tipos de objetos que hay dentro de `.git`, los objetos fichero (blob) y los objetos directorio (tree). |
 | blob (binary large object) | fichero binario | Es como llama git a todos los ficheros que tiene bajo .git, y que resultan ser casi siempre binario, por eso los llama blob's |
 | tree | árbol | Es como llama git a todos los objetos directorio o contenedores que tiene bajo .git |
