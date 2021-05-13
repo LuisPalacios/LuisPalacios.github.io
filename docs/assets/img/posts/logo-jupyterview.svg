@@ -2,7 +2,17 @@
 <svg width="150px" height="127px" viewBox="0 0 150 127" version="1.1" xmlns="http://www.w3.org/2000/svg">
   <title>ssh</title>
   <desc>Created with Sketch.</desc>
-  <g id="Canvas" transform="matrix(2.155604, 0, 0, 2.155604, -3505.576416, -5279.348633)" style="">
+  <g transform="matrix(1, 0, 0, 1, 0.804427, -7.107639)">
+    <title>Finder</title>
+    <path style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 3px;" d="M 104.066 49.957 C 90.286 69.873 81.78 83.745 92.556 87.528 C 105.449 93.645 90.772 115.157 104.335 125.741"/>
+    <path style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 3px;" d="M 71.232 96.824 C 77.581 108.94 112.962 107.477 118.477 97.507"/>
+    <circle style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 3px;" cx="76.471" cy="70.101" r="5.188"/>
+    <circle style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 3px;" cx="115.139" cy="70.064" r="5.188"/>
+    <rect x="60.15" y="56.502" width="73.681" height="59.221" style="paint-order: fill; fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-width: 3px;" rx="3.248" ry="3.248"/>
+  </g>
+  <g id="Canvas" transform="matrix(1.220493, 0, 0, 1.220493, -1985.036011, -2987.440918)" style="">
+    <title>Jupyter</title>
+    <circle style="fill: rgb(255, 255, 255);" cx="1662.146" cy="2477.306" r="19.661"/>
     <g id="Group" style="mix-blend-mode:normal;">
       <g id="Group" style="mix-blend-mode:normal;">
         <g id="Group" style="mix-blend-mode:normal;">
