@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="150px" height="127px" viewBox="0 0 150 127" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <title>ssh</title>
+  <desc>Created with Sketch.</desc>
+  <g transform="matrix(1, 0, 0, 1, 0.804427, -7.107639)">
+    <title>Finder</title>
+    <path style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 3px;" d="M 104.066 49.957 C 90.286 69.873 81.78 83.745 92.556 87.528 C 105.449 93.645 90.772 115.157 104.335 125.741"/>
+    <path style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 3px;" d="M 71.232 96.824 C 77.581 108.94 112.962 107.477 118.477 97.507"/>
+    <circle style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 3px;" cx="76.471" cy="70.101" r="5.188"/>
+    <circle style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 3px;" cx="115.139" cy="70.064" r="5.188"/>
+    <rect x="60.15" y="56.502" width="73.681" height="59.221" style="paint-order: fill; fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-width: 3px;" rx="3.248" ry="3.248"/>
+  </g>
+  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" style="" transform="matrix(0.400272, 0, 0, 0.400272, 10.921246, 17.756653)">
+    <title>Markdown</title>
+    <rect x="0.678" y="-0.62" width="155.864" height="93.966" style="fill: rgb(224, 245, 255);"/>
+    <g id="logo-markdown" transform="translate(4.000000, 5.000000)">
+      <rect id="Rectangle" stroke="#000000" stroke-width="9.10050989" x="1.0903156" y="0" width="148.026401" height="87.0112286"/>
+      <path d="M19.7804441,68.5767212 L19.7804441,18.4345074 L34.7334439,18.4345074 L49.6853225,36.8690147 L64.6360798,18.4345074 L79.5890796,18.4345074 L79.5890796,68.5767212 L64.6360798,68.5767212 L64.6360798,39.8184917 L49.6853225,58.252999 L34.7334439,39.8184917 L34.7334439,68.5767212 L19.7804441,68.5767212 Z M113.231087,68.5767212 L90.8038295,44.2443659 L105.755708,44.2443659 L105.755708,18.4345074 L120.708708,18.4345074 L120.708708,44.2443659 L135.659465,44.2443659 L113.231087,68.5767212 Z" id="Shape" fill-rule="nonzero" fill="#000000"/>
+    </g>
+  </g>
+</svg>

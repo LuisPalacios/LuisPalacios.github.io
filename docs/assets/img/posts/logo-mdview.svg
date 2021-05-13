@@ -1,21 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg width="150px" height="127px" viewBox="0 0 150 127" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <title>ssh</title>
-  <desc>Created with Sketch.</desc>
-  <g transform="matrix(1, 0, 0, 1, 0.804427, -7.107639)">
-    <title>Finder</title>
-    <path style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 3px;" d="M 104.066 49.957 C 90.286 69.873 81.78 83.745 92.556 87.528 C 105.449 93.645 90.772 115.157 104.335 125.741"/>
-    <path style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 3px;" d="M 71.232 96.824 C 77.581 108.94 112.962 107.477 118.477 97.507"/>
-    <circle style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 3px;" cx="76.471" cy="70.101" r="5.188"/>
-    <circle style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 3px;" cx="115.139" cy="70.064" r="5.188"/>
-    <rect x="60.15" y="56.502" width="73.681" height="59.221" style="paint-order: fill; fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-width: 3px;" rx="3.248" ry="3.248"/>
-  </g>
-  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" style="" transform="matrix(0.400272, 0, 0, 0.400272, 10.921246, 17.756653)">
-    <title>Markdown</title>
-    <rect x="0.678" y="-0.62" width="155.864" height="93.966" style="fill: rgb(224, 245, 255);"/>
-    <g id="logo-markdown" transform="translate(4.000000, 5.000000)">
-      <rect id="Rectangle" stroke="#000000" stroke-width="9.10050989" x="1.0903156" y="0" width="148.026401" height="87.0112286"/>
-      <path d="M19.7804441,68.5767212 L19.7804441,18.4345074 L34.7334439,18.4345074 L49.6853225,36.8690147 L64.6360798,18.4345074 L79.5890796,18.4345074 L79.5890796,68.5767212 L64.6360798,68.5767212 L64.6360798,39.8184917 L49.6853225,58.252999 L34.7334439,39.8184917 L34.7334439,68.5767212 L19.7804441,68.5767212 Z M113.231087,68.5767212 L90.8038295,44.2443659 L105.755708,44.2443659 L105.755708,18.4345074 L120.708708,18.4345074 L120.708708,44.2443659 L135.659465,44.2443659 L113.231087,68.5767212 Z" id="Shape" fill-rule="nonzero" fill="#000000"/>
-    </g>
-  </g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?> <!-- Created with Vectornator for iOS (http://vectornator.io/) --><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="100%" xmlns:vectornator="http://vectornator.io" version="1.1" viewBox="0 0 150 150">
+<metadata>
+<vectornator:setting key="DimensionsVisible" value="0"/>
+<vectornator:setting key="PencilOnly" value="0"/>
+<vectornator:setting key="SnapToPoints" value="0"/>
+<vectornator:setting key="OutlineMode" value="0"/>
+<vectornator:setting key="CMYKEnabledKey" value="0"/>
+<vectornator:setting key="RulersVisible" value="1"/>
+<vectornator:setting key="SnapToEdges" value="0"/>
+<vectornator:setting key="GuidesVisible" value="1"/>
+<vectornator:setting key="DisplayWhiteBackground" value="0"/>
+<vectornator:setting key="doHistoryDisabled" value="0"/>
+<vectornator:setting key="SnapToGuides" value="1"/>
+<vectornator:setting key="TimeLapseWatermarkDisabled" value="0"/>
+<vectornator:setting key="Units" value="Points"/>
+<vectornator:setting key="DynamicGuides" value="1"/>
+<vectornator:setting key="IsolateActiveLayer" value="0"/>
+<vectornator:setting key="SnapToGrid" value="0"/>
+</metadata>
+<defs/>
+<g id="Page-1" vectornator:layerName="Page-1">
+<g opacity="1">
+<path stroke="#000000" stroke-width="2.4" d="M108.655+48.6928C94.1427+69.6675+85.1845+84.2769+96.5333+88.261C110.112+94.7032+94.6545+117.359+108.938+128.505" fill="none" stroke-linecap="butt" opacity="1" stroke-linejoin="miter"/>
+<path stroke="#000000" stroke-width="2.4" d="M74.0758+98.0512C80.7623+110.811+118.024+109.27+123.832+98.7705" fill="none" stroke-linecap="butt" opacity="1" stroke-linejoin="miter"/>
+<path stroke="#000000" stroke-width="2.4" d="M74.1295+69.9076C74.1295+66.89+76.5757+64.4438+79.5933+64.4438C82.6108+64.4438+85.057+66.89+85.057+69.9076C85.057+72.9252+82.6108+75.3714+79.5933+75.3714C76.5757+75.3714+74.1295+72.9252+74.1295+69.9076Z" fill="none" stroke-linecap="butt" opacity="1" stroke-linejoin="miter"/>
+<path stroke="#000000" stroke-width="2.4" d="M114.853+69.8686C114.853+66.8511+117.299+64.4048+120.317+64.4048C123.334+64.4048+125.781+66.8511+125.781+69.8686C125.781+72.8862+123.334+75.3324+120.317+75.3324C117.299+75.3324+114.853+72.8862+114.853+69.8686Z" fill="none" stroke-linecap="butt" opacity="1" stroke-linejoin="miter"/>
+<path stroke="#000000" stroke-width="2.4" d="M65.8253+55.5857L136.582+55.5857C138.471+55.5857+140.002+57.1172+140.002+59.0063L140.002+114.534C140.002+116.423+138.471+117.955+136.582+117.955L65.8253+117.955C63.9361+117.955+62.4046+116.423+62.4046+114.534L62.4046+59.0063C62.4046+57.1172+63.9361+55.5857+65.8253+55.5857Z" fill="none" stroke-linecap="round" opacity="1" stroke-linejoin="round"/>
+</g>
+<path d="M9.99752+22.0048L75.702+22.0048L75.702+22.0048L75.702+61.6162L75.702+61.6162L9.99752+61.6162L9.99752+61.6162L9.99752+22.0048L9.99752+22.0048Z" opacity="1" fill="#e0f5ff"/>
+<g opacity="1">
+<path stroke="#000000" stroke-width="3.64268" d="M11.8575+24.3739L74.2581+24.3739L74.2581+24.3739L74.2581+61.0535L74.2581+61.0535L11.8575+61.0535L11.8575+61.0535L11.8575+24.3739L11.8575+24.3739Z" fill="none" stroke-linecap="butt" opacity="1" stroke-linejoin="miter"/>
+<path d="M19.7364+53.2824L19.7364+32.1449L26.0398+32.1449L32.3428+39.916L38.6453+32.1449L44.9487+32.1449L44.9487+53.2824L38.6453+53.2824L38.6453+41.1594L32.3428+48.9304L26.0398+41.1594L26.0398+53.2824L19.7364+53.2824ZM59.1305+53.2824L49.6763+43.0251L55.9793+43.0251L55.9793+32.1449L62.2827+32.1449L62.2827+43.0251L68.5852+43.0251L59.1305+53.2824Z" opacity="1" fill="#000000"/>
+</g>
+</g>
 </svg>
