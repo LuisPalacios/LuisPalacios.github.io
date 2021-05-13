@@ -12,7 +12,7 @@ permalink: /about/
 
 ¡Hola!, me llamo Luis y soy un tipo variado, tecnología, arte, hacker, fotografía, negocio, padre.
 
-Siempre dudando entre la tecnología y el arte, descanso cuando conecto con estos hobbies, programando, investigando tecnologías, dibujando o revelando una foto digital.
+Siempre dudando entre la tecnología y el arte, descanso cuando conecto con mi hobbies, programando, investigando tecnologías o [dibujando](https://www.instagram.com/luis.palacios.derqui).
 
 Este blog está dedicado a guardar mis apuntes técnicos, casi siempre en el entorno de Linux o el desarrollo de software. Mi blog original empezó con [NibbleBlog](http://www.nibbleblog.com), depués [Wordpress](https://wordpress.org/) y ahora migrando a [jekyll](http://jekyllrb.com) hospedo en [GitHub Pages](https://pages.github.com). 
 
@@ -26,8 +26,8 @@ En este [apunte]({% post_url 2021-04-19-nuevo-blog %}) describo cómo está mont
 
 Hi, my name is Luis and I'm a varied guy, technology, art, hacker, photography, business, father.
 
-Always hesitating between technology and art, in the end mixing it, focused on my hobbies, when I program, research technologies or paint a picture or develop a digital photo.
+Always hesitating between technology and art, in the end mixing it. I rest when I devote myself to my hobbies, developing software, hacking technologies or [painting](https://www.instagram.com/luis.palacios.derqui).
 
-This blog (as you've probably noticed, **mainly in Spanish** 🤗) is dedicated to keep my technical notes, mostly in the Linux or software development environment. Started with [NibbleBlog](http://www.nibbleblog.com), then [Wordpress](https://wordpress.org/) and now using [jekyll](http://jekyllrb.com), hosted on [GitHub Pages](https://pages.github.com).
+This blog (only **in Spanish** 🤗) is dedicated to keep my technical notes, mostly in the Linux or software development environment. Started with [NibbleBlog](http://www.nibbleblog.com), then [Wordpress](https://wordpress.org/) and now using [jekyll](http://jekyllrb.com), hosted on [GitHub Pages](https://pages.github.com).
 
 In this [note]({% post_url 2021-04-19-nuevo-blog %}) I describe how I set up this static blog. Sources are in the [LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io) repository and you can access the blog via: [www.luispa.com](https://www.luispa.com)
