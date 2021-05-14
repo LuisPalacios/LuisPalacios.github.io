@@ -113,7 +113,7 @@ El programa te avisará de aquellos ficheros que contengan el set WARNING y adem
 
 {% include showImagen.html
     src="/assets/img/original/Captura-de-pantalla-2014-12-23-a-las-17.35.03.png"
-    caption="Captura de pantalla 2014-12-23 a las 17.35.03"
+    caption="Proyecto 'sanato' en GitHub"
     width="600px"
     %}
 
