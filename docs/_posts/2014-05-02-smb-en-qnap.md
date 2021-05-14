@@ -93,15 +93,15 @@ Esta es la razón principal por la que he decidido dejar de usar AFP y pasar a S
 
 Hay un par de cosas que he detectado como "curiosas". La primera es que hay que tener cuidado con no usar ciertos caracteres en los nombres de los ficheros y la segunda es que QNAP no soporta ciertas extensiones en atributos de ficheros (lo detecté al ver que GoodSync se queja al copiar algunos ficheros).
 
-1) Sobre la limitación de los caracteres especiales en los nombres de los ficheros o directorios recomiendo echarle un ojo a este artículo interesante sobre las limitaciones dependiendo del sistema operativo. En mi caso históricamente nunca he tenido problemas con AFP, aparentemente cualquier carácter funcionaba al escribir desde el Mac a la red. Ojo porque realmente no es así.
+1) Recomiendo echarle un ojo a este [artículo](http://en.wikipedia.org/wiki/Filename#Comparison_of_filename_limitations) sobre las limitaciones de los caracteres especiales dependiendo del sistema operativo. En mi caso históricamente nunca he tenido problemas con AFP, aparentemente cualquier carácter funcionaba al escribir desde el Mac a la red. Ojo porque realmente no es así.
 
-2) Sobre los atributos extendidos que algunos de mis ficheros en mi Mac tienen y que GoodSync intenta poner al escribirlos en al red... pues he visto que en algunos casos "no" puede y simplemente no puede poner dichos atributos extendidos a la copia de la red. No es grave, porque el fichero sí se copia perfecto y funciona, pero "algún" atributo no está viajando a mi file system en la red. Es algo que tengo que investigar más en detalle.
+2) Sobre los atributos extendidos, he visto que en algunos casos no puede poner dichos atributos extendidos a la copia de la red. No es grave, porque el fichero sí se copia perfecto y funciona, pero "algún" atributo no está viajando a mi file system en la red. Es algo que tengo que investigar más en detalle.
 
 <br/>
 
 ## Caracteres no recomendados
 
-He desarrollado una pequeña herramienta que te va a permitir detectar si el nombre de alguno de tus ficheros y/o directorios contiene caracteres "peculiares". ¿Para qué sirve? pues para estar avisado, dado que si intentas copiar dichos archivos (con ciertos caracteres raros) a tu NAS, puede que a ésta no le guste demasiado. Ah!, también sirve para "cambiar" los caracteres por otros sustitutivos (aunque ojo con esa opción que es muy intrusiva...)
+He desarrollado una pequeña herramienta que detecta si el nombre de alguno de tus ficheros y/o directorios contiene caracteres "peculiares". ¿Para qué sirve? pues para estar avisado, dado que si intentas copiar dichos archivos (con ciertos caracteres raros) a tu NAS, puede que a ésta no le guste demasiado. Ah!, también sirve para "cambiar" los caracteres por otros sustitutivos (aunque ojo con esa opción que es muy intrusiva...)
 
 El programa se ejecuta desde la línea de comandos (Terminal.app o iTerm) y puedes hacerlo en modo "informativo" o en modo "intrusivo = cambia los caracteres peculiares por otros más sanos". Además soporta dos conjuntos de caracteres que divido entre caracteres por los que voy a AVISARTE (WARNING SET) o caracteres que deberías CAMBIAR (MUST-SWAP). Los caracteres que van en cada conjunto son:
 
@@ -117,4 +117,6 @@ El programa te avisará de aquellos ficheros que contengan el set WARNING y adem
     width="600px"
     %}
 
-Ten cuidado porque hay aplicaciones o documentos que dentro de su bundle pueden tener este tipo de caracteres, ya que son perfectamente válidos. Te recomiendo usarlo solo para tus propios ficheros, fotos, videos, documentos que vas a guardar en tu servidor de ficheros QNAP. Recuerda que el programa tiene opción de sanear esos dos ":?" caracteres, por lo tanto **sí que renombra** el fichero o directorio (cambia esos dos caracteres por un guión '-'), así que úsala con cuidado.
+Ten cuidado porque hay aplicaciones o documentos que dentro de su bundle pueden tener este tipo de caracteres, ya que son perfectamente válidos. Te recomiendo usarlo solo para tus propios ficheros, fotos, videos, documentos que vas a guardar en tu servidor de ficheros QNAP. Recuerda que el programa tiene opción de sanear esos dos `:?` caracteres, por lo tanto **sí que renombra** el fichero o directorio (cambia esos dos caracteres por un guión '-'), así que úsala con cuidado.
+
+
