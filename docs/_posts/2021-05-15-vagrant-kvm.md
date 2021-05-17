@@ -128,7 +128,9 @@ luis@jupiter:~$ sudo apt-get install vagrant-libvirt
 
 **Creo mi primera VM**
 
-En un directorio distinto creo el fichero `Vagrantfile` y levanto mi primera VM, un simple `Vanilla Debian box`
+En un directorio distinto creo el fichero `Vagrantfile` y levanto mi primera VM, un simple `Vanilla Debian box`. 
+
+| Nota: Aquí tienes la lista de [boxes](https://app.vagrantup.com/boxes/search) (equipos) que puedes instalarte. Te recomiendo leer esta [guía](https://www.vagrantup.com/vagrant-cloud/boxes/catalog) |
 
 ```console
 luis@jupiter:~$ mkdir miproyecto
