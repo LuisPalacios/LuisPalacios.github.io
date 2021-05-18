@@ -171,3 +171,14 @@ vagrant@buster:~$
 ## Networking
 
 Por defecto, KVM configura un bridge virtual privado, para que todas las máquinas virtuales puedan comunicarse entre sí dentro del ordenador anfitrión (host), con su propia subred y DHCP para configurar la red del invitado (guest) y utiliza NAT para acceder a la red del host. Si trabajas solo desde el Desktop del Linux pues genial, pero si quieres acceder a estas máquinas virtuales desde fuera (desde tu LAN) entonces hay que hacer más cosas. Actualizaré este artículo más adelante. 
+
+
+<br/>
+
+## Caso de uso
+
+Cuento un ejemplo de un caso de uso de maquina virtual, se trata de una plataforma para desarrollo de software que necesito poder desplegar, usando `Vagrant`, tanto en mi portatil (con VirtualBox) como en un servidor Linux (Con KVM/Libvirt). Dejo a continuación un enlace al repositorio donde tienes toda la información: 
+
+* [https://github.com/LuisPalacios/devbox](https://github.com/LuisPalacios/devbox)
+
+
