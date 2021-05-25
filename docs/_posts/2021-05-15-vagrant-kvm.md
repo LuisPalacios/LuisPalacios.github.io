@@ -39,7 +39,7 @@ Otro método es usar el comando:
 
 ```console
 luis@jupiter:~$ lscpu | grep -i Virtualiz
-Virtualización:                      VT-x
+Virtualización: VT-x
 ```
 
 <br>
@@ -170,15 +170,78 @@ vagrant@buster:~$
 
 ## Networking
 
-Por defecto, KVM configura un bridge virtual privado, para que todas las máquinas virtuales puedan comunicarse entre sí dentro del ordenador anfitrión (host), con su propia subred y DHCP para configurar la red del invitado (guest) y utiliza NAT para acceder a la red del host. Si trabajas solo desde el Desktop del Linux pues genial, pero si quieres acceder a estas máquinas virtuales desde fuera (desde tu LAN) entonces hay que hacer más cosas. Actualizaré este artículo más adelante. 
+Por defecto las máquinas virtuales creadas con Vagrant crean una red privada y usan DHCP. Dependiendo del caso de uso suelo configurar Vagrant para *networking privado y con IP estática* o bien *networking público con IP estática*. ¿Porqué siempre IP estática?, pues para hacer más cómo el trabajo con la VM. 
 
+**Networking privado**
+
+Aquí tienes el trozo que suelo usar en el fichero `Vagrantfile`: 
+
+```config
+    # Networking Privado, con IP fija para que sea más fácil hacer SSH desde el Host.
+    config.vm.network :private_network,
+                      :ip => "10.20.30.40",
+                      :libvirt__domain_name => "coder.local"
+```
+
+**Networking público**
+
+Aquí el trozo para configurar en modo público en el `Vagrantfile`: 
+
+```console
+    # Networking Público, con IP fija 
+    config.vm.network "public_network",
+                      :dev => "br0",
+                      :mode => "bridge",
+                      :type => "bridge",
+                      :ip => "192.168.1.100"
+```
+
+Ojo!... si vas a usar la versión de IP pública tienes que prearar el Host (tu servidor linux). Es necesario configurar la interfaz Ethernet con un bridge y recomiendo hacer una configuración manual (no usar NetworkManager o similar)... Aquí tienes un ejemplo de lo que he hecho en un Linux Servidor con Debian 11: 
+
+* Configuración Servidor Debian 11
+
+```config
+root@jupiter:~# cat /etc/network/interfaces.d/br0
+#
+# Configuración IP estática en interfaz principal Ethernet.
+# Como voy a usar Vagrant con IP's públicas creo un Bridge
+#
+# Si se modifica este fichero: service networking restart
+#
+auto br0
+iface br0 inet static
+	address 192.168.1.200
+	broadcast 192.168.1.255
+	netmask 255.255.255.0
+	gateway 192.168.1.1
+
+	# Instalo también el paquete "resolvconf" para no tener que
+	# editar el fichero /etc/resolv.conf sino que se ponga
+	# la IP del DNS server desde aquí.
+	dns-nameservers 192.168.1.253
+
+	# Añado mi interfaz física al Bridge. Las interfaces que
+	# configure con Vagrant en modo pública con IP fija se añadirán
+	# serán añadidas a este bridge.
+	#
+	bridge_ports enp0s25
+	bridge_stp off       # Deshabilito Spanning Tree Protocol
+      bridge_waitport 0    # No espero antes de habilitar el puerto
+	bridge_fd 0          # No meter ningún retardo en el forwarding
+```
+
+* Instalo `resolvconf` y rearranco el servicio de networking
+
+```console
+# apt install resolvconf
+# service networking restart  (quizá necesites hacer reboot)
+```
 
 <br/>
 
 ## Caso de uso
 
-Cuento un ejemplo de un caso de uso de maquina virtual, se trata de una plataforma para desarrollo de software que necesito poder desplegar, usando `Vagrant`, tanto en mi portatil (con VirtualBox) como en un servidor Linux (Con KVM/Libvirt). Dejo a continuación un enlace al repositorio donde tienes toda la información: 
+Cuento un ejemplo de un caso de uso de maquina virtual, se trata de una plataforma para desarrollo de software que quier desplegar usando `Vagrant` en un servidor Linux (Con KVM/Libvirt). Dejo a continuación un enlace al repositorio donde tienes toda la información. 
 
 * [https://github.com/LuisPalacios/devbox](https://github.com/LuisPalacios/devbox)
-
 

@@ -33,7 +33,9 @@ MacOS trae versiones antiguas (Python 2 y 3) así que lo primero es instalarnos 
 
 4. Modificar la línea de comandos para anticipar el nuevo Python3 en el $PATH: `export PATH=/usr/local/bin:/usr/local/sbin:$PATH`.
 
-5. Para evitar ejecutar "python" con la versión antigua, en tu .zshrc: `alias python=/usr/local/bin/python3" >> ~/.zshrc`
+5. Para evitar ejecutar "python" o "pip" con la versión antigua, en tu .zshrc:
+   -  `alias python=/usr/local/bin/python3" >> ~/.zshrc`
+   -  `alias pip=/usr/local/bin/pip3" >> ~/.zshrc`
 
 6. Nunca borres el Python original que trae OSX.
 
