@@ -21,15 +21,7 @@ Si no sabes lo que es un pull request [lee este artículo](https://help.github.c
 <nbr>/
 ### Creación de un PR
 
-Si eres un colaborador externo, haz un fork del repositorio para que puedas contribuir con tu cuenta. Consulta la documentación de GitHub sobre [cómo hacer un fork](https://help.github.com/articles/fork-a-repo/) de un repositorio y que es un [Pull Request](https://docs.github.com/es/github/collaborating-with-issues-and-pull-requests/about-pull-requests).
+Nota: **Tengo pendiente terminar de documentar esta sección**
 
+Si eres un colaborador externo, haz un fork del repositorio para que puedas contribuir desde tu usuario. Consulta la documentación de GitHub sobre [cómo hacer un fork](https://help.github.com/articles/fork-a-repo/) de un repositorio y que es un [Pull Request](https://docs.github.com/es/github/collaborating-with-issues-and-pull-requests/about-pull-requests). Los Pull Requests deben hacerse a la rama donde están los **apuntes técnicos**: (`gh-pages`)
 
-Las Pull Requests deben hacerse a la rama donde están los **apuntes técnicos** (`gh-pages`)
-
-#### Actualizar tu copia a la última versión
-
-<br/>
-
-#### Iniciar Pull Request
-
-<br/>
