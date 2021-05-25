@@ -1,12 +1,12 @@
 ## Pautas para los pull-requests
 
-Una pequeña introducción: Si te gusta este repositorio y quieres contribuir lo primero que tendrás que hacer es crearte una copia en tu cuenta de GitHub, es decir, hacer un `fork` o bifurcación para poder trabajar con él en forma separada. Una vez que tengas modificaciones (commits) que quieres que incorpore a mi repositorio podrás hacer un `Pull Request`, es decir, una petición que me haces a mi, como propietario del repositorio original, para que incorpore los commits que están en tu fork. 
+Una pequeña introducción: Si te gusta este repositorio y quieres contribuir lo primero que tendrás que hacer es crearte una copia en tu cuenta de GitHub, es decir, hacer un `fork` o bifurcación para poder trabajar con él de forma separada. 
+
+Una vez que tengas modificaciones (commits) que quieres que incorpore a mi repositorio podrás hacer un `Pull Request`, es decir, una petición que me haces a mi, como propietario del repositorio original, para que incorpore los commits que están en tu fork. 
 
 Un Pull Request es una petición para que valide el código (o documento en este caso) que se quiere fusionar en la rama `gh-pages`, que es donde tengo el blog. Normalmente trabajarás en tu Fork en una rama específica (distinta a `gh-pages`) donde modificas el documento que sea. Además es recomendable tener creado previamente un `Issue` para dar seguimiento a la tarea en cuestión. 
 
-En este [artículo](https://help.github.com/articles/using-pull-requests) de GitHub tienes más información general sobre estos conceptos.
-
-A continuación describo una somera guía con los pasos necesarios para realizar un Pull Requests. 
+En este [artículo](https://help.github.com/articles/using-pull-requests) de GitHub tienes más información general sobre estos conceptos. A continuación describo una somera guía con los pasos necesarios. 
 
 <br/>
 
