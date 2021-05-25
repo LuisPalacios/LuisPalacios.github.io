@@ -14,6 +14,6 @@ You are now in the `gh-pages` branch, the sources of this [jekyll](http://jekyll
 
 ![Arquitectura del blog](/docs/assets/img/posts/nuevo-blog.jpg?raw=true "Arquitectura del blog")
 
-### Pautas para los pull-requests
+### Pull Requests
 
-Si te gusta este repositorio y quieres contribuir sigue las [pautas para hcer pull requests](PR.md)
+Si te gusta este repositorio y quieres contribuir sigue las [pautas para hacer pull requests](PR.md)

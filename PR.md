@@ -1,19 +1,3 @@
-## LuisPalacios.github.io
-
-Ahora estás en la branch `gh-pages`, donde están los fuentes de mi "blog" basado en [jekyll](http://jekyllrb.com) y hospedado en [GitHub Pages](https://pages.github.com). En [este apunte](https://www.luispa.com/herramientas/2021/04/19/nuevo-blog.html) he documentado cómo configuré todo para montar este blog.
-
----
-
-You are now in the `gh-pages` branch, the sources of this [jekyll](http://jekyllrb.com) based blog hosted on [GitHub Pages](https://pages.github.com). In [this note](https://www.luispa.com/herramientas/2021/04/19/nuevo-blog.html) I have documented how I configured everything to set up this blog.
-
----
-
-* [https://www.luispa.com](https://www.luispa.com) 
-
-<br/>
-
-![Arquitectura del blog](/docs/assets/img/posts/nuevo-blog.jpg?raw=true "Arquitectura del blog")
-
 ## Pautas para los pull-requests
 
 Una pequeña introducción: Si te gusta este repositorio y quieres contribuir lo primero que tendrás que hacer es crearte una copia en tu cuenta de GitHub, es decir, hacer un `fork` o bifurcación para poder trabajar con él en forma separada. Una vez que tengas modificaciones (commits) que quieres que incorpore a mi repositorio podrás hacer un `Pull Request`, es decir, una petición que me haces a mi, como propietario del repositorio original, para que incorpore los commits que están en tu fork. 
