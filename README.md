@@ -16,12 +16,22 @@ You are now in the `gh-pages` branch, the sources of this [jekyll](http://jekyll
 
 ## Pautas para los pull-requests
 
-Si no sabes lo que es un pull request [lee este artículo](https://help.github.com/articles/using-pull-requests)
+Una pequeña introducción: Si te gusta este repositorio y quieres contribuir lo primero que tendrás que hacer es crearte una copia en tu cuenta de GitHub, es decir, hacer un `fork` o bifurcación para poder trabajar con él en forma separada. Una vez que tengas modificaciones (commits) que quieres que incorpore a mi repositorio podrás hacer un `Pull Request`, es decir, una petición que me haces a mi, como propietario del repositorio original, para que incorpore los commits que están en tu fork. 
 
-<nbr>/
-### Creación de un PR
+Un Pull Request es una petición para que valide el código (o documento en este caso) que se quiere fusionar en la rama `gh-pages`, que es donde tengo el blog. Normalmente trabajarás en tu Fork en una rama específica (distinta a `gh-pages`) donde modificas el documento que sea. Además es recomendable tener creado previamente un `Issue` para dar seguimiento a la tarea en cuestión. 
 
-Nota: **Tengo pendiente terminar de documentar esta sección**
+En este [artículo](https://help.github.com/articles/using-pull-requests) de GitHub tienes más información general sobre estos conceptos.
 
-Si eres un colaborador externo, haz un fork del repositorio para que puedas contribuir desde tu usuario. Consulta la documentación de GitHub sobre [cómo hacer un fork](https://help.github.com/articles/fork-a-repo/) de un repositorio y que es un [Pull Request](https://docs.github.com/es/github/collaborating-with-issues-and-pull-requests/about-pull-requests). Los Pull Requests deben hacerse a la rama donde están los **apuntes técnicos**: (`gh-pages`)
+A continuación describo una somera guía con los pasos necesarios para realizar un Pull Requests. 
+
+<br/>
+
+Nota: **Esta guía esta incompleta, pendiente de terminar de documentar** 
+
+* **Creación de un Fork**: Solo necesitas hacerlo una vez, haz un [Fork](https://help.github.com/articles/fork-a-repo/) de este repositorio y clónatelo en tu ordenador de trabajo.
+* **Creación de un Issue**: Busca o crea un Issue donde se describa el trabajo alrededor del apunte técnico en el que vas a colaborar.
+* **Créate una rama dedicada a dicho issue** en tu propia copia clonada de tu propio repositorio (tu Fork). 
+* PDTE
+* PDTE
+* **Realiza un [Pull Request](https://docs.github.com/es/github/collaborating-with-issues-and-pull-requests/about-pull-requests)** a la rama donde están los **apuntes técnicos**: (`gh-pages`)
 
