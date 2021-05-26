@@ -1,5 +1,5 @@
 ---
-title: "iptables con nflog"
+title: "IPtables con nflog"
 date: "2014-08-31"
 categories: linux
 tags: iptables linux gentoo seguridad
@@ -7,7 +7,7 @@ excerpt_separator: <!--more-->
 ---
 
 
-![logo qnap](/assets/img/original/imagenes_web111.jpg){: width="150px" style="float:left; padding-right:25px" } 
+![logo qnap](/assets/img/posts/imagenes_web111.jpg){: width="150px" style="float:left; padding-right:25px" } 
 
 Cita Geek: "Registrar lo que pasa es de sabios...". En el pasado usaba `ULOG` para analizar qué paquetes eran descartados por `iptables`, pero como ha sido marcado como obsoleto he cambiado a `NFLOG`.
 
