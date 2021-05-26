@@ -1,5 +1,5 @@
 ---
-title: "Despertar para backup"
+title: "Despertar el Mac para backup"
 date: "2014-06-23"
 categories: apuntes
 tags: backup macosx
