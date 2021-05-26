@@ -7,7 +7,7 @@ excerpt_separator: <!--more-->
 ---
 
 
-![logo qnap](/assets/img/posts/backup.jpg){: width="150px" style="float:left; padding-right:25px" } 
+![logo backup](/assets/img/posts/backup.jpg){: width="150px" style="float:left; padding-right:25px" } 
 
 **Hacer copias de seguridad debería ser obligatorio**. Por desgracia la mayoría hemos aprendido a lo largo de los años que la frase va en serio. El problema es que hacerlo es un verdadero rollo, así que cualquier programa o método que lo automatice es bienvenido.
 
