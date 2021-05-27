@@ -1,84 +1,65 @@
 ---
-title: "WebGrab+Plus con TVHeadEnd en Linux"
+title: "WebGrab+Plus con Tvheadend"
 date: "2015-02-03"
-categories: apuntes
-tags: cisco hiperconvergencia ucs
+categories: tv
+tags: linux movistar tvheadend
 excerpt_separator: <!--more-->
 ---
 
-{% include showImagen.html
-    src="/assets/img/original/"
-    caption="Tvheadend"
-    width="600px"
-    %}
+![logo Tvheadend](/assets/img/posts/logo-tvhWebGrab+.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
 
-{% include showImagen.html
-    src="/assets/img/original/4571) . Aquí describo como configurar WebGrab para bajarme el EPG desde otras fuentes. El programa WebGrab+Plus genera un fichero guide.xml en formato XMLTV que hay que pasarle a TVHeadEnd y que este a su vez actualiza a los XBMC (en Raspberri Pi en mi caso"
-    caption="Tvheadend y Movistar TV (2016)"
-    width="600px"
-    %}
+[WebGrab+Plus](http://www.webgrabplus.com/) es un recolector de Guías EPG multi-sitio capaz de trabajar de manera incremental. Se baja la programación y genera un fichero en formato XMLTV que puedes usar para alimentar a tu media center o a Tvheadend. Primero probé a instalarlo en un MacOSX y ahora (este artículo) toca instalarlo en mi servidor Linux y por supuesto integrarlo con [Tvheadend](https://tvheadend.org/).
+
+<br clear="left"/>
+<!--more-->
+
+Este apunte está relacionado con este sobre [Tvheadend y Movistar TV (2016)]({% post_url 2016-02-28-tvh-movistar-2016 %}). Aquí describo como configurar WebGrab para bajarme el EPG desde otras fuentes. El programa WebGrab+Plus genera un fichero guide.xml en formato XMLTV que hay que pasarle a TVHeadEnd y que este a su vez actualiza a los XBMC (en Raspberri Pi en mi caso).
 
 {% include showImagen.html
     src="/assets/img/original/twr-xbmc-1024x498.png"
-    caption="twr-xbmc"
+    caption="Entorno con WebGrab+Plus"
     width="600px"
     %}
 
-**Importante**: He creado un contenedor Docker con Tvheadend ya listo para su uso, mira al final del artículo. El contenedor Docker con WebGrab+Plus es una asignatura que todavía tengo pendiente :-).
+| **Importante**: He creado un contenedor Docker con Tvheadend ya listo para su uso, mira al final del artículo. El contenedor Docker con WebGrab+Plus es una asignatura que todavía tengo pendiente :-). |
 
-[/dropshadowbox]
+<br/>
 
-## Instalación de WebGrab+Plus en Linux
+### Instalación de WebGrab+Plus en Linux
 
 Pasos para realizar la instalación completa de WebGrab+Plus en un equipo linux:
 
-{% include showImagen.html
-    src="/assets/img/original/"
-    caption="Mono"
-    width="600px"
-    %}
+* Instalar Mono en Linux. En Gentoo la última disponible es la versión 3.2.8. Seguramente te funcione con cualquiera superior a la 2.10. En el fichero `package.accept_keywords`
 
-\=dev-lang/mono-3.2.8   ~amd64
+```config
+=dev-lang/mono-3.2.8   ~amd64
+```
 
+* Ejecutar la instalación
+
+```console
 totobo ~ # emerge -v dev-lang/mono
+```
 
-{% include showImagen.html
-    src="/assets/img/original/WebGrabPlusV1.1.1LINUX.rar) (V1.1.1"
-    caption="WebGrab+Plus (Linux)"
-    width="600px"
-    %}
+- Descarga la última versión de WebGrab+Plus (Linux)
+- Extraer el `rar` en el $HOME de tu usuario y renombrar el directorio a "**temp1**"
+- Descargar parches, como documenta en su web. 
+- Extraer el ZIP en el $HOME de tu usuario y renombrar el directorio a "**temp2**"
+- Crear un directorio donde instalar la aplicación. En mi caso: `/home/luis/wg++`   
+- Copiar los directorios `REX` y `MDB` desde `temp1` a `/home/luis/wg++`
+- Copiar `WebGrab+Plus.config.xml` desde `temp1` a `/home/luis/wg++`    
+- Copiar `WebGrab+Plus.exe` desde `temp2` a `/home/luis/wg++`
+- Modifico la configuración, parto de la lista de canales EPG que puedo descargar y utilizar con WG++. En mi caso concreto voy a usar fuentes disponibles en España. Descargo por ejempo la del pais.com y al final el fichero de configuraicón de WG++ ( WebGrab++.config.xml) que estoy usando es el siguiente:
 
-Extraer el rar en el $HOME de tu usuario y renombrar el directorio a "**temp1**"
-
-{% include showImagen.html
-    src="/assets/img/original/54"
-    caption="fichero de upgrade patchexe_54.zip"
-    width="600px"
-    %}
-
-Extraer el ZIP en el $HOME de tu usuario y renombrar el directorio a "**temp2**"
-
-- Crear un directorio donde instalar la aplicación. En mi caso: /home/luis/wg++
-    
-- Copiar los directorios REX y MDB desde temp1 a /home/luis/wg++
-    
-- Copiar WebGrab+Plus.config.xml desde temp1 a /home/luis/wg++
-    
-- Copiar WebGrab+Plus.exe desde temp2 a /home/luis/wg++
-    
-{% include showImagen.html
-    src="/assets/img/original/epg-channels#stc_33). Descargo por ejempo la del pais.com y al final el fichero de configuraicón de WG++ (WebGrab++.config.xml"
-    caption="fuentes disponibles en España"
-    width="600px"
-    %}
-    
-
+```console
 totobo wg++ $ curl -Ok http://webgrabplus.com/sites/default/files/download/ini/info/zip/Spain_elpais.com.zip
 totobo wg++ $ unzip Spain_elpais.com.zip
 Archive: Spain_elpais.com.zip
 inflating: elpais.com.channels.xml
 inflating: elpais.com.ini
+```
 
+```xml
 <!--?xml version="1.0"?-->
 <settings>
 
@@ -249,110 +230,67 @@ inflating: elpais.com.ini
  <channel update="i" site="elpais.com" site_id="yomvi" xmltv_id="YOMVI">YOMVI</channel>
 
 </settings>
+```
 
 - Creo un pequeño script para arrancar y ejecutar el programa de forma más sencilla, recuerda darle permisos de ejecución con chmod 755 wg++.sh
 
+```bash
 #!/bin/bash
 #
-
 cd /home/luis/wg++
 mono Webgrab+Plus.exe "/home/luis/wg++"
+```
 
 A partir de ahora ya podrías ejecutar el programa y ver que todo funciona correctamente y se genera el fichero guide.xml. El siguiente paso será la integración con TVHeadEnd
 
-## Integración con TVHeadEnd
+<br/>
 
-{% include showImagen.html
-    src="/assets/img/original/376)), mejor dicho, vamos a pasarle todo el EPG para que él a su vez lo procese y pueda entregárselo a los "consumidores" (Raspberry's con XBMC"
-    caption="fuente"
-    width="600px"
-    %}
+### Integración con Tvheadend
 
-- Descargo el fichero "tv_grab" diseñado por WebGraph+Plus para interactuar con TVHeadEnd y lo salvo como /usr/bin/tv_grab_wg++
+Le paso todo el EPG para que él a su vez lo procese y pueda entregárselo a los "consumidores" (Raspberry's con XBMC".
 
+- Descargo el fichero "tv_grab" diseñado por WebGraph+Plus para interactuar con TVHeadEnd y lo salvo como `/usr/bin/tv_grab_wg++`
+
+```console
 # wget -O /usr/bin/tv_grab_wg++ http://www.webgrabplus.com/sites/default/files/tv_grab_wg.txt
 # chmod +x /usr/bin/tv_grab_wg++
-
-Dejo aquí una copia, notar que he cambiado la segunda línea del script para que deje el fichero guide.xml en mi directorio de trabajo: xmltv_file_location=/home/luis/wg++/guide.xml
-
-#!/bin/bash
-xmltv_file_location=/home/luis/wg++/guide.xml
-dflag=
-vflag=
-cflag=
-qflag=
-if (( $# < 1 )) then   cat "$xmltv_file_location"   exit 0 fi for arg do     delim=""     case "$arg" in     #translate --gnu-long-options to -g (short options)        --description) args="${args}-d ";;        --version) args="${args}-v ";;        --capabilities) args="${args}-c ";;        --quiet) args="${args}-q ";;        #pass through anything else        *) [[ "${arg:0:1}" == "-" ]] || delim="\""            args="${args}${delim}${arg}${delim} ";;     esac done #Reset the positional parameters to the short options eval set -- $args while getopts "dvcq" option do     case $option in         d)  dflag=1;;         v)  vflag=1;;         c)  cflag=1;;         q)  qflag=1;;         \?) printf "unknown option: -%s\n" $OPTARG             printf "Usage: %s: [--description] [--version] [--capabilities] \n" $(basename $0)             exit 2             ;;     esac >&2
-done
-
-if [ "$dflag" ]
-then
-   printf "$0 is a wrapper grabber around WebGrab+Plus\n"
-fi
-if [ "$vflag" ]
-then
-   printf "0.2\n"
-fi
-if [ "$cflag" ]
-then
-   printf "baseline\n"
-fi
-if [ "$qflag" ]
-then
-   printf ""
-fi
-
-exit 0
+```
 
 - Puedes ejecutar el grabber desde la línea de comandos para comprobar que funciona correctamente, verás que va mostrando en el propio terminal un montón de datos xmltv.
 
-# /usr/bin/tv_grab_wg++
-:
-
 - Pero lo más importante es configurar TVHeadEnd. Rearráncalo y entre medias pídele que busque este nuevo grabber. El programa tv_find_grabbers ejecuta una búsqueda de todos los ejecutables "/usr/bin/tv_grab*" que puedan ser "grabbers", aquellos que respondan de forma adecuada se habilitarán y podrán ser seleccionados en su configuración (vía Web).
 
+```console
 totobo ~ # /etc/init.d/tvheadend stop
 totobo ~ # tv_find_grabbers
 /usr/bin/tv_grab_wg++|/usr/bin/tv_grab_wg++ is a wrapper grabber around WebGrab+Plus
 totobo ~ # /etc/init.d/tvheadend start
+```
 
 - Configuro TVHeadEnd y selecciono el nuevo grabber "XMLTV: tv_grab_wg++".
 
 {% include showImagen.html
-    src="/assets/img/original/webgrabconfig.png"
-    caption="webgrabconfig"
+    src="/assets/img/posts/webgrabconfig.png"
+    caption="Configuración del grabber"
     width="600px"
     %}
 
 - Por último, programo en el cron que se ejecute el grabber diariamente, al hacerlo desde el directorio cron.daily será alrededor de las 3.00am.
 
+```bash
 #!/bin/bash
 #
 export PATH=/usr/sbin:/usr/bin:/sbin:/bin:.
 cd /home/luis/wg++
 ./wg++.sh > /dev/null 2>&1
 
-## Tvheadend en contenedor Docker
+```
+
+### Tvheadend en contenedor Docker
 
 He creado un contenedor Docker para ejecutar Tvheadend, échale un ojo, estos son los proyectos donde tienes todo lo necesario:
 
-{% include showImagen.html
-    src="/assets/img/original/"
-    caption="luispa/base-tvheadend"
-    width="600px"
-    %}
-{% include showImagen.html
-    src="/assets/img/original/base-tvheadend"
-    caption="GitHub base-tvheadend"
-    width="600px"
-    %}
-{% include showImagen.html
-    src="/assets/img/original/servicio-tvheadend"
-    caption="GitHub servicio-tvheadend"
-    width="600px"
-    %}
+* [Docker luispa/base-tvheadend](https://hub.docker.com/r/luispa/base-tvheadend/)
+* [GitHub base-tvheadend](https://github.com/LuisPalacios/base-tvheadend)
+* [GitHub servicio-tvheadend](https://github.com/LuisPalacios/servicio-tvheadend)
 
-{% include showImagen.html
-    src="/assets/img/original/?p=172"
-    caption="otros casos de uso de Docker"
-    width="600px"
-    %}
