@@ -1,37 +1,36 @@
 ---
-title: "Log de \"iptables\" con NFLOG vs ULOG"
+title: "IPtables con nflog"
 date: "2014-08-31"
-categories: gentoo
-tags: iptables linux seguridad
+categories: linux
+tags: iptables linux gentoo seguridad
 excerpt_separator: <!--more-->
 ---
 
-Esta frase bien podría ser una cita Geek: "Registrar lo que pasa es de sabios...", así que este apunte va de "log". En el pasado usaba ULOG para analizar qué paquetes eran descartados por IPTABLES, pero como ULOG ha sido marcado como obsoleto en el Kernel, he cambiado mi configuración a NFLOG.
 
-{% include showImagen.html
-    src="/assets/img/original/imagenes_web111.jpg"
-    caption="imagenes_web111"
-    width="600px"
-    %}
+![logo qnap](/assets/img/posts/imagenes_web111.jpg){: width="150px" style="float:left; padding-right:25px" } 
 
-## Configuración del kernel
+Cita Geek: "Registrar lo que pasa es de sabios...". En el pasado usaba `ULOG` para analizar qué paquetes eran descartados por `iptables`, pero como ha sido marcado como obsoleto he cambiado a `NFLOG`.
+
+<br clear="left"/>
+<!--more-->
+
+
+#### Configuración del kernel
 
 Configurar lo siguiente en el Kernel:
 
- 
+```config
 - CONFIG_NETFILTER_NETLINK_LOG=y # Log packets via NFNETLINK interface
 - CONFIG_NETFILTER_XT_TARGET_NFLOG=y # Enables NFLOG target (allows log through nfnetlink_log)
 - CONFIG_NETFILTER_XT_TARGET_LOG=y # Enables LOG target (allows log through syslog) OLD METHOD
 - CONFIG_IP_NF_TARGET_ULOG=n # "unset" OLD ULOG Target
- 
+```
 
- 
-
-### CONFIG_NETFILTER_NETLINK_LOG
+#### CONFIG_NETFILTER_NETLINK_LOG
 
 Activamos la opción de hacer Logging a través de NFNETLINK, es la opción nueva que permitirá trabajar con el target NFLOG
 
- 
+```kernel
 Symbol: NETFILTER_NETLINK_LOG [=y]
 Prompt: Netfilter LOG over NFNETLINK interface
  -> Networking support (NET [=y])
@@ -39,15 +38,13 @@ Prompt: Netfilter LOG over NFNETLINK interface
  -> Network packet filtering framework (Netfilter) (NETFILTER [=y])
  -> Core Netfilter Configuration
  {*} Netfilter LOG over NFNETLINK interface
- 
+```
 
- 
-
-### CONFIG_NETFILTER_XT_TARGET_NFLOG
+#### CONFIG_NETFILTER_XT_TARGET_NFLOG
 
 Target NFLOG, para que podamos usarlo con iptables.
 
- 
+```kernel
 Symbol: NETFILTER_XT_TARGET_NFLOG [=m] 
 Prompt: "NFLOG" target support
  -> Networking support (NET [=y]) 
@@ -56,15 +53,13 @@ Prompt: "NFLOG" target support
  -> Core Netfilter Configuration
  -> Netfilter Xtables support (required for ip_tables) (NETFILTER_XTABLES [=y]) 
  <*> "NFLOG" target support
- 
+```
 
- 
-
-### CONFIG_NETFILTER_XT_TARGET_LOG
+#### CONFIG_NETFILTER_XT_TARGET_LOG
 
 Se trata del método antiguo usado para hacer logging al SYSLOG. Ya no lo necesito, así que lo he desactivado:
 
- 
+```kernel
 Symbol: NETFILTER_XT_TARGET_LOG [=y]
 Prompt: LOG target support
  -> Networking support (NET [=y])
@@ -73,15 +68,13 @@ Prompt: LOG target support
  -> Core Netfilter Configuration 
  -> Netfilter Xtables support (required for ip_tables) (NETFILTER_XTABLES [=y])
  < > LOG target support
- 
+```
 
- 
-
-### CONFIG_NETFILTER_XT_TARGET_LOG (OBSOLETO)
+#### CONFIG_NETFILTER_XT_TARGET_LOG (OBSOLETO)
 
 Este es el antiguo ULOG, que al quedar obsoleto también he desactivado
 
- 
+```kernel
 Symbol: IP_NF_TARGET_ULOG [=n] 
 Prompt: ULOG target support (obsolete) 
  -> Networking support (NET [=y])
@@ -90,19 +83,19 @@ Prompt: ULOG target support (obsolete)
  -> IP: Netfilter Configuration
  -> IP tables support (required for filtering/masq/NAT) (IP_NF_IPTABLES [=y])
  < > ULOG target support (obsolete)
- 
+```
 
- 
-
-## Programa ULOG
+### Programa ULOG
 
 No olvides que tienes que instalar ULOG y configurarlo
 
- 
+```console
 emerge -v ulogd
+```
 
 Fichero de configuración:
 
+```config
 [global]
 logfile="/var/log/ulogd/ulogd.log"
 loglevel=5
@@ -147,15 +140,15 @@ file="/var/log/ulogd/iptables_dropblacklist.log"
 sync=1
 [emu4]
 file="/var/log/ulogd/iptables_dnat.log"
- 
+```
 
- 
+<br/>
 
-## Ejemplo de uso con IPTABLES
+### Ejemplo de uso con IPTABLES
 
 Sección de un script donde añado una regla para hacer drop de ciertas IP's de una supuesta blacklist:
 
- 
+```console
  :
  # Prefijos que bloqueo de forma especifica
  export LOGDROPBLACKLIST="yes" 
@@ -191,10 +184,13 @@ Sección de un script donde añado una regla para hacer drop de ciertas IP's de 
  
  :
  =====
-
+```
  
-
+<br/>
 ### Mostrar logging
 
- 
+Ejecutar el comando siguiente: 
+
+```console
 tail -f /var/log/ulog/iptables_drop.log
+```
