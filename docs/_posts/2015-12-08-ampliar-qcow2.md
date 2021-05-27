@@ -14,11 +14,9 @@ En este apunte describo cómo ampliar el disco duro de una máquina virtual (VM)
 <br clear="left"/>
 <!--more-->
 
-### Acciones en el Host KVM
+#### Estrategia
 
 Antes de empezar voy a averiguar o confirmar el tamaño actual de la VM, me conecto con ella y ejecuto el comando `df -h`, que en mi caso informa de una capacidad de 10GB. 
-
-
 
 - Averiguo el tamaño actual de la VM (cortafuegix)
 
@@ -36,12 +34,15 @@ Identificador del disco: DFA5DB69-5DA5-4AAB-8C4F-0266592CFB48
 
 {% include showImagen.html
     src="/assets/img/posts/qcow2-1.png"
-    caption="Proceso de redimensionamiento"
-    width="600px"
+    caption="Estrategia de redimensionamiento"
+    width="550px"
     %}
 
+<br/>
 
-La VM `cortafuegix` está alojada en el HOST `marte`, así que conecto con él y continúo desde ahí: 
+#### Acciones en el Host 
+
+La VM `cortafuegix` está alojada en el HOST `marte`, un equipo Linux con QEMU/KVM, así que conecto con él y continúo desde ahí: 
 
 - Paro la VM (cortafuegix)
 
@@ -64,7 +65,7 @@ Domain cortafuegix.parchis.org is being shutdown
 {% include showImagen.html
     src="/assets/img/posts/qcow2-2.png"
     caption="Estado de las VMs"
-    width="600px"
+    width="550px"
     %}
 
 
@@ -119,10 +120,15 @@ Arranco la VM de nuevo.
 ```bash
 luis@marte ~$ sudo virsh start cortafuegix.parchis.org
 Domain cortafuegix.parchis.org started
-
 ```
 
-Arrancamos la VM y utilizo `gparted` para ampliar la partición (**Paso 4** del gráfico). La máquina virtual arrancará sin problemas con una partición de 10GB dentro de un disco de 15GB por lo que podremos emplear esta herramienta para ampliarla. Si me aparece el siguiente mensaje pulso en `Corregir`
+<br/>
+
+#### Acciones en la máquina virtual
+
+Ahora que ya tengo la VM arrancada voy a conectar con ella (`cortafuegix`) y utilizar `gparted` para ampliar la partición (**Paso 4** del gráfico). La máquina virtual arrancará sin problemas con una partición de 10GB dentro de un disco de 15GB por lo que podremos emplear esta herramienta para ampliarla. 
+
+- Si me aparece el siguiente mensaje pulso en `Corregir`
 
 {% include showImagen.html
     src="/assets/img/posts/qcow2-3.png"
