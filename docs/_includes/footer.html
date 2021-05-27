@@ -7,29 +7,28 @@ Versión personalizada por Luis Palacios
 
     <!-- INICIO BACK TO TOP (Solo en Posts, no en navigator) -->
     {% if page.collection == 'posts' %}
-        <!-- Issue: Botón "volver al principio" #3
-             https://github.com/LuisPalacios/LuisPalacios.github.io/issues/3 -->    
-        <script src="/assets/js/vanilla-back-to-top.min.js"></script>
-            <script>addBackToTop({
+    <!-- Issue: Botón "volver al principio" #3
+             https://github.com/LuisPalacios/LuisPalacios.github.io/issues/3 -->
+    <script src="/assets/js/vanilla-back-to-top.min.js"></script>
+    <script>
+        addBackToTop({
             diameter: 56,
             backgroundColor: 'rgb(255, 82, 82)',
             textColor: '#fff'
-            })
-        </script>
+        })
+    </script>
     {% endif %}
     <!-- FIN BACK TO TOP -->
-  
+
     <!-- Copia del original con pequeñas modificaciones -->
     <data class="u-url" href="/"></data>
-  
+
     <div class="wrapper">
-        
+
         <h2 class="footer-heading">
             <a href="{{ site.url }}">Ir a la portada</a>
             <br/>
-            <p style="font-size:0.8em; font-style:italic; color: grey; text-align:justify;">Este blog 
-               está dedicado a documentar apuntes técnicos sobre entornos linux o desarrollo de software.
-               Todavía me falta migrar 54 apuntes antiguos desde mi blog basado en wordpress.</p>
+            <p style="font-size:0.8em; font-style:italic; color: grey; text-align:justify;">Este blog está dedicado a documentar apuntes técnicos sobre entornos linux o desarrollo de software. Todavía estoy en el proceso de migrar 52 apuntes antiguos.</p>
         </h2>
 
         <div class="footer-col-wrapper">
@@ -45,33 +44,33 @@ Versión personalizada por Luis Palacios
 
                 <!-- Script apuntando al script JS que hará la búsqueda -->
                 <script src="/assets/js/simple-jekyll-search.js" type="text/javascript"></script>
-            
+
                 <!-- Configuración -->
                 <script>
                     SimpleJekyllSearch({
-                    searchInput: document.getElementById('search-input'),
-                    resultsContainer: document.getElementById('results-container'),
-                    json: '/search.json'
+                        searchInput: document.getElementById('search-input'),
+                        resultsContainer: document.getElementById('results-container'),
+                        json: '/search.json'
                     })
                 </script>
                 <!-- FIN BÚSQUEDAS -->
 
             </div>
-    
-    
+
+
             <div class="footer-col footer-col-2">
                 <ul class="contact-list">
                     <a href="https://github.com/LuisPalacios/LuisPalacios.github.io">Repositorio GitHub</a>
                 </ul>
             </div>
-    
+
             <div class="footer-col footer-col-3">
                 <ul class="social-media-list" style="text-align:right;">
                     <li>
                         <a href="https://www.instagram.com/luis.palacios.derqui">
                             <svg class="svg-icon">
                                 <use xlink:href="/assets/minima-social-icons.svg#instagram"></use>
-                            </svg> 
+                            </svg>
                             <span class="username">Luis.Palacios.Derqui</span>
                         </a>
                     </li>
@@ -79,7 +78,7 @@ Versión personalizada por Luis Palacios
                         <a href="https://github.com/LuisPalacios">
                             <svg class="svg-icon">
                                 <use xlink:href="/assets/minima-social-icons.svg#github"></use>
-                            </svg> 
+                            </svg>
                             <span class="username">LuisPalacios</span>
                         </a>
                     </li>
@@ -87,7 +86,7 @@ Versión personalizada por Luis Palacios
                         <a href="https://www.twitter.com/LuisPalacios">
                             <svg class="svg-icon">
                                     <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
-                            </svg> 
+                            </svg>
                             <span class="username">@LuisPalacios</span>
                         </a>
                     </li>
@@ -97,17 +96,11 @@ Versión personalizada por Luis Palacios
 
         <!-- INICIO COMENTARIOS (Solo en Posts, no en navigator) -->
         {% if page.collection == 'posts' %}
-            <script src="https://utteranc.es/client.js"
-                repo="LuisPalacios/LuisPalacios.github.io"
-                issue-term="pathname"
-                label="comentario"
-                theme="github-light"
-                crossorigin="anonymous"
-                async>
-            </script>
+        <script src="https://utteranc.es/client.js" repo="LuisPalacios/LuisPalacios.github.io" issue-term="pathname" label="comentario" theme="github-light" crossorigin="anonymous" async>
+        </script>
         {% endif %}
         <!-- FIN COMENTARIOS -->
-               
+
     </div>
-  
-  </footer>
+
+</footer>
