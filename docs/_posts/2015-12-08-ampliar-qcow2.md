@@ -20,10 +20,9 @@ Antes de empezar voy a averiguar o confirmar el tamaño actual de la VM, me cone
 
 - Averiguo el tamaño actual de la VM (cortafuegix)
 
-```bash
+```console
 luis @ idefix ➜  ~  ssh -Y -a luis@cortafuegix.parchis.org
 luis@cortafuegix ~ $ sudo fdisk --list
-luis@cortafuegix ~ # fdisk --list
 Disco /dev/vda: 10 GiB, 10737418240 bytes, 20971520 sectores
 Unidades: sectores de 1 * 512 = 512 bytes
 Tamaño de sector (lógico/físico): 512 bytes / 512 bytes
@@ -46,7 +45,7 @@ La VM `cortafuegix` está alojada en el HOST `marte`, un equipo Linux con QEMU/K
 
 - Paro la VM (cortafuegix)
 
-```bash
+```console
 luis@marte:~$ sudo virsh list
  Id   Name                      State
 -----------------------------------------
@@ -71,7 +70,7 @@ Domain cortafuegix.parchis.org is being shutdown
 
 - Hago propietario del fichero a mi usuario para trabajar más cómodo.
 
-```bash
+```console
 luis@tierra:~$ ls -al cortafuegix.parchis.org.*
 -rw-r--r-- 1 libvirt-qemu kvm  21448556544 may 27 09:22 cortafuegix.parchis.org.qcow2
 -rw-r--r-- 1 luis         luis        4975 abr  9  2017 cortafuegix.parchis.org.xml
@@ -81,43 +80,43 @@ luis@marte ~$ sudo chown luis:luis /home/luis/cortafuegix.parchis.org.qcow2
     
 - Convierto el de `QCOW2` a `RAW` (tarda ~ 1min 15seg) - **Paso 1** en el gráfico.
     
-```bash
+```console
 luis@marte:~$ qemu-img convert cortafuegix.parchis.org.qcow2 -O raw cortafuegix.parchis.org.raw
 ```
 
 - Creo un archivo RAW de 5GB (tarda ~ 20seg)
     
-```bash
+```console
 luis@marte ~$ dd if=/dev/zero of=extra5GBzeros.raw bs=1024k count=5120
 ```
     
 - Con ambos RAWs creo un RAW final de 15GB. **Paso 2** en el gráfico.
     
-```bash
+```console
 luis@marte ~$ cat cortafuegix.parchis.org.raw extra5GBzeros.raw > cortafuegix.parchis.org.15GB.raw
 ```
 
 - Hago un **backup del original QCOW2**
   
-```bash
+```console
 luis@marte ~ $ mv cortafuegix.parchis.org.qcow2 cortafuegix.parchis.org.BACKUP.qcow2
 ```
     
 - Convierto el RAW de 15GB a formato QCOW2 (tarda ~1min 34seg). **Paso 3** del gráfico.
 
-```bash
+```console
 luis@marte ~$ qemu-img convert cortafuegix.parchis.org.25GB.raw -O qcow2 cortafuegix.parchis.org.qcow2
 ```
 
 - Vuelvo a hacer propietario a qemu.
 
-```bash
+```console
 luis@marte ~$ sudo chown libvirt-qemu:kvm /home/luis/cortafuegix.parchis.org.qcow2
 ```
 
 Arranco la VM de nuevo. 
 
-```bash
+```console
 luis@marte ~$ sudo virsh start cortafuegix.parchis.org
 Domain cortafuegix.parchis.org started
 ```
@@ -137,7 +136,7 @@ Ahora que ya tengo la VM arrancada voy a conectar con ella (`cortafuegix`) y uti
     %}
 
 
-```bash
+```console
 luis @ idefix ➜  ~  ssh -Y -a luis@cortafuegix.parchis.org
 +------------------+
 | Bienvenido Luis! |
@@ -155,7 +154,7 @@ Selecciono el área existente, botón derecho, Redimensionar y extiendo el tama�
 
 Aplico los cambios, salgo de `gparted` y rearranco `cortafuegix`. Cuando conecte con él podré comprobar el nuevo tamaño.
 
-```bash
+```console
 cortafuegix ~ # fdisk --list
 Disco /dev/vda: 15 GiB, 5368709120 bytes, 10485760 sectores
 ```
