@@ -63,7 +63,7 @@ luis@jupiter:~$ sudo apt install qemu qemu-kvm libvirt-clients libvirt-daemon-sy
 
 **Arranco el servicio**
 
-Once KVM is installed, start libvertd service (If it is not started already):
+Una vez instalado KVM arranco el servicio libvirtd:
 
 ```console
 $ sudo systemctl enable libvirtd
@@ -88,14 +88,8 @@ $ systemctl status libvirtd
       width="500px"
       %}
 
-```console
-luis@jupiter:~$ virsh list --all
- Id   Nombre   Estado
------------------------
-```
+**Instalo Virt-Manager** y lo arranco. Aunque es el software indicado para gestionar VMs, en este apunte lo uso como monitor, me va a venir bien para ver cómo Vagrant las crea, arranca, para y destruye. 
 
-
-**Instalo Virt-Manager**
 
 ```console
 luis@jupiter:~$ sudo apt install virt-manager
@@ -109,7 +103,7 @@ luis@jupiter:~$ sudo apt install virt-manager
 
 <br/>
 
-| ¡Ya tenemos una instalación operativa donde podemos empezar a crear y manipular máquinas virtuales! |
+| ¡Ya tenemos una instalación operativa donde podemos empezar a crear y manipular máquinas virtuales, **con Vagrant**! |
 
 <br/>
 
@@ -128,7 +122,7 @@ luis@jupiter:~$ sudo apt-get install vagrant-libvirt
 
 **Creo mi primera VM**
 
-En un directorio distinto creo el fichero `Vagrantfile` y levanto mi primera VM, un simple `Vanilla Debian box`. 
+Siempre en un directorio dedicado creo el fichero `Vagrantfile` y levanto mi primera VM, en este ejemplo un simple `Vanilla Debian box`. 
 
 | Nota: Aquí tienes la lista de [boxes](https://app.vagrantup.com/boxes/search) (equipos) que puedes instalarte. Te recomiendo leer esta [guía](https://www.vagrantup.com/vagrant-cloud/boxes/catalog) |
 
@@ -170,11 +164,9 @@ vagrant@buster:~$
 
 ## Networking
 
-Por defecto las máquinas virtuales creadas con Vagrant crean una red privada y usan DHCP. Dependiendo del caso de uso suelo configurar Vagrant para *networking privado y con IP estática* o bien *networking público con IP estática*. ¿Porqué siempre IP estática?, pues para hacer más cómo el trabajo con la VM. 
+Por defecto las máquinas virtuales con Vagrant se crean una red privada y usan DHCP. Yo prefiero usar IP fija para mi laboratorio, pero eso va por gustos y caso de uso. Estas son las configuraciones que suelo manejar: 
 
-**Networking privado**
-
-Aquí tienes el trozo que suelo usar en el fichero `Vagrantfile`: 
+**Networking privado + IP fija**, fichero `Vagrantfile`: 
 
 ```config
     # Networking Privado, con IP fija para que sea más fácil hacer SSH desde el Host.
@@ -183,9 +175,7 @@ Aquí tienes el trozo que suelo usar en el fichero `Vagrantfile`:
                       :libvirt__domain_name => "coder.local"
 ```
 
-**Networking público**
-
-Aquí el trozo para configurar en modo público en el `Vagrantfile`: 
+**Networking público + IP fija**, fichero `Vagrantfile`: 
 
 ```console
     # Networking Público, con IP fija 
@@ -196,17 +186,15 @@ Aquí el trozo para configurar en modo público en el `Vagrantfile`:
                       :ip => "192.168.1.100"
 ```
 
-Ojo!... si vas a usar la versión de IP pública tienes que prearar el Host (tu servidor linux). Es necesario configurar la interfaz Ethernet con un bridge y recomiendo hacer una configuración manual (no usar NetworkManager o similar)... Aquí tienes un ejemplo de lo que he hecho en un Linux Servidor con Debian 11: 
-
-* Configuración Servidor Debian 11
+Ojo!... si vas a usar la versión de IP pública tienes que prearar el Host (tu servidor linux). Es necesario configurar la interfaz Ethernet con un bridge y recomiendo hacer una configuración manual (no usar NetworkManager o similar). Aquí tienes un ejemplo de lo que he hecho en Linux con Debian 11: 
 
 ```config
 root@jupiter:~# cat /etc/network/interfaces.d/br0
 #
 # Configuración IP estática en interfaz principal Ethernet.
-# Como voy a usar Vagrant con IP's públicas creo un Bridge
+# Uso Vagrant con IP's públicas, necesito crear un Bridge
 #
-# Si se modifica este fichero: service networking restart
+# Tras modificar este fichero: service networking restart
 #
 auto br0
 iface br0 inet static
@@ -215,7 +203,7 @@ iface br0 inet static
 	netmask 255.255.255.0
 	gateway 192.168.1.1
 
-	# Instalo también el paquete "resolvconf" para no tener que
+	# Instalé también el paquete "resolvconf" para no tener que
 	# editar el fichero /etc/resolv.conf sino que se ponga
 	# la IP del DNS server desde aquí.
 	dns-nameservers 192.168.1.253
@@ -241,7 +229,7 @@ iface br0 inet static
 
 ## Caso de uso
 
-Cuento un ejemplo de un caso de uso de maquina virtual, se trata de una plataforma para desarrollo de software que quier desplegar usando `Vagrant` en un servidor Linux (Con KVM/Libvirt). Dejo a continuación un enlace al repositorio donde tienes toda la información. 
+He documentado en otro apunte un ejemplo de un caso de uso de maquina virtual, se trata de una plataforma para desarrollo de software que despliego usando `Vagrant` en un servidor Linux (con KVM/Libvirt). Aquí tienes el repositorio con toda la información. 
 
 * [https://github.com/LuisPalacios/devbox](https://github.com/LuisPalacios/devbox)
 
