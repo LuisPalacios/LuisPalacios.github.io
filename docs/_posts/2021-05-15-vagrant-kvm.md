@@ -188,7 +188,7 @@ Por defecto las máquinas virtuales con Vagrant se crean una red privada y usan 
 
 Ojo!... si vas a usar la versión de IP pública tienes que prearar el Host (tu servidor linux). Es necesario configurar la interfaz Ethernet con un bridge y recomiendo hacer una configuración manual (no usar NetworkManager o similar). Aquí tienes un ejemplo de lo que he hecho en Linux con Debian 11: 
 
-```config
+```console
 root@jupiter:~# cat /etc/network/interfaces.d/br0
 #
 # Configuración IP estática en interfaz principal Ethernet.
