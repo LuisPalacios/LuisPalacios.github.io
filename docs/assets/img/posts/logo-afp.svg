@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg width="150px" height="127px" viewBox="0 0 150 127" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <title>ssh</title>
-  <desc>Created with Sketch.</desc>
-  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="matrix(0.889169, 0, 0, 0.889169, 10.263178, 31.072491)" style="">
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="15" height="15"/>
+  </defs>
+  <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: rgb(84, 84, 84); pointer-events: none; visibility: hidden;" x="15" y="15" bx:origin="0.5 0.5"/>
+  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="matrix(0.811758, 0, 0, 0.811758, 15.041721, 48.502625)" style="">
     <g id="logo-AFP">
       <path d="M45.8532427,62.6549686 C42.3122385,66.0914749 38.4053347,65.5556485 34.6812238,63.9356172 C30.7220711,62.282636 27.1024582,62.1779812 22.9212866,63.9356172 C17.7141213,66.1829498 14.9505753,65.5296025 11.8145397,62.6549686 C-5.89079498,44.4269874 -3.27740586,16.6600418 16.8451883,15.614749 C21.7256799,15.8761506 25.1425732,18.313023 28.0172071,18.5155858 C32.2901674,17.6466527 36.3800209,15.1573745 40.953295,15.4840481 C46.4479079,15.9283996 50.5573745,18.0974372 53.3013075,21.9979079 C41.9985879,28.7924686 44.6774059,43.6885983 55.0589435,47.8699268 C52.9812238,53.3253138 50.3157427,58.715272 45.8468096,62.7006276 L45.8532427,62.6549686 Z M27.6252615,15.4187762 C27.096182,7.31736402 33.6621339,0.65334728 41.2146967,0 C42.2533996,9.34283473 32.7213389,16.3333682 27.6252615,15.4187762 Z" id="Shape" fill="#000000" fill-rule="nonzero"/>
       <g id="AFP">

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg width="144px" height="159px" viewBox="0 0 144 159" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <title>logo-nibbleblog</title>
-  <desc>Created with Sketch.</desc>
-  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0.94117647" style="" transform="matrix(0.774124, 0, 0, 0.774124, 16.246645, 17.943937)">
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="15" height="15"/>
+  </defs>
+  <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: rgb(84, 84, 84); pointer-events: none; visibility: hidden;" x="15" y="15" bx:origin="0.5 0.5"/>
+  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0.94117647" style="" transform="matrix(0.759311, 0, 0, 0.759311, 20.384762, 14.679086)">
     <g id="logo-nibbleblog" transform="translate(-3.000000, -2.000000)" fill="#47474F">
       <g id="g61" transform="translate(2.215581, 1.569565)">
         <path d="M116.313636,136.027301 C115.138015,140.754539 114.460332,143.121788 112.76734,147.943426 C116.019731,148.851114 119.753057,148.427526 122.563375,147.086569 C126.107241,145.230045 126.073236,143.039491 124.598851,140.51733 C122.874283,137.937076 119.585458,135.865127 116.313636,136.027301 Z" id="path63"/>

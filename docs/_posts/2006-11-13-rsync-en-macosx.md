@@ -7,7 +7,7 @@ excerpt_separator: <!--more-->
 ---
 
 
-![logo rsync](/assets/img/posts/logo-rsync.svg){: width="150px" height="114px" style="float:left; padding-right:25px" } 
+![logo rsync](/assets/img/posts/logo-rsync.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
 
 El programa rsync viene incluido con Mac OSX pero si necesitas una versión más moderna y que soporte más funcionalidades, como por ejemplo preservar metadatos, soporte de caracteres extendidos o caracteres multiplataforma entonces vas a tener que instalarte una de las últimas versiones.
 

@@ -6,16 +6,14 @@ tags: firewire gentoo linux
 excerpt_separator: <!--more-->
 ---
 
-![firewire](/assets/img/posts/logo-firewire.svg){: width="150px" style="float:left; padding-right:25px" } 
+![firewire](/assets/img/posts/logo-firewire.svg){: width="150px" height="150px"  style="float:left; padding-right:25px" } 
 
 IEEE 1394 (Firewire) es un tipo de conexión para diversas plataformas, destinado a la entrada y salida de datos en serie a gran velocidad. Suele utilizarse para la interconexión de dispositivos digitales como cámaras digitales y videocámaras. Apple lo implementó para interconectar discos duros. 
-
-En este apunte describo cómo configura un disco FireWire para conectarlo a mi Mac Mini que está ejecutando `Gentoo Linux`.
 
 <br clear="left"/>
 <!--more-->
 
-Primero hay que preparar el Kernel de Linux para que de soporte al driver de FireWire.
+En este apunte describo cómo configura un disco FireWire para conectarlo a mi Mac Mini que está ejecutando `Gentoo Linux`. Primero hay que preparar el Kernel de Linux para que de soporte al driver de FireWire.
 
 ```
  Device Drivers --->

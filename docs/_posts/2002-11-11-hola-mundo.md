@@ -6,7 +6,7 @@ tags: blog linux
 excerpt_separator: <!--more-->
 ---
 
-![nimble image](/assets/img/posts/logo-nibbleblog.svg){: width="150px" height="163px" style="float:left; padding-right:25px" } 
+![nimble image](/assets/img/posts/logo-nibbleblog.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
 
 En el 2002 me dió por empezar a compartir documentación técnica y este es el primer apunte que hice, explica cómo trabajar con un software llamado Nibbleblog. Poco después evolucioné a wordpress y hoy en día (2021) he cambiado a "Jekyll + GitHub Pages", dejo este primer `apunte` como referencia. 
 

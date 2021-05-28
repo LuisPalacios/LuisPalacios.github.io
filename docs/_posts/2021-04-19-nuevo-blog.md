@@ -6,7 +6,7 @@ tags: blog linux github jekyll
 excerpt_separator: <!--more-->
 ---
 
-![Logo Jekyll](/assets/img/posts/logo-jekyll.svg){: width="150px" height="61px" style="float:left; padding-right:25px" } 
+![Logo Jekyll](/assets/img/posts/logo-jekyll.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
 
 En este apunte describo cómo he montado este blog estático "fabricado" con [jekyll](http://jekyllrb.com) y hospedado en las [GitHub Pages](https://pages.github.com). Los fuentes se encuentran a su vez en el repositorio [LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io). El sitio ha quedado finalmente configurado en mi dominio: [https://www.luispa.com](https://www.luispa.com)
 

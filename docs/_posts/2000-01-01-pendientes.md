@@ -18,5 +18,5 @@ Apuntes que tengo pendientes de migrar:
 * Equipo Linux como router de Movistar - Artículo wp 266
 * Tvheadend y Movistar TV (2016) - Articulo wp 4571
 * Media Center casero - Artículo wp 1025
-* Raspberry Pi OpenElec con XBMC - Artículo wp 1284
+* Raspberry Pi OpenElec con XBMC - Artículo wp 1284.
 * Artículo a Servidor Linux casero - Artículo wp 725

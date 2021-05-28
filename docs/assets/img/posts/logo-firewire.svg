@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg width="150px" height="127px" viewBox="0 0 150 127" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
   <defs>
+    <bx:grid x="0" y="0" width="15" height="15"/>
     <filter color-interpolation-filters="sRGB" id="filter3997">
       <feFlood result="flood" flood-color="rgb(0,0,0)" flood-opacity="0.5" id="feFlood3999"/>
       <feComposite in2="SourceGraphic" operator="in" in="flood" result="composite1" id="feComposite4001"/>
@@ -30,16 +31,17 @@
       <feComposite in2="offset" operator="over" in="SourceGraphic" result="composite2" id="feComposite3887"/>
     </filter>
   </defs>
-  <title>ssh</title>
-  <desc>Created with Sketch.</desc>
-  <g transform="matrix(0.423345, -0.432597, 0.432597, 0.423345, -71.490707, 0.830171)" id="g3804-2" style="fill: rgb(255, 194, 0); fill-opacity: 1; stroke: none; filter: url(#filter3997);">
-    <rect width="48.09322" height="17.055084" x="74.894066" y="142.90254" id="rect3766-9" style="fill:#ffc200;fill-opacity:1;stroke:none"/>
-    <rect width="48.09322" height="17.055084" x="74.893997" y="174.00592" id="rect3766-7-7" style="fill:#ffc200;fill-opacity:1;stroke:none"/>
-  </g>
-  <path d="M 74.158 38.256 C 62.172 38.256 52.332 47.944 52.332 59.743 C 52.332 71.543 62.172 81.211 74.158 81.211 C 86.144 81.211 95.965 71.543 95.965 59.743 C 95.965 47.944 86.144 38.256 74.158 38.256 Z M 74.158 48.758 C 80.379 48.758 85.315 53.618 85.315 59.743 C 85.315 65.868 80.379 70.708 74.158 70.708 C 67.936 70.708 63 65.868 63 59.743 C 63 53.618 67.936 48.758 74.158 48.758 Z" id="path2989" style="font: medium Sans; text-indent: 0px; text-align: start; text-decoration: none; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; writing-mode: lr-tb; text-anchor: start; baseline-shift: baseline; color: rgb(0, 0, 0); fill: rgb(255, 194, 0); fill-opacity: 1; stroke: none; stroke-width: 17.6819; marker: none; visibility: visible; display: inline; overflow: visible; filter: url(#filter3865);"/>
-  <rect width="26.109" height="31.959" x="69.211" y="-64.673" transform="matrix(0.704768, 0.709438, -0.709438, 0.704768, 13.92164, 3.328836)" id="rect3764" style="fill: rgb(255, 194, 0); fill-opacity: 1; stroke: none; filter: url(#filter4391);"/>
-  <g id="g3804" style="fill: rgb(255, 194, 0); fill-opacity: 1; stroke: none; filter: url(#filter3877);" transform="matrix(0.605278, 0, 0, 0.605278, 13.92164, 3.328836)">
-    <rect width="48.09322" height="17.055084" x="74.894066" y="142.90254" id="rect3766" style="fill:#ffc200;fill-opacity:1;stroke:none"/>
-    <rect width="48.09322" height="17.055084" x="74.893997" y="174.00592" id="rect3766-7" style="fill:#ffc200;fill-opacity:1;stroke:none"/>
+  <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: rgb(84, 84, 84); pointer-events: none; visibility: hidden;" x="15" y="15" bx:origin="0.5 0.5"/>
+  <g transform="matrix(1.043692, 0, 0, 1.043692, -2.763458, 9.33918)" style="">
+    <g transform="matrix(0.423345, -0.432597, 0.432597, 0.423345, -71.490707, 0.830171)" id="g3804-2" style="fill: rgb(255, 194, 0); fill-opacity: 1; stroke: none; filter: url(#filter3997);">
+      <rect width="48.09322" height="17.055084" x="74.894066" y="142.90254" id="rect3766-9" style="fill:#ffc200;fill-opacity:1;stroke:none"/>
+      <rect width="48.09322" height="17.055084" x="74.893997" y="174.00592" id="rect3766-7-7" style="fill:#ffc200;fill-opacity:1;stroke:none"/>
+    </g>
+    <path d="M 74.158 38.256 C 62.172 38.256 52.332 47.944 52.332 59.743 C 52.332 71.543 62.172 81.211 74.158 81.211 C 86.144 81.211 95.965 71.543 95.965 59.743 C 95.965 47.944 86.144 38.256 74.158 38.256 Z M 74.158 48.758 C 80.379 48.758 85.315 53.618 85.315 59.743 C 85.315 65.868 80.379 70.708 74.158 70.708 C 67.936 70.708 63 65.868 63 59.743 C 63 53.618 67.936 48.758 74.158 48.758 Z" id="path2989" style="font: medium Sans; text-indent: 0px; text-align: start; text-decoration: none; letter-spacing: normal; word-spacing: normal; text-transform: none; direction: ltr; writing-mode: lr-tb; text-anchor: start; baseline-shift: baseline; color: rgb(0, 0, 0); fill: rgb(255, 194, 0); fill-opacity: 1; stroke: none; stroke-width: 17.6819; marker: none; visibility: visible; display: inline; overflow: visible; filter: url(#filter3865);"/>
+    <rect width="26.109" height="31.959" x="69.211" y="-64.673" transform="matrix(0.704768, 0.709438, -0.709438, 0.704768, 13.92164, 3.328836)" id="rect3764" style="fill: rgb(255, 194, 0); fill-opacity: 1; stroke: none; filter: url(#filter4391);"/>
+    <g id="g3804" style="fill: rgb(255, 194, 0); fill-opacity: 1; stroke: none; filter: url(#filter3877);" transform="matrix(0.605278, 0, 0, 0.605278, 13.92164, 3.328836)">
+      <rect width="48.09322" height="17.055084" x="74.894066" y="142.90254" id="rect3766" style="fill:#ffc200;fill-opacity:1;stroke:none"/>
+      <rect width="48.09322" height="17.055084" x="74.893997" y="174.00592" id="rect3766-7" style="fill:#ffc200;fill-opacity:1;stroke:none"/>
+    </g>
   </g>
 </svg>

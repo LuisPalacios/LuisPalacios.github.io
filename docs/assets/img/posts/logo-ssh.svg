@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg width="150px" height="127px" viewBox="0 0 150 127" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <title>ssh</title>
-  <desc>Created with Sketch.</desc>
-  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" style="" transform="matrix(0.786035, 0, 0, 0.786035, 16.031736, 13.525391)">
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="15" height="15"/>
+  </defs>
+  <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: rgb(84, 84, 84); pointer-events: none; visibility: hidden;" x="15" y="15" bx:origin="0.5 0.5"/>
+  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" style="" transform="matrix(0.800781, 0, 0, 0.800781, 15.00002, 24.380207)">
     <g id="ssh">
       <path d="M6.67073171,0 L143.182927,0 C146.864287,0.00672073763 149.846947,2.99339613 149.853659,6.67971154 L149.853659,119.746346 C149.846947,123.432662 146.864287,126.419337 143.182927,126.426058 L6.67073171,126.426058 C2.98937198,126.419337 0.00671170265,123.432662 0,119.746346 L0,6.67971154 C0.00671170265,2.99339613 2.98937198,0.00672073763 6.67073171,0 Z" id="Path" fill="#000000"/>
       <path d="M149.853659,31.9820192 L149.853659,41.9222115 L118.621951,41.9222115 C116.848694,41.9222116 115.210137,40.9749166 114.323508,39.4371635 C113.436879,37.8994104 113.436879,36.0048204 114.323508,34.4670673 C115.210137,32.9293141 116.848694,31.9820192 118.621951,31.9820192 L149.853659,31.9820192 Z M0,41.9222115 L0,31.9820192 L53.8658537,31.9820192 C55.639111,31.9820192 57.2776683,32.9293141 58.164297,34.4670672 C59.0509257,36.0048204 59.0509257,37.8994104 58.164297,39.4371635 C57.2776683,40.9749167 55.639111,41.9222116 53.8658537,41.9222115 L0,41.9222115 Z" id="Shape" fill="#FFFFFF"/>

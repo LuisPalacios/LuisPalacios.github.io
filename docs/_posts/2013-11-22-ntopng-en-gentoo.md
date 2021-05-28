@@ -6,7 +6,7 @@ tags: linux gentoo ntopng
 excerpt_separator: <!--more-->
 ---
 
-![Logo ntopng](/assets/img/posts/logo-ntopng.png){: width="150px" height="150px" style="float:left; padding-right:25px" } 
+![Logo ntopng](/assets/img/posts/logo-ntopng.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
 
 Hace no demasiado se liberó "ntopng" 1.1 y ya es hora de echarle un ojo. Todavía no está en Portage, así que gracias al overlay (via layman) de Eigenlay he encontrado lo necesario para realizar la instalación.
 

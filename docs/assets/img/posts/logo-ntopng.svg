@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="15" height="15"/>
+  </defs>
+  <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: rgb(84, 84, 84); pointer-events: none; visibility: hidden;" x="15" y="15" bx:origin="0.5 0.5"/>
+  <g transform="matrix(1.011406, 0, 0, 1.011406, -0.872297, -0.855053)" style="">
+    <title>Cosa</title>
+    <rect x="17.099" y="18.827" width="115.803" height="112.346" style="stroke: rgb(0, 0, 0);" rx="16.202" ry="16.202"/>
+    <g style="">
+      <circle style="fill: rgb(255, 255, 255);" cx="39.995" cy="77.243" r="13.667"/>
+      <circle style="fill: rgb(255, 255, 255);" cx="111.302" cy="42.667" r="13.667"/>
+      <circle style="fill: rgb(255, 255, 255);" cx="75.219" cy="96.455" r="29.297"/>
+      <circle style="fill: rgb(255, 255, 255);" cx="104.532" cy="126.28" r="12.802"/>
+      <path d="M 16.382 72.709 L 33.822 71.959 L 33.822 83.437 L 6.409 84.179 L 16.382 72.709 Z" style="fill: rgb(255, 255, 255);" transform="matrix(0.754723, -0.656044, 0.656044, 0.754723, -43.451038, 47.330055)"/>
+      <rect x="7.869" y="64.717" width="26.966" height="10.323" style="fill: rgb(255, 255, 255);" transform="matrix(0.573215, -0.819405, 0.819405, 0.573215, 28.466522, 39.363297)"/>
+      <rect x="5.9" y="68.804" width="20.221" height="10.975" style="fill: rgb(255, 255, 255);" transform="matrix(-0.831386, -0.555696, 0.555696, -0.831386, 101.158432, 125.842628)"/>
+      <rect x="5.329" y="162.629" width="18.263" height="25.941" style="fill: rgb(255, 255, 255);" transform="matrix(-0.738128, -0.674661, 0.674661, -0.738128, -9.294625, 260.303009)"/>
+    </g>
+    <circle style="fill: none; stroke: rgb(255, 136, 0); stroke-width: 8.07199px;" cx="75.778" cy="96.675" r="25.913" transform="matrix(0.86459, 0, 0, 0.869802, 9.379217, 11.958719)"/>
+    <circle style="stroke: rgb(255, 136, 0); stroke-width: 8.07199px; fill: rgb(255, 136, 0);" cx="75.778" cy="96.675" r="25.913" transform="matrix(0.30173, 0, 0, 0.303548, 79.961319, 94.75927)"/>
+    <rect x="56.293" y="94.573" width="18.675" height="18.199" style="fill: rgb(255, 136, 0);" transform="matrix(0.706913, 0.707301, -0.707301, 0.706913, 122.763374, -2.600602)"/>
+  </g>
+</svg>
