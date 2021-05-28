@@ -214,7 +214,7 @@ iface br0 inet static
 	#
 	bridge_ports enp0s25
 	bridge_stp off       # Deshabilito Spanning Tree Protocol
-      bridge_waitport 0    # No espero antes de habilitar el puerto
+	bridge_waitport 0    # No espero antes de habilitar el puerto
 	bridge_fd 0          # No meter ningún retardo en el forwarding
 ```
 
