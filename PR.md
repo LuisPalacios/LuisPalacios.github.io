@@ -12,7 +12,8 @@ En este [artículo](https://help.github.com/articles/using-pull-requests) de Git
 
 Nota: **Esta guía esta incompleta, pendiente de terminar de documentar** 
 
-* **Creación de un Fork**: Solo necesitas hacerlo una vez, haz un [Fork](https://help.github.com/articles/fork-a-repo/) de este repositorio y clónatelo en tu ordenador de trabajo.
+* **Creación de un Fork**: Solo necesitas hacerlo una vez, haz un [Fork](https://help.github.com/articles/fork-a-repo/) de este repositorio 
+* **Clona tu Fork** en tu tu ordenador de trabajo. Ahí es donde vas a trabajar.
 * **Creación de un Issue**: Busca o crea un Issue donde se describa el trabajo alrededor del apunte técnico en el que vas a colaborar.
 * **Créate una rama dedicada a dicho issue** en tu propia copia clonada de tu propio repositorio (tu Fork). 
 * PDTE
