@@ -229,7 +229,9 @@ iface br0 inet static
 
 ## Caso de uso
 
-He documentado en otro apunte un ejemplo de un caso de uso de maquina virtual, se trata de una plataforma para desarrollo de software que despliego usando `Vagrant` en un servidor Linux (con KVM/Libvirt). Aquí tienes el repositorio con toda la información. 
+En este repositorio en GitHub tienes un [maquina virtual para desarrollo de software preparada con Vagrant](https://github.com/LuisPalacios/devbox). Además podrás encontrar en el apunte "[Servicios Systemd de usuario]({% post_url 2021-05-30-systemd-usuario %})" cómo ejecutar procesos de usuario durante el arranque del sistema, para arrancar esta máquina virtual con Vagrant durante el boot. 
 
-* [https://github.com/LuisPalacios/devbox](https://github.com/LuisPalacios/devbox)
+
+### Arranque automático como usuario. 
+
 
