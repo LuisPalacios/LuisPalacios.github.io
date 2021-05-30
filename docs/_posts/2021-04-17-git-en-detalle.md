@@ -1518,6 +1518,31 @@ Push de `master` hacia el repositorio Bare `delta`. El push tiene tres pasos:
 
 <br/>
 
+## Ejemplos de uso con repositorios reales. 
+
+Muestro a continuación algunos comandos típicos 
+
+* Mi clone local apunta a un `remote`vía HTTP y quiero cambiarlo a `SSH`
+
+Comando: `git remote set-url origin git@github.com:LuisPalacios/Master-DS.git`
+
+```console
+luis@coder:~/notebooks/Master-DS$ cat .git/config
+:
+[remote "origin"]
+	url = https://github.com/LuisPalacios/Master-DS.git
+:
+
+luis@coder:~/notebooks/Master-DS$ git remote set-url origin git@github.com:LuisPalacios/Master-DS.git
+luis@coder:~/notebooks/Master-DS$ cat .git/config
+:
+[remote "origin"]
+	url = git@github.com:LuisPalacios/Master-DS.git
+:
+```
+
+<br>
+
 ## Resumen
 
 GIT se estructura alrededor de un árbol gráfico y casi todos sus comandos lo manipulan. Para entenderlo en profundidad céntrate en las propiedades de dicho gráfico, no en los flujos de trabajo o los comandos.
