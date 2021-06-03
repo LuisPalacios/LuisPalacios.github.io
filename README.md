@@ -16,4 +16,4 @@ You are now in the `gh-pages` branch, the sources of this [jekyll](http://jekyll
 
 ### Pull Requests
 
-Si te gusta este repositorio y quieres contribuir sigue las [pautas para hacer pull requests](PR.md)
+Si te gusta este repositorio y quieres contribuir sigue las [pautas para hacer pull requests](PR.md).
