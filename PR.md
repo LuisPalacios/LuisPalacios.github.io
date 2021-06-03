@@ -100,7 +100,7 @@ $ vi PR.md
 ```
 
 * **Hace commits**
-  * Como en cualquier proyecto, opcionalmente haceuno o más `commit`'s. 
+  * Como en cualquier proyecto, opcionalmente hace uno o más `commit`'s. 
   
 ```console
 $ git add PR.md
@@ -142,6 +142,11 @@ $ git push
 
   * El usuario `Agorastis` puede añadir más commits a su Branch `13-cookies` en `AgorastisMesaio/LuisPalacios.github.io`
 
+```console
+$ git add PR.md
+$ git commit -m "#13 revisión PR.md"
+$ git push
+```
 
 <br/>
 
