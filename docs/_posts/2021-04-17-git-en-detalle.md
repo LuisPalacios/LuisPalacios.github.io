@@ -1522,7 +1522,7 @@ Push de `master` hacia el repositorio Bare `delta`. El push tiene tres pasos:
 
 Muestro a continuación algunos comandos típicos 
 
-* Mi clone local apunta a un `remote`vía HTTP y quiero cambiarlo a `SSH`
+* Mi clone local apunta a un `remote` vía HTTP y quiero cambiarlo a `SSH`
 
 Comando: `git remote set-url origin git@github.com:LuisPalacios/Master-DS.git`
 
