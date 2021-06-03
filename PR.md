@@ -20,7 +20,7 @@ Colaboración en el proyecto:
 * **Elije un Issue**: Busca o crea un [Issue en el repositorio original](https://github.com/LuisPalacios/LuisPalacios.github.io/issues) sobre el que vas a colaborar.
 * **Créa una Branch dedicada a dicho issue** en tu Clone.
 * **Modifica** los ficheros correspondientes, haz **commits, push, etc...** en tu propio repositorio mientras trabajas en dicha Branch.
-* **Realiza un [Pull Request](https://docs.github.com/es/github/collaborating-with-issues-and-pull-requests/about-pull-requests)** a la rama donde están los **apuntes técnicos**: (`gh-pages`)
+* **Realiza un [Pull Request](https://docs.github.com/es/github/collaborating-with-issues-and-pull-requests/about-pull-requests)** a la rama donde están los **apuntes técnicos**, (`gh-pages`).
 
 <br/>
 
@@ -103,8 +103,8 @@ $ vi PR.md
   * Como en cualquier proyecto, opcionalmente haceuno o más `commit`'s. 
   
 ```console
-$ git git add PR.md
-$ git commit -m "#13 Documento el fichero PR.md"
+$ git add PR.md
+$ git commit -m "#13 Mejoro el fichero PR.md"
 ```
 
 | Convención de Nombres (mensaje del commit): "#nn descripción", (`#nn` es el número de Issue) |
@@ -125,11 +125,25 @@ $ git push
 ```
 
 * **Solicita un Pull Request**
-  * Ha llegado el momento de pedir que las modificaciones se incorporen a mi repositorio  **upstream**. 
-  * Crea un `pull request for '13-cookies'` en GitHub visitando el enlace siguiente:
+  * Ha llegado el momento de pedir que se incorporen las modificaciones. 
+  * `Agorastis` se dirige a [su Fork en GitHub](https://github.com/AgorastisMesaio/LuisPalacios.github.io), selecciona la Branch `13-cookies` que contiene las modificaciones.
+  * Click en `Compare & Pull Request`
+  * Selecciona: 
+    * Repositorio BASE: `LuisPalacios/LuisPalacios.github.io`
+    * Referencia BASE: Branch `gh-pages`
+    * Repositorio HEAD: `AgorastisMesaio/LuisPalacios.github.io`
+    * Ref. HEAD: Branch `13-cookies`
+  * En el título el mismo mensaje que puso en el commit. 
+  * Deja un mensaje explicativo con las modificaciones realizadas. 
+  * Click en **CREATE A PULL REQUEST**
 
-[https://github.com/LuisPalacios/LuisPalacios.github.io/pull/new/13-cookies](https://github.com/LuisPalacios/LuisPalacios.github.io/pull/new/13-cookies)
+* **Revisiones a la Pull Request**
+  * Podrá ocurrir que solicito revisiones o modificaciones extra desde el propio GitHub. A partir de ese momento tanto el usuario `Agorastis` como `Luis` podrán comunicarse sobre el `Issue #13` hasta que finalmente se acepte el Pull Request. 
 
+  * El usuario `Agorastis` puede añadir más commits a su Branch `13-cookies` en `AgorastisMesaio/LuisPalacios.github.io`
+
+
+<br/>
 
 ### ¿Qué hago si el Repositorio original cambia?
 
