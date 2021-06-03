@@ -1,5 +1,5 @@
-{% comment %}
-Zona para los iconos y favicons
+{% comment %} 
+    Zona para los iconos y favicons 
 {% endcomment %}
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -8,15 +8,15 @@ Zona para los iconos y favicons
 <link rel="manifest" href="/site.webmanifest">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
 <meta name="msapplication-TileColor" content="#da532c">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#ffffff"> 
 
-
-{% comment %}
-    Zona para hacer Analytics en Plausible
-{% endcomment %}
+{% comment %} 
+    Zona para hacer Analytics en Plausible 
+{% endcomment %} 
 
 {% if jekyll.environment == "production" %}
+    {% include cookie-consent.html %}
+    {% comment %} 
     <script async defer data-domain="luispa.com" src="https://plausible.io/js/plausible.js"></script>
+    {% endcomment %} 
 {% endif %}
-
-
