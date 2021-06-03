@@ -161,15 +161,20 @@ Si durante el proceso el repo original cambia, querremos sincronizar con él.
 git remote add upstream https://github.com/LuisPalacios/LuisPalacios.github.io.git
 ```
 
-* **Incorporo las modificaciones** que se hayan podido hacer en **upstream**
+* **Merge de las modificaciones** que se hayan podido hacer en **upstream**
 
 ```console
-git checkout 13-cookies
-git fetch --all
-git merge upstream/gh-pages
+$ git checkout 13-cookies
+$ git fetch --all
+$ git merge upstream/gh-pages
 ```
 
-Then we can rebase our master onto our feature branch and then push the feature branch to our repo. Remember that changes pushed to a branch from wich we have already requested a pull will be integrated in the pull request. That's another reason why it is convenient to request the pull from our feature branch, and not from our master.
+* **Seguimos trabajando en nuestro Branch** (ya actualizado), y si tengo más modificaciones las sigo suviendo a mi Fork:
 
+```console
+$ git add . 
+$ git commit -m "#13 Cambios en PR.md"
+$ git push
+```
 
 
