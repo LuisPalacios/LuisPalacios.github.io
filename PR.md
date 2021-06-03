@@ -155,15 +155,19 @@ $ git push
 Si durante el proceso el repo original cambia, querremos sincronizar con él.
 
 * **Añadimos como remoto al original**
-  * Para `bajarnos` las modificaciones que se hayan podido hacer en el Repositorio original [repositorio LuisPalacios/LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io) primero lo añadimos como `remote`
+  * Para `bajarnos` las modificaciones que se puedan ir hadiendo en **upstream** (Mi repositorio original [LuisPalacios/LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io)) lo añadimos como `remote`
 
 ```console
 git remote add upstream https://github.com/LuisPalacios/LuisPalacios.github.io.git
 ```
 
-git checkout master
-    git fetch --all
-    git merge upstream/master
+* **Incorporo las modificaciones** que se hayan podido hacer en **upstream**
+
+```console
+git checkout 13-cookies
+git fetch --all
+git merge upstream/gh-pages
+```
 
 Then we can rebase our master onto our feature branch and then push the feature branch to our repo. Remember that changes pushed to a branch from wich we have already requested a pull will be integrated in the pull request. That's another reason why it is convenient to request the pull from our feature branch, and not from our master.
 
