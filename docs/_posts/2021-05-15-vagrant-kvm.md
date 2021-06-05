@@ -230,8 +230,3 @@ iface br0 inet static
 ## Caso de uso
 
 En este repositorio en GitHub tienes un [maquina virtual para desarrollo de software preparada con Vagrant](https://github.com/LuisPalacios/devbox). Además podrás encontrar en el apunte "[Servicios Systemd de usuario]({% post_url 2021-05-30-systemd-usuario %})" cómo ejecutar procesos de usuario durante el arranque del sistema, para arrancar esta máquina virtual con Vagrant durante el boot. 
-
-
-### Arranque automático como usuario. 
-
-
