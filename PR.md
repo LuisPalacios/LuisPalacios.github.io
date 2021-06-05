@@ -38,7 +38,7 @@ En este pequeño tutorial vemos al usuario `Agorastis Messaio` que va a contribu
     * https://github.com/AgorastisMesaio/LuisPalacios.github.io
 
 * **Clone**:
-  * `Agorastis` clona dicho Fork en su ordendor. 
+  * `Agorastis` clona dicho Fork en su ordenador. 
   
 ```console
 $ cd /home/agorastis
@@ -63,6 +63,8 @@ Switched to a new branch 'gh-pages'
 ```
 
 | El **Fork y Clone** solo es necesario hacerlo una única vez. |
+|:--:|
+
 
 <br/>
 
