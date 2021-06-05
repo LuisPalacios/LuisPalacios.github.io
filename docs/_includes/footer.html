@@ -38,7 +38,7 @@ Versión personalizada por Luis Palacios
                 <!-- INICIO BÚSQUEDAS -->
                 <!-- Elemento HTML para realizar la búsqueda -->
                 <div id="search-container">
-                    <input type="text" id="search-input" placeholder="buscar...">
+                    <input id="search-input" placeholder="buscar..." type="text">
                     <ul id="results-container"></ul>
                 </div>
 
@@ -85,7 +85,7 @@ Versión personalizada por Luis Palacios
                     <li>
                         <a href="https://www.twitter.com/LuisPalacios">
                             <svg class="svg-icon">
-                                    <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+                                <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
                             </svg>
                             <span class="username">@LuisPalacios</span>
                         </a>
@@ -96,8 +96,7 @@ Versión personalizada por Luis Palacios
 
         <!-- INICIO COMENTARIOS (Solo en Posts, no en navigator) -->
         {% if page.collection == 'posts' %}
-        <script src="https://utteranc.es/client.js" repo="LuisPalacios/LuisPalacios.github.io" issue-term="pathname" label="comentario" theme="github-light" crossorigin="anonymous" async>
-        </script>
+        <script async crossorigin="anonymous" issue-term="pathname" label="comentario" repo="LuisPalacios/LuisPalacios.github.io" src="https://utteranc.es/client.js" theme="github-light"></script>
         {% endif %}
         <!-- FIN COMENTARIOS -->
 
