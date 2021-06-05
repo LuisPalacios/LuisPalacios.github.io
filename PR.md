@@ -1,26 +1,23 @@
 ## Pull Requests al Blog
 
-Si te gusta este repositorio y quieres contribuir hazte un `fork` (bifurcación) para poder trabajar de forma separada. Cuando quieras que las incorpore a mi repositorio original podrás hacerme un `Pull Request` (PR) solicitándolo.
+Este repositorio es personal y su objetivo es doble: documentar para tener en algún sitio mis notas y apuntes pero sobre todo devolver a la comunidad. Si te gusta y quieres contribuir sigue las pautas que describo más abajo.
 
-Un PR es una petición para que valide el código (o documento en este caso) que se quiere fusionar. Lo lógico es que te apoyes en los `Issues` que voy creando para darle seguimiento. 
-
-En este [artículo](https://help.github.com/articles/using-pull-requests) de GitHub tienes información general sobre los PR. A continuación describo una guía con los pasos necesarios y un pequeño tutorial a modo de ejemplo.
 
 <br/>
 
 ### Pautas para los pull-requests
 
-Lo primero y recomendado es hacer un Fork y un Clone, pasos que solo tienes que hacer la primera vez. 
+Un Pull-Reuqest es una petición para que valide código (apuntes en este caso) que se quieren publicar. En este [artículo](https://help.github.com/articles/using-pull-requests) de GitHub tienes información general sobre el tema. A continuación tienes los pasos y más adelante un pequeño tutorial a modo de ejemplo.
 
-* **Crea un Fork**: Haz un [Fork](https://help.github.com/articles/fork-a-repo/) de mi [repositorio LuisPalacios/LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io)
-* **Haz un Clone**: Desde tu ordenador de trabajo, haz un Clone de tu propio Fork. 
-
-Colaboración en el proyecto: 
-
-* **Elije un Issue**: Busca o crea un [Issue en el repositorio original](https://github.com/LuisPalacios/LuisPalacios.github.io/issues) sobre el que vas a colaborar.
-* **Créa una Branch dedicada a dicho issue** en tu Clone.
-* **Modifica** los ficheros correspondientes, haz **commits, push, etc...** en tu propio repositorio mientras trabajas en dicha Branch.
-* **Realiza un [Pull Request](https://docs.github.com/es/github/collaborating-with-issues-and-pull-requests/about-pull-requests)** a la rama donde están los **apuntes técnicos**, (`gh-pages`).
+* **Issue**: Antes de trabajar en una nueva funcionalidad o documento, por favor [busca o crea un **Issue** en el repositorio original](https://github.com/LuisPalacios/LuisPalacios.github.io/issues) sobre el que vas a colaborar. Opcionalmente asígnatelo a ti mismo o a algún colaborador. 
+* **Fork**: Haz un [Fork](https://help.github.com/articles/fork-a-repo/) de mi [repositorio LuisPalacios/LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io) y recuerda que el Blog está en la Branch `gh-pages`.
+* **Clone**: Desde tu ordenador de trabajo, haz un Clone de tu propio Fork. 
+* **Branch**: Crea una *Branch* específica para el *Issue* en tu *Clone* para que los cambios se independicen del resto de ramas. 
+* **Modifica**: Trabaja sobre tu rama, haz **commits, push, etc...** en tu propio repositorio. Asegúrate de ejecutar tests y de que las páginas se ven bien y funcionan en todos los navegadores. 
+* **Squash**. Si has hecho varios commits en tu Branch, intenta por favor agregarlos (squash) en un número menor de commits. 
+* **Pull Request**: Realiza un [Pull Request](https://docs.github.com/es/github/collaborating-with-issues-and-pull-requests/about-pull-requests)** contra la Branch `gh-pages`, que es donde están mis **apuntes técnicos**.
+* **Revisión**: Revisaré el código/documentación y podría opcionalmente pedirte conformidad con el estilo general o algún otro cambio. 
+* **Publicación**: Una vez aceptado haré un *merge* y pasará a estar disponible. 
 
 <br/>
 

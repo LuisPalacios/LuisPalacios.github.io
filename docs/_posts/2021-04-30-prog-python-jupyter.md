@@ -279,7 +279,7 @@ Ejecutar comandos
 {% include showImagen.html 
       src="/assets/img/posts/prog-python-jupyter-3.png" 
       caption="Habilitamos SQL en Jupyter Labsd" 
-      width="600px"
+      width="400px"
       %}
 
 <br/>

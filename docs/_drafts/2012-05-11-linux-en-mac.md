@@ -20,7 +20,7 @@ El diseño que voy a utilizar es el que se describe en el siguiente gráfico. El
 
 {% include showImagen.html
     src="/assets/img/original/macminidesign_0_o.jpg"
-    caption="macminidesign_0_o"
+    caption="Diseño Linux en Mac"
     width="600px"
     %}
 

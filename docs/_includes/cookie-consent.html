@@ -1,3 +1,5 @@
+<!-- CSS
+-->
 <style>
     #cookie-notice {
         padding: 0.5rem 1rem;
@@ -6,7 +8,7 @@
         position: fixed;
         bottom: 0;
         width: calc(100% - 2rem);
-        background: #222;
+        background: rgb(87, 13, 13);
         color: rgba(255, 255, 255, 0.8);
     }
     
@@ -28,7 +30,17 @@
         }
     }
 </style>
-<div id="cookie-notice"><span>Quiero utiliza cookies de terceros para mejorar la funcionalidad del Blog.</span><a id="cookie-notice-accept" class="btn btn-primary btn-sm">Aprovar</a><a href="/privacy" class="btn btn-primary btn-sm">Más información</a></div>
+
+<!-- Elemento que muestra el mensaje de Cookies
+-->
+<div id="cookie-notice">
+    <span>Utilizo cookies para mejorar la funcionalidad del Blog.</span>
+    <a class="btn btn-primary btn-sm" id="cookie-notice-accept">Aprobar</a>
+    <a class="btn btn-primary btn-sm" href="/privacidad">Más información</a>
+</div>
+
+<!-- Script
+-->
 <script>
     function createCookie(name, value, days) {
         var expires = "";
@@ -55,12 +67,18 @@
         createCookie(name, "", -1);
     }
 
-    if (readCookie('cookie-notice-dismissed') == 'true') {
-
-        { %
-            if jekyll.environment == "production" %
-        } { % < script async defer data - domain = "luispa.com"
-            src = "https://plausible.io/js/plausible.js" >
-</script> %} {% endif %} } else { document.getElementById('cookie-notice').style.display = 'block'; } document.getElementById('cookie-notice-accept').addEventListener("click", function() { createCookie('cookie-notice-dismissed', 'true', 31); document.getElementById('cookie-notice').style.display
-= 'none'; location.reload(); });
+    // Check cookie
+    if (readCookie('consentimiento-cookies-luispa_com') == 'true') {
+        var script = document.createElement("script");
+        script.src = "https://plausible.io/js/plausible.js";
+        script.setAttribute('data-domain', 'luispa.com');
+        document.head.appendChild(script);
+    } else {
+        document.getElementById('cookie-notice').style.display = 'block';
+    }
+    document.getElementById('cookie-notice-accept').addEventListener("click", function() {
+        createCookie('consentimiento-cookies-luispa_com', 'true', 31);
+        document.getElementById('cookie-notice').style.display = 'none';
+        location.reload();
+    });
 </script>
