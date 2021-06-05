@@ -76,7 +76,7 @@ $ cd /home/agorastis/LuisPalacios.github.io
 $ git checkout gh-pages
 ```
 
-* **Elije un Issue**: El siguiente paso consiste en decidir (o incluso crear) sobre qué [Issue en el repositorio original](https://github.com/LuisPalacios/LuisPalacios.github.io/issues) va a colaborar. En ete ejemplo pensó en el [Issue "GDPR: Cookie consent #13"](https://github.com/LuisPalacios/LuisPalacios.github.io/issues/13). 
+* **Elije un Issue**: El siguiente paso consiste en decidir (o incluso crear) sobre qué [Issue en el repositorio original](https://github.com/LuisPalacios/LuisPalacios.github.io/issues) va a colaborar. En este ejemplo pensó en el [Issue "GDPR: Cookie consent #13"](https://github.com/LuisPalacios/LuisPalacios.github.io/issues/13). 
 
 * **Crea una Branch Nueva**
   * En su Clone crea una rama nueva y le asigna un nombre donde se incluye el número del Issue. Este nombre puede ser cualquiera.
