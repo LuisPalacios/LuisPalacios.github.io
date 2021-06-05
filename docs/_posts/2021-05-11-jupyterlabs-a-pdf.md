@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 ![logo jupyter impresión](/assets/img/posts/logo-jupyterprint.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
 
 
-En este apunte describo cómo he conseguido, desde un MacOS, convertir a PDF correctamente los ejercicios de Jupyter Labs en diferentes entornos. No es fácil convertir los cuadernos de Jupyter Labs a PDF debido a las múltiples variantes (imágenes, enlaces) que puede contener. He probado exportaciones intermedias, `pandoc`, apps, sin demasiado éxito.
+En este apunte describo como he conseguido, desde un MacOS, convertir a PDF correctamente los ejercicios de Jupyter Labs en diferentes entornos. No es fácil convertir los cuadernos de Jupyter Labs a PDF debido a las múltiples variantes (imágenes, enlaces) que puede contener. He probado exportaciones intermedias, `pandoc`, apps, sin demasiado éxito.
 
 <br clear="left"/>
 <!--more-->
