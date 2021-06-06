@@ -8,9 +8,6 @@ excerpt_separator: <!--more-->
 
 ### Privacidad
 
-
-Después de un tiempo con el blog he encontrado una solución básica para tratar el consentimiento de cookies. Tengo pendiente estudiar otra que tiene buena pinta que se llama [Cookie Consent](https://www.osano.com/cookieconsent) de Osano y que descubrí [aquí](https://www.chuvisco.me/technology/2019/07/01/cookie-consent/).
-
 En 2018 entró en vigor el GDPR (Reglamento General de Protección de Datos) de la Unión Europea. Establece que cualquier empresa o individuo que procese información personal de ciudadanos de la Unión Europea debe cumplirlo.
 
 Yo no guardo absolutamente nada de los ciudadanos en mi Blog, pero sí que creo que debo informar de un servicio externo (a través de un programa en JavaScript) que monitoriza mi Blog, y aunque lo hace de forma anónima, quiero dar la opción de OPT-OUT (que puedas decidir impedir que monitorice tu sesión). Se trata de [Plausible.io](https://plausible.io/), una alternativa a Google Analytics para hacer una analítica ligera a sitios Web. No utiliza cookies y es completamente compatible con GDPR, CCPA and PECR. 
