@@ -38,7 +38,7 @@ En este pequeño tutorial vemos al usuario `Agorastis Messaio` que va a contribu
     * https://github.com/AgorastisMesaio/LuisPalacios.github.io
 
 * **Clone**:
-  * `Agorastis` clona dicho Fork en su ordendor. 
+  * `Agorastis` clona dicho Fork en su ordenador. 
   
 ```console
 $ cd /home/agorastis
@@ -63,12 +63,11 @@ Switched to a new branch 'gh-pages'
 ```
 
 | El **Fork y Clone** solo es necesario hacerlo una única vez. |
+|:---:|
 
 <br/>
 
 ### Contribuir 
-
-Como decía, Fork y Clone sólo una vez. Esta parte se repite por cada modificación o contribución. 
 
 * `Agorastis` entra en su Clone y cambia a `gh-pages` (se asegura que parte de la Branch correcta)
 
@@ -77,7 +76,7 @@ $ cd /home/agorastis/LuisPalacios.github.io
 $ git checkout gh-pages
 ```
 
-* **Elije un Issue**: El siguiente paso consiste en decidir (o incluso crear) sobre qué [Issue en el repositorio original](https://github.com/LuisPalacios/LuisPalacios.github.io/issues) va a colaborar. En ete ejemplo pensó en el [Issue "GDPR: Cookie consent #13"](https://github.com/LuisPalacios/LuisPalacios.github.io/issues/13). 
+* **Elije un Issue**: El siguiente paso consiste en decidir (o incluso crear) sobre qué [Issue en el repositorio original](https://github.com/LuisPalacios/LuisPalacios.github.io/issues) va a colaborar. En este ejemplo pensó en el [Issue "GDPR: Cookie consent #13"](https://github.com/LuisPalacios/LuisPalacios.github.io/issues/13). 
 
 * **Crea una Branch Nueva**
   * En su Clone crea una rama nueva y le asigna un nombre donde se incluye el número del Issue. Este nombre puede ser cualquiera.
@@ -88,6 +87,7 @@ Switched to a new branch '13-cookies'
 ```
 
 | Convención de Nombres (nombre de la Branch): "#-descripción", (`# == número de Issue`) |
+|:---:|
 
 * **Realiza las modificaciones/contribuciones** 
   * Editar ficheros, etc. En el ejemplo modificó el fichero `PR.md`
@@ -105,6 +105,7 @@ $ git commit -m "#13 Mejoro el fichero PR.md"
 ```
 
 | Convención de Nombres (mensaje del commit): "#nn descripción", (`#nn` es el número de Issue) |
+|:---:|
 
 * **Sincroniza con su Fork**
   * Como en cualquier proyecto, puede hacer `push` a [su Fork en GitHub](https://github.com/AgorastisMesaio/LuisPalacios.github.io). El **primer `push`** es un poco diferente, solicita que se cree la branch `13.cookies` en su Fork y la marca como tracking-branch. 
@@ -114,6 +115,8 @@ $ git push --set-upstream origin 13-cookies
 ```
 
 | Nota: La primera vez que se hace el `push` nos invita a hacer el Pull Request, mostrando el enlace directo, aunque no es necesario hacerlo ahora... |
+|:---:|
+
 
   * Si necesitas modificar más veces podrá hacer más `commits` y en **futuros `push`** ya no tendrás que usar la opción `--set-upstream`. A partir de ahora bastaría con `git push` a secas (git ya sabe quién es su tracking-branch)
 
