@@ -10,10 +10,11 @@ excerpt_separator: <!--more-->
 
 En 2018 entró en vigor el GDPR (Reglamento General de Protección de Datos) de la Unión Europea. Establece que cualquier empresa o individuo que procese información personal de ciudadanos de la Unión Europea debe cumplirlo.
 
-Yo no guardo absolutamente nada de los ciudadanos en mi Blog, pero sí que creo que debo informar de un servicio externo (a través de un programa en JavaScript) que monitoriza mi Blog, y aunque lo hace de forma anónima, quiero dar la opción de OPT-OUT (que puedas decidir impedir que monitorice tu sesión). Se trata de [Plausible.io](https://plausible.io/), una alternativa a Google Analytics para hacer una analítica ligera a sitios Web. No utiliza cookies y es completamente compatible con GDPR, CCPA and PECR. 
+![logo gdpr](/assets/img/posts/logo-gdpr.png){: width="200px" style="float:left; padding-right:25px" } 
 
-Dicho esto, se te ofrecerá la opción de decidir consentir la ejecución de *plausible.io*. Si lo aceptas que sepas que no guardo nada sobre ti, ni siquiera tu dirección IP, sino que de forma sintética (sin datos personales de ningún tipo) se registrará con qué página has conectado, cuando y desde qué zona geográfica (país)  en plausible.io para que yo pueda ver un agregado de cuantas personas han visto o leído qué paginas y desde qué países. 
+En mi blog no guardo información personal, pero utilizo un sistema de monitorización de accesos que recoge información sintética (sin datos personales) sobre las páginas a las que se conectan los navegadores, cuando lo hacen y desde qué zona geográfica (país). El programa que utilizo se llama [Plausible.io](https://plausible.io/), una alternativa a Google Analytics para hacer una analítica ligera a sitios Web. No utiliza cookies y es completamente compatible con GDPR, CCPA and PECR. 
 
-| ![logo linux router](/assets/img/posts/logo-gdpr.png) |
-|:---:|
-| |
+Dicho esto, ofrezco la opción de decidir consentir la ejecución de este pequeño módulo *plausible.io*. Si lo aceptas que sepas que no guardo nada sobre ti, ni siquiera tu dirección IP, este proveedor externo guarda la información que he descrito (página, cuando y desde qué zona geográfica (país)) en sus propios servidores, de modo que yo puedo ver un agregado de cuantas personas han visto o leído qué paginas y desde qué países; para ir mejorando mi blog.
+
+Si quieres volver a resetear mi cookie pulsar en el enlace de más abajo.
+

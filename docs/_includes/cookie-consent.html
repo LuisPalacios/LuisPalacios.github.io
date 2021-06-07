@@ -1,84 +1,149 @@
 <!-- CSS
 -->
 <style>
-    #cookie-notice {
+    .lpouter {
         padding: 0.5rem 1rem;
         display: none;
         text-align: center;
         position: fixed;
         bottom: 0;
         width: calc(100% - 2rem);
-        background: rgb(87, 13, 13);
-        color: rgba(255, 255, 255, 0.8);
+        background: rgb(205, 205, 205);
+        color: rgba(63, 63, 63, 0.8);
     }
     
-    #cookie-notice a {
+    .lpinner {
+        width: 50%;
+    }
+    
+    #mensaje-reset-cookies {
+        padding: 1rem 1rem 1rem 1rem;
+        text-align: center;
+        display: none;
+        margin: auto;
+        width: 30%;
+        border-radius: 12px;
+        background: rgb(205, 205, 205);
+        color: rgba(63, 63, 63, 0.8);
+        margin-bottom: 1rem;
+    }
+    
+    #mensaje-privacidad {
+        padding: 0.5rem 1rem 1rem 1rem;
+        display: none;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        width: calc(100% - 2rem);
+        background: rgb(205, 205, 205);
+        color: rgba(63, 63, 63, 0.8);
+    }
+    
+    #mensaje-privacidad a {
         display: inline-block;
         cursor: pointer;
-        margin-left: 0.5rem;
     }
     
-    @media (max-width: 767px) {
-        #cookie-notice span {
-            display: block;
-            padding-top: 3px;
-            margin-bottom: 1rem;
-        }
-        #cookie-notice a {
-            position: relative;
-            bottom: 4px;
-        }
+    .cc-btn {
+        margin-top: 1rem;
+        margin-left: 0.5rem;
+        padding: .4em .8em;
+        font-size: .9em;
+        font-weight: 700;
+        border-width: 1px;
+        border-style: solid;
+        text-align: center;
+        white-space: nowrap;
+        border-radius: 12px;
+        cursor: pointer;
+    }
+    
+    .cc-btn-aprobar {
+        border-color: rgb(25, 99, 0);
+        background: rgb(182, 247, 161);
+        color: rgb(0, 0, 0);
+    }
+    
+    .cc-btn-declinar {
+        border-color: rgb(152, 1, 1);
+        background: rgb(255, 118, 118);
+        color: rgb(255, 255, 255);
     }
 </style>
 
-<!-- Elemento que muestra el mensaje de Cookies
+<!-- HTML
 -->
-<div id="cookie-notice">
-    <span>Utilizo cookies para mejorar la funcionalidad del Blog.</span>
-    <a class="btn btn-primary btn-sm" id="cookie-notice-accept">Aprobar</a>
-    <a class="btn btn-primary btn-sm" href="/privacidad">Más información</a>
+<div id="mensaje-privacidad">
+    <a class="cc-btn cc-btn-declinar" id="id-boton-declinar">Declinar</a>
+    <a class="cc-btn cc-btn-aprobar" id="id-boton-aceptar">Aprobar</a>
+    <br> Uso cookies para mejorar la experiencia de navegación,
+    <a href="/privacidad">más información</a>.
+</div>
+<div id="mensaje-reset-cookies">
+    <a class="cc-btn cc-btn-declinar" id="id-boton-reset-cookies">Reset cookies</a>
 </div>
 
 <!-- Script
 -->
 <script>
-    function createCookie(name, value, days) {
-        var expires = "";
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toUTCString();
+    // Get & Set cookies
+    function getCookieValue(cookieKey) {
+        var t = ("; " + document.cookie).split("; " + cookieKey + "=");
+        return t.length < 2 ? void 0 : t.pop().split(";").shift()
+    }
+
+    function setCookie(cookieKey, cookieValue, cookieExpireDays, cookieDomain, cookiePath, cookieSecure) {
+        var expira = new Date;
+        expira.setHours(expira.getHours() + 24 * (cookieExpireDays || 365));
+        var a = [cookieKey + "=" + cookieValue, "expires=" + expira.toUTCString(), "path=" + (cookiePath || "/")];
+        cookieDomain && a.push("domain=" + cookieDomain), cookieSecure && a.push("secure"), document.cookie = a.join(";")
+    }
+
+    // Preparo variables
+    var theCookieKey = 'consentimiento_luispa_com';
+    var thisPageName = '';
+    l = location.pathname.match(/\/([^\/]+)\/?$/)
+    if (Array.isArray(l) == true) {
+        thisPageName = l[1]
+    }
+
+    // Compruebo las cookies
+    theCookieValue = getCookieValue(theCookieKey);
+    if (theCookieValue == 'aprobado' || theCookieValue == 'declinado') {
+        if (theCookieValue == 'aprobado') {
+            // console.log('cookie: aprobado')
+            var script = document.createElement("script");
+            script.src = "https://plausible.io/js/plausible.js";
+            script.setAttribute('data-domain', 'luispa.com');
+            document.head.appendChild(script);
+        } else if (theCookieValue == 'declinado') {
+            // Do nothing
+            // console.log('cookie: declinado')
         }
-        document.cookie = name + "=" + value + expires + "; path=/";
-    }
-
-    function readCookie(name) {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        if (thisPageName == 'privacidad') {
+            document.getElementById('mensaje-reset-cookies').style.display = 'block';
         }
-        return null;
-    }
-
-    function eraseCookie(name) {
-        createCookie(name, "", -1);
-    }
-
-    // Check cookie
-    if (readCookie('consentimiento-cookies-luispa_com') == 'true') {
-        var script = document.createElement("script");
-        script.src = "https://plausible.io/js/plausible.js";
-        script.setAttribute('data-domain', 'luispa.com');
-        document.head.appendChild(script);
     } else {
-        document.getElementById('cookie-notice').style.display = 'block';
+        document.getElementById('mensaje-privacidad').style.display = 'block';
+        console.log('cookie: NO TENGO!!')
     }
-    document.getElementById('cookie-notice-accept').addEventListener("click", function() {
-        createCookie('consentimiento-cookies-luispa_com', 'true', 31);
-        document.getElementById('cookie-notice').style.display = 'none';
+
+    // Botón para aceptar
+    document.getElementById('id-boton-aceptar').addEventListener("click", function() {
+        setCookie(theCookieKey, 'aprobado', 30)
+        document.getElementById('mensaje-privacidad').style.display = 'none';
+        location.reload();
+    });
+    // Botón para declinar
+    document.getElementById('id-boton-declinar').addEventListener("click", function() {
+        setCookie(theCookieKey, 'declinado', 30)
+        document.getElementById('mensaje-privacidad').style.display = 'none';
+        location.reload();
+    });
+    // Botón para reset de las cookies
+    document.getElementById('id-boton-reset-cookies').addEventListener("click", function() {
+        setCookie(theCookieKey, '', -1)
+        document.getElementById('mensaje-reset-cookies').style.display = 'none';
         location.reload();
     });
 </script>

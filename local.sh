@@ -12,7 +12,7 @@ cd ${SCRIPT_DIR}/docs
 
 # Ejecuto el servidor en localhost, incluyendo los posts bajo ./docs/_drafts
 # Nota: Los archivos .md que están bajo ./docs/_drafts no se mostrarán en producción.
-JEKYLL_ENV=development bundle exec jekyll serve --drafts
+JEKYLL_ENV=development bundle exec jekyll serve --drafts --host=192.168.100.3
 
 # Ejecuto el servidor en mi hostname en mi LAN para poder probarlo 
 # desde otros clientes (por ejemplo una tablet o un móvil)
