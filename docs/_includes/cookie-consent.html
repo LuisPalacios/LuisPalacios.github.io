@@ -1,31 +1,14 @@
 <!-- CSS
 -->
 <style>
-    .lpouter {
-        padding: 0.5rem 1rem;
-        display: none;
-        text-align: center;
-        position: fixed;
-        bottom: 0;
-        width: calc(100% - 2rem);
-        background: rgb(205, 205, 205);
-        color: rgba(63, 63, 63, 0.8);
-    }
-    
-    .lpinner {
-        width: 50%;
-    }
-    
     #mensaje-reset-cookies {
-        padding: 1rem 1rem 1rem 1rem;
         text-align: center;
         display: none;
-        margin: auto;
+        margin-left: auto;
+        margin-right: auto;
         width: 30%;
         border-radius: 12px;
-        background: rgb(205, 205, 205);
-        color: rgba(63, 63, 63, 0.8);
-        margin-bottom: 1rem;
+        color: rgba(43, 29, 126, 0.8);
     }
     
     #mensaje-privacidad {
@@ -47,6 +30,7 @@
     .cc-btn {
         margin-top: 1rem;
         margin-left: 0.5rem;
+        margin-right: 0.5rem;
         padding: .4em .8em;
         font-size: .9em;
         font-weight: 700;
@@ -59,15 +43,42 @@
     }
     
     .cc-btn-aprobar {
-        border-color: rgb(25, 99, 0);
-        background: rgb(182, 247, 161);
+        border-color: rgb(91, 172, 64);
+        background: rgb(191, 241, 175);
         color: rgb(0, 0, 0);
+        opacity: 0.8;
+    }
+    
+    .cc-btn-aprobar:hover {
+        opacity: 1;
     }
     
     .cc-btn-declinar {
-        border-color: rgb(152, 1, 1);
-        background: rgb(255, 118, 118);
-        color: rgb(255, 255, 255);
+        border-color: rgb(184, 86, 86);
+        background: rgb(248, 167, 167);
+        color: rgb(0, 0, 0);
+        opacity: 0.4;
+    }
+    
+    .cc-btn-declinar:hover {
+        opacity: 1;
+    }
+    
+    .cc-btn-reset-cookies {
+        padding: 0.2em 0.8em;
+        margin-left: 0rem;
+        margin-right: 0rem;
+        border-color: rgb(64, 148, 146);
+        background: rgb(167, 238, 237);
+        color: rgb(0, 0, 0);
+        border-radius: 0px;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        opacity: 0.4;
+    }
+    
+    .cc-btn-reset-cookies:hover {
+        opacity: 1;
     }
 </style>
 
@@ -80,7 +91,7 @@
     <a href="/privacidad">más información</a>.
 </div>
 <div id="mensaje-reset-cookies">
-    <a class="cc-btn cc-btn-declinar" id="id-boton-reset-cookies">Reset cookies</a>
+    <a class="cc-btn cc-btn-reset-cookies" id="id-boton-reset-cookies">Reset cookies</a>
 </div>
 
 <!-- Script
