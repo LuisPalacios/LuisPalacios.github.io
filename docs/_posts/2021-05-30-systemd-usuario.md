@@ -1,5 +1,5 @@
 ---
-title: "Servicios Systemd de usuario"
+title: "Systemd de usuario"
 date: "2021-05-30"
 categories: linux
 tags: systemd service usuario

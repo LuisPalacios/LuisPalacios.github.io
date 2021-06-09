@@ -1,5 +1,5 @@
 ---
-title: "Previsualizar cuadernos en MacOS"
+title: "Previsualizar Cuadernos en MacOS"
 date: "2021-05-08"
 categories: herramientas
 tags: macos

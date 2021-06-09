@@ -1,5 +1,5 @@
 ---
-title: "Python, Pip, PipEnv y JupyterLab en MacOS"
+title: "Python y JupyterLab en MacOS"
 date: "2021-04-30"
 categories: desarrollo
 tags: macos python jupyter

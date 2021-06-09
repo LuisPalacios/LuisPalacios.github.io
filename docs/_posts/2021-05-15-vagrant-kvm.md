@@ -1,5 +1,5 @@
 ---
-title: "Vagrant con proveedor Libvirt KVM"
+title: "Vagrant con Libvirt KVM"
 date: "2021-05-15"
 categories: virtualización
 tags: linux kvm virtualización python jupyter

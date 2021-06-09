@@ -1,5 +1,5 @@
 ---
-title: "Convertir cuadernos JupyterLabs a PDF"
+title: "JupyterLabs a PDF"
 date: "2021-05-11"
 categories: desarrollo
 tags: macos python jupyter

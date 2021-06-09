@@ -1,5 +1,5 @@
 ---
-title: "Captura remota con WireShark"
+title: "WireShark remoto"
 date: "2016-06-05"
 categories: apuntes
 tags: linux nuc

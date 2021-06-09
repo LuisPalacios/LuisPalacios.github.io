@@ -1,5 +1,5 @@
 ---
-title: "Evolución a SMB2 en mi QNAP"
+title: "SMB2 en mi QNAP"
 date: "2014-05-02"
 categories: apuntes
 tags: afp qnap samba smb2
