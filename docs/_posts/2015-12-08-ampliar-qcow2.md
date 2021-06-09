@@ -78,7 +78,7 @@ luis@tierra:~$ ls -al cortafuegix.parchis.org.*
 luis@marte ~$ sudo chown luis:luis /home/luis/cortafuegix.parchis.org.qcow2
 ```
     
-- Convierto el de `QCOW2` a `RAW` (tarda ~ 1min 15seg) - **Paso 1** en el gráfico.
+- Convierto `QCOW2` a `RAW` (tarda ~ 1min 15seg) - **Paso 1** en el gráfico.
     
 ```console
 luis@marte:~$ qemu-img convert cortafuegix.parchis.org.qcow2 -O raw cortafuegix.parchis.org.raw
@@ -90,7 +90,7 @@ luis@marte:~$ qemu-img convert cortafuegix.parchis.org.qcow2 -O raw cortafuegix.
 luis@marte ~$ dd if=/dev/zero of=extra5GBzeros.raw bs=1024k count=5120
 ```
     
-- Con ambos RAWs creo un RAW final de 15GB. **Paso 2** en el gráfico.
+- Combino ambos RAWs creo un RAW final de 15GB. **Paso 2** en el gráfico.
     
 ```console
 luis@marte ~$ cat cortafuegix.parchis.org.raw extra5GBzeros.raw > cortafuegix.parchis.org.15GB.raw
@@ -105,7 +105,7 @@ luis@marte ~ $ mv cortafuegix.parchis.org.qcow2 cortafuegix.parchis.org.BACKUP.q
 - Convierto el RAW de 15GB a formato QCOW2 (tarda ~1min 34seg). **Paso 3** del gráfico.
 
 ```console
-luis@marte ~$ qemu-img convert cortafuegix.parchis.org.25GB.raw -O qcow2 cortafuegix.parchis.org.qcow2
+luis@marte ~$ qemu-img convert cortafuegix.parchis.org.15GB.raw -O qcow2 cortafuegix.parchis.org.qcow2
 ```
 
 - Vuelvo a hacer propietario a qemu.
