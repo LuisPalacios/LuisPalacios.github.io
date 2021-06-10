@@ -20,7 +20,7 @@ CIFS (Common Internet File System) es un "Dialecto" de SMB. Un dialecto es un co
 
 {% include showImagen.html
     src="/assets/img/original/sambaqnap.jpg"
-    caption="samba+qnap"
+    caption="Samba y QNAP Juntos"
     width="400px"
     %}
 
@@ -34,7 +34,7 @@ He instalado la versión 4.1 del software de QNAP y como se puede ver ya incorpo
 
 {% include showImagen.html
     src="/assets/img/original/SMBavanzado.png"
-    caption="SMBavanzado"
+    caption="SMB Avanzado"
     width="600px"
     %}
 
