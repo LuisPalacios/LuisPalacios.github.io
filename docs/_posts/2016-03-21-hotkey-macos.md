@@ -20,7 +20,7 @@ Voy a usar como ejemplo la aplicación PathFinder. Mi objetivo es que se abra es
 {% include showImagen.html
     src="/assets/img/posts/automator1.png"
     caption="Programa Automator"
-    width="300px"
+    width="800px"
     %}
 
 - Crea un Servicio nuevo,
@@ -31,7 +31,7 @@ Voy a usar como ejemplo la aplicación PathFinder. Mi objetivo es que se abra es
     width="800px"
     %}
 
-Asociamos la pulsación de una tecl con una App.
+Asociamos la pulsación de una tecla con una App.
 
 - Automator: Documento nuevo
 - Seleccionar las condiciones: sin datos de entrada, en cualquier aplicación
@@ -40,7 +40,7 @@ Asociamos la pulsación de una tecl con una App.
 
 {% include showImagen.html
     src="/assets/img/posts/automator3.png"
-    caption="automator4"
+    caption="Asociamos la tecla"
     width="600px"
     %}
 
