@@ -7,7 +7,7 @@ Este repositorio es un Blog personal, para mis notas o apuntes técnicos y sobre
 
 ### Pautas para los pull-requests
 
-Un Pull-Reuqest es una petición para que valide código (apuntes en este caso) que se quieren publicar. En este [artículo](https://help.github.com/articles/using-pull-requests) de GitHub tienes información general sobre el tema. A continuación tienes los pasos y más adelante un pequeño tutorial a modo de ejemplo.
+Un Pull-Reuqest es una petición para que yo valide código (apuntes en este caso) que quieras publicar. En este [artículo](https://help.github.com/articles/using-pull-requests) de GitHub tienes información general sobre el tema. A continuación tienes los pasos y más adelante un pequeño tutorial a modo de ejemplo.
 
 * **Issue**: Antes de trabajar en una nueva funcionalidad o documento, por favor [busca o crea un **Issue** en el repositorio original](https://github.com/LuisPalacios/LuisPalacios.github.io/issues) sobre el que vas a colaborar. Opcionalmente asígnatelo a ti mismo o a algún colaborador. 
 * **Fork**: Haz un [Fork](https://help.github.com/articles/fork-a-repo/) de mi [repositorio LuisPalacios/LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io) y recuerda que el Blog está en la Branch `gh-pages`.
