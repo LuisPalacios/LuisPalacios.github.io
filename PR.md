@@ -15,7 +15,7 @@ Un Pull-Reuqest es una petición para que yo valide código (apuntes en este cas
 * **Branch**: Crea una *Branch* específica para el *Issue* en tu *Clone* para que los cambios se independicen del resto de ramas. 
 * **Modifica**: Trabaja sobre tu rama, haz **commits, push, etc...** en tu propio repositorio. Asegúrate de ejecutar tests y de que las páginas se ven bien y funcionan en todos los navegadores. 
 * **Squash**. Si has hecho varios commits en tu Branch, intenta por favor agregarlos (squash) en un número menor de commits. 
-* **Pull Request**: Realiza un [Pull Request](https://docs.github.com/es/github/collaborating-with-issues-and-pull-requests/about-pull-requests)** contra la Branch `gh-pages`, que es donde están mis **apuntes técnicos**.
+* **Pull Request**: Realiza un [Pull Request](https://docs.github.com/es/github/collaborating-with-issues-and-pull-requests/about-pull-requests) contra la Branch `gh-pages`, que es donde están mis **apuntes técnicos**.
 * **Revisión**: Revisaré el código/documentación y podría opcionalmente pedirte conformidad con el estilo general o algún otro cambio. 
 * **Publicación**: Una vez aceptado haré un *merge* y pasará a estar disponible. 
 
