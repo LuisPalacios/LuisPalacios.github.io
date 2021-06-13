@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg width="158px" height="97px" viewBox="0 0 158 97" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <title>logo-markdown</title>
-  <desc>Created with Sketch.</desc>
-  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" style="" transform="matrix(0.899188, 0, 0, 0.899188, 7.974542, 4.889923)">
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="15" height="15"/>
+  </defs>
+  <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: rgb(84, 84, 84); pointer-events: none; visibility: hidden;" x="15" y="15" bx:origin="0.5 0.5"/>
+  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" style="" transform="matrix(0.810666, 0, 0, 0.810666, 10.873468, 35.678146)">
     <g id="logo-markdown" transform="translate(4.000000, 5.000000)">
       <rect id="Rectangle" stroke="#000000" stroke-width="9.10050989" x="1.0903156" y="0" width="148.026401" height="87.0112286"/>
       <path d="M19.7804441,68.5767212 L19.7804441,18.4345074 L34.7334439,18.4345074 L49.6853225,36.8690147 L64.6360798,18.4345074 L79.5890796,18.4345074 L79.5890796,68.5767212 L64.6360798,68.5767212 L64.6360798,39.8184917 L49.6853225,58.252999 L34.7334439,39.8184917 L34.7334439,68.5767212 L19.7804441,68.5767212 Z M113.231087,68.5767212 L90.8038295,44.2443659 L105.755708,44.2443659 L105.755708,18.4345074 L120.708708,18.4345074 L120.708708,44.2443659 L135.659465,44.2443659 L113.231087,68.5767212 Z" id="Shape" fill="#000000" fill-rule="nonzero"/>

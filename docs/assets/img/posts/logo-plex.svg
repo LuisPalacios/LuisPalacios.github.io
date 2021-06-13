@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="50" cy="50" r="38.272" stroke="#e5a00d" stroke-width="3" fill="rgba(0,0,0,.9)" style=""/>
-  <path d="M 36.445 25.283 L 50.797 25.283 L 66.744 50 L 50.797 74.717 L 36.445 74.717 L 52.392 50" fill="#e5a00d" style=""/>
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="15" height="15"/>
+  </defs>
+  <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: rgb(84, 84, 84); pointer-events: none; visibility: hidden;" x="15" y="15" bx:origin="0.5 0.5"/>
+  <g>
+    <circle cx="75" cy="75" r="60" stroke="#e5a00d" stroke-width="3" fill="rgba(0,0,0,.9)" style=""/>
+    <path d="M 53.749 36.251 L 76.249 36.251 L 101.25 75 L 76.249 113.749 L 53.749 113.749 L 78.75 75" fill="#e5a00d" style=""/>
+  </g>
 </svg>

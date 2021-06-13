@@ -6,7 +6,7 @@ tags: fusion gentoo linux virtualizacion vmware
 excerpt_separator: <!--more-->
 ---
 
-![logo VM Fusion](/assets/img/posts/logo-fusion.jpg){: width="150px" style="float:left; padding-right:25px" } 
+![logo VM Fusion](/assets/img/posts/logo-fusion.png){: width="150px" style="float:left; padding-right:25px" } 
 
 En este artículo describo cómo instalar Gentoo Linux 3.10.17 (64 bits, con **systemd + Gnome 3**) en una máquina virtual (VM) ejecutándose en VMWare Fusion 6 para Mac OSX versión 10.9 (Mavericks). Esto mismo debería funcionar igual en un Host distinto, como Parallels o VMWare Workstation para Windows o Linux.
 

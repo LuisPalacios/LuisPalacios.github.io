@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg">
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
   <defs>
+    <bx:grid x="0" y="0" width="15" height="15"/>
     <radialGradient gradientUnits="userSpaceOnUse" cx="121.618" cy="147.31" r="38.311" id="gradient-0" gradientTransform="matrix(0.97976, -0.202725, 0.081571, 0.394238, -57.229084, 88.607398)">
       <stop offset="0" style="stop-color: rgba(0, 0, 0, 1)"/>
       <stop offset="1" style="stop-color: rgb(97, 97, 97); stop-opacity: 0;"/>
     </radialGradient>
   </defs>
-  <g style="" transform="matrix(1.430692, 0, 0, 1.430692, -26.134911, -75.777138)">
+  <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: rgb(84, 84, 84);" x="15" y="15" bx:origin="0.5 0.5"/>
+  <g style="" transform="matrix(1.38119, 0, 0, 1.38119, -25.909674, -75.98304)">
     <path d="M 115.478 122.029 C 99.637 135.667 55.121 144.194 35.351 137.377 C 26.17 134.213 25.05 128.36 32.411 122.029 C 48.253 108.391 92.769 99.864 112.54 106.68 C 121.721 109.845 122.84 115.696 115.478 122.029 Z" id="path-1" style="paint-order: fill; fill: url(#gradient-0);" transform="matrix(0.982159, 0.188055, -0.188055, 0.982159, 24.267405, -11.728568)"/>
     <g id="g3813" transform="matrix(0.236954, 0, 0, 0.236954, 38.331814, -116.047325)" style="">
       <path d="m 0.34282784,901.90026 0,100.62504 0.03125,0 c 0.13323192,17.103 26.93452416,33.7389 74.81249916,42.9062 71.558743,13.7016 163.060593,5.5444 204.375003,-18.1875 13.59024,-7.8065 20.05029,-16.3087 20.0625,-24.7187 l 0,-100.37504 c -0.0444,8.38955 -6.50621,16.86923 -20.0625,24.65625 C 238.24717,950.53839 146.74532,958.66433 75.186577,944.96276 27.137451,935.76265 0.31623817,919.06779 0.37407784,901.90026 l -0.03125,0 z" id="path3759" style="stroke: rgb(186, 218, 85); paint-order: fill; fill: rgb(85, 123, 139);"/>

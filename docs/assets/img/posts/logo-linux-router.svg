@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:bx="https://boxy-svg.com">
   <defs>
+    <bx:grid x="0" y="0" width="15" height="15"/>
+    <radialGradient gradientUnits="userSpaceOnUse" cx="121.618" cy="147.31" r="38.311" id="gradient-0" gradientTransform="matrix(0.926473, -0.185495, 0.079529, 0.397229, -49.264251, 86.024457)">
+      <stop offset="0" style="stop-color: rgba(0, 0, 0, 1)"/>
+      <stop offset="1" style="stop-color: rgb(97, 97, 97); stop-opacity: 0.02;"/>
+    </radialGradient>
+    <radialGradient gradientUnits="userSpaceOnUse" cx="121.618" cy="147.31" r="38.311" id="gradient-1" gradientTransform="matrix(0.602589, -0.097821, 0.040375, 0.248726, -4.343772, 65.418584)">
+      <stop offset="0" style="stop-color: rgba(0, 0, 0, 1)"/>
+      <stop offset="1" style="stop-color: rgb(97, 97, 97); stop-opacity: 0.02;"/>
+    </radialGradient>
     <radialGradient id="radialGradient18834" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-0.69844216,0,0,0.76335815,166.3057,50.219935)" cx="336.22372" cy="220.53755" r="27.391165" xlink:href="#linearGradient4417-0"/>
     <linearGradient id="linearGradient4417-0">
       <stop id="stop4419-4-4" offset="0" style="stop-color:#000000"/>
@@ -275,16 +284,9 @@
       <path style="fill:url(#radialGradient701);stroke-width:0.77538" d="m 214.63605,148.03815 c -2.51029,-0.0409 -4.99135,0.28921 -7.27146,0.88384 -4.05254,1.05688 -7.57367,2.93934 -10.08468,5.39315 -1.62814,0.85539 -3.05003,1.89919 -4.20722,3.08639 -0.66186,0.67901 -1.24391,1.41694 -1.50131,2.24757 -0.20244,0.65333 -0.19857,1.34469 -0.28524,2.01986 -0.0324,0.25293 -0.0778,0.5073 -0.0362,0.76548 0.0208,0.12909 0.0631,0.25809 0.13756,0.38081 0.0221,0.0364 0.0528,0.0707 0.0806,0.1055 0.0825,0.15031 0.18297,0.29681 0.31473,0.43099 0.28806,0.29334 0.68023,0.53107 1.09417,0.73203 0.41394,0.20097 0.85255,0.36757 1.2815,0.54936 2.28006,0.96628 4.22773,2.32456 5.9925,3.75924 2.3677,1.92485 4.52941,4.06099 7.5099,5.46004 2.10465,0.98794 4.52773,1.552 6.92602,1.72396 2.81637,0.20193 5.58521,-0.12293 8.18167,-0.69344 2.40631,-0.52873 4.69673,-1.27132 6.75202,-2.25401 3.90702,-1.86802 6.98699,-4.60634 11.42445,-5.83442 0.96876,-0.2681 1.99041,-0.45921 2.91317,-0.78993 0.92276,-0.33072 1.76305,-0.8265 2.11948,-1.52711 0.34261,-0.67347 0.2049,-1.45031 0.23569,-2.18968 0.0329,-0.791 0.26357,-1.5559 0.33312,-2.34278 0.0695,-0.78687 -0.0382,-1.6289 -0.62199,-2.35178 -0.12955,-0.16043 -0.28324,-0.31001 -0.45163,-0.45157 -0.0509,-0.29235 -0.22134,-0.58029 -0.46622,-0.83239 -0.50487,-0.51975 -1.29334,-0.87172 -2.09515,-1.11671 -1.09824,-0.33555 -2.25599,-0.50211 -3.39891,-0.69601 -3.51093,-0.59565 -6.96955,-1.47539 -10.29467,-2.60394 -1.65302,-0.56104 -3.27073,-1.18327 -4.90416,-1.77928 -1.67927,-0.61273 -3.38672,-1.20103 -5.16515,-1.57729 -1.49109,-0.31546 -3.00643,-0.47332 -4.51259,-0.49788 z" id="path699"/>
     </clipPath>
     <radialGradient id="radialGradient701" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.81494503,-0.25452614,0.31491054,0.43302392,-75.371375,150.73818)" cx="294.48483" cy="193.09949" r="31.111488" xlink:href="#linearGradient28469-0"/>
-    <radialGradient gradientUnits="userSpaceOnUse" cx="121.618" cy="147.31" r="38.311" id="gradient-0" gradientTransform="matrix(0.926473, -0.185495, 0.079529, 0.397229, -49.264251, 86.024457)">
-      <stop offset="0" style="stop-color: rgba(0, 0, 0, 1)"/>
-      <stop offset="1" style="stop-color: rgb(97, 97, 97); stop-opacity: 0.02;"/>
-    </radialGradient>
-    <radialGradient gradientUnits="userSpaceOnUse" cx="121.618" cy="147.31" r="38.311" id="gradient-1" gradientTransform="matrix(0.602589, -0.097821, 0.040375, 0.248726, -4.343772, 65.418584)">
-      <stop offset="0" style="stop-color: rgba(0, 0, 0, 1)"/>
-      <stop offset="1" style="stop-color: rgb(97, 97, 97); stop-opacity: 0.02;"/>
-    </radialGradient>
   </defs>
-  <g style="" transform="matrix(1.106685, 0, 0, 1.106685, -8.986476, -9.398623)">
+  <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: rgb(84, 84, 84); pointer-events: none; visibility: hidden;" x="15" y="15" bx:origin="0.5 0.5"/>
+  <g style="" transform="matrix(1.041008, 0, 0, 1.041008, -3.444365, -4.2047)">
     <path d="M 116.661 121.982 C 100.82 135.62 56.304 144.147 36.534 137.33 C 27.353 134.166 26.233 128.313 33.594 121.982 C 49.436 108.344 93.952 99.817 113.723 106.633 C 122.904 109.798 124.023 115.649 116.661 121.982 Z" id="path-1" style="paint-order: fill; fill: url(#gradient-0);" transform="matrix(0.982159, 0.188055, -0.188055, 0.982159, 24.279674, -11.951876)"/>
     <g id="g3813" transform="matrix(0.236954, 0, 0, 0.236954, 38.331814, -116.047325)" style="">
       <path d="m 0.34282784,901.90026 0,100.62504 0.03125,0 c 0.13323192,17.103 26.93452416,33.7389 74.81249916,42.9062 71.558743,13.7016 163.060593,5.5444 204.375003,-18.1875 13.59024,-7.8065 20.05029,-16.3087 20.0625,-24.7187 l 0,-100.37504 c -0.0444,8.38955 -6.50621,16.86923 -20.0625,24.65625 C 238.24717,950.53839 146.74532,958.66433 75.186577,944.96276 27.137451,935.76265 0.31623817,919.06779 0.37407784,901.90026 l -0.03125,0 z" id="path3759" style="stroke: rgb(186, 218, 85); paint-order: fill; fill: rgb(85, 123, 139);"/>

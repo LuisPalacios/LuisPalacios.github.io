@@ -4,10 +4,12 @@
     <bx:grid x="0" y="0" width="15" height="15"/>
   </defs>
   <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: rgb(84, 84, 84); pointer-events: none; visibility: hidden;" x="15" y="15" bx:origin="0.5 0.5"/>
-  <path id="path1098" style="stroke-linejoin: round; stroke: rgb(51, 51, 51); stroke-width: 3.125; stroke-linecap: round; fill: none;" d="M 73.887 107.452 L 73.887 126.943 M 23.758 127.503 L 126.241 127.503"/>
-  <path id="path1099" style="fill-rule: evenodd; stroke: rgb(51, 51, 51); stroke-width: 1pt; fill: rgb(51, 51, 51);" d="M 81.677 126.111 C 81.677 131.898 75.413 135.515 70.399 132.622 C 68.072 131.278 66.639 128.797 66.639 126.111 C 66.639 120.321 72.904 116.702 77.917 119.599 C 80.243 120.943 81.677 123.423 81.677 126.111 Z"/>
-  <path id="path741" style="stroke-linejoin: round; fill-rule: evenodd; stroke: rgb(51, 51, 51); stroke-width: 3.2048; fill: rgb(238, 238, 238);" d="M 121.385 63.129 C 121.385 99.078 82.47 121.547 51.336 103.573 C 36.887 95.229 27.987 79.814 27.987 63.129 C 27.987 27.18 66.903 4.711 98.037 22.685 C 112.485 31.027 121.385 46.444 121.385 63.129 Z"/>
-  <path id="path743" style="stroke-linejoin: round; stroke: rgb(76, 76, 76); stroke-width: 5; stroke-linecap: round; fill: none;" d="M 74.446 62.64 L 74.446 28.146"/>
-  <path id="path744" style="stroke-linejoin: round; stroke: rgb(76, 76, 76); stroke-width: 5; stroke-linecap: round; fill: none;" d="M 76.476 63.292 L 99.559 76.616"/>
-  <path id="path742" style="stroke-linejoin: round; fill-rule: evenodd; stroke: rgb(51, 51, 51); stroke-linecap: round; stroke-width: 3.0256; fill: rgb(51, 51, 51);" d="M 78.917 63.126 C 78.917 66.383 75.394 68.419 72.574 66.79 C 71.262 66.036 70.455 64.638 70.455 63.126 C 70.455 59.871 73.982 57.836 76.802 59.465 C 78.11 60.219 78.917 61.617 78.917 63.126 Z"/>
+  <g>
+    <path id="path1098" style="stroke-linejoin: round; stroke: rgb(51, 51, 51); stroke-width: 3.125; stroke-linecap: round; fill: none;" d="M 73.887 107.452 L 73.887 126.943 M 23.758 127.503 L 126.241 127.503"/>
+    <path id="path1099" style="fill-rule: evenodd; stroke: rgb(51, 51, 51); stroke-width: 1pt; fill: rgb(51, 51, 51);" d="M 81.677 126.111 C 81.677 131.898 75.413 135.515 70.399 132.622 C 68.072 131.278 66.639 128.797 66.639 126.111 C 66.639 120.321 72.904 116.702 77.917 119.599 C 80.243 120.943 81.677 123.423 81.677 126.111 Z"/>
+    <path id="path741" style="stroke-linejoin: round; fill-rule: evenodd; stroke: rgb(51, 51, 51); stroke-width: 3.2048; fill: rgb(238, 238, 238);" d="M 121.385 63.129 C 121.385 99.078 82.47 121.547 51.336 103.573 C 36.887 95.229 27.987 79.814 27.987 63.129 C 27.987 27.18 66.903 4.711 98.037 22.685 C 112.485 31.027 121.385 46.444 121.385 63.129 Z"/>
+    <path id="path743" style="stroke-linejoin: round; stroke: rgb(76, 76, 76); stroke-width: 5; stroke-linecap: round; fill: none;" d="M 74.446 62.64 L 74.446 28.146"/>
+    <path id="path744" style="stroke-linejoin: round; stroke: rgb(76, 76, 76); stroke-width: 5; stroke-linecap: round; fill: none;" d="M 76.476 63.292 L 99.559 76.616"/>
+    <path id="path742" style="stroke-linejoin: round; fill-rule: evenodd; stroke: rgb(51, 51, 51); stroke-linecap: round; stroke-width: 3.0256; fill: rgb(51, 51, 51);" d="M 78.917 63.126 C 78.917 66.383 75.394 68.419 72.574 66.79 C 71.262 66.036 70.455 64.638 70.455 63.126 C 70.455 59.871 73.982 57.836 76.802 59.465 C 78.11 60.219 78.917 61.617 78.917 63.126 Z"/>
+  </g>
 </svg>
