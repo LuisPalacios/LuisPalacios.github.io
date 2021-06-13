@@ -1,6 +1,6 @@
 ## Pull Requests al Blog
 
-Este repositorio es un Blog personal, para mis notas o apuntes técnicos y sobre todo para devolver ycontribuir, a través de documentación, a la comunidad de Internet. Si te gusta y quieres contribuir sigue las pautas que describo más abajo.
+Este repositorio es un Blog personal, para mis notas o apuntes técnicos y sobre todo para devolver y contribuir, a través de documentación, a la comunidad de Internet. Si te gusta y quieres contribuir sigue las pautas que describo más abajo.
 
 
 <br/>
