@@ -2,7 +2,7 @@
 title: "Media Center Pi+KODI/XBMC"
 date: "2015-01-31"
 categories: tv
-tags: media center movistar raspberry xbmc pi linux kodi
+tags: media center movistar raspberry xbmc pi linux kodi 
 excerpt_separator: <!--more-->
 ---
 

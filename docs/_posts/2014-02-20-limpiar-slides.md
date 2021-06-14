@@ -1,5 +1,5 @@
 ---
-title: "Limpiar master slides en PPT"
+title: "Limpiar PPT"
 date: "2014-02-20"
 categories: herramientas
 tags: slides ppt vba

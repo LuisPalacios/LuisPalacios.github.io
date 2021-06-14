@@ -2,7 +2,7 @@
 title: "Rsync en MacOS"
 date: "2006-11-13"
 categories: herramientas
-tags: cliente servidor mac linux
+tags: cliente servidor mac linux rsync
 excerpt_separator: <!--more-->
 ---
 

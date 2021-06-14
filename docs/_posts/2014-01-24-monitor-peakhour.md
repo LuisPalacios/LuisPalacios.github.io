@@ -1,8 +1,8 @@
 ---
-title: "Monitorizar la red con PeakHour"
+title: "Monitorizar con PeakHour"
 date: "2014-01-24"
 categories: macos
-tags: monitor peakhour snmp
+tags: monitor peakhour snmp tráfico red networking
 excerpt_separator: <!--more-->
 ---
 

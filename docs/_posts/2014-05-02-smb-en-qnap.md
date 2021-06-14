@@ -1,7 +1,7 @@
 ---
 title: "SMB2 en mi QNAP"
 date: "2014-05-02"
-categories: apuntes
+categories: herramientas
 tags: afp qnap samba smb2
 excerpt_separator: <!--more-->
 ---

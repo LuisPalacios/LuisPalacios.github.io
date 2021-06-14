@@ -1,8 +1,8 @@
 ---
 title: "IPtables con nflog"
 date: "2014-08-31"
-categories: linux
-tags: iptables linux gentoo seguridad
+categories: seguridad
+tags: linux vpn openvpn firewall túneles seguridad iptables
 excerpt_separator: <!--more-->
 ---
 

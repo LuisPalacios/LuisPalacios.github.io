@@ -1,8 +1,8 @@
 ---
 title: "Intel Quick Sync Video"
 date: "2016-04-09"
-categories: apuntes gentoo linux media-center qsv vaapi
-tags: aceleracion qsv quicksync-video transcodificacion tvheadend
+categories: linux
+tags: aceleracion qsv quicksync-video transcodificacion tvheadend media-center qsv vaapi
 excerpt_separator: <!--more-->
 ---
 

@@ -1,8 +1,8 @@
 ---
 title: "WireShark remoto"
 date: "2016-06-05"
-categories: apuntes
-tags: linux nuc
+categories: linux
+tags: networking tráfico captura
 excerpt_separator: <!--more-->
 ---
 

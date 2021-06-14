@@ -1,8 +1,8 @@
 ---
 title: "Ampliar disco qcow2"
 date: "2015-12-08"
-categories: apuntes
-tags: convertir iscsi qcow2
+categories: virtualización
+tags: convertir iscsi qcow2 disco tamaño
 excerpt_separator: <!--more-->
 ---
 

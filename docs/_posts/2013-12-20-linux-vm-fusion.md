@@ -2,7 +2,7 @@
 title: "Linux en 'Fusion para Mac'"
 date: "2013-12-20"
 categories: virtualización
-tags: fusion gentoo linux virtualizacion vmware
+tags: fusion gentoo linux virtualizacion vmware vm fusion
 excerpt_separator: <!--more-->
 ---
 

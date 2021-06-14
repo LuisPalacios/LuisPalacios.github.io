@@ -2,7 +2,7 @@
 title: "ntopng en Gentoo"
 date: "2013-11-22"
 categories: linux
-tags: linux gentoo ntopng
+tags: linux gentoo ntopng tiempo hora time
 excerpt_separator: <!--more-->
 ---
 

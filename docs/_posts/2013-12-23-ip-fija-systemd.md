@@ -2,7 +2,7 @@
 title: "IP fija con Systemd en Gentoo"
 date: "2013-12-23"
 categories: linux
-tags: linux systemd gentoo
+tags: linux systemd gentoo networking ip fija
 excerpt_separator: <!--more-->
 ---
 

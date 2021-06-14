@@ -1,8 +1,8 @@
 ---
 title: "Despertar el Mac para backup"
 date: "2014-06-23"
-categories: apuntes
-tags: backup macosx
+categories: herramientas
+tags: backup macosx copia
 excerpt_separator: <!--more-->
 ---
 

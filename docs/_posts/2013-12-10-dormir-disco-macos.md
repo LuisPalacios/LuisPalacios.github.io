@@ -1,8 +1,8 @@
 ---
-title: "Cuándo duerme un disco en MacOSX"
+title: "Dormir un disco en MacOSX"
 date: "2013-12-10"
-categories: macos
-tags: disco macosx sleep
+categories: herramientas
+tags: disco macosx sleep dormir
 excerpt_separator: <!--more-->
 ---
 

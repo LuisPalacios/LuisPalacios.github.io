@@ -1,8 +1,8 @@
 ---
 title: "Hotkey para Apps de MacOS"
 date: "2016-03-21"
-categories: apuntes
-tags: finder hotkey osx pathfinder
+categories: herramientas
+tags: finder hotkey macos osx pathfinder
 excerpt_separator: <!--more-->
 ---
 

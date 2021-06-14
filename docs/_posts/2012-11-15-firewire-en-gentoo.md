@@ -2,7 +2,7 @@
 title: "FireWire en Linux en Mac"
 date: "2012-11-15"
 categories: linux
-tags: firewire gentoo linux
+tags: firewire gentoo linux discos
 excerpt_separator: <!--more-->
 ---
 

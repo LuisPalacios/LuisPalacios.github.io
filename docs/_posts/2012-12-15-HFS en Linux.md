@@ -2,7 +2,7 @@
 title: "HFS+ en Linux"
 date: "2012-12-15"
 categories: linux
-tags: hfs linux gentoo
+tags: hfs linux gentoo discos
 excerpt_separator: <!--more-->
 ---
 
