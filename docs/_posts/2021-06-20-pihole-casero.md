@@ -351,6 +351,10 @@ https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt
 https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
 ```
 
+```console
+$ sudo pihole -g
+```
+
 * Whitelists. Las he sacado de diferentes fuentes y estas son las que yo uso (y cómo las configuro desde cero)... 
 
 ```console
