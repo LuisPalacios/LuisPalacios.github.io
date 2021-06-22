@@ -6,7 +6,7 @@ tags: systemd service usuario
 excerpt_separator: <!--more-->
 ---
 
-![logo vagrant kvm](/assets/img/posts/logo-systemd.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
+![logo systemd](/assets/img/posts/logo-systemd.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
 
 El gestor [systemd](https://systemd.io/) permite configurar servicios desde un usuario normal del sistema. Estos ***servicios de usuario de systemd*** son una funcionalidad poco conocida pero muy útil. Consiste en poder crear y usar ficheros `.service` desde un directorio local del usuario y que se ejecuten con sus privilegios. 
 

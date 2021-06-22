@@ -6,7 +6,7 @@ tags: networking tráfico captura
 excerpt_separator: <!--more-->
 ---
 
-![Logo Mover](/assets/img/posts/logo-wireshark.svg){: width="150px" style="float:left; padding-right:25px" } 
+![Logo wireshark](/assets/img/posts/logo-wireshark.svg){: width="150px" style="float:left; padding-right:25px" } 
 
 En este apunto explico cómo lanzo una captura tráfico de la red (`tcpdump`) en un equipo Linux remoto ([Pi2 con Gentoo]({% post_url 2015-05-17-gentoo-pi2 %})) y pido que se reenvíe a **Wireshark** ejecutándose en mi ordenado (Mac). Conseguiremos que la salida de tcpdump sea la entrada de Wireshark. Parece magia pero verás que es extremadamente sencillo. Vas a necesitar conocer `ssh` y `sudo`, un par de requisitos para que esto sea tan fácil. 
 

@@ -6,7 +6,7 @@ tags: aceleracion qsv quicksync-video transcodificacion tvheadend media-center q
 excerpt_separator: <!--more-->
 ---
 
-![logo Tvheadend](/assets/img/posts/logo-intel-quicksync.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
+![logo Quicksync](/assets/img/posts/logo-intel-quicksync.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
 
 En este apunte explico cómo intento que Tvheadend use las capacidades de transcodificación (encode y decode) por Hardware ofrecidas por Intel Quick Sync Video (por ejemplo en sus NUC’s). El objetivo es que los streams de video utilicen mucho menos ancho de banda. Pensaba que NO me iba a hacer falta debido a mi caso de uso (Tvheadend para ver canales iptv en un entorno sin problemas de ancho de banda, router Linux + Fibra y clientes raspberry con Kodi por cable Ethernet)...
 

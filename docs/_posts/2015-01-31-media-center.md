@@ -150,7 +150,7 @@ Nota: Con Pi 2 o 3 se soportan bitrates >40Mbps con muchísimo menor consumo de 
 Recomiendo encarecidamente **grabar las imágenes con [balenaEtcher](https://www.balena.io/etcher/)**, es un programa que funciona genial y no he tenido ningún problema con él. 
 
 {% include showImagen.html
-    src="/assets/img/posts/belenaEtcher.png"
+    src="/assets/img/posts/balenaEtcher1.png"
     caption=""
     width="600px"
     %}

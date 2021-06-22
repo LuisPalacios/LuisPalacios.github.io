@@ -7,7 +7,7 @@ excerpt_separator: <!--more-->
 ---
 
 
-![logo qnap](/assets/img/posts/imagenes_web111.jpg){: width="150px" style="float:left; padding-right:25px" } 
+![logo log](/assets/img/posts/imagenes_web111.jpg){: width="150px" style="float:left; padding-right:25px" } 
 
 Cita Geek: "Registrar lo que pasa es de sabios...". En el pasado usaba `ULOG` para analizar qué paquetes eran descartados por `iptables`, pero como ha sido marcado como obsoleto he cambiado a `NFLOG`.
 

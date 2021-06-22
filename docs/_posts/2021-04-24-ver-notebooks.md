@@ -6,7 +6,7 @@ tags: macos
 excerpt_separator: <!--more-->
 ---
 
-![logo md](/assets/img/posts/logo-jupyterview.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
+![logo jupyter view](/assets/img/posts/logo-jupyterview.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
 
 Con MacOS no se incluye una opción en Finder para poder pre-visualizar cuaderos de Jupyter Labs (.ipynb). Existen varias opciones pero una de las más rápidas y sencillas consiste en instalar `ipynb-quicklook`
 

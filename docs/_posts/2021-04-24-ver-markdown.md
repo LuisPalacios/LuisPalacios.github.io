@@ -6,7 +6,7 @@ tags: macos
 excerpt_separator: <!--more-->
 ---
 
-![logo md](/assets/img/posts/logo-mdview.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
+![logo mdview](/assets/img/posts/logo-mdview.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
 
 Con MacOS no se incluye una opción en el **Finder**, para poder pre-visualizar archivos Markdown (.md). Existen varias opciones para resolverlo, una de las más rápidas y sencillas consiste en instalar `qlmarkdown`
 

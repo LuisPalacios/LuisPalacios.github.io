@@ -6,7 +6,7 @@ tags: disco macosx sleep dormir
 excerpt_separator: <!--more-->
 ---
 
-![Logo memtest](/assets/img/posts/duermetedisco.png){: width="150px" style="float:left; padding-right:25px" } 
+![Logo duerme](/assets/img/posts/duermetedisco.png){: width="150px" style="float:left; padding-right:25px" } 
 
 Necesito subir el tiempo que esperará el MacOSX antes de poner a dormir un disco duro externo Thunderbolt. Por defecto son diez minutos. El comando para ver la configuración actual es:
 

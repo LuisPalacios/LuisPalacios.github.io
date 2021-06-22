@@ -6,7 +6,7 @@ tags: linux movistar tvheadend
 excerpt_separator: <!--more-->
 ---
 
-![logo Tvheadend](/assets/img/posts/logo-tvhWebGrab+.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
+![logo WebGrab+](/assets/img/posts/logo-tvhWebGrab+.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
 
 [WebGrab+Plus](http://www.webgrabplus.com/) es un recolector de Guías EPG multi-sitio capaz de trabajar de manera incremental. Se baja la programación y genera un fichero en formato XMLTV que puedes usar para alimentar a tu media center o a Tvheadend. Primero probé a instalarlo en un MacOSX y ahora (este artículo) toca instalarlo en mi servidor Linux y por supuesto integrarlo con [Tvheadend](https://tvheadend.org/).
 
