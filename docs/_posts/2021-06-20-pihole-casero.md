@@ -1,8 +1,8 @@
 ---
 title: "Pi-hole casero"
-date: "2021-05-30"
-categories: linux
-tags: systemd service usuario
+date: "2021-06-20"
+categories: herramientas
+tags: linux anuncios cortafuegos pihole whitelist adlist
 excerpt_separator: <!--more-->
 ---
 
