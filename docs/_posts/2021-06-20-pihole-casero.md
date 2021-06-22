@@ -8,16 +8,16 @@ excerpt_separator: <!--more-->
 
 ![logo pihole](/assets/img/posts/logo-pihole.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
 
-Pi-hole es un servidor de DNS que protege tus equipos de contenido no deseado, sin necesidad de instalar ningún software en los clientes de tu red. **Uno de los principales casos de uso es que haga de sumidero para la publicidad que inunda hoy en día las redes** 😅. Como lo oyes, puedes poner un pequeño PC con Linux y Pi-hole en tu red de casa para evitar que te llegue la mayoría de la publicidad mientras navegas. 
+Pi-hole es un servidor DNS que protege tus equipos de contenido no deseado, sin necesidad de instalar ningún software en los clientes de tu red. **Su caso de uso es que haga de sumidero para la publicidad que inunda hoy en día las redes** 😅. Como lo oyes, un pequeño PC con Linux y Pi-hole en tu red de casa para evitar que te llegue mogollón de publicidad mientras navegas. 
 
 <br clear="left"/>
 <!--more-->
 
 <br>
 
-En una Raspberry Pi 4B, he montado [Raspberry Pi OS](https://www.raspberrypi.org/software/operating-systems/) GNU/Linux 10 (buster) y el software [Pi-Hole](https://pi-hole.net). He realizado la instalación en mi casa, donde tengo un router de Movistar (pero valdría cualquier proveedor de internet). Desactivé el DNS/DHCP Server del router y pasé a usar ambos servicios en el Pi-Hole. Excluyendo la instalación de Raspbian (que no describo aquí) el proceso total es muy sencillo, tarda menos de diez minutos
+En una Raspberry Pi 4B, he montado [Raspberry Pi OS](https://www.raspberrypi.org/software/operating-systems/) GNU/Linux 10 (buster) y [Pi-Hole](https://pi-hole.net). He realizado la instalación en mi casa, donde tengo un router de Movistar (pero valdría cualquier proveedor de internet). Desactivé el DNS/DHCP Server del router y pasé a usar ambos servicios en el Pi-Hole. Excluyendo la instalación de Raspbian, el proceso total es muy sencillo, tarda menos de diez minutos
 
-Antes de empezar, las ventajas de Pi-hole, sacadas de su [propia](https://docs.pi-hole.net) web.
+Antes de empezar, ventajas de Pi-hole, sacadas de su [propia](https://docs.pi-hole.net) web.
 
 * Fácil de instalar: el instalador te guía por el proceso y tarda menos de diez minutos
 * Resolutivo: la publicidad se bloquea no solo en navegador, sino también en aplicaciones móviles y televisores inteligentes
@@ -28,7 +28,7 @@ Antes de empezar, las ventajas de Pi-hole, sacadas de su [propia](https://docs.p
 * Versátil: puede funcionar opcionalmente como servidor DHCP, asegurando que todos los dispositivos estén protegidos automáticamente
 * Escalable: capaz de gestionar cientos de millones de consultas si lo instalas en un servidor potente. 
 * Moderno: bloquea los anuncios tanto en IPv4 como en IPv6
-* Gratuito: software de código abierto, pero [funciona con DONACIONES, algo que te recomiendo hacer](https://docs.pi-hole.net). 
+* Gratuito: software de código abierto, [funciona con DONACIONES, algo que te recomiendo hacer](https://docs.pi-hole.net). 
 
 
 {% include showImagen.html 
@@ -39,23 +39,23 @@ Antes de empezar, las ventajas de Pi-hole, sacadas de su [propia](https://docs.p
 
 <br/>
 
-¿Cómo funciona? pues de forma similar a un cortafuegos, los anuncios y los "rastreadores" se bloquean para todos los dispositivos que se encuentran en tu red casera. Cuando estos hagan una consulta a su DNS (servidor de nombres) verificará si debe bloquear dicho nombre porque lo tiene en su lista negra. Así de sencillo. 
+¿Cómo funciona? pues de forma similar a un cortafuegos, los anuncios y los "rastreadores" se bloquean para todos los dispositivos que se encuentran en tu red casera. Cuando hagan una consulta al DNS de Pi-hole bloqueará los nombres que tenga en su lista negra.
 
 <br/> 
 
 ### Instalación
 
-Comprobé los [requisitos](https://docs.pi-hole.net/main/prerequisites/#supported-operating-systems) de Pi-hol y preparé el Hardware (Raspberry Pi), descargué el Sistema Operativo (Raspbian OS, documentado [aquí](https://www.raspberrypi.org/software/)), versión ([Raspberry Pi OS Lite](https://www.raspberrypi.org/software/operating-systems/), del 7 de Mayo de 2021) y lo copié a una memoria de 8GB usando [belenaEtcher](https://www.balena.io/etcher/).  
+Comprobé los [requisitos](https://docs.pi-hole.net/main/prerequisites/#supported-operating-systems) de Pi-hole y preparé el Hardware (Raspberry Pi), descargué el Sistema Operativo (Raspbian OS, documentado [aquí](https://www.raspberrypi.org/software/)), versión ([Raspberry Pi OS Lite](https://www.raspberrypi.org/software/operating-systems/), del 7 de Mayo de 2021) y lo copié a una memoria de 8GB usando [belenaEtcher](https://www.balena.io/etcher/).  
 
 {% include showImagen.html
     src="/assets/img/posts/balenaEtcher2.png"
-    caption=""
+    caption="Balena Etcher"
     width="500px"
     %}
 
 <br/>
 
-Tras hacer boot con la tarjeta preparada, terminé de configurar Raspian OS
+Tras el boot terminé de configurar Raspian OS
 
 ```console
 Login: pi
@@ -73,7 +73,7 @@ $ sudo raspi-config
 
 ```
 
-Vía SSH sigo con la [instalación](https://docs.pi-hole.net/main/basic-install/) de Pi-hole:
+Vía SSH sigo con la [instalación](https://docs.pi-hole.net/main/basic-install/) de Pi-hole conectado a la IP que ha recibido vía SSH.
 
 
 * Conecto con la Raspberry Pi y ejecuto el script de instalación. 
@@ -142,8 +142,8 @@ pi@pihole:~ $ curl -sSL https://install.pi-hole.net | bash
 
 Una vez que termina me apunto datos importantes
 
-- Configure your devices to use the Pi-hole as their DNS server: `192.168.100.150`
-- View the web interface at: `http://192.168.100.150/admin`
+- Configure your devices to use the Pi-hole as their DNS server: `192.168.1.150`
+- View the web interface at: `http://192.168.1.150/admin`
 - Your Admin Webpage login password is: `zaXxhC2K` (la cambiaré luego)
 
 <br/>
@@ -227,7 +227,7 @@ pi@pihole:~ $ sudo pihole -a -p
 
 {% include showImagen.html 
       src="/assets/img/posts/pihole2.png" 
-      caption="Arquitectura Pi-hole" 
+      caption="Login en Pi-hole" 
       width="500px"
       %}
 
@@ -235,7 +235,7 @@ pi@pihole:~ $ sudo pihole -a -p
 
 {% include showImagen.html 
       src="/assets/img/posts/pihole3.png" 
-      caption="Arquitectura Pi-hole" 
+      caption="Dashboard de Pi-hole" 
       width="500px"
       %}
 
@@ -244,7 +244,9 @@ pi@pihole:~ $ sudo pihole -a -p
 - Web interface: `http://192.168.1.224/admin`
 - Admin Webpage password: `zaXxhC2K` (la cambiaré luego)
 
-* Activo el DHCP Server
+* IMPORTANTE: Desactivo el DHCP Server que tenía antes en la misma red LAN. Estaba configurado en el router de Movistar, accedí a su configuración y lo desactivé.
+
+* Activo el DHCP Server de Pi-Hole
   
 ```config
    Settings -> DHCP -> Habilito DHCP Server
@@ -497,6 +499,6 @@ $ pihole -up
 
 ### Referencias a estudiar
 
-Encontré esta herramienta que es interesante estudiar... Link https://github.com/jessedp/pihole5-list-tool
+Encontré esta herramienta que es interesante estudiar... [https://github.com/jessedp/pihole5-list-tool](https://github.com/jessedp/pihole5-list-tool)
 
 
