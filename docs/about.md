@@ -14,7 +14,7 @@ permalink: /about/
 
 Siempre dudando entre la tecnología y el arte, descanso cuando conecto con mi hobbies, programando, investigando tecnologías o [dibujando](https://www.instagram.com/luis.palacios.derqui).
 
-Este blog está dedicado a guardar mis apuntes técnicos, casi siempre en el entorno de Linux o el desarrollo de software. Mi blog original empezó con [NibbleBlog](http://www.nibbleblog.com), depués [Wordpress](https://wordpress.org/) y ahora migrando a [jekyll](http://jekyllrb.com) hospedo en [GitHub Pages](https://pages.github.com). 
+Este blog está dedicado a guardar mis apuntes técnicos, casi siempre en el entorno de Linux o el desarrollo de software. Mi blog original empezó con [NibbleBlog](http://www.nibbleblog.com), depués [Wordpress](https://wordpress.org/) y ahora basado en [jekyll](http://jekyllrb.com) y hospedado en [GitHub Pages](https://pages.github.com). 
 
 En este [apunte]({% post_url 2021-04-19-nuevo-blog %}) describo cómo está montado. Los fuentes están en el repositorio [LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io) y puedes acceder al blog vía [www.luispa.com](https://www.luispa.com)
 
