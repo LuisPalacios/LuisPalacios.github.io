@@ -15,7 +15,7 @@ El gestor [systemd](https://systemd.io/) permite configurar servicios desde un u
 
 [systemd](https://systemd.io/) es un gestor de sistemas y servicios para Linux que se ejecuta como PID 1 y arranca todo el sistema. Permite paralelización, usa sockets y D-Bus para iniciar los servicios, inicia demonios, monitoriza y gestiona procesos, puntos de montaje. Desplazó a `sysvinit` como estándar de facto hace ya tiempo.
 
-Tiene una funcionalidad muy interesante llamada "user lingering" que consiste en ejecutar instancias de de *systemd* como usuario normal del sistema. Eso nos va a permitir lanzar procesos de usuario durante el arranque del sistema.
+Tiene una funcionalidad muy interesante llamada "user lingering" que consiste en ejecutar instancias de *systemd* como usuario normal del sistema. Eso nos va a permitir lanzar procesos de usuario durante el arranque del sistema.
 
 <br/> 
 
