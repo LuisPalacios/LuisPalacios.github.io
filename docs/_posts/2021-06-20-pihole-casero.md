@@ -182,7 +182,7 @@ interface eth0
         static domain_name_servers=80.58.61.250 80.58.61.254
 ```
 
-* Desactivo completamente la WiFi y el BlueTooth (no los voy a usar). Nota que después de modificar este fichero debes hacer un `reboot`
+* Desactivo completamente la WiFi y el BlueTooth (no los voy a usar).
 
 ```console
 pi@pihole:~ $ sudo nano /boot/config.txt
@@ -254,7 +254,7 @@ pi@pihole:~ $ sudo pihole -a -p
 ```config
    Settings -> DHCP -> Habilito DHCP Server
 		From: 192.168.1.50
-		To: 192.168.1.251
+		To: 192.168.1.220
 		Router: 192.168.1.1
 		Domain: home.arpa
 		Lease time in hours: 1
