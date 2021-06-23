@@ -157,7 +157,7 @@ Actualizo el sistema y termino de configurar manualmente algunos aspectos
  $ sudo apt upgrade -y
 ```
 
-* Configuro dirección IP estática
+* Configuro dirección IP estática, decido poner la `.224` (`192.168.1.224`) 
 
 ```console
 pi@pihole:~ $ sudo cat /etc/dhcpcd.conf
@@ -172,6 +172,9 @@ require dhcp_server_identifier
 slaac private
 #
 #  LO SIGUIENTE ES MUY IMPORTANTE. OBLIGATORIO USAR SIEMPRE IP FIJA !!!!
+#  Hasta ahora teníamos la .150 que es la que me asignó DHCP y que pedí
+#  quedara como fija, pero fue solo para que me creara las líneas siguientes.
+#  Pongo aquí la IP definitiva:
 #
 interface eth0
         static ip_address=192.168.1.224/24
