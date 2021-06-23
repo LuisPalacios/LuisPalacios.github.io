@@ -73,7 +73,7 @@ $ sudo raspi-config
 
 ```
 
-Vía SSH sigo con la [instalación](https://docs.pi-hole.net/main/basic-install/) de Pi-hole conectado a la IP que ha recibido vía SSH.
+Vía SSH sigo con la [instalación](https://docs.pi-hole.net/main/basic-install/) de Pi-hole. Conecto con la dirección IP que ha recibido desde el DHCP Server que tengo en mi red (Router del proveedor) y que sustituiré más adelante, una vez asigne una IP fija.
 
 
 * Conecto con la Raspberry Pi y ejecuto el script de instalación. 
