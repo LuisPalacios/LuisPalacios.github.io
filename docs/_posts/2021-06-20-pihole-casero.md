@@ -220,7 +220,7 @@ BLOCKING_ENABLED=true
 pi@pihole:~ $ sudo reboot
 ```
 
-* Cambio la contraseña de administrador
+* Una vez que arranca, entro por SSH y cambio la contraseña de administrador de PiHole
 
 ```console
 pi@pihole:~ $ sudo pihole -a -p
@@ -245,7 +245,7 @@ pi@pihole:~ $ sudo pihole -a -p
 <br/>
 
 - Web interface: `http://192.168.1.224/admin`
-- Admin Webpage password: `zaXxhC2K` (la cambiaré luego)
+
 
 * IMPORTANTE: Desactivo el DHCP Server que tenía antes en la misma red LAN. Estaba configurado en el router de Movistar, accedí a su configuración y lo desactivé.
 
@@ -278,7 +278,7 @@ A partir de este momento:
 
 ### Parametrización
 
-El sistema ya debería estar operativo, sin embargo en mi caso he ido un poco más haya y realizado algunos cambios manualmente en los ficheros de configuración. 
+El sistema ya debería estar operativo, sin embargo en mi caso he ido un poco más allá y realizado algunos cambios manualmente en los ficheros de configuración. 
 
 ```console
 $ sudo cat /etc/dnsmasq.d/01-pihole.conf
