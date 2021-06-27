@@ -10,11 +10,9 @@ permalink: /about/
 
 ![myimg](/assets/img/posts/about_luispa.jpg){: width="200px" height="231px" style="float:left; padding-right:25px" } 
 
-¡Hola!, me llamo Luis y soy un tipo variado, tecnología, arte, hacker, fotografía, negocio, padre.
+¡Hola!, me llamo Luis y soy un tipo variado, tecnología, arte, hacker, fotografía, negocio, padre. Mis hobbies son la programación, la tecnología y el [dibujo](https://www.instagram.com/luis.palacios.derqui).
 
-Siempre dudando entre la tecnología y el arte, descanso cuando conecto con mi hobbies, programando, investigando tecnologías o [dibujando](https://www.instagram.com/luis.palacios.derqui).
-
-Este blog está dedicado a guardar mis apuntes técnicos, casi siempre en el entorno de Linux o el desarrollo de software. Mi blog original estaba basado en [NibbleBlog](http://www.nibbleblog.com), depués lo pasé a [Wordpress](https://wordpress.org/) y por último lo he migrado a un blog estático con [jekyll](http://jekyllrb.com), que he hospedado en [GitHub Pages](https://pages.github.com). 
+Este blog está dedicado a guardar mis apuntes técnicos, casi siempre en el entorno de Linux o el desarrollo de software. Empecé con un blog basado en [NibbleBlog](http://www.nibbleblog.com), depués lo pasé a [Wordpress](https://wordpress.org/) y por último lo he migrado a un blog estático con [jekyll](http://jekyllrb.com), que he hospedado en [GitHub Pages](https://pages.github.com). 
 
 En este [apunte]({% post_url 2021-04-19-nuevo-blog %}) puedes encontrar cómo lo he configurado e instalado. Los fuentes de todos estos apuntes técnicos están en el repositorio [LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io). La dirección pública de este blog la puedes encontrar en [www.luispa.com](https://www.luispa.com)
 
