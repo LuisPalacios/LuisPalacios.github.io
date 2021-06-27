@@ -30,14 +30,14 @@
         <h2 class="footer-heading">
             <a href="{{ site.url }}">Ir a la portada</a>
             <br/>
-            <p style="font-size:0.8em; font-style:italic; color: grey; text-align:justify;">Blog con apuntes técnicos en entornos linux o desarrollo de software. Consulta la página sobre
+            <p style="font-size:0.8em; font-style:italic; color: grey; text-align:justify;">Blog con apuntes técnicos en entornos linux o desarrollo de software (<a href="https://github.com/LuisPalacios/LuisPalacios.github.io">fuente en GitHub</a>). Consulta la página sobre
                 <a href="{{ site.url }}/privacidad">Privacidad</a> para establecer tus preferencias.</p>
 
         </h2>
 
-        <div class="footer-col-wrapper">
+        <div class="footer_luis_outer">
 
-            <div class="footer-col footer-col-1">
+            <div class="footer_luis_inner">
 
                 <!-- INICIO BÚSQUEDAS -->
                 <!-- Elemento HTML para realizar la búsqueda -->
@@ -61,52 +61,28 @@
 
             </div>
 
-
-            <div class="footer-col footer-col-2">
-                <ul class="contact-list">
-                    <a href="https://github.com/LuisPalacios/LuisPalacios.github.io">Repositorio GitHub</a>
-                </ul>
-            </div>
-
-            <div class="footer-col footer-col-3">
-                <ul class="social-media-list " style="text-align:right;">
-                    <li>
-                        <a href="https://www.instagram.com/luis.palacios.derqui">
-                            <svg class="svg-icon">
+            <div class="footer_luis_inner">
+                <a href="https://www.instagram.com/luis.palacios.derqui">
+                    <svg class="svg-icon">
                                 <use xlink:href="/assets/minima-social-icons.svg#instagram"></use>
                             </svg>
-                            <span class="username">Luis.Palacios.Derqui</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/LuisPalacios">
-                            <svg class="svg-icon">
+                </a>
+                <a href="https://github.com/LuisPalacios">
+                    <svg class="svg-icon">
                                 <use xlink:href="/assets/minima-social-icons.svg#github"></use>
                             </svg>
-                            <span class="username">LuisPalacios</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.twitter.com/LuisPalacios">
-                            <svg class="svg-icon">
+                </a>
+                <a href="https://www.twitter.com/LuisPalacios">
+                    <svg class="svg-icon">
                                 <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
                             </svg>
-                            <span class="username">@LuisPalacios</span>
-                        </a>
-                    </li>
-                </ul>
+                </a>
             </div>
         </div>
 
         <!-- INICIO COMENTARIOS (Solo en Posts, no en navigator) -->
         {% if page.collection == 'posts' %}
-        <script src="https://utteranc.es/client.js"
-                repo="LuisPalacios/LuisPalacios.github.io"
-                issue-term="pathname"
-                label="comentario"
-                theme="github-light"
-                crossorigin="anonymous"
-            async>
+        <script src="https://utteranc.es/client.js" repo="LuisPalacios/LuisPalacios.github.io" issue-term="pathname" label="comentario" theme="github-light" crossorigin="anonymous" async>
         </script>
         {% endif %}
         <!-- FIN COMENTARIOS -->

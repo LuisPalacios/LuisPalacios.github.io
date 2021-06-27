@@ -91,7 +91,14 @@ code {
 
 // Para el footer personalizado
 // ----------------------------------------------
-.footer_outer {
+.footer_luis_outer {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.footer_luis_inner {
   display: flex;
 }
 
