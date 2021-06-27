@@ -23,10 +23,18 @@ pre, code, .highlighter-rouge .highlight { background-color: #f8f8f8; }
 // Deshabilito resaltar errores en los códigos que se documenten
 .highlight .err { color: inherit; background-color: inherit; }
 
+// Para el footer personalizado
+// ----------------------------------------------
+.site-title {
+  display: table-cell;
+  vertical-align: middle;
+}
+
 // Añado el LOGO del sitio a la cabecera. 
 .site-title::before {
 	content: url("img/posts/drjal.svg");
-	display: inline-block;
+  display: inline-block;
+  vertical-align: middle;
 	position: relative;
 	width: 37px;
 	top: 5px;
@@ -101,5 +109,6 @@ code {
 .footer_luis_inner {
   display: flex;
 }
+
 
 // ----------------------------------------------
