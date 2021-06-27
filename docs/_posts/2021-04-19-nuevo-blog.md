@@ -100,7 +100,7 @@ Ruby es un lenguaje de programación interpretado, reflexivo y orientado a objet
    launchctl setenv PATH "/usr/local/bin:/usr/local/sbin:/usr/local/opt/ruby/bin:$PATH"
 ```
 
-Para poder instalar gem’s en mi HOME directory y no hacer system wide isntalls
+Para poder instalar gem’s en mi directorio HOME (y evitar tener que hacer instalaciones a nivel de todo el sistema)
 
 ```zsh
 ➜  ~ > nano $HOME/.zshrc
