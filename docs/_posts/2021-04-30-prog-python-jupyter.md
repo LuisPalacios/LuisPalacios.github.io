@@ -68,7 +68,7 @@ pip 21.0.1 from /Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/
 
 ### Entornos aislados de Python
 
-Las aplicaciones en Python hacen uso de paquetes y módulos que no forman parte de la librería estándar. La gestión de qué versiones y librerías instalo puede llegar a ser inmanejable. La solución consiste en crear un entorno virtual, que me ofrezca la capacidad de ejecutar mi aplicación de forma aislada con acceso las librerías con las versiones necesarias, sin conflictos. 
+Las aplicaciones en Python hacen uso de paquetes y módulos que no forman parte de la librería estándar. La gestión de qué versiones y librerías instalo puede llegar a ser inmanejable. La solución consiste en crear un entorno virtual, que me ofrezca la capacidad de ejecutar mi aplicación de forma aislada con acceso a las librerías con las versiones necesarias, sin conflictos. 
 
 Python tiene varias formas populares de crear entornos virtuales, por ejemplo:
 
@@ -177,7 +177,7 @@ De nuevo vamos a crear un proyecto ficticio que permita sacar algún gráfico qu
 ```zsh
 ➜  ~ > mkdir plot
 ➜  ~ > cd plot
-➜  fibonacci > pipenv install matplotlib numpy
+➜  plot > pipenv install matplotlib numpy
 :
 ```
 
