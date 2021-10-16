@@ -29,7 +29,6 @@ $ git init
 $ cd /home/proyectos
 $ git clone https://github.com/LuisPalacios/LuisPalacios.github.io
 
-
 $ cd /home/proyectos/miproyecto
 $ git status
 ```
