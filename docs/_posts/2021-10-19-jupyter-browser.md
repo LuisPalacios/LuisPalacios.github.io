@@ -18,20 +18,19 @@ El proceso es bastante sencillo, asumo que tienes Jupyter instalado, abrimos el 
 
 ```
 $ cd ~/.jupyter
-$ .jupyter
 ```
 
 Si tienes el fichero ```jupyter_notebook_config.py``` ábrelo con tu editor preferido. Si no existe, créalo con el comando siguiente: 
 
 ```
-$ .jupyter  jupyter notebook --generate-config
+$ jupyter notebook --generate-config
 Writing default config to: /Users/luis/.jupyter/jupyter_notebook_config.py
 ```
 
 Abrimos el fichero con el editor preferido
 
 ```
-$ .jupyter  e jupyter_notebook_config.py
+$ e jupyter_notebook_config.py
 ```
 
 Cambia la línea siguiente
@@ -43,7 +42,7 @@ c.NotebookApp.browser = 'open -a /Applications/Google\ Chrome.app %s'
 Vuelve a tu proyecto y arranca Jupyter Lab desde la línea de comandos, verás que ahora se invoca al nuevo navegador. 
 
 ```
-pipenv run jupyter lab
+$ pipenv run jupyter lab
 ```
 
 
