@@ -118,6 +118,13 @@ Es un gestor de paquetes de software que va a facilitar el trabajo con Jekyll y 
 ➜  ~ > gem install jekyll bundler
 ```
 
+Meses después, tras actualizar Homebrew, Ruby y el propio Macos, me encontré con problemas con el comando gem. Lo resolví ejecutando lo siguiente: 
+
+```zsh
+➜  ~ > gem cleanup && gem pristine --all
+```
+
+
 <br/>
 
 ### Jekyll
