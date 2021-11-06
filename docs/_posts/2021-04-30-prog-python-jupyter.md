@@ -166,11 +166,11 @@ Tu dirección IP es: 80.31.238.6
 
 ## IV. Preparar el entorno "Jupyter lab"
 
-[Jupyter Lab](https://jupyter.org) es una aplicación web que sirve a modo de puente constante entre el código y los textos explicativos. Esta es una de las partes más interesante de este apunte !!. Voy a crear un entorno, **Jupyter Lab**; es un editor online (se ejecuta en tu browser) que te permite trabajar con documentos de texto llamados **Jupyter notebooks**, ficheros de texto, arrancar terminales u otros componentes personalizados. Lo mejor de los **Jupyter notebooks** es que puedes incluir otros contenidos además del código fuente.
+[Jupyter Lab](https://jupyter.org) es una aplicación web que permite codificar, ejecutar y "documentar". Esta última es una de las partes más interesante de este apunte. Vamos a por ello, creo un entorno **Jupyter Lab**; un editor online (que se ejecuta en tu browser) que te permite trabajar con documentos de texto llamados **Jupyter notebooks**, arrancar terminales u otros componentes personalizados. Lo mejor de estos notebookses que puedes incluir otros contenidos además del código fuente.
 
 <br/>
 
-### Prueba de concepto: Jupyter notebook
+### Prueba de concepto: Jupyter notebook "sencillo"
 
 De nuevo vamos a crear un proyecto ficticio que permita sacar algún gráfico que se mostrará usando la librería `matplotlib` y `numpy`.
 
@@ -219,26 +219,33 @@ Nos prepara un servidor que se queda escuchando en el puerto `8888` y nos muestr
 
 <br/>
 
-## Vitaminar Jupyter Lab
+### Prueba de concepto: Jupyter notebook Data Science
 
-Vamos ver cómo añadir funcionalidad extra al entorno.
-
-### Entorno con varias librerías
-
-Por ejemplo, si queremos trabajar con un entorno más complicado con múltiples librerías Pytho pues simplemente tienes que instalarlas con pipenv y pasarán a estar disponibles en JupyterLab. 
-
-Un ejemplo, queremos trabajar con pandas, entramos en nuestro nuevo proyecto (lo he llamado `proyecto_pandas`) e instalamos las librerías. 
+Si queremos algo más complejo, un entorno más complicado con múltiples librerías, a continuación verás como instalarlas. En este ejemplo queremos trabajar con pandas, matplotlib, seaborn, prophet... entramos en nuestro nuevo proyecto (lo he llamado `proyecto_pandas`) e instalamos las librerías. 
 
 ```zsh
 ➜  > mkdir proyecto_pandas
-➜  > cd 
-➜  proyecto_pandas > pipenv install pandas tabulate openpyxl lxml html5lib beautifulsoup4 sqlalchemy feather-format matplotlib xlrd scipy ipykernel pexpect ipython-sql Faker
+➜  > cd proyecto_pandas
+➜  proyecto_pandas > 
+➜  proyecto_pandas > pipenv install
+➜  proyecto_pandas > pipenv check
+➜  proyecto_pandas > pipenv install matplotlib numpy pandas
+➜  proyecto_pandas > pipenv install tabulate
+➜  proyecto_pandas > pipenv install openpyxl
+➜  proyecto_pandas > pipenv install Cython convertdate lunarcalendar holidays
+➜  proyecto_pandas > pipenv install pystan
 ➜  proyecto_pandas > pipenv install jupyterlab
+➜  proyecto_pandas > pipenv install seaborn
+➜  proyecto_pandas > pipenv install plotnine plotly
+➜  proyecto_pandas > pipenv install ipywidgets
+➜  proyecto_pandas > pipenv install jupyter_client # (para que croos_validation de fbprophet.diagnostics funcione)
+➜  proyecto_pandas > pipenv run jupyter nbextension enable --py widgetsnbextension # (para que croos_validation de fbprophet.diagnostics funcione)
+➜  proyecto_pandas > pipenv install prophet
+➜  proyecto_pandas > pipenv install lxml html5lib beautifulsoup4 sqlalchemy feather-format matplotlib xlrd scipy ipykernel pexpect ipython-sql Faker
 ```
-
 <br/>
 
-### Entorno con varias librerías
+### SQL con JupyterLab
 
 Si queremos utilizar SQL con JupyterLab recomiendo usar la extensión hecha por Catherine Devlin, [IPython SQL Magic](https://github.com/catherinedevlin/ipython-sql).
 
