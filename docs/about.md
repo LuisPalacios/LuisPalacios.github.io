@@ -30,4 +30,4 @@ This blog (only **in Spanish** 🤗) is dedicated to keep my technical notes, mo
 
 In this [note]({% post_url 2021-04-19-nuevo-blog %}) I describe how I set up this static blog. Sources are in the [LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io) repository and you can access the blog via: [www.luispa.com](https://www.luispa.com)
 
-This site has additional privacy policies for an [apunte](/dividimusprivacy) I'm developing: 
+This site has additional privacy policies for an [App](/dividimusprivacy) I'm developing: 
