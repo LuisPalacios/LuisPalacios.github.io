@@ -8,7 +8,7 @@ excerpt_separator: <!--more-->
 
 ### Privacidad
 
-En 2018 entró en vigor el GDPR (Reglamento General de Protección de Datos) de la Unión Europea. Establece que cualquier empresa o individuo que procese información personal de ciudadanos de la Unión Europea debe cumplirlo.
+En 2018 entró en vigor el GDPR (Reglamento General de Protección de Datos) de la Unión Europea. Establece que cualquier empresa o individuo que procese información personal de los ciudadanos de la Unión Europea debe cumplirlo.
 
 ![logo gdpr](/assets/img/posts/logo-gdpr.png){: width="200px" style="float:left; padding-right:25px" } 
 

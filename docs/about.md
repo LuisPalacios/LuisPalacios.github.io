@@ -29,3 +29,5 @@ Always hesitating between technology and art, in the end mixing it. I rest when 
 This blog (only **in Spanish** 🤗) is dedicated to keep my technical notes, mostly in the Linux or software development environment. Started with [NibbleBlog](http://www.nibbleblog.com), then [Wordpress](https://wordpress.org/) and now using [jekyll](http://jekyllrb.com), hosted on [GitHub Pages](https://pages.github.com).
 
 In this [note]({% post_url 2021-04-19-nuevo-blog %}) I describe how I set up this static blog. Sources are in the [LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io) repository and you can access the blog via: [www.luispa.com](https://www.luispa.com)
+
+This site has additional privacy policies for an [apunte](/dividimusprivacy) I'm developing: 
