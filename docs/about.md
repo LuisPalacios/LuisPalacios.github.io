@@ -32,14 +32,14 @@ In this [note]({% post_url 2021-04-19-nuevo-blog %}) I describe how I set up thi
 
 This site has privacy policies for the [Dividimus App](/dividimusprivacy) that've developed for iOS. 
 
---
+---
 
 <br/>
 
 {% include showImagen.html
     src="/assets/img/posts/qr-luispa.com.png"
     caption="QR www.luispa.com"
-    width="250px"
+    width="150px"
     %}
 
 <br/>
