@@ -74,9 +74,11 @@ influxdb:
 
 - Entro en modo debugging en el Linux que aloja a HASS OS ([más info](https://developers.home-assistant.io/docs/operating-system/debugging/#ssh-access-to-the-host), [otra referencia](https://developers.home-assistant.io/docs/operating-system/debugging/) y [otra referencia](https://github.com/home-assistant/operating-system/blob/rel-1/Documentation/configuration.md#automatic)
 
-  - Formateo USB como FAT o EXT4 y llamo "CONFIG"
+  - Formateo USB como FAT o EXT4 y muy importante, le pongo el nombre: "CONFIG"
   - Creo en su raiz un fichero "autorhized_keys" con mi clave pública
-  - Ejecuto 
+  - Inserto la usb en un puerto libre del servidor HA
+  - De forma casi instantánea activa SSHD escuchando en el puerto 22222
+  - Ejecuto desde un cliente donde tenga la clave privada:
 
 ```
 ssh root@tu-servidor-hass -p 22222  (también ssh root@homeassistant.local -p 22222)
