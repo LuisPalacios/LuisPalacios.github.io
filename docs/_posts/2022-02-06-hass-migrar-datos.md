@@ -8,7 +8,7 @@ excerpt_separator: <!--more-->
 
 ![Logo Grafana](/assets/img/posts/logo-hass-out-grafana-influxdb.svg){: width="150px" style="float:left; padding-right:25px" } 
 
-He **migrado ambos servicios a un servidor externo**. Sacar el servicio y montarlo en otro servidor no es demasiado difícil, lo que sí que me llevó un rato fue descubrir cómo exportar e importar los datos entre los InfluxDB y cómo adaptar el Dashboard antiguo de Grafana para que use `Flux`. 
+He **migrado los servicios InfluxDB/Grafana de mi Home Assistant a un servidor externo**. Sacar el servicio y montarlo en otro servidor no es demasiado difícil, lo que sí que me llevó un rato fue descubrir cómo exportar e importar los datos entre los InfluxDB y cómo adaptar el Dashboard antiguo de Grafana para que use `Flux`. 
 
 
 <br clear="left"/>
