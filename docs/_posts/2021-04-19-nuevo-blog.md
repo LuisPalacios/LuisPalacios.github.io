@@ -89,6 +89,13 @@ Homebrew 3.1.2
 
 <br/>
 
+### Python
+
+No es necesario instalar Python para lo que estamos discutiendo aquí, pero es un buen momento para hacerlo si lo vas a necesitar en el futuro. Aquí tienes un [apunte sobre Python en MacOS]({% post_url 2021-04-30-prog-python-jupyter %})
+
+
+<br/>
+
 ### Ruby
 
 Ruby es un lenguaje de programación interpretado, reflexivo y orientado a objetos, creado por el programador japonés Yukihiro "Matz" Matsumoto, quien comenzó a trabajar en Ruby en 1993, y lo presentó públicamente en 1995. Necesitamos Ruby para ejecutar Jekyll, así que voy a instalarlo utilizando Homebrew:

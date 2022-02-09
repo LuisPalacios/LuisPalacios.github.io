@@ -22,8 +22,11 @@ En este apunte técnico voy a mostrar como instalar **Python, Pip y PipEnv** par
 
 [Python](https://www.python.org) es un lenguaje de programación interpretado cuya filosofía hace hincapié en la legibilidad de su código.​ Se trata de un lenguaje de programación multiparadigma, ya que soporta parcialmente la orientación a objetos, programación imperativa y, en menor medida, programación funcional
 
+MacOS trae versiones antiguas (Python 2 y 3) así que lo primero es instalarnos la última versión. Puedes elegir entre instalar la versión nativa directamente desde https://www.python.org o la versión vía Hombrebrew
 
-MacOS trae versiones antiguas (Python 2 y 3) así que lo primero es instalarnos la última versión. 
+Nota: Si en el futuro vas a instalar/utilizar aplicaciones en hombebrew que dependen de python te recomiendo que uses la Instalación vía Hombebrew 
+
+#### Instalación desde python.org
 
 1. Descargar la última versión para [Mac OS X](https://www.python.org/downloads/mac-osx/)
 
@@ -42,11 +45,29 @@ MacOS trae versiones antiguas (Python 2 y 3) así que lo primero es instalarnos 
 7. A partir de ahora utiliza: `/usr/local/bin/python3`
 
 
+#### Instalación vía Hombrebrew
+
+1. `brew install python`
+
+2. Modificar la línea de comandos para anticipar el nuevo Python3 en el $PATH: `export PATH=/usr/local/bin:/usr/local/sbin:$PATH`.
+
+3. Para evitar ejecutar "python" o "pip" con la versión antigua, en tu .zshrc:
+   -  `alias python=/usr/local/bin/python3" >> ~/.zshrc`
+   -  `alias pip=/usr/local/bin/pip3" >> ~/.zshrc`
+
+4. Nunca borres el Python original que trae OSX.
+
+5. A partir de ahora utiliza: `/usr/local/bin/python3`
+
+
 <br/>
 
 ## II. Instalar PIP
 
 Un indispensable, `pip` es el sistema de gestión de paquetes utilizado para instalar y administrar los paquetes desde **PyPI**, el [Python Package Index](https://pypi.org), el repositorio de software oficial para aplicaciones de terceros en el lenguaje de programación Python. 
+
+Nota: Si optaste por la opcion Homebrew ignora el siguiente paso. 
+#### Instalación desde bootstrap.pypa.io
 
 Instalamos PIP desde la linea de comandos
 
@@ -63,6 +84,11 @@ Python 3.9.2
 ➜  ~ > pip --version
 pip 21.0.1 from /Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/pip (python 3.9)
 ```
+
+#### Instalación vía Hombrebrew
+
+No hace falta instalar `pip` dado que ya viene instalado (`brew install python`)
+
 
 <br>
 
@@ -84,6 +110,11 @@ Python tiene varias formas populares de crear entornos virtuales, por ejemplo:
 
 Mi preferencia personal es **PipEnv**, una herramienta que pretende traer lo mejor de varios mundos del empaquetado (bundler, composer, npm, cargo, yarn, etc.) al mundo de Python. 
 
+
+Nota: Si optaste por la opcion Homebrew ignora el siguiente paso. 
+
+#### Instalación con pip
+
 Ejecuta lo siguiente: 
 
 ```zsh
@@ -98,13 +129,23 @@ pipenv, version 2020.11.15
 ```
 
 
-Si no puedes ejecutar `pipenv`significa que necesitas corregir tu variable PATH. Tendrás que modificar tu fichero `.bashrc`o `.zsh`, según qué shell ejecutas. Desde el 2019 Apple recomienda `zsh`. Verifica qué shell tienes configurada en Preferencias del Sistema > Usuarios y Grupos > (botón derecho sobre tu usuario) Opciones Avanzadas > Shell de inicio de sesión (cambia a `zsh`). Después modifica `$HOME/.zsh`
+#### Instalación vía Hombrebrew
+
+1. `brew install pipenv`
+
+<br/>
+
+--
+
+En ambos casos, si no puedes ejecutar `pipenv`significa que necesitas corregir tu variable PATH. Tendrás que modificar tu fichero `.bashrc`o `.zsh`, según qué shell ejecutas. Desde el 2019 Apple recomienda `zsh`. Verifica qué shell tienes configurada en Preferencias del Sistema > Usuarios y Grupos > (botón derecho sobre tu usuario) Opciones Avanzadas > Shell de inicio de sesión (cambia a `zsh`). Después modifica `$HOME/.zsh`
+
 
 ```zsh
 ➜  ~ grep PATH .zshrc
 export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/opt/ruby/bin:/Users/lpalacio/Library/Python/3.9/bin:$PATH
 launchctl setenv PATH "/usr/local/bin:/usr/local/sbin:/usr/local/opt/ruby/bin:/Users/lpalacio/Library/Python/3.9/bin:$PATH"
 ```
+
 
 <br/>
 
@@ -313,9 +354,20 @@ Removing virtualenv (/Users/luis/.local/share/virtualenvs/plot-djKM4O4f)...
 
 Instalar es relativamente fácil, pero con tantos programas y módulos en tu sistema es importante saber cómo actualizarlos.
 
+#### Instalación nativa 
+
 - Actualiza **Python** en tu MacOS reinstalando la [última versión](https://www.python.org/downloads/mac-osx/).
 - Actualiza **pip** ejecutando el comando `pip install --upgrade pip`
 - Actualiza **todo lo que has instalado con `pip`** mediante: 
+
+
+#### Instalación vía Hombrebrew
+
+1. `brew update`
+2. `brew upgrade`
+   
+
+
 
 ````
 pip list --outdated --format=freeze |\
