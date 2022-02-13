@@ -8,7 +8,7 @@ excerpt_separator: <!--more-->
 
 ![Logo Grafana](/assets/img/posts/logo-hass-solax.svg){: width="150px" style="float:left; padding-right:25px" } 
 
-En este apunte describo cómo he integrado en Home Assistant mi instalación Fotovoltaica con paneles Axitec, un Inversor SolaX y un par de baterías Triple Power de SolaX. Tras probar varias opciones me he decantado por la **integración que utiliza el protocolo MODBUS/TCP** para sacar la mayor cantidad de datos del Inversor.
+Describo cómo he integrado en Home Assistant mi instalación Fotovoltaica con paneles Axitec, un Inversor SolaX y un par de baterías Triple Power. Tras probar varias opciones me he decantado por la **integración MODBUS/TCP** que trabaja en local, vía LAN y saca más datos que el resto de opciones.
 
 <br clear="left"/>
 <!--more-->
@@ -25,29 +25,28 @@ Mi instalación fotovoltaica consta de los siguientes componentes:
       %}
 
 
-- 1 x Inversor SolaX Híbrido X1-HYBRID-5.0T Gen-3
-- 23 x Módulos solar Axitec 280W 60 células policristalino
-- 1 x SolaX EPS Box
-- 1 x BMS para baterías Triple Power de SolaX T- BAT MC0500
-- 2 x Batería Triple Power T63 v2.0 SolaX 6,3kWh
-- 1 x Meter Chint DDSU 666
-- 1 x 
+      - 1 x Inversor SolaX Híbrido X1-HYBRID-5.0T Gen-3
+      - 23 x Módulos solar Axitec 280W 60 células policristalino
+      - 1 x SolaX EPS Box
+      - 1 x BMS para baterías Triple Power de SolaX T- BAT MC0500
+      - 2 x Batería Triple Power T63 v2.0 SolaX 6,3kWh
+      - 1 x Meter Chint DDSU 666
+      - 1 x SolaX Pocket WiFi Dongle
+  
 
 Tenemos tres opciones de monitorización. 
 
-1. SolaX Cloud de forma automática y/o a través de un API. 
-2. Consulta en local al Pocket Wifi/LAN Dongle mediante API.
-3. Consulta en local al puerto Ethernet mediante MODBUS/TCP
+1. SolaX Cloud (se actualiza automáticamente vía Dongle) y puede ser consultada a través de la App oficial de SolaX o a través de REST/API. 
+2. Consulta directa en local al Pocket Wifi/LAN Dongle mediante REST/API.
+3. Consulta directa a través de la LAN (puerto Ethernet) mediante MODBUS/TCP
 
 <br/>
 
 ### 1. Monitorizar vía SolaX Cloud
 
-Cuando terminan la instalación deben dejarte configurado el Dongle de modo que este registre sus métricas en la Cloud de SolaX para que puedas consultarlas gráficamente desde un navegador o una aplicación móvil. 
+Cuando terminan la instalación deben dejarte configurado el Dongle de modo que vaya guardando en la Cloud SolaX para que puedas consultarlas desde un navegador o una aplicación móvil. Las actualizaciones las hace cada 5 minutos. 
 
-A través del Wifi/LAN dongle el inversor actualiza sus datos cada 5 minutos en la Cloud de SolaX. 
-
-- Podemos usar un navegador o el App de SolaX para conectar con SolaX Cloud. En ambos casos estás accediendo a un servicio online con una ventana de 5-min. Aunque no es tiempo real, funciona muy bien. 
+- Podemos usar un navegador o el App de SolaX para conectar con SolaX Cloud. En ambos casos estás accediendo a un servicio online con una ventana de 5-min, que aunque no es tiempo real, funciona bastante bien. 
 
 
 {% include showImagen.html 
@@ -56,7 +55,7 @@ A través del Wifi/LAN dongle el inversor actualiza sus datos cada 5 minutos en 
       width="700px"
       %}
 
-- Puedes consultar a SolaX Cloud todo lo que ha ido guardando a través de un API y bajarte a local los datos para hacer tu post-procesamiento
+- Puedes consultar a SolaX Cloud a través de REST/API y bajarte a local los datos.
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-02-13-hass-solax-3.jpg" 
@@ -67,7 +66,7 @@ A través del Wifi/LAN dongle el inversor actualiza sus datos cada 5 minutos en 
 
 **Integración con Home Assistant**
 
-En mi caso nunca he utilizado esta opción, de hecho no la recomiendao, es mucho mejor la opción de MODBUS que describo más adelante. No obstante, aquí tienes un par de enlaces: 
+Nunca he integrado vía el REST/API de SolaxCloud, de hecho no lo recomiendo, es mucho mejor la opción de MODBUS que describo más adelante. No obstante, aquí tienes un par de enlaces: 
 
 - Proyecto en GitHUb para hacer la **[SolaxCloud integration for Home Assistant](https://github.com/thomascys/solaxcloud)**.
 - Un buen hilo de discusión [aquí](https://community.home-assistant.io/t/pv-solax-inverter-cloud-sensors-via-api/277874/65), encontrarás muchos comentarios sobre esta y otras opciones... 
@@ -92,9 +91,9 @@ La integración con Home Assistant la tienes disponible en: **[// SolaX Power](h
 
 Mis observaciones y algunos retos: 
 
-- Lo he usado durante más de un año y funciona relativamente bien, sin demasiados problemas. Expone las métricas más habituales, más adelante he descubierto que NO expone todas la métricas posibles. 
-- El Dongle WiFi se conecta como cliente a la red (WiFi) de tu casa para enviar datos a SolaxCloud. 
-- El primer reto fue descubrir que presenta un SSID privado (WiFi_SWXXXXXXXX) utilizando una IP fija (5.8.8.8) y solo escucha a las peticiones API REST por esta IP. 
+- Lo he usado durante más de un año y funciona relativamente bien, sin demasiados problemas. Expone las métricas más habituales, aunque no todas. 
+- El Dongle WiFi se conecta como cliente a tu red WiFi para llegar a SolaxCloud pero también expone una nueva red Wifi. 
+- Mi primera sorpresa fue este nuevo SSID (WiFi_SWXXXXXXXX) **sin clave** donde usa una IP fija (5.8.8.8) y descubrir que solo escucha a las peticiones API REST por esta IP. 
   - Eso supone, en la mayoría de los casos, tener que montar un proxy en tu casa. Por ejemplo una raspberry conectada a tu LAN y a esta WiFi. Montar un `nginx` que haga de proxy. 
   - Por suerto encontré [este proyecto](https://blog.chrisoft.io/2021/02/14/firmwares-modificados-para-solax-pocket-wifi-v2/) donde puedes bajarte Firmwares modificados para Solax Pocket WIFI V2, que básicamente habilita el escuchar por la IP que recibe en tu casa. 
 - Otro reto es su estabilidad, "a veces" dejaba de actualizar, sin motivo aparente. 
@@ -113,19 +112,19 @@ Mis observaciones y algunos retos:
 
 ### 3. Monitorizar vía red local (MODBUS/TCP)
 
-Consultar al Inversor mediante el protocolo MODBUS/TCP es probablemente la opción óptima. Por suerte mi inversor X1-HYBRID-G3 soporta recibir consultas por el puerto 502 (puerto de por defecto para el protocolo modbus/tcp). Necesitas poner un cable Ethernet en el puerto LAN de tu inversor conectado a la red local de tu casa. En mi caso le asigno una dirección IP fija desde mi DHCP server a través de su MAC.
+Consultar al Inversor mediante el protocolo MODBUS/TCP es para mi la mejor opción. Por suerte mi inversor X1-HYBRID-G3 soporta recibir consultas por el puerto 502 (puerto de por defecto para el protocolo modbus/tcp). Necesitas poner un cable Ethernet en el puerto LAN de tu inversor conectado a la red local de tu casa. En mi caso le asigno una dirección IP fija desde mi DHCP server a través de su MAC.
 
 <br/> 
 
 **Integración con Home Assistant**
 
-Existe una *Integración* para Home Assistant muy buena para poder conectaros mediante `modbus/tcp`. Lee muchos más datos y con más frecuenta que el resto de opciones que he probado. Voy a guardar todos estos datos en mi influxDB externo, para posterior visualización en Grafana.
+Existe una *Integración* para Home Assistant muy buena para poder conectaros mediante `modbus/tcp`. Lee muchos más datos y con más frecuenta que el resto de opciones que he probado. En mi caso guardo todo en mi influxDB externo, para posterior visualización en Grafana.
 
 La integración la tienes aquí, se llama [homsassistant-solax-modbus](https://github.com/wills106/homsassistant-solax-modbus) y se trata de un `custom_component` para Home Assistant. 
 
 Sobre el Autor de esta integración: 
-- Publicó en este [hilo](https://community.home-assistant.io/t/solax-inverter-by-modbus-no-pocket-wifi-now-a-custom-component/140143/10) con su trabajo, merece la pena recorrerlo. 
-- Tiene otro proyecto [Home Assistant Configuration](https://github.com/wills106/homeassistant-config) muy interesante. 
+- Publicó en este [hilo](https://community.home-assistant.io/t/solax-inverter-by-modbus-no-pocket-wifi-now-a-custom-component/140143/10) su trabajo, merece la pena recorrerlo. 
+- Tiene otro repositorio, [Home Assistant Configuration](https://github.com/wills106/homeassistant-config) muy interesante. 
 
 
 <br/>
@@ -363,7 +362,7 @@ Su objetivo es facilitar a los usuarios el conocimiento de su consumo energétic
 
 Existe una forma de compatibilizar los datos de esta integración para que me aparezcan en dicho Dashboard... 
 
-PENDIENTE de probar y documentar!!
+| Nota: PENDIENTE de probar y documentar !! |
 
 <br/>
 
