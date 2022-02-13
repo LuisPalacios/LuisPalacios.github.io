@@ -2,8 +2,12 @@
     <div class="screen_inner">
         <figure>
             <div class="screen_image">
-                <img src="{{ include.src }}" width="{{ include.width }}" alt="{{ include.subtitulo }}" />
-                <img src="{{ include.src2 }}" width="{{ include.width }}" />
+                <a href="{{ include.src }}">
+                    <img src="{{ include.src }}" width="{{ include.width }}" alt="{{ include.subtitulo }}" />
+                </a>
+                <a href="{{ include.src2 }}">
+                    <img src="{{ include.src2 }}" width="{{ include.width }}" />
+                </a>
             </div>
             <figcaption class="screen_caption">{{ include.caption }}</figcaption>
         </figure>

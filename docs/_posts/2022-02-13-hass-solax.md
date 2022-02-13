@@ -347,14 +347,23 @@ from(bucket: "home_assistant")
 
 <br/>
 
-**Integración con Energy Dashboard (Pendiente)**
+**Temas Pendientes**
+
+- Tengo pendiente de estudio la [configuración que utiliza el autor de la Integración](https://github.com/wills106/homeassistant-config/blob/master/packages/solax_x1_hybrid_g3_triplepower.yaml). 
+
+- Tengo pendiente ver qué otras opciones son interesantes para monitorizar, además de investigar la posibilidad de programar el Inversor desde Home Assistant, aunque eso me da bastante respeto de momento... 
+
+
+<br/>
+
+### Integración con Energy Dashboard
 
 Con la versión 2021.8 Home Assistant liberó el Tablero de control de la energía
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-02-13-hass-solax-13.png" 
       caption="Ejemplo de configuración en Grafana" 
-      width="300px"
+      width="250px"
       %}
 
 
@@ -362,22 +371,47 @@ Su objetivo es facilitar a los usuarios el conocimiento de su consumo energétic
 
 Existe una forma de compatibilizar los datos de esta integración para que me aparezcan en dicho Dashboard... 
 
-| Nota: PENDIENTE de probar y documentar !! |
-
 <br/>
 
-**Más integraciones (Pendiente)**
+#### Configuración inicial. 
 
-- Tengo pendiente de estudio la [configuración que utiliza el autor de la Integración](https://github.com/wills106/homeassistant-config/blob/master/packages/solax_x1_hybrid_g3_triplepower.yaml). 
+En este [enlace](https://www.home-assistant.io/blog/2021/08/04/home-energy-management/) está la documentación para configurar la pantalla de Energía. 
 
-- Tengo pendiente ver qué otras opciones son interesantes para monitorizar, además de investigar la posibilidad de programar el Inversor desde Home Assistant, aunque eso me da bastante respeto de momento... 
+| Nota: Si ya has hecho una configuración y no consigues editarla desde el Dashboard `Energy` es porque solo puedes editarla desde **Configuration > Dashboard > Energy**. Por cierto, a nivel informativo, la configuración se guarda en el fichero: `config/.storage/energy` |
 
 
-----
+{% include showImagen.html 
+      src="/assets/img/posts/2022-02-13-hass-solax-14.png" 
+      caption="Configuration > Dashboard > Energy" 
+      width="600px"
+      %}
+
+{% include showImagen2.html 
+      src="/assets/img/posts/2022-02-13-hass-solax-16.jpg" 
+      src2="/assets/img/posts/2022-02-13-hass-solax-17.jpg" 
+      caption="Detalle de los datos configurados, click para ampliar" 
+      width="250px"
+      %}
+
+| Nota1: Para el CO2 Signal basta con visitar el sitio y darse de alta, te envía tu token |
+
+| Nota2: En la ventana donde defino el grid consumption (SolaXM Today's Import Energy) he añadido un entity que hace el tracking the los costes totales, pero es una prueba, no hace falta ponerlo |
+
+El resultado final es el Dashboard de Energía 
+
+{% include showImagen.html 
+      src="/assets/img/posts/2022-02-13-hass-solax-15.png" 
+      caption="Dashboard de Energía integrado en HA" 
+      width="800px"
+      %}
+
+
+Que podemos comparar con lo que vemos en un Dashboard Grafana personalizado... 
+
+{% include showImagen.html 
+      src="/assets/img/posts/2022-02-13-hass-solax-20.png" 
+      caption="Detalle de consumos en un Dashboard Grafana" 
+      width="800px"
+      %}
 
 <br/>
-
-
-
-
-
