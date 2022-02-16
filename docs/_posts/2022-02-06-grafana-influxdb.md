@@ -420,11 +420,80 @@ aspect_ratio: 70%
 
 Recuerda aquí tienes un apunte sobre como [migrar los datos de InfluxDB y los dashboards Grafana]({% post_url 2022-02-06-hass-migrar-datos %}) desde Home Assistant a un servidor nuevo como el que acabamos de configurar. 
 
-----
+<br/>
+
+#### Tips para InfluxDB
 
 <br/>
 
+**Exportar todos los datos de un bucket**
+
+Quería ver cómo se estaban guardando los datos de `Telegraf` así que los saqué de influx para verlos 🤗
+
+```
+luis@almacenix:~$ influx bucket list
+ID			Name		Retention	Shard group duration	Organization ID		Schema Type
+:
+1234584375938475	telegraf	infinite	168h0m0s		8975ef952db592e6	implicit
+:
+luis@almacenix:~$ sudo influxd inspect export-lp --bucket-id 1234584375938475 --engine-path /var/lib/influxdb/engine --output-path /home/luis/telegraf.lp
+:
+luis@almacenix:~$ more telegraf.lp
+cpu,cpu=cpu-total,host=almacenix usage_guest=0 1644238720000000000
+cpu,cpu=cpu-total,host=almacenix usage_guest=0 1644238730000000000
+cpu,cpu=cpu-total,host=almacenix usage_guest=0 1644238740000000000
+cpu,cpu=cpu-total,host=almacenix usage_guest=0 1644238750000000000
+:
+```
+
+<br/>
+
+**Borrar datos específicos**
+
+Durante pruebas con Plugins de Telegraf generé muchos datos que más tarde quise borrar, aquí dejo algunos ejemplos: 
+
+- Borrar todo lo que he guardado con el `_measurement="temporal_size"` entre dos timestamps concretos
+
+```
+luis@almacenix:~$ influx delete --bucket telegraf --start '2022-02-15T17:00:00Z' --stop '2022-02-15T23:00:00Z' --predicate '_measurement="temporal_size"'
+```
+
+<br/>
+
+- Repito pero pongo "ahora mismo" como fecha de fin. 
+  
+```
+luis@almacenix:~$ influx delete --bucket telegraf --start '2022-02-16T14:00:00Z' --stop $(date +"%Y-%m-%dT%H:%M:%SZ") --predicate '_measurement="temporal_size"'
+```
+
+<br/>
+
+- Borra el `_measurement="temporal_size"` por completo, algunas pruebas se guardaron con fechas en el pasado así que establezco que lo borre entero, desde el inicio de los tiempos (digitales) hasta ahora mismo... 
+  
+```
+luis@almacenix:~$ influx delete --bucket telegraf --start '1970-01-01T00:00:00Z' --stop $(date +"%Y-%m-%dT%H:%M:%SZ") --predicate '_measurement="temporal_size"'
+```
+
+<br/>
+
+- El último ejemplo, hice pruebas con el plugin `inputs.influxdb` que me llenó el bucket de Telegraf de un montón de `_measurement's` (decenas) que luego no me servían para nada. Aprovheché que *todos los data points* venían con un tag llamado `url`. 
+
+```
+luis@almacenix:~$ influx delete --bucket telegraf --start '2022-02-15T01:00:00Z' --stop '2022-02-16T23:00:00Z' --predicate 'url="http://localhost:8086/metrics"'
+```
 
 
+<br/>
+
+### Tips para Telegraf
+
+**Espiar el tamaño de los buckets de InfluxDB**
+
+* El objetivo es averiguar el tamaño de los buckets de un servidor InfluxDB y que Telegraf (corriendo en dicho servidor) se lo envíe, para luego poder observar si nos crece mucho y nos quedamos sin espacio (desde Grafana)
+
+Aquí tienes una copia de dicho [Script compatible con formato *influx* para el Plugin **input.exec**](https://gist.github.com/LuisPalacios/9597178db4c4c4b357dd0700d61c1835), que puedes usar para averiguar el tamaño de los buckets de un servidor InfluxDB. Las instrucciones de instalación están documentadas en el propio script. 
 
 
+----
+
+<br/>
