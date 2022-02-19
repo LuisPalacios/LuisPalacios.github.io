@@ -8,19 +8,17 @@ excerpt_separator: <!--more-->
 
 ![Logo Grafana](/assets/img/posts/logo-hass-casa.svg){: width="150px" style="float:left; padding-right:25px" } 
 
-Home Assistant (HA)... Automatización del hogar de código abierto que da prioridad al control local y a la privacidad. Impulsado por una comunidad mundial de aficionados al bricolaje, al háztelo tú mismo y al cacharreo y hacking. Aunque Perfecto para ejecutar en una Raspberry Pi o en un servidor local.
+Home Assistant (HA) para la automatización del hogar, una software de código abierto que da prioridad al control local y a la privacidad. Impulsado por una comunidad mundial de aficionados al bricolaje, al háztelo tú mismo, el cacharreo y hacking.  Se puede instalar de múltiples formas. Yo he elegido la de **Home Assistant Operating System**, un **Appliance** que puede correr en múltiples plataformas, como la Raspberry Pi, un x86-64 con UEFI o incluso una máquina virtual sobre KVM (opción que documento en este apunte). 
 
 
 <br clear="left"/>
 <!--more-->
 
-El sistema operativo Home Assistant utiliza Docker como motor de contenedores. Por defecto, despliega el Home Assistant Supervisor como un contenedor. A su vez, Home Assistant Supervisor utiliza el motor de contenedores Docker para controlar Home Assistant Core y Add-Ons en contenedores separados. El sistema operativo de Home Assistant no está basado en una distribución Linux normal como Ubuntu. Está construido usando Buildroot y está optimizado para ejecutar Home Assistant. Está dirigido a dispositivos de computación de placa única (SBC) como la Raspberry Pi o ODROID, pero también soporta sistemas x86-64 con UEFI.
+### Instalación de HA OS sobre KVM
 
+Documento, de todas las [opciones de instalación disponibles](https://www.home-assistant.io/installation/), la de **Linux -> Home Assistant Operating System (VM)"**, básicamente un appliance con un sistema operativo linux mínimo y el Supervisor + Add-Ons de Home Assistant ya preinstalados. 
 
-Traducción realizada con la versión gratuita del traductor www.DeepL.com/Translator
+Internamente utiliza Docker como motor de contenedores, los diferentes módulos de los que está compuesto, como van a correr en contenedores. El sistema operativo de Home Assistant no está basado en una distribución Linux normal como Ubuntu. Está construido usando Buildroot y está optimizado para ejecutar Home Assistant.
 
-
-### Instalación
-
-Mi instalación fotovoltaica consta de los siguientes componentes: 
+WiP...
 

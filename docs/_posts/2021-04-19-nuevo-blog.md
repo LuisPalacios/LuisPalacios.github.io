@@ -91,7 +91,7 @@ Homebrew 3.1.2
 
 ### Python
 
-No es necesario instalar Python para lo que estamos discutiendo aquí, pero es un buen momento para hacerlo si lo vas a necesitar en el futuro. Aquí tienes un [apunte sobre Python en MacOS]({% post_url 2021-04-30-prog-python-jupyter %})
+No es necesario instalar Python para lo que estamos discutiendo aquí, pero es un buen momento para hacerlo si lo vas a necesitar en el futuro. Aquí tienes un [apunte sobre Python en MacOS]({% post_url 2021-04-30-python-jupyter %})
 
 
 <br/>
