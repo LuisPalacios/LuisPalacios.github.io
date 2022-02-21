@@ -6,7 +6,7 @@ tags: linux homeassistant grafana influxdb solax solaxcloud
 excerpt_separator: <!--more-->
 ---
 
-![Logo Grafana](/assets/img/posts/logo-hass-solax.svg){: width="150px" style="float:left; padding-right:25px" } 
+![Logo Solax](/assets/img/posts/logo-hass-solax.svg){: width="150px" style="float:left; padding-right:25px" } 
 
 Describo cómo he integrado en Home Assistant mi instalación Fotovoltaica con paneles Axitec, un Inversor SolaX y un par de baterías Triple Power. Tras probar varias opciones me he decantado por la **integración MODBUS/TCP** que trabaja en local, vía LAN y saca más datos que el resto de opciones.
 

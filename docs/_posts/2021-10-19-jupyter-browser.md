@@ -6,7 +6,7 @@ tags: macos python jupyter
 excerpt_separator: <!--more-->
 ---
 
-![Logo GIT](/assets/img/posts/logo-jupyterchrome.svg){: width="150px" style="float:left; padding-right:25px" } 
+![Logo Jupyter Chrome](/assets/img/posts/logo-jupyterchrome.svg){: width="150px" style="float:left; padding-right:25px" } 
 
 Describo cómo cambiar el navegador de por defecto para Jupyter Lab en un Mac. Si no hacemos nada y arrancamos jupyter lab desde la línea de comandos veremos cómo se invoca al navegador de por defecto del sistema (Safari). Si quieres cambiarlo a Chrome sigue los pasos siguientes. 
 

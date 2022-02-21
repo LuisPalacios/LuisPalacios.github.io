@@ -2,7 +2,7 @@
 title: "Router Linux para Movistar"
 date: "2014-10-05"
 categories: linux
-tags: movistar router
+tags: movistar mac iptables router
 excerpt_separator: <!--more-->
 ---
 

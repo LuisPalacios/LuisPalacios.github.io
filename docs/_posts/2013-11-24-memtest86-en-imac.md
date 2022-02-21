@@ -24,7 +24,7 @@ Ah!, hay una alternativa a todo esto, consiste en ejecutar memtest desde MacOSX,
 
 ## Instalación de rEFInd
 
-Vamos a por la opción "arriesgada :-)"... Descarga rEFInd, en concreto utilicé el "binary zip file", que es compatible con el iMac 27" (late 2013, también probado en mid 2011). Una vez que lo tengas bucea en el subdirectorio `refind-bin-0.7.5`
+Vamos a por la opción "arriesgada :-)"... [Descarga rEFInd](http://www.rodsbooks.com/refind/index.html), en concreto utilicé el "binary zip file", que es compatible con el iMac 27" (late 2013, también probado en mid 2011). Una vez que lo tengas bucea en el subdirectorio `refind-bin-0.7.5`
 
 {% include showImagen.html 
       src="/assets/img/original/refind1.png" 

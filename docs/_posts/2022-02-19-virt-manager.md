@@ -6,7 +6,7 @@ tags: linux kvm vm qemu virtualización virt-manager libvirt
 excerpt_separator: <!--more-->
 ---
 
-![Logo Grafana](/assets/img/posts/logo-virtmanager.svg){: width="150px" style="float:left; padding-right:25px" } 
+![Logo Virt Manager](/assets/img/posts/logo-virtmanager.svg){: width="150px" style="float:left; padding-right:25px" } 
 
 
 El objetivo es poder ejecutar **[virt-manager](https://virt-manager.org)** desde mi Mac para administrar las VM's de un par de servidores anfitriones KVM/QEMU remotos sin necesidad de instalarles un entorno X11. He documentado dos opciones, la primera es mediante **máquina virtual** local (Virtualbox/Parallels/...) con un ubuntu y entorno mínimo GUI (solo `Xorg/X11` y `virt-manager`), la segunda es mediante **HomeBrew**.
@@ -49,7 +49,10 @@ luis@ubuntu:~$ touch $HOME/.hushlogin
 ```
 luis@ubuntu:~$ sudo apt install xauth
 :
-luis@ubuntu:~$ sudo apt-get install virt-manager ssh-askpass-gnome --no-install-recommends
+luis@ubuntu:~$ sudo apt install virt-manager ssh-askpass-gnome --no-install-recommends
+
+luis@ubuntu:~$ sudo apt install -y spice-client-gtk
+
 ```
 
 -  Prepararo SSH, para conectar desde mi VM `ubuntu` a un servidor llamado `tierra` con KVM/QEMU. Aquí tienes una [guía sobre SSH en Linux](https://www.luispa.com/linux/2006/11/13/ssh.html) y otra sobre [SSH y X11 como root](https://www.luispa.com/linux/2017/02/11/x11-desde-root.html). 

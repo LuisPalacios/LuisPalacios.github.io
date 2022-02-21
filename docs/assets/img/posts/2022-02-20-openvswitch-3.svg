@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 800 270" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="15" height="15"/>
+  </defs>
+  <path stroke-width="0" d="M 433.441 6.14 C 443.761 4.972 464.274 6.828 473.06 8.505 C 478.5 9.544 480.984 10.609 484.296 12.645 C 487.58 14.662 490.5 18.101 492.87 20.628 C 494.905 22.796 495.534 24.559 497.897 26.837 C 501.083 29.908 507.466 32.856 511.202 37.186 C 515.128 41.733 518.465 48.592 520.663 53.743 C 522.546 58.152 523.631 62.05 524.212 66.162 C 524.773 70.13 524.321 72.809 524.212 77.988 C 524.052 85.581 522.875 103.186 523.03 108.739 C 523.103 111.372 523.558 111.388 523.621 113.469 C 523.713 116.523 522.945 120.864 523.03 125.888 C 523.14 132.457 525.721 140.492 524.803 150.132 C 523.61 162.672 518.223 185.755 513.568 195.666 C 510.51 202.175 508.082 204.528 503.219 208.38 C 497.26 213.099 485.41 218.268 478.974 220.798 C 474.397 222.598 473.088 223.1 467.739 223.755 C 459.105 224.813 439.917 225.624 429.301 224.347 C 420.794 223.322 414.493 221.563 408.013 218.433 C 401.593 215.332 394.748 211.306 390.568 205.719 C 386.308 200.024 384.412 192.584 382.88 184.431 C 381.108 175.002 381.572 158.134 381.698 151.906 C 381.761 148.752 382.405 147.331 382.289 145.993 C 382.216 145.15 381.786 145.141 381.698 144.22 C 381.537 142.547 382.183 140.603 382.289 135.941 C 382.517 125.879 381.114 93.43 381.698 79.171 C 382.105 69.205 382.278 63.358 384.063 56.109 C 385.791 49.094 389.277 40.454 392.046 36.299 C 393.872 33.559 396.105 33.287 397.664 31.272 C 399.286 29.176 399.359 26.527 401.508 23.88 C 404.434 20.277 409.876 14.997 415.109 12.054 C 420.483 9.03 425.712 7.014 433.441 6.14 Z M 431.37 19.741 C 425.539 20.922 420.842 25.273 418.952 26.245 C 418.218 26.623 418.259 26.351 417.77 26.837 C 416.779 27.821 414.372 32.371 413.63 33.342 C 413.325 33.741 413.453 33.469 413.039 33.933 C 411.583 35.564 403.49 43.419 400.621 48.717 C 397.916 53.711 396.877 59.201 395.889 64.683 C 394.891 70.235 394.907 72.542 394.707 81.833 C 394.303 100.661 393.282 164.291 395.889 182.361 C 397.148 191.083 397.865 193.565 401.212 197.736 C 404.763 202.161 411.83 205.514 417.178 207.789 C 422.084 209.877 425.411 210.8 431.962 211.337 C 441.518 212.12 460.009 212.208 470.991 209.563 C 480.348 207.309 489.429 202.296 494.645 198.328 C 498.378 195.485 500.25 193.014 501.741 189.457 C 503.349 185.621 502.283 181.09 503.515 175.856 C 505.064 169.276 510.119 160.681 511.202 152.794 C 512.285 144.911 510.123 138.626 510.019 128.549 C 509.879 114.876 511.976 88.699 511.202 76.51 C 510.703 68.647 510.024 64.514 508.246 59.361 C 506.577 54.529 504.328 50.154 501.149 46.352 C 497.874 42.433 491.849 39.225 488.731 36.299 C 486.372 34.084 485.365 32.444 483.409 30.385 C 481.263 28.126 478.971 24.867 476.312 23.289 C 473.813 21.804 472.26 21.508 468.034 20.924 C 460.488 19.879 439.939 18.005 431.37 19.741 Z" style="stroke-width: 2px; fill: rgba(201, 255, 175, 0.78); pointer-events: none; visibility: hidden;"/>
+  <g transform="matrix(1, 0, 0, 1, -535.83551, -410.447021)">
+    <line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" x1="544.271" y1="517.131" x2="1327.4" y2="517.131"/>
+    <g transform="matrix(1, 0, 0, 1, 1, 0)">
+      <g>
+        <rect x="653.453" y="444.858" width="103.01" height="19.042" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" rx="2.91" ry="2.91"/>
+        <text style="font-family: &quot;Courier New&quot;; font-size: 12px; white-space: pre;" x="668.952" y="457.519">Socket API</text>
+      </g>
+      <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.28" y1="463.9" x2="706.28" y2="535.688"/>
+      <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.28" y1="550.866" x2="706.28" y2="557.805"/>
+      <g>
+        <rect x="653.453" y="557.805" width="103.01" height="19.042" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" rx="2.91" ry="2.91"/>
+        <text style="font-family: &quot;Courier New&quot;; font-size: 10px; white-space: pre;" x="668.952" y="570.466">Network Stack</text>
+      </g>
+      <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.28" y1="576.847" x2="706.28" y2="587.83"/>
+      <g>
+        <rect x="653.453" y="587.83" width="103.01" height="19.042" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" rx="2.91" ry="2.91"/>
+        <text style="font-family: &quot;Courier New&quot;; font-size: 12px; white-space: pre;" x="692.201" y="599.764">eth0</text>
+      </g>
+      <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.28" y1="606.872" x2="706.28" y2="620.735"/>
+      <g>
+        <rect x="653.453" y="620.735" width="103.01" height="19.042" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" rx="2.91" ry="2.91"/>
+        <text style="font-family: &quot;Courier New&quot;; font-size: 12px; white-space: pre;" x="696" y="632.669">NIC</text>
+      </g>
+      <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.28" y1="639.777" x2="706.28" y2="653.64"/>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 281.01944, 0)">
+      <g>
+        <rect x="653.453" y="444.858" width="103.01" height="19.042" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" rx="2.91" ry="2.91"/>
+        <text style="font-family: &quot;Courier New&quot;; font-size: 12px; white-space: pre;" x="668.952" y="457.519">Socket API</text>
+      </g>
+      <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.28" y1="463.9" x2="706.28" y2="474.423"/>
+      <g>
+        <rect x="653.453" y="474.423" width="103.01" height="19.042" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" rx="2.91" ry="2.91"/>
+        <text style="font-family: &quot;Courier New&quot;; font-size: 12px; white-space: pre;" x="697.378" y="486.33">App</text>
+      </g>
+      <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.28" y1="493.465" x2="706.28" y2="508.063"/>
+      <g>
+        <rect x="653.453" y="508.063" width="103.01" height="19.042" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" rx="2.91" ry="2.91"/>
+        <text style="font-family: &quot;Courier New&quot;; font-size: 12px; white-space: pre;" x="668.952" y="520.724">/dev/tapX</text>
+      </g>
+      <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.282" y1="527.105" x2="706.282" y2="536.968"/>
+      <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.282" y1="551.004" x2="706.282" y2="557.805"/>
+      <g>
+        <rect x="653.453" y="557.805" width="103.01" height="19.042" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" rx="2.91" ry="2.91"/>
+        <text style="font-family: &quot;Courier New&quot;; font-size: 10px; white-space: pre;" x="668.952" y="570.466">Network Stack</text>
+      </g>
+      <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.28" y1="576.847" x2="706.28" y2="587.83"/>
+      <g>
+        <rect x="653.453" y="587.83" width="103.01" height="19.042" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" rx="2.91" ry="2.91"/>
+        <text style="font-family: &quot;Courier New&quot;; font-size: 12px; white-space: pre;" x="691.179" y="599.737">tapX</text>
+      </g>
+    </g>
+    <g>
+      <line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" x1="1124.964" y1="620.9" x2="1262.46" y2="620.735"/>
+      <g transform="matrix(1, 0, 0, 1, 418.201538, 0)">
+        <g>
+          <rect x="653.453" y="444.858" width="103.01" height="19.042" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" rx="2.91" ry="2.91"/>
+          <text style="font-family: &quot;Courier New&quot;; font-size: 12px; white-space: pre;" x="668.952" y="457.519">Socket API</text>
+        </g>
+        <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.28" y1="463.9" x2="706.28" y2="535.688"/>
+        <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.28" y1="550.866" x2="706.28" y2="557.805"/>
+        <g>
+          <rect x="653.453" y="557.805" width="103.01" height="19.042" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" rx="2.91" ry="2.91"/>
+          <text style="font-family: &quot;Courier New&quot;; font-size: 10px; white-space: pre;" x="668.952" y="570.466">Network Stack</text>
+        </g>
+        <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.28" y1="576.847" x2="706.28" y2="587.83"/>
+        <g>
+          <rect x="653.453" y="587.83" width="103.01" height="19.042" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" rx="2.91" ry="2.91"/>
+          <text style="font-family: &quot;Courier New&quot;; font-size: 12px; white-space: pre;" x="686.798" y="599.186">vethX</text>
+        </g>
+        <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.28" y1="606.872" x2="706.28" y2="620.735"/>
+      </g>
+      <g transform="matrix(1, 0, 0, 1, 555.662231, 0)">
+        <g>
+          <rect x="653.453" y="444.858" width="103.01" height="19.042" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" rx="2.91" ry="2.91"/>
+          <text style="font-family: &quot;Courier New&quot;; font-size: 12px; white-space: pre;" x="668.952" y="457.519">Socket API</text>
+        </g>
+        <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.28" y1="463.488" x2="706.28" y2="535.276"/>
+        <g>
+          <rect x="653.453" y="557.805" width="103.01" height="19.042" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" rx="2.91" ry="2.91"/>
+          <text style="font-family: &quot;Courier New&quot;; font-size: 10px; white-space: pre;" x="668.952" y="570.466">Network Stack</text>
+        </g>
+        <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.28" y1="576.847" x2="706.28" y2="587.83"/>
+        <g>
+          <rect x="653.453" y="587.83" width="103.01" height="19.042" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" rx="2.91" ry="2.91"/>
+          <text style="font-family: &quot;Courier New&quot;; font-size: 12px; white-space: pre;" x="687.14" y="600.314">vethX</text>
+        </g>
+        <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.28" y1="606.872" x2="706.28" y2="620.735"/>
+        <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.28" y1="550.431" x2="706.28" y2="557.805"/>
+      </g>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 137.536987, 0)">
+      <g>
+        <rect x="653.453" y="444.858" width="103.01" height="19.042" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" rx="2.91" ry="2.91"/>
+        <text style="font-family: &quot;Courier New&quot;; font-size: 12px; white-space: pre;" x="668.952" y="457.519">Socket API</text>
+      </g>
+      <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.28" y1="463.9" x2="706.28" y2="474.423"/>
+      <g>
+        <rect x="653.453" y="474.423" width="103.01" height="19.042" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" rx="2.91" ry="2.91"/>
+        <text style="font-family: &quot;Courier New&quot;; font-size: 12px; white-space: pre;" x="695.264" y="486.33">App</text>
+      </g>
+      <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.28" y1="493.465" x2="706.28" y2="508.063"/>
+      <g>
+        <rect x="653.453" y="508.063" width="103.01" height="19.042" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" rx="2.91" ry="2.91"/>
+        <text style="font-family: &quot;Courier New&quot;; font-size: 12px; white-space: pre;" x="668.952" y="520.724">/dev/tunX</text>
+      </g>
+      <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.28" y1="527.105" x2="706.28" y2="536.968"/>
+      <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.28" y1="551.004" x2="706.28" y2="557.805"/>
+      <g>
+        <rect x="653.453" y="557.805" width="103.01" height="19.042" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" rx="2.91" ry="2.91"/>
+        <text style="font-family: &quot;Courier New&quot;; font-size: 10px; white-space: pre;" x="668.952" y="570.466">Network Stack</text>
+      </g>
+      <line style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" x1="706.28" y1="576.847" x2="706.28" y2="587.83"/>
+      <g>
+        <rect x="653.453" y="587.83" width="103.01" height="19.042" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" rx="2.91" ry="2.91"/>
+        <text style="font-family: &quot;Courier New&quot;; font-size: 12px; white-space: pre;" x="692.059" y="599.764">tunX</text>
+      </g>
+    </g>
+    <text style="font-family: Arial; font-size: 12px; white-space: pre;" x="669.952" y="432.836">NIC Física</text>
+    <text style="font-family: Arial; font-size: 12px; white-space: pre;" x="815.009" y="432.836">TUN (L3)</text>
+    <text style="font-family: Arial; font-size: 12px; white-space: pre;" x="957.467" y="432.836">TAP (L2)</text>
+    <text style="font-family: Arial; font-size: 12px; white-space: pre;" x="1158.37" y="432.836">Pareja VEth</text>
+    <text style="font-family: Arial; font-size: 10px; white-space: pre;" x="556.668" y="510.073">Espacio del usuario</text>
+    <text style="font-family: Arial; font-size: 10px; white-space: pre;" x="556.668" y="534.247">Espacio del Kernel</text>
+    <text style="fill: rgb(51, 51, 51); font-family: Arial; font-size: 9px; white-space: pre;" x="677.061" y="547.524">Ethernet RAW</text>
+    <text style="fill: rgb(51, 51, 51); font-family: Arial; font-size: 9px; white-space: pre;" x="816.009" y="547.524">L3 Ethernet</text>
+    <text style="fill: rgb(51, 51, 51); font-family: Arial; font-size: 9px; white-space: pre;" x="959.465" y="547.524">Ethernet RAW</text>
+    <text style="fill: rgb(51, 51, 51); font-family: Arial; font-size: 9px; white-space: pre;" x="1095.48" y="547.524">Ethernet RAW</text>
+    <text style="fill: rgb(51, 51, 51); font-family: Arial; font-size: 9px; white-space: pre;" x="1235.11" y="547.524">Ethernet RAW</text>
+    <text style="fill: rgb(51, 51, 51); font-family: Arial; font-size: 11px; white-space: pre;" x="683.069" y="666.713">Red física</text>
+  </g>
+  <rect x="384.549" y="6.774" width="134" height="203.226" style="fill: none; stroke-width: 4px; stroke: rgb(8, 163, 0); stroke-opacity: 0.49; visibility: hidden;" rx="15.776" ry="15.776"/>
+</svg>

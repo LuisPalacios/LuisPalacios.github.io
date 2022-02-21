@@ -61,9 +61,7 @@ luis@jupiter:~$ sudo apt install qemu qemu-kvm libvirt-clients libvirt-daemon-sy
 * virtinst - programas para crear y clonar máquinas virtuales,
 * bridge-utils - utilidades para configurar el Bridge Ethernet en Linux.
 
-**Arranco el servicio**
-
-Una vez instalado KVM arranco el servicio libvirtd:
+El servicio debería haber arrancado (ubuntu arranca los servicios cuando los instala), en cualquier caso se haría así: 
 
 ```console
 $ sudo systemctl enable libvirtd
@@ -73,7 +71,7 @@ $ sudo systemctl start libvirtd
 **Añado mi usuario como parte del grupo `libvirt`**
 
 ```console
-sudo adduser $LOGNAME libvirt
+sudo adduser luis libvirt
 ```
 
 **Verifico que está todo funcionando**

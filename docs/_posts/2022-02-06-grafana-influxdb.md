@@ -6,7 +6,7 @@ tags: linux homeassistant grafana influxdb
 excerpt_separator: <!--more-->
 ---
 
-![Logo Grafana](/assets/img/posts/logo-grafana-influxdb.svg){: width="150px" style="float:left; padding-right:25px" } 
+![Logo Grafana e InfluxDB](/assets/img/posts/logo-grafana-influxdb.svg){: width="150px" style="float:left; padding-right:25px" } 
 
 Monto estos tres servicios en un servidor dedicado en mi casa para poder monitorizar la Domótica. InfluxDB es una base de datos super optimizada para trabajar con series de tiempo. Grafana permite crear cuadros de mando y gráficos a partir de múltiples fuentes y Telegraf es un agente ligero que permite recolectar, procesar y enviar datos a nuestra base de datos. 
 
