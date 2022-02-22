@@ -598,7 +598,7 @@ network:
     # Puertos `Internal` para Acceso a VLAN's, consumibles localmente o por VM's
     # Creados con:
     #  ovs-vsctl add-port solbr vlanNNN tag=NNN -- set Interface vlanNNN type=internal
-    # Configuro todos para que se activen (UP) incluso los que no tienen IP.
+    #
     vnet100:
       addresses: [192.168.100.33/24]
       gateway4: 192.168.100.1
