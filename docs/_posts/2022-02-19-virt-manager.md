@@ -136,16 +136,14 @@ luis@ubuntu$ virt-manager -c 'qemu+ssh://luis@tierra.parchis.org:XXXXX/system?ke
 
 ## Opción HomeBrew
 
-- Virt-manager no está disponible en HomeBrew, existe una [fórmula](https://github.com/jeffreywildman/homebrew-virt-manager) personalizada que permite instalarlo pero está obsoleta y falla. Gracias a este [Issues/184](https://github.com/jeffreywildman/homebrew-virt-manager/issues/184) y múltiples forks he encontrado el de *Damenly*, que tiene buena pinta. Ojo, es super simple, solo instala virt-manager, no instala libvirt ni soporta ciertas dependencias (como por ejemplo la contraeña de ssh, leer el [README](https://github.com/Damenly/homebrew-virt-manager))
-
+- Virt-manager no está disponible en HomeBrew, existe una [fórmula](https://github.com/jeffreywildman/homebrew-virt-manager) personalizada que permite instalarlo pero está obsoleta y falla. Gracias a este [Issues/184](https://github.com/jeffreywildman/homebrew-virt-manager/issues/184) y múltiples forks he encontrado el de *Damenly*, que tiene buena pinta. Ojo, es super simple, solo instala virt-manager, no instala libvirt ni soporta ciertas dependencias (como por ejemplo la contraeña de ssh, leer el [README](https://github.com/Damenly/homebrew-virt-manager)). 
+- He tenido algún que otro problema al instalarlo y lo desinstalé, lo dejo aquí para hacer seguimiento a este proyecto. 
 ```
 brew tap Damenly/homebrew-virt-manager
 brew install virt-manager --HEAD
 brew install virt-viewer
 ```
-
-Una vez instalado ejecutamos: 
-
+- Una vez instalado ejecutamos: 
 ```
 export XDG_DATA_DIRS="/opt/homebrew/share/".
 virt-manager -c test:///default

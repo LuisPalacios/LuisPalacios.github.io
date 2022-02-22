@@ -264,7 +264,6 @@ from(bucket: "home_assistant")
   |> yield(name: "mean")
 ```
 
-
 ----
 
 <br/>
