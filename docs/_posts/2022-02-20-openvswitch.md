@@ -97,18 +97,18 @@ root@maclinux:~# ip link show dev solbr
 
 ### Configuración estática
 
-A continuación voy a configurar varias opciones **muy estáticas**, para que los ejemplos se vean claros. Más adelante en este mismo apunto veremos como hacerlo **un poco más dinámico** apoyándonos en la integración entre Libvirt (de QEMU) y Open vSwitch. 
+A continuación voy a configurar varias opciones **muy estáticas**, para que los ejemplos se vean claros. Más adelante en este mismo apunte veremos como hacerlo **un poco más dinámico** apoyándonos en la integración entre Libvirt (de QEMU) y Open vSwitch. 
 
-De entrad, empezamos con estas opciones que quiero configurar en mi equipo: 
+De entrada, empezamos con estas opciones:
 
 - Que el servidor reciba `eth0` en modo Trunk
-- Probar que el servidor reciba `vlan100` en modo Acceso *directamente conectado a su Stack TCP/IP* y por supuesto asignarle una IP, aunque luego no lo usaré.
+- Que el servidor reciba `vlan100` en modo Acceso *directamente conectado a su Stack TCP/IP* y por supuesto asignarle una IP. Más adelante dejaré de usar esta opción, en favor de la siguiente opción, pero viene bien ver cómo se hace.
 - Que el servidor instancie varias interfaces virtuales `vnetNNN` *a través del switch OVS* que puedan ser consumidas localmente por el propio servidor o por las VM's en modo Acceso. 
   - Las que llamo `vnet192` y `vnet500` serán usadas por el servidor con su propia IP. 
 - Que los Guest's (VM's) se conecten a una de esas intefaces virtuales (una VLAN)
 - Que los Guest's (VM's) puedan recibir un puerto Trunk con una o más VLAN's.
 
-No olvides ir aplicando los cambios si vas haciendo pruebas con `netplan apply`
+A partir de ahora, cuando modifiques el fichero de Netplan acuérdate de ejecutar `netplan apply`
 
 
 {% include showImagen.html 
@@ -123,7 +123,7 @@ Más adelante en este mismo apunte verás la configuración completa de `/etc/ne
 
 #### Que el servidor reciba `eth0` en modo Trunk
 
-- Añado el puerto `eth0` al bridge `solbr` como un puerto Trunk. No hace falta hacer nada especial, siempre se añaden los puertos físicos en modo Trunk por defecto
+- Añado el puerto `eth0` al bridge `solbr` como un puerto Trunk. No hace falta hacer nada especial, los puertos físicos se añaden en modo Trunk por defecto
 ```console
 root@maclinux:~# ovs-vsctl add-br solbr
 root@maclinux:~# ovs-vsctl add-port solbr eth0
@@ -271,8 +271,6 @@ network:
 root@maclinux:~# ovs-vsctl add-br solbr
 root@maclinux:~# ovs-vsctl show
 root@maclinux:~# ovs-vsctl add-port solbr eth0
-root@maclinux:~# ovs-vsctl add-port solbr vlan192 tag=192 -- set Interface vlan192 type=internal
-root@maclinux:~# ovs-vsctl add-port solbr vlan500 tag=500 -- set Interface vlan500 type=internal
 root@maclinux:~# ovs-vsctl add-port solbr vnet006 tag=006 -- set Interface vnet006 type=internal
 root@maclinux:~# ovs-vsctl add-port solbr vnet100 tag=100 -- set Interface vnet100 type=internal
 root@maclinux:~# ovs-vsctl add-port solbr vnet192 tag=192 -- set Interface vnet192 type=internal
@@ -308,10 +306,6 @@ root@maclinux:~# ip link
     link/ether 76:0c:7d:c8:46:53 brd ff:ff:ff:ff:ff:ff
 11: solbr: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
     link/ether 3c:07:54:59:aa:cb brd ff:ff:ff:ff:ff:ff
-12: macvtap0@vnet100: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group default qlen 500
-    link/ether 52:54:00:b8:d4:f0 brd ff:ff:ff:ff:ff:ff
-13: macvtap1@vnet192: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group default qlen 500
-    link/ether 52:54:00:e1:ff:22 brd ff:ff:ff:ff:ff:ff
 ```
 
 - Bridge OVS
@@ -375,11 +369,11 @@ root@maclinux:~# adduser luis libvirt
 root@maclinux:~# adduser luis kvm
 root@maclinux:~# systemctl reboot -f
 ```
-- **Desahabilito el arranque del bridge que trae KVM por defecto**. En este apunte vemos cómo configurara todo con el Open vSwitch, así que no necesto el Bridge de Linux tradicional. Nota, para habilitarlo de nuevo basta con ejecutar `# virsh net-autostart default`
+- **Desahabilito el arranque del bridge que trae KVM por defecto**. Estamos usando Open vSwitch, así que no necesito el Bridge de Linux tradicional. Nota, para habilitarlo de nuevo basta con ejecutar `# virsh net-autostart default`
 ```console
 root@maclinux:~# virsh net-autostart --disable default
 ```
-- Descargo **Alpine Linux** para las pruebas. En la sección de [Downloads](https://alpinelinux.org/downloads/) > VIRTUAL > *Slimmed down kernel. Optimized for virtual systems*, me bajo la ISO para x86_64 (**solo 52MB**), es la versión más compacta posible y la usaré para .
+- Descargo **Alpine Linux** para las pruebas. En la sección de [Downloads](https://alpinelinux.org/downloads/) > VIRTUAL > *Slimmed down kernel. Optimized for virtual systems*, me bajo la ISO para x86_64 (**solo 52MB**), es la versión más compacta posible.
 ```console
 luis@maclinux:~$ wget https://dl-cdn.alpinelinux.org/alpine/v3.15/releases/x86_64/alpine-virt-3.15.0-x86_64.iso
 luis@maclinux:~$ wget https://dl-cdn.alpinelinux.org/alpine/v3.15/releases/x86_64/alpine-virt-3.15.0-x86_64.iso.sha256
@@ -388,7 +382,7 @@ alpine-virt-3.15.0-x86_64.iso: OK
 luis@maclinux:~$ ls -hl alpine-virt-3.15.0-x86_64.iso
 -rw-rw-r-- 1 luis luis 52M nov 24 09:23 alpine-virt-3.15.0-x86_64.iso
 ```
-- Creo una *pequeña VM de pruebas* con Alpine Linux desde `virt-manager`: 768MB de RAM, 1 CPU, disco de 1GB, usando la imagen: `alpine-virt-3.15.0-x86_64.iso`, la llamo `alpine1` y en la Red virtual uso la `interno1: macvtap`.
+- Creo una **pequeña VM** desde `virt-manager`: 768MB de RAM, 1 CPU, disco de 1GB, usando la imagen: `alpine-virt-3.15.0-x86_64.iso`, la llamo `alpine1` y en la Red virtual uso la `vbet100`.
 ```console
 luis@maclinux:~$ virt-manager
 ```
@@ -400,7 +394,7 @@ luis@maclinux:~$ virt-manager
       %}
 
 
-- EJecuto el setup de Alpine (más info en [esta guía](https://wiki.alpinelinux.org/wiki/QEMU)). 
+- Ejecuto el setup de Alpine (más info en [esta guía](https://wiki.alpinelinux.org/wiki/QEMU)). 
 ```console
 localhost login: root
 :
@@ -428,7 +422,7 @@ localhost login: root
       width="800px"
       %}
 
-- Arriba algunos detalles, entre ellos el driver preferido para la red es `virtio`
+- Arriba más pruebas, añado otra interfaz y fíjate que uso el driver `virtio`, el más recomendado.
   
 
 <br/>
@@ -534,7 +528,7 @@ root@maclinux:~# virsh net-list
       width="500px"
       %}
 
-- Lo mejor está por llegar. Una vez que arranque la VM se va a crear dinámicamente un nuevo interfaz llamado vnetN con la configuración que establecí en el XML. En este ejemplo hemos seleccionado el llamado VLAN100, que en el XML tiene `tag id='100'`, por lo tanto **nos creará un virtual port interno** con el `tag: 100`.
+- Lo mejor está por llegar. Una vez que arranque la VM se va a crear dinámicamente un nuevo interfaz llamado vnetN con la configuración que establecí en el XML. En este ejemplo hemos seleccionado el llamado VLAN100, en el XML tiene `tag id='100'`, por lo tanto **nos creará un virtual port interno** con el `tag: 100`.
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-02-20-openvswitch-8.png" 
@@ -543,11 +537,11 @@ root@maclinux:~# virsh net-list
       %}
       
 - En la imagen anterior he marcado las interfaces virtuales activas, tras arrancar la VM. 
-  - vnet0 en verde: Esta interfaz es dinámica y está perfectamente asociada a la VLAN100 de OVS. Cuando la VM se apague la interfaz desaparecerá.
-  - En naranja: Son interfaces estáticas que quiero mantener, porque necesito que el HOST tenga su propia IP en ellas, así que las dejaré. 
-  - En rojo: Son interfaces estáticas que YA NO NECESITO porque solo las voy a usar con Libvirt, así que las borro, tanto de OVS como de Netplan
+  - vnet0 en verde: Se ha creado y asociado a mi bridge OVS dinámicamente. Se ha asociado a la VLAN100 de OVS. Cuando la VM se apague la interfaz desaparecerá.
+  - En azul: Son interfaces estáticas que quiero mantener tanto en OVS (Su base de datos) como en Netplan. Las voy a consumir tanto desde el Host, con sus propias IPs, como con las VMs. 
+  - En rojo: Son interfaces estáticas, que ya no necesito, así que las borro, tanto de OVS como de Netplan, en favor de usar su versión dinámica desde virt-manager.
+
 - Elimino los puertos estáticos
- 
 ```console
 root@maclinux:~# ovs-vsctl del-port solbr vnet300
 root@maclinux:~# ovs-vsctl del-port solbr vnet400
@@ -575,10 +569,7 @@ root@maclinux:~# ovs-vsctl show
                 type: internal
     ovs_version: "2.13.3"
 ```
-
 - Versión final de Netplan:
-
-
 ```yaml
 # Config LuisPa
 
@@ -618,7 +609,6 @@ network:
     vnet500:
       addresses: [192.168.101.3/24]
 ```
-
 
 
 ----
