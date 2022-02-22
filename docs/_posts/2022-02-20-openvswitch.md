@@ -570,6 +570,7 @@ root@maclinux:~# ovs-vsctl show
     ovs_version: "2.13.3"
 ```
 - Versión final de Netplan:
+ 
 ```yaml
 # Config LuisPa
 
