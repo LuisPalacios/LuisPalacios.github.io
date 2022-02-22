@@ -441,7 +441,7 @@ Ahora vamos a aprovechar las ventajas de la integración entre Libvirt y Open vS
 
 Open vSwitch soporta las redes que gestiona `libvirt` en modo `bridged` (no las NAT), más información [aquí](https://docs.openvswitch.org/en/latest/howto/libvirt/).
 
-- Voy a crear una plantilla de red en Libvirt. Creo el fichero `/etc/libvirt/qemu/Networks/solbr.xml`
+- Voy a crear una plantilla de red en Libvirt. Creo el fichero `/etc/libvirt/qemu/Networks/solbr.xml` 
 
 ```xml
 <!--
@@ -528,14 +528,13 @@ root@maclinux:~# virsh net-list
 
 - Desde mis VM's veré las nuevas opciones cuando seleccione la Red
 
-
 {% include showImagen.html 
       src="/assets/img/posts/2022-02-20-openvswitch-7.png" 
       caption="Tendré una nueva opción para mi bridge en OVS" 
       width="500px"
       %}
 
-- Lo mejor está por llegar. Una vez que arranque la VM se va a crear dinámicamente un nuevo interfaz llamado vnetN con la configuración que establecí en el XML. En este ejemplo hemos seleccionado el llamado VLAN100, que en el XML tiene ` <tag id='100'/>`, por lo tanto **nos creará un virtual port interno** con el `tag: 100`.
+- Lo mejor está por llegar. Una vez que arranque la VM se va a crear dinámicamente un nuevo interfaz llamado vnetN con la configuración que establecí en el XML. En este ejemplo hemos seleccionado el llamado VLAN100, que en el XML tiene `tag id='100'`, por lo tanto **nos creará un virtual port interno** con el `tag: 100`.
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-02-20-openvswitch-8.png" 
@@ -548,6 +547,7 @@ root@maclinux:~# virsh net-list
   - En naranja: Son interfaces estáticas que quiero mantener, porque necesito que el HOST tenga su propia IP en ellas, así que las dejaré. 
   - En rojo: Son interfaces estáticas que YA NO NECESITO porque solo las voy a usar con Libvirt, así que las borro, tanto de OVS como de Netplan
 - Elimino los puertos estáticos
+ 
 ```console
 root@maclinux:~# ovs-vsctl del-port solbr vnet300
 root@maclinux:~# ovs-vsctl del-port solbr vnet400
@@ -575,7 +575,9 @@ root@maclinux:~# ovs-vsctl show
                 type: internal
     ovs_version: "2.13.3"
 ```
+
 - Versión final de Netplan:
+
 
 ```yaml
 # Config LuisPa
