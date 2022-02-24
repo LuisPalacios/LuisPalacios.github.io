@@ -29,7 +29,7 @@ He decidido instalar los tres en un servidor Ubuntu 20.04 LTS, sobre máquina vi
 ### Instalación del Servidor Linux
 
 Instalo Ubuntu en una máquina virtual corriendo en KVM. He seguido la documentación oficial, [Insalación de Ubuntu](https://ubuntu.com/server/docs/installation) y la siguiente imagen ISO:   
-```shell
+```console
 wget https://releases.ubuntu.com/20.04/ubuntu-20.04.3-live-server-amd64.iso
 ```
 Desde mi servidor con KVM lanzo `virt-manager` → Nueva máquina virtual, uso el ISO anterior y llamo al servidor `almacenix.parchis.org` (el dominio es privado, servido por mi [propio DNS Server]({% post_url 2021-06-20-pihole-casero %}))
