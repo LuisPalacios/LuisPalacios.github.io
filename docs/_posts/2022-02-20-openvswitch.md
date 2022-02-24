@@ -1,12 +1,12 @@
 ---
-title: "Linux, Open vSwitch y KVM"
+title: "Open vSwitch y KVM"
 date: "2022-02-20"
 categories: administración
 tags: linux kvm vlan ovs openvswitch sdn openflow vm qemu virtualización virt-manager libvirt
 excerpt_separator: <!--more-->
 ---
 
-![Logo OVS](/assets/img/posts/logo-ovs.svg){: width="150px" style="float:left; padding-right:25px" } 
+![Logo OVS](/assets/img/posts/logo-ovs-kvm.svg){: width="150px" style="float:left; padding-right:25px" } 
 
 Ya era hora de jugar con Open vSwitch (OVS), voy a aprovechar que instalo en breve un nuevo Servidor con Ubuntu Server, KVM, Máquinas Virtuales y VLAN's para montarlo todo con Open vSwitch en vez del Bridge de Linux tradicional. 
 
@@ -26,12 +26,11 @@ OVS es un bridge virtual desde donde haré toda la gestión de las conexiones de
 - Está diseñado para poder distribuir el switching a través de múltiples servidores físicos, similar a lo que se hace con `vNetwork distributed vswitch` de VMware o el `Nexus 1000V` de Cisco. 
 - Soporta bastantes cosas más, [aquí](https://www.openvswitch.org/features/) tienes la lista completa.
 
+Me gustaría advertir que no voy a usar las interfaces **TUN** / **TAP**. A modo recordatorio, son los dispositivos virtuales de red que residen en el Kernel, TUN opera a nivel 3 (routing) y **TAP a nivel 2 (bridges/switching)**. Trabajan usando sockets en el *espacio de usuario*. Tradicionalmente se han usado siempre junto con el Bridge estándar que incorpora el Kernel de Linux y con KVM/QEMU.
 
-Voy a hacer mención a un tema interesante. En linux tenemos las interfaces **TUN** / **TAP**. Son dispositivos virtuales de red que residen en el Kernel. TUN opera en nivel 3 (routing) y **TAP en nivel 2 (bridges/switching)**. Son como cualquier otra interfaz, con sus direcciones, conmutación de tráfico, etc; la diferencia es que se hará todo en *memoria* usando sockets, en el *espacio de usuario*, no en la red física. Tradicionalmente se han usado siempre junto con el Bridge de Linux y con KVM/QEMU, pero... NO LOS VAMOS A USAR con Open vSwitch.
+Con Open vSwitch utilizo solo sus propios `Internal Ports` en vez de interfaces `TAP`, ten cuidado con las decenas de documentos y ejemplos que hay en internet documentados con `tap` y Open vSwitch. En este apunte (y en mi instalación en producción) con KVM/QEMU y OVS solo voy a usar `Internal Ports`. 
 
-Open vSwitch trata a los dispositivos `TAP` como si fuesen cualquier otro tipo de dispositivo, es decir, no los abre con `sockets` (modo estándar) sino como `un interfaz normal`. Eso supone ciertos problemas; para entender más las implicaciones te recomiendo leer *Q: I created a tap device tap0, configured an IP address on it, and added it to a bridge, like this:* en los [Common Configuration Issues de OVS](https://docs.openvswitch.org/en/latest/faq/issues/).
-
-Me adelanto, en Open vSwitch vamos a utilizar `Internal Ports` en vez de interfaces `TAP` y ojo con las decenas de documentos y enlaces que hay en internet documentados con `tap`, pueden llevarte a confusión. Para el caso de KVM/QEMU que vemos aquí solo voy a usar `Internal Ports`. 
+Open vSwitch puede trabajar con `TAP` pero los trata como si fuesen un interfaz normal, es decir, no los abre vía `sockets` (modo estándar) y eso supone ciertas limitaciones e implicaciones, te recomiendo leer *Q: I created a tap device tap0, configured an IP address on it, and added it to a bridge...:* en los [Common Configuration Issues de OVS](https://docs.openvswitch.org/en/latest/faq/issues/).
 
 <br/>
 
@@ -39,9 +38,8 @@ Me adelanto, en Open vSwitch vamos a utilizar `Internal Ports` en vez de interfa
 
 Los principales componentes son:
 
-- **`ovs-vswitchd`**: Es el demonio (núcleo) de OVS junto con el módulo **`openvswitch_mod.ko`** (para el kernel). Ambos se encargan de la conmutación, VLAN's, bonding, monitorización. El *primer* paquete lo gestiona el daemon en el user-space, pero del *resto* de la conmutación se encarga el módulo del kernel (hablan entre ellos usando `netlink`). 
-- **`ovsdb-server`**: Es el segundo al mando, se trata de un servidor de base de datos ligero que para guardar la configuración de OVS (`ovs-vswitchd` habla con él). 
-
+- **`ovs-vswitchd`**: Es el demonio (núcleo) de OVS junto con el módulo **`openvswitch_mod.ko`** (para el kernel). Ambos se encargan de la conmutación, VLAN's, bonding, monitorización. El *primer* paquete lo gestiona el daemon en el user-space, pero del *resto* de la conmutación se encarga el módulo del kernel. 
+- **`ovsdb-server`**: Es el segundo al mando, se trata de un servidor de base de datos ligero que guarda la configuración de OVS.
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-02-20-openvswitch-1.jpg" 
@@ -73,9 +71,9 @@ root         772       1  0 12:23 ?        00:00:00 ovs-vswitchd unix:/var/run/o
 
 ### Añadir el Bridge OVS
 
-Los comandos que introduzcamos con `ovs-vsctl` **son persistentes** (recuerda la base de datos), en el siguiente reboot se volverán a activar. 
+Los comandos que introduzcamos con `ovs-vsctl` **son persistentes** (recuerda la base de datos). 
 
-| Nota: **CUIDADO QUEDARSE SIN CONEXIÓN SI SE USA SSH**. Ahora mismo la tarjeta física `enp2s0f0` está conectada al Stack IP, pero si la renombro, muevo al bridge, cambio a VLAN's etc. rompería la conexión. Importante tener acceso a la consola. |
+| Nota: **Cuidado si estás conectado vía SSH**. Parto de un ubuntu recién instalado, donde su tarjeta física se llama `enp2s0f0` y está conectada al Stack IP. En cuanto empiece a hacer cambios puedo romper dicha conexión. Importante tener acceso a la consola. |
 
 - Creo un bridge llamado `solbr`
 ```console
@@ -102,7 +100,7 @@ A continuación voy a configurar varias opciones **muy estáticas**, para que lo
 De entrada, empezamos con estas opciones:
 
 - Que el servidor reciba `eth0` en modo Trunk
-- Que el servidor reciba `vlan100` en modo Acceso *directamente conectado a su Stack TCP/IP* y por supuesto asignarle una IP. Más adelante dejaré de usar esta opción, en favor de la siguiente opción, pero viene bien ver cómo se hace.
+- Que el servidor reciba `vlan100` en modo Acceso *directamente conectado a su Stack TCP/IP* y por supuesto asignarle una IP. Más adelante cambio a la versión dinámica (vnetNNN, siguiente punto). 
 - Que el servidor instancie varias interfaces virtuales `vnetNNN` *a través del switch OVS* que puedan ser consumidas localmente por el propio servidor o por las VM's en modo Acceso. 
   - Las que llamo `vnet192` y `vnet500` serán usadas por el servidor con su propia IP. 
 - Que los Guest's (VM's) se conecten a una de esas intefaces virtuales (una VLAN)
@@ -547,42 +545,29 @@ root@maclinux:~# ovs-vsctl del-port solbr vnet300
 root@maclinux:~# ovs-vsctl del-port solbr vnet400
 root@maclinux:~# ovs-vsctl del-port solbr vnet221
 root@maclinux:~# ovs-vsctl del-port solbr vnet006
-root@maclinux:~# ovs-vsctl show
-83506d0f-e81b-4d47-be11-e25821d08d9a
-    Bridge solbr
-        Port vnet100
-            tag: 100
-            Interface vnet100
-                type: internal
-        Port solbr
-            Interface solbr
-                type: internal
-        Port eth0
-            Interface eth0
-        Port vnet192
-            tag: 192
-            Interface vnet192
-                type: internal
-        Port vnet500
-            tag: 500
-            Interface vnet500
-                type: internal
-    ovs_version: "2.13.3"
 ```
-- Versión final de Netplan:
- 
-```yaml
+
+<br/>
+
+----
+
+<br/>
+
+## Configuración final
+
+Al final he realizado algunos cambios, creado más VM's, eliminado la vlan500 de netplan (para dejarlo sólo para pruebas entre VM's), etc. Así es como ha quedado mi configuración:
+
+- Configuración base del servidor, antes de arranca VMs:
+```console
 # Config LuisPa
-
 network:
-
   version: 2
-
   ethernets:
 
     # Interfaz principal
     eth0:
-      # Buscar mac,original,nuevo para no errar en futuros matchs
+      # La renombro bucando por MAC o Nombre-original o Nombre-nuevo, 
+      # De esta forma no falla nunca, ni da warnings...
       match:
         macaddress: "3c:07:54:59:aa:cb"
         name: enp2s0f0
@@ -591,14 +576,10 @@ network:
       dhcp4: no
 
     # Bridge principal OVS de este servidor
-    # 'sol': nombre servidor. 'br': bridge
     solbr:
       dhcp4: no
 
-    # Puertos `Internal` para Acceso a VLAN's, consumibles localmente o por VM's
-    # Creados con:
-    #  ovs-vsctl add-port solbr vlanNNN tag=NNN -- set Interface vlanNNN type=internal
-    #
+    # Puertos Internal para Acceso a VLANs consumibles desde el Host y/o VMs
     vnet100:
       addresses: [192.168.100.33/24]
       gateway4: 192.168.100.1
@@ -607,10 +588,94 @@ network:
         search: [parchis.org]
     vnet192:
       addresses: [192.168.1.3/24]
-    vnet500:
-      addresses: [192.168.101.3/24]
+```
+```console
+root@maclinux:~# ovs-vsctl show
+83506d0f-e81b-4d47-be11-e25821d08d9a
+    Bridge solbr
+        Port solbr
+            Interface solbr
+                type: internal
+        Port eth0
+            Interface eth0
+        Port vnet100
+            tag: 100
+            Interface vnet100
+                type: internal
+        Port vnet192
+            tag: 192
+            Interface vnet192
+                type: internal
+    ovs_version: "2.13.3"
+```
+- Tras arrancar varias VM's Libvirt instancia `vnets` para dar soporte a: Una VM conectada a la vlan100, otra conectada a la vlan100 y vlan500 (interna para pruebas) y una tercera conectada al Trunk:
+```console
+luis@maclinux:~$ s
+root@maclinux:~# ovs-vsctl show
+83506d0f-e81b-4d47-be11-e25821d08d9a
+    Bridge solbr
+        Port solbr
+            Interface solbr
+                type: internal
+        Port eth0
+            Interface eth0
+        Port vnet100
+            tag: 100
+            Interface vnet100
+                type: internal
+        Port vnet192
+            tag: 192
+            Interface vnet192
+                type: internal
+        Port vnet0
+            tag: 500
+            Interface vnet0
+        Port vnet1
+            tag: 100
+            Interface vnet1
+        Port vnet2
+            trunks: [6, 100, 192, 221, 300, 400]
+            Interface vnet2
+    ovs_version: "2.13.3"
 ```
 
+<br/>
+
+### Referencia de comandos
+
+Dejo a continuación algunos comandos interesantes a modo de referencia ([fuente](https://gist.github.com/djoreilly/c5ea44663c133b246dd9d42b921f7646)):
+
+- Base de datos:
+ 
+```console
+ovs-vsctl list open_vswitch
+ovs-vsctl list interface vnet100
+ovs-vsctl --columns=options list interface vnet2
+ovs-vsctl --columns=ofport,name list Interface
+ovs-vsctl --columns=ofport,name --format=table list Interface
+ovs-vsctl -f csv --no-heading --columns=ofport,name list Interface
+ovs-vsctl -f csv --no-heading -d bare --columns=name,tag,trunk list port
+ovs-vsctl --format=table --columns=name,mac_in_use find Interface name=vnet100
+```
+
+- Flujos:
+
+```console
+ovs-ofctl dump-flows solbr
+ovs-appctl bridge/dump-flows solbr
+
+ovs-ofctl dump-flows solbr | cut -d',' -f3,6,7-
+ovs-ofctl -O OpenFlow13 dump-flows solbr | cut -d',' -f3,6,7-
+
+ovs-appctl dpif/show
+ovs-ofctl show solbr
+ovs-ofctl show solbr | egrep "^ [0-9]"
+
+ovs-dpctl dump-flows
+ovs-appctl dpctl/dump-flows
+ovs-appctl dpctl/dump-flows system@ovs-system
+ovs-appctl dpctl/dump-flows netdev@ovs-netdev
+```
 
 ----
 

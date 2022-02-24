@@ -1,5 +1,5 @@
 ---
-title: "Home Assistant @ Casa"
+title: "WiP!!: Home Assistant @ Casa"
 date: "2022-02-13"
 categories: domótica
 tags: linux homeassistant hassos hass

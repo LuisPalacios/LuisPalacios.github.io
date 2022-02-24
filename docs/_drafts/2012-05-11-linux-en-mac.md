@@ -1,5 +1,5 @@
 ---
-title: "Linux en Mac"
+title: "WiP!!: Linux en Mac"
 date: "2012-05-11"
 categories: apuntes
 tags: linux mac mini
