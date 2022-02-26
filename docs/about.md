@@ -14,7 +14,7 @@ permalink: /about/
 
 Este blog de caracter personal está dedicado a guardar mis apuntes técnicos, casi siempre en el entorno de Linux o el desarrollo de software. 
 
-Empecé con un blog basado en [NibbleBlog](http://www.nibbleblog.com), depués lo pasé a [Wordpress](https://wordpress.org/) y por último lo he migrado a un blog estático con [jekyll](http://jekyllrb.com), que he hospedado en [GitHub Pages](https://pages.github.com). Todos los apuntes están bajo licencia [Atribución 4.0 Internacional (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.es_ES). Compartirlo en redes sociales es bienvenido, siempre y cuando se realice la correspondiente atribución de autoría y no permitiendo, en ningún caso, la derivación de obra o uso lucrativo de las mismas por terceros.
+Empecé con un blog basado en [NibbleBlog](http://www.nibbleblog.com), depués lo pasé a [Wordpress](https://wordpress.org/) y por último lo he migrado a un blog estático con [jekyll](http://jekyllrb.com), que he hospedado en [GitHub Pages](https://pages.github.com). Todos los apuntes están bajo licencia [Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0//deed.es). Compartirlo en redes sociales es bienvenido, siempre y cuando se realice la correspondiente atribución de autoría y no permitiendo, en ningún caso, la derivación de obra o uso lucrativo de las mismas por terceros.
 
 En este [apunte]({% post_url 2021-04-19-nuevo-blog %}) puedes encontrar cómo lo he instalado y configurado. Los fuentes están en el repositorio [LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io) y la dirección pública del blog es [www.luispa.com](https://www.luispa.com)
 
@@ -29,7 +29,7 @@ Hi, my name is Luis and I'm a varied guy, technology, art, hacker, photography, 
 
 This blog is dedicated to keep my technical notes, mostly in the Linux or software development environment. Everything is done **in Spanish**, remember you can always click on the "Translate" buttom in your browser for a **real-time translation** 🤗.
 
-Started with [NibbleBlog](http://www.nibbleblog.com), then [Wordpress](https://wordpress.org/) and now using [jekyll](http://jekyllrb.com), hosted on [GitHub Pages](https://pages.github.com). All notes are licensed under [Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.en). Sharing in social networks is welcome, as long as the corresponding attribution of authorship is made and not allowing in any case, the derivation of work or lucrative use of the same by third parties.
+Started with [NibbleBlog](http://www.nibbleblog.com), then [Wordpress](https://wordpress.org/) and now using [jekyll](http://jekyllrb.com), hosted on [GitHub Pages](https://pages.github.com). All notes are licensed under [Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0//deed.en). Sharing in social networks is welcome, as long as the corresponding attribution of authorship is made and not allowing in any case, the derivation of work or lucrative use of the same by third parties.
 
 In this [note]({% post_url 2021-04-19-nuevo-blog %}) I describe how I set up this static blog, sources available at [LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io). Public link: [www.luispa.com](https://www.luispa.com).
 
