@@ -118,27 +118,29 @@ Consultar al Inversor mediante el protocolo MODBUS/TCP es para mi la mejor opci�
 
 **Integración con Home Assistant**
 
-Existe una *Integración* para Home Assistant muy buena para poder conectaros mediante `modbus/tcp`. Lee muchos más datos y con más frecuenta que el resto de opciones que he probado. En mi caso guardo todo en mi influxDB externo, para posterior visualización en Grafana.
+Existe una *Integración* para Home Assistant muy buena para poder conectaros mediante `modbus/tcp`. Lee muchos más datos y con más frecuencia que el resto de opciones que he probado.
 
-La integración la tienes aquí, se llama [homsassistant-solax-modbus](https://github.com/wills106/homsassistant-solax-modbus) y se trata de un `custom_component` para Home Assistant. 
+La integración es [homsassistant-solax-modbus](https://github.com/wills106/homsassistant-solax-modbus) y se trata de un `custom_component` para Home Assistant. 
 
 Sobre el Autor de esta integración: 
 - Publicó en este [hilo](https://community.home-assistant.io/t/solax-inverter-by-modbus-no-pocket-wifi-now-a-custom-component/140143/10) su trabajo, merece la pena recorrerlo. 
 - Tiene otro repositorio, [Home Assistant Configuration](https://github.com/wills106/homeassistant-config) muy interesante. 
 
 
+| Nota: En mi caso necesité vengo de una versión antigua (donde hice instalación manual). Eliminé el directorio `/config/custom_components/solax_modbus` y borré la integración desde *Configuration > Integrations*, Tras el reboot de rigor pude hacer la *Instalación desde HACS* |
+
 <br/>
 
-**Instalación manual de homsassistant-solax-modbus**
+**Instalación desde HACS**
 
-Este módulo no viene entre la lista de Integraciones de Homa Assistant ni en [HACS](https://hacs.xyz), el Community Store de Home Assistant. La instalación debe hacerse manual. Antes de empezar, asegúrate de tener instalado el Add-On `Terminal & SSH`
+Desde la versión 0.4.5 podemos instalar desde [HACS](https://hacs.xyz), el Community Store de Home Assistant.
 
-- Configuration > Add-Ons > ADD-ON STORE > busca "terminal"
+- HACS > Integrations > Explore & Download Repositories > busco por "modbus"
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-02-13-hass-solax-6.png" 
-      caption="Vas a necesitar este Add-On" 
-      width="200px"
+      caption="Instalo Homsassistant Solax Modbus" 
+      width="500px"
       %}
 
 A continuación descargamos el ZIP del proyecto desde GitHub
@@ -146,35 +148,21 @@ A continuación descargamos el ZIP del proyecto desde GitHub
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-02-13-hass-solax-7.png" 
-      caption="Descargo el proyecto en mi ordenador" 
+      caption="Selecciono la última versión" 
       width="500px"
       %}
 
-Lo subimos a Home Assistant desde el File Editor
+A continuación **rearranco Home Assistant** desde Configuration > Settings > Restart
 
-{% include showImagen.html 
-      src="/assets/img/posts/2022-02-13-hass-solax-8.png" 
-      caption="Subo el ZIP a HA al directorio /config/custome_components" 
-      width="300px"
-      %}
-
-Extraigo el ZIP y copio/muevo el sub-directorio `solax_modbus`
-
-{% include showImagen.html 
-      src="/assets/img/posts/2022-02-13-hass-solax-9.png" 
-      caption="Subo el ZIP a HA al directorio /config/custome_components" 
-      width="300px"
-      %}
-
-Hago un reboot del HA y desde Configuration > Integrations selecciono la nueva Integración, la parametrizo con la IP del Inversor en mi LAN, lo llamo `SolaXM`(la M la pongo por Modbus) y establezco la frecuencia en 10s, más que suficiente... 
+Entro en **Configuration** > **Device & Services** > **Add Integration** > **Setup a new Integration**, busco por `solax` y selecciono la que se llama *SolaX Inverter Modbus*. La llamo `SolaXM`(la M la pongo por Modbus), pongo su IP, selecciono MI MODELO y establezco la frecuencia en 15s, más que suficiente... 
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-02-13-hass-solax-10.jpg" 
       caption="Doy de alta la nueva integración" 
-      width="300px"
+      width="600px"
       %}
 
-La busco en Configuration > Devices & Services > Devices y la añado a LOVELACE UI.
+Aparece ya en Configuration > Devices & Services > Integrations. Entro en el **device** la añado a LOVELACE UI.
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-02-13-hass-solax-11.png" 
@@ -184,11 +172,12 @@ La busco en Configuration > Devices & Services > Devices y la añado a LOVELACE 
 
 <br/>
 
+
 **Exportar los datos a InfluxDB**
 
-Nota: En mi caso utilizo un Servidor Externo para alojar InfluxDB 2.x y Grafana. Aquí tienes un apunte sobre [cómo crear un Servidor Grafana, InfluxDB y Telegraf]({% post_url 2022-02-06-grafana-influxdb %}). Antiguamente lo tenía todo en el mismo servidor de HA, con InfluxDB 1.x, así que una vez listo hice la [migración de los datos y los dashboards Grafana]({% post_url 2022-02-06-hass-migrar-datos %}) al nuevo servidor.
+Para exportar los datos voy a usar mi Servidor Externo con InfluxDB 2.x y Grafana ([un apunte sobre eso]({% post_url 2022-02-06-grafana-influxdb %})). Por cierto, lo migré de InfluxDB 1.x (embebido en HASS) a esta versión externa ([aquí los pasos]({% post_url 2022-02-06-hass-migrar-datos %})).
 
-A continuación configuro `/config/configuration.yaml` para mandar la información del Inversor a mi nuevo InfluxDB 2.x externo. 
+Configuro `/config/configuration.yaml` para mandar la información de mi Inversor al servidor InfluxDB. Si tu inversor es distinto tendrás datos parecidos pero no iguales.
 
 ```
 :
@@ -206,62 +195,43 @@ influxdb:
   include:
     entities:
      :
-      # Poner aquí los sensor.solaxm*
-      - sensor.solaxm_allow_grid_charge
+      # Poner aquí los sensor.solaxm
+      - sensor.solaxm_bms_connect_state
+      - sensor.solaxm_backup_charge_end
+      - sensor.solaxm_backup_charge_start
+      - sensor.solaxm_backup_gridcharge
       - sensor.solaxm_battery_capacity
-      - sensor.solaxm_battery_charge_max_current
       - sensor.solaxm_battery_current_charge
-      - sensor.solaxm_battery_discharge_max_current
-      - sensor.solaxm_battery_input_energy_today
-      - sensor.solaxm_battery_minimum_capacity
-      - sensor.solaxm_battery_output_energy_today
-      - sensor.solaxm_battery_power_charge
-      - sensor.solaxm_battery_temperature
-      - sensor.solaxm_battery_voltage_charge
-      - sensor.solaxm_bms_connect_state
-      - sensor.solaxm_charger_use_mode
-      - sensor.solaxm_earth_detect_x3
-      - sensor.solaxm_end_time_1
-      - sensor.solaxm_end_time_2
-      - sensor.solaxm_feedin_energy_total
-      - sensor.solaxm_grid_export
-      - sensor.solaxm_grid_import
-      - sensor.solaxm_grid_mode_runtime
-      - sensor.solaxm_grid_service_x3
-      - sensor.solaxm_house_load
-      - sensor.solaxm_inverter_current
-      - sensor.solaxm_inverter_current_r
-      - sensor.solaxm_inverter_current_s
-      - sensor.solaxm_inverter_current_t
-      - sensor.solaxm_inverter_frequency
-      - sensor.solaxm_inverter_power
-      - sensor.solaxm_inverter_power_r
-      - sensor.solaxm_inverter_power_s
-      - sensor.solaxm_inverter_power_t
-      - sensor.solaxm_inverter_temperature
-      - sensor.solaxm_inverter_voltage
-      - sensor.solaxm_inverter_voltage_r
-      - sensor.solaxm_inverter_voltage_s
-      - sensor.solaxm_inverter_voltage_t
-      - sensor.solaxm_measured_power
-      - sensor.solaxm_measured_power_r
-      - sensor.solaxm_measured_power_s
-      - sensor.solaxm_measured_power_t
-      - sensor.solaxm_phase_power_balance_x3
-      - sensor.solaxm_pv_current_1
-      - sensor.solaxm_pv_current_2
-      - sensor.solaxm_pv_power_1
-      - sensor.solaxm_pv_power_2
-      - sensor.solaxm_pv_total_power
-      - sensor.solaxm_pv_voltage_1
-      - sensor.solaxm_pv_voltage_2
-      - sensor.solaxm_run_mode
-      - sensor.solaxm_start_time_1
-      - sensor.solaxm_start_time_2
-      - sensor.solaxm_today_s_export_energy
-      - sensor.solaxm_today_s_import_energy
-      - sensor.solaxm_today_s_solar_energy
-      - sensor.solaxm_today_s_yield 
+      - sensor.solaxm_battery_input_energy_today
+      - sensor.solaxm_battery_output_energy_today
+      - sensor.solaxm_battery_power_charge
+      - sensor.solaxm_battery_temperature
+      - sensor.solaxm_battery_voltage_charge
+      - sensor.solaxm_charger_end_time_1
+      - sensor.solaxm_charger_end_time_2
+      - sensor.solaxm_charger_start_time_1
+      - sensor.solaxm_charger_start_time_2
+      - sensor.solaxm_grid_export
+      - sensor.solaxm_grid_import
+      - sensor.solaxm_house_load
+      - sensor.solaxm_inverter_current
+      - sensor.solaxm_inverter_frequency
+      - sensor.solaxm_inverter_power
+      - sensor.solaxm_inverter_temperature
+      - sensor.solaxm_inverter_voltage
+      - sensor.solaxm_measured_power
+      - sensor.solaxm_pv_current_1
+      - sensor.solaxm_pv_current_2
+      - sensor.solaxm_pv_power_1
+      - sensor.solaxm_pv_power_2
+      - sensor.solaxm_pv_total_power
+      - sensor.solaxm_pv_voltage_1
+      - sensor.solaxm_pv_voltage_2
+      - sensor.solaxm_run_mode
+      - sensor.solaxm_today_s_export_energy
+      - sensor.solaxm_today_s_import_energy
+      - sensor.solaxm_today_s_solar_energy
+      - sensor.solaxm_today_s_yield 
 ```
 
 <br/>
@@ -406,7 +376,7 @@ El resultado final es el Dashboard de Energía
       %}
 
 
-Que podemos comparar con lo que vemos en un Dashboard Grafana personalizado... 
+Comparación con lo que vemos en un Dashboard Grafana personalizado... 
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-02-13-hass-solax-20.png" 
