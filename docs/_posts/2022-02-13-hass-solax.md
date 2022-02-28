@@ -112,28 +112,25 @@ Mis observaciones y algunos retos:
 
 ### 3. Monitorizar vía red local (MODBUS/TCP)
 
-Consultar al Inversor mediante el protocolo MODBUS/TCP es para mi la mejor opción. Por suerte mi inversor X1-HYBRID-G3 soporta recibir consultas por el puerto 502 (puerto de por defecto para el protocolo modbus/tcp). Necesitas poner un cable Ethernet en el puerto LAN de tu inversor conectado a la red local de tu casa. En mi caso le asigno una dirección IP fija desde mi DHCP server a través de su MAC.
+Consultar al Inversor mediante el protocolo MODBUS/TCP es la mejor opción. Por suerte mi inversor X1-HYBRID-G3 soporta recibir consultas por el puerto 502 (puerto de por defecto para el protocolo modbus/tcp). Necesitas poner un cable Ethernet en el puerto LAN de tu inversor conectado a la red local de tu casa. En mi caso le asigno una dirección IP fija desde mi DHCP server a través de su MAC.
 
 <br/> 
 
 **Integración con Home Assistant**
 
-Existe una *Integración* para Home Assistant muy buena para poder conectaros mediante `modbus/tcp`. Lee muchos más datos y con más frecuencia que el resto de opciones que he probado.
+Existe una *Integración* muy buena, lee muchos más datos y con más frecuencia que el resto de opciones que he probado, [homsassistant-solax-modbus](https://github.com/wills106/homsassistant-solax-modbus). El autor,
 
-La integración es [homsassistant-solax-modbus](https://github.com/wills106/homsassistant-solax-modbus) y se trata de un `custom_component` para Home Assistant. 
-
-Sobre el Autor de esta integración: 
 - Publicó en este [hilo](https://community.home-assistant.io/t/solax-inverter-by-modbus-no-pocket-wifi-now-a-custom-component/140143/10) su trabajo, merece la pena recorrerlo. 
 - Tiene otro repositorio, [Home Assistant Configuration](https://github.com/wills106/homeassistant-config) muy interesante. 
 
 
-| Nota: En mi caso necesité vengo de una versión antigua (donde hice instalación manual). Eliminé el directorio `/config/custom_components/solax_modbus` y borré la integración desde *Configuration > Integrations*, Tras el reboot de rigor pude hacer la *Instalación desde HACS* |
+| Nota: En mi caso empecé con una versión antigua (instalación manual). Antes de instalar la última eliminé el directorio `/config/custom_components/solax_modbus` y borré la integración desde *Configuration > Integrations*, Tras el reboot de rigor pude  seguir con el siguiente punto. |
 
 <br/>
 
 **Instalación desde HACS**
 
-Desde la versión 0.4.5 podemos instalar desde [HACS](https://hacs.xyz), el Community Store de Home Assistant.
+Desde la versión 0.4.5 se instala desde [HACS](https://hacs.xyz), el Community Store de Home Assistant.
 
 - HACS > Integrations > Explore & Download Repositories > busco por "modbus"
 
@@ -143,7 +140,7 @@ Desde la versión 0.4.5 podemos instalar desde [HACS](https://hacs.xyz), el Comm
       width="500px"
       %}
 
-A continuación descargamos el ZIP del proyecto desde GitHub
+Selecciono la última versión
 
 
 {% include showImagen.html 
@@ -152,9 +149,9 @@ A continuación descargamos el ZIP del proyecto desde GitHub
       width="500px"
       %}
 
-A continuación **rearranco Home Assistant** desde Configuration > Settings > Restart
+**Rearranco** Home Assistant desde Configuration > Settings > Restart
 
-Entro en **Configuration** > **Device & Services** > **Add Integration** > **Setup a new Integration**, busco por `solax` y selecciono la que se llama *SolaX Inverter Modbus*. La llamo `SolaXM`(la M la pongo por Modbus), pongo su IP, selecciono MI MODELO y establezco la frecuencia en 15s, más que suficiente... 
+Entro en **Configuration** > **Device & Services** > **Add Integration** > **Setup a new Integration**, busco por `solax` y selecciono *SolaX Inverter Modbus*. La llamo `SolaXM`(la M la pongo por Modbus), pongo su IP, selecciono MI MODELO y establezco la frecuencia en 15s, más que suficiente... 
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-02-13-hass-solax-10.jpg" 
@@ -162,7 +159,7 @@ Entro en **Configuration** > **Device & Services** > **Add Integration** > **Set
       width="600px"
       %}
 
-Aparece ya en Configuration > Devices & Services > Integrations. Entro en el **device** la añado a LOVELACE UI.
+Aparece ya en Configuration > Devices & Services > Integrations. Entro en el **device** la añado a Lovelace UI.
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-02-13-hass-solax-11.png" 
