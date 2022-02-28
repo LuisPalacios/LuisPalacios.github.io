@@ -433,19 +433,14 @@ Ahora vamos a aprovechar las ventajas de la integración entre Libvirt y Open vS
 
 Open vSwitch soporta las redes que gestiona `libvirt` en modo `bridged` (no las NAT), más información [aquí](https://docs.openvswitch.org/en/latest/howto/libvirt/).
 
-- Voy a crear una plantilla de red en Libvirt. Creo el fichero `/etc/libvirt/qemu/Networks/solbr.xml` 
+- Voy a crear una de red perssistente en Libvirt desde un XML `/root/mi-solbr.xml` 
 
 ```xml
-<!--
-WARNING: THIS IS AN AUTO-GENERATED FILE. CHANGES TO IT ARE LIKELY TO BE
-OVERWRITTEN AND LOST. Changes to this xml configuration should be made using:
-  virsh net-edit net-solbr
-or other application using the libvirt API.
+<!-- Ejemplo de fichero XML para crear una red virtual persistente dentro de Libvirt. 
 -->
 
 <network>
   <name>net-solbr</name>
-  <uuid>fcaa986c-f900-4448-b897-d75556e59784</uuid>
   <forward mode='bridge'/>
   <bridge name='solbr'/>
   <virtualport type='openvswitch'/>
@@ -504,7 +499,9 @@ or other application using the libvirt API.
   
 ```console
 root@maclinux:~# virsh net-define /etc/libvirt/qemu/networks/net-solbr.xml
-Network net-solbr defined from /etc/libvirt/qemu/networks/net-solbr.xml
+Network net-solbr defined from /root/mi-solbr.xml
+
+(Se crea el fichero /etc/libvirt/qemu/networks/net-solbr.xml)
 
 root@maclinux:~# virsh net-start net-solbr
 Network net-solbr started
