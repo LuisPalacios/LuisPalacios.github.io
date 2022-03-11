@@ -487,12 +487,19 @@ luis@almacenix:~$ influx delete --bucket telegraf --start '2022-02-15T01:00:00Z'
 
 ### Tips para Telegraf
 
-**Espiar el tamaño de los buckets de InfluxDB**
+**Monitorizar el tamaño de los buckets de un Servidor InfluxDB**
 
-* El objetivo es averiguar el tamaño de los buckets de un servidor InfluxDB y que Telegraf (corriendo en dicho servidor) se lo envíe, para luego poder observar si nos crece mucho y nos quedamos sin espacio (desde Grafana)
+* El objetivo es averiguar el tamaño de los buckets de un servidor InfluxDB, por ejemplo para observar si crecen mucho y nos quedamos sin espacio. Como siempre se puede observar todo desde Grafana
 
-Aquí tienes una copia de dicho [Script compatible con formato *influx* para el Plugin **input.exec**](https://gist.github.com/LuisPalacios/9597178db4c4c4b357dd0700d61c1835), que puedes usar para averiguar el tamaño de los buckets de un servidor InfluxDB. Las instrucciones de instalación están documentadas en el propio script. 
+- Gist: [Script compatible con formato *influx* para el Plugin **input.exec**](https://gist.github.com/LuisPalacios/9597178db4c4c4b357dd0700d61c1835) para averiguar el tamaño de los buckets de un servidor InfluxDB. 
+  
+<br/>
 
+**Monitorizar el tamaño de los discos QCOW2 de un Host QEMU/KVM**
+
+* El objetivo es que podamos ver el tamaño de los discos QCOW2 de un linux Host con QEMU/KVM.
+
+- Gist: [Script compatible con formato *influx* para el Plugin **input.exec**](https://gist.github.com/LuisPalacios/e130f8200132a86a32dafbf2bfd0d1fb) para averiguar la ocupación de los discos QCOW2. 
 
 ----
 
