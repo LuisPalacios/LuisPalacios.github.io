@@ -1,5 +1,5 @@
 ---
-title: "GIT cheatsheet"
+title: "Chuleta sobre GIT"
 date: "2021-10-10"
 categories: desarrollo
 tags: git
