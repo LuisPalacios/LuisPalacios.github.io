@@ -15,6 +15,8 @@ En este apunte voy a cubrir la instalación de [Gitea](http://gitea.io) como ser
 
 | En este apunte sobre [Gitea en VM]({% post_url 2022-03-26-gitea-vm %}) describo cómo instalarlo en una máquina virtual. Además tengo un par de apuntes sobre [GIT en detalle]({% post_url 2021-04-17-git-en-detalle %}) y este [Chuleta sobre GIT]({% post_url 2021-10-10-git-cheatsheet %})|
 
+Más adelante escribí un apunte sobre como [instalar Gitea y Traefik en Docker]({ post_url 2022-03-27-gitea-docker %}).
+
 <br/>
 
 ## Introducción
