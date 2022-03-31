@@ -367,6 +367,15 @@ root@maclinux:~# adduser luis libvirt
 root@maclinux:~# adduser luis kvm
 root@maclinux:~# systemctl reboot -f
 ```
+
+<br/>
+
+### Configuración estática con OVS + Libvirt + QEMU/KVM
+
+Primero vamos a ver la forma tradicional de configuración. Consiste en dar de alta interfaces virtuales (vnic's) en nuestro bridge OVS, asignarles un nombre y configurarlas "manual y estáticamente" desde virt-manager. 
+
+Pero lo primero es lo primero, elimino la configuración de red que trae KVM por defecto. 
+
 - **Desahabilito el arranque del bridge que trae KVM por defecto**. Estamos usando Open vSwitch, así que no necesito el Bridge de Linux tradicional. Nota, para habilitarlo de nuevo basta con ejecutar `# virsh net-autostart default`
 ```console
 root@maclinux:~# virsh net-autostart --disable default
@@ -380,7 +389,7 @@ alpine-virt-3.15.0-x86_64.iso: OK
 luis@maclinux:~$ ls -hl alpine-virt-3.15.0-x86_64.iso
 -rw-rw-r-- 1 luis luis 52M nov 24 09:23 alpine-virt-3.15.0-x86_64.iso
 ```
-- Creo una **pequeña VM** desde `virt-manager`: 768MB de RAM, 1 CPU, disco de 1GB, usando la imagen: `alpine-virt-3.15.0-x86_64.iso`, la llamo `alpine1` y en la Red virtual uso la `vbet100`.
+- Creo una **pequeña VM** desde `virt-manager`: 768MB de RAM, 1 CPU, disco de 1GB, usando la imagen: `alpine-virt-3.15.0-x86_64.iso`, la llamo `alpine1` y en la Red virtual uso la `vnet100`.
 ```console
 luis@maclinux:~$ virt-manager
 ```
@@ -421,13 +430,48 @@ localhost login: root
       %}
 
 - Arriba más pruebas, añado otra interfaz y fíjate que uso el driver `virtio`, el más recomendado.
-  
 
 <br/>
 
-### Configuración dinámica
+#### Ejemplo más complejo con varias interfaces estáticas. 
 
-Ahora vamos a aprovechar las ventajas de la integración entre Libvirt y Open vSwitch. 
+A continuación puedes ver una configuración más compleja. En este ejemplo voy a crear varias interfaces en mi Open vSwitch apuntando a diferentes VLAN's
+
+```console
+ovs-vsctl add-port solbr v100dev1 tag=100 -- set Interface v100dev1 type=internal
+ovs-vsctl add-port solbr v100dev2 tag=100 -- set Interface v100dev2 type=internal
+ovs-vsctl add-port solbr v100dev3 tag=100 -- set Interface v100dev3 type=internal
+ovs-vsctl add-port solbr v192dev1 tag=192 -- set Interface v192dev1 type=internal
+ovs-vsctl add-port solbr v300dev1 tag=300 -- set Interface v300dev1 type=internal
+```
+
+A continuación las asigno en las máquinas virtuales. Enseño tres ejemplos:
+
+{% include showImagen.html 
+      src="/assets/img/posts/2022-02-20-openvswitch-9.png" 
+      caption="Asocio el puerto v100dev1 (vlan100) a la VM ubuntu" 
+      width="600px"
+      %}
+
+{% include showImagen.html 
+      src="/assets/img/posts/2022-02-20-openvswitch-10.png" 
+      caption="Asocio el puerto v192dev1 (vlan192) a la misma VM como 2ª interfaz" 
+      width="600px"
+      %}
+
+En otra VM... 
+
+{% include showImagen.html 
+      src="/assets/img/posts/2022-02-20-openvswitch-11.png" 
+      caption="Asocio el puerto v10dev2 (vlan100) a la VM git" 
+      width="600px"
+      %}
+
+<br/>
+
+### Configuración dinámica con OVS + Libvirt + QEMU/KVM
+
+Cambiamos de tercio, vamos a aprovechar las ventajas de la integración entre Libvirt y Open vSwitch para no tener que hacer configuraciones tan estáticas. Dejaremos que sea libvirt quien llame a `ovs-vsctl` para crear (al levantar la VM) y destruir (al parar la VM) los puertos del switch.
 
 #### Integración de Open vSwitch con Libvirt
 
