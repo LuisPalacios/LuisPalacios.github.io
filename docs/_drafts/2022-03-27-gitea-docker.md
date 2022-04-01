@@ -6,22 +6,183 @@ tags: linux git servidor gitea gitlab github traefik smtp
 excerpt_separator: <!--more-->
 ---
 
-![Logo GIT](/assets/img/posts/logo-gitea.svg){: width="150px" style="float:left; padding-right:25px" } 
+![Logo gitea traefik docker](/assets/img/posts/logo-gitea-docker.svg){: width="150px" style="float:left; padding-right:25px" } 
 
-En este apunte voy a cubrir la instalación de [Gitea](http://gitea.io) como servidor GIT y [Traefik](https://doc.traefik.io/traefik/) para terminar SSL (certificados de LetsEncrypt). 
+En este apunte describo la instalación de [Gitea](http://gitea.io) como servidor GIT y [Traefik](https://doc.traefik.io/traefik/) para terminar SSL (certificados de LetsEncrypt). Ahora que estoy reorganizando mis servidores caseros me ha surgido la necesidad de volver a Docker. Normalmente trabajo con máquinas virtuales muy ajustadas en tamaño y recursos, pero esta vez voy a montarlo sobre Docker, que a su vez correrá dentro de una máquina virtual QEMU/KVM :-). 
 
 <br clear="left"/>
 <!--more-->
 
-| En este apunte sobre [Gitea en VM]({% post_url 2022-03-26-gitea-vm %}) describo cómo instalarlo en una máquina virtual. Además tengo un par de apuntes sobre [GIT en detalle]({% post_url 2021-04-17-git-en-detalle %}) y este [Chuleta sobre GIT]({% post_url 2021-10-10-git-cheatsheet %})|
-
-Más adelante escribí un apunte sobre como [instalar Gitea y Traefik en Docker]({% post_url 2022-03-27-gitea-docker %}).
-
-<br/>
+| Ya expliqué cómo montar [Gitea sobre una máquina virtual]({% post_url 2022-03-26-gitea-vm %}). También tienes un par de apuntes sobre [GIT en detalle]({% post_url 2021-04-17-git-en-detalle %}) y esta [Chuleta sobre GIT]({% post_url 2021-10-10-git-cheatsheet %})|
 
 ## Introducción
 
-asdf
+Este apunte sobre [mis primeros pasos con Docker]({% post_url 2014-11-01-inicio-docker %}) me trae buenos recuerdos y también asusta lo rápido que pasa el tiempo. Lo primero que necesito decidir es sobre qué SO voy a montar Docker, teniendo en cuenta que: 
 
+- Voy a correr Docker dentro de una Virtual Machine en mi Servidor QEMU/KVM. 
+- El Sistema Operativo del Guest solo va a correr Docker, no necesito una distribución enorme. 
+- Opcionalmente podría interesar que el SO traiga herramientas de Docker ya instaladas. 
+
+Busco algo pequeño, fácil de mantener y robusto, entre las diferentes opciones que he visto por [ahí](https://kuberty.io/blog/best-os-for-docker/) he optado por [Alpine Linux](https://alpinelinux.org), aquí tienes los pasos:
+
+- Máquina virtual con Alpine Linux
+- Docker. 
+- Contenedores de Gitea y Traefik
 
 <br/>
+
+### Máquina virtual con Alpine Linux
+
+- Voy a crear mi VM llamada `git.parchis.org` 
+- Descargo **Alpine Linux** desde [Downloads](https://alpinelinux.org/downloads/) > VIRTUAL > *Slimmed down kernel. Optimized for virtual systems*, x86_64 (**solo 52MB**), es la versión más compacta posible.
+```console
+luis@sol:~/kvm/base$ wget https://dl-cdn.alpinelinux.org/alpine/v3.15/releases/x86_64/alpine-virt-3.15.3-x86_64.iso
+luis@sol:~/kvm/base$ wget https://dl-cdn.alpinelinux.org/alpine/v3.15/releases/x86_64/alpine-virt-3.15.3-x86_64.iso.sha256
+luis@sol:~/kvm/base$ sha256sum -c alpine-virt-3.15.3-x86_64.iso.sha256
+alpine-virt-3.15.3-x86_64.iso: La suma coincide
+```
+- Creo el puerto `estático`en mi switch virtual (en este apunte sobre [Open vSwitch y KVM]({% post_url 2022-02-20-openvswitch %}) está todo explicado). 
+```
+luis@sol:~$ sudo ovs-vsctl add-port solbr v100vnet11 tag=100 -- set Interface v100vnet11 type=internal
+```
+- Creo una **máquina virtual** desde `virt-manager` con **1GB de RAM, 1 CPU, disco de 8GB y una NIC virtio**, usando la imagen: `alpine-virt-3.15.3-x86_64.iso`, la llamo `gitea-traefik-docker` y en la configuración de red uso el interfaz que acabo de crear `v100vnet11`.
+```console
+luis@maclinux:~$ virt-manager
+```
+
+{% include showImagen.html 
+      src="/assets/img/posts/2022-03-27-gitea-docker-1.png" 
+      caption="Creo VM desde virt-manager" 
+      width="450px"
+      %}
+
+
+- Arranco la VM y entro en el setup de Alpine (más info en [esta guía](https://wiki.alpinelinux.org/wiki/QEMU)). 
+```console
+luis@sol:~/kvm/gitea-traefik-docker$ virsh console git.parchis.org
+localhost login: root
+Welcome to Alpine!
+:
+localhost:~#
+:
+# export SWAP_SIZE=0
+# setup-alpine
+```
+-  Selecciono DHCP para mí interfaz eth0. Nombre del equipo `git`, Disco `vda`, modalidad `sys`, el resto por defecto.
+- Apago y vuelvo a arrancar
+```console
+git:~# poweroff. 
+```
+- Hago login como root e instalo unas cuantas herramientas útiles. 
+```console
+git:~# apk add iproute2
+git:~# apk add nano
+git:~# apk add sudo
+```
+- Creo mi usuario `luis` y configuro ssh
+```console
+git:~# addgroup -g 1000 luis
+git:~# adduser -h /home/luis -s /bin/ash -G luis --u 1000 luis
+git:~# adduser luis wheel
+git:~# su - luis
+git:~$ 
+git:~$ ssh-keygen -t rsa -b 2048 -C "luis@git.parchis.org"
+:
+git:~$ exit
+```
+- También he creado el fichero authorized_keys (aquí tienes un [apunte sobre SSH en linux]({% post_url 2009-02-01-ssh %}))
+- Modifico SSH para que trabaje solo con clave pública/privada
+```console
+git:~# cat /etc/ssh/sshd_config
+# Config LuisPa
+Port 22
+PubkeyAuthentication yes
+PasswordAuthentication no
+AuthenticationMethods publickey
+AllowAgentForwarding yes
+AllowTcpForwarding yes
+GatewayPorts yes
+AddressFamily inet
+PrintMotd no
+Subsystem sftp /usr/lib64/misc/sftp-server
+AcceptEnv LANG LC_*
+git:~# service sshd restart
+```
+- Acelero el tiempo de boot a unos 5 segundos
+```console
+git:~# cat /boot/extlinux.conf
+# Generated by update-extlinux 6.04_pre1-r9
+#DEFAULT menu.c32                        # Comento esta línea
+DEFAULT virt                             # Añadida, virt = nombre más abajo
+PROMPT 0
+MENU TITLE Alpine/Linux Boot Menu
+MENU HIDDEN
+MENU AUTOBOOT Alpine will be booted automatically in # seconds.
+TIMEOUT 30
+LABEL virt
+  MENU LABEL Linux virt
+  LINUX vmlinuz-virt
+  INITRD initramfs-virt
+  APPEND root=UUID=bff03f67-29ee-4525-96d9-3096a1799fc7 modules=sd-mod,usb-storage,ext4 quiet rootfstype=ext4
+MENU SEPARATOR
+```
+
+<br/>
+
+### Docker y Docker Compose
+
+- Habilito el **Community repository**
+```console
+git:~# cat /etc/apk/repositories
+#/media/cdrom/apks
+http://dl-cdn.alpinelinux.org/alpine/v3.15/main
+http://dl-cdn.alpinelinux.org/alpine/v3.15/community   <== Descomento esta línea
+```
+- Actualizo el sistema e instalo **docker** y **docker-compose**
+```console
+git:~# apk update
+git:~# apk upgrade --available
+git:~# apk add docker docker-compose
+git:~# rc-update add docker boot
+git:~# service docker start
+```
+- Añado mi usuario al grupo docker y hago un reboot...
+```console
+git:~# addgroup luis docker
+git:~# reboot -f
+```
+- Pruebo Docker (con la última imagen de [alpine](https://hub.docker.com/_/alpine), que ocupa poquísimo...)
+```console
+git:~$ mkdir docker
+git:~$ cd docker
+git:~/docker$
+git:~/docker$ docker pull alpine:latest
+git:~/docker$ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED      SIZE
+alpine       latest    76c8fb57b6fc   3 days ago   5.57MB
+git:~/docker$ docker create -t -i  --name myalpine alpine:latest
+5f1fefa539848f9e0fe995bf2e9c426def69ca48bfacc51bdb509197939c041e
+git:~/docker$ docker start myalpine
+myalpine
+git:~/docker$ docker exec -it myalpine /bin/ash
+/ #
+/ # exit
+git:~/docker$ docker stop myalpine
+myalpine
+git:~/docker$ docker rm myalpine
+myalpine
+```
+
+Ya puedo continuar
+
+<br/>
+
+### Contenedor Gitea
+
+<br/>
+
+### Contenedor Traefik
+
+<br/>
+
+
