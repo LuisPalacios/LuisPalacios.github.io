@@ -353,6 +353,7 @@ Instalar es relativamente fácil, pero con tantos programas y módulos en tu sis
 Ejecuta los comandos siguientes
 
 ```
+$ export HOMEBREW_VERBOSE=1
 $ brew update
 ```
 ```

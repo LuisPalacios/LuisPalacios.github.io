@@ -173,7 +173,8 @@ git:~/docker$ docker rm myalpine
 myalpine
 ```
 
-Ya puedo continuar
+
+
 
 <br/>
 
