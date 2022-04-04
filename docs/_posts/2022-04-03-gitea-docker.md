@@ -74,11 +74,11 @@ git:~$ mkdir gitea
 
 -  Creo el fichero donde se guardará el certificado de `letsencrypt`.
 ```console
-git:~/gitea$ mkdir traefik
-git:~/gitea$ touch traefik/parchis.json
-git:~/gitea$ chmod 600 traefik/parchis.json
+git:~/gitea$ mkdir data_traefik
+git:~/gitea$ touch data_traefik/acme.json
+git:~/gitea$ chmod 600 data_traefik/acme.json
 ```
-- Creo `docker-compose.yml`, de momento solo añado el primer serivicio `gitea-traefik`. Cambia tu `Host()` y `TUCORREO@TUDOMINIO.COM` por el adecuado.
+- Creo `docker-compose.yml`, de momento solo añado el primer serivicio `gitea-traefik`. Cambia tu `HOST` y `TUCORREO@gmail.com` por el adecuado.
 ```yml
 version: '3.9'
 services:
@@ -87,7 +87,7 @@ services:
     container_name: gitea-traefik
     restart: unless-stopped
     volumes:
-      - ./traefik/acme.json:/acme.json
+      - ./data_traefik/acme.json:/acme.json
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - public
@@ -143,14 +143,14 @@ time="2022-03-27T08:33:57Z" level=info msg="Testing certificate renew..." provid
 
 <br/>
 
-### Contenedores Gitea y Redis
+### Contenedores Gitea, Redis y MySQL
 
-- Preparo el directorio donde dejaré los datos de GIT
+- Preparo el directorio donde dejaré los datos
 ```console
-git:~/gitea$ mkdir -p data/gitea
+git:~/gitea$ mkdir -p data/gitea      # Directorio para los datos de Gitea
+git:~/gitea$ mkdir -p mysql           # Directorio para los datos de MySQL
 ```
-- Añado al `docker-compose.yml` dos servicios más.
-- Adapto las siguientes opciones de configuración:
+- Añado los tres servicios a `docker-compose.yml`. Lo adapto a mis necesidades: 
   - DOMAIN y SSH_DOMAIN (urls para hacer clone con git)
   - ROOT_URL (Configurado para usar HTTPS, incluyendo mi dominio)
   - SSH_LISTEN_PORT (este es el puerto de escucha para SSH dentro del contenedor)
@@ -160,14 +160,21 @@ git:~/gitea$ mkdir -p data/gitea
   - ./data/gitea (Ruta para la persistencia de los datos. En mi caso utilizo dejo los datos dentro de la máquina virtual)
 - Así es como queda el fichero final: 
 ```yml
+# 
+# docker-compose.yaml para gitea,traefik,redis y mysql
+# 
 version: '3.9'
+#
+# Servicios
+#
 services:
+  # 
   gitea-traefik:
     image: traefik:2.7
     container_name: gitea-traefik
     restart: unless-stopped
     volumes:
-      - ./traefik/acme.json:/acme.json
+      - ./data_traefik/acme.json:/acme.json
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - public
@@ -191,7 +198,7 @@ services:
       - '--entrypoints.http.http.redirections.entrypoint.scheme=https'
       - '--entrypoints.https=true'
       - '--entrypoints.https.address=:443'
-      - '--certificatesResolvers.letsencrypt.acme.email=TUCORREO@TUDOMINIO.com'
+      - '--certificatesResolvers.letsencrypt.acme.email=TUCORREO@gmail.com'
       - '--certificatesResolvers.letsencrypt.acme.storage=acme.json'
       - '--certificatesResolvers.letsencrypt.acme.httpChallenge.entryPoint=http'
       - '--log=true'
@@ -199,10 +206,11 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-size: "1m"
+        max-size: "1m"    
+  #  Gitea
   gitea:
     container_name: gitea
-    image: gitea/gitea:1.16
+    image: gitea/gitea:1.16.5
     restart: unless-stopped
     depends_on:
       gitea-traefik:
@@ -221,17 +229,30 @@ services:
       - ROOT_URL=https://git.parchis.org
       - SSH_PORT=22
       - SSH_LISTEN_PORT=22
-      - DB_TYPE=sqlite3
+      - DB_TYPE=mysql
+      - GITEA__database__DB_TYPE=mysql
+      - GITEA__database__HOST=db:3306
+      - GITEA__database__NAME=gitea
+      - GITEA__database__USER=gitea
+      - GITEA__database__PASSWD=gitea      
       - GITEA__cache__ENABLED=true
       - GITEA__cache__ADAPTER=redis
       - GITEA__cache__HOST=redis://gitea-cache:6379/0?pool_size=100&idle_timeout=180s
       - GITEA__cache__ITEM_TTL=24h
+      - GITEA__mailer__ENABLED=true
+      - GITEA__mailer__FROM="TUCORREO@gmail.com"
+      - GITEA__mailer__MAILER_TYPE=smtp
+      - GITEA__mailer__HOST="smtp.gmail.com:465"
+      - GITEA__mailer__IS_TLS_ENABLED=true
+      - GITEA__mailer__USER="TUCORREO@gmail.com"
+      - GITEA__mailer__HELO_HOSTNAME="git.parchis.org"      
     ports:
       - "22:22"
+    restart: always
     networks:
       - public
     volumes:
-      - ./data/gitea:/data
+      - ./data_gitea:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     labels:
@@ -245,6 +266,9 @@ services:
       driver: "json-file"
       options:
         max-size: "1m"
+    depends_on:
+      - db   
+  # Redis
   gitea-cache:
     container_name: gitea-cache
     image: redis:6-alpine
@@ -259,11 +283,31 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-size: "1m"
+        max-size: "1m"  
+  # MySQL
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=gitea
+      - MYSQL_USER=gitea
+      - MYSQL_PASSWORD=gitea
+      - MYSQL_DATABASE=gitea
+    networks:
+      - public
+    volumes:
+      - ./data_mysql:/var/lib/mysql
+#
+# Networking 
 networks:
   public:
     name: public
 ```
+
+<br/>
+
+#### Arrancar todos los servicios
+
 - Paro Traefik 
 ```console
 git:~/gitea$ docker-compose stop
@@ -272,16 +316,17 @@ git:~/gitea$ docker-compose stop
 ```console
 git:~/gitea$ docker-compose up -d
 Creating network "public" with the default driver
-Creating gitea-traefik ... done
-Creating gitea-cache   ... done
-Creating gitea         ... done
-:
+Starting gitea-traefik ... done
+Starting gitea-cache   ... done
+Starting gitea_db_1    ... done
+Starting gitea         ... done:
 git:~/gitea$ docker-compose ps
     Name                   Command                  State                                       Ports
 --------------------------------------------------------------------------------------------------------------------------------------
 gitea           /usr/bin/entrypoint /bin/s ...   Up             0.0.0.0:22->22/tcp,:::22->22/tcp, 3000/tcp
 gitea-cache     docker-entrypoint.sh redis ...   Up (healthy)   6379/tcp
 gitea-traefik   /entrypoint.sh --api --pro ...   Up             0.0.0.0:443->443/tcp,:::443->443/tcp, 0.0.0.0:80->80/tcp,:::80->80/tcp
+gitea_db_1      docker-entrypoint.sh mysqld      Up             3306/tcp, 33060/tcp
 ```
 - Cotilleo los `logs` con: 
 ```console
