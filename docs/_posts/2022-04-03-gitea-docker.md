@@ -8,12 +8,12 @@ excerpt_separator: <!--more-->
 
 ![Logo gitea traefik docker](/assets/img/posts/logo-gitea-docker.svg){: width="150px" style="float:left; padding-right:25px" } 
 
-En este apunte describo la instalación de [Gitea](http://gitea.io) (servidor GIT) y [Traefik](https://doc.traefik.io/traefik/) (terminar certificados SSL de LetsEncrypt). Ambos corriendo como contenedores Docker en una máquina virtual basada en Alpine Linux. En el apunte anterior expliqué qué es Gitea y cómo [montarlo sobre una máquina virtual]({% post_url 2022-03-26-gitea-vm %}).
+En este apunte describo la instalación de [Gitea](http://gitea.io) (servidor GIT) y [Traefik](https://doc.traefik.io/traefik/) (terminar certificados SSL de LetsEncrypt), junto con [Redis](https://redis.io) (cache) y [MySQL](https://www.mysql.com) (DB). Todos como contenedores Docker en una máquina virtual basada en Alpine Linux. En el apunte anterior expliqué qué es Gitea y cómo [montarlo sobre una máquina virtual]({% post_url 2022-03-26-gitea-vm %}).
 
 <br clear="left"/>
 <!--more-->
 
-En esta ocasión he añadido Traefik y ejecuto ambos como **contenedores en un Host Docker** que a su vez corre en máquina virtual Alpine Linux sobre mi Hypervisor QEMU/KVM. Este apunte refleja mi instalación en producción en mi red casera. Doy crédito al autor de este fantástico artículo: [setup a self-hosted git service with gitea](https://dev.to/ruanbekker/setup-a-self-hosted-git-service-with-gitea-11ce).
+En esta ocasión he añadido Traefik y Redis a la foto y todo ejecutándose como **contenedores en un Host Docker** sobre un Linux ligero (Alpine Linux), a su vez sobre mi Hypervisor QEMU/KVM. Este apunte refleja mi instalación en producción en mi red casera. Crédito va para el autor de esta buena guía, [setup a self-hosted git service with gitea](https://dev.to/ruanbekker/setup-a-self-hosted-git-service-with-gitea-11ce).
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-03-27-gitea-docker-1.jpg" 
@@ -33,7 +33,7 @@ Antes de entrar en harina ahí va la configuración de networking de mi instalac
       width="600px"
       %}
 
-Este tipo de instalación permitirá conectar con el servidor en mi red privada (LAN) pero también desde Internet (obligatorio para recibir el certificado SSL de Letsencrypt). Normalmente abro los puertos de internet solo bajo demanda, para renovar el certificado o usar el servicio desde internet, de esta forma:
+Este tipo de instalación permitirá conectar con el servidor en mi red privada (LAN) pero también desde Internet (obligatorio para recibir el certificado SSL de Letsencrypt). Aunque casi siempre lo uso en local, así es como abro los puertos de internet bajo demanda, para renovar el certificado o usar el servicio desde internet puntualmente:
 
 ```console
 export GITIP=192.168.1.200
@@ -41,12 +41,12 @@ iptables -t nat -I PREROUTING -i ppp0 -p tcp -m multiport --dports 22,80,443 -j 
 iptables -I FORWARD -p tcp -m multiport --dports 22,80,443 -d ${GITIP} -j ACCEPT
 ```
 
-En mi proveedor DNS tengo activo el nombre `git.parchis.org` apuntando a mi dirección ip pública (dinámica) y en el Servidor DNS local en mi instalación casera tengo lo siguiente: 
+En mi proveedor DNS tengo `git.parchis.org` apuntando a mi dirección ip pública (dinámica) y en el Servidor DNS local en mi instalación casera está así: 
 
-- Traefik: `traefik.parchis.org --> 192.168.1.200`
-- Gitea: `git.parchis.org       --> 192.168.1.200`
+- `traefik.parchis.org --> 192.168.1.200`
+- `git.parchis.org       --> 192.168.1.200`
 
-He configurado el Servicio `openssh` del Alpine Linux para que escuche por otro puerto (22222), de modo que dejo libre el puerto `22` para el contenedor de `gitea`. El acceso a la web se realizara vía `HTTPS` por el puerto `443` y el trabajo con GIT *sobre ssh* se hará a través del puerto `22`.
+He configurado el Servicio `openssh` del Alpine Linux para que escuche por otro puerto (22222), de modo que dejo libre el puerto `22` para git sobre SSH en el contenedor de `gitea`, y el acceso a la web de Gitea se realizara vía `HTTPS` por el puerto `443`.
 
 <br/>
 
@@ -72,13 +72,15 @@ git:~$ mkdir gitea
 
 ### Contenedor Traefik
 
+Primero voy a crear solo la parte de Traefik, para asegurarme que funciona correctamente.
+
 -  Creo el fichero donde se guardará el certificado de `letsencrypt`.
 ```console
 git:~/gitea$ mkdir data_traefik
 git:~/gitea$ touch data_traefik/acme.json
 git:~/gitea$ chmod 600 data_traefik/acme.json
 ```
-- Creo `docker-compose.yml`, de momento solo añado el primer serivicio `gitea-traefik`. Cambia tu `HOST` y `TUCORREO@gmail.com` por el adecuado.
+- Creo `docker-compose.yml`, de momento solo pongo el primer serivicio `gitea-traefik`. Cambia tu `HOST` y `TUCORREO@gmail.com` por el adecuado.
 ```yml
 version: '3.9'
 services:
@@ -145,7 +147,7 @@ time="2022-03-27T08:33:57Z" level=info msg="Testing certificate renew..." provid
 
 ### Contenedores Gitea, Redis y MySQL
 
-- Preparo el directorio donde dejaré los datos
+- Preparo los directorios donde dejaré los datos.
 ```console
 git:~/gitea$ mkdir -p data/gitea      # Directorio para los datos de Gitea
 git:~/gitea$ mkdir -p mysql           # Directorio para los datos de MySQL
@@ -308,11 +310,11 @@ networks:
 
 #### Arrancar todos los servicios
 
-- Paro Traefik 
+- Paro Traefik (opcional)
 ```console
 git:~/gitea$ docker-compose stop
 ``` 
-- Arranco los tres servicios
+- Arranco todos los microservicios (contenedores)
 ```console
 git:~/gitea$ docker-compose up -d
 Creating network "public" with the default driver
@@ -336,9 +338,9 @@ git:~/gitea$ docker-compose logs
 
 <br/>
 
-### Instalación y configuración de Gitea
+### Parametrizar Gitea
 
-Se supone que ya está, así que me dirijo a mi `ROOT_URL`, `https://git.parchis.org` y entro en la configuración inicial (que aparece ya pre rellena)
+Me dirijo a mi `ROOT_URL`, `https://git.parchis.org` y entro en la configuración inicial.
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-03-27-gitea-docker-3.png" 
@@ -346,7 +348,7 @@ Se supone que ya está, así que me dirijo a mi `ROOT_URL`, `https://git.parchis
       width="600px"
       %}
 
-- Preparo la parte del correo. Uso mi cuenta de GMail con contraseña de aplicación. 
+- Sección de correo. Uso mi cuenta de GMail con contraseña de aplicación. 
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-03-27-gitea-docker-4.png" 
@@ -354,7 +356,7 @@ Se supone que ya está, así que me dirijo a mi `ROOT_URL`, `https://git.parchis
       width="600px"
       %}
 
-- Configuro al usuario administrador
+- Configuro el usuario administrador
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-03-27-gitea-docker-5.png" 
@@ -362,7 +364,7 @@ Se supone que ya está, así que me dirijo a mi `ROOT_URL`, `https://git.parchis
       width="600px"
       %}
 
-- Hacemos click in "Instalar Gitea". Cuando termina vuelvo a escribir la `ROOT_URL` y deberías ver lo siguiente al estar ya autenticado.
+- Hacemos click en "Instalar Gitea". Cuando termina vuelvo a escribir la `ROOT_URL` y deberías ver lo siguiente al estar ya autenticado.
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-03-27-gitea-docker-6.png" 
@@ -370,7 +372,7 @@ Se supone que ya está, así que me dirijo a mi `ROOT_URL`, `https://git.parchis
       width="600px"
       %}
 
-- Si intento conectar desde INTERNET con con `http://git.parchis.org` me redirige a `https://git.parchis.org` y veré lo siguiente
+- Si intento conectar desde INTERNET con `http://git.parchis.org` me redirige a `https://git.parchis.org` y veré lo siguiente
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-03-27-gitea-docker-7.png" 
@@ -379,7 +381,7 @@ Se supone que ya está, así que me dirijo a mi `ROOT_URL`, `https://git.parchis
       %}
 
 
-- Si más adelante quieres retocar la configuración puedes hacerlo modificando `/home/luis/gitea/data/gitea/gitea/conf/app.ini`. Recuerda que antes de modificarlo es conveniente parar el contenedor. En mi caso para que funcionase bien el correo tuve que retocarlo
+- Si más adelante quieres retocar la configuración puedes hacerlo modificando `/home/luis/gitea/data/gitea/gitea/conf/app.ini`. Recuerda que antes es conveniente parar el contenedor.
 ```console
 git:~/gitea$ docker-compose stop gitea
 git:~/gitea$ nano data/gitea/gitea/conf/app.ini
@@ -438,7 +440,7 @@ Vuelvo a la página web y creo el repositorio `hola-mundo`
       width="600px"
       %}
 
-Antes de poder trabajar con él configuro mi cliente (`$HOME/.ssh/config`) y añado lo siguiente: 
+Antes de poder trabajar con él, configuro mi cliente (`$HOME/.ssh/config`) y añado lo siguiente: 
 
 ```config
 # Gitea
