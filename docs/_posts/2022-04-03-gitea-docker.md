@@ -356,6 +356,26 @@ Me dirijo a mi `ROOT_URL`, `https://git.parchis.org` y entro en la configuració
       width="600px"
       %}
 
+
+| Si más adelante quieres retocar la configuración puedes hacerlo modificando `/home/luis/gitea/data/gitea/gitea/conf/app.ini`. Recuerda que antes es conveniente parar el contenedor. |
+
+```console
+git:~/gitea$ docker-compose stop gitea
+git:~/gitea$ nano data/gitea/gitea/conf/app.ini
+:
+[mailer]
+ENABLED        = true
+HOST           = smtp.gmail.com:465
+FROM           = tucorreo@gmail.com
+USER           = tucorreo@gmail.com
+PASSWD         = tucontraseñadeaplicación
+MAILER_TYPE    = smtp
+IS_TLS_ENABLED = true
+HELO_HOSTNAME  = git.parchis.org
+:
+git:~/gitea$ docker-compose start gitea
+```
+
 - Configuro el usuario administrador
 
 {% include showImagen.html 
@@ -379,25 +399,6 @@ Me dirijo a mi `ROOT_URL`, `https://git.parchis.org` y entro en la configuració
       caption="Página al conectar desde Internet con https://git.parchis.org" 
       width="600px"
       %}
-
-
-- Si más adelante quieres retocar la configuración puedes hacerlo modificando `/home/luis/gitea/data/gitea/gitea/conf/app.ini`. Recuerda que antes es conveniente parar el contenedor.
-```console
-git:~/gitea$ docker-compose stop gitea
-git:~/gitea$ nano data/gitea/gitea/conf/app.ini
-:
-[mailer]
-ENABLED        = true
-HOST           = smtp.gmail.com:465
-FROM           = tucorreo@gmail.com
-USER           = tucorreo@gmail.com
-PASSWD         = tucontraseñadeaplicación
-MAILER_TYPE    = smtp
-IS_TLS_ENABLED = true
-HELO_HOSTNAME  = git.parchis.org
-:
-git:~/gitea$ docker-compose start gitea
-```
 
 <br/>
 
