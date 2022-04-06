@@ -478,3 +478,5 @@ Gitea viene con Swagger por defecto y el endpoint es `/api/swagger`
 
 ----
 
+Espero que te haya gustado el apunte. 
+
