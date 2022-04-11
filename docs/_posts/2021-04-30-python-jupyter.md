@@ -103,11 +103,12 @@ Homebrew instala todo aquello que necesitas que Apple no instala de serie. Si no
 $ brew install python
 ```
     * No solo va a instalar Python sino que además nos instala el indispensable `pip`, sistema de gestión de paquetes utilizado para instalar y administrar los paquetes desde **PyPI**, el [Python Package Index](https://pypi.org). Es el repositorio de software oficial para aplicaciones de terceros en el lenguaje de programación Python. 
-2. Instalamos PivEnv
+2. Instalamos PivEnv (usando `pip` o `brew`). En mi caso suelo usar `pip`
+```zsh
+$ pip install pipenv
+[[$ brew install pipenv]]
 ```
-$ brew install pipenv
-```
-3. Modificamos la línea de comandos para anticipar el nuevo Python3 en el $PATH y creo un par de alias, así evito ejecutar las versiones antiguos de Python/Pip que vienen con el MacOS. Recuerda, nunca borres el Python original que trae OSX.
+1. Modificamos la línea de comandos para anticipar el nuevo Python3 en el $PATH y creo un par de alias, así evito ejecutar las versiones antiguos de Python/Pip que vienen con el MacOS. Recuerda, nunca borres el Python original que trae OSX.
 ```shell
 # Es es un ejemplo de mi fichero $HOME/.zshrc
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH
