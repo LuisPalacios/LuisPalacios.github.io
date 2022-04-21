@@ -19,6 +19,14 @@ En este apunto explico cómo lanzo una captura tráfico de la red (`tcpdump`) en
     width="600px"
     %}
 
+* Trabajo en un Mac, así que lo primero es crearme un shortcut en la línea de comandos
+
+```console
+$ ln -s /Applications/Wireshark.app/Contents/MacOS/Wireshark ~/bin/wireshark
+```
+
+<br/>
+
 * Opción con mkfifo
 
 Primero empiezo por una opción un poco más complicada (la siguiente es más sencilla), pero nos va a ayudar a entender mejor cual es la idea... 
@@ -38,7 +46,9 @@ Sesión 2:
 $ ssh luis@gentoopi.parchis.org "sudo tcpdump -s 0 -U -n -w - -i eth0 not port 22" > /tmp/remote
 ```
 
-* Opción sin mkfifo
+<br/>
+
+* Opción directa sin mkfifo (Preferida)
 
 Lo anterior se puede reducir a una línea en una única sesión de Terminal:
 
