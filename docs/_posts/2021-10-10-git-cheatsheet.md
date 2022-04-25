@@ -39,10 +39,10 @@ $ git status
 
 ```zsh
 $ git log --pretty=oneline
-a7a05...d9114 (HEAD -> master, origin/master, origin/HEAD) Nueva versión
+a7a05..d9114 (HEAD -> master, origin/master, origin/HEAD) Nueva versión
 :
-3f64b44628fc766dc88bd1c09d643c552f877101 Versión terminada
-ce5d45076225865ff01779bb1f574646cfc1e621 Primer commit
+3f64b..37101 Versión terminada
+ce5d4..1e621 Primer commit
 $ git tag 1.0 3f64b           <== Aplicada al commit con hash 3f64b
 $ git tag -d 1.0              <== La borro para añadirla de nuvo con anotación
 $ git tag -a 1.0 -m "Primera versión operativa" 3f64b
@@ -69,15 +69,14 @@ $ git lg
 
 <br/>
 
-**Reestablecer un archivo de la working copy** a su contenido anterior. Ojo, es destructivo, vuelve a dejar el contenido anterior del fichero. 
+**Deshacer**.
+
+Técnicamente consiste en *Volver a la versión anterior de un archivo de la working copy*. Muy útil cuando hemos borrado o  modificado un archivo por error y queremos deshacer por completo y volver a su versión anterior (la del último commit).  Ojo que es destructivo, vuelve a dejar el contenido anterior del fichero y lo que hayamos modificado se pierde... 
 
 ```zsh
 $ git restore Capstone/dataset/0.dataclean/datos.ipynb
 ```
 
-
 <br/>
 
-----
-
-<br/>
+---
