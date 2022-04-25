@@ -35,6 +35,24 @@ $ git status
 
 <br/>
 
+**Tags**
+
+```zsh
+$ git log --pretty=oneline
+a7a05...d9114 (HEAD -> master, origin/master, origin/HEAD) Nueva versión
+:
+3f64b44628fc766dc88bd1c09d643c552f877101 Versión terminada
+ce5d45076225865ff01779bb1f574646cfc1e621 Primer commit
+$ git tag 1.0 3f64b           <== Aplicada al commit con hash 3f64b
+$ git tag -d 1.0              <== La borro para añadirla de nuvo con anotación
+$ git tag -a 1.0 -m "Primera versión operativa" 3f64b
+$ git tag 2.0                 <== Aplica al último commit
+$ git push origin 1.0         <== Envío tag o tags al origen.
+$ git push origin --tags
+```
+
+<br/>
+
 **Alias**
 
 ```zsh
