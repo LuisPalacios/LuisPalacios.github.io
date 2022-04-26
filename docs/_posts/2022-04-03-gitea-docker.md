@@ -162,15 +162,16 @@ git:~/gitea$ mkdir -p mysql           # Directorio para los datos de MySQL
   - ./data/gitea (Ruta para la persistencia de los datos. En mi caso utilizo dejo los datos dentro de la máquina virtual)
 - Así es como queda el fichero final: 
 ```yml
-# 
+#
 # docker-compose.yaml para gitea,traefik,redis y mysql
-# 
+#
 version: '3.9'
 #
 # Servicios
 #
 services:
-  # 
+
+  #
   gitea-traefik:
     image: traefik:2.7
     container_name: gitea-traefik
@@ -200,7 +201,7 @@ services:
       - '--entrypoints.http.http.redirections.entrypoint.scheme=https'
       - '--entrypoints.https=true'
       - '--entrypoints.https.address=:443'
-      - '--certificatesResolvers.letsencrypt.acme.email=TUCORREO@gmail.com'
+      - '--certificatesResolvers.letsencrypt.acme.email=luis@luispa.com'
       - '--certificatesResolvers.letsencrypt.acme.storage=acme.json'
       - '--certificatesResolvers.letsencrypt.acme.httpChallenge.entryPoint=http'
       - '--log=true'
@@ -208,7 +209,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-size: "1m"    
+        max-size: "1m"
+
   #  Gitea
   gitea:
     container_name: gitea
@@ -219,6 +221,8 @@ services:
         condition: service_started
       gitea-cache:
         condition: service_healthy
+      db:
+        condition: service_started
     environment:
       - APP_NAME="Gitea"
       - USER_UID=1000
@@ -236,18 +240,19 @@ services:
       - GITEA__database__HOST=db:3306
       - GITEA__database__NAME=gitea
       - GITEA__database__USER=gitea
-      - GITEA__database__PASSWD=gitea      
+      - GITEA__database__PASSWD=gitea
       - GITEA__cache__ENABLED=true
       - GITEA__cache__ADAPTER=redis
       - GITEA__cache__HOST=redis://gitea-cache:6379/0?pool_size=100&idle_timeout=180s
       - GITEA__cache__ITEM_TTL=24h
       - GITEA__mailer__ENABLED=true
-      - GITEA__mailer__FROM="TUCORREO@gmail.com"
+      - GITEA__mailer__FROM="luis.palacios.derqui@gmail.com"
       - GITEA__mailer__MAILER_TYPE=smtp
       - GITEA__mailer__HOST="smtp.gmail.com:465"
       - GITEA__mailer__IS_TLS_ENABLED=true
-      - GITEA__mailer__USER="TUCORREO@gmail.com"
-      - GITEA__mailer__HELO_HOSTNAME="git.parchis.org"      
+      - GITEA__mailer__USER="luis.palacios.derqui@gmail.com"
+      - GITEA__mailer__PASSWD="taadxgovjbtaxpmq"
+      - GITEA__mailer__HELO_HOSTNAME="git.parchis.org"
     ports:
       - "22:22"
     restart: always
@@ -268,8 +273,7 @@ services:
       driver: "json-file"
       options:
         max-size: "1m"
-    depends_on:
-      - db   
+
   # Redis
   gitea-cache:
     container_name: gitea-cache
@@ -285,7 +289,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-size: "1m"  
+        max-size: "1m"
+
   # MySQL
   db:
     image: mysql:8
@@ -300,7 +305,7 @@ services:
     volumes:
       - ./data_mysql:/var/lib/mysql
 #
-# Networking 
+# Networking
 networks:
   public:
     name: public
@@ -474,9 +479,69 @@ Gitea viene con Swagger por defecto y el endpoint es `/api/swagger`
       width="600px"
       %}
 
+
 <br/>
 
-----
+## Actualizaciones
 
-Espero que te haya gustado el apunte. 
+Un aspecto importante cuando ya lo tenemos funcionando son las actualizaciones. Tenemos que decidir qué estrategia seguimos y cómo hacerlas. La estrategia te la dejo a tí, cada cual es muy particular con este tema. En mi caso actualizo de vez en cuando `gitea`, mientras que el resto de los servicios realmente no lo necesito, quizá cuando vea que merece la pena o hace falta. 
 
+Siempre importante hacer un backup completo, suelo parar la VM, hago un backup de la imagen del disco y luego la arranco y hago el update. Veamos cómo:
+
+| ❗❗ Ah! Los datos siempre en un volumen externo fuera de los contenedores Docker ❗❗ |
+
+En mi caso los tengo así, todos los datos en directorios externos, en concreto los siguientes: 
+
+```config
+/home
+└── luis
+    └── gitea
+        ├── data_gitea
+        ├── data_mysql
+        └── data_traefik
+```
+
+<br/>
+
+#### Actualización de Gitea
+
+- Averiguo cual es la versión a la que quiero actualizar en el [Hub de Docker -> Gitea (tags)](https://hub.docker.com/r/gitea/gitea/tags)
+- Modifico el fichero `docker-compose.yml` y cambio el número de versión. Estaba en la versión `1.16.5` y cambio a `1.16.6`
+```yaml
+  :
+  #  Gitea
+  gitea:
+    container_name: gitea
+    image: gitea/gitea:1.16.6
+  :
+```
+- Me bajo la última versión
+```console
+git:~/gitea$ docker-compose pull gitea
+```
+- Paro los servicios, elimino los contenedores y vuelvo a arrancarlos.
+```console
+git:~/gitea$ docker-compose down
+git:~/gitea$ docker-compose up -d
+```
+- Al conectar con el navegador deberías ver que ya tienes la nueva versión (en tu navegador en la última línea, a la izda).
+
+{% include showImagen.html 
+      src="/assets/img/posts/2022-04-03-gitea-docker-13.png" 
+      caption="Versión de gitea" 
+      width="250px"
+      %}
+
+<br/>
+
+#### Actualizació del resto: Traefik, redis, mysql
+
+- Con el resto de servicios es igual, busca las últimas versiones aquí: 
+  - Última versión en Docker de [Traefik](https://hub.docker.com/_/traefik)
+  - Última versión en Docker de [Redis](https://hub.docker.com/_/redis)
+  - Última versión en Docker de [Mysql](https://hub.docker.com/_/mysql)
+- El proceso es el mismo que el de Gitea, editas el  `docker-compose.yml`, cambias la versión en la entrada `image: ...` del contenedor que quieres actualizar. Haces un `docker-compose pull`, paras (`docker-compose down`) y arrancas (`docker-compose up -d`) todo de nuevo. 
+
+<br/>
+
+---
