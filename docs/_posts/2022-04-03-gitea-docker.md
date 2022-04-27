@@ -484,13 +484,13 @@ Gitea viene con Swagger por defecto y el endpoint es `/api/swagger`
 
 ## Actualizaciones
 
-Un aspecto importante cuando ya lo tenemos funcionando son las actualizaciones. Tenemos que decidir qué estrategia seguimos y cómo hacerlas. La estrategia te la dejo a tí, cada cual es muy particular con este tema. En mi caso actualizo de vez en cuando `gitea`, mientras que el resto de los servicios realmente no lo necesito, quizá cuando vea que merece la pena o hace falta. 
+Tenemos que decidir qué estrategia seguimos y cómo hacerlas. La estrategia te la dejo a tí, cada cual es muy particular con este tema. En mi caso actualizo de vez en cuando `gitea`, mientras que el resto de los servicios cuando vea que merece la pena o hace falta. 
 
-Siempre importante hacer un backup completo, suelo parar la VM, hago un backup de la imagen del disco y luego la arranco y hago el update. Veamos cómo:
+Siempre importante hacer un backup completo, suelo parar la VM, hago un backup de la imagen del disco y luego la arranco y hago el update.
 
 | ❗❗ Ah! Los datos siempre en un volumen externo fuera de los contenedores Docker ❗❗ |
 
-En mi caso los tengo así, todos los datos en directorios externos, en concreto los siguientes: 
+En mi caso los tengo así, todos los datos en directorios externos: 
 
 ```config
 /home
@@ -505,8 +505,8 @@ En mi caso los tengo así, todos los datos en directorios externos, en concreto 
 
 #### Actualización de Gitea
 
-- Averiguo cual es la versión a la que quiero actualizar en el [Hub de Docker -> Gitea (tags)](https://hub.docker.com/r/gitea/gitea/tags)
-- Modifico el fichero `docker-compose.yml` y cambio el número de versión. Estaba en la versión `1.16.5` y cambio a `1.16.6`
+- Averiguo versiones disponibles en el [Hub de Docker -> Gitea (tags)](https://hub.docker.com/r/gitea/gitea/tags)
+- Modifico el fichero `docker-compose.yml` y cambio el número de versión, de `1.16.5` a `1.16.6`
 ```yaml
   :
   #  Gitea
@@ -515,7 +515,7 @@ En mi caso los tengo así, todos los datos en directorios externos, en concreto 
     image: gitea/gitea:1.16.6
   :
 ```
-- Me bajo la última versión
+- Al hacer un pull se baja la versión
 ```console
 git:~/gitea$ docker-compose pull gitea
 ```
@@ -524,7 +524,7 @@ git:~/gitea$ docker-compose pull gitea
 git:~/gitea$ docker-compose down
 git:~/gitea$ docker-compose up -d
 ```
-- Al conectar con el navegador deberías ver que ya tienes la nueva versión (en tu navegador en la última línea, a la izda).
+- Al conectar con el navegador deberías ver que hizo correctamente la actualización.
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-04-03-gitea-docker-13.png" 
@@ -534,13 +534,13 @@ git:~/gitea$ docker-compose up -d
 
 <br/>
 
-#### Actualizació del resto: Traefik, redis, mysql
+#### Actualización del resto: Traefik, redis, mysql
 
-- Con el resto de servicios es igual, busca las últimas versiones aquí: 
+- Con el resto de servicios es igual, busca las últimas versiones: 
   - Última versión en Docker de [Traefik](https://hub.docker.com/_/traefik)
   - Última versión en Docker de [Redis](https://hub.docker.com/_/redis)
   - Última versión en Docker de [Mysql](https://hub.docker.com/_/mysql)
-- El proceso es el mismo que el de Gitea, editas el  `docker-compose.yml`, cambias la versión en la entrada `image: ...` del contenedor que quieres actualizar. Haces un `docker-compose pull`, paras (`docker-compose down`) y arrancas (`docker-compose up -d`) todo de nuevo. 
+- El proceso es el mismo que el de Gitea, editas el  `docker-compose.yml`, cambias la versión en la entrada `image: ...`, haces un `docker-compose pull`, paras (`docker-compose down`) y arrancas (`docker-compose up -d`) todo de nuevo. 
 
 <br/>
 
