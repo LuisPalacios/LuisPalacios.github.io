@@ -128,7 +128,7 @@ Existe una *Integración* muy buena, lee muchos más datos y con más frecuencia
 
 <br/>
 
-**Instalación con HACS (0.4.5) **
+**Instalación con HACS (0.4.5)**
 
 Desde la versión 0.4.5 ya es posible hacer la instalación desde [HACS](https://hacs.xyz), el Community Store de Home Assistant.
 
