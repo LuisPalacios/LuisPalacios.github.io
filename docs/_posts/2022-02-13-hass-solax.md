@@ -128,9 +128,9 @@ Existe una *Integración* muy buena, lee muchos más datos y con más frecuencia
 
 <br/>
 
-**Instalación desde HACS**
+**Instalación con HACS (0.4.5) **
 
-Desde la versión 0.4.5 se instala desde [HACS](https://hacs.xyz), el Community Store de Home Assistant.
+Desde la versión 0.4.5 ya es posible hacer la instalación desde [HACS](https://hacs.xyz), el Community Store de Home Assistant.
 
 - HACS > Integrations > Explore & Download Repositories > busco por "modbus"
 
@@ -149,6 +149,7 @@ Selecciono la última versión
       width="500px"
       %}
 
+
 **Rearranco** Home Assistant desde Configuration > Settings > Restart
 
 Entro en **Configuration** > **Device & Services** > **Add Integration** > **Setup a new Integration**, busco por `solax` y selecciono *SolaX Inverter Modbus*. La llamo `SolaXM`(la M la pongo por Modbus), pongo su IP, selecciono MI MODELO y establezco la frecuencia en 15s, más que suficiente... 
@@ -166,6 +167,41 @@ Aparece ya en Configuration > Devices & Services > Integrations. Entro en el **d
       caption="A partir de ahora ya podemos verlo en Lovelace" 
       width="800px"
       %}
+
+
+<br/>
+
+**Migración de 0.4.x a 0.5.3a**
+
+Cuando se liberó la versión 0.5.x el autor recomendaba eliminar la integración (0.4.x) y volver a crearla con la nueva (0.5.x) **manteniendo el mismo nombre del dispositivo**, para que todo el resto de tu configuración se mantenga al instalar la nueva versión. 
+
+- Confirmo el nombre de mi dispositivo, en mi caso le había puesto **`SolaXM`**
+  - *Configuration > Devices & Services > SolaXM (SolaX Inverter Modbus) > "..." > Rename* 
+- Elimino el dispositivo Solax modbus
+  - *Configuration > Devices & Services > SolaXM (SolaX Inverter Modbus) > "..." > Delete*
+- Rearranco HA
+  - Configuration > Settings > Server Control > Home Assistant > Restart
+
+- Elimino la integración Solax modbus en HACS
+  - HACS > Integrations > SolaX Inverter Modbus > "..." > Remove
+- Reinstalo la nueva versión 0.5.3a
+  - HACS > Integrations > Explore & Download Repositories > busco por "modbus"
+  - SolaX INverter Modbus > Download this repository > Selecciono la última (0.5.3a) > Download
+- Rearranco Home Assistant
+  - Configuration > Settings > Server Control > Home Assistant > Restart
+- Doy de alta de nuevo el dispositivo
+  - Configuration > Device & Services > Add Integration > Setup a new Integration
+  - Busco por `solax` > *SolaX Inverter Modbus* > lo llamo **`SolaXM`** 
+  - Pongo su IP y resto de parámetros. 
+
+| Nota: En esta ocasión no necesito definir el modelo porque compartí el inicio de mi número de serie con el Autor (ver el link del hilo de desarrollo de arriba) para que lo detecte |
+
+{% include showImagen.html 
+      src="/assets/img/posts/2022-02-13-hass-solax-21.png" 
+      caption="Nueva versión 0.5.3a" 
+      width="600px"
+      %}
+
 
 <br/>
 
