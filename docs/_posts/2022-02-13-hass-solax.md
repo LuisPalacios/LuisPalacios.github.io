@@ -186,7 +186,7 @@ Cuando se liberó la versión 0.5.x el autor recomendaba eliminar la integració
   - HACS > Integrations > SolaX Inverter Modbus > "..." > Remove
 - Reinstalo la nueva versión 0.5.3a
   - HACS > Integrations > Explore & Download Repositories > busco por "modbus"
-  - SolaX INverter Modbus > Download this repository > Selecciono la última (0.5.3a) > Download
+  - SolaX Inverter Modbus > Download this repository > Selecciono la última (0.5.3a) > Download
 - Rearranco Home Assistant
   - Configuration > Settings > Server Control > Home Assistant > Restart
 - Doy de alta de nuevo el dispositivo
@@ -199,9 +199,8 @@ Cuando se liberó la versión 0.5.x el autor recomendaba eliminar la integració
 {% include showImagen.html 
       src="/assets/img/posts/2022-02-13-hass-solax-21.png" 
       caption="Nueva versión 0.5.3a" 
-      width="600px"
+      width="500px"
       %}
-
 
 <br/>
 
