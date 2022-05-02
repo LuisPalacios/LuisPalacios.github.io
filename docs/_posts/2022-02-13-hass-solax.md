@@ -128,7 +128,7 @@ Existe una *Integración* muy buena, lee muchos más datos y con más frecuencia
 
 <br/>
 
-**Instalación con HACS (0.4.5) **
+**Instalación con HACS (0.4.5)**
 
 Desde la versión 0.4.5 ya es posible hacer la instalación desde [HACS](https://hacs.xyz), el Community Store de Home Assistant.
 
@@ -173,7 +173,7 @@ Aparece ya en Configuration > Devices & Services > Integrations. Entro en el **d
 
 **Migración de 0.4.x a 0.5.3a**
 
-Cuando se liberó la versión 0.5.x el autor recomendaba eliminar la integración (0.4.x) y volver a crearla con la nueva (0.5.x) **manteniendo el mismo nombre del dispositivo**, para que todo el resto de tu configuración se mantenga al instalar la nueva versión. 
+Cuando se liberó la versión 0.5.x el autor recomendaba ([discusión #26](https://github.com/wills106/homsassistant-solax-modbus/discussions/26)) eliminar la integración (0.4.x) y volver a crearla con la nueva (0.5.x) **manteniendo el mismo nombre del dispositivo**, para que todo el resto de tu configuración se mantenga al instalar la nueva versión. 
 
 - Confirmo el nombre de mi dispositivo, en mi caso le había puesto **`SolaXM`**
   - *Configuration > Devices & Services > SolaXM (SolaX Inverter Modbus) > "..." > Rename* 
@@ -194,7 +194,7 @@ Cuando se liberó la versión 0.5.x el autor recomendaba eliminar la integració
   - Busco por `solax` > *SolaX Inverter Modbus* > lo llamo **`SolaXM`** 
   - Pongo su IP y resto de parámetros. 
 
-| Nota: En esta ocasión no necesito definir el modelo porque compartí el inicio de mi número de serie con el Autor (ver el link del hilo de desarrollo de arriba) para que lo detecte |
+| Nota: En esta ocasión no necesito definir el modelo de mi inversor, lo detectó por el inicio de su número de serie. Lo compartí con el Autor ([discusión #26](https://github.com/wills106/homsassistant-solax-modbus/discussions/26)) |
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-02-13-hass-solax-21.png" 
