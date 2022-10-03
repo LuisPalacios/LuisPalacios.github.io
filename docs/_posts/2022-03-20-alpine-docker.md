@@ -8,7 +8,7 @@ excerpt_separator: <!--more-->
 
 ![Logo docker](/assets/img/posts/logo-docker.svg){: width="150px" style="float:left; padding-right:25px" } 
 
-En este apunte describo como instalar Alpine Linux en una máquina virtual en mi servidor QEMU/KVM y cómo instalar Docker en ella, para pruebas de concepto, laboratorios, etc.  ¿Se puede instalar un Host Docker encima de una Máquina Virtual?. La respuesta es un sí rotundo, de hecho es un lugar excelente para hacerlo, sobre todo en entornos de laboratorio, caseros, pequeños despliegues. 
+En este apunte describo como instalar Alpine Linux en una máquina virtual en mi servidor QEMU/KVM y cómo instalar Docker en ella. Necesitaba, para pruebas de concepto y servicios caseros, poder instalar contenedores sobre un servidor con Docker que ocupase "poquísimo". ¿Se puede instalar un Host Docker encima de una Máquina Virtual?. La respuesta es un sí rotundo, de hecho es un lugar excelente para hacerlo, sobre todo en entornos de laboratorio, caseros, pequeños despliegues. 
 
 
 <br clear="left"/>
@@ -17,17 +17,19 @@ En este apunte describo como instalar Alpine Linux en una máquina virtual en mi
 
 ## Introducción
 
-En mi laboratorio tengo un pequeño y a la vez potente servidor [Meerkat de System76](https://system76.com/desktops/meerkat) para hospedar mis máquinas virtuales. Recientemente he decidido probar y desplegar algunos servicios a través de Docker. Por cierto, hacía mucho tiempo que no ([jugaba con Docker]({% post_url 2014-11-01-inicio-docker %})). 
+Necesitaba montar microservicios encima de Docker (hacía tiempo que no ([jugaba con Docker]({% post_url 2014-11-01-inicio-docker %})) dudé entre añadir Docker a mi servidor donde tengo KVM, dedicar un PC antiguo a Docker o pensar en algo más creativo... 
 
-Necesito poder ejecutar máquinas virtuales y contenedores Docker. Mi duda es si hacerlo en paralelo en mi servidor Ubuntu LTS. Decidí optar por un enfoque distinto: **montar máquinas virtuales dedicadas a contenedores Docker**. El motivo principal ha sido evitar follones con el networking (openvswitch + docker switches + iptables) y por otro aislar y contener problemas/troubleshooting. En mi servidor queda la cosa como sigue: 
+Al final decidí optar por la tercera opción: **montar máquinas virtuales dedicadas a contenedores Docker corriendo en mi servidor KVM**. Mi potente y pequeño servidor [Meerkat de System76](https://system76.com/desktops/meerkat) es donde tengo todas mis VM's, pues bien, algunas de ellas van a soportar microservicio encima de Docker. 
+
+La segunda opción (añadir Docker a mi servidor donde tengo KVM) hubiese sido un infierno con el networking (openvswitch + docker switches + iptables), así que opté por aislar y contener problemas/troubleshooting de Docker en VM's dedicadas. Así que mi servidor de VM's queda como sigue: 
 
 - Hardware: Meerkat de System76
 - Software: [Pop!_OS](https://pop.system76.com), Ubuntu Server LTS.
 - Networking: [Open vSwtich]({% post_url 2022-02-20-openvswitch %})
 - QEMU/KVM con Hypervisor
-- Varios Guest's con máquinas virtuales corriendo Ubuntu Server LTS y servicios.
-- Varios Guest's, con appliance como [Umbrella](https://umbrella.cisco.com) o [vWLC](https://www.cisco.com/c/en/us/products/wireless/wireless-lan-controller/index.html) de Cisco.
-- Varios Guest's con máquinas virtuales corriendo Alpine Linux con Docker y contenedores. 
+- Varios Guest's con máquinas virtuales corriendo Linux (Ubuntu Server LTS) y servicios.
+- Varios Guest's appliances como [Umbrella](https://umbrella.cisco.com) o [vWLC](https://www.cisco.com/c/en/us/products/wireless/wireless-lan-controller/index.html) de Cisco.
+- Varios Guest's con **máquinas virtuales corriendo Alpine Linux con Docker y contenedores para servicios (git, nodered, ...)**. 
 
 <br/>
 
@@ -45,7 +47,9 @@ Entre las diferentes opciones que he visto por [ahí](https://kuberty.io/blog/be
 
 #### Máquina virtual con Alpine Linux
 
-- Creo una VM llamada `docker.parchis.org`. Descargo **Alpine Linux** desde [Downloads](https://alpinelinux.org/downloads/) > VIRTUAL > *Slimmed down kernel. Optimized for virtual systems*, x86_64 (**solo 52MB**), es la versión más compacta posible.
+Veamos un ejemplo creando una una VM l
+
+- Descargo **Alpine Linux** desde [Downloads](https://alpinelinux.org/downloads/) > VIRTUAL > *Slimmed down kernel. Optimized for virtual systems*, x86_64 (**solo 52MB**), es la versión más compacta posible.
 ```console
 luis@sol:~/kvm/base$ wget https://dl-cdn.alpinelinux.org/alpine/v3.15/releases/x86_64/alpine-virt-3.15.3-x86_64.iso
 luis@sol:~/kvm/base$ wget https://dl-cdn.alpinelinux.org/alpine/v3.15/releases/x86_64/alpine-virt-3.15.3-x86_64.iso.sha256
@@ -54,7 +58,18 @@ alpine-virt-3.15.3-x86_64.iso: La suma coincide
 ```
 - Creo un puerto `estático` en mi switch virtual (más info aquí: [Open vSwitch y KVM]({% post_url 2022-02-20-openvswitch %})). 
 ```
+luis@sol:~/kvm/base$ sudo ovs-vsctl list-br
+solbr
+luis@sol:~/kvm/base$ sudo ovs-vsctl list-ports solbr
+eth0
+:
+v100vnet12  (miro cual es el último que tenía dado de alta)
+:
 luis@sol:~$ sudo ovs-vsctl add-port solbr v100vnet13 tag=100 -- set Interface v100vnet13 type=internal
+```
+- Creo el directorio donde ubicaré el fichero de la máquina virtual
+```console
+luis@sol:~/kvm$ mkdir docker
 ```
 - Creo una **máquina virtual** desde `virt-manager` con **1GB de RAM, 1 CPU, disco de 4GB y una NIC virtio**, usando la imagen: `alpine-virt-3.15.3-x86_64.iso`, la llamo `docker.parchis.org` y en la configuración de red uso el interfaz que acabo de crear `v100vnet13`.
 ```console
@@ -102,7 +117,7 @@ docker:~# reboot
 
 - Hago login como root e instalo unas cuantas herramientas útiles. 
 ```console
-docker:~# apk add iproute2 nano sudo tzdata
+docker:~# apk add iproute2 nano tzdata
 docker:~# cp /usr/share/zoneinfo/Europe/Madrid /etc/localtime
 docker:~# echo "Europe/Madrid" >  /etc/timezone
 docker:~# apk del tzdata
@@ -169,12 +184,38 @@ git:~# cat /etc/apk/repositories
 http://dl-cdn.alpinelinux.org/alpine/v3.15/main
 http://dl-cdn.alpinelinux.org/alpine/v3.15/community   <== Descomento esta línea
 ```
+- Añado la siguiente línea al fichero `/etc/sudoers`
+```console
+# User rules for luis
+luis ALL=(ALL) NOPASSWD:ALL
+```
+- Creo un par de scripts de apoyo
+```console
+nodered:~# cat > /usr/bin/e
+#!/bin/ash
+/usr/bin/nano "${*}"
+nodered:~# chmod 755 /usr/bin/e
+:
+nodered:~# cat > /usr/bin/confcat
+#!/bin/ash
+# By LuisPa 1998
+# confcat: quita las lineas con comentarios, muy util como sustituto
+# a "cat" para ver contenido sin los comentarios.
+#
+grep -vh '^[[:space:]]*#' "$@" | grep -v '^//' | grep -v '^;' | grep -v '^$' | grep -v '^!' | grep -v '^--'
+nodered:~# chmod 755 /usr/bin/confcat
+:
+nodered:~# cat > /usr/bin/s
+#!/bin/ash
+/usr/bin/sudo -i
+nodered:~# chmod 755 /usr/bin/s
+```
 - Actualizo el sistema e instalo herramientas muy útiles además de **docker** y **docker-compose**
 ```console
 docker:~# apk update
 docker:~# apk upgrade --available
 docker:~# apk add bash-completion procps util-linux 
-docker:~# apk readline findutils sed coreutils sudo
+docker:~# apk add readline findutils sed coreutils sudo
 docker:~# apk add docker docker-bash-completion docker-compose docker-compose-bash-completion docker-cli-compose
 docker:~# rc-update add docker boot
 docker:~# service docker start
@@ -193,10 +234,10 @@ alpine       latest    76c8fb57b6fc   3 days ago   5.57MB
 docker:~$ docker create -t -i  --name myalpine alpine:latest
 5f1fefa539848f9e0fe995bf2e9c426def69ca48bfacc51bdb509197939c041e
 docker:~$ docker start myalpine
+/ # exit
 docker:~$ docker exec -it myalpine /bin/ash
 docker:~$ docker stop myalpine
 docker:~$ docker rm myalpine
-myalpine
 ```
 - Que no te sorprenda que `docker stop myalpine`tarde un rato en pararse, [aquí](https://stackoverflow.com/questions/60493765/running-and-stopping-an-alpine-docker-container-takes-about-10x-as-long-as-cento) tienes la explicacion.
  
