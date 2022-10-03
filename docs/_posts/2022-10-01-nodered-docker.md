@@ -1,6 +1,6 @@
 ---
 title: "Node-RED en Docker"
-date: "2022-10-02"
+date: "2022-10-01"
 categories: domótica
 tags: linux homeassistant grafana flujos iot influxdb solax solaxcloud docker
 excerpt_separator: <!--more-->
