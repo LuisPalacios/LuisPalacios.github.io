@@ -28,14 +28,16 @@ Como decía, instalo [NodeRed](https://nodered.org) como un **contenedor en un H
 
 ### Máquina virtual con Alpine Linux
 
-El primer paso es la creación de una **VM (Virtual Machine) basada en Alpine Linux con todo lo necesario para ejecutar Docker**. Sigo la documentación y el ejemplo descrito en el apunte [Alpine para ejecutar contenedores]({% post_url 2022-03-20-alpine-docker %}). En este caso llamo al equipo `nodered.parchis.org`.
+Creo una Virtual Machine basada en Alpine Linux con todo lo necesario para ejecutar Docker y la llamo `nodered.parchis.org`.
 
-- Una vez que termino la instalación del Alpine Linux verifico su `/etc/hosts`
+| IMPORTANTE: En este enlaces tienes la [documentación para instalar Alpine + Docker]({% post_url 2022-03-20-alpine-docker %}). |
+
+- Una vez que termino la instalación verifico su `/etc/hosts`
 ```console
 127.0.0.1	nodered.parchis.org nodered localhost.localdomain localhost
 ::1		localhost localhost.localdomain
 ```
-- Entro en la VM con mi usuario y creo el directorio `nodered` donde colocaré todos los ficheros de trabajo para los contenedores.
+- Entro en la VM con mi usuario (luis) y creo el directorio `nodered` donde colocaré todos los ficheros de trabajo para los contenedores.
 ```console
 nodered:~$ id
 uid=1000(luis) gid=1000(luis) groups=1000(luis),10(wheel),18(audio),27(video),28(netdev),101(docker)
