@@ -8,20 +8,19 @@ excerpt_separator: <!--more-->
 
 ![Logo nodered](/assets/img/posts/logo-nodered.svg){: width="150px" style="float:left; padding-right:25px" } 
 
-Node-RED es una herramienta de programación para conectar dispositivos de hardware, API y servicios en línea de formas nuevas e interesantes. Ofrece un editor basado en el navegador que facilita el conectar flujos utilizando la amplia gama de nodos y permite desplegarlos en tiempo real. 
+Node-RED es una herramienta de programación que permite conectar dispositivos Hardware, API's y servicios en la nube, a través de flujos de trabajo creativos. Se hace todo desde el navegador y soporta decenas de nodos própios y terceros. 
 
-
-Describo el proceso de instalación de NodeRed para integrarlo con mi *Home Assistant*. He decidido montarlo en una máquina virtual independiente, tal como hice con el [servidor Grafana, InfluxDB y Telegraf]({% post_url 2022-02-06-grafana-influxdb %}), pero esta vez utilizando Alpine y Docker por debajo, al estilo de mi [servidor git casero]({% post_url 2022-04-03-gitea-docker %}).
+Aquí voy a explicar el proceso de instalación, en una máquina virtual con Alpine y Docker por debajo. Si estás interesado, tengo otro apunte describiendo cómo lo [integro con mi *Home Assistant*]({% post_url 2022-10-02-nodered-hass %}).
 
 <br clear="left"/>
 <!--more-->
 
-Voy a instalar [NodeRed](https://nodered.org) como un **contenedor en un Host Docker** corriendo a su vez sobre la distribución ligera Alpine Linux que a su vez se ejecuta sobre mi Hypervisor QEMU/KVM. 
+Como decía, instalo [NodeRed](https://nodered.org) como un **contenedor en un Host Docker** corriendo a su vez sobre la distribución ligera Alpine Linux, que a su vez se ejecuta sobre mi Hypervisor QEMU/KVM. Esta es la arquitectura:
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-10-02-nodered-docker-1.jpg" 
       caption="Arquitectura de la instalación" 
-      width="450px"
+      width="400px"
       %}
 
 <br/>
@@ -29,7 +28,7 @@ Voy a instalar [NodeRed](https://nodered.org) como un **contenedor en un Host Do
 
 ### Máquina virtual con Alpine Linux
 
-El primer paso es la creación de **VM basada en Alpine Linux con todo lo necesario para ejecutar Docker**. Sigo la documentación y el ejemplo descrito en el apunte [Alpine para ejecutar contenedores]({% post_url 2022-03-20-alpine-docker %}). Llamo al equipo `nodered.parchis.org`.
+El primer paso es la creación de una **VM (Virtual Machine) basada en Alpine Linux con todo lo necesario para ejecutar Docker**. Sigo la documentación y el ejemplo descrito en el apunte [Alpine para ejecutar contenedores]({% post_url 2022-03-20-alpine-docker %}). En este caso llamo al equipo `nodered.parchis.org`.
 
 - Una vez que termino la instalación del Alpine Linux verifico su `/etc/hosts`
 ```console
@@ -59,6 +58,7 @@ nodered:~/nodered$ mkdir data_nodered
 nodered:~/nodered$ chown  -R luis:luis data_nodered/
 ```
 - Creo `~/.nodered/docker-compose.yml`.
+
 ```yml
 version: "3.9"
 
@@ -130,7 +130,7 @@ node-red_1  | 3 Oct 15:38:18 - [info] Started flows
 
 ### Trabajar con NodeRED
 
-Me dirijo `http://nodered.parchis.org:1880` y realizo la configuración inicial. 
+Me dirijo `http://nodered.parchis.org:1880` y realizo la configuración inicial. Si no tienes experiencia te recomiendo seguir la [documentación oficial de Node-RED](https://nodered.org/docs/).
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-10-02-nodered-docker-2.jpg" 
@@ -144,12 +144,12 @@ Me dirijo `http://nodered.parchis.org:1880` y realizo la configuración inicial.
 #### Actualizaciones futuras
 
 - Averiguo versiones disponibles en el [Hub de Docker -> NodeRED (tags)](https://hub.docker.com/r/nodered/node-red/tags)
-- Modifico el fichero `docker-compose.yml` y cambio el número de versión, por ejemplo subo desde la `3.0.2-18` a la `3.0.3`
+- Modifico el fichero `docker-compose.yml` y cambio el número de versión, por ejemplo subo desde la `3.0.1` a la `3.0.2`
 ```yaml
   :
 services:
   node-red:
-    image: nodered/node-red:3.0.3
+    image: nodered/node-red:3.0.2
     container_name: nodered
   :
 ```
@@ -165,6 +165,12 @@ nodered:~/nodered$ docker-compose up -d
 - Al conectar con el navegador deberías ver que hizo correctamente la actualización.
 
 <br/>
+
+{% include showImagen.html 
+      src="/assets/img/posts/2022-10-02-nodered-docker-3.png" 
+      caption="Comprobar la versión" 
+      width="200px"
+      %}
 
 
 ---

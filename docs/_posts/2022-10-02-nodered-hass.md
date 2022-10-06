@@ -8,18 +8,18 @@ excerpt_separator: <!--more-->
 
 ![Logo nodered](/assets/img/posts/logo-nodered-hass.svg){: width="150px" style="float:left; padding-right:25px" } 
 
-En este apunte como conectar Node-RED y HASS cuando se ejecutan en instancias separadas. Tengo un servidor que ejecuta Home-Assistant y otro Node-red, están en máquinas virtuales separadas.  Lo bueno de esto es que cuando necesito reiniciar Home-Assistant no afecta a Node-RED y viceversa.
+Explico como he conectado Node-RED con mi Home Assistant (HASS), teniendo en cuenta que se ejecutan en servidores independientes. Están desplegados en máquinas virtuales distintas, para poder realizar mantenimientos de forma independiente y mejorar su rendimiento. 
 
-Aquí tienes cómo instalé mi [servicio Node-RED]({% post_url 2022-10-01-nodered-docker %}) utilizando Alpine y Docker por debajo, corriendo como máquina virtual sobre mi servidor KVM.
+Para tu información he creado otro apunte [aquí]({% post_url 2022-10-01-nodered-docker %}) donde describo la instalación de Node-RED utilizando Alpine y Docker por debajo, corriendo como máquina virtual sobre mi servidor KVM.
 
 <br clear="left"/>
 <!--more-->
 
-### Configuración en HASS
+### Configuración en Home Assistant
 
-Voy a suponer que tienes ambos instalados y que puedes acceder a sus respectivas interfaces web aunque estén en máquinas diferentes, o en lugares distintos, como es mi caso.
+Voy a suponer que tienes ambos instalados y que puedes acceder a sus respectivas interfaces web aunque estén en máquinas diferentes, o en lugares distintos, como es mi caso. Para conectar ambos vamos a empezar por Home Assistant. 
 
-En Home Asssitant voy al icono de usuario en la parte inferior izquierda de la pantalla.
+En la pantala de administración voy al icono de usuario en la parte inferior izquierda de la pantalla.
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-10-02-nodered-hass-1.png" 
@@ -86,7 +86,7 @@ Añado la URL base (requiere http:// y el número de puerto), pego el Token que 
       %}
 
 
-Si todo ha ido bien debería ver un icono verde bajo el nodo de cambio de estado y si entro en el nodo y hago clic en el campo de la entidad veo una lista de mis entidades de mi HASS, que reconozco perfectamente... 
+Si todo ha ido bien debería ver un icono verde bajo el nodo de cambio de estado y si entro en el nodo y hago clic en el campo de la entidad veo una lista de mis entidades de mi Home Assistant, que reconozco perfectamente... 
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-10-02-nodered-hass-8.png" 
@@ -99,9 +99,9 @@ Si todo ha ido bien debería ver un icono verde bajo el nodo de cambio de estado
       width="500px"
       %}
 
-A partir de aquí ya se pueden crear flujos dado que ambos están perfectamente conectados. De hecho podría conectar a varios servidores HASS si es que los tuviese. 
+A partir de aquí ya se pueden crear flujos dado que ambos están perfectamente conectados. De hecho podría conectar a varios servidores Home Assistant si es que los tuviese. 
 
-La ventaja de ejecutar Node-RED en un servidor independiente, como decía al principio, radica en separar modularmente los servicios. Ahora no hay dependencias entre ellos y podré ejecutar funciones de Domótica desde Node-RED independientemente de HASS.
+La ventaja de ejecutar Node-RED en un servidor independiente, como decía al principio, radica en separar modularmente los servicios. Ahora no hay dependencias entre ellos y podré ejecutar funciones de Domótica desde Node-RED independientemente de Home Assistant.
 
 
 ---
