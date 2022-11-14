@@ -8,12 +8,12 @@ excerpt_separator: <!--more-->
 
 ![Logo gitea traefik docker](/assets/img/posts/logo-gitea-docker.svg){: width="150px" style="float:left; padding-right:25px" } 
 
-En este apunte describo la instalación de [Gitea](http://gitea.io) (servidor GIT) y [Traefik](https://doc.traefik.io/traefik/) (terminar certificados SSL de LetsEncrypt), junto con [Redis](https://redis.io) (cache) y [MySQL](https://www.mysql.com) (DB). Todos como contenedores Docker en una máquina virtual basada en Alpine Linux. En el apunte anterior expliqué qué es Gitea y cómo [montarlo sobre una máquina virtual]({% post_url 2022-03-26-gitea-vm %}).
+En este apunte describo la instalación de [Gitea](http://gitea.io) (servidor GIT) y [Traefik](https://doc.traefik.io/traefik/) (terminar certificados SSL de LetsEncrypt), junto con [Redis](https://redis.io) (cache) y [MySQL](https://www.mysql.com) (DB). Instalo todas las aplicaciones como contenedores Docker en un Linux Alpine que se ejecuta como máquina virtual en mi servidor KVM. En el apunte anterior expliqué qué es Gitea y cómo [montarlo sobre una máquina virtual]({% post_url 2022-03-26-gitea-vm %}) directamente (sin docker).
 
 <br clear="left"/>
 <!--more-->
 
-En esta ocasión he añadido Traefik y Redis a la foto y todo ejecutándose como **contenedores en un Host Docker** sobre un Linux ligero (Alpine Linux), a su vez sobre mi Hypervisor QEMU/KVM. Este apunte refleja mi instalación en producción en mi red casera. Crédito va para el autor de esta buena guía, [setup a self-hosted git service with gitea](https://dev.to/ruanbekker/setup-a-self-hosted-git-service-with-gitea-11ce).
+En esta ocasión he añadido Traefik y Redis a la foto. Todo son **contenedores Docker** sobre un Linux ligero (Alpine Linux), ejecutándose, a su vez, como máquina virtual sobre mi Hypervisor QEMU/KVM. Este apunte refleja mi instalación en producción en mi red casera. Crédito va para el autor de esta buena guía, [setup a self-hosted git service with gitea](https://dev.to/ruanbekker/setup-a-self-hosted-git-service-with-gitea-11ce).
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-03-27-gitea-docker-1.jpg" 
@@ -80,7 +80,7 @@ git:~/gitea$ mkdir data_traefik
 git:~/gitea$ touch data_traefik/acme.json
 git:~/gitea$ chmod 600 data_traefik/acme.json
 ```
-- Creo `docker-compose.yml`, de momento solo pongo el primer serivicio `gitea-traefik`. Cambia tu `HOST` y `TUCORREO@gmail.com` por el adecuado.
+- Creo `docker-compose.yml`, de momento solo pongo el primer serivicio `gitea-traefik`. Cambia tu `HOST` y `TUCORREO@TUDOMINIO.com` por el adecuado.
 ```yml
 version: '3.9'
 services:
@@ -173,9 +173,13 @@ services:
 
   #
   gitea-traefik:
-    image: traefik:2.7
+    image: traefik:2.8.7
     container_name: gitea-traefik
     restart: unless-stopped
+    depends_on:
+      gitea:
+        condition: service_healthy
+#         condition: service_started
     volumes:
       - ./data_traefik/acme.json:/acme.json
       - /var/run/docker.sock:/var/run/docker.sock
@@ -201,7 +205,7 @@ services:
       - '--entrypoints.http.http.redirections.entrypoint.scheme=https'
       - '--entrypoints.https=true'
       - '--entrypoints.https.address=:443'
-      - '--certificatesResolvers.letsencrypt.acme.email=luis@luispa.com'
+      - '--certificatesResolvers.letsencrypt.acme.email=TUCORREO@TUDOMINIO.com'
       - '--certificatesResolvers.letsencrypt.acme.storage=acme.json'
       - '--certificatesResolvers.letsencrypt.acme.httpChallenge.entryPoint=http'
       - '--log=true'
@@ -214,15 +218,15 @@ services:
   #  Gitea
   gitea:
     container_name: gitea
-    image: gitea/gitea:1.16.5
+    image: gitea/gitea:1.17.3
     restart: unless-stopped
+    #  Nota: Pendiente de estudiar:
+    #  https://docs.docker.com/compose/startup-order/
     depends_on:
-      gitea-traefik:
-        condition: service_started
       gitea-cache:
         condition: service_healthy
       db:
-        condition: service_started
+        condition: service_healthy
     environment:
       - APP_NAME="Gitea"
       - USER_UID=1000
@@ -246,18 +250,23 @@ services:
       - GITEA__cache__HOST=redis://gitea-cache:6379/0?pool_size=100&idle_timeout=180s
       - GITEA__cache__ITEM_TTL=24h
       - GITEA__mailer__ENABLED=true
-      - GITEA__mailer__FROM="luis.palacios.derqui@gmail.com"
+      - GITEA__mailer__FROM="TUCORREO@TUDOMINIO.com"
       - GITEA__mailer__MAILER_TYPE=smtp
       - GITEA__mailer__HOST="smtp.gmail.com:465"
       - GITEA__mailer__IS_TLS_ENABLED=true
-      - GITEA__mailer__USER="luis.palacios.derqui@gmail.com"
-      - GITEA__mailer__PASSWD="taadxgovjbtaxpmq"
+      - GITEA__mailer__USER="TUCORREO@TUDOMINIO.com"
+      - GITEA__mailer__PASSWD="TUCONTRASEÑA"
       - GITEA__mailer__HELO_HOSTNAME="git.parchis.org"
     ports:
       - "22:22"
-    restart: always
     networks:
       - public
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --no-verbose --tries=1 --spider localhost:3000/explore/repos || exit 1"]
+      interval: 5s
+      start_period: 2s
+      timeout: 3s
+      retries: 55
     volumes:
       - ./data_gitea:/data
       - /etc/timezone:/etc/timezone:ro
@@ -294,12 +303,18 @@ services:
   # MySQL
   db:
     image: mysql:8
-    restart: always
+    restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=gitea
       - MYSQL_USER=gitea
       - MYSQL_PASSWORD=gitea
       - MYSQL_DATABASE=gitea
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      start_period: 2s
+      interval: 10s
+      timeout: 2s
+      retries: 55
     networks:
       - public
     volumes:
@@ -543,5 +558,40 @@ git:~/gitea$ docker-compose up -d
 - El proceso es el mismo que el de Gitea, editas el  `docker-compose.yml`, cambias la versión en la entrada `image: ...`, haces un `docker-compose pull`, paras (`docker-compose down`) y arrancas (`docker-compose up -d`) todo de nuevo. 
 
 <br/>
+
+
+
+### Arranque de los servicios
+
+*Arranque durante el boot*: No necesito crear un script para que durante el boot se arranque los servicios. 
+
+En el fichero `docker-compose.yml`tengo la orden `restart: unless-stopped` en todos los servicios. Una vez que ejecute  `docker-compose up -d` el daemon volverá a arrancarlos tras el boot. 
+
+*Orden de los servicios*: A pesar de haber configurado el fichero `docker-compose.yml` para que se ejecuten en orden, he detectado que tras el boot algunas veces traefik no se comparta y lo he resuelto programando un rearranque del mismo. 
+
+- Creo un script de rearranque `/home/luis/gitea/restart-traefik.sh`
+```console
+#!/bin/ash
+#
+cd /home/luis/gitea
+while true; do
+    sleep 30
+    wget -q --no-verbose --tries=1 --spider https://git.parchis.org/explore/repos 2> /dev/null
+    if [ "${?}" -ne "0" ]; then
+        docker-compose restart gitea-traefik
+    fi
+done
+```
+- Creo el ejecutable `/etc/local.d/0-restart-traefik.sh`
+```console
+#!/bin/ash
+#
+sleep 10
+sudo -H -u luis ash -c /home/luis/gitea/restart-traefik.sh
+```
+- Activo el servicio local
+```console
+rc-update add local
+```
 
 ---
