@@ -359,9 +359,9 @@ cortafuegix
 
 **Compartir Dashboard con un Home Assistant remoto**
 
-Me gusta ver los dashboards de Grafana desde Home Assistant lo más integrado posible:
+Me gusta ver los dashboards de Grafana desde Home Assistant lo más integrados posible:
 
-En el equipo donde tengo Grafana configuro autenticación anónima y poder trabajar con iFrames. Realizo las modificaciones siguientes en el fichero `/etc/grafana/grafana.ini`:
+- Configuro autenticación anónima y poder trabajar con iFrames modificando el fichero `/etc/grafana/grafana.ini`:
 
 ```yaml
 [auth.anonymous]
@@ -375,7 +375,13 @@ cookie_samesite = none
 allow_embedding = true
 ```
 
-Además es importante (si no lo tiene ya así) hacer coincidir el `org_name` con el nombre de la Organización. Entro vía Web y me aseguro de de coincida:
+- Rearranco el servidor Grafana:
+
+```
+root@almacenix:~# systemctl restart grafana-server.service
+```
+
+- A continuación me aseguro de que coincida el `org_name` (`grafana.ini`) con el nombre de la Organización, entro en la administración de Grafana vía Web y me aseguro de que coincidan:
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-02-06-grafana-influxdb-4.png" 
@@ -384,13 +390,7 @@ Además es importante (si no lo tiene ya así) hacer coincidir el `org_name` con
       %}
 
 
-Rearranco el servidor
-
-```
-root@almacenix:~# systemctl restart grafana-server.service
-```
-
- - Copiar el link directo al Dashboard.
+- Por último ya solo nos queda copiar el link directo al Dashboard.
    -  Desde Grafana->Dasboard->Abre el dashboard->Click en el icono de Compartir !!
    -  Copiar la URL
 
