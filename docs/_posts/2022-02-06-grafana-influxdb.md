@@ -375,6 +375,15 @@ cookie_samesite = none
 allow_embedding = true
 ```
 
+Cambio, si es necesario, el nombre de la Organización del dashboard de Grafana, deben coincidir.
+
+{% include showImagen.html 
+      src="/assets/img/posts/2022-02-06-grafana-influxdb-4.png" 
+      caption="org_name y el nombre de la organización del Dashboard deben coincidir" 
+      width="800px"
+      %}
+
+
 Rearranco el servidor
 
 ```
