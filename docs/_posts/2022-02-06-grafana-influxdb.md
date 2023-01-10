@@ -361,7 +361,7 @@ cortafuegix
 
 Me gusta ver los dashboards de Grafana desde Home Assistant lo más integrado posible:
 
-En el equipo donde tengo Grafana configuro autenticación anónima y poder trabajar con iFrames. Realizo las modificaciones siguientes en el fichero /etc/grafana/grafana.ini
+En el equipo donde tengo Grafana configuro autenticación anónima y poder trabajar con iFrames. Realizo las modificaciones siguientes en el fichero `/etc/grafana/grafana.ini`:
 
 ```yaml
 [auth.anonymous]
@@ -375,7 +375,7 @@ cookie_samesite = none
 allow_embedding = true
 ```
 
-Además es importante (si no lo tiene ya así) hacer coincidir el `org_name` con el nombre de la Organización. Entro vía Web y me aseguro de de coincida.
+Además es importante (si no lo tiene ya así) hacer coincidir el `org_name` con el nombre de la Organización. Entro vía Web y me aseguro de de coincida:
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-02-06-grafana-influxdb-4.png" 
