@@ -143,7 +143,42 @@ Me dirijo `http://nodered.parchis.org:1880` y realizo la configuración inicial.
 
 <br/>
 
-#### Actualizaciones futuras
+#### Añadir nodos a la Paleta
+
+Node-RED viene con un conjunto básico de nodos útiles, pero hay muchos más disponibles tanto en el proyecto Node-RED como en la comunidad en general. Puedes buscar los nodos disponibles en la [biblioteca de Node-RED](http://flows.nodered.org/).
+
+Puedes añadir nodos con `npm install <npm-package-name>` desde la línea de comandos, pero es complicado hacerlo al ejectuarse en un contendor. Es mucho más fácil instalar  nodos directamente en el editor (desde el navegador). 
+
+- Selecciono la opción `Manage palette` del menú principal.
+
+{% include showImagen.html 
+      src="/assets/img/posts/2022-10-02-nodered-docker-4.png" 
+      caption="Ejecución inicial" 
+      width="250px"
+      %}
+
+- Voy a la pestaña "Instalar" y **busco** en el catálogo de módulos disponibles y lo instalo.
+
+{% include showImagen2.html 
+      src="/assets/img/posts/2022-10-02-nodered-docker-5.png" 
+      src2="/assets/img/posts/2022-10-02-nodered-docker-6.png" 
+      caption="Busco homeassistant y snmp para instalar integraciones" 
+      width="600px"
+      %}
+
+- La pestaña "Nodos" muestra todos los módulos que ha instalado, cuáles se están utilizando y **si hay actualizaciones disponibles para alguno de ellos**.
+
+{% include showImagen.html 
+      src="/assets/img/posts/2022-10-02-nodered-docker-7.png" 
+      caption="Actualización disponible para Home Assistant" 
+      width="600px"
+      %}
+
+
+<br/>
+
+
+#### Actualizaciones futuras del contenedor
 
 - Averiguo versiones disponibles en el [Hub de Docker -> NodeRED (tags)](https://hub.docker.com/r/nodered/node-red/tags)
 - Modifico el fichero `docker-compose.yml` y cambio el número de versión, por ejemplo subo desde la `3.0.1` a la `3.0.2`
@@ -171,7 +206,7 @@ nodered:~/nodered$ docker-compose up -d
 {% include showImagen.html 
       src="/assets/img/posts/2022-10-02-nodered-docker-3.png" 
       caption="Comprobar la versión" 
-      width="200px"
+      width="250px"
       %}
 
 
