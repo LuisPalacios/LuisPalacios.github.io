@@ -387,12 +387,6 @@ pihole --white-regex "(\.|^)symcb\.com$"
 #
 # Exactas: 
 
-# iTunes
-pihole -w itunes.apple.com
-pihole -w s.mzstatic.com
-
-# Apple-ID
-pihole -w appleid.apple.com
 
 # NVIDIA GeForce
 pihole -w gfwsl.geforce.com 
@@ -408,8 +402,6 @@ pihole -w connectivitycheck.android.com android.clients.google.com clients3.goog
 # Windows/Microsoft
 pihole -w msftncsi.com www.msftncsi.com ipv6.msftncsi.com
 
-# iOS/Apple
-pihole -w captive.apple.com gsp1.apple.com www.apple.com www.appleiphonecell.com
 
 # Google Maps and other Google services
 pihole -w clients4.google.com 
@@ -474,6 +466,84 @@ pihole -w mobile.pipe.aria.microsoft.com
 pihole -w self.events.data.microsoft.com
 pihole -w pixel.wp.com
 pihole -w analytics.google.com
+
+# Apple
+# Aquí tienes la lista completa publicada por Apple: 
+# https://support.apple.com/en-us/HT210060
+
+# Apple varios REGEX
+pihole --white-regex *.apps.apple.com *.amazonaws.com *.cdn-apple.com *.digicert.com deimos3.apple.com *.symcb.com *.symcd.com 
+
+# Apple varios Exacta
+pihole -w www.appleiphonecell.com gnf-mdn.apple.com gnf-mr.apple.com  gsp1.apple.com swpost.apple.com ocsp.verisign.net
+
+# Apple Device setup
+pihole -w albert.apple.com captive.apple.com gs.apple.com humb.apple.com static.ips.apple.com sq-device.apple.com tbsc.apple.com time-ios.apple.com time.apple.com time-macos.apple.com
+
+# Apple Device management
+pihole --white-regex *.push.apple.com
+pihole -w deviceenrollment.apple.com deviceservices-external.apple.com gdmf.apple.com identity.apple.com iprofiles.apple.com mdmenrollment.apple.com setup.icloud.com vpp.itunes.apple.com
+
+# Apple Apple Business Manager and Apple School Manager
+pihole --white-regex *.business.apple.com *.school.apple.com *.itunes.apple.com *.mzstatic.com *.vertexsmb.com
+pihole -w appleid.cdn-apple.com idmsa.apple.com api.ent.apple.com api.edu.apple.com statici.icloud.com www.apple.com upload.appleschoolcontent.com ws-ee-maidsvc.icloud.com
+
+# Apple Business Essentials device management 
+pihole -w axm-adm-enroll.apple.com axm-adm-mdm.apple.com axm-adm-scep.apple.com axm-app.apple.com icons.axm-usercontent-apple.com
+pihole --white-regex *.apple-mapkit.com
+
+# Apple Classroom and Schoolwork
+pihole -w s.mzstatic.com play.itunes.apple.com ws-ee-maidsvc.icloud.com ws.school.apple.com pg-bootstrap.itunes.apple.com cls-iosclient.itunes.apple.com cls-ingest.itunes.apple.com
+
+# Apple macOS, iOS, iPadOS, watchOS, and tvOS
+pihole -w appldnld.apple.com configuration.apple.com gdmf.apple.com gg.apple.com gs.apple.com ig.apple.com mesu.apple.com ns.itunes.apple.com oscdn.apple.com	 osrecovery.apple.com skl.apple.com swcdn.apple.com swdist.apple.com swdownload.apple.com swscan.apple.com updates-http.cdn-apple.com	updates.cdn-apple.com xp.apple.com 
+
+# App Store 
+pihole --white-regex *.itunes.apple.com *.apps.apple.com *.mzstatic.com
+pihole -w itunes.apple.com ppq.apple.com
+
+# Apple Carrier updates
+pihole -w appldnld.apple.com appldnld.apple.com.edgesuite.net itunes.com itunes.apple.com updates-http.cdn-apple.com updates.cdn-apple.com
+
+# Apple Content caching
+pihole -w lcdn-registration.apple.com suconfig.apple.com xp-cdn.apple.com	lcdn-locator.apple.com serverstatus.apple.com
+
+# Apple App features
+pihole -w api.apple-cloudkit.com
+pihole --white-regex *.appattest.apple.com
+
+# Apple Feedback Assistant
+pihole -w bpapi.apple.com	cssubmissions.apple.com fba.apple.com
+
+# Apple diagnostics
+pihole -w diagassets.apple.com
+
+# Apple Domain Name System resolution
+pihole -w doh.dns.apple.com
+
+# Apple Certificate validation
+pihole -w certs.apple.com crl.apple.com crl.entrust.net crl3.digicert.com crl4.digicert.com ocsp.apple.com ocsp.digicert.cn ocsp.digicert.com ocsp.entrust.net ocsp2.apple.com valid.apple.com
+
+# Apple ID
+pihole -w appleid.apple.com appleid.cdn-apple.com idmsa.apple.com  gsa.apple.com  
+
+# Apple iCloud
+pihole --white-regex *.apple-cloudkit.com *.apple-livephotoskit.com *.cdn-apple.com *.gc.apple.com *.icloud.com *.icloud.apple.com *.icloud-content.com *.iwork.apple.com
+pihole -w mask.icloud.com mask-h2.icloud.com mask-api.icloud.com
+
+# Apple Siri and Search
+pihole -w guzzoni.apple.com
+pihole --white-regex *.smoot.apple.com
+
+# Apple Associated Domains
+pihole -w app-site-association.cdn-apple.com app-site-association.networking.apple
+
+# Apple Tap to Pay on iPhone
+pihole -w pos-device.apple.com humb.apple.com phonesubmissions.apple.com 
+
+# Apple Additional content
+pihole -w audiocontentdownload.apple.com devimages-cdn.apple.com download.developer.apple.com playgrounds-assets-cdn.apple.com playgrounds-cdn.apple.com sylvan.apple.com
+
 
 ```
 
