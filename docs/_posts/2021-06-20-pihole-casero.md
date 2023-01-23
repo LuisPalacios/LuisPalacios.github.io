@@ -529,7 +529,7 @@ pihole -w appleid.apple.com appleid.cdn-apple.com idmsa.apple.com  gsa.apple.com
 
 # Apple iCloud
 pihole --white-regex *.apple-cloudkit.com *.apple-livephotoskit.com *.cdn-apple.com *.gc.apple.com *.icloud.com *.icloud.apple.com *.icloud-content.com *.iwork.apple.com
-pihole -w mask.icloud.com mask-h2.icloud.com mask-api.icloud.com
+pihole -w mask-api.icloud.com
 
 # Apple Siri and Search
 pihole -w guzzoni.apple.com
@@ -543,9 +543,15 @@ pihole -w pos-device.apple.com humb.apple.com phonesubmissions.apple.com
 
 # Apple Additional content
 pihole -w audiocontentdownload.apple.com devimages-cdn.apple.com download.developer.apple.com playgrounds-assets-cdn.apple.com playgrounds-cdn.apple.com sylvan.apple.com
-
-
 ```
+
+<br/>
+
+### iCloud Private Relay
+
+PiHole bloquea por defecto el acceso a los dominios `mask.icloud.com` y `mask-h2.icloud.com`. El objetivo es **bloquear** el acceso al servicio **iCloud Private Relay** para prevenir que los dispositivos de Apple se salten PiHole a la torera. El equipo de PiHole lo ha implementado siguiendo las recomendaciones de la propia empresa Apple (puedes consultarlo [aquí](https://developer.apple.com/support/prepare-your-network-for-icloud-private-relay))
+
+Si deseas permitir a tus dispositivos Apple usar **iCloud Private Relay** y esquivar por completo a PiHole debes configurar `BLOCK_ICLOUD_PR=false` en el fichero `/etc/pihole/pihole-FTL.conf` y rearrancar pihole-FTL (`sudo service pihole-FTL restart`). 
 
 <br/>
 
