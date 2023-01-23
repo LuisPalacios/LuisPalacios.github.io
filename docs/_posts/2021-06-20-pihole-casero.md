@@ -570,8 +570,8 @@ $ pihole -up
 
 <br/>
 
-### Referencias a estudiar
+### Referencias
 
-Encontré esta herramienta que es interesante estudiar... [https://github.com/jessedp/pihole5-list-tool](https://github.com/jessedp/pihole5-list-tool)
-
+* Hilo Interesante: [Commonly Whitelisted Domains](https://discourse.pi-hole.net/t/commonly-whitelisted-domains/212/73?page=4)
+* Herramienta curiosa a estudiar: [pihole5-list-tool](https://github.com/jessedp/pihole5-list-tool)
 
