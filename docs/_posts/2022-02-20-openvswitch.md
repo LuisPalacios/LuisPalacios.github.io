@@ -477,14 +477,14 @@ Cambiamos de tercio, vamos a aprovechar las ventajas de la integración entre Li
 
 Open vSwitch soporta las redes que gestiona `libvirt` en modo `bridged` (no las NAT), más información [aquí](https://docs.openvswitch.org/en/latest/howto/libvirt/).
 
-- Voy a crear una de red perssistente en Libvirt desde un XML `/root/mi-solbr.xml` 
+- Voy a crear una de red perssistente en Libvirt desde un XML `/root/switch-solbr.xml` 
 
 ```xml
 <!-- Ejemplo de fichero XML para crear una red virtual persistente dentro de Libvirt. 
 -->
 
 <network>
-  <name>net-solbr</name>
+  <name>switch-solbr</name>
   <forward mode='bridge'/>
   <bridge name='solbr'/>
   <virtualport type='openvswitch'/>
@@ -542,21 +542,19 @@ Open vSwitch soporta las redes que gestiona `libvirt` en modo `bridged` (no las 
 - Lo activo desde Libvirt 
   
 ```console
-root@maclinux:~# virsh net-define /etc/libvirt/qemu/networks/net-solbr.xml
-Network net-solbr defined from /root/mi-solbr.xml
+root@maclinux:~# virsh net-define switch-solbr
+(Se crea el fichero /etc/libvirt/qemu/networks/switch-solbr.xml)
 
-(Se crea el fichero /etc/libvirt/qemu/networks/net-solbr.xml)
+root@maclinux:~# virsh net-start switch-solbr
+Network switch-solbr started
 
-root@maclinux:~# virsh net-start net-solbr
-Network net-solbr started
-
-root@maclinux:~# virsh net-autostart net-solbr
-Network net-solbr marked as autostarted
+root@maclinux:~# virsh net-autostart switch-solbr
+Network switch-solbr marked as autostarted
 
 root@maclinux:~# virsh net-list
  Name        State    Autostart   Persistent
 ----------------------------------------------
- net-solbr   active   yes         yes
+ switch-solbr   active   yes         yes
 ```
 
 - Desde mis VM's veré las nuevas opciones cuando seleccione la Red
