@@ -26,6 +26,7 @@ Antes de entrar en harina, tenemos dos formas de trabajar, con el cliente (progr
 * Cliente GUI [GitHub Desktop](https://desktop.github.com) desarrollado por GitHub.
 * Cliente GUI [SourceTree](https://www.sourcetreeapp.com)
 * Aquí tienes más.. [clientes GUI](https://git-scm.com/downloads/guis)
+* También puedes buscar talleres como este en otros idiomas ([aquí un ejemplo](https://github.com/mstanczy/git-workshop))
 
 <br/>
 
