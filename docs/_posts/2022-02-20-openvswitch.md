@@ -51,44 +51,49 @@ Los principales componentes son:
 
 ## Instalación de OVS
 
-Tras la instalación de un Ubuntu Server LTS 20.04, 
+Tras la instalación de Ubuntu Server LTS 22.04.1, 
 
 - Instalo OVS
 ```console
-root@maclinux:~# apt update && apt upgrade -y
 root@maclinux:~# apt install openvswitch-switch
 ```
 - Ubuntu habilita y arranca el servicio `openvswitch-switch.service` que a su vez arranca los dos daemons antes comentados. 
 ```console
 root@maclinux:~# ps -ef | grep ovs
-root         719       1  0 12:23 ?        00:00:00 ovsdb-server /etc/openvswitch/conf.db -vconsole:emer -vsyslog:err -vfile:info --remote=punix:/var/run/openvswitch/db.sock --private-key=db:Open_vSwitch,SSL,private_key --certificate=db:Open_vSwitch,SSL,certificate --bootstrap-ca-cert=db:Open_vSwitch,SSL,ca_cert --no-chdir --log-file=/var/log/openvswitch/ovsdb-server.log --pidfile=/var/run/openvswitch/ovsdb-server.pid --detach
-root         772       1  0 12:23 ?        00:00:00 ovs-vswitchd unix:/var/run/openvswitch/db.sock -vconsole:emer -vsyslog:err -vfile:info --mlockall --no-chdir --log-file=/var/log/openvswitch/ovs-vswitchd.log --pidfile=/var/run/openvswitch/ovs-vswitchd.pid --detach
+root        1179       1  0 13:29 ?        00:00:00 ovsdb-server /etc/openvswitch/conf.db -vconsole:emer -vsyslog:err -vfile:info --remote=punix:/var/run/openvswitch/db.sock --private-key=db:Open_vSwitch,SSL,private_key --certificate=db:Open_vSwitch,SSL,certificate --bootstrap-ca-cert=db:Open_vSwitch,SSL,ca_cert --no-chdir --log-file=/var/log/openvswitch/ovsdb-server.log --pidfile=/var/run/openvswitch/ovsdb-server.pid --detach
+root        1238       1  0 13:29 ?        00:00:00 ovs-vswitchd unix:/var/run/openvswitch/db.sock -vconsole:emer -vsyslog:err -vfile:info --mlockall --no-chdir --log-file=/var/log/openvswitch/ovs-vswitchd.log --pidfile=/var/run/openvswitch/ovs-vswitchd.pid --detach
+```
+- Instalo el soporte de VLAN's y de paso algunas herramientas útiles
+```console
+root@maclinux:~# apt install net-tools nmap vlan
 ```
 
 <br/>
 
 ## Networking en el Servidor
 
+Antes de instalar KVM voy a preparar el bridge OVS
+
 ### Añadir el Bridge OVS
 
-Los comandos que introduzcamos con `ovs-vsctl` **son persistentes** (recuerda la base de datos). 
+Los comandos que introduzcamos con `ovs-vsctl` **son persistentes** (recuerda la base de datos).  enp2s0f0
 
-| Nota: **Cuidado si estás conectado vía SSH**. Parto de un ubuntu recién instalado, donde su tarjeta física se llama `enp2s0f0` y está conectada al Stack IP. En cuanto empiece a hacer cambios puedo romper dicha conexión. Importante tener acceso a la consola. |
+| **Cuidado si estás conectado vía SSH**. Como parto de un ubuntu recién instalado, donde su tarjeta física se llama `eno1` y está conectada al Stack IP, en cuanto empiece a hacer cambios puedo romper dicha conexión; así que es importante tener acceso a la consola del equipo por si acaso. |
 
 - Creo un bridge llamado `solbr`
 ```console
 root@maclinux:~# ovs-vsctl add-br solbr
 root@maclinux:~# ip link set solbr up
 root@maclinux:~# ovs-vsctl show
-83506d0f-e81b-4d47-be11-e25821d08d9a
+f283cd6c-17e8-4bf3-be1a-b50904e91fc3
     Bridge solbr
         Port solbr
             Interface solbr
                 type: internal
-    ovs_version: "2.13.3"
+    ovs_version: "2.17.3"
 root@maclinux:~# ip link show dev solbr
-8: solbr: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
-    link/ether 9e:5f:90:fe:6a:42 brd ff:ff:ff:ff:ff:ff
+5: solbr: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/ether a2:35:10:40:0f:4c brd ff:ff:ff:ff:ff:ff
 ```
 
 <br/>

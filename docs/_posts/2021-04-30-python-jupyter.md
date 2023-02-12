@@ -367,6 +367,14 @@ $ pip list --outdated --format=freeze |\
     xargs -n1 pip install -U
 ```
 
+En versiones nuevas de pip, 
+
+```console
+$ python3 -m pip list --outdated --format=json |\
+    jq -r '.[] | "\(.name)==\(.latest_version)"' |\
+    xargs -n1 pip3 install -U
+```
+
 <br/>
 
 #### Si instalaste Python de forma nativa
