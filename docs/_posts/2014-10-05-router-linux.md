@@ -10,6 +10,8 @@ excerpt_separator: <!--more-->
 
 Este apunte describe qué hay detrás (a nivel técnico) del servicio IP que nos ofrece Movistar Fusión FTTH (Fibra) y como sustituir el router que nos instalan por un equipo basado en GNU/Linux, que hará de Router (junto con un Switch Ethernet) para ofrecer los mismos servicios de Datos, Televisión (IPTV) y Voz (VoIP).
 
+Después de leer este apunte te recomiendo que sigas con el apunte sobre cómo hacer que funcionen los [videos bajo demanda para Movistar]({% post_url 2014-10-18-movistar-bajo-demanda %}) utilizando un router Linux.
+
 <br clear="left"/>
 <!--more-->
 
