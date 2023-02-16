@@ -992,7 +992,7 @@ General
 
 Falta un último detalle que he dejado para el final, el servicio de Video de Movistar Fusión permite seleccionar y ver videos bajo demanda en dos situaciones: 1) reproducir una grabación que hayamos programado o 2) reproducir un video desde la parrilla de Movistar TV.
 
-Es un pelín complicado, así que he creado un apunte técnico especial que encontrarás en «Movistar: Video bajo demanda con router Linux»
+Es un pelín complicado, así que he creado un apunte técnico especial que encontrarás en [videos bajo demanda para Movistar]({% post_url 2014-10-18-movistar-bajo-demanda %})
 
 <br/>
 
