@@ -158,7 +158,7 @@ Desde un browser conecto (y funciona) con mi propio ordenador en: [http://127.0.
 
 <br/>
 
-## Creo luispalacios.github.io 
+## luispalacios.github.io 
 
 Sigo las instrucciones de [pages.github.com](https://pages.github.com) y su [documentación oficial](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/creating-a-github-pages-site-with-jekyll) para crear mi [Mi repositorio LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io)
 
@@ -406,8 +406,9 @@ Modifico mi fichero [./docs/_includes/footer.html](https://github.com/LuisPalaci
 
 <br/>
 
-## Mejoras adicionales al Blog
+## Mejoras
 
+### Issues
 
 En vez de seguir ampliando este apunte lo que he hecho es crear `issues`en github con cada una de las modificaciones y mejoras que quería añadirle. 
 
@@ -416,11 +417,7 @@ Puedes encontrarlas entre mis [issues cerrados sobre este blog](https://github.c
 
 <br/>
 
----
-
-<br/>
-
-#### Actualizaciones futuras
+### Actualizaciones
 
 Actualizar Homebrew
 
@@ -438,7 +435,7 @@ Actualizar bundle
 
 <br/>
 
-#### Enlaces interesantes
+### Enlaces interesantes
 
 Para mejorar mi sitio de apuntes, algunos enlaces interesantes: 
 
