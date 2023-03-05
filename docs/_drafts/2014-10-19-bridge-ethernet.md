@@ -16,7 +16,7 @@ Más info en los apuntes: [Router Linux para Movistar]({% post_url 2014-10-05-ro
 <br clear="left"/>
 <!--more-->
 
-## Punto de partida
+## Arquitectura
 
 Este es el Hardware que he utilizado:
 
@@ -48,11 +48,11 @@ El título del apunte es **Bridge Ethernet** porque fue lo que más me costo con
 
 <br />
 
-### Software necesario
+### Instalación de OpenVPN
 
-**Ejecuto lo siguiente en ambas Pi's !!!**
+Esta sección hay que **repetirla en ambas Pi's, en `norte` y en `sur` !!!**, más adelante veremos sus configuraciones específicas.
 
-Me convierto en `root`
+Primero me convierto en `root`
 
 ```console
 $ sudo su -i
@@ -95,7 +95,9 @@ Lo tengo bien, **Europe/Madrid**, si no fuese el caso tendría que corregirlo co
 Instalo OpenVPN, Bridge Utils y algunas herramientas importantes.
 
 ```console
-# apt -y install openvpn unzip bridge-utils igmpproxy dnsutils tcpdump ebtables
+# apt -y install openvpn unzip bridge-utils \
+         igmpproxy dnsutils tcpdump ebtables \
+         tree
 ```
 
 Preparo el directorio de trabajo de **easy-rsa**
@@ -106,8 +108,357 @@ Preparo el directorio de trabajo de **easy-rsa**
 
 <br />
 
-### Configuración de "norte"
+## Servidor `norte`
 
-Sección dedicada al servidor `norte`, que si recordamos es el que está en mi casa y que conectaremos físicamente al router de Movistar en 2 puertos. 
+El servidor `norte` es el que está en mi casa y que conectaremos físicamente al router de Movistar por duplicado. El motivo es sencillo, el primer puerto (`eth0`) será el principal por donde irá todo el tráfico del equipo, mientras que el segundo (`eth1`) lo dedicaré exclusivamente solicitar y recibir el tráfico IPTV.
+
+<br />
+
+### Networking
+
+Conexión con Internet e IPTV
+ setup de las interfaces
+
+Configuración como router: 
+ Routing
+ NAT
+ Forwarding
+ Firewall
+
+<br />
+
+### OpenVPN
+
+En esta sección describo cómo configuro OpenVPN en modo servidor
+
+<br />
+
+#### Certificados
+
+- Tras preparar **easy-rsa** en `/etc/openvpn/easy-rsa` voy a crear un paquete de certificados que utilizaré para el servidor `norte`y sus `clientes`. Empiezo creando el fichero `vars` 
+
+```console
+# cd /etc/openvpn/easy-rsa
+# cat vars
+set_var EASYRSA_DN           "org"
+set_var EASYRSA_REQ_COUNTRY  "ES"
+set_var EASYRSA_REQ_PROVINCE "MAD"
+set_var EASYRSA_REQ_CITY     "Norte"
+set_var EASYRSA_REQ_ORG      "Parchis"
+set_var EASYRSA_REQ_EMAIL    "microrreo@gmail.com"
+set_var EASYRSA_REQ_OU       "Parchis"
+set_var EASYRSA_CA_EXPIRE    10950
+set_var EASYRSA_CERT_EXPIRE  10950
+```
+
+- Crear la infraestructura PKI
+
+```console
+# ./easyrsa init-pki
+Note: using Easy-RSA configuration from: /etc/openvpn/easy-rsa/vars
+init-pki complete; you may now create a CA or requests.
+Your newly created PKI dir is: /etc/openvpn/easy-rsa/pki
+```
+
+- Generar el certificado de la Certificate Authority (CA). Especificar el Common Name.
+
+```console
+# cd /etc/openvpn/easy-rsa
+# ./easyrsa build-ca
+:
+Enter New CA Key Passphrase:
+:
+Common Name (eg: your user, host, or server name) [Easy-RSA CA]:norte
+:
+Your new CA certificate file for publishing is at:
+/etc/openvpn/easy-rsa/pki/ca.crt
+```
+
+- Generar ambos, el server certificate request y la key
+
+```console
+# cd /etc/openvpn/easy-rsa
+# ./easyrsa gen-req norte nopass
+:
+Keypair and certificate request completed. Your files are:
+req: /root/easy-rsa/pki/reqs/norte.req
+key: /root/easy-rsa/pki/private/norte.key
+```
+
+- Firmar el el fichero con el certificado .crt que necesita el servidor
+
+```console
+# cd /etc/openvpn/easy-rsa
+# ./easyrsa sign-req server norte
+:
+Certificate created at: /root/easy-rsa/pki/issued/norte.crt
+```
+
+- Generar los parámetros Diffie-Hellman (DH) que necesita el servidor
+
+```console
+# cd /etc/openvpn/easy-rsa
+# ./easyrsa gen-dh
+:
+```
+
+- Generarmos el secreto Hash-based Message Authentication Code (HMAC)
+
+```console
+# cd /etc/openvpn/easy-rsa
+# openvpn --genkey secret /etc/openvpn/easy-rsa/pki/ta.key
+```
+
+<br />
+
+#### Instalo certificados en el servidor `norte`
+
+- Durante el proceso anterior se han creado ya los certificados que usará `norte` en su función de Access Server y de Bridge Ethernet, pero tenemos que colocarlos en su sitio. 
+
+- Copio los certificados y aprovecho para darles un nombre más significativo
+
+```console
+# cd /etc/openvpn/server/keys
+# cp /etc/openvpn/easy-rsa/pki/ca.crt norte.ca.crt
+# cp /etc/openvpn/easy-rsa/pki/issued/norte.crt .
+# cp /etc/openvpn/easy-rsa/pki/private/norte.key .
+# cp /etc/openvpn/easy-rsa/pki/dh.pem norte.dh.pem
+# cp /etc/openvpn/easy-rsa/pki/ta.key norte.ta.key
+```
+
+<br />
+
+#### Creo los certificados para `sur`
+
+- Desde este servidor crearemos certificados para que distintos clientes puedan conectar con él. En este ejemplo vamos a crear el certificado del cliente `sur`.
+
+```console
+# cd /etc/openvpn/easy-rsa
+# ./easyrsa build-client-full sur_cliente_de_norte nopass
+:
+./pki/private/sur_cliente_de_norte.key
+./pki/reqs/sur_cliente_de_norte.req
+./pki/issued/sur_cliente_de_norte.crt
+```
+
+- Empaqueto los certificados recien creados para `sur`
+
+```console
+# cd /etc/openvpn/easy-rsa/pki
+# cp ca.crt /tmp/norte.ca.crt
+# cp issued/sur_cliente_de_norte.crt /tmp
+# cp private/sur_cliente_de_norte.key /tmp
+# cp ta.key /tmp/norte.ta.key
+# cd /tmp
+# tar cvfz sur_cliente_de_norte_keys.tgz norte.ca.crt sur_cliente_de_norte.crt sur_cliente_de_norte.key norte.ta.key
+```
+
+- Guardo el fichero comprimido con los certificados de `sur` para enviárselo en el futuro y que los instale. Lo veremos en la siguietne sección.
+
+```console
+luis@norte~ $ pwd
+/home/luis
+luis@norte~ $ cp /tmp/sur_cliente_de_norte_keys.tgz .
+```
+
+<br />
+
+#### Access Server `norte`
+
+Ahora vamos a configurar el *servicio Access Server*. Creo el fichero principal de configuración y los de sus clientes. 
+
+- `/etc/openvpn/server/norte_access_server.conf`
+
+```console
+# Configuración de "Access Server" de OpenVPN
+#
+# Soy "servidor", expondré el device tun0 y uso udp como prortocolo.
+proto udp
+dev tun1
+
+# Datos de trabajo de mi servidor
+port 1444
+# El siguiente rango tiene que estar libre
+server 192.168.224.0 255.255.255.0
+comp-lzo
+persist-key
+persist-tun
+client-to-client
+topology subnet
+keepalive 10 120
+
+# Opciones de los túneles
+sndbuf 512000
+rcvbuf 512000
+push "sndbuf 512000"
+push "rcvbuf 512000"
+txqueuelen 2000
+tun-mtu 1400
+mssfix 1360
+
+# Mis claves de servidor
+ca keys/norte.ca.crt
+cert keys/norte.crt
+key keys/norte.key
+dh keys/norte.dh.pem
+# Nivel extra de seguridad, firmo con HMAC el handshake SSL/TLS
+tls-auth keys/norte.ta.key 0
+
+# Rutas y DNS server que voy a exponer a mis clientes.
+# Si quiero exponar mi "LAN" (de `norte`) quito el comentario
+#push "route 192.168.X.0 255.255.255.0"
+# Si quiero forzar a que los clientes usen mi DNS Server
+#push "dhcp-option DNS 192.168.X.1"
+
+# Ficheros de configuración de los clientes
+ifconfig-pool-persist /etc/openvpn/server/ipp.txt
+client-config-dir /etc/openvpn/server/ccd
+
+# Rutas que voy a instalarme para saber cómo llegar a las
+# LAN's de mis clientes. Ellos tienen que hacer un push
+# de su rango en su fichero de cliente.
+route 192.168.107.0 255.255.255.0 192.168.224.107 # LAN de sur
+
+# Ficheros de log y estado
+status /etc/openvpn/server/norte_access_server.status.log
+log /etc/openvpn/server/norte_access_server.log
+verb 4
+```
+
+- `/etc/openvpn/server/ipp.txt`
+
+```console
+cliente_sur,192.168.224.107,
+```
+
+- `/etc/openvpn/server/ccd/cliente_sur`
+
+```console
+# Nueva ruta a la que tengo acceso via `sur`, su LAN.
+iroute 192.168.107.0 255.255.255.0
+```
+
+- Arranque del servicio
+
+```console
+# systemctl start openvpn-server@norte_access_server
+# systemctl enable openvpn-server@norte_access_server
+# systemctl status openvpn-server@norte_access_server
+● openvpn-server@norte_access_server.service - OpenVPN service for norte_access_server
+     Loaded: loaded (/lib/systemd/system/openvpn-server@.service; enabled; vendor preset: enabled)
+                                                                  =======
+     Active: active (running) since Sat 2014-10-19 11:44:57 CET; 1min 14s ago
+             ======
+```
+
+<br />
+
+## Servidor `sur`
+
+El servidor `sur` es el que está en remoto. También cuenta con dos tarjetas de red pero para usos distintos a los que vimos antes. El primer puerto (`eth0`) lo usamos para conectarnos a nuestro proveedor de internet usando DHCP y el segundo puerto (`eth1`) lo usamos para dar servcio a la LAN privada. 
+
+<br />
+
+### Networking
+
+Conexión con Internet y LAN
+ setup de las VLAN
+ setup de las interfaces
+
+Configuración como router: 
+ Routing
+ NAT
+ Forwarding
+ Firewall
+
+<br />
+
+### OpenVPN en `sur`
+
+En esta sección describo cómo configuro openvpn en modo cliente para que se conecte con `norte`
+
+<br />
+
+#### Instalo certificados como cliente de `norte`
+
+Ya teníamos los certificados que preparamos y los he enviado a este equipo para instalarlos en el directorio `/etc/openvpn/client`. Preparo un subdirectorio donde irán las claves.
+
+```console
+# mkdir -p /etc/openvpn/cliente/keys/sur_cliente_de_norte
+# cd /etc/openvpn/client/keys/sur_cliente_de_norte/
+# tar xvfz /home/luis/sur_cliente_de_norte_keys.tgz
+:
+```
+
+Ahora configuro el *servicio cliente de un Access Server*. Creo el fichero principal de configuración.
+
+- `/etc/openvpn/server/sur_cliente_de_norte.conf`
+
+```console
+#
+# Configuración CLIENTE de un tunel "Access Server" OpenVPN
+#
+# Soy "cliente", expondré el device tun1
+client
+dev tun1
+proto udp
+
+# Datos del "Access Server" OpenVpn con el que conecto
+remote norte.dominio.com 1444
+comp-lzo
+resolv-retry 30
+nobind
+persist-key
+persist-tun
+
+# Mis claves como cliente de norte
+ca keys/sur_cliente_de_norte/norte.ca.crt
+cert keys/sur_cliente_de_norte/sur_cliente_de_norte.crt
+key keys/sur_cliente_de_norte/sur_cliente_de_norte.key
+# Nivel extra de seguridad, firmo con HMAC el handshake SSL/TLS
+tls-auth keys/sur_cliente_de_norte/norte.ta.key 1
+
+# Mis rutas en mi LAN que expongo al Servidor
+push "route 192.168.107.0 255.255.255.0"
+
+# Ficheros de log y estado
+status /etc/openvpn/client/sur_cliente_de_norte.status.log
+log /etc/openvpn/client/sur_cliente_de_norte.log
+verb 4
+```
+
+| Nota: remote norte.dominio.com |
+
+```console
+# tree /etc/openvpn/client
+etc/openvpn/client/
+├── sur_cliente_de_norte.conf
+└── keys
+    └── sur_cliente_de_norte
+        ├── norte.ca.crt
+        ├── norte.ta.key
+        ├── sur_cliente_de_norte.crt
+        └── sur_cliente_de_norte.key
+```
+
+- Arranque del servicio
+
+```console
+# systemctl start openvpn-server@sur_cliente_de_norte
+# systemctl enable openvpn-server@sur_cliente_de_norte
+# systemctl status openvpn-server@sur_cliente_de_norte
+● openvpn-server@sur_cliente_de_norte.service - OpenVPN service for sur_cliente_de_norte
+     Loaded: loaded (/lib/systemd/system/openvpn-server@.service; enabled; vendor preset: enabled)
+                                                                  =======
+     Active: active (running) since Sat 2014-10-19 12:20:07 CET; 1min 14s ago
+             ======
+```
+
+
+<br />
+
+### Configuración del Switch TL-x08E
+
+
 
 
