@@ -52,7 +52,7 @@ En el equipo `sur` voy a montar **tres VLANs** que van a permitir tres servicios
 
 <br />
 
-### Instalación de OpenVPN
+### Instalación de software
 
 Esta sección hay que **repetirla en ambas Pi's, en `norte` y en `sur` !!!**, más adelante veremos sus configuraciones específicas.
 
@@ -103,11 +103,6 @@ Instalo OpenVPN, Bridge Utils y algunas herramientas importantes.
          dnsutils tcpdump ebtables tree bmon
 ```
 
-Preparo el directorio de trabajo de **easy-rsa**
-
-```console
-# cp -a /usr/share/easy-rsa /etc/openvpn/easy-rsa
-```
 
 <br />
 
@@ -197,7 +192,13 @@ Veamos cómo configurar este equipo como un Servidor de acceso y bridge ethernet
 
 #### Certificados
 
-Ya habíamos preparado al principio el paquete **easy-rsa** en `/etc/openvpn/easy-rsa`. Lo primero que hay que hacer, y solo hay que hacerlo una vez, es configurar los certificados, que usaré como servidor `norte` y otros que enviaré al cliente `sur`. 
+ Lo primero que hay que hacer, y solo hay que hacerlo una vez, es configurar los certificados, que usaré como servidor `norte` y otros que enviaré al cliente `sur`. 
+ 
+ - Preparo el directorio de trabajo de **easy-rsa**
+
+```console
+# cp -a /usr/share/easy-rsa /etc/openvpn/easy-rsa
+```
 
 - Empiezo creando el fichero `vars` 
 
