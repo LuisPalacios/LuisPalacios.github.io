@@ -1229,7 +1229,7 @@ Ya tenemos a `sur` y `norte` conectados con un Bridge Ethernet.
 
 # ip a show dev eth1.206
 4: eth1.206@eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1492 qdisc noqueue master br206 state UP group default qlen 1000
-    link/ether ac:15:a2:86:c1:0c brd ff:ff:ff:ff:ff:ff
+   (No hace falta dirección IP)
 
 # brctl show
 bridge name	bridge id		STP enabled	interfaces
@@ -1260,8 +1260,8 @@ Para que el Deco reciba la dirección IP y opciones correctamente tengo que inst
 #dhcp-range=tag:!decos,192.168.104.33,192.168.104.199,1h
 #dhcp-range=tag:decos,192.168.104.200,192.168.104.223,1h
 # Hago la asociacion por mac
-dhcp-host=8c:61:a3:5e:83:0c,ij-deco-salon,192.168.104.200,set:decos
-dhcp-host=2C:95:69:02:CF:75,ij-deco-servicio,192.168.104.201,set:decos
+dhcp-host=8c:61:a3:5e:82:0c,ij-deco-salon,192.168.104.200,set:decos
+dhcp-host=2C:95:23:02:CF:75,ij-deco-servicio,192.168.104.201,set:decos
 dhcp-option=tag:decos,option:router,192.168.104.1
 dhcp-option=tag:decos,6,172.26.23.3
 dhcp-option=tag:decos,240,':::::239.0.2.10:22222:v6.0:239.0.2.30:22222'
@@ -1273,7 +1273,7 @@ dhcp-range=set:vlan204,192.168.206.10,192.168.206.20,1h
 dhcp-option=tag:vlan206,option:router,192.168.206.2
 dhcp-option=tag:vlan206,6,172.26.23.3
 dhcp-option=tag:vlan206,240,':::::239.0.2.10:22222:v6.0:239.0.2.30:22222'
-dhcp-host=DC:A6:33:DB:DC:FE,deco206-manuel-eth,192.168.206.21,set:vlan206
+dhcp-host=DC:A6:33:AC:12:FE,deco206-eth,192.168.206.21,set:vlan206
 
 ```
 
