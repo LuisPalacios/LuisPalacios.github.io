@@ -6,12 +6,11 @@ tags: movistar router cone nat iptables television
 excerpt_separator: <!--more-->
 ---
 
-
 ![logo linux router](/assets/img/posts/logo-bridge-eth.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
 Pruebas de concepto para extender la red de mi casa a un sitio remoto a través de internet y poder consumir los servicios de IPTV de Movistar. Voy a usar dos Raspberry Pi, una en casa sirviendo dos túneles (datos e IPTV) y otra en remoto conectándose a ellos a través de Internet. 
 
-Más info en los apuntes: [Router Linux para Movistar]({% post_url 2014-10-05-router-linux %}) y [videos bajo demanda]({% post_url 2014-10-18-movistar-bajo-demanda %}) con Fullcone NAT en linux. Aunque a nivel de rendimiento debaja mucho que desear, con la [Pi 4]({% post_url 2021-10-19-raspberry-pi-os %}) seguro que funcionaría mejor.
+Más info en los apuntes: [Router Linux para Movistar]({% post_url 2014-10-05-router-linux %}) y [videos bajo demanda]({% post_url 2014-10-18-movistar-bajo-demanda %}) con Fullcone NAT en linux. Aunque a nivel de rendimiento debaja mucho que desear, con la [Pi 4]({% post_url 2023-03-02-raspberry-pi-os %}) seguro que funcionaría mejor.
 
 <br clear="left"/>
 <!--more-->
@@ -145,7 +144,7 @@ Activo la nueva configuración:
 
 <br />
 
-#### Activo el Forwarding en IPv4
+#### Activo el Forwarding IPv4
 
 Edito el fichero `/etc/sysctl.conf` y modifico la lisguiente línea para que se active el forwarding: 
 
@@ -243,11 +242,9 @@ Certificate created at: /root/easy-rsa/pki/issued/norte.crt
 
 <br />
 
-#### Instalo certificados en el servidor `norte`
+#### Preparo los certificados para su uso
 
-- Durante el proceso anterior se han creado ya los certificados que usará `norte` en su función de Access Server y de Bridge Ethernet, pero tenemos que colocarlos en su sitio. 
-
-- Copio los certificados y aprovecho para darles un nombre más significativo
+- Durante el proceso anterior se han creado ya los certificados que usará `norte` en su función de Access Server y de Bridge Ethernet, pero tenemos que colocarlos en su sitio. Copio los certificados y aprovecho para darles un nombre más significativo.
 
 ```console
 # cd /etc/openvpn/server/keys
@@ -258,11 +255,8 @@ Certificate created at: /root/easy-rsa/pki/issued/norte.crt
 # cp /etc/openvpn/easy-rsa/pki/ta.key norte.ta.key
 ```
 
-<br />
+* Creo los certificados para el cliente **`sur`**: Desde este servidor crearemos certificados para que distintos clientes puedan conectar con él. En este ejemplo vamos a crear el certificado del cliente `sur` y empaquetarlo para enviarselo.
 
-#### Creo los certificados para `sur`
-
-- Desde este servidor crearemos certificados para que distintos clientes puedan conectar con él. En este ejemplo vamos a crear el certificado del cliente `sur`.
 
 ```console
 # cd /etc/openvpn/easy-rsa
@@ -271,11 +265,7 @@ Certificate created at: /root/easy-rsa/pki/issued/norte.crt
 ./pki/private/sur_cliente_de_norte.key
 ./pki/reqs/sur_cliente_de_norte.req
 ./pki/issued/sur_cliente_de_norte.crt
-```
 
-- Empaqueto los certificados recien creados para `sur`
-
-```console
 # cd /etc/openvpn/easy-rsa/pki
 # cp ca.crt /tmp/norte.ca.crt
 # cp issued/sur_cliente_de_norte.crt /tmp
@@ -283,11 +273,7 @@ Certificate created at: /root/easy-rsa/pki/issued/norte.crt
 # cp ta.key /tmp/norte.ta.key
 # cd /tmp
 # tar cvfz sur_cliente_de_norte_keys.tgz norte.ca.crt sur_cliente_de_norte.crt sur_cliente_de_norte.key norte.ta.key
-```
 
-- Guardo el fichero comprimido con los certificados de `sur` para enviárselo en el futuro y que los instale. Lo veremos en la siguietne sección.
-
-```console
 luis@norte~ $ pwd
 /home/luis
 luis@norte~ $ cp /tmp/sur_cliente_de_norte_keys.tgz .
@@ -302,7 +288,8 @@ Ahora vamos a configurar el *servicio Access Server*. Creo el fichero principal 
 - [/etc/openvpn/server/norte_access_server.conf](https://gist.github.com/LuisPalacios/0b1094cd2203cb8c4e11bfdcc1da0b65)
 - [/etc/openvpn/server/ipp.txt](https://gist.github.com/LuisPalacios/1faab36ba5857411f41b7fec652c723e)
 - [/etc/openvpn/server/ccd/cliente_sur](https://gist.github.com/LuisPalacios/d5af811441f1088f9d2d76d91de3c52c)
-- Arranque del servicio
+
+Arranque del servicio
 
 ```console
 # systemctl start openvpn-server@norte_access_server
@@ -319,25 +306,21 @@ Ahora vamos a configurar el *servicio Access Server*. Creo el fichero principal 
 
 #### Bridge Ethernet Server `norte`
 
-Vamos a por el más complicado, el *servicio Bridge Ethernet*. Creo el fichero principal de configuración (`.conf`) y varios ficheros de apoyo. Son autoexplicativos...
+El segundo es el *servicio Bridge Ethernet*. Creo el fichero principal de configuración (`.conf`) y varios ficheros de apoyo bastante autoexplicativos.
 
 - [/etc/openvpn/server/norte_bridge_ethernet_server.conf](https://gist.github.com/LuisPalacios/6e4341fb4378ad4bc9100106ffc0d2b1)
 - [/etc/openvpn/server/norte_bridge_ethernet_server_CONFIG.sh](https://gist.github.com/LuisPalacios/be850d8a0393c0a107896ae5bc460c8d)
 - [/etc/openvpn/server/norte_bridge_ethernet_server_FW_CLEAN.sh](https://gist.github.com/LuisPalacios/9eeb4d9c2d7341feb7250e94e32a41e0)
 - [/etc/openvpn/server/norte_bridge_ethernet_server_UP.sh](https://gist.github.com/LuisPalacios/c57eec842bf72c27674206ebc7bb51d2)
-- [/etc/openvpn/server/norte_bridge_ethernet_server_DOWN.sh](norte_bridge_ethernet_server_DOWN.sh)
+- [/etc/openvpn/server/norte_bridge_ethernet_server_DOWN.sh](https://gist.github.com/LuisPalacios/779ace4cce3421f2fa303093111cdc9a)
 
 
-- Cambio los permisos a los ficheros `*.sh` y arranco el servicio
+Cambio los permisos a los ficheros `*.sh` y arranco el servicio
 
 ```console
 # cd /etc/openvpn/server
 # chmod 755 norte_bridge_ethernet_server*.sh
-```
 
-- Arranque del servicio
-
-```console
 # systemctl start openvpn-server@norte_bridge_ethernet_server
 # systemctl enable openvpn-server@norte_bridge_ethernet_server
 # systemctl status openvpn-server@norte_bridge_ethernet_server
@@ -346,32 +329,23 @@ Vamos a por el más complicado, el *servicio Bridge Ethernet*. Creo el fichero p
                                                                   =======
      Active: active (running) since Sun 2014-10-19 13:20:08 CET; 17s ago
              ======
-```
 
-Ya tenemos el equipo `norte` preparado para aceptar conexiones, tanto en modo Access Server (interfaz `tun1`) como en modo Bridge Ethernet Server (interfaces `tap206` y `br206`).
-
-```console
-# ip a
-1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    inet 127.0.0.1/8 scope host lo
-       valid_lft forever preferred_lft forever
+# ip a 
 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
     inet 192.168.1.2/24 brd 192.168.1.255 scope global noprefixroute eth0
-       valid_lft forever preferred_lft forever
+
 3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1492 qdisc pfifo_fast state UP group default qlen 1000
     inet 192.168.1.3/24 metric 300 scope global eth1
-       valid_lft forever preferred_lft forever
+
 6: tun1: <POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP> mtu 1400 qdisc pfifo_fast state UNKNOWN group default qlen 2000
     link/none
     inet 192.168.224.1/24 scope global tun1
-       valid_lft forever preferred_lft forever
+
 7: tap206: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast master br206 state UNKNOWN group default qlen 1000
     link/ether be:64:00:02:06:02 brd ff:ff:ff:ff:ff:ff
 8: br206: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1492 qdisc noqueue state UP group default qlen 1000
     link/ether 02:64:00:02:06:02 brd ff:ff:ff:ff:ff:ff
     inet 192.168.206.1/24 brd 192.168.206.255 scope global br206
-       valid_lft forever preferred_lft forever
 ```
 
 <br />
