@@ -21,12 +21,12 @@ Este apunte está relacionado con [Router Linux para Movistar]({% post_url 2014-
 
 Este es el Hardware que he utilizado:
 
-- **2 x Raspberry Pi**
+- **2 x Raspberry Pi 4B**
   - Para esta prueba de concepto voy a llamar `norte` al equipo que tiene el contrato Movistar y `sur` al equipo remoto.
-- **2 x Dongle USB Ethernet** para ser más granular y poder hacer más virguerías a nivel de routing, policy based routing, control de tráfico, etc.
+- **2 x TP-Link Adaptador UE300-USB 3.0 A Gigabit Ethernet** para tener un segundo puerto físico y ser más granular, para poder hacer más virguerías a nivel de routing, policy based routing, control de tráfico, etc.
 - **1 x Switch** con soporte de VLAN's e IGMP Snooping para la LAN del equipo remoto.
 
-Entre ambas Pi's creo dos túneles que irán por puertos `udp` diferentes:
+Entre ambas Pi's creo dos túneles que irán por dos puertos `udp` diferentes:
 
 - 1) **Access Server** para tráfico normal de Internet. Lo montaré con [OpenVPN](https://openvpn.net) y UDP. El que hace de *Servidor* es `norte` y el *Cliente* (llama a casa) es `sur`.
 
