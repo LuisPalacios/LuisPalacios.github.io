@@ -15,7 +15,10 @@ Este apunte está relacionado con [Router Linux para Movistar]({% post_url 2014-
 <br clear="left"/>
 <!--more-->
 
-| Actualización 2023: A nivel de rendimiento recuerdo que estas pruebas debajan mucho que desear y tuve problemas de configuración. Volví a probar hace poco con un par de [Pi 4 con Raspberry Pi OS 64bits]({% post_url 2023-03-02-raspberry-pi-os %}) que funcionan infinitamente mejor y de paso he actulaizado el apunte. |
+| Actualización 2023: A nivel de rendimiento recuerdo que estas pruebas debajan mucho que desear y tuve problemas de configuración. He vuelto a probar hace poco con un par de [Pi 4 con Raspberry Pi OS 64bits]({% post_url 2023-03-02-raspberry-pi-os %}) que funcionan infinitamente mejor y de paso estoy actulizando el apunte. |
+
+| Pendiente 2023: Todavía me falta documentar las partes de NAT y Firewall, así como DNS/DHCP en sur, para que todo el routing a internet y las VLAN's de datos funcionen. La documentación actual solo cubre el servicio de IPTV. |
+
 
 ## Arquitectura
 
