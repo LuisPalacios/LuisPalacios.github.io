@@ -125,30 +125,8 @@ Este es el esquema de conexiones, describo además a modo informativo cuales son
 
 La configuración IP es inicialmente muy sencilla. Solo configuro `eth0` con una dirección IP fija. Dejo `eth1` inicialmente sin servicio, la activaré desde el servicio OpenVPN Bridge Ethernet.
 
-Este es mi fichero de configuración `/etc/dhcpcd.conf`
 
-```console
-## Parámetros estándar
-hostname
-clientid
-persistent
-option rapid_commit
-option domain_name_servers, domain_name, domain_search, host_name
-option classless_static_routes
-option interface_mtu
-require dhcp_server_identifier
-slaac private
-
-## Interfaz eth1 inicialmente desactivada. La activaré desde el 
-## servicio Bridge Ethernet. 
-denyinterfaces eth1
-
-## Interfaz eth0 con una dirección IP fija. 
-interface eth0
-        static ip_address=192.168.1.2/24
-        static routers=192.168.1.1
-        static domain_name_servers=80.58.61.250 80.58.61.254
-```
+- [/etc/dhcpcd.conf](https://gist.github.com/LuisPalacios/0513c8b1c2119da372d2f1e4fcea57d9)
 
 Activo la nueva configuración:
 
@@ -1169,7 +1147,7 @@ for i in `echo ${EB_TAP} ${EB_VLAN} ${EB_BRIDGE}`; do
     iptables -D OUTPUT -o ${i} -j ACCEPT 2>/dev/null
 done
 
-# Eliminar la IP del bridge
+# Eliminar la IP del bridge 
 ip addr del ${bridge_ip_local} brd + dev ${EB_BRIDGE} 2>/dev/null
 
 # Remove interfaces from the bridge
