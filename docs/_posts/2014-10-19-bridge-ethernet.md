@@ -350,15 +350,19 @@ Cambio los permisos a los ficheros `*.sh` y arranco el servicio
 
 <br />
 
-### Acceso a `norte` desde internet
+### Nombre y dirección IP de `norte` en internet
 
-Para que `sur` llegue a `norte` y a los dos puertos por los que escucha, necesita resolver un nombre DNS público para averiguar cuál es la IP Pública del router de Movistar. Además necesitamos que dicho router haga Port Forwarding.
+Para poder llegar a `norte` con un nombre DNS y dirección IP públicos necesitas resolver un nombre DNS público para averiguar cuál es la IP Pública del router de Movistar. Además necesitamos que dicho router haga Port Forwarding.
 
 <br />
 
-#### Dirección IP Pública de `norte`
+#### Nombre DNS e IP Pública
 
-En mi caso tengo un dominio propio y utilizo Dynamic DNS para actualizar la IP pública cada vez que cambia. Hay varias formas de hacerlo y no voy a entrar en detalle, busca en internet opciones para conseguirlo. En este laboratorio y ejemplos he documentado usando el nombre y puertos siguientes:
+Para acceder a un router casero desde internet es necesario que tenga un nombre del tipo `mirouter.midominio.com`. Conseguirlo es muy fácil usando un DNS dinámico. Se puede hacer con un dominio propio (que hayas comprado) o puedes incluso hacerlo con múltiples servicios que te ofrecen por ahí (del tipo miservidorcasero.proveedordns.com)
+
+En mi caso, como decía, tengo un dominio propio y utilizo Dynamic DNS para actualizar la IP pública cada vez que cambia. Hay varias formas de hacerlo y no voy a entrar en detalle, busca en internet opciones para conseguirlo. En este laboratorio y ejemplos verás que he documentado usando el nombre y puertos siguientes. No son los reales pero te dan una idea de cómo configurar los tuyos propios.
+
+En el laboratorio es el servidor `sur` el que llama a `norte` para construir los dos túneles, así que solo necesitamos dar de alta a este último en nuestro proveedor DNS.
 
 - Servicio Access Server --> `norte.dominio.com, 12345 (udp)`
 - Servicio Bridge Ethernet Server --> `norte.dominio.com, 12346 (udp)`
@@ -367,11 +371,11 @@ En mi caso tengo un dominio propio y utilizo Dynamic DNS para actualizar la IP p
 
 #### Port Forwarding en Router Movistar
 
-Además es muy importante activar **Port Forwarding** en el Router de Movistar. Aquí tienes una captura de la configuración. Recuerda elegir protocolo UDP al dar de alta cada registro.
+Además es muy importante activar **Port Forwarding** en el Router de Movistar donde está ubicado `norte`. Aquí tienes una captura de la configuración. Recuerda elegir protocolo UDP al dar de alta cada registro.
 
 {% include showImagen.html
     src="/assets/img/posts/2014-10-19-bridge-ethernet-04.png"
-    caption="Port Forwarding en el router Movistar"
+    caption="Port Forwarding hacia mi servidor `norte`"
     width="850px"
     %}
 
@@ -379,50 +383,9 @@ Además es muy importante activar **Port Forwarding** en el Router de Movistar. 
 
 ### IGMP Proxy
 
-Para que los Decos remotos puedan acceder conectarse es necesario configurar IGMP Proxy.
+Para que los Decos remotos puedan acceder conectarse es necesario configurar IGMP Proxy. La instalación es muy sencilla: `apt -y igmpproxy` y aquí tienes el fichero de configuración.
 
-La instalación es muy sencilla. 
-
-```console
-# apt -y igmpproxy
-```
-
-- `/etc/igmpproxy.conf`
-
-```console
-########################################################
-#
-#   Fichero de configuración de IgmpProxy
-#   --------------------------------------------
-#
-########################################################
-
-##------------------------------------------------------
-## Modo Quickleave, envío "Leave" instantáneos
-##------------------------------------------------------
-quickleave
-
-##------------------------------------------------------
-## Configuro eth1 como interface upstream
-## Aquí es donde asumo que están las fuentes IPTV
-##------------------------------------------------------
-phyint eth1 upstream ratelimit 0 threshold 3
-        altnet 172.0.0.0/8
-
-##------------------------------------------------------
-## Configuro el interfaz Bridge Ethernet
-##------------------------------------------------------
-phyint br206    downstream ratelimit 0 threshold 3
-
-##------------------------------------------------------
-## Configuro el resto de interfaces en disabled
-##------------------------------------------------------
-phyint lo     disabled
-phyint eth0   disabled
-phyint tun0   disabled
-phyint tun1   disabled
-phyint tap206 disabled
-```
+- [/etc/igmpproxy.conf](https://gist.github.com/LuisPalacios/c05fda1f8fe657a9baefe20eabc07fc4)
 
 ### Fullcone NAT
 
