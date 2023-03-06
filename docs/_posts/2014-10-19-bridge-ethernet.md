@@ -8,12 +8,14 @@ excerpt_separator: <!--more-->
 
 ![logo linux router](/assets/img/posts/logo-bridge-eth.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-Pruebas de concepto para extender la red de mi casa a un sitio remoto a través de internet y poder consumir los servicios de IPTV de Movistar. Voy a usar dos Raspberry Pi, una en casa sirviendo dos túneles (datos e IPTV) y otra en remoto conectándose a ellos a través de Internet. 
+Pruebas de concepto para extender la red de mi casa a un sitio remoto a través de internet y poder consumir los servicios de IPTV de Movistar. Utilicé Raspberry Pi 2, una en casa sirviendo dos túneles (datos e IPTV) y otra en remoto conectándose a ellos a través de Internet.
 
-Más info en los apuntes: [Router Linux para Movistar]({% post_url 2014-10-05-router-linux %}) y [videos bajo demanda]({% post_url 2014-10-18-movistar-bajo-demanda %}) con Fullcone NAT en linux. Aunque a nivel de rendimiento debaja mucho que desear, con la [Pi 4]({% post_url 2023-03-02-raspberry-pi-os %}) seguro que funcionaría mejor.
+Este apunte está relacionado con [Router Linux para Movistar]({% post_url 2014-10-05-router-linux %}) y [videos bajo demanda]({% post_url 2014-10-18-movistar-bajo-demanda %}) con Fullcone NAT en linux. 
 
 <br clear="left"/>
 <!--more-->
+
+| Actualización 2023: A nivel de rendimiento recuerdo que estas pruebas debajan mucho que desear y tuve problemas de configuración. Volví a probar hace poco con un par de [Pi 4 con Raspberry Pi OS 64bits]({% post_url 2023-03-02-raspberry-pi-os %}) que funcionan infinitamente mejor y de paso he actulaizado el apunte. |
 
 ## Arquitectura
 
@@ -110,17 +112,18 @@ Preparo el directorio de trabajo de **easy-rsa**
 
 El servidor `norte` es el que está en mi casa y que conectaremos físicamente al router de Movistar por duplicado. El motivo es sencillo, el primer puerto (`eth0`) será el principal por donde irá todo el tráfico del equipo, mientras que el segundo (`eth1`) lo dedicaré exclusivamente solicitar y recibir el tráfico IPTV.
 
-<br />
-
-### Networking `norte`
-
-Este es el esquema de conexiones, describo además a modo informativo cuales son los rangos que maneja un router de movistar por defecto:
-
 {% include showImagen.html
     src="/assets/img/posts/2014-10-19-bridge-ethernet-02.jpg"
     caption="Networking del servidor norte"
     width="600px"
     %}
+
+Arriba tienes el esquema de conexiones y en él recuerdo a modo informativo cuales son los rangos que maneja un router 
+de movistar por defecto.
+
+<br />
+
+### Networking `norte`
 
 La configuración IP es inicialmente muy sencilla. Solo configuro `eth0` con una dirección IP fija. Dejo `eth1` inicialmente sin servicio, la activaré desde el servicio OpenVPN Bridge Ethernet.
 
@@ -144,15 +147,21 @@ Activo la nueva configuración:
 
 <br />
 
-#### Activo el Forwarding IPv4
+#### Forwarding IPv4
 
-Edito el fichero `/etc/sysctl.conf` y modifico la lisguiente línea para que se active el forwarding: 
+Edito el fichero `/etc/sysctl.conf` y modifico la lisguiente línea para que se active el forwarding. Para activarlo basta con ejecutar `sysctl -p`
 
 ```console
 net.ipv4.ip_forward=1
 ```
 
-AUnque no va a actuar como router en la LAN local sí que va a conmutar tráfico entre los túneles y eth0 `+` eth1. Describo más adelante lo que falta de networking, nat, firewall, una vez que tengamos los túneles OpenVPN operativos.
+<br />
+
+#### NAT y Firewall
+
+**PENDIENTE: Configuración como router: NAT y Firewall L2 y L3**
+
+Este equipo no va a actuar como router en la LAN local, pero sí que va a conmutar tráfico entre los túneles. En esta sección describo cómo configurar NAT y Firewall. 
 
 <br />
 
@@ -381,13 +390,15 @@ Además es muy importante activar **Port Forwarding** en el Router de Movistar d
 
 <br />
 
-### IGMP Proxy
+### IGMP Proxy en `norte`
 
 Para que los Decos remotos puedan acceder conectarse es necesario configurar IGMP Proxy. La instalación es muy sencilla: `apt -y igmpproxy` y aquí tienes el fichero de configuración.
 
 - [/etc/igmpproxy.conf](https://gist.github.com/LuisPalacios/c05fda1f8fe657a9baefe20eabc07fc4)
 
-### Fullcone NAT
+<br />
+
+### Fullcone NAT en `norte`
 
 Tal como describo en el apunte [Videos bajo demanda]({% post_url 2014-10-18-movistar-bajo-demanda %}), es necesario soportar Fullcone NAT en linux paraque funcionen. Estos son los pasos en una Raspberry Pi
 
@@ -419,12 +430,21 @@ nf_nat_rtsp
 <br />
 
 ---
+---
+---
+---
 
 <br />
 
 ## Servidor `sur`
 
 El servidor `sur` es el que está en remoto. También cuenta con dos tarjetas de red pero para usos distintos a los que vimos antes.
+
+{% include showImagen.html
+    src="/assets/img/posts/2014-10-19-bridge-ethernet-03.jpg"
+    caption="Networking del servidor sur"
+    width="600px"
+    %}
 
 <br />
 
@@ -434,71 +454,18 @@ Configuro ambas interfaces, la `eth0` (puerto embebido de las Raspberry Pi) cone
 
 La `eth1` (puerto usb dongle gigabitethernet) conectada a mi switch con soporte de VLAN's e IGMP Snooping. En mi laboratorio he utilizado un Switch tp-link TL-SG108E, pero cualquiera de consumo con soporte de VLAN's e IGMP Snooping nos vale. Al final del apunte tienes capturas con la configuración del Switch.
 
-{% include showImagen.html
-    src="/assets/img/posts/2014-10-19-bridge-ethernet-03.jpg"
-    caption="Networking del servidor sur"
-    width="600px"
-    %}
-
 Como decía, el primer puerto (`eth0`) lo usamos para conectarnos a nuestro proveedor de internet usando DHCP y el segundo (`eth1`) para dar servcio a la LAN privada, usando VLAN's: 
 
-- VLAN 6
-  - Conectar clientes de `sur` que quiero que salgan a Internet a través de la conexión de `norte`.
-- VLAN 206
-  - Conectar Deco en `sur` para que consuma el tráfico IPTV de `norte`
-- VLAN 100
-  - Conectar clientes de `sur` que quiero que salgan a Internet a través del operador de `sur`. 
+VLAN | Descripción
+-------|-------------------
+`6` | Clientes de `sur` que quiero que salgan a Internet a través de la conexión de `norte`
+`100` | Clientes de `sur` que quiero que salgan a Internet a través del operador de `sur`
+`206` | Deco en `sur` para que consuma el tráfico IPTV de `norte`
 
-- `/etc/dhcpcd.conf`
+Preparo los ficheros de networking y activo la nueva configuración:
 
-```console
-## Parámetros estándar
-hostname
-clientid
-persistent
-option rapid_commit
-option domain_name_servers, domain_name, domain_search, host_name
-option classless_static_routes
-option interface_mtu
-require dhcp_server_identifier
-slaac private
-
-## Interfaz eth0, recibe IP, router y DNS por DHCP 
-interface eth0
-
-## Interfaz eth1 va al TRUNK y no quiero IP
-interface eth1
-nodhcp
-noipv4
-
-# Tres interfaces para las vlans 
-# ver /etc/networki/interfaces.d/vlans
-interface eth1.206
-  nodhcp
-  noipv4
-interface eth1.6
-  static ip_address=192.168.107.1/24
-interface eth1.100
-  static ip_address=192.168.10.1/24 
-```
-
-- `/etc/network/interfaces.d/vlans`
-
-```console
-auto eth1.2
-iface eth1.2 inet manual
-  vlan-raw-device eth1
-
-auto eth1.6
-iface eth1.6 inet manual
-  vlan-raw-device eth1
-
-auto eth1.100
-iface eth1.100 inet manual
-  vlan-raw-device eth1
-```
-
-Activo la nueva configuración:
+- [/etc/dhcpcd.conf](https://gist.github.com/LuisPalacios/7f36aa70890dbf9a9cb72fda3250ef7a)
+- [/etc/network/interfaces.d/vlans](https://gist.github.com/LuisPalacios/695a0a0a592e4a6526bb0f87cccc9ede)
 
 ```console
 # service networking restart
@@ -527,7 +494,7 @@ Activo la nueva configuración:
 
 <br />
 
-#### Activo el Forwarding en IPv4
+#### Forwarding en IPv4
 
 Edito el fichero `/etc/sysctl.conf` y modifico la lisguiente línea para que se active el forwarding. Para activarlo basta con ejecutar `sysctl -p`
 
@@ -535,12 +502,13 @@ Edito el fichero `/etc/sysctl.conf` y modifico la lisguiente línea para que se 
 net.ipv4.ip_forward=1
 ```
 
+<br /> 
 
-**PENDIENTE: Configuración como router: 
- Routing
- NAT
- Forwarding
- Firewall**
+#### NAT y Firewall
+
+**PENDIENTE: Configuración como router: NAT y Firewall L2 y L3**
+
+Este equipo actúa como router entre las diferentes interfaces y redes disponibles, así que es importante definir y configurar sus opciones de NAT y Firewall. 
 
 <br />
 
@@ -551,7 +519,6 @@ En esta sección describo cómo configuro openvpn en modo cliente para que se co
 <br />
 
 #### Instalo los certificados de `sur`
-
 
 Lo primero es instalarme los certificados como cliente de `norte`. Ya los había preparado y enviado a este equipo. Preparo un subdirectorio donde irán las claves, bajo `/etc/openvpn/client` y descomprimo los archivos.
 
@@ -572,62 +539,12 @@ Lo primero es instalarme los certificados como cliente de `norte`. Ya los había
 
 <br />
 
-#### Cliente del Access Server `norte`
+#### Cliente del Access Server
 
-Ahora configuro el *servicio cliente de un Access Server*, creo el fichero principal de configuración.
+Ahora configuro el *servicio cliente del Access Server en `norte`*. Creo el fichero principal de configuración y luego arranco el servicio.
 
-- `/etc/openvpn/server/sur_cliente_de_norte.conf`
+- [/etc/openvpn/server/sur_cliente_de_norte.conf](https://gist.github.com/LuisPalacios/5de5f4b594fc18fae8578e9c1cf9e062)
 
-```console
-#
-# Configuración CLIENTE de un tunel "Access Server" OpenVPN
-#
-# Soy "cliente", expondré el device tun1
-client
-dev tun1
-proto udp
-
-# Datos del "Access Server" OpenVpn con el que conecto
-# Debe ser accesible vía internet y uso el mismo puerto 
-# que configuré en el servidor norte.
-remote norte.dominio.com 12345
-comp-lzo
-resolv-retry 30
-nobind
-persist-key
-persist-tun
-
-# Mis claves como cliente de norte
-ca keys/sur_cliente_de_norte/norte.ca.crt
-cert keys/sur_cliente_de_norte/sur_cliente_de_norte.crt
-key keys/sur_cliente_de_norte/sur_cliente_de_norte.key
-# Nivel extra de seguridad, firmo con HMAC el handshake SSL/TLS
-tls-auth keys/sur_cliente_de_norte/norte.ta.key 1
-
-# Mis rutas en mi LAN que expongo al Servidor
-push "route 192.168.107.0 255.255.255.0"
-
-# Ficheros de log y estado
-status /etc/openvpn/client/sur_cliente_de_norte.status.log
-log /etc/openvpn/client/sur_cliente_de_norte.log
-verb 4
-```
-
-| Nota: remote norte.dominio.com |
-
-```console
-# tree /etc/openvpn/client
-etc/openvpn/client/
-├── sur_cliente_de_norte.conf
-└── keys
-    └── sur_cliente_de_norte
-        ├── norte.ca.crt
-        ├── norte.ta.key
-        ├── sur_cliente_de_norte.crt
-        └── sur_cliente_de_norte.key
-```
-
-- Arranque del servicio
 
 ```console
 # systemctl start openvpn-server@sur_cliente_de_norte
@@ -644,189 +561,31 @@ etc/openvpn/client/
     link/none
     inet 192.168.224.2/24 scope global tun1
        valid_lft forever preferred_lft forever
+
+luis@sur$ ping 192.168.224.1
+PING 192.168.224.1 (192.168.224.1) 56(84) bytes of data.
+64 bytes from 192.168.224.1: icmp_seq=1 ttl=64 time=17.8 ms
+64 bytes from 192.168.224.1: icmp_seq=2 ttl=64 time=17.6 ms
+64 bytes from 192.168.224.1: icmp_seq=3 ttl=64 time=16.7 ms
+^C
 ```
 
 <br />
 
-#### Cliente Bridge Ethernet
+#### Cliente del Bridge Ethernet
 
-Ahora configuro el *servicio cliente de un Bridge Ethernet Server*, creo el fichero principal de configuración.
+Ahora configuro el *servicio cliente del Bridge Ethernet de `norte`*. Creo el fichero principal de configuración, los scripts de apoyo y arranco el servicio.
 
-- `/etc/openvpn/client/sur_cliente_bridge_ethernet_de_norte.conf`
+- [/etc/openvpn/client/sur_cliente_bridge_ethernet_de_norte.conf](https://gist.github.com/LuisPalacios/823ff8491f181188b0793310c540188f)
+- [/etc/openvpn/client/sur_cliente_bridge_ethernet_de_norte_CONFIG.sh](https://gist.github.com/LuisPalacios/358f038b84f527f89e238c3c2eb70b95)
+- [/etc/openvpn/client/sur_cliente_bridge_ethernet_de_norte_UP.sh](https://gist.github.com/LuisPalacios/baa778c216b5d1560dad332ab6cacce1)
+- [/etc/openvpn/client/sur_cliente_bridge_ethernet_de_norte_DOWN.sh](https://gist.github.com/LuisPalacios/dc60bc84ede46594cc2a0f7dec884255)
 
-```console
-# Cliente de un "Bridge Ethernet" OpenVPN
-#
-# Soy un cliente del servidor:
-remote norte.midominio.com 12346
-client
-
-# Creo un device de tipo `tap` y uso udp como prortocolo.
-proto udp
-dev tap206
-
-# Resto de parámetros del servidor
-resolv-retry 30
-nobind
-persist-key
-persist-tun
-
-# Mis claves
-ca keys/sur_cliente_de_norte/norte.ca.crt
-cert keys/sur_cliente_de_norte/sur_cliente_de_norte.crt
-key keys/sur_cliente_de_norte/sur_cliente_de_norte.key
-# Nivel extra de seguridad, firmo con HMAC el handshake SSL/TLS
-tls-auth keys/sur_cliente_de_norte/norte.ta.key 1
-
-# Scripts para activar o desactivar el tunel
-script-security 2
-up /etc/openvpn/client/sur_cliente_bridge_ethernet_de_norte_UP.sh
-down /etc/openvpn/client/sur_cliente_bridge_ethernet_de_norte_DOWN.sh
-
-# Ficheros de log y estado
-status /etc/openvpn/client/sur_cliente_bridge_ethernet_de_norte.status.log
-log /etc/openvpn/client/sur_cliente_bridge_ethernet_de_norte.log
-verb 4
-```
-
-- `/etc/openvpn/client/sur_cliente_bridge_ethernet_de_norte_CONFIG.sh`
-
-```console
-#!/bin/bash
-# Fichero xxxxx_cliente_bridge_ethernet_de_yyyyy_CONFIG.sh
-# Este fichero contiene los nombres de las interfaces y parámetros de cada uno de
-# ellas. Los utilizan los scripts de arranque y parada del servicio Bridge Ethernet
-
-# Configuración General
-export mtu="1492"
-
-# Para el Bridge
-export EB_TAP="tap206"     # Nombre del interfaz tap (ver .conf), representa al tunel openvpn y que añadiré al bridge.
-export EB_BRIDGE="br206"   # Interfaz virtual Bridge que voy a crear.
-export EB_VLAN="eth1.206"  # Interfaz VLAN local que añadiré al bridge
-
-# Configuración para el tunel openvpn (interfaz tapXXX)
-# Las direcciones MAC's pueden ser cualquiera, obviamente que no se usen en otro sitio.
-export mac_tap="be:64:00:02:06:02"       # MAC privada para el interfaz tap local que asociaré al bridge
-export mac_bridge="02:64:00:02:06:02"    # MAC privada para el bridge local
-# Configuración para el bridge local (interfaz brXXX)
-# El rango puede ser cualquiera, una vez más que no e use en otro sitio
-export bridge_ip_rango="192.168.206.0/24" # Rango que voy a usar en el bridge
-export bridge_ip_local="192.168.206.2/24" # IP de este servidor en su interfaz brXXX (bridge local)
-export bridge_ip_remota="192.168.206.1"   # IP de del servidor remoto en su interfaz brXXX (su propio bridge)
-```
-
-- `/etc/openvpn/client/sur_cliente_bridge_ethernet_de_norte_UP.sh`
-
-```console
-#!/bin/bash
-# Script que se ejecuta al hacer un `start` del servicio Bridge Ethernet
-
-# Interfaces, rutas + IP y MACs asociaré a las interfaces tap y bridge
-. /etc/openvpn/client/sur_cliente_bridge_ethernet_de_norte_CONFIG.sh
-
-# Activo el tunel IPSec
-ip link set ${EB_TAP} address ${mac_tap}
-ip link set ${EB_TAP} up
-
-# SETUP BRIDGE
-brctl addbr ${EB_BRIDGE}
-brctl stp ${EB_BRIDGE} off                         # HUB: no uso STP
-brctl setageing ${EB_BRIDGE} 0                     # HUB: olvidar MAC addresses, be a HUB
-brctl setfd ${EB_BRIDGE} 0                         # HUB: elimino el forward delay
-#ip link set ${EB_BRIDGE} promisc on              # entregar el paquete en local
-ip link set ${EB_BRIDGE} address ${mac_bridge}     # Cada nodo debe tener una distinta
-ip link set ${EB_BRIDGE} arp on
-ip link set ${EB_BRIDGE} mtu ${mtu}
-ip link set ${EB_BRIDGE} up
-
-# Activatar VLAN y cambiar MTU
-ip link set ${EB_VLAN} up
-ip link set ${EB_VLAN} mtu ${mtu}
-
-# Añadir interfaces al bridge
-brctl addif ${EB_BRIDGE} ${EB_TAP}  # Añado tunel ipsec al bridge
-brctl addif ${EB_BRIDGE} ${EB_VLAN} # Añado vlan al bridge
-
-# Asignar una IP al Bridge si queremos que vaya todo por el bridge
-# IMPORTANTÍSIMO poner /24 o asignará una /32 (no funcionará)
-ip addr add ${bridge_ip_local} brd + dev ${EB_BRIDGE}
-
-# Me aseguro de configurar bien el rp_filter
-echo -n 0 > /proc/sys/net/ipv4/conf/${EB_BRIDGE}/rp_filter
-echo -n 1 > /proc/sys/net/ipv4/conf/${EB_VLAN}/rp_filter
-echo -n 1 > /proc/sys/net/ipv4/conf/${EB_TAP}/rp_filter
-
-# Me aseguro de que el forwarding está funcionando
-echo -n 1 > /proc/sys/net/ipv4/ip_forward
-
-# Permito el tráfico
-for i in `echo ${EB_TAP} ${EB_VLAN} ${EB_BRIDGE}`; do
-    iptables -I INPUT -i ${i} -j ACCEPT
-    iptables -I FORWARD -i ${i} -j ACCEPT
-    iptables -I OUTPUT -o ${i} -j ACCEPT
-done
-
-# Tabla de routing para los Decos
-grep -i "^206 Decos" /etc/iproute2/rt_tables > /dev/null 2>&1
-if [ "$?" = 1 ]; then
-    sudo echo "206 Decos" >> /etc/iproute2/rt_tables
-fi
-ip route add ${bridge_ip_rango} dev ${EB_BRIDGE} table Decos
-ip route add default via ${bridge_ip_remota} table Decos
-ip rule add from ${bridge_ip_rango} table Decos
-```
-
-- `/etc/openvpn/client/sur_cliente_bridge_ethernet_de_norte_DOWN.sh`
-
-```console
-#!/bin/bash
-# Script que se ejecuta al hacer un `stop` del servicio Bridge Ethernet
-
-# Interfaces, rutas + IP y MACs asociaré a las interfaces tap y bridge
-. /etc/openvpn/client/sur_cliente_bridge_ethernet_de_norte_CONFIG.sh
-
-# Quitar las reglas iptables
-for i in `echo ${EB_TAP} ${EB_VLAN} ${EB_BRIDGE}`; do
-    iptables -D INPUT -i ${i} -j ACCEPT 2>/dev/null
-    iptables -D FORWARD -i ${i} -j ACCEPT 2>/dev/null
-    iptables -D OUTPUT -o ${i} -j ACCEPT 2>/dev/null
-done
-
-# Eliminar la IP del bridge 
-ip addr del ${bridge_ip_local} brd + dev ${EB_BRIDGE} 2>/dev/null
-
-# Remove interfaces from the bridge
-brctl delif ${EB_BRIDGE} ${EB_VLAN} 2>/dev/null
-brctl delif ${EB_BRIDGE} ${EB_TAP} 2>/dev/null
-
-# Destroy interface tunel IPSec
-ip link set ${EB_TAP} down 2>/dev/null
-
-# Destroy interface vlan
-ip link set ${EB_VLAN} down 2>/dev/null
-
-# Destroy the BRIDGE
-ip link set ${EB_BRIDGE} down 2>/dev/null
-brctl delbr ${EB_BRIDGE} 2>/dev/null
-
-# Destruir la table de routing para los clientes Decos
-#
-ip rule del from ${bridge_ip_rango} table Decos
-ip route del default via ${bridge_ip_remota} table Decos
-ip route del ${bridge_ip_rango} dev ${EB_BRIDGE} table Decos
-```
-
-Cambio los permisos a los scripts
 
 ```console
 # cd /etc/openvpn/client
 # chmod 755 sur_cliente_bridge_ethernet_de_norte*.sh
-```
 
-- Arranque del servicio
-
-```console
 # systemctl start openvpn-client@sur_cliente_bridge_ethernet_de_norte
 # systemctl enable openvpn-server@sur_cliente_bridge_ethernet_de_norte
 # systemctl status openvpn-server@sur_cliente_bridge_ethernet_de_norte
@@ -836,11 +595,7 @@ root@dubai:/etc/openvpn/client# systemctl status openvpn-client@dubai_cliente_br
                                                                   =======
      Active: active (running) since Sun 2014-10-19 14:10:18 CET; 17s ago
              ======
-```
 
-Ya tenemos a `sur` y `norte` conectados con un Bridge Ethernet.
-
-```console
 # ip a show dev tap206
 8: tap206: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast master br206 state UNKNOWN group default qlen 1000
     link/ether be:64:00:02:06:02 brd ff:ff:ff:ff:ff:ff
@@ -869,44 +624,27 @@ PING 192.168.206.1 (192.168.206.1) 56(84) bytes of data.
 
 <br />
 
-### DHCP Server
+#### DHCP Server en `sur`
 
-Para que el Deco reciba la dirección IP y opciones correctamente tengo que instalarme un servidor DHCP en el equipo remoto. En mi caso utilizo [Pi-hole casero]({% post_url 2021-06-20-pihole-casero %}), pero vale cualquiera. Lo que es importante es que se le pasen bien las opciones al Deco.
+Vamos a necesitar un DHCP Server en `sur` para poder servir IP's en las interfaces LAN para sus clientes. Además es importante que el Deco reciba su dirección IP y unas opciones muy concretas. 
 
+En mi caso siempre me instalo el [Pi-hole casero]({% post_url 2021-06-20-pihole-casero %}), pero valdría cualquier servidor DHCP. 
 
+- [/etc/dhnsmasq.d/03-pihole-decos.conf](https://gist.github.com/LuisPalacios/56218937108e19048ed89c2133dd8bfe)
 
-- `/etc/dhnsmasq.d/03-pihole-decos.conf`
-
-```console
-# DECOS
-# No consigo que funcione bien a traves del vendor-class
-#dhcp-vendorclass=set:decos,IAL]
-#dhcp-range=tag:!decos,192.168.104.33,192.168.104.199,1h
-#dhcp-range=tag:decos,192.168.104.200,192.168.104.223,1h
-# Hago la asociacion por mac
-dhcp-host=8c:61:a3:5e:82:0c,ij-deco-salon,192.168.104.200,set:decos
-dhcp-host=2C:95:23:02:CF:75,ij-deco-servicio,192.168.104.201,set:decos
-dhcp-option=tag:decos,option:router,192.168.104.1
-dhcp-option=tag:decos,6,172.26.23.3
-dhcp-option=tag:decos,240,':::::239.0.2.10:22222:v6.0:239.0.2.30:22222'
-
-
-
-# vlan 204
-dhcp-range=set:vlan204,192.168.206.10,192.168.206.20,1h
-dhcp-option=tag:vlan206,option:router,192.168.206.2
-dhcp-option=tag:vlan206,6,172.26.23.3
-dhcp-option=tag:vlan206,240,':::::239.0.2.10:22222:v6.0:239.0.2.30:22222'
-dhcp-host=DC:A6:33:AC:12:FE,deco206-eth,192.168.206.21,set:vlan206
-
-```
 
 <br />
 
+### Switch en `sur`
 
-### Configuración del tp-link TL-SG108E
+Como dije al principio, en la red LAN de `sur` necesitamos un pequeño switch que soporte VLAN's e IGMP Snooping. En mi caso me he decantado por tp-link TL-SG108E.
 
-Dejo aquí unas capturas con un ejemplo de configuración de un Switch TP-Link TLSG108E, donde he dedicado puertos a las VLAN 206, 6 y 100 y el puerto 8 en modo trunk donde conecto el interfaz `eth1` de mi raspberry Pi. Los puertos 1 al 7 son puertos de acceso, mientras que el puerto 8 es un puerto Trunk. 
+Puerto | VLAN - Descripción
+-------|-------------------
+`1,2` | Puertos VLAN 206, para los Decos, que se conectarán a Movistar a través del túnel bridge-eternet con `norte`
+`3,4` | Puertos VLAN 6, para clietnes que salen a Internet a través de la conexión vía `norte`
+`5,6,7` | Puertos VLAN 100, para clietnes que salen a Internet a través de la conexión del proveedor local en `sur`
+`8` | Puerto TRUNK vlan's 6,206,100 donde conecto mi Raspberry Pi a su `eth1`(dongle usb)
 
 {% include showImagen.html
     src="/assets/img/posts/2014-10-19-bridge-ethernet-05.png"

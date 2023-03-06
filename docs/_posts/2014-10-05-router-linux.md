@@ -10,10 +10,12 @@ excerpt_separator: <!--more-->
 
 Este apunte describe qué hay detrás (a nivel técnico) del servicio IP que nos ofrece Movistar Fusión FTTH (Fibra) y como sustituir el router que nos instalan por un equipo basado en GNU/Linux, que hará de Router (junto con un Switch Ethernet) para ofrecer los mismos servicios de Datos, Televisión (IPTV) y Voz (VoIP).
 
-Después de leer este apunte te recomiendo que sigas con el apunte sobre cómo hacer que funcionen los [videos bajo demanda para Movistar]({% post_url 2014-10-18-movistar-bajo-demanda %}) utilizando un router Linux.
+Después de leer este apunte te recomiendo que sigas con el apunte sobre cómo hacer que funcionen los [videos bajo demanda para Movistar]({% post_url 2014-10-18-movistar-bajo-demanda %}) y el apunte sobre un laboratorio para extender con un [Bridge Ethernet]({% post_url 2014-10-19-bridge-ethernet %}) tu red local a un sitio remoto.
 
 <br clear="left"/>
 <!--more-->
+
+| Actualización 2023: Este apunte tiene muchos años y tras la incorporación de DRM ya no es posible ver los canales con `VLC`, `OpenELEC` o `TVheadend`, pero la posibilidad de cambiar el Router de Movistar por un router Neutro o un Linux siguen estando vigentes, siempre que tengas la ONT o el Router de Movistar modo Bridge Puro / ONT. |
 
 ## Punto de partida
 
