@@ -101,7 +101,7 @@ Por último hacemos una actualización del sistema operativo !
 
 ### YA ESTÁ !!!
 
-Tengo una Raspberry Pi perfectamente operativa, actualizada a la última versión de Raspberry OS de 64 bits y con el último Kernel 6.1 que es lo que estaba disponible en la fecha de esta publicación. 
+Tengo una Raspberry Pi perfectamente operativa, actualizada a la última versión de Raspberry OS de 64 bits. 
 
 <br/>
 
