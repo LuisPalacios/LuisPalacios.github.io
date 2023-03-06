@@ -8,14 +8,13 @@ excerpt_separator: <!--more-->
 
 ![logo linux router](/assets/img/posts/logo-linux-rtsp.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
 
-Aquí me ocupo en detalle de cómo configurar mi [router Linux para Movistar]({% post_url 2014-10-05-router-linux %}) de modo que funcionen los "Videos bajo demanda" en el decodificador. Es posible seleccionar y ver videos bajo demanda para reproducir películas o grabaciones. Por desgracia el tráfico que va por debajo es algo peculiar y si nuestro router no soporta una cosa llamada **Full Cone NAT** pues no nos va a funcionar. 
+Aquí me ocupo en detalle de cómo configurar mi [router Linux para Movistar]({% post_url 2014-10-05-router-linux %}) de modo que funcionen los "Videos bajo demanda" en el decodificador. Es posible seleccionar y ver videos bajo demanda para reproducir películas o grabaciones. Por desgracia el tráfico que va por debajo es algo peculiar y si nuestro router no soporta una cosa llamada **Full Cone NAT** pues no nos va a funcionar.
 
 El motivo es que los Decos solicitan los videos mediante RTSP a su servidor de control pero el vídeo se les envía desde otro servidor distinto, una IP desconocida, por lo que descartará el tráfico. Veamos cómo resolverlo.
 
 
 <br clear="left"/>
 <!--more-->
-
 
 ## Full Cone NAT vs "netfilter rtsp"
 
