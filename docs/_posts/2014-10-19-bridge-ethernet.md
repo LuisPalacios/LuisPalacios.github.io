@@ -35,7 +35,7 @@ Entre ambas Pi's creo dos túneles que irán por dos puertos `udp` diferentes:
 
 - 2) **Bridge Ethernet** para tráfico IPTV. De nuevo usando [OpenVPN](https://openvpn.net) y UDP. El que hace de *Servidor* es `norte` y el *Cliente* (llama a casa) es `sur`.
 
-El título del apunte es **Bridge Ethernet** porque fue lo que más me costo configurar, hay poca documentación y conmutar multicast por internet no es obvio. De todas formas no solo describo esa función sino que veremos más casos de uso, voy a crear **tres VLANs** que van a permitir:
+En el equipo `sur` voy a montar **tres VLANs** que van a permitir tres servicios. El título del apunte, **Bridge Ethernet**, es uno de ellos, porque fue lo que más me costo configurar, hay poca documentación y conmutar multicast por internet no es obvio:
 
 - VLAN 6
   - Conectar clientes de `sur` que quiero que salgan a Internet a través de la conexión de `norte`, así hago pruebas de **routing** y si es necesario de **policy based routing**
@@ -113,7 +113,7 @@ Preparo el directorio de trabajo de **easy-rsa**
 
 ## Servidor `norte`
 
-El servidor `norte` es el que está en mi casa y que conectaremos físicamente al router de Movistar por duplicado. El motivo es sencillo, el primer puerto (`eth0`) será el principal por donde irá todo el tráfico del equipo, mientras que el segundo (`eth1`) lo dedicaré exclusivamente solicitar y recibir el tráfico IPTV.
+El servidor `norte` es el que está en mi casa y que conectaremos físicamente al router de Movistar por duplicado. El motivo es sencillo, el primer puerto (`eth0`) será el principal por donde irá todo el tráfico del equipo, mientras que el segundo (`eth1`) lo dedicaré exclusivamente a solicitar y recibir el tráfico IPTV.
 
 {% include showImagen.html
     src="/assets/img/posts/2014-10-19-bridge-ethernet-02.jpg"
@@ -128,7 +128,7 @@ de movistar por defecto.
 
 ### Networking `norte`
 
-La configuración IP es inicialmente muy sencilla. Solo configuro `eth0` con una dirección IP fija. Dejo `eth1` inicialmente sin servicio, la activaré desde el servicio OpenVPN Bridge Ethernet.
+La configuración IP es inicialmente muy sencilla. Si consultas el `dhcpcd.con` verás que solo configuro `eth0` con una dirección IP fija. La parte de `eth1` la dejo sin servicio, durante el boot NO se activará. La activo durante la ejecución de un script del apoyo del servicio *OpenVPN Bridge Ethernet Server*. El motivo es sencillo, la interfaz `eth1`(dongle usb) la uso exclusivamente para consumir el tráfico IPTV del router de Movistar y "enchufarla" al tunel, no la quiero usar para absoluatamente nada más, así que su activación y desactivación está vinculada al momento en que se levanta o para el túnel.
 
 
 - [/etc/dhcpcd.conf](https://gist.github.com/LuisPalacios/0513c8b1c2119da372d2f1e4fcea57d9)
@@ -160,11 +160,32 @@ net.ipv4.ip_forward=1
 
 <br />
 
-#### NAT y Firewall
+#### NAT y Firewall  (Pendiente)
 
-**PENDIENTE: Configuración como router: NAT y Firewall L2 y L3**
+**PENDIENTE: Configuración como router: NAT, Firewall L2 y L3**
 
 Este equipo no va a actuar como router en la LAN local, pero sí que va a conmutar tráfico entre los túneles. En esta sección describo cómo configurar NAT y Firewall. 
+
+Servicios y Scripts
+  
+- [/etc/systemd/system/internet_wait.service](https://gist.github.com/LuisPalacios/421b9b4c1bdda72d28fd2e12a621d8c8)
+- [/etc/systemd/system/firewall_1_pre_network.service](https://gist.github.com/LuisPalacios/caa9d72bcdc44ec1727452e9c6660074)
+- [/etc/systemd/system/firewall_2_post_network.service](https://gist.github.com/LuisPalacios/1d5865d8bd59da1d2c077014a6485c3a)
+- [/root/firewall/norte_firewall_clean.sh](https://gist.github.com/LuisPalacios/375aa2faa215e22a6a48f8cb3047e882)
+- [/root/firewall/norte_firewall_inames.sh](https://gist.github.com/LuisPalacios/1a38011c97fc33f8c6e8a46497df5ef5)
+- Pendiente [/root/firewall/norte_firewall_1_pre_network.sh]()
+- Pendiente [/root/firewall/norte_firewall_2_post_network.sh]()
+- Pendiente [/root/firewall/norte_verifica_conectividad.sh]()
+
+
+Habilito los servicios y rearranco el equipo
+
+```console
+# systemctl enable internet_wait.service
+# systemctl enable firewall_1_pre_network.service
+# systemctl enable firewall_2_post_network.service
+# reboot -f
+```
 
 <br />
 
@@ -507,11 +528,32 @@ net.ipv4.ip_forward=1
 
 <br /> 
 
-#### NAT y Firewall
+#### NAT y Firewall (Pendiente)
 
 **PENDIENTE: Configuración como router: NAT y Firewall L2 y L3**
 
 Este equipo actúa como router entre las diferentes interfaces y redes disponibles, así que es importante definir y configurar sus opciones de NAT y Firewall. 
+
+Servicios y Scripts
+  
+- [/etc/systemd/system/internet_wait.service](https://gist.github.com/LuisPalacios/421b9b4c1bdda72d28fd2e12a621d8c8)
+- [/etc/systemd/system/firewall_1_pre_network.service](https://gist.github.com/LuisPalacios/ad2a727e744f323f911f1a602da5b70e)
+- [/etc/systemd/system/firewall_2_post_network.service](https://gist.github.com/LuisPalacios/9d7131feb3503d327341065e93e01f18)
+- [/root/firewall/sur_firewall_clean.sh](https://gist.github.com/LuisPalacios/df48ebd0d19c4bd2aef6d72e1111b49b)
+- [/root/firewall/sur_firewall_inames.sh](https://gist.github.com/LuisPalacios/cfffe7546faf1abed9d5bc48575e5dcc)
+- [/root/firewall/sur_firewall_1_pre_network.sh](https://gist.github.com/LuisPalacios/16265be825109a5fd45d303aac8106b7)
+- [/root/firewall/sur_firewall_2_post_network.sh](https://gist.github.com/LuisPalacios/a03338e163a79ebfe44d65ddc4ecb743)
+- [/root/firewall/sur_verifica_conectividad.sh](https://gist.github.com/LuisPalacios/eee992475e67e3425a73720d43df1f4d)
+
+
+Habilito los servicios y rearranco el equipo
+
+```console
+# systemctl enable internet_wait.service
+# systemctl enable firewall_1_pre_network.service
+# systemctl enable firewall_2_post_network.service
+# reboot -f
+```
 
 <br />
 
@@ -627,7 +669,7 @@ PING 192.168.206.1 (192.168.206.1) 56(84) bytes of data.
 
 <br />
 
-#### DHCP Server en `sur`
+#### DNS/DHCP Server en `sur` (Pendiente)
 
 Vamos a necesitar un DHCP Server en `sur` para poder servir IP's en las interfaces LAN para sus clientes. Además es importante que el Deco reciba su dirección IP y unas opciones muy concretas. 
 
@@ -635,6 +677,8 @@ En mi caso siempre me instalo el [Pi-hole casero]({% post_url 2021-06-20-pihole-
 
 - [/etc/dhnsmasq.d/03-pihole-decos.conf](https://gist.github.com/LuisPalacios/56218937108e19048ed89c2133dd8bfe)
 
+
+Pendiente: Documentar DNS Server y resto de opciones DHCP para las dos LAN's locales.
 
 <br />
 
@@ -664,3 +708,22 @@ Puerto | VLAN - Descripción
     caption="Qué tagging se hace en cada puertos"
     width="600px"
     %}
+
+
+<br />
+
+### Salud del servicio (Pendiente)
+
+Dejo aquí unos cuantos comandos para verificar el estado de salud de las conexiones: 
+
+**Norte**
+
+- Pendiente [/root/firewall/norte_verifica_conectividad.sh]()
+
+
+**Sur**
+
+- [/root/firewall/sur_verifica_conectividad.sh](https://gist.github.com/LuisPalacios/eee992475e67e3425a73720d43df1f4d)
+
+
+<br />
