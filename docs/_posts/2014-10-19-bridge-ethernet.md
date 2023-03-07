@@ -101,6 +101,12 @@ Instalo OpenVPN, Bridge Utils y algunas herramientas importantes.
          dnsutils tcpdump ebtables tree bmon
 ```
 
+<br />
+
+—
+—
+—
+—
 
 <br />
 
@@ -477,17 +483,15 @@ El servidor `sur` es el que está en remoto. También cuenta con dos tarjetas de
 
 ### Networking `sur`
 
-Configuro ambas interfaces, la `eth0` (puerto embebido de las Raspberry Pi) conectada al router o cable del operador, por donde espero recibir una IP dinámica, mi router por defecto y la dirección del DNS Server.
+Configuro ambas interfaces, la `eth0` (puerto embebido de las Raspberry Pi) conectada al router del proveedor (IP dinámica, router por defecto y DNS Server).
 
-La `eth1` (puerto usb dongle gigabitethernet) conectada a mi switch con soporte de VLAN's e IGMP Snooping. En mi laboratorio he utilizado un Switch tp-link TL-SG108E, pero cualquiera de consumo con soporte de VLAN's e IGMP Snooping nos vale. Al final del apunte tienes capturas con la configuración del Switch.
-
-Como decía, el primer puerto (`eth0`) lo usamos para conectarnos a nuestro proveedor de internet usando DHCP y el segundo (`eth1`) para dar servcio a la LAN privada, usando VLAN's: 
+La `eth1` (puerto usb dongle gigabitethernet) conectada a mi switch con soporte de VLAN's e IGMP Snooping. En mi laboratorio he utilizado un Switch tp-link TL-SG108E, pero cualquiera de consumo con soporte de VLAN's e IGMP Snooping nos vale. Al final del apunte tienes capturas con la configuración del Switch. En esta interfaz uso las VLAN's: 
 
 VLAN | Descripción
 -------|-------------------
-`6` | Clientes de `sur` que quiero que salgan a Internet a través de la conexión de `norte`
-`100` | Clientes de `sur` que quiero que salgan a Internet a través del operador de `sur`
-`206` | Deco en `sur` para que consuma el tráfico IPTV de `norte`
+`6` | Clientes de `sur` que quiero que salgan a Internet desde la conexión remota de `norte`
+`100` | Clientes de `sur` que quiero que salgan a Internet localmente, por el proveedor de `sur`
+`206` | Deco que conecto localmente en `sur` pero que consuma el tráfico IPTV de `norte`
 
 Preparo los ficheros de networking y activo la nueva configuración:
 
@@ -593,7 +597,7 @@ Lo primero es instalarme los certificados como cliente de `norte`. Ya los había
 
 #### Cliente del Access Server
 
-Ahora configuro el *servicio cliente del Access Server en `norte`*. Creo el fichero principal de configuración y luego arranco el servicio.
+Ahora configuro el mi *servicio como cliente del Access Server de `norte`*. Creo el fichero principal de configuración y luego arranco el servicio.
 
 - [/etc/openvpn/server/sur_cliente_de_norte.conf](https://gist.github.com/LuisPalacios/5de5f4b594fc18fae8578e9c1cf9e062)
 
@@ -678,11 +682,11 @@ PING 192.168.206.1 (192.168.206.1) 56(84) bytes of data.
 
 #### DNS/DHCP Server en `sur` (Pendiente)
 
-Vamos a necesitar un DHCP Server en `sur` para poder servir IP's en las interfaces LAN para sus clientes. Además es importante que el Deco reciba su dirección IP y unas opciones muy concretas. 
+Vamos a necesitar un DHCP Server en `sur` para poder servir IP's en las interfaces LAN para sus clientes y para que el Deco reciba su dirección IP y unas opciones muy concretas. 
 
-En mi caso siempre me instalo el [Pi-hole casero]({% post_url 2021-06-20-pihole-casero %}), pero valdría cualquier servidor DHCP. 
+En mi caso me gusta [Pi-hole]({% post_url 2021-06-20-pihole-casero %}), pero valdría cualquier servidor DHCP. 
 
-- [/etc/dhnsmasq.d/03-pihole-decos.conf](https://gist.github.com/LuisPalacios/56218937108e19048ed89c2133dd8bfe)
+- Parte de la config para los Decos: [/etc/dhnsmasq.d/03-pihole-decos.conf](https://gist.github.com/LuisPalacios/56218937108e19048ed89c2133dd8bfe)
 
 
 Pendiente: Documentar DNS Server y resto de opciones DHCP para las dos LAN's locales.
@@ -691,7 +695,7 @@ Pendiente: Documentar DNS Server y resto de opciones DHCP para las dos LAN's loc
 
 ### Switch en `sur`
 
-Como dije al principio, en la red LAN de `sur` necesitamos un pequeño switch que soporte VLAN's e IGMP Snooping. En mi caso me he decantado por tp-link TL-SG108E.
+En la red LAN de `sur` necesitamos un switch que soporte VLAN's e IGMP Snooping. En mi caso me he decantado por tp-link TL-SG108E.
 
 Puerto | VLAN - Descripción
 -------|-------------------
