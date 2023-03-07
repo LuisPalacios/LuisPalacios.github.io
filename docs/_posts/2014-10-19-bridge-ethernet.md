@@ -17,8 +17,6 @@ Este apunte está relacionado con [Router Linux para Movistar]({% post_url 2014-
 
 | Actualización 2023: A nivel de rendimiento recuerdo que estas pruebas debajan mucho que desear y tuve problemas de configuración. He vuelto a probar hace poco con un par de [Pi 4 con Raspberry Pi OS 64bits]({% post_url 2023-03-02-raspberry-pi-os %}) que funcionan infinitamente mejor y de paso estoy actulizando el apunte. |
 
-| Pendiente 2023: Todavía me falta documentar las partes de NAT y Firewall, así como DNS/DHCP en sur, para que todo el routing a internet y las VLAN's de datos funcionen. La documentación actual solo cubre el servicio de IPTV. |
-
 
 ## Arquitectura
 
@@ -155,9 +153,7 @@ net.ipv4.ip_forward=1
 
 <br />
 
-#### NAT y Firewall  (Pendiente)
-
-**PENDIENTE: Configuración como router: NAT, Firewall L2 y L3**
+#### NAT y Firewall
 
 Este equipo no va a actuar como router en la LAN local, pero sí que va a conmutar tráfico entre los túneles. En esta sección describo cómo configurar NAT y Firewall. 
 
@@ -166,16 +162,22 @@ Servicios y Scripts
 - [/etc/systemd/system/internet_wait.service](https://gist.github.com/LuisPalacios/421b9b4c1bdda72d28fd2e12a621d8c8)
 - [/etc/systemd/system/firewall_1_pre_network.service](https://gist.github.com/LuisPalacios/caa9d72bcdc44ec1727452e9c6660074)
 - [/etc/systemd/system/firewall_2_post_network.service](https://gist.github.com/LuisPalacios/1d5865d8bd59da1d2c077014a6485c3a)
+- [/root/firewall/pi_eth1_up.sh](https://gist.github.com/LuisPalacios/8ff7a2d289d115a97969faa1788e7367)
 - [/root/firewall/norte_firewall_clean.sh](https://gist.github.com/LuisPalacios/375aa2faa215e22a6a48f8cb3047e882)
 - [/root/firewall/norte_firewall_inames.sh](https://gist.github.com/LuisPalacios/1a38011c97fc33f8c6e8a46497df5ef5)
-- Pendiente [/root/firewall/norte_firewall_1_pre_network.sh]()
-- Pendiente [/root/firewall/norte_firewall_2_post_network.sh]()
-- Pendiente [/root/firewall/norte_verifica_conectividad.sh]()
-
+- [/root/firewall/norte_firewall_1_pre_network.sh](https://gist.github.com/LuisPalacios/14c1a8474d9a39341b99bc30f804fc59)
+- [/root/firewall/norte_firewall_2_post_network.sh](https://gist.github.com/LuisPalacios/b20f5ea512f1801ca72a13a7c7010f49)
+- [/root/firewall/norte_verifica_conectividad.sh](https://gist.github.com/LuisPalacios/1c7e2e04676124de85ced92df57a1bd7)
+- [/etc/systemd/system/watch_eth_bridge_con_sur.timer](https://gist.github.com/LuisPalacios/cd7dee3143e08971eba58cb19cbb9fe5)
+- [/etc/systemd/system/watch_eth_bridge_con_sur.service](https://gist.github.com/LuisPalacios/f3d4c426d8208dc5fee3c6a847dcc087)
+- [/etc/default/watch_eth_bridge_con_sur](https://gist.github.com/LuisPalacios/6d88dfc25ed09f704ffcae35a1512508)
+- [/usr/bin/watch_eth_bridge.sh](https://gist.github.com/LuisPalacios/0e957f4522ad8da15a566d034fec336f)
 
 Habilito los servicios y rearranco el equipo
 
 ```console
+# chmod 755 /root/firewall/*.sh
+# chmod 755 /usr/bin/watch_eth_bridge.sh
 # systemctl enable internet_wait.service
 # systemctl enable firewall_1_pre_network.service
 # systemctl enable firewall_2_post_network.service
@@ -529,27 +531,31 @@ net.ipv4.ip_forward=1
 
 <br /> 
 
-#### NAT y Firewall (Pendiente)
+#### NAT y Firewall
 
-**PENDIENTE: Configuración como router: NAT y Firewall L2 y L3**
-
-Este equipo actúa como router entre las diferentes interfaces y redes disponibles, así que es importante definir y configurar sus opciones de NAT y Firewall. 
+Este equipo actúa como router entre las diferentes interfaces y redes disponibles, así que es importante definir y configurar sus opciones de NAT y Firewall.
 
 Servicios y Scripts
   
 - [/etc/systemd/system/internet_wait.service](https://gist.github.com/LuisPalacios/421b9b4c1bdda72d28fd2e12a621d8c8)
 - [/etc/systemd/system/firewall_1_pre_network.service](https://gist.github.com/LuisPalacios/ad2a727e744f323f911f1a602da5b70e)
 - [/etc/systemd/system/firewall_2_post_network.service](https://gist.github.com/LuisPalacios/9d7131feb3503d327341065e93e01f18)
+- [/root/firewall/pi_eth1_up.sh](https://gist.github.com/LuisPalacios/8ff7a2d289d115a97969faa1788e7367)
 - [/root/firewall/sur_firewall_clean.sh](https://gist.github.com/LuisPalacios/df48ebd0d19c4bd2aef6d72e1111b49b)
 - [/root/firewall/sur_firewall_inames.sh](https://gist.github.com/LuisPalacios/cfffe7546faf1abed9d5bc48575e5dcc)
 - [/root/firewall/sur_firewall_1_pre_network.sh](https://gist.github.com/LuisPalacios/16265be825109a5fd45d303aac8106b7)
-- [/root/firewall/sur_firewall_2_post_network.sh](https://gist.github.com/LuisPalacios/a03338e163a79ebfe44d65ddc4ecb743)
+- [/root/firewall/sur_firewall_2_post_network.sh](https://gist.github.com/LuisPalacios/c218c0a3ac0fdc791f9576475620789a)
 - [/root/firewall/sur_verifica_conectividad.sh](https://gist.github.com/LuisPalacios/eee992475e67e3425a73720d43df1f4d)
-
+- [/etc/systemd/system/watch_eth_bridge_con_norte.timer](https://gist.github.com/LuisPalacios/b6809e3c838a800f5f250b53e616bdc9)
+- [/etc/systemd/system/watch_eth_bridge_con_norte.service](https://gist.github.com/LuisPalacios/5dff1345f6203a55e27c1efea426eac4)
+- [/etc/default/watch_eth_bridge_con_norte](https://gist.github.com/LuisPalacios/0d4b6f84bb7afaff78ed197ba39ad605)
+- [/usr/bin/watch_eth_bridge.sh](https://gist.github.com/LuisPalacios/0e957f4522ad8da15a566d034fec336f)
 
 Habilito los servicios y rearranco el equipo
 
 ```console
+# chmod 755 /root/firewall/*.sh
+# chmod 755 /usr/bin/watch_eth_bridge.sh
 # systemctl enable internet_wait.service
 # systemctl enable firewall_1_pre_network.service
 # systemctl enable firewall_2_post_network.service
@@ -713,18 +719,16 @@ Puerto | VLAN - Descripción
 
 <br />
 
-### Salud del servicio (Pendiente)
+### Salud del servicio
 
 Dejo aquí unos cuantos comandos para verificar el estado de salud de las conexiones: 
 
 **Norte**
 
-- Pendiente [/root/firewall/norte_verifica_conectividad.sh]()
-
+- [/root/firewall/norte_verifica_conectividad.sh](https://gist.github.com/LuisPalacios/1c7e2e04676124de85ced92df57a1bd7)
 
 **Sur**
 
 - [/root/firewall/sur_verifica_conectividad.sh](https://gist.github.com/LuisPalacios/eee992475e67e3425a73720d43df1f4d)
-
 
 <br />
