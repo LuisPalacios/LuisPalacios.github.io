@@ -129,8 +129,11 @@ de movistar por defecto.
 
 La configuración IP es inicialmente muy sencilla. Si consultas el `dhcpcd.con` verás que solo configuro `eth0` con una dirección IP fija. La parte de `eth1` la dejo sin servicio, durante el boot NO se activará. La activo durante la ejecución de un script del apoyo del servicio *OpenVPN Bridge Ethernet Server*. El motivo es sencillo, la interfaz `eth1`(dongle usb) la uso exclusivamente para consumir el tráfico IPTV del router de Movistar y "enchufarla" al tunel, no la quiero usar para absoluatamente nada más, así que su activación y desactivación está vinculada al momento en que se levanta o para el túnel.
 
-
 - [/etc/dhcpcd.conf](https://gist.github.com/LuisPalacios/0513c8b1c2119da372d2f1e4fcea57d9)
+
+Para que funcione el TP-Link Adaptador UE300-USB 3.0 A Gigabit Ethernet necesito este fichero:
+
+- [/etc/udev/rules.d/50-usb-realtek-net.rules](https://gist.github.com/LuisPalacios/7f78efbcb6d57ff29d72209e1a5c43a6)
 
 Activo la nueva configuración:
 
@@ -168,7 +171,6 @@ Servicios y Scripts
 - [/etc/systemd/system/internet_wait.service](https://gist.github.com/LuisPalacios/421b9b4c1bdda72d28fd2e12a621d8c8)
 - [/etc/systemd/system/firewall_1_pre_network.service](https://gist.github.com/LuisPalacios/caa9d72bcdc44ec1727452e9c6660074)
 - [/etc/systemd/system/firewall_2_post_network.service](https://gist.github.com/LuisPalacios/1d5865d8bd59da1d2c077014a6485c3a)
-- [/root/firewall/pi_eth1_up.sh](https://gist.github.com/LuisPalacios/8ff7a2d289d115a97969faa1788e7367)
 - [/root/firewall/norte_firewall_clean.sh](https://gist.github.com/LuisPalacios/375aa2faa215e22a6a48f8cb3047e882)
 - [/root/firewall/norte_firewall_inames.sh](https://gist.github.com/LuisPalacios/1a38011c97fc33f8c6e8a46497df5ef5)
 - [/root/firewall/norte_firewall_1_pre_network.sh](https://gist.github.com/LuisPalacios/14c1a8474d9a39341b99bc30f804fc59)
@@ -498,6 +500,10 @@ Preparo los ficheros de networking y activo la nueva configuración:
 - [/etc/dhcpcd.conf](https://gist.github.com/LuisPalacios/7f36aa70890dbf9a9cb72fda3250ef7a)
 - [/etc/network/interfaces.d/vlans](https://gist.github.com/LuisPalacios/695a0a0a592e4a6526bb0f87cccc9ede)
 
+Para que funcione el TP-Link Adaptador UE300-USB 3.0 A Gigabit Ethernet necesito este fichero:
+
+- [/etc/udev/rules.d/50-usb-realtek-net.rules](https://gist.github.com/LuisPalacios/7f78efbcb6d57ff29d72209e1a5c43a6)
+
 ```console
 # service networking restart
 :
@@ -544,7 +550,6 @@ Servicios y Scripts
 - [/etc/systemd/system/internet_wait.service](https://gist.github.com/LuisPalacios/421b9b4c1bdda72d28fd2e12a621d8c8)
 - [/etc/systemd/system/firewall_1_pre_network.service](https://gist.github.com/LuisPalacios/ad2a727e744f323f911f1a602da5b70e)
 - [/etc/systemd/system/firewall_2_post_network.service](https://gist.github.com/LuisPalacios/9d7131feb3503d327341065e93e01f18)
-- [/root/firewall/pi_eth1_up.sh](https://gist.github.com/LuisPalacios/8ff7a2d289d115a97969faa1788e7367)
 - [/root/firewall/sur_firewall_clean.sh](https://gist.github.com/LuisPalacios/df48ebd0d19c4bd2aef6d72e1111b49b)
 - [/root/firewall/sur_firewall_inames.sh](https://gist.github.com/LuisPalacios/cfffe7546faf1abed9d5bc48575e5dcc)
 - [/root/firewall/sur_firewall_1_pre_network.sh](https://gist.github.com/LuisPalacios/16265be825109a5fd45d303aac8106b7)
@@ -554,6 +559,7 @@ Servicios y Scripts
 - [/etc/systemd/system/watch_eth_bridge_con_norte.service](https://gist.github.com/LuisPalacios/5dff1345f6203a55e27c1efea426eac4)
 - [/etc/default/watch_eth_bridge_con_norte](https://gist.github.com/LuisPalacios/0d4b6f84bb7afaff78ed197ba39ad605)
 - [/usr/bin/watch_eth_bridge.sh](https://gist.github.com/LuisPalacios/0e957f4522ad8da15a566d034fec336f)
+
 
 Habilito los servicios y rearranco el equipo
 
