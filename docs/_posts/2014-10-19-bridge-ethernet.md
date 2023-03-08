@@ -516,7 +516,7 @@ El servidor `sur` es el que está en remoto. También cuenta con dos tarjetas de
 
 <br />
 
-### Networking `sur`
+### Networking
 
 Configuro ambas interfaces, la `eth0` (puerto embebido de las Raspberry Pi) conectada al router del proveedor (IP dinámica, router por defecto y DNS Server).
 
@@ -534,7 +534,7 @@ Preparo los ficheros de networking y activo la nueva configuración:
 - [/etc/network/interfaces.d/vlans](https://gist.github.com/LuisPalacios/695a0a0a592e4a6526bb0f87cccc9ede)
 
 
-Para que funcione `eth1`, con el TP-Link UE300 Gigabit Ethernet necesito crear este fichero. No se usará hasta el próximo reboot:
+Para que funcione bien el dongle TP-Link UE300 Gigabit Ethernet necesito crear este fichero. No se usará hasta el próximo reboot:
 
 - [/etc/udev/rules.d/50-usb-realtek-net.rules](https://gist.github.com/LuisPalacios/7f78efbcb6d57ff29d72209e1a5c43a6)
 
@@ -579,7 +579,7 @@ net.ipv4.ip_forward=1
 
 Este equipo actúa como router entre las diferentes interfaces y redes disponibles, así que es importante definir y configurar sus opciones de NAT y Firewall.
 
-Servicios y Scripts
+Servicios y Scripts.
   
 - [/etc/systemd/system/internet_wait.service](https://gist.github.com/LuisPalacios/421b9b4c1bdda72d28fd2e12a621d8c8)
 - [/etc/systemd/system/firewall_1_pre_network.service](https://gist.github.com/LuisPalacios/ad2a727e744f323f911f1a602da5b70e)
@@ -589,13 +589,15 @@ Servicios y Scripts
 - [/root/firewall/sur_firewall_1_pre_network.sh](https://gist.github.com/LuisPalacios/16265be825109a5fd45d303aac8106b7)
 - [/root/firewall/sur_firewall_2_post_network.sh](https://gist.github.com/LuisPalacios/c218c0a3ac0fdc791f9576475620789a)
 - [/root/firewall/sur_verifica_conectividad.sh](https://gist.github.com/LuisPalacios/eee992475e67e3425a73720d43df1f4d)
+
+Además preparo un servicio que **vigila el túnel bridge ethernet**
+
 - [/etc/systemd/system/watch_eth_bridge_con_norte.timer](https://gist.github.com/LuisPalacios/b6809e3c838a800f5f250b53e616bdc9)
 - [/etc/systemd/system/watch_eth_bridge_con_norte.service](https://gist.github.com/LuisPalacios/5dff1345f6203a55e27c1efea426eac4)
 - [/etc/default/watch_eth_bridge_con_norte](https://gist.github.com/LuisPalacios/0d4b6f84bb7afaff78ed197ba39ad605)
 - [/usr/bin/watch_eth_bridge.sh](https://gist.github.com/LuisPalacios/0e957f4522ad8da15a566d034fec336f)
 
-
-Habilito los servicios y rearranco el equipo
+Habilito los servicios (se activará todo en el próximo reboot)
 
 ```console
 # chmod 755 /root/firewall/*.sh
@@ -603,7 +605,6 @@ Habilito los servicios y rearranco el equipo
 # systemctl enable internet_wait.service
 # systemctl enable firewall_1_pre_network.service
 # systemctl enable firewall_2_post_network.service
-# reboot -f
 ```
 
 <br />
@@ -735,7 +736,7 @@ Pendiente: Documentar DNS Server y resto de opciones DHCP para las dos LAN's loc
 
 #### Reboot
 
-Es buen momento para hacer un reboot del servidor `norte`
+Es buen momento para hacer reboot.
 
 ```console
 # reboot -f
@@ -744,7 +745,7 @@ Es buen momento para hacer un reboot del servidor `norte`
 
 <br />
 
-### Switch en `sur`
+### Switch en la LAN de `sur`
 
 En la red LAN de `sur` necesitamos un switch que soporte VLAN's e IGMP Snooping. En mi caso me he decantado por tp-link TL-SG108E.
 
@@ -776,7 +777,7 @@ Puerto | VLAN - Descripción
 
 ### Salud del servicio
 
-Dejo aquí unos cuantos comandos para verificar el estado de salud de las conexiones: 
+Dejo aquí un script que verifica el estado de salud de las conexiones: 
 
 **Norte**
 
