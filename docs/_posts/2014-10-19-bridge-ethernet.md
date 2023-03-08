@@ -8,14 +8,14 @@ excerpt_separator: <!--more-->
 
 ![logo linux router](/assets/img/posts/logo-bridge-eth.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-Pruebas de concepto para extender la red de mi casa a un sitio remoto a través de internet y poder consumir los servicios de IPTV de Movistar. Utilicé un par de Raspberry Pi 2, conectadas entre sí por dos túneles IPSec.
+Pruebas de concepto para extender la red de mi casa a un sitio remoto a través de internet, desde donde consumir los servicios de IPTV de Movistar. Utilicé un par de Raspberry Pi 2, conectadas entre sí por un par de túneles IPSec.
 
 Este apunte está relacionado con [Router Linux para Movistar]({% post_url 2014-10-05-router-linux %}) y [videos bajo demanda]({% post_url 2014-10-18-movistar-bajo-demanda %}) con Fullcone NAT en linux. 
 
 <br clear="left"/>
 <!--more-->
 
-| Actualización 2023: A nivel de rendimiento recuerdo que estas pruebas debajan mucho que desear y tuve problemas de configuración. He vuelto a probar hace poco con un par de [Pi 4 con Raspberry Pi OS 64bits]({% post_url 2023-03-02-raspberry-pi-os %}) que funcionan infinitamente mejor y de paso estoy actulizando el apunte. |
+| Actualización 2023: A nivel de rendimiento recuerdo que estas pruebas debajan mucho que desear y tuve problemas de configuración. He vuelto a probar hace poco con un par de [Pi 4 con Raspberry Pi OS 64bits]({% post_url 2023-03-02-raspberry-pi-os %}) que funcionan infinitamente mejor y de paso he actualizado este apunte. |
 
 
 ## Arquitectura
@@ -27,21 +27,19 @@ Este es el Hardware que he utilizado:
 - **2 x TP-Link Adaptador UE300-USB 3.0 A Gigabit Ethernet** para tener un segundo puerto físico y ser más granular, hacer más virguerías a nivel de routing, policy based routing, control de tráfico, etc.
 - **1 x Switch** con soporte de VLAN's e IGMP Snooping para la LAN del equipo remoto.
 
-En `norte` creo dos túneles IPSec en modo Servidor:
+En `norte` creo dos túneles IPSec/UDP en modo Servidor (con [OpenVPN](https://openvpn.net)):
 
-- 1) **Access Server** para tráfico normal de Internet, con [OpenVPN](https://openvpn.net) y UDP. 
+- 1) **Access Server** para tráfico normal de Internet
+- 2) **Bridge Ethernet** para tráfico IPTV
 
-- 2) **Bridge Ethernet** para tráfico IPTV, con [OpenVPN](https://openvpn.net) y UDP.
+En `sur` me conecto como cliente y creo **tres VLANs** en la LAN:
 
-En `sur` me conecto a esos túneles como cliente y además configuro **tres VLANs**:
+VLAN | Función
+-------|-------------------
+`10` | Clientes de `sur` que salen a Internet por proveedor local en `sur`
+`107` | Clientes de `sur` que salen a Internet a través de `norte`.
+`206` | Deco en `sur` para que consuma el tráfico IPTV de `norte`.
 
-- VLAN 6
-  - Aquí se conectan clientes de `sur` que quiero que salgan a Internet a través de la conexión de `norte`.
-- VLAN 206
-  - Aquí se conecta el Deco en `sur` para que consuma el tráfico IPTV de `norte`.
-- VLAN 100
-  - Aquí se conectan los clientes de `sur` que quiero que salgan a Internet a través del operador de `sur`.
-  
 {% include showImagen.html
     src="/assets/img/posts/2014-10-19-bridge-ethernet-01.jpg"
     caption="Arquitectura de la prueba de concepto"
@@ -52,16 +50,16 @@ En `sur` me conecto a esos túneles como cliente y además configuro **tres VLAN
 
 ### Instalación de software
 
-Esta sección hay que **repetirla en ambas Pi's**.
+Actualizo el Raspberry Pi OS e instalo software. Repito estos comandos en ambas Pi's.
 
-Primero me convierto en `root`
+Desde `root`
 
 ```console
 $ sudo su -i
 #
 ```
 
-Actualizo.
+Actualizo el sistema operativo.
 
 ```console
 # apt update && apt upgrade -y && apt full-upgrade -y
@@ -112,7 +110,7 @@ Instalo OpenVPN, Bridge Utils y algunas herramientas importantes.
 
 ## Servidor `norte`
 
-El servidor `norte` es el que está en mi casa y que conectaremos físicamente al router de Movistar con ambas interfaces. El primer puerto (`eth0`) será el principal por donde irá todo el tráfico del equipo, mientras que el segundo (`eth1`) lo dedicaré exclusivamente a consumir tráfico IPTV.
+El servidor `norte` es el que está en mi casa con conexión directa al router de Movistar con ambas interfaces. El primer puerto (`eth0`) será el principal por donde irá todo el tráfico normal, mientras que el segundo (`eth1`) lo dedicaré exclusivamente a tráfico IPTV.
 
 {% include showImagen.html
     src="/assets/img/posts/2014-10-19-bridge-ethernet-02.jpg"
@@ -127,11 +125,11 @@ de movistar por defecto.
 
 ### Networking
 
-La configuración IP de `norte` es sencilla. Si consultas el `dhcpcd.conf` de más abajo verás que solo configuro `eth0` con una dirección IP fija. La parte de `eth1` la dejo sin servicio. El motivo por el que no configuro `eth1` en `dhcpcd.conf` es que lo hago manualmente desde el script que levanta el tunel *Bridge Ethernet Server*.
+La configuración IP de `norte` es sencilla. Si consultas el `dhcpcd.conf` de más abajo verás que solo configuro `eth0` con una dirección IP fija. La parte de `eth1` la dejo sin servicio. El motivo por el que no la configuro es que lo hago más tarde desde el script que levanta el tunel *Bridge Ethernet Server*.
 
 - [/etc/dhcpcd.conf](https://gist.github.com/LuisPalacios/0513c8b1c2119da372d2f1e4fcea57d9)
 
-Aunque no activo `eth1` durante el boot, para que funcione el TP-Link Adaptador UE300 necesito crear el fichero siguiente.  No se hará efectivo hasta el próximo reboot 
+Aunque no activo `eth1` durante el boot, para que funcione el TP-Link Adaptador UE300 necesito crear el fichero siguiente (no se hará efectivo hasta el próximo reboot). 
 
 - [/etc/udev/rules.d/50-usb-realtek-net.rules](https://gist.github.com/LuisPalacios/7f78efbcb6d57ff29d72209e1a5c43a6)
 
@@ -155,7 +153,7 @@ Activo la nueva configuración:
 
 #### Forwarding IPv4
 
-Edito el fichero `/etc/sysctl.conf` y modifico la lisguiente línea para que se active el forwarding. Para activarlo basta con ejecutar `sysctl -p`
+Edito el fichero `/etc/sysctl.conf` y modifico la lisguiente línea para que se active el forwarding. Para activarlo sin rearrancar ejecuta `sysctl -p`
 
 ```console
 net.ipv4.ip_forward=1
@@ -165,9 +163,9 @@ net.ipv4.ip_forward=1
 
 #### NAT y Firewall
 
-Este equipo no va a actuar como router en la LAN local, pero sí que va a conmutar tráfico entre los túneles. En esta sección describo cómo configurar NAT y Firewall. 
+Este equipo no va a actuar como router en la LAN local, pero sí que va a conmutar tráfico entre los túneles. 
 
-Servicios y Scripts que necesitas crear:
+Estos son los Servicios y Scripts que he creado:
   
 - [/etc/systemd/system/internet_wait.service](https://gist.github.com/LuisPalacios/421b9b4c1bdda72d28fd2e12a621d8c8)
 - [/etc/systemd/system/firewall_1_pre_network.service](https://gist.github.com/LuisPalacios/caa9d72bcdc44ec1727452e9c6660074)
@@ -195,19 +193,15 @@ Habilito los servicios (se activará todo en el próximo reboot)
 # systemctl enable firewall_2_post_network.service
 ```
 
-De momento no rearranco el equipo, sigo configurando y lo haré al final.
+De momento no rearranco el equipo, sigo configurando.
 
 <br />
 
 ### OpenVPN en `norte`
 
-Veamos cómo configurar este equipo como un Servidor de acceso y bridge ethernet utilizando OpenVPN.
-
-<br />
-
 #### Certificados
 
-Lo primero que hay que hacer, y solo hay que hacerlo una vez, es configurar los certificados de “servidor”. 
+Lo primero que hay que hacer, y solo hay que hacerlo una vez, es configurar los certificados del equipo que hace de “servidor” (`norte`). 
  
  - Preparo el directorio de trabajo de **easy-rsa**
 
@@ -265,7 +259,7 @@ req: /root/easy-rsa/pki/reqs/norte.req
 key: /root/easy-rsa/pki/private/norte.key
 ```
 
-- Firmar el el fichero con el certificado .crt que necesita el servidor
+- Firmar el el fichero con el certificado `.crt` que necesita el servidor
 
 ```console
 # cd /etc/openvpn/easy-rsa
@@ -293,7 +287,7 @@ Certificate created at: /root/easy-rsa/pki/issued/norte.crt
 
 #### Preparo los certificados para su uso
 
-- Durante el proceso anterior se han creado ya los certificados que usará `norte` en su función de Access Server y de Bridge Ethernet, pero tenemos que colocarlos en su sitio. Copio los certificados y aprovecho para darles un nombre más significativo.
+- Durante el proceso anterior se han creado ya los certificados que usará `norte` en su función de Access Server y de Bridge Ethernet Server, pero tenemos que colocarlos en su sitio. Copio los certificados y aprovecho para darles un nombre más significativo.
 
 ```console
 # cd /etc/openvpn/server/keys
@@ -304,7 +298,7 @@ Certificate created at: /root/easy-rsa/pki/issued/norte.crt
 # cp /etc/openvpn/easy-rsa/pki/ta.key norte.ta.key
 ```
 
-* Creo los certificados para el cliente **`sur`**: Desde este servidor crearemos certificados para que distintos clientes puedan conectar con él. En este ejemplo vamos a crear el certificado del cliente `sur` y empaquetarlo para enviarselo.
+* Creo los certificados para el cliente **`sur`** y lo empaqueto para enviarselo.
 
 
 ```console
@@ -478,13 +472,11 @@ nf_nat                 49152  3 nf_nat_rtsp,nft_chain_nat,xt_MASQUERADE
 nf_conntrack          139264  4 nf_nat,nf_conntrack_rtsp,nf_nat_rtsp,xt_MASQUERADE
 ```
 
-- Para que se carge siempre con el boot del sistema modifico el fichero /etc/modules
+- Para que se carge siempre con el boot del sistema modifico el fichero `/etc/modules`
 
 ```console
 nf_nat_rtsp
 ```
-
-<br />
 
 | ¡Aviso! - Ahora es buen momento para hacer un reboot de `norte` |
 
@@ -519,11 +511,11 @@ Configuro ambas interfaces, la `eth0` (puerto embebido de las Raspberry Pi) cone
 
 La `eth1` (puerto usb dongle gigabitethernet) conectada a mi switch con soporte de VLAN's e IGMP Snooping. En mi laboratorio he utilizado un Switch tp-link TL-SG108E, pero cualquiera de consumo con soporte de VLAN's e IGMP Snooping nos vale. Al final del apunte tienes capturas con la configuración del Switch. En esta interfaz uso las VLAN's: 
 
-VLAN | Descripción
+VLAN | Función
 -------|-------------------
-`6` | Clientes de `sur` que quiero que salgan a Internet desde la conexión remota de `norte`
-`100` | Clientes de `sur` que quiero que salgan a Internet localmente, por el proveedor de `sur`
-`206` | Deco que conecto localmente en `sur` pero que consuma el tráfico IPTV de `norte`
+`10` | Clientes de `sur` que salen a Internet por proveedor local en `sur`
+`107` | Clientes de `sur` que salen a Internet a través de `norte`.
+`206` | Deco en `sur` para que consuma el tráfico IPTV de `norte`.
 
 Preparo los ficheros de networking y activo la nueva configuración:
 
@@ -745,7 +737,6 @@ Estos son los ficheros de configuración para la parte de DHCP:
 - [/etc/dhnsmasq.d/03-pihole-decos.conf](https://gist.github.com/LuisPalacios/a681108193f24da6929588dbbedc0b2a)
 - [/etc/dhnsmasq.d/04-pihole-sur.conf](https://gist.github.com/LuisPalacios/c109627b3ec2f4dbd390ec5ade9184bb)
 
-<br />
 
 | ¡Aviso! - Ahora es buen momento para hacer un reboot de `norte` |
 
@@ -760,12 +751,13 @@ Estos son los ficheros de configuración para la parte de DHCP:
 
 En la red LAN de `sur` necesitamos un switch que soporte VLAN's e IGMP Snooping. En mi caso me he decantado por tp-link TL-SG108E.
 
-Puerto | VLAN - Descripción
+Puertos | VLAN - Descripción
 -------|-------------------
-`1,2` | VLAN 206, deco que conecta a IPTV por túnel "bridge-eternet" vía `norte`
-`3,4` | VLAN 107, clientes que salen a Internet por túnel "acceso" vía `norte`
-`5,6,7` | VLAN 10, clientes que salen a Internet por proveedor local en `sur`
-`8` | TRUNK VLANs 206,107,10 donde conecto mi Raspberry Pi a su `eth1`(dongle usb)
+`1,2` | VLAN 206. Deco que conecta a Movistar TV por túnel "bridge-eternet" vía `norte`
+`3,4` | VLAN 107. Clientes que salen a Internet por túnel de "acceso" vía `norte`
+`5,6,7` | VLAN 10. Clientes que salen a Internet por proveedor local en `sur`
+`8` | TRUNK VLANs 206,107,10. Raspberry Pi a su `eth1`(dongle usb)
+
 
 {% include showImagen.html
     src="/assets/img/posts/2014-10-19-bridge-ethernet-05.png"
