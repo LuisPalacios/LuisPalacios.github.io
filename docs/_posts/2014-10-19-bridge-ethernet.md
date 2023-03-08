@@ -103,12 +103,16 @@ Instalo OpenVPN, Bridge Utils y algunas herramientas importantes.
 
 <br />
 
+
+<br />
+
 —
 —
 —
 —
 
 <br />
+
 
 ## Servidor `norte`
 
@@ -125,15 +129,16 @@ de movistar por defecto.
 
 <br />
 
-### Networking `norte`
+### Networking
 
-La configuración IP es inicialmente muy sencilla. Si consultas el `dhcpcd.conf` verás que solo configuro `eth0` con una dirección IP fija. La parte de `eth1` la dejo sin servicio. La activo durante la ejecución de un script del apoyo del servicio *OpenVPN Bridge Ethernet Server*.
+La configuración IP de `norte` es sencilla. Si consultas el `dhcpcd.conf` de más abajo verás que solo configuro `eth0` con una dirección IP fija. La parte de `eth1` la dejo sin servicio. El motivo por el que no configuro `eth1` en `dhcpcd.conf` es que lo hago manualmente desde el script que levanta el tunel *Bridge Ethernet Server*.
 
 - [/etc/dhcpcd.conf](https://gist.github.com/LuisPalacios/0513c8b1c2119da372d2f1e4fcea57d9)
 
 Aunque no activo `eth1` durante el boot, para que funcione el TP-Link Adaptador UE300 necesito crear el fichero siguiente.  No se hará efectivo hasta el próximo reboot 
 
 - [/etc/udev/rules.d/50-usb-realtek-net.rules](https://gist.github.com/LuisPalacios/7f78efbcb6d57ff29d72209e1a5c43a6)
+
 
 Activo la nueva configuración:
 
@@ -191,7 +196,7 @@ Habilito los servicios
 # systemctl enable firewall_2_post_network.service
 ```
 
-De momento no rearranco el equipo, todavía falta toda la configuración de OpenVPN, etc.
+De momento no rearranco el equipo, todavía falta toda la configuración de OpenVPN.
 
 <br />
 
@@ -203,7 +208,7 @@ Veamos cómo configurar este equipo como un Servidor de acceso y bridge ethernet
 
 #### Certificados
 
- Lo primero que hay que hacer, y solo hay que hacerlo una vez, es configurar los certificados, que usaré como servidor `norte` y otros que enviaré al cliente `sur`. 
+Lo primero que hay que hacer, y solo hay que hacerlo una vez, es configurar los certificados de “servidor”. 
  
  - Preparo el directorio de trabajo de **easy-rsa**
 
@@ -395,19 +400,19 @@ Cambio los permisos a los ficheros `*.sh` y arranco el servicio
 
 <br />
 
-### Nombre y dirección IP de `norte` en internet
+### `norte` en Internet
 
-Para poder llegar a `norte` con un nombre DNS y dirección IP públicos necesitas resolver un nombre DNS público para averiguar cuál es la IP Pública del router de Movistar. Además necesitamos que dicho router haga Port Forwarding.
+Para poder llegar a `norte` con un nombre DNS y dirección IP públicos necesitas resolver su **nombre DNS público** para averiguar cuál es la IP Pública del router de Movistar. Además necesitamos que dicho router haga Port Forwarding.
 
 <br />
 
 #### Nombre DNS e IP Pública
 
-Para acceder a un router casero desde internet es necesario que tenga un nombre del tipo `mirouter.midominio.com`. Conseguirlo es muy fácil usando un DNS dinámico. Se puede hacer con un dominio propio (que hayas comprado) o puedes incluso hacerlo con múltiples servicios que te ofrecen por ahí (del tipo miservidorcasero.proveedordns.com)
+Para acceder a un router casero desde internet es necesario que tenga un nombre del tipo `mirouter.midominio.com`. Conseguirlo es muy fácil usando DNS dinámico. Se puede hacer con un dominio propio (que hayas comprado) o puedes incluso hacerlo con múltiples servicios que te ofrecen por ahí (del tipo miservidorcasero.proveedordns.com)
 
-En mi caso, como decía, tengo un dominio propio y utilizo Dynamic DNS para actualizar la IP pública cada vez que cambia. Hay varias formas de hacerlo y no voy a entrar en detalle, busca en internet opciones para conseguirlo. En este laboratorio y ejemplos verás que he documentado usando el nombre y puertos siguientes. No son los reales pero te dan una idea de cómo configurar los tuyos propios.
+En mi caso, como decía, tengo un dominio propio y utilizo Dynamic DNS para actualizar la IP pública cada vez que cambia. Hay varias formas de hacerlo y no voy a entrar en detalle, busca en internet opciones para conseguirlo. En este laboratorio y ejemplos verás que he documentado usando el nombre y puertos de más abajo. No son los reales pero te dan una idea de cómo configurar los tuyos propios.
 
-En el laboratorio es el servidor `sur` el que llama a `norte` para construir los dos túneles, así que solo necesitamos dar de alta a este último en nuestro proveedor DNS.
+En el laboratorio es el servidor `sur` el que llama a `norte` para construir los dos túneles, así que en este caso solo tengo que preocuparme de configurar `norte` en mi proveedor DNS.
 
 - Servicio Access Server --> `norte.dominio.com, 12345 (udp)`
 - Servicio Bridge Ethernet Server --> `norte.dominio.com, 12346 (udp)`
@@ -416,27 +421,44 @@ En el laboratorio es el servidor `sur` el que llama a `norte` para construir los
 
 #### Port Forwarding en Router Movistar
 
-Además es muy importante activar **Port Forwarding** en el Router de Movistar donde está ubicado `norte`. Aquí tienes una captura de la configuración. Recuerda elegir protocolo UDP al dar de alta cada registro.
+Activo **Port Forwarding** en el Router de Movistar donde está ubicado `norte`. Aquí tienes una captura de la configuración. Recuerda elegir protocolo UDP al dar de alta cada registro.
 
 {% include showImagen.html
     src="/assets/img/posts/2014-10-19-bridge-ethernet-04.png"
-    caption="Port Forwarding hacia mi servidor `norte`"
+    caption="Port Forwarding desde el router de movistar a mi servidor `norte`"
     width="850px"
     %}
 
 <br />
 
-### IGMP Proxy en `norte`
+### IGMP Proxy 
 
-Para que los Decos remotos puedan acceder conectarse es necesario configurar IGMP Proxy. La instalación es muy sencilla: `apt -y igmpproxy` y aquí tienes el fichero de configuración.
+Por el interfaz del Bridge `br206` de `norte` van a llegar los `join` multicast del Deco remoto (`sur`). Llegan hasta ahí, por lo que necesito reenviarlos y hacer de intermediario. Esa es la función de `igmpproxy` en norte: escucha por el downstream (interfaz `br206`) y reenvía por su upstream (interfaz `eth1`).
+
+
+Instalo el software
+
+```console
+# apt -y igmpproxy
+```
+
+Preparo el fichero de configuración.
 
 - [/etc/igmpproxy.conf](https://gist.github.com/LuisPalacios/c05fda1f8fe657a9baefe20eabc07fc4)
 
+Habilito su arranque durante el boot
+
+```console
+# systemctl enable igmpproxy
+```
+
 <br />
 
-### Fullcone NAT en `norte`
+### Fullcone NAT
 
-Tal como describo en el apunte [Videos bajo demanda]({% post_url 2014-10-18-movistar-bajo-demanda %}), es necesario soportar Fullcone NAT en linux paraque funcionen. Estos son los pasos en una Raspberry Pi
+Tal como describo en el apunte [Videos bajo demanda]({% post_url 2014-10-18-movistar-bajo-demanda %}), es necesario activar este tipo de NAT para que funcionen las grabaciones, series, películas, etc. 
+
+Compilo e instalo en el sistema operativo Raspberry Pi OS de `norte`:
 
 
 ```console
@@ -467,12 +489,11 @@ nf_nat_rtsp
 
 #### Reboot
 
-Es buen momento para hacer un reboot del servidor `norte`
+Es buen momento para hacer un reboot de `norte`
 
 ```console
 # reboot -f
 ```
-
 
 <br />
 
