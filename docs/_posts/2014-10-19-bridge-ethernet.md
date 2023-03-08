@@ -103,16 +103,12 @@ Instalo OpenVPN, Bridge Utils y algunas herramientas importantes.
 
 <br />
 
+---
+---
+---
+---
 
 <br />
-
-—
-—
-—
-—
-
-<br />
-
 
 ## Servidor `norte`
 
@@ -181,12 +177,15 @@ Servicios y Scripts que necesitas crear:
 - [/root/firewall/norte_firewall_1_pre_network.sh](https://gist.github.com/LuisPalacios/14c1a8474d9a39341b99bc30f804fc59)
 - [/root/firewall/norte_firewall_2_post_network.sh](https://gist.github.com/LuisPalacios/b20f5ea512f1801ca72a13a7c7010f49)
 - [/root/firewall/norte_verifica_conectividad.sh](https://gist.github.com/LuisPalacios/1c7e2e04676124de85ced92df57a1bd7)
+
+Además preparo un servicio que **vigila el túnel bridge ethernet**
+
 - [/etc/systemd/system/watch_eth_bridge_con_sur.timer](https://gist.github.com/LuisPalacios/cd7dee3143e08971eba58cb19cbb9fe5)
 - [/etc/systemd/system/watch_eth_bridge_con_sur.service](https://gist.github.com/LuisPalacios/f3d4c426d8208dc5fee3c6a847dcc087)
 - [/etc/default/watch_eth_bridge_con_sur](https://gist.github.com/LuisPalacios/6d88dfc25ed09f704ffcae35a1512508)
 - [/usr/bin/watch_eth_bridge.sh](https://gist.github.com/LuisPalacios/0e957f4522ad8da15a566d034fec336f)
 
-Habilito los servicios
+Habilito los servicios (se activará todo en el próximo reboot)
 
 ```console
 # chmod 755 /root/firewall/*.sh
@@ -196,7 +195,7 @@ Habilito los servicios
 # systemctl enable firewall_2_post_network.service
 ```
 
-De momento no rearranco el equipo, todavía falta toda la configuración de OpenVPN.
+De momento no rearranco el equipo, sigo configurando y lo haré al final.
 
 <br />
 
@@ -487,9 +486,7 @@ nf_nat_rtsp
 
 <br />
 
-#### Reboot
-
-Es buen momento para hacer un reboot de `norte`
+| ¡Aviso! - Ahora es buen momento para hacer un reboot de `norte` |
 
 ```console
 # reboot -f
@@ -549,18 +546,15 @@ Para que funcione bien el dongle TP-Link UE300 Gigabit Ethernet necesito crear e
 :
 4: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
     link/ether 28:87:ba:12:26:43 brd ff:ff:ff:ff:ff:ff
-5: eth1.206@eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+5: eth1.206@eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1492 qdisc noqueue master br206 state UP group default qlen 1000
     link/ether 28:87:ba:12:26:43 brd ff:ff:ff:ff:ff:ff
-    inet 192.168.206.1/24 brd 192.168.207.255 scope global noprefixroute eth1.2
-       valid_lft forever preferred_lft forever
-6: eth1.6@eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+6: eth1.107@eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
     link/ether 28:87:ba:12:26:43 brd ff:ff:ff:ff:ff:ff
-    inet 192.168.107.1/24 brd 192.168.107.255 scope global noprefixroute eth1.6
-       valid_lft forever preferred_lft forever
-7: eth1.100@eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    inet 192.168.107.1/24 brd 192.168.107.255 scope global noprefixroute eth1.107
+7: eth1.10@eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
     link/ether 28:87:ba:12:26:43 brd ff:ff:ff:ff:ff:ff
-    inet 192.168.10.1/24 brd 192.168.10.255 scope global noprefixroute eth1.100
-       valid_lft forever preferred_lft forever
+    inet 192.168.10.1/24 brd 192.168.10.255 scope global noprefixroute eth1.10
+:
 ```
 
 <br />
@@ -579,7 +573,7 @@ net.ipv4.ip_forward=1
 
 Este equipo actúa como router entre las diferentes interfaces y redes disponibles, así que es importante definir y configurar sus opciones de NAT y Firewall.
 
-Servicios y Scripts.
+Servicios y Scripts que necesitas crear:
   
 - [/etc/systemd/system/internet_wait.service](https://gist.github.com/LuisPalacios/421b9b4c1bdda72d28fd2e12a621d8c8)
 - [/etc/systemd/system/firewall_1_pre_network.service](https://gist.github.com/LuisPalacios/ad2a727e744f323f911f1a602da5b70e)
@@ -594,7 +588,7 @@ Además preparo un servicio que **vigila el túnel bridge ethernet**
 
 - [/etc/systemd/system/watch_eth_bridge_con_norte.timer](https://gist.github.com/LuisPalacios/b6809e3c838a800f5f250b53e616bdc9)
 - [/etc/systemd/system/watch_eth_bridge_con_norte.service](https://gist.github.com/LuisPalacios/5dff1345f6203a55e27c1efea426eac4)
-- [/etc/default/watch_eth_bridge_con_norte](https://gist.github.com/LuisPalacios/0d4b6f84bb7afaff78ed197ba39ad605)
+- [/etc/default/watch_eth_bridge_con_norte](https://gist.github.com/LuisPalacios/318f50ef9b0c0cd86e291c406047daa1)
 - [/usr/bin/watch_eth_bridge.sh](https://gist.github.com/LuisPalacios/0e957f4522ad8da15a566d034fec336f)
 
 Habilito los servicios (se activará todo en el próximo reboot)
@@ -606,6 +600,8 @@ Habilito los servicios (se activará todo en el próximo reboot)
 # systemctl enable firewall_1_pre_network.service
 # systemctl enable firewall_2_post_network.service
 ```
+
+De momento no rearranco el equipo, sigo configurando y lo haré al final.
 
 <br />
 
@@ -640,14 +636,17 @@ Lo primero es instalarme los certificados como cliente de `norte`. Ya los había
 
 Ahora configuro el mi *servicio como cliente del Access Server de `norte`*. Creo el fichero principal de configuración y luego arranco el servicio.
 
-- [/etc/openvpn/server/sur_cliente_de_norte.conf](https://gist.github.com/LuisPalacios/5de5f4b594fc18fae8578e9c1cf9e062)
+- [/etc/openvpn/client/sur_cliente_access_de_norte.conf](https://gist.github.com/LuisPalacios/1ea5bccae15675b98d6cc133780b0fff)
+- [/etc/openvpn/client/dubai_cliente_access_de_avila_CONFIG.sh](https://gist.github.com/LuisPalacios/571629103be2f4db92aa2fd620a90006)
+- [/etc/openvpn/client/dubai_cliente_access_de_avila_DOWN.sh](https://gist.github.com/LuisPalacios/b54b27d34e9f3c718eb27fc3de977559)
+- [/etc/openvpn/client/dubai_cliente_access_de_avila_UP.sh](https://gist.github.com/LuisPalacios/59ed7e4df2e232689c555cf88bfdb733)
 
 
 ```console
-# systemctl start openvpn-server@sur_cliente_de_norte
-# systemctl enable openvpn-server@sur_cliente_de_norte
-# systemctl status openvpn-server@sur_cliente_de_norte
-● openvpn-server@sur_cliente_de_norte.service - OpenVPN service for sur_cliente_de_norte
+# systemctl start openvpn-server@sur_cliente_access_de_norte
+# systemctl enable openvpn-server@sur_cliente_access_de_norte
+# systemctl status openvpn-server@sur_cliente_access_de_norte
+● openvpn-server@sur_cliente_access_de_norte.service - OpenVPN service for sur_cliente_access_de_norte
      Loaded: loaded (/lib/systemd/system/openvpn-server@.service; enabled; vendor preset: enabled)
                                                                   =======
      Active: active (running) since Sat 2014-10-19 12:20:07 CET; 1min 14s ago
@@ -677,6 +676,8 @@ Ahora configuro el *servicio cliente del Bridge Ethernet de `norte`*. Creo el fi
 - [/etc/openvpn/client/sur_cliente_bridge_ethernet_de_norte_CONFIG.sh](https://gist.github.com/LuisPalacios/358f038b84f527f89e238c3c2eb70b95)
 - [/etc/openvpn/client/sur_cliente_bridge_ethernet_de_norte_UP.sh](https://gist.github.com/LuisPalacios/baa778c216b5d1560dad332ab6cacce1)
 - [/etc/openvpn/client/sur_cliente_bridge_ethernet_de_norte_DOWN.sh](https://gist.github.com/LuisPalacios/dc60bc84ede46594cc2a0f7dec884255)
+- [/etc/openvpn/client/sur_cliente_bridge_ethernet_de_norte_RT_UP.sh](https://gist.github.com/LuisPalacios/3d898a5c7a9ce48eff77896763c99ecd)
+- [/etc/openvpn/client/sur_cliente_bridge_ethernet_de_norte_RT_DOWN.sh](https://gist.github.com/LuisPalacios/bfb30e26bbfe2ad2dbef433d83616c7c)
 
 
 ```console
@@ -723,8 +724,6 @@ PING 192.168.206.1 (192.168.206.1) 56(84) bytes of data.
 
 #### DHCP Server 
 
-
-
 ![logo pihole](/assets/img/posts/logo-pihole.svg){: width="150px" height="150px" style="float:right; padding-right:25px" } 
 
 En `sur` necesito instalar un servidor DHCP para servir IP's en sus interfaces LAN, en realidad en sus VLAN's, incluido el Deco y sus opciones concretas.
@@ -748,9 +747,7 @@ Estos son los ficheros de configuración para la parte de DHCP:
 
 <br />
 
-### Reboot
-
-Es buen momento para hacer reboot.
+| ¡Aviso! - Ahora es buen momento para hacer un reboot de `norte` |
 
 ```console
 # reboot -f
