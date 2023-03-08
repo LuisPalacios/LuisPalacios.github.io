@@ -686,43 +686,70 @@ PING 192.168.206.1 (192.168.206.1) 56(84) bytes of data.
 
 <br />
 
-#### DNS/DHCP Server en `sur` (Pendiente)
-
-Vamos a necesitar un DHCP Server en `sur` para poder servir IP's en las interfaces LAN para sus clientes y para que el Deco reciba su dirección IP y unas opciones muy concretas. 
-
-En mi caso me gusta [Pi-hole]({% post_url 2021-06-20-pihole-casero %}), pero valdría cualquier servidor DHCP. 
-
-- Parte de la config para los Decos: [/etc/dhnsmasq.d/03-pihole-decos.conf](https://gist.github.com/LuisPalacios/56218937108e19048ed89c2133dd8bfe)
+#### DHCP Server 
 
 
-Pendiente: Documentar DNS Server y resto de opciones DHCP para las dos LAN's locales.
+
+![logo pihole](/assets/img/posts/logo-pihole.svg){: width="150px" height="150px" style="float:right; padding-right:25px" } 
+
+En `sur` necesito instalar un servidor DHCP para servir IP's en sus interfaces LAN, en realidad en sus VLAN's, incluido el Deco y sus opciones concretas.
+
+Para todo lo relacionado con DNS y DHCP llevo tiempo usando el proyecto [Pi-hole](https://pi-hole.net). Utiliza [`dnsmasq`](https://thekelleys.org.uk/dnsmasq/doc.html) para dar los servicios DNS y DHCP, aunque su verdadero secreto es que se trata de un sumidero de DNS (o DNS Sinkhole) que protege a los equipos de tu red de contenido no deseado, sin necesidad de instalar ningún software en los clientes.
+
+En este laboratorio solo voy a usar la parte de DHCP (el sumidero y el DNS quizá en el futuro). Si quieres aprender más sobre el tema, te aconsejo leer el apunte [Pi-hole casero]({% post_url 2021-06-20-pihole-casero %}).
+
+Ejecuto la instalación de Pi-hole (para más detalle consulta el enlace)
+
+```console
+$ curl -sSL https://install.pi-hole.net | bash
+```
+
+Estos son los ficheros de configuración para la parte de DHCP: 
+
+- [/etc/dhnsmasq.d/01-pihole.conf](https://gist.github.com/LuisPalacios/dd2dd41690887957215cc5d88c0750d4)
+- [/etc/dhnsmasq.d/02-pihole-dhcp.conf](https://gist.github.com/LuisPalacios/23adb47e03d7bbcfbf5602127c560d70)
+- [/etc/dhnsmasq.d/03-pihole-decos.conf](https://gist.github.com/LuisPalacios/a681108193f24da6929588dbbedc0b2a)
+- [/etc/dhnsmasq.d/04-pihole-sur.conf](https://gist.github.com/LuisPalacios/c109627b3ec2f4dbd390ec5ade9184bb)
 
 <br />
 
-### Switch en `sur`
+### Switch con VLAN's
 
 En la red LAN de `sur` necesitamos un switch que soporte VLAN's e IGMP Snooping. En mi caso me he decantado por tp-link TL-SG108E.
 
 Puerto | VLAN - Descripción
 -------|-------------------
-`1,2` | Puertos VLAN 206, para los Decos, que se conectarán a Movistar a través del túnel bridge-eternet con `norte`
-`3,4` | Puertos VLAN 6, para clietnes que salen a Internet a través de la conexión vía `norte`
-`5,6,7` | Puertos VLAN 100, para clietnes que salen a Internet a través de la conexión del proveedor local en `sur`
-`8` | Puerto TRUNK vlan's 6,206,100 donde conecto mi Raspberry Pi a su `eth1`(dongle usb)
+`1,2` | VLAN 206, deco que conecta a IPTV por túnel "bridge-eternet" vía `norte`
+`3,4` | VLAN 107, clientes que salen a Internet por túnel "acceso" vía `norte`
+`5,6,7` | VLAN 10, clientes que salen a Internet por proveedor local en `sur`
+`8` | TRUNK VLANs 206,107,10 donde conecto mi Raspberry Pi a su `eth1`(dongle usb)
 
 {% include showImagen.html
     src="/assets/img/posts/2014-10-19-bridge-ethernet-05.png"
-    caption="Activo IGMP Snooping en el Switch"
+    caption="Dirección IP del propio Switch"
     width="600px"
     %}
 {% include showImagen.html
     src="/assets/img/posts/2014-10-19-bridge-ethernet-06.png"
-    caption="Defino en qué puertos se hace Tag o Untag de qué VLAN's"
+    caption="Activo IGMP Snooping en el Switch"
     width="600px"
     %}
 {% include showImagen.html
     src="/assets/img/posts/2014-10-19-bridge-ethernet-07.png"
+    caption="Defino en qué puertos se hace Tag o Untag de qué VLAN's"
+    width="600px"
+    %}
+{% include showImagen.html
+    src="/assets/img/posts/2014-10-19-bridge-ethernet-08.png"
     caption="Qué tagging se hace en cada puertos"
+    width="600px"
+    %}
+
+Como curiosidd, una vez que tengamos todo funcionando podemos ver en el propio switch los grupos multicast activos: 
+
+{% include showImagen.html
+    src="/assets/img/posts/2014-10-19-bridge-ethernet-09.png"
+    caption="Grupos multicast activos"
     width="600px"
     %}
 
@@ -737,8 +764,77 @@ Dejo aquí unos cuantos comandos para verificar el estado de salud de las conexi
 
 - [/root/firewall/norte_verifica_conectividad.sh](https://gist.github.com/LuisPalacios/1c7e2e04676124de85ced92df57a1bd7)
 
+```console
+root@norte:~/firewall# ./norte_verifica_conectividad.sh
+Unit (servicio) firewall_1_pre_network: IPTABLES (pre-net) ...                 [OK]
+Unit (servicio) firewall_2_post_network: IPTABLES (post-net) ...               [OK]
+Unit (servicio) watch_eth_bridge_con_sur.timer: Vigilante ...                  [OK]
+Unit (servicio) sshd.service: SSHD ...                                         [OK]
+Probando interface: lo                                                         [OK]
+Probando interface: eth0                                                       [OK]
+Probando interface: eth1                                                       [OK]
+Probando interface: br206                                                      [OK]
+Probando interface: tun1                                                       [OK]
+Probando IP localhost: localhost (lo) ...                                      [OK] 0.089 ms
+Probando IP 192.168.1.1: Router de acceso a Internet ...                       [OK] 0.514 ms
+Probando IP 192.168.224.2: Tunel Internet con Sur ...                          [OK] 12.471 ms
+Probando IP 192.168.206.2: Tunel IPTV con Sur ...                              [OK] 12.261 ms
+Probando IP 10.64.0.1: MOVISTAR IPTV ...                                       [OK] 3.273 ms
+Comprobando Kernel: /proc/sys/net/ipv4/ip_forward  (OK=1)                      [OK]
+Comprobando Kernel: /proc/sys/net/ipv4/conf/lo/rp_filter  (OK=0)               [OK]
+Comprobando Kernel: /proc/sys/net/ipv4/conf/all/rp_filter  (OK=0)              [OK]
+Comprobando Kernel: /proc/sys/net/ipv4/conf/default/rp_filter  (OK=1)          [OK]
+Comprobando Kernel: /proc/sys/net/ipv4/conf/eth0/rp_filter  (OK=1)             [OK]
+Comprobando Kernel: /proc/sys/net/ipv4/conf/eth1/rp_filter  (OK=0)             [OK]
+Comprobando Kernel: /proc/sys/net/ipv4/conf/br206/rp_filter  (OK=0)            [OK]
+Comprobando Kernel: /proc/sys/net/ipv4/conf/tun1/rp_filter  (OK=1)             [OK]
+Comprobando Kernel: /proc/sys/net/ipv4/conf/tun1/forwarding  (OK=1)            [OK]
+WAN Interfaz Internet ifWan              : eth0 - 192.168.1.2
+LAN IPTV              ifLanIPTV          : eth1 - 192.168.1.3
+Tunel Sur             ifTunelSur         : tun1
+Bridge IPTV           ifBridgeIPTV       : br206 - 192.168.206.1
+INTRANET : 192.168.1.0/24 192.168.206.0/24 192.168.107.0/24 192.168.10.0/24 192.168.224.0/24 192.168.222.0/24
+```
+
 **Sur**
 
 - [/root/firewall/sur_verifica_conectividad.sh](https://gist.github.com/LuisPalacios/eee992475e67e3425a73720d43df1f4d)
+
+```console
+root@sur:~/firewall# ./sur_verifica_conectividad.sh
+
+Unit (servicio) firewall_1_pre_network: IPTABLES (pre-net) ...                 [OK]
+Unit (servicio) firewall_2_post_network: IPTABLES (post-net) ...               [OK]
+Unit (servicio) watch_eth_bridge_con_norte.timer: Vigilante ...                [OK]
+Unit (servicio) sshd.service: SSHD ...                                         [OK]
+Probando interface: lo                                                         [OK]
+Probando interface: eth0                                                       [OK]
+Probando interface: br206                                                      [OK]
+Probando interface: eth1.107                                                   [OK]
+Probando interface: eth1.10                                                    [OK]
+Probando interface: tun1                                                       [OK]
+Probando IP localhost: localhost (lo) ...                                      [OK] 0.115 ms
+Probando IP 192.168.1.1: Router de acceso a Internet ...                       [OK] 0.269 ms
+Probando IP 192.168.107.254: Switch local ...                                  [OK] 2.183 ms
+Probando IP 192.168.224.1: Tunel Internet con Norte ...                        [OK] 13.317 ms
+Probando IP 192.168.206.1: Tunel IPTV con Norte ...                            [OK] 13.365 ms
+Probando IP 10.64.0.1: MOVISTAR IPTV ...                                       [OK] 15.383 ms
+Comprobando Kernel: /proc/sys/net/ipv4/ip_forward  (OK=1)                      [OK]
+Comprobando Kernel: /proc/sys/net/ipv4/conf/all/rp_filter  (OK=0)              [OK]
+Comprobando Kernel: /proc/sys/net/ipv4/conf/default/rp_filter  (OK=1)          [OK]
+Comprobando Kernel: /proc/sys/net/ipv4/conf/br206/rp_filter  (OK=0)            [OK]
+Comprobando Kernel: /proc/sys/net/ipv4/conf/eth1.107/rp_filter  (OK=1)         [OK]
+Comprobando Kernel: /proc/sys/net/ipv4/conf/eth1.10/rp_filter  (OK=1)          [OK]
+Comprobando Kernel: /proc/sys/net/ipv4/conf/tun1/rp_filter  (OK=1)             [OK]
+Comprobando Kernel: /proc/sys/net/ipv4/conf/tun1/forwarding  (OK=1)            [OK]
+Comprobando Kernel: /proc/sys/net/ipv4/conf/lo/rp_filter  (OK=0)               [OK]
+Comprobando Kernel: /proc/sys/net/ipv4/conf/eth0/rp_filter  (OK=1)             [OK]
+Comprobando Kernel: /proc/sys/net/ipv4/conf/lo/rp_filter  (OK=0)               [OK]
+WAN Interfaz Internet         : eth0 - 192.168.1.82
+Bridge IPTV                   : br206 - 192.168.206.2
+LAN Acceso Internet Via Norte : eth1.107 - 192.168.107.1
+LAN Acceso Internet Via Sur   : eth1.10 - 192.168.10.1
+INTRANET : 192.168.206.0/24 192.168.107.0/24 192.168.10.0/24 192.168.224.0/24 192.168.222.0/24
+```
 
 <br />
