@@ -180,8 +180,8 @@ Además preparo un servicio que **vigila el túnel bridge ethernet**
 
 - [/etc/systemd/system/watch_eth_bridge_con_sur.timer](https://gist.github.com/LuisPalacios/cd7dee3143e08971eba58cb19cbb9fe5)
 - [/etc/systemd/system/watch_eth_bridge_con_sur.service](https://gist.github.com/LuisPalacios/f3d4c426d8208dc5fee3c6a847dcc087)
-- [/etc/default/watch_eth_bridge_con_sur](https://gist.github.com/LuisPalacios/6d88dfc25ed09f704ffcae35a1512508)
-- [/usr/bin/watch_eth_bridge.sh](https://gist.github.com/LuisPalacios/0e957f4522ad8da15a566d034fec336f)
+- [/etc/default/watch_eth_bridge_con_sur](https://gist.github.com/LuisPalacios/f4366fb5609d1c08759cf0c256fdb49a)
+- [/usr/bin/watch_eth_bridge.sh](https://gist.github.com/LuisPalacios/0d059a520bc10bb4ee39342d28f52c16)
 
 Habilito los servicios (se activará todo en el próximo reboot)
 
@@ -580,8 +580,8 @@ Además preparo un servicio que **vigila el túnel bridge ethernet**
 
 - [/etc/systemd/system/watch_eth_bridge_con_norte.timer](https://gist.github.com/LuisPalacios/b6809e3c838a800f5f250b53e616bdc9)
 - [/etc/systemd/system/watch_eth_bridge_con_norte.service](https://gist.github.com/LuisPalacios/5dff1345f6203a55e27c1efea426eac4)
-- [/etc/default/watch_eth_bridge_con_norte](https://gist.github.com/LuisPalacios/318f50ef9b0c0cd86e291c406047daa1)
-- [/usr/bin/watch_eth_bridge.sh](https://gist.github.com/LuisPalacios/0e957f4522ad8da15a566d034fec336f)
+- [/etc/default/watch_eth_bridge_con_norte](https://gist.github.com/LuisPalacios/732bbfc06192a4d7c557f92277d50697)
+- [/usr/bin/watch_eth_bridge.sh](https://gist.github.com/LuisPalacios/0d059a520bc10bb4ee39342d28f52c16)
 
 Habilito los servicios (se activará todo en el próximo reboot)
 
