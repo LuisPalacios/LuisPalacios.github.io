@@ -55,6 +55,12 @@ Password: <la del paso anterior>
 luis@raspberrypi:~ $ sudo raspi-config
 ```
 
+{% include showImagen.html
+    src="/assets/img/posts/2023-03-02-raspberry-pi-os-04.png"
+    caption="raspi-config"
+    width="500px"
+    %}
+
 Selecciono **Interface options -> SSH -> Ok**, arrancará el servicio SSHD. Me salgo de `raspi-config` y averiguo qué dirección IP ha recibido de la red.
 
 ```console
@@ -79,29 +85,30 @@ Use raspi-config to set the country before use.
 pi@raspberrypi:~ $
 ```
 
-Vuelvo a entrar en `raspi-config` para terminar de configurar múltiples aspectos importantes: 
+Vuelvo a ejecutar `raspi-config` para terminar de configurar múltiples aspectos importantes: 
+
+```console
+pi@raspberrypi:~ $ sudo raspi-config
+```
 
 * `System Options > hostname > "idefix"`
 * `Localisation Options > Locale >`
-  * `[ ] en_GB.UTF-8 UTF-8`
-  * `[*] es_ES.UTF-8 UTF-8`
+  * `[ ] en_GB.UTF-8 UTF-8 <---- Lo quito`
+  * `[*] es_ES.UTF-8 UTF-8 <---- Lo pongo` 
   * `Default Locale: es_ES.UTF-8 UTF-8`
 * `Localisation Options > Timezone > Europa, Madrid`
 * `Localisation Options > WLAN Country > ES`
-* `Advance Options > Network intLocalisation Options > WLAN Country > ES`
+* `Advance Options > Network interface names > No`
 * `Finish y Reboot`
 
 Por último hacemos una actualización del sistema operativo !
 
 ```console
-# apt update && apt upgrade -y && apt full-upgrade -y
+pi@raspberrypi:~ $ sudo su -
+root@raspberrypi:~# apt update && apt upgrade -y && apt full-upgrade -y
 ```
 
-<br/>
-
-### YA ESTÁ !!!
-
-Tengo una Raspberry Pi perfectamente operativa, actualizada a la última versión de Raspberry OS de 64 bits. 
+Ya hemos terminado, tengo una Raspberry Pi perfectamente operativa, actualizada a la última versión de Raspberry OS de 64 bits.
 
 <br/>
 
@@ -124,7 +131,6 @@ console=serial0,115200 console=tty1 root=PARTUUID=2c310193-02 rootfstype=ext4 fs
 * Fichero `/boot/config.txt`, añado al final del fichero dos líneas adicionales:
 
 ```console
-:
 dtoverlay=disable-wifi
 dtoverlay=disable-bt
 ```
@@ -136,15 +142,13 @@ dtoverlay=disable-bt
 
 #### Ficheros y scripts
 
-Si los quieres instalar bájate los gists y dales permiso de ejecución. Para instalarlos, a continuación un ejemplo: haz clic en el enlace (p.ej. el de `/usr/bin/e`), selecciánalo todo y copia con Ctrl-C. Depués usa `cat` y cambia los permisos: 
+Si los quieres instalar bájate los gists y dales permiso de ejecución. Para instalarlos, a continuación un ejemplo: haz clic en el enlace (p.ej. el de `/usr/bin/e`), selecciánalo todo y copia con Ctrl-C. Depués usa `cat`, Intro, Ctrl-D y al volver a la línea de comandos cambia los permisos:
 
 ```console
 luis@idefix:~ $ sudo su -
 root@dubai:~# cat > /usr/bin/e
-Ctrl-V             <=== Pego el contenido del gist
-
-Intro              <=== Crear nueva línea vacía al final, antes de pulsar Ctrl-D
-Ctrl-D             <=== Salgo
+:
+:
 root@dubai:~# chmod 755 /usr/bin/e
 ```
 
