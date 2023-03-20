@@ -133,6 +133,26 @@ Aunque no activo `eth1` durante el boot, para que funcione el TP-Link Adaptador 
 
 - [/etc/udev/rules.d/50-usb-realtek-net.rules](https://gist.github.com/LuisPalacios/7f78efbcb6d57ff29d72209e1a5c43a6)
 
+Para evitar que **`networkd`** elimine reglas o rutas que se establecen por fuera de su control modifico el fichero `networkd.conf`. Un ejemplo es si usamos `RIP` (vía [frr](https://frrouting.org)) para recibir rutas, otro ejemplo es si usamos el comando `ip rule` para hacer policy based routing (de hecho en este apunte lo utilizo). 
+
+- `/etc/systemd/networkd.conf`
+
+```console
+[Network]
+#SpeedMeter=no
+#SpeedMeterIntervalSec=10sec
+ManageForeignRoutingPolicyRules=no          # Cambiarlo a "no" !!!
+ManageForeignRoutes=no                      # Cambiarlo a "no" !!!
+#RouteTable=
+
+[DHCPv4]
+#DUIDType=vendor
+#DUIDRawData=
+
+[DHCPv6]
+#DUIDType=vendor
+#DUIDRawData=
+```
 
 Activo la nueva configuración:
 
