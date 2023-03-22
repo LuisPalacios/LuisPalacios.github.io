@@ -8,10 +8,9 @@ excerpt_separator: <!--more-->
 
 ![logo linux router](/assets/img/posts/logo-linux-rtsp.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
 
-Aquí me ocupo en detalle de cómo configurar el [router Linux para Movistar]({% post_url 2014-10-05-router-linux %}) para que funcionen los "Videos bajo demanda", es decir, ver una Peli, una Serie, rebobinar (canal) o ver una grabación (propia o Últimos 7 días)
-de los últimos 7 días o algo que hayamos grabado.  varios  Es posible seleccionar y ver videos bajo demanda para reproducir películas o grabaciones. Por desgracia el tráfico que va por debajo es algo peculiar y si nuestro router no soporta una cosa llamada **Full Cone NAT** pues no nos va a funcionar.
+Los streams de video IPTV que utiliza Movistar son de dos tipos: los canales normales (Multicast/UDP) y los videos bajo demanda (Unicast/UDP). En este apunte describo qué hay que hacer en el [router Linux para Movistar]({% post_url 2014-10-05-router-linux %}) para que funcionen los "Videos bajo demanda". Utilizan el protocolo `RTSP` que necesita que nuestro router soporte **Full Cone NAT**. 
 
-El motivo es que los Decos solicitan los videos mediante RTSP a su servidor de control pero el vídeo se les envía desde otro servidor distinto, una IP desconocida, por lo que descartará el tráfico. Veamos cómo resolverlo.
+Los Decos solicitan los videos mediante RTSP a su servidor de control pero el video se enviá desde otro servidor distinto, con una IP desconocida, por lo que si no hacemos nada se descartará el tráfico del video. Veamos cómo resolverlo.
 
 
 <br clear="left"/>
@@ -19,9 +18,9 @@ El motivo es que los Decos solicitan los videos mediante RTSP a su servidor de c
 
 ## Full Cone NAT vs "netfilter rtsp"
 
-Hay varios tipos de NAT y no es el objeto describirlos aquí, lo que sí que tienes que tener en cuenta es que necesitas usar **Full Cone NAT o algo parecido** para poder ver los videos bajo demanda. En los routers originales que nos deja Movistar podemos ver que tiene full cone nat activo en el interfaz IPTV (vlan2).
+Hay varios tipos de NAT y no es el objeto describirlos aquí, lo que sí que tienes que tener en cuenta es que necesitas usar **Full Cone NAT** para poder ver los videos bajo demanda. En los routers originales que nos deja Movistar podemos ver que tiene Full cone nat activo en el interfaz IPTV (vlan2).
 
-Como decía al principio, los Decos solicitan los videos mediante el protocolo RTSP a su servidor de control pero el que entrega el stream MPEG2(TS) es otro servidor distinto, desde una IP desconocida para tu router, por lo que se descartará. Ahí es donde entra el Full Cone NAT. Fue desarrollado para resolver precisamente este problema, identificar las peticiones de video bajo demanda (flujos RTSP).
+Como decía al principio, los Decos solicitan los videos mediante el protocolo RTSP a su servidor de control pero el que entrega el stream MPEG2(TS) es otro servidor distinto, desde una IP distinta y desconocida para tu router, por lo que se descartará. Ahí es donde entra el Full Cone NAT. Fue desarrollado para resolver precisamente este problema, identificar las peticiones de video bajo demanda (flujos RTSP).
 
 {% include showImagen.html
     src="/assets/img/original/vod-978x1024.png"
@@ -33,11 +32,11 @@ Como decía al principio, los Decos solicitan los videos mediante el protocolo R
 
 ### ¿Cómo funciona?
 
-Sigamos el gráfico anterior. Cuando pulsas el botón "Movistar TV" en tu mando, el Deco busca al servidor que gestiona la parrilla, lo primero que hace es enviar una consulta al DNS Server (1) para preguntar quién es el servidor que gestiona la parrilla y los menús. 
+Sigamos el gráfico anterior, por ejemplo seleccionando una Peli. Cuando pulsas el botón "Movistar TV" en tu mando, el Deco busca al servidor que gestiona la parrilla, lo primero que hace es enviar una consulta al DNS Server (1) para preguntar quién es el servidor que gestiona la parrilla y los menús.
 
-Una vez que consigue su dirección establece un diálogo con él (2) y es ahí donde recibes y ves los menús en tu tele. Navegando por los menús y una vez seleccionas una grabación, serie o película y pulsas en "Ver", el deco solicita el video a otro servidor distinto que llamo gestor de videos bajo demanda (3) mediante el protocolo RTSP. 
+Una vez que consigue su dirección establece un diálogo con él (2) y es ahí donde recibes y ves los menús en tu tele. Navegando por los menús y una vez seleccionas una grabación, serie o película y pulsas en "Ver", el deco solicita el video a otro servidor distinto que llamo gestor de videos bajo demanda (3) mediante el protocolo RTSP.
 
-En esta última petición se envía un paquete SETUP que contiene el número del puerto por el que el Deco se quedará escuchando para recibir el futuro video. Mientras el deco espera, el gestor de videos bajo demanda solicita (4) que uno de los servidores que llamo MPEG Servers envíe de vuelta el stream de video MPEG (5) al puerto que se solicitó en el paquete SETUP.
+Se origina con un paquete SETUP que contiene el número del puerto por el que el Deco se quedará escuchando para recibir el futuro video. Mientras el deco espera, el gestor de videos solicita (4) que uno de los servidores (que llamo MPEG Servers) envíe el stream de video MPEG (5) al puerto que se solicitó en el paquete SETUP.
 
 {% include showImagen.html
     src="/assets/img/original/captura_vod1-1024x578.png"
@@ -45,33 +44,26 @@ En esta última petición se envía un paquete SETUP que contiene el número del
     width="600px"
     %}
 
-En el gráfico de captura anterior vemos como el Deco solicita que se envíe el video al puerto 27171. El servidor que hará de emisor del stream MPEG será distinto y empezará a enviar tráfico MPEG-2 TS (Transport Stream) en modo Unicast a la IP visible del router (Linux) al puerto solicitado (27171 en este ejemplo). El router (Linux) deberá instalar una regla dinámica para que todo tráfico recibido en su IP exterior y ese puerto se conmute hacia el Deco solicitante y mismo puerto.
+En el gráfico de captura anterior vemos como el Deco solicita que se envíe el video al puerto 27171. El servidor que hará de emisor del stream MPEG será distinto y empezará a enviar tráfico MPEG-2 TS (Transport Stream) en modo Unicast/UDP a la IP visible del router (Linux), al puerto solicitado (27171).
+
+Para que el router (Linux) no tire el tráfico hay que instalar una regla de tipo DNAT para que se conmute hacia el Deco solicitante.
 
 <br/>
 
 ### ¿Cómo lo implemento?
 
-En el caso de linux vamos a utilizar **netfilter rtsp** y lo vamos a hacer instalando un pequeño código de software libre que se llama **rtsp-conntrack**, añadiendo un pequeño parche necesario para que funcione correctamente. Estas pruebas las hice con el kernel 3.17.0 en Gentoo y **no** usé el paquete `net-firewall/rtsp-conntrack-3.7` original que viene con Gentoo porque instalaba una versión antigua que no funciona con movistar.
+En el caso de linux vamos a utilizar **netfilter rtsp** y lo vamos a hacer instalando un pequeño código de software libre que se llama **rtsp-conntrack**, añadiendo un pequeño parche necesario para que funcione correctamente. Estas pruebas las hice con el kernel 3.17.0 en Gentoo, descargué los fuentes originales, los parcheé, compilé e instalé. He dejado todo en [mi repositorio rtsp-linux en github](https://github.com/LuisPalacios/rtsp-linux).
 
-Lo que hice fue descargar los fuentes originales, parchearlos, compilarlos e instalarlos.
-
-- Instalación del módulo, fíjate que uso "debug" al hacer el make. Durante la fase de pruebas es importante para enterarte de lo que está pasando (log del kernel). Más adelante recompilo sin dicha opción. 
+- Instalación del módulo, fíjate que uso "debug" al hacer el make. Durante la fase de pruebas es importante para enterarte de lo que está pasando (log del kernel). Más adelante recompilo sin dicha opción.
 
 ```console
  
 ___DESCARGA___
-# mkdir /tmp/rtsp
-# cd /tmp/rtsp
-# wget http://mike.it-loops.com/rtsp/rtsp-module-3.7-v2.tar.gz
-:
-# tar xvfz rtsp-module-3.7-v2.tar.gz
-# rm rtsp-module-3.7-v2.tar.gz
-
-___PATCH___
-Copia/Pega desde pastebin el parche: http://pastebin.com/4QZ2r7eV 
-Crea un fichero por ejempo en: /tmp/rtsp-3.7-v2.patch
-
-# patch < /tmp/rtsp-3.7-v2.patch
+# cd ~/
+# wget https://github.com/LuisPalacios/rtsp-linux/archive/refs/heads/master.zip
+# unzip master.zip
+# rm master.zip
+# cd ~/rtsp-linux-master
 
 ___COMPILA___
 # make debug
@@ -93,11 +85,15 @@ drwxr-xr-x 5 root root 4096 oct 18 16:41 ..
 Una vez terminada la compilación e instalación anterior ya puedes cargar los módulos en el Kernel:
 
 ```console 
-# modprobe nf_conntrack_rtsp  (Este módulo se encarga de "detectar" el SETUP RTSP)
-# modprobe nf_nat_rtsp        (Este módulo se encarga de establecer la asociación (nat))
+# modprobe nf_conntrack_rtsp  (Este módulo se ejecuta al "detectar" el SETUP RTSP)
+# modprobe nf_nat_rtsp        (Este módulo se encarga de establecer la asociación (dnat))
  
-# sysctl -w net.netfilter.nf_conntrack_helper=1
 ````
+
+- A continuación tenemos que configurar `conntrack` para que llame a los módulos del kernel. Hay dos formas de hacerlo, dependiendo de qué versíon del kernel tengas: 
+
+- Kernel <= 5 : `sysctl -w net.netfilter.nf_conntrack_helper=1`
+- Kernel >= 6 : `iptables -t raw -A PREROUTING -p tcp --dport 554 -j CT --helper rtsp`
 
 - Te vuelves a tu Deco, entras en el menú Movistar TV, busca una grabación y pula en "ver", debería funcionar. Puedes comprobar con el comando dmesg que la asociación es correcta, algo parecido a lo siguiente:
 
@@ -130,9 +126,11 @@ Una vez terminada la compilación e instalación anterior ya puedes cargar los m
 [359264.285029] IP_CT_DIR_REPLY
 ```
 
+<br/>
+
 ### Instalación final
 
-Una vez lo tengas todo funcionando te recomiendo que recompiles sin "debug", vuelvas a instalar los módulos y programes su carga durante el arranque del equipo
+Una vez lo tengas todo funcionando te recomiendo que recompiles sin "debug", vuelvas a instalar los módulos y programes su carga durante el arranque del equipo. 
 
 Recompila e instala
 
@@ -146,7 +144,7 @@ Recompila e instala
 
 **Nota**: Recuerda que si compilas e instalas un nuevo Kernel, tendrás que recompilar e instalar de nuevo estos dos módulos.
 
-Carga durante el boot, en gentoo hay que añadir lo siguiente al fichero `/etc/conf.d/modules`
+Carga durante el boot, en gentoo hay que añadir lo siguiente al fichero `/etc/conf.d/modules` (en Gentoo)
 
 ```console
 :
@@ -154,11 +152,18 @@ modules="nf_conntrack_rtsp"
 modules="nf_nat_rtsp"
 ```
 
-Acuérdate de ejecutar esto en algún momento durante el arranque de tu equipo:
+En Ubuntu, añade al fichero `/etc/modules`
 
 ```console
-sysctl -w net.netfilter.nf_conntrack_helper=1
+nf_nat_rtsp
 ```
+
+No olvides configurar `conntrack` para que llame a los módulos del kernel, tienes dos formas distintas de hacerlo como veíamos arriba, acuérdate de ejecutarlo en algún momento durante el arranque de tu equipo:
+
+- Kernel <= 5 : `sysctl -w net.netfilter.nf_conntrack_helper=1`
+- Kernel >= 6 : `iptables -t raw -A PREROUTING -p tcp --dport 554 -j CT --helper rtsp`
+
+<br/>
 
 ### Monitorizar
 
@@ -190,4 +195,4 @@ udp 17 29 src=172.26.83.137 dst=10.214.XX.YY sport=48440 dport=27645 [UNREPLIED]
 
 ### Referencias
 
-- Puedes encontrar la última versión en el repositorio [rtsp-module](https://github.com/LuisPalacios/rtsp-module) en mi cuenta de GitHub
+- Mi repositorio [rtsp-linux](https://github.com/LuisPalacios/rtsp-linux).
