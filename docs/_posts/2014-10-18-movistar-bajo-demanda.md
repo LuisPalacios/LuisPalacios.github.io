@@ -92,8 +92,17 @@ Una vez terminada la compilación e instalación anterior ya puedes cargar los m
 
 - A continuación tenemos que configurar `conntrack` para que llame a los módulos del kernel. Hay dos formas de hacerlo, dependiendo de qué versíon del kernel tengas: 
 
-- Kernel <= 5 : `sysctl -w net.netfilter.nf_conntrack_helper=1`
-- Kernel >= 6 : `iptables -t raw -A PREROUTING -p tcp --dport 554 -j CT --helper rtsp`
+- Automático: `sysctl -w net.netfilter.nf_conntrack_helper=1`
+- Manual: `iptables -t raw -A PREROUTING -p tcp --dport 554 -j CT --helper rtsp`
+
+El método automático solo se puede usar hasta el kernel 5, mientras que el manual puede usarse con cualquier kernel. El método que recomiendo es el manual, de hecho la recomendación completa es: 
+
+```console
+iptables -t raw -A PREROUTING -p tcp --dport 554 -j CT --helper rtsp
+iptables -A FORWARD -p tcp --dport 554 -m state --state RELATED,ESTABLISHED
+```
+
+Estas reglas asumen que la conexión RTSP usa TCP y que el servidor está escuchando en el puerto 554 (que es el caso). El primer comando utiliza el target `CT` para asignar el helper `rtsp` a las conexiones RTSP entrantes. El segundo comando hace posible que estas conexiones que ya estuviesen establecidas y relacionadas funcionen a través del firewall.
 
 - Te vuelves a tu Deco, entras en el menú Movistar TV, busca una grabación y pula en "ver", debería funcionar. Puedes comprobar con el comando dmesg que la asociación es correcta, algo parecido a lo siguiente:
 

@@ -469,7 +469,7 @@ Habilito su arranque durante el boot
 
 ### Fullcone NAT
 
-Tal como describo en el apunte [Videos bajo demanda]({% post_url 2014-10-18-movistar-bajo-demanda %}), es necesario activar este tipo de NAT para que funcionen las grabaciones, series, películas, etc. 
+Tal como describo en el apunte [Videos bajo demanda]({% post_url 2014-10-18-movistar-bajo-demanda %}), es necesario activar Fullcone NAT para que funcionen los flujos de tipos RTSP (grabaciones, series, películas, rebobinar, etc).
 
 Compilo e instalo en el sistema operativo Raspberry Pi OS de `norte`:
 
@@ -497,6 +497,11 @@ nf_conntrack          139264  4 nf_nat,nf_conntrack_rtsp,nf_nat_rtsp,xt_MASQUERA
 ```console
 nf_nat_rtsp
 ```
+
+- Configuro el sistema para que se llame a estos módulos al detectar flujos de tipo RTSP. Hay dos formas de hacerlo, dependiendo de qué versíon del kernel que tengas.
+
+Automático: `sysctl -w net.netfilter.nf_conntrack_helper=1`, solo funciona hasta el Kernel 5.x.
+Manual: `iptables -t raw -A PREROUTING -p tcp --dport 554 -j CT --helper rtsp`, funciona con cualquier versión de Kernel, incluida la 6.x.
 
 | ¡Aviso! - Ahora es buen momento para hacer un reboot de `norte` |
 
