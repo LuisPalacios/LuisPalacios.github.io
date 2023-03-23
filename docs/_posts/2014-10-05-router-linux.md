@@ -330,12 +330,20 @@ Para la vlan 6 (datos internet)
 ```console 
 # export ipVLAN6=\`ip addr show dev vlan6 | grep inet | awk '{print $2}' | sed 's;\/.*;;'\`
 # iptables -t nat -A POSTROUTING -o ppp0 -s 192.168.1.0/24 -j SNAT --to-source ${ipVLAN6}
+
+o más fácil: 
+
+# iptables -t nat -A POSTROUTING -o ppp0 -j MASQUERADE
 ```
 
 Para la vlan 2 (IPTV)
 
 ```console 
-#iptables -t nat -A POSTROUTING -o vlan2 -s 192.168.1.0/24 -j SNAT --to-source 10.214.XX.YY
+# iptables -t nat -A POSTROUTING -o vlan2 -s 192.168.1.0/24 -j SNAT --to-source 10.214.XX.YY
+
+o más fácil: 
+
+# iptables -t nat -A POSTROUTING -o vlan2 -j MASQUERADE
 ```
 
 Para la vlan 3 (VoIP)
@@ -344,6 +352,10 @@ Para la vlan 3 (VoIP)
 ```console 
 # export ipVLAN3=\`ip addr show dev vlan3 | grep inet | awk '{print $2}' | sed 's;\/.*;;'\`
 # iptables -t nat -A POSTROUTING -o vlan3 -s 192.168.1.0/24 -j SNAT --to-source ${ipVLAN3}
+
+o más fácil: 
+
+# iptables -t nat -A POSTROUTING -o vlan3 -j MASQUERADE
 ```
 
 <br/>
