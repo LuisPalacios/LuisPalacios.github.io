@@ -288,7 +288,7 @@ El siguiente paso es que arranques ambos daemos, estas son las órdenes en Gento
 # /etc/init.d/ripd start
 ```
 
-Puedes conectar con ambos daemons y ver qué está pasando. Primero con el daemon general de zebra:
+Puedes conectar con ambos daemons y ver qué está pasando. Primero con el daemon general de zebra y luego el de ripd
 
 ```console
 # telnet localhost 2601
@@ -299,11 +299,9 @@ Password:
 bolica# show ip route
 :
 bolica# quit
-``` 
 
-Después con el daemon ripd
+:
 
-```console
 # telnet localhost 2602
 :
 Password:
@@ -368,7 +366,11 @@ Si tienes problemas te recomiendo que añadas una linea con la cadena `debug` en
 
 Tanto si has contratado una IP fija como una dinámica la configuración es la misma, al arrancar el daemon PPP el equipo recibirá su IP, instalará una ruta por defecto por dicho interfaz y listo.
 
-OJO!: Una de las desventajsa de PPPoE es que reduce la MTU a 1492 y el MSS (Maximum Segment Size) negociado de TCP a 1452, así que tenemos que hacer lo mismo en nuestro Linux. ¿Dónde?, pues la MTU en un sitio y el MSS en otro:
+<br/> 
+
+**MTU**
+
+OJO!: Una de las desventajas de PPPoE es que reduce la MTU a 1492 y el MSS (Maximum Segment Size) negociado de TCP a 1452, así que tenemos que hacer lo mismo en nuestro Linux. ¿Dónde?, pues la MTU en un sitio y el MSS en otro:
 
 - MTU: El PPPD se encarga de definir la MTU en `/etc/conf.d/net`
 - MSS: El MSS se tiene que configurar con `iptables`
@@ -386,6 +388,25 @@ iptables -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
 iptables -t mangle -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
 :
 ```
+
+<br/> 
+
+**Source NAT**
+
+Como decía antes, necesario hacer source NAT, de modo que el tráfico originado por los clientes de la red salgan a internet con la dirección que tenemos en el interfaz ppp0
+
+```console 
+# export ipVLAN6=\`ip addr show dev vlan6 | grep inet | awk '{print $2}' | sed 's;\/.*;;'\`
+# iptables -t nat -A POSTROUTING -o ppp0 -s 192.168.1.0/24 -j SNAT --to-source ${ipVLAN6}
+
+o más fácil: 
+
+# iptables -t nat -A POSTROUTING -o ppp0 -j MASQUERADE
+```
+
+<br/> 
+
+**Arranque**
 
 Preparamos el arranque futuro
 
@@ -410,7 +431,7 @@ El Servicio VoIP nos llega por la VLAN-3. La configuración es sencilla, el equi
 
 <br/>
 
-### Cliente dhcp
+**Cliente dhcp**
 
 En la configuración cliente DHCP de linux hay que especificar que "no" sobreescriba NIS, NTP ni DNS, y además que "no" se instale una ruta por defecto por dicha VLAN3. Lo vimos en la configuración de la red al principio, pero como recordatorio estas son las líneas específicas en /etc/conf.d/net
 
@@ -423,18 +444,22 @@ dhcp_vlan3="nogateway nodns nontp nosendhost nonis"
 
 <br/>
 
-### Source NAT
+**Source NAT**
 
-Debes hacer source NAT, de modo que el tráfico originado por tu cliente SIP (que reside en la VLAN100 con dirección 192.168.1.xxx)  que salga por la vlan3 lo haga con la dirección IP fuente del linux (recibida por dhcp y del estilo 10.25.ZZZ.ZZZ), como recordatorio estos son los comandos que ejecuto:
+De nuevo, para que el tráfico originado por tu cliente SIP (que reside en la VLAN100 con dirección 192.168.1.xxx)  que salga por la vlan3 lo haga con la dirección IP fuente del linux (recibida por dhcp y del estilo 10.25.ZZZ.ZZZ), como recordatorio estos son los comandos que ejecuto:
 
 ```console
 # export ipVLAN3=\`ip addr show dev vlan3 | grep inet | awk '{print $2}' | sed 's;\/.*;;'\`
 # iptables -t nat -A POSTROUTING -o vlan3 -s 192.168.1.0/24 -j SNAT --to-source ${ipVLAN3}
+
+o más fácil: 
+
+# iptables -t nat -A POSTROUTING -o vlan3 -j MASQUERADE
 ```
 
 <br/>
 
-### La "ruta" para Voip
+**La "ruta" para Voip***
 
 Por este interfaz solo vamos a necesitar una única ruta y podemos aprenderla por RIP pasivo o bien instalarla manualmente. En mi caso he preferido usar RIP.  Lo vimos al principio, estas son las líneas específicas en `/etc/quagga/ripd.conf`
 
@@ -627,7 +652,7 @@ ___ Pon a "0" el Interfaz Upstream ____
 
 Tienes que desactivar (0) en `All` y en `vlan2`, dejando el resto activas (1), donde el RPF seguirá actuando. Notarás que la `loopback` (lo) también está desactivado, es correcto.
 
-``conf 
+```conf 
 /proc/sys/net/ipv4/conf/all/rp_filter        0
 /proc/sys/net/ipv4/conf/default/rp_filter    1
 /proc/sys/net/ipv4/conf/vlan100/rp_filter    1
@@ -648,8 +673,12 @@ ___ COMPRUEBA TU INSTALACIÓN ___
 
 Aunque ya lo expliqué antes, recordatorio: para que los paquetes de los Decos salgan hacia la VLAN2 con tú dirección IP (en la vlan2) es necesario hacer Source NAT.
 
-```console
-iptables -t nat -A POSTROUTING -o vlan2 -s 192.168.1.0/24 -j SNAT --to-source 10.214.XX.YY
+```console 
+# iptables -t nat -A POSTROUTING -o vlan2 -s 192.168.1.0/24 -j SNAT --to-source 10.214.XX.YY
+
+o más fácil: 
+
+# iptables -t nat -A POSTROUTING -o vlan2 -j MASQUERADE
 ```
 
 Opcional, si tu Linux es un router de internet y usas iptables para hacer de firewall, recuerda aceptar los paquetes multicast. Te dejo un recordatorio:
