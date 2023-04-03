@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 
 ![logo linux router](/assets/img/posts/logo-raspberry.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-Este apunte describo el proceso de instalación de una **Raspberry Pi 4 Model B Rev 1.5** con el sistema operativo basado en Debian **Raspberry Pi OS (64bits)**. Va a ser un mini servidor para distintas pruebas y tareas.
+Este apunte describo el proceso de instalación de una **Raspberry `Pi4B Rev1.5`** (también probado con la `Pi3B+`)  con el sistema operativo **Raspberry Pi OS (64bits)** (basado en Debian). Normalmente uso estas Pi's como mini servidores de propósito específico o para pruebas y laboratorios.
 
 <br clear="left"/>
 <!--more-->
@@ -74,7 +74,7 @@ eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 Me conecto desde mi puesto de trabajo
 
 ```console
-$ ssh pi@192.168.1.82
+$ ssh luis@192.168.1.82
 :
 Last login: Tue Feb 21 04:29:57 2023
 -bash: warning: setlocale: LC_ALL: cannot change locale (es_ES.UTF-8)
@@ -82,13 +82,13 @@ Last login: Tue Feb 21 04:29:57 2023
 Wi-Fi is currently blocked by rfkill.
 Use raspi-config to set the country before use.
 
-pi@raspberrypi:~ $
+luis@raspberrypi:~ $
 ```
 
 Vuelvo a ejecutar `raspi-config` para terminar de configurar múltiples aspectos importantes: 
 
 ```console
-pi@raspberrypi:~ $ sudo raspi-config
+luis@raspberrypi:~ $ sudo raspi-config
 ```
 
 * `System Options > hostname > "idefix"`
@@ -99,13 +99,17 @@ pi@raspberrypi:~ $ sudo raspi-config
 * `Localisation Options > Timezone > Europa, Madrid`
 * `Localisation Options > WLAN Country > ES`
 * `Advance Options > Network interface names > No`
+  * `No`: Si quieres usar eth0, eth1, etc..
+  * `Yes`: Si quieres usar nombres predecibles
 * `Finish y Reboot`
 
 Por último hacemos una actualización del sistema operativo !
 
 ```console
-pi@raspberrypi:~ $ sudo su -
-root@raspberrypi:~# apt update && apt upgrade -y && apt full-upgrade -y
+$ ssh luis@192.168.1.82
+:
+luis@idefix:~ $ sudo su -
+root@idefix:~# apt update && apt upgrade -y && apt full-upgrade -y
 ```
 
 Ya hemos terminado, tengo una Raspberry Pi perfectamente operativa, actualizada a la última versión de Raspberry OS de 64 bits.
@@ -146,10 +150,10 @@ Si los quieres instalar bájate los gists y dales permiso de ejecución. Para in
 
 ```console
 luis@idefix:~ $ sudo su -
-root@dubai:~# cat > /usr/bin/e
+root@idefix:~# cat > /usr/bin/e
 :
 :
-root@dubai:~# chmod 755 /usr/bin/e
+root@idefix:~# chmod 755 /usr/bin/e
 ```
 
 - Script [/usr/bin/e](https://gist.githubusercontent.com/LuisPalacios/14b0198abc35c26ab081df531a856971/raw/8b6e278b4e89f105b2d573ebc79c67e915e6ab47/e)
