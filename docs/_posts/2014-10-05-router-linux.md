@@ -566,6 +566,30 @@ A continuación el tipo de tráfico que he visto en la vlan2 con WireShark:
     - 239.0.2.132:3937 DVBSTP
     - 239.0.2.155:3937 DVBSTP
 
+- El resto de rangos deben estar configurados para enrutarse por la VLAN6 (o VLAN3 para VoIP). Los Decos consumen la VLAN2 para el 99% del tráfico, pero observe cierto tráfico en la VLAN6 ... 
+
+<br/>
+
+#### Arranque de los Decos
+
+Apago el Deco durante más de 30seg (para que haga un arranque completo), lo enciendo y esta es la actividad que observo:
+
+* Tras el boot hace un DHCP Request
+  * Debe recibir su IP, el router por defecto, el DNS Server `172.26.23.3` y la `opción 240` (ver siguiente punto)
+* Hace un IGMP Report (Join) al grupo `239.0.2.30`, el tráfico multicast empieza a llegar y se va suscribiendo a otros grupos (`239.0.2.2, 239.0.2.129-134, 239.0.2.154-155`)
+* En paralelo pide (al DNS) la IP de `main.acs.telefonica.net`, se intenta conectar con él por el puerto `7008`.
+  * La sesión TLS fracasa por **Error de Certificado Expirado** - Probablemente (aunque nunca lo he verificado) tenga que ver que el Deco en este punto **todavía no ha actualizado su fecha, tiene 1/1/1970**.
+  * NOTA: ES IMPORTANTE QUE CONECTE CON ESTE SITIO, a pesar de dar el error de Certificado (si no lo consigue no progresa en su arranque). Da igual que de error de certificado. 
+* Entro en la *Configuración del descodificador* (cada mando con una tecla distinta). Par cuando llegamos aquí veo que **ha conseguido actualizar la fecha** (gracias al tráfico multicast) y podremos confirmar los parámetros DHCP, etc...
+* Si dejo el Deco en el menú de configuración observo que sigue llegando tráfico multicast y de vez en cuando intenta conectar con `main.acs.telefonica.net` (y dando error de certificado, algo que por lo que he visto se puede ignorar).
+* Salgo del Configurador, muestra durante un rato "Cargando ()()()"... y por detrás se va conectando en TCP/HTTP a varios sitios, entre ellos `http://www-60.svc.imagenio.telefonica.net:2001/appserver/mvtv.do?...". 
+* Tras bastante intercambio de tráfico TCP (y por supuesto va llegando mucho en multicast) empiezo a ver imágenes en la pantalla de la TV.
+* Al cabo de un rato tengo los menús cargados y todo preparado. 
+* En cuanto pulso un canal, hace un IGM Report (Join) y se empieza a visualizar el canal.
+
+Ocurren bastantes cosas por detrás incluso antes de llegar al menú de configuración. Si no tienes bien configurado el routing (ver el punto anterior), el DNS Server (172.26.23.3), el IGMP Snooping, el Multicast forwarding, RPF (ver más adelante), etc... vas a tener algún tipo de problema. Ten cuidado porque despista mucho cuando unas cosas funcionan y otras no (multicast, unicast, nat, rtsp)...
+ 
+
 <br/>
 
 ## DHCP para los Decos

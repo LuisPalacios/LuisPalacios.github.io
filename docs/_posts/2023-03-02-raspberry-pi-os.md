@@ -144,6 +144,29 @@ dtoverlay=disable-bt
 
 <br />
 
+#### Asigno una IP fija
+
+Normalmente dejo que la Pi trabaje con el cliente dhcp por defecto, pero a veces necesito asignarle una IP fija. No es evidente cómo hacerlo, porque depende de la versión del SO. En mi caso he configurado `raspi-config` -> Avanzado -> Netowrk -> Nombres de interfaces predecibles -> No. Después modifico estos dos ficheros: 
+
+* Fichero `/etc/dhcpcd.conf`, añado al final lo siguiente:
+
+```console
+interface eth0
+static ip_address=192.168.103.3/22
+static routers=192.168.100.1
+static domain_name_servers=192.168.100.224
+```
+
+* Fichero `/etc/network/interfaces`, añado al final lo siguiente:
+
+```console
+auto eth0
+allow-hotplug eth0
+iface eth0 inet maual
+```
+
+<br />
+
 #### Ficheros y scripts
 
 Si los quieres instalar bájate los gists y dales permiso de ejecución. Para instalarlos, a continuación un ejemplo: haz clic en el enlace (p.ej. el de `/usr/bin/e`), selecciánalo todo y copia con Ctrl-C. Depués usa `cat`, Intro, Ctrl-D y al volver a la línea de comandos cambia los permisos:
