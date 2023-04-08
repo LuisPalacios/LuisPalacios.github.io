@@ -9,9 +9,9 @@ excerpt_separator: <!--more-->
 
 ![logo linux router](/assets/img/posts/logo-proxmox-plantilla.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-Proxmox VE es una plataforma de virtualización potente y fácil de usar con muchas características. Una de ellas es la posibilidad de usar **plantillas para crear máquinas virtuales**. Minimiza el tiempo dedicado a la creación de nuevas instancias.
+Proxmox VE es una plataforma de virtualización de código abierto potente y fácil de usar que permite el despliegue y la gestión de máquinas virtuales (con el Hipervisor KVM y QEMU) y contenedores (basados con LXC). Ofrece la posibilidad de usar **plantillas para crear máquinas virtuales** de forma muy sencilla, algo que minimiza el tiempo de creación de nuevas instancias.
 
-En este apunte describo cómo combinar las *Plantillas de Proxmox* con **imágenes basada en la nube** y **cloud-init** para automatizar todo el proceso de instanciación de VM's. En este apunte utilizo Proxmox VE 7.4-3 y una imagen de Ubuntu 22.04 LTS.
+En este apunte describo cómo combinar las *Plantillas de Proxmox* con **imágenes basada en la nube** y **cloud-init** para automatizar todo el proceso de instanciación de VM's (ejemplos para Ubuntu y Debian).
 
 
 <br clear="left"/>
