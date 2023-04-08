@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 
 ![logo linux router](/assets/img/posts/logo-proxmox-plantilla.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-Proxmox VE es una plataforma de virtualización de código abierto potente y fácil de usar que permite el despliegue y la gestión de máquinas virtuales (con el Hipervisor KVM y QEMU) y contenedores (basados con LXC). Ofrece la posibilidad de usar **plantillas para crear máquinas virtuales** de forma muy sencilla, algo que minimiza el tiempo de creación de nuevas instancias.
+[Proxmox VE](https://www.proxmox.com/en/proxmox-ve) es una plataforma de virtualización de código abierto potente y fácil de usar que permite el despliegue y la gestión de máquinas virtuales (con el Hipervisor KVM y el virtualizador QEMU) y contenedores (basados en LXC). Ofrece la posibilidad de usar **plantillas para crear máquinas virtuales** de forma muy sencilla, algo que minimiza el tiempo de creación de nuevas instancias.
 
 En este apunte describo cómo combinar las *Plantillas de Proxmox* con **imágenes basada en la nube** y **cloud-init** para automatizar todo el proceso de instanciación de VM's (ejemplos para Ubuntu y Debian).
 
@@ -21,15 +21,17 @@ En este apunte describo cómo combinar las *Plantillas de Proxmox* con **imágen
 
 Las **imágenes basadas en la nube** (VM cloud based images) son muy útiles porque tienen un tamaño mínimo y permite hacer despliegues ágiles de máquinas virtuales. Podemos bajarnos estas imágenes y configurarlas como el "disco" de nuestra VM (se trata del sistema operativo completamente instalado). Además podemos parametrizar la VM durante su primer boot usando [`cloud-init`](https://cloud-init.io). 
 
-Las **Plantillas de Proxmox** permiten clonar (crar) VM's partiendo de una ya existente (que hemos convertido en Plantilla). Si combinamos todo (VM's que usan imágenes basadas en la nube, cloud-init y las plantillas) conseguimos un activo muy potente para crear VM's ágiles y ligeras. 
+Es decir que cuando necesitemos una VM no tenemos que instalar el Sistema Operativo y configurarlo al crearla, sino que ya lo tendremos instalado. Además podremos tener nuestro usuario, contraseña, claves SSH y otras lindezas para ahorrarnos trabajo.
+
+Una **Plantilla de Proxmox** es una VM que podemos clonar rápidamente para crear una nueva VM independiente, nos facilita mucho el trabajo y si lo combinamos todo (VM's con imágenes basadas en la nube, cloud-init y las plantillas) conseguimos un activo muy potente para crear VM's ágiles y ligeras.
 
 <br/>
 
 #### Creación de una Plantilla (basada en Ubuntu)
 
-Vamos a ver todo el proceso de creación de una VM y su conversión a Plantilla y usaremos una de estas imágenes basadas en la nube en vez de instalar el SO por completo.
+Creo una VM con una de estas imágenes basadas en la nube (en vez de instalar el SO por completo), la convierto en plantilla y listos...
 
-- Como decía he elegido Ubuntu, así que descargo una de sus [imágenes basadas en la nube de Ubuntu](https://cloud-images.ubuntu.com/minimal/releases/jammy/release/) en mi iMac.
+- Empiezo por la imagen de Ubuntu, descargo una de sus [imágenes basadas en la nube de Ubuntu](https://cloud-images.ubuntu.com/minimal/releases/jammy/release/) en mi iMac.
 ```console
 $ curl -O https://cloud-images.ubuntu.com/minimal/releases/jammy/release/ubuntu-22.04-minimal-cloudimg-amd64.img
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -37,19 +39,19 @@ $ curl -O https://cloud-images.ubuntu.com/minimal/releases/jammy/release/ubuntu-
 100  285M  100  285M    0     0  70.1M      0  0:00:04  0:00:04 --:--:-- 70.2M
 $ mv ubuntu-22.04-minimal-cloudimg-amd64.img ubuntu-22.04.img
 ```
-- La subo a Proxmox, a un disco remoto NFS que tengo en un QNAP.
+- La subo a Proxmox, a un disco remoto NFS que tengo por ahí (QNAP).
 {% include showImagen.html
     src="/assets/img/posts/2023-04-07-proxmox-plantilla-vm-01.jpg"
     caption="Subo la imagen a Proxmox (a mi servidor NFS para imágenes)"
     width="600px"
     %}
-- Creo una VM nueva sin *medio de instalación* asociado (no voy a hacer la instalación del Sistema Operativo) y *sin disco duro* (ya que su disco será la *cloud image* que me bajé antes). Uso lo mínimo, 1 CPU, 1024 RAM...
+- Creo una VM nueva sin *medio de instalación* asociado (no voy a hacer la instalación del Sistema Operativo) y *sin disco duro* (ya que su disco será la *cloud image* que me bajé antes). Le concedo lo mínimo: 1 CPU, 1024 RAM (podré cambiarlo en las futuras VM's que clone desde ésta).
 {% include showImagen.html
     src="/assets/img/posts/2023-04-07-proxmox-plantilla-vm-02.jpg"
     caption="Creo la máquina virtual"
     width="600px"
     %}
-- Se recomienda (OpenStack) que *cloud-init* encuentre su parametrizació en un dispositivo de tipo CD-ROM asociado a la VM. Tenemos la ventaja de que Proxmox VE nos genera automáticamente una imagen ISO para esto. Creo este dispositivo desde `Hardware -> Add -> CloudInit Drive (ide0)`.
+- Se recomienda (OpenStack) que *cloud-init* encuentre su parametrización en un dispositivo de tipo CD-ROM asociado a la VM. Tenemos la ventaja de que Proxmox VE nos genera automáticamente una imagen ISO para esto, así que lo creo desde `Hardware -> Add -> CloudInit Drive (ide0)`.
 {% include showImagen.html
     src="/assets/img/posts/2023-04-07-proxmox-plantilla-vm-03.jpg"
     caption="Asocio un dispositivo CDROM para Cloud-Init"
@@ -61,7 +63,9 @@ $ mv ubuntu-22.04-minimal-cloudimg-amd64.img ubuntu-22.04.img
     caption="Parametrizo cloud-init y pulso en [Regenerate Image]"
     width="600px"
     %}
-- Pulso en **Regenerate Image**. La ventaja que me da es que me ahorro tener que configurar todo eso en todas las futuras VMs.
+
+| Importante: No te olvides de darle a **Regenerate Image**. La ventaja de `cloud-init` es que me ahorro configurar varias cosas en las futuras VMs. |
+
 - Sigo desde el CLI (vía SSH) en el nodo donde creé la VM. *Importante a partir de ahora*: Usa el mismo número de VM (ID) que usaste durante la creación (en mi caso el **900**).
 ```console
 ➜  ~ ssh root@pve-tierra.parchis.org
@@ -69,8 +73,10 @@ Last login: Sat Apr  8 10:20:18 2023 from 192.168.100.3
 root@pve-tierra:~#
 ```
 - Asocio una consola serie de tipo VGA para poder *ver la consola* desde Proxmox.
-  - `qm set 900 --serial0 socket --vga serial0`
-- Averiguo el Path a la imagen a importar
+```console
+# set 900 --serial0 socket --vga serial0
+```
+- Averiguo el Path de la imagen a importar
 ```console
 root@pve-tierra:~# pvesm list panoramix
 Volid                                                 Format  Type           Size VMID
@@ -78,7 +84,7 @@ panoramix:iso/ubuntu-22.04-minimal-cloudimg-amd64.img iso     iso       29982720
 root@pve-tierra:~# pvesm path panoramix:iso/ubuntu-22.04-minimal-cloudimg-amd64.img
 /mnt/pve/panoramix/template/iso/ubuntu-22.04-minimal-cloudimg-amd64.img
 ```
-- Importo la *imagen basada en la nube* a la VM. El siguiente comando copia la imagen y la configura como un disco disponible para la VM. 
+- Importo la *imagen basada en la nube*. El siguiente comando copia la imagen al storage de Proxmox y la configura como un disco disponible para la VM. 
 ```console
 root@pve-tierra:~# qm importdisk 900 /mnt/pve/panoramix/template/iso/ubuntu-22.04-minimal-cloudimg-amd64.img local-zfs
 importing disk '/mnt/pve/panoramix/template/iso/ubuntu-22.04-minimal-cloudimg-amd64.img' to VM 900 ...
@@ -98,7 +104,9 @@ Successfully imported disk as 'unused0:local-zfs:vm-900-disk-0'
     width="600px"
     %}  
 - **MUY IMPORTANTE** Esta imagen tiene dos problemas, el primero es que no permitirá hacer boot y el segundo que tiene un tamaño muy pequeño (2,2GB). Para corregir ambos vamos a redimensionarla (que de paso corrige el tema del boot). Podría haberlo hecho con `qemu-img` antes de importarla, pero vamos a usar `qm resize` después de hacer la importación:
-  - `qm disk resize 900 scsi0 32G` 
+```console
+# qm disk resize 900 scsi0 32G
+```
 {% include showImagen.html
     src="/assets/img/posts/2023-04-07-proxmox-plantilla-vm-07.png"
     caption="Disco asociado a la VM y redimensionado a 32GB"
@@ -135,7 +143,7 @@ $ mv debian-11-genericcloud-amd64.raw debian-11-genericcloud-amd64.img
 
 #### Crear una nueva máquina virtual
 
-Ya podemos crear todas las máquinas virtuales que queramos partiendo de la(s) Plantilla(s). Se realiza con la Función **Clonar**. Veamos un ejemplo con la plantilla de Ubuntu, aunque para la de Debian sería prácticamente igual.
+Ya podemos crear todas las máquinas virtuales que queramos partiendo de la(s) Plantilla(s). Se realiza con la Función **Clonar**. Veamos un ejemplo con la de Ubuntu (para la de Debian es igual).
 
 - Pulso con el botón derecho sobre la Plantilla, selecciono **Clone**, asigno el **VM ID**, su **nombre** y el **modo de clonado** (a mi me gusta hacer clonados completos). Cuando termina arranco la VM y hago click en **Console** para ver el proceso de arranque completo. **Importante no tocar nada, no hacer Login** hasta que termine la ejecución de **cloud-init**.
 {% include showImagen.html
@@ -143,7 +151,7 @@ Ya podemos crear todas las máquinas virtuales que queramos partiendo de la(s) P
     caption="Creo una VM (clonando la plantilla) y la arranco."
     width="600px"
     %}  
-- Cuando termina `cloud-init`  entro con mi usuario `luis`, averiguo qué IP he recibido por DHCP (para futuras conexiones vía SSH), instalo `qemu-guest-agent` (para controlar mejor la VM desde Proxmox) y rearranco la VM.
+- Cuando `cloud-init` termina entro con mi usuario (`luis`), averiguo qué IP he recibido (para futuras conexiones vía SSH), instalo `qemu-guest-agent` (para controlar mejor la VM desde Proxmox) y rearranco la VM.
   - `ip a`
   - `sudo apt install qemu-guest-agent`
   - `sudo reboot -f`
@@ -152,9 +160,7 @@ Ya podemos crear todas las máquinas virtuales que queramos partiendo de la(s) P
     caption="Termino de instalar qemu-guest-agent."
     width="600px"
     %}
-- Ya tenemos un nuevo Ubuntu instanciado. Si vamos a darle un uso de largo recorrido recomiendo asignarle una dirección IP estática. En mi caso siempre lo hago asignando IP's estáticas por dirección MAC desde mi DHCP Server.
-
-
+- Ya tenemos un nuevo Ubuntu (o Debian) instanciado. Si vamos a darle un uso de largo recorrido recomiendo asignarle una dirección IP estática. En mi caso siempre lo hago asignando IP's a MAC's de forma estática desde mi DHCP Server.
 
 <br />
 
