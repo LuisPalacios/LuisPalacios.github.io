@@ -1,5 +1,5 @@
 ---
-title: "Plantillas en Proxmox"
+title: "Plantilla de VM en Proxmox"
 date: "2023-04-07"
 categories: administración
 tags: linux pve proxmox kvm qemu cloud-init alpine debian ubuntu plantilla virtualización
@@ -9,9 +9,9 @@ excerpt_separator: <!--more-->
 
 ![logo linux router](/assets/img/posts/logo-proxmox-plantilla.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-[Proxmox VE](https://www.proxmox.com/en/proxmox-ve) es una plataforma de virtualización de código abierto potente y fácil de usar que permite el despliegue y la gestión de máquinas virtuales (con el Hipervisor KVM y el virtualizador QEMU) y contenedores (basados en LXC). Ofrece la posibilidad de usar **plantillas para crear máquinas virtuales** de forma muy sencilla, algo que minimiza el tiempo de creación de nuevas instancias.
+[Proxmox VE](https://www.proxmox.com/en/proxmox-ve) es una plataforma de virtualización de código abierto potente y fácil de usar que permite el despliegue y la gestión de **máquinas virtuales** (VM's con [KVM](https://www.linux-kvm.org/page/Main_Page)/[QEMU](https://www.qemu.org)) y **contenedores** (CT's basados en [LXC](https://linuxcontainers.org/lxc/introduction/)). Proxmox nos ofrece **Plantillas** para minimizar el tiempo de creación de nuevas instancias de estas máquinas virtuales o contendores.
 
-En este apunte describo cómo combinar las *Plantillas de Proxmox* con **imágenes basada en la nube** y **cloud-init** para automatizar todo el proceso de instanciación de VM's (ejemplos para Ubuntu y Debian).
+En este apunte me concentro cómo crear mi propia **Plantillas de máquina virtual** junto con una **imagen basada en la nube** y **cloud-init**.
 
 
 <br clear="left"/>
@@ -19,19 +19,19 @@ En este apunte describo cómo combinar las *Plantillas de Proxmox* con **imágen
 
 ### Plantillas con imágenes basadas en la nube
 
-Las **imágenes basadas en la nube** (VM cloud based images) son muy útiles porque tienen un tamaño mínimo y permite hacer despliegues ágiles de máquinas virtuales. Podemos bajarnos estas imágenes y configurarlas como el "disco" de nuestra VM (se trata del sistema operativo completamente instalado). Además podemos parametrizar la VM durante su primer boot usando [`cloud-init`](https://cloud-init.io). 
+¿Qué es una **Plantilla de VM en Proxmox**?, se trata de una VM normal y corriente que convertimos en "Plantilla" y a partir de ella podemos clonar nuevas VM's idénticas rápidamente. Si las combinamos con imágenes basadas en la nube y cloud-init conseguimos un activo muy potente para crear VM's ágiles y ligeras.
 
-Es decir que cuando necesitemos una VM no tenemos que instalar el Sistema Operativo y configurarlo al crearla, sino que ya lo tendremos instalado. Además podremos tener nuestro usuario, contraseña, claves SSH y otras lindezas para ahorrarnos trabajo.
+Las **imágenes basadas en la nube** (VM cloud based images) son muy útiles porque tienen un tamaño mínimo y permite hacer despliegues ágiles de máquinas virtuales. Podemos bajarnos estas imágenes y configurarlas como el "disco" de nuestra VM (se trata del sistema operativo completamente instalado). ¿Cuál es la diferencia?, pues que evitamosinstalar el Sistema Operativo, estas imágenes son el "disco" ya instalado. 
 
-Una **Plantilla de Proxmox** es una VM que podemos clonar rápidamente para crear una nueva VM independiente, nos facilita mucho el trabajo y si lo combinamos todo (VM's con imágenes basadas en la nube, cloud-init y las plantillas) conseguimos un activo muy potente para crear VM's ágiles y ligeras.
+**[`cloud-init`](https://cloud-init.io)** es un estandar para la personalización de instancias en la cloud (o de instancias de nuestras VMs en nuestro Proxmox). Vamos a poder parametrizar el usuario, contraseña, claves SSH y otras lindezas para ahorrarnos trabajo.
 
 <br/>
 
 #### Creación de una Plantilla (basada en Ubuntu)
 
-Creo una VM con una de estas imágenes basadas en la nube (en vez de instalar el SO por completo), la convierto en plantilla y listos...
+Empezamos con la creación de la VM (desde una imagen basada en la nube), luego seguiremos con su parametrización, conversión a plantilla y a clonar...
 
-- Empiezo por la imagen de Ubuntu, descargo una de sus [imágenes basadas en la nube de Ubuntu](https://cloud-images.ubuntu.com/minimal/releases/jammy/release/) en mi iMac.
+- Me bajo la imagen de Ubuntu, desde sus [imágenes basadas en la nube de Ubuntu](https://cloud-images.ubuntu.com/minimal/releases/jammy/release/).
 ```console
 $ curl -O https://cloud-images.ubuntu.com/minimal/releases/jammy/release/ubuntu-22.04-minimal-cloudimg-amd64.img
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -45,13 +45,13 @@ $ mv ubuntu-22.04-minimal-cloudimg-amd64.img ubuntu-22.04.img
     caption="Subo la imagen a Proxmox (a mi servidor NFS para imágenes)"
     width="600px"
     %}
-- Creo una VM nueva sin *medio de instalación* asociado (no voy a hacer la instalación del Sistema Operativo) y *sin disco duro* (ya que su disco será la *cloud image* que me bajé antes). Le concedo lo mínimo: 1 CPU, 1024 RAM (podré cambiarlo en las futuras VM's que clone desde ésta).
+- Creo una VM nueva sin *medio de instalación* asociado (no voy a hacer la instalación del Sistema Operativo) y *sin disco duro* (ya que su disco será la *cloud image* que me bajé antes). Le concedo lo mínimo: 1 CPU, 1024 RAM (podré cambiarlo en las futuras VM's que clone).
 {% include showImagen.html
     src="/assets/img/posts/2023-04-07-proxmox-plantilla-vm-02.jpg"
     caption="Creo la máquina virtual"
     width="600px"
     %}
-- Se recomienda (OpenStack) que *cloud-init* encuentre su parametrización en un dispositivo de tipo CD-ROM asociado a la VM. Tenemos la ventaja de que Proxmox VE nos genera automáticamente una imagen ISO para esto, así que lo creo desde `Hardware -> Add -> CloudInit Drive (ide0)`.
+- Se recomienda (desde el proyecto OpenStack) que *cloud-init* encuentre su parametrización en un dispositivo de tipo CD-ROM asociado a la VM. Tenemos la ventaja de que Proxmox VE nos genera automáticamente una imagen ISO preparada para esto: `Hardware -> Add -> CloudInit Drive (ide0)`.
 {% include showImagen.html
     src="/assets/img/posts/2023-04-07-proxmox-plantilla-vm-03.jpg"
     caption="Asocio un dispositivo CDROM para Cloud-Init"
