@@ -27,7 +27,7 @@ En la pantala de administración voy al icono de usuario en la parte inferior iz
       width="200px"
       %}
 
-A continuación, bajo al final de la página hasta llegar a los tokens de acceso de larga duración. Creo un token y coio el string que me presenta. IMPORTANTE: Copia el texto entero porque una vez creado la primera vez ya no será posible volver a enseñar la cadena de texto. Así que cópialo, ya que lo necesitaremos más adelante. Si te equivocas, no pasa nada, bórralo y crea otro. Puedes incluso generar un QR para imprimirlo y poder acceder en el futuro a la cadena de texto. Te muestro aquí un ejemplo de la secuencia
+A continuación, bajo al final de la página hasta llegar a los tokens de acceso de larga duración. Creo un token y copio el string que me presenta. IMPORTANTE: Copia el texto entero porque una vez creado la primera vez ya no será posible volver a enseñar la cadena de texto. Así que cópialo, ya que lo necesitaremos más adelante. Si te equivocas, no pasa nada, bórralo y crea otro. Puedes incluso generar un QR para imprimirlo y poder acceder en el futuro a la cadena de texto. Te muestro aquí un ejemplo de la secuencia
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-10-02-nodered-hass-2.png" 
@@ -37,7 +37,6 @@ A continuación, bajo al final de la página hasta llegar a los tokens de acceso
 
 
 <br/>
-
 
 ### Configuración en Node-RED
 
@@ -103,5 +102,29 @@ A partir de aquí ya se pueden crear flujos dado que ambos están perfectamente 
 
 La ventaja de ejecutar Node-RED en un servidor independiente, como decía al principio, radica en separar modularmente los servicios. Ahora no hay dependencias entre ellos y podré ejecutar funciones de Domótica desde Node-RED independientemente de Home Assistant.
 
+<br/>
+
+### Apple HomeKit
+
+Ahora que tenemos Node-RED instalado podemos añadir otros nodos adicionales desde la librería, como HomeKit.He instalado el proyecto [node-red-contrib-homekit-bridged](https://flows.nodered.org/node/node-red-contrib-homekit-bridged), que integra HomeKit con Node-RED. Ya se que podría haberlo integrado directamente con HASS, pero prefiero tener a Node-RED como intermediario entre ambos (HASS y HomeKit).
+
+* Desde el menú de Node-RED (arriba a la derecha) en el interfaz web -> `Manage Palette` -> `Install`, buscar e instalar `node-red-contrib-homekit-bridged`.
+
+{% include showImagen.html 
+      src="/assets/img/posts/2022-10-02-nodered-hass-10.png" 
+      caption="Instalación de node-red-contrib-homekit-bridged" 
+      width="500px"
+      %}
+* Se instalan los nodos siguientes:
+{% include showImagen.html 
+      src="/assets/img/posts/2022-10-02-nodered-hass-11.png" 
+      caption="Nodos instalados" 
+      width="250px"
+      %}
+
+Un par de enlaces para hacer flujos con este nodo:
+
+* [Ejemplos](https://nrchkb.github.io/wiki/examples/). Se pueden importar desde la "hamburguesa" de Node-RED.
+* [Documentación](https://nrchkb.github.io/wiki/introduction/quick-start/), información sobre cómo trabaja y ejemplos.
 
 ---
