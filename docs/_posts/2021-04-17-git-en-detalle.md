@@ -8,7 +8,7 @@ excerpt_separator: <!--more-->
 
 ![Logo GIT](/assets/img/posts/logo-git.svg){: width="150px" style="float:left; padding-right:25px" } 
 
-[GIT](https://git-scm.com) es un sistema de control de versiones distribuido, gratuito y de código abierto, diseñado para gestionar desde proyectos pequeños a muy grandes con rapidez y eficacia. No depende de un repositorio central, múltiples usuarios pueden instalarse GIT y comunicarse entre ellos sin pasar por dicho servidor central. Lo que pasa es que sería inmanejable, así que los "servidores o repositorios centrales (remotos)" son muy útiles y necesarios, **los más famosos son [GitHub](https://github.com) y [GitLab](https://about.gitlab.com)**. 
+[GIT](https://git-scm.com) es un sistema de control de versiones distribuido, gratuito y de código abierto, diseñado para gestionar desde proyectos pequeños a muy grandes con rapidez y eficacia. No depende de un repositorio central, múltiples usuarios pueden instalarse GIT y comunicarse entre ellos sin pasar por dicho servidor central. Lo que pasa es que sería inmanejable, así que los "servidores o repositorios centrales (remotos)" son muy útiles y necesarios, **los más famosos son [GitHub](https://github.com), [GitLab](https://about.gitlab.com) y [Gitea](https://gitea.io/en-us/)**. 
 
 <br clear="left"/>
 <!--more-->
