@@ -559,8 +559,6 @@ git:~/gitea$ docker-compose up -d
 
 <br/>
 
-
-
 ### Arranque de los servicios
 
 *Arranque durante el boot*: No necesito crear un script para que durante el boot se arranque los servicios. 
@@ -592,6 +590,18 @@ sudo -H -u luis ash -c /home/luis/gitea/restart-traefik.sh
 - Activo el servicio local
 ```console
 rc-update add local
+```
+
+<br/>
+
+### Instalar qemu-guest-agent
+
+Para poder controlar bien el apagado y encendido de esta VM desde KVM/QEMU o Proxmox VE necesito instalar el paquete `qemu-guest-agent`
+
+```console
+git:~# apk add qemu-guest-agent
+git:~# rc-update add qemu-guest-agent default
+ * service qemu-guest-agent added to runlevel default
 ```
 
 ---

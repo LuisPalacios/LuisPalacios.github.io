@@ -8,7 +8,7 @@ excerpt_separator: <!--more-->
 
 ![logo pihole](/assets/img/posts/logo-pihole.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
 
-Pi-hole es un servidor DNS que protege tus equipos de contenido no deseado, sin necesidad de instalar ningún software en los clientes de tu red. **Su caso de uso es que haga de sumidero para la publicidad que inunda hoy en día las redes** 😅. Como lo oyes, un pequeño PC con Linux y Pi-hole en tu red de casa para evitar que te llegue mogollón de publicidad mientras navegas. 
+Pi-hole es un servidor DNS (y DHCP) que protege tus equipos de contenido no deseado, sin necesidad de instalar ningún software en los clientes de tu red. **Su caso de uso es que haga de sumidero para la publicidad que inunda hoy en día las redes** 😅. Como lo oyes, un pequeño PC con Linux y Pi-hole en tu red de casa para evitar que te llegue mogollón de publicidad mientras navegas. 
 
 <br clear="left"/>
 <!--more-->
