@@ -11,7 +11,7 @@ excerpt_separator: <!--more-->
 
 [Proxmox VE](https://www.proxmox.com/en/proxmox-ve) es una plataforma de virtualización de código abierto potente y fácil de usar que permite el despliegue y la gestión de **máquinas virtuales** (VM's con [KVM](https://www.linux-kvm.org/page/Main_Page)/[QEMU](https://www.qemu.org)) y **contenedores** (CT's basados en [LXC](https://linuxcontainers.org/lxc/introduction/)). Proxmox nos ofrece **Plantillas** para minimizar el tiempo de creación de nuevas instancias de estas máquinas virtuales o contendores.
 
-En este apunte me concentro cómo crear mi propia **Plantillas de máquina virtual** junto con una **imagen basada en la nube** y **cloud-init**.
+En este apunte me concentro en cómo crear mi propia **Plantillas de máquina virtual** junto con una **imagen basada en la nube** y **cloud-init**.
 
 
 <br clear="left"/>
