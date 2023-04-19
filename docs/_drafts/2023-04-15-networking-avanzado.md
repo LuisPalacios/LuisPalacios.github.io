@@ -49,7 +49,7 @@ Lo primero que me planteé fue el tema de resiliencia. Cuando se me caía el "ho
 
 Todos los servidores que menciono a continuación corren en máquinas virtuales linux o en contenedores (LXC o Docker) en el Cluster:
 
-- Servicios de Networking: Un Router/Firewall/OpenVPN/Knock, varios Switches, Access Points y servicios: Servidor DHCP, DNS, controlador de AP's, Nginx Proxy Manager y herramientas como Uptime Kuma, LibreNMS, Netdisco para la monitorización del rendimiento de la red y los diferentes servicios que se estén utilizando.
+- Servicios de Networking: Un Router/Firewall/OpenVPN/Knock, varios Switches, Access Points y servicios: Servidor DHCP, DNS, controlador de AP's, Nginx Proxy Manager y herramientas como Gatus, Uptime Kuma, LibreNMS, Netdisco para la monitorización del rendimiento de la red y los diferentes servicios que se estén utilizando.
 
 - Servicios de domótica: Home Assistant, Node-RED, Zigbee2MQTT, Mosquito, Grafana e InfluxDB. Permiten controlar y automatizar diferentes dispositivos en el hogar, como la iluminación, los sistemas de climatización, las cerraduras y los electrodomésticos.
 
@@ -294,4 +294,9 @@ Describir aquí NPM
 Describir aquí OpenVPN
 
 
+<br/>
+
+#### Monitorizacion: Gatus
+
+https://github.com/TwiN/gatus
 
