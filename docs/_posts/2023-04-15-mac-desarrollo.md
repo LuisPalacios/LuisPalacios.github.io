@@ -46,6 +46,36 @@ Visual Studio Code es un editor de código fuente desarrollado por Microsoft par
 
 Esta es fácil, descargo e instalo (versión Universal estable) [desde aquí](https://code.visualstudio.com/docs/?dv=osx).
 
+Una vez instalado podrás arrancarlo desde `Aplicaciones`. Es muy comodo poder arrancarlo desde cualquier terminal (iTerm2 por ejemplo). Te lo recomiendo. Haz lo siguiente: 
+
+1. Con VSCode lanzado, pulsa CMD-SHIFT-P e instala el comando '**code**' en el PATH. 
+
+{% include showImagen.html
+    src="/assets/img/posts/2023-04-15-mac-desarrollo-06.png"
+    caption="Instalar el comando `code` en el PATH"
+    width="600px"
+    %}
+
+2. Crea un alias en tu `~/.zshrc` para lanzar el programa de forma rápida desde el CLI.
+
+```conf
+# Alias para llamar a VSCode desde CLI con "e"
+alias e="/usr/local/bin/code"
+```
+
+Aquí tienes la copia de mi [`.zshrc`](https://gist.github.com/LuisPalacios/f66942b329af7920bebd4b95fa36cdb5).
+
+
+{% include showImagen.html
+    src="/assets/img/posts/2023-04-15-mac-desarrollo-07.jpg"
+    caption="Arranque de VSCode muy rápido desde el CLI"
+    width="600px"
+    %}
+
+
+2. A partir de ahora, cuando estas en un directorio y quieres editar todo lo que cuelga de él, simplemente escribe `e .` 
+
+
 <br/>
 
 #### iTerm2
@@ -453,27 +483,15 @@ brew services start mongodb-community@6.0
 brew services stop mongodb-community@6.0
 ```
 
-- Arrancar o parar MongoDB manualmente:
-
-```zsh
-mongod --config /usr/local/etc/mongod.conf --fork   # Para macOS con procesadores Intel
-mongod --config /opt/homebrew/etc/mongod.conf --fork  # Para macOS con procesadores ARM 
-```
-
-```zsh
-mongosh
-> shutdown 
-```
-
 Si Mac OS no deja abrir mongodb o mongosh por un tema de seguridad: Preferencias -> Security and Privacy pane > Gemeral > mongod Open Anyway or Allow Anyway 
 
-Podemos ver que está escuchando en localhost en el puerto por defecto `127.0.0.1:27017`
+Comprobar que arrancó y escucha en `localhost` en el puerto por defecto `127.0.0.1:27017`
 
 ```zsh
 netstat -na|grep -i 27017
 tcp6       0      0  ::1.27017              *.*                    LISTEN
 tcp4       0      0  127.0.0.1.27017        *.*                    LISTEN
-a3f97c9f1c2bb4f1 stream      0      0 a3f97cad866b9521                0                0                0 /tmp/mongodb-27017.sock
+a3f97c9f1c2bb4f1 stream      0      0 a3f97cad866b9521                0  0 0 /tmp/mongodb-27017.sock
 ```
 
 Y pdemos monitorizar el Log
