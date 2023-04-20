@@ -20,7 +20,7 @@ Parto de una instalación nueva de Ventura y el orden de instalación y configur
 
 #### Xcode command line tools
 
-En algún momento vas a tener que instalar las "Apple command line tools" que también se conocen como "Xcode command line tools" y además tienes que aceptar la licencia. Ahora es un buen momento.
+En algún momento vas a tener que instalar las **Apple command line tools** (también conocidas como *Xcode command line tools*) y que aceptar la licencia. Hacerlo ahora es un buen momento.
 
 ```zsh
 xcode-select --install
@@ -31,7 +31,7 @@ sudo xcodebuild -license accept
 
 #### Fichero `~/.zshrc`
 
-Durante la preparación lo voy a modificar varias veces. Dejo aquí la copia final de este fichero ya completa y compatible con **Oh My Zsh** (aunque este lo instalo dentro de un par de pasos). Te recomiendo que uses mi versión, está bastante probada. En los siguientes puntos explicaré que se configura relacionado en este fichero. 
+Durante la preparación de mi Mac siguiendo este apunte menciono que hay que modificar este fichero varias veces. Dejo aquí la copia final completa, compatible con **Oh My Zsh** (aunque lo instalo dentro de un par de pasos). Es una versión bastante probada que siempre puedes adaptar. 
 
 - Copia de mi [`.zshrc`](https://gist.github.com/LuisPalacios/f66942b329af7920bebd4b95fa36cdb5)
 
@@ -118,7 +118,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 Siendo desarrollador con un Mac, quieres [Homebrew](https://brew.sh/index_es) (o `brew` por resumir) Aunque Mac OS trae de todo (al estar basado en FreeBSD) por desgracia no está a la última y le faltan cosas. 
 
-Con `brew` vas a poder instalar (**en paralelo a tu Mac OS (sin tocarlo ni estropearlo)**) un montón de programas de software libre super interesantes, software de bajo nivel, herramientas para la línea de commandos, aplicaciones, compiladores, lenguajes, etc. podrás instalar hasta MongoDB (ver más adelante).
+Con `brew` vas a poder instalar (**en paralelo a tu Mac OS sin tocarlo ni estropearlo**) un montón de programas de software libre super interesantes, software de bajo nivel, herramientas para la línea de commandos, aplicaciones, compiladores, lenguajes, etc. podrás instalar hasta MongoDB (ver más adelante).
 
 Ejecuto el script de instalación.
 
@@ -166,7 +166,7 @@ export PATH="/opt/homebrew/opt/ruby/bin:~/.gems/bin:$PATH"   # Versión para Mac
 
 ![logo linux router](/assets/img/posts/logo-git.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
-[GIT](https://git-scm.com) es un sistema de control de versiones distribuido, gratuito y de código abierto, diseñado para gestionar desde proyectos pequeños a muy grandes con rapidez y eficacia. Existen varias opciones de Instalación del cliente para la línea de comandos ([fuente original](https://git-scm.com/download/mac)), en mi caso utilizo la de Homebrew.
+[Git](https://git-scm.com) es un sistema de control de versiones distribuido, gratuito y de código abierto, diseñado para gestionar desde proyectos pequeños a muy grandes con rapidez y eficacia. Existen varias opciones de Instalación del cliente para la línea de comandos ([fuente original](https://git-scm.com/download/mac)), en mi caso utilizo la de Homebrew.
 
 Realizo la instalación de Git desde homebrew.  
 
@@ -182,12 +182,12 @@ Creo el fichero [~/.gitconfig](https://gist.github.com/LuisPalacios/0ee871ee2364
 ```zsh
 curl -s -O https://gist.githubusercontent.com/LuisPalacios/0ee871ee236485d4a064179b16ada400/raw/348a8a448095a460756f85ef0362521b886b0a2e/.gitconfig
 curl -s -O https://gist.githubusercontent.com/LuisPalacios/6923f8cc708ce10f3bd4a6772625fb0c/raw/65d0ed6acba83ece4db78228821589212b9f9f4b/.gitignore_global
+
+# Edítalo para adaptarlo
 e .gitconfig
 ```
 
-Como cliente GUI uso [GitKraken](https://www.gitkraken.com). 
-
-Más información sobre git en esta [chuleta sobre GIT]({% post_url 2021-10-10-git-cheatsheet %}) y [GIT en detalle]({% post_url 2021-04-17-git-en-detalle %}). 
+Como cliente GUI uso [GitKraken](https://www.gitkraken.com). Tienes más información sobre git en esta [chuleta sobre GIT]({% post_url 2021-10-10-git-cheatsheet %}) y [GIT en detalle]({% post_url 2021-04-17-git-en-detalle %}). 
 
 <br/>
 
@@ -485,7 +485,7 @@ tail -f /opt/homebrew/var/log/mongodb/mongo.log
 
 **Programa de ejemplo** 
 
-Te dejo una referencia a un pequeño proyecto en GitHub para que puedas probar varios de los paquetes que hemos instalado, en este ejemplo: `npm` y `mongod`.
+Te dejo una referencia a un pequeño proyecto en GitHub para que puedas probar `npm` y `mongod`.
 
 - [Proyecto Tienda](https://github.com/LuisJal/ProyectoTienda)
  
@@ -494,6 +494,10 @@ Te dejo una referencia a un pequeño proyecto en GitHub para que puedas probar v
 
 #### Jupyter Lab
 
-[Jupyter Lab](https://jupyter.org) es una aplicación web que permite codificar, ejecutar y "documentar". Esta última es una de las partes más interesante del proyecto, puedes tener documentación y código a la vez y que se ejecute !!. 
+[Jupyter Lab](https://jupyter.org) es una aplicación web que permite codificar, ejecutar y "documentar". Esta última es una de las partes más interesante del proyecto, puedes tener documentación y código a la vez y que se ejecute. 
 
 He documentado el proceso en otro apunte, más antiguo. La parte de Python puedes ignorarla porque la de aquí es más moderna, pero el resto te puede valer: [Python y JupyterLab en MacOS]({% post_url 2021-04-30-python-jupyter %}).
+
+<br/>
+
+--
