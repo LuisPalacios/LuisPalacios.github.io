@@ -20,7 +20,7 @@ Parto de una instalación nueva de Ventura y el orden de instalación y configur
 
 #### Xcode command line tools
 
-En algún momento vas a tener que instalar las **Apple command line tools** (también conocidas como *Xcode command line tools*) y que aceptar la licencia. Hacerlo ahora es un buen momento.
+En algún momento vas a tener que instalar las **Apple command line tools** (también conocidas como *Xcode command line tools*) y aceptar la licencia. Hacerlo ahora es un buen momento.
 
 ```zsh
 xcode-select --install
