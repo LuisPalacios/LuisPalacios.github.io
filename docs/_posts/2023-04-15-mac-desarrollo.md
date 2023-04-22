@@ -238,6 +238,82 @@ sudo xcodebuild -license accept
 
 <br/>
 
+#### Java
+
+![logo linux router](/assets/img/posts/logo-java.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
+
+Podemos instalar JRE (Java Runtime Environment) para ejecutar aplicaciones Java o el JDK (Java Development Kit), para desarrollar y ejecutar aplicaciones Java.
+
+En mi caso obviamente me instalo JDK, trae herramientas como el compilador (javac), el desensamblador de binarios (javap), el debugger, etc. y toda instalación de JDK incluye JRE. Te recomiendo echar un ojo a esta [imagen sobre la estructura de componentes de Java](https://stackoverflow.com/a/29160633/1065197).
+
+Para instalar accedo directamente al [Java SE Development Kit](https://www.oracle.com/java/technologies/downloads/) y me bajo la versión JDK 20 para macOS. En mi caso elegí la versión ARM64 DMG Installer
+
+{% include showImagen.html
+    src="/assets/img/posts/2023-04-15-mac-desarrollo-08.png"
+    caption="Descargo e instalo el SDK de Java"
+    width="800px"
+    %}
+
+Una vez instalado, hacemos nuestra prueba de concepto desde iTerm
+
+```zsh
+$ mkdir -p ~/Desktop/hola
+$ cd ~/Desktop/hola
+$ cat > HolaMundo.java << EOF
+public class HolaMundo {
+	public static void main(String[] args) {		
+		System.out.println("Hola Mundo!");
+	}
+}
+EOF
+
+$ javac HolaMundo.java
+$ ls -l
+total 16
+-rw-r--r--@ 1 luis  staff  423 22 abr 15:22 HolaMundo.class
+-rw-r--r--@ 1 luis  staff  111 22 abr 15:21 HolaMundo.java
+
+$ java HolaMundo
+Hola Mundo!
+
+```
+
+Te dejo aquí algunas referencias interesantes: 
+
+- Las [notas sobre la instalación del JDK](https://docs.oracle.com/en/java/javase/20/install/installation-jdk-macos.html#GUID-E8A251B6-D9A9-4276-ABC8-CC0DAD62EA33)
+- [Información y requisitos del sistema](https://www.java.com/es/download/help/java_mac.html) para instalar y usar Oracle Java en Mac OS X
+- Artículo sobre la [Actualización manual necesaria para Java 8 en macOS](https://www.java.com/es/download/help/java8_manual_update_macos.html).
+
+<br/>
+
+#### Eclipse. 
+
+![logo linux router](/assets/img/posts/logo-eclipse.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
+
+Podrías usar Visual Studio Code como IDE pero lo más normal es que te instales Eclipse, es **La plataforma** para trabajar con Java, y mucho más, en realidad con herramientas de programación de código abierto multiplataforma para desarrollar Aplicaciones. 
+
+Típicamente se ha usado para desarrollar IDE's (entornos de desarrollo integrados), como el del propio Java (Java Development Toolkit - JDT). 
+
+Lo primero es haber descargado e instalado el **Java JDK para macOS** (visto en el punto anterior). A continuación descargo la última versión de Eclipse mediante **Eclipse Installer**. 
+
+{% include showImagen.html
+    src="/assets/img/posts/2023-04-15-mac-desarrollo-09.png"
+    caption="Descargo la versión ARM del Eclipse Installer para Mac"
+    width="500px"
+    %}
+
+Arrastro el **Eclipse Installer** a Aplicaciones. Puedo utilizarlo para instalar varias cosas, de lo uso para instalar el «Eclipse IDE for Java Developers».
+
+{% include showImagen.html
+    src="/assets/img/posts/2023-04-15-mac-desarrollo-10.png"
+    caption="Instalo Eclipse IDE for Java Developers"
+    width="500px"
+    %}
+
+Ya tienes Eclipse operativo para empezar a trabajar con él. Te dejo un apunte que hice sobre cómo trabajar con [Eclipse + Java sobre repositorio Git]({% post_url 2022-10-27-quidomi %}).
+
+<br/>
+
 #### Python, Pip y PipEnv
 
 ![logo linux router](/assets/img/posts/logo-python.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
@@ -497,6 +573,19 @@ Te dejo una referencia a un pequeño proyecto en GitHub para que puedas probar `
 [Jupyter Lab](https://jupyter.org) es una aplicación web que permite codificar, ejecutar y "documentar". Esta última es una de las partes más interesante del proyecto, puedes tener documentación y código a la vez y que se ejecute. 
 
 He documentado el proceso en otro apunte, más antiguo. La parte de Python puedes ignorarla porque la de aquí es más moderna, pero el resto te puede valer: [Python y JupyterLab en MacOS]({% post_url 2021-04-30-python-jupyter %}).
+
+<br/>
+
+#### Indispensables
+
+Dejo aquí una lista de programas que considero indispensables y que instalo con Homebrew. Nota que puedes poner más de uno en la lína de comandos (separados por espacio).
+
+Instalación: `brew install <programa(s)>
+
+|  Programa | Descripción |
+| -- | -- |
+| jq | Filtrar, buscar y mostrar de forma "bonita" el resultado de un JSON en lugar de en una sola línea. |
+
 
 <br/>
 
