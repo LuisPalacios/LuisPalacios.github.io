@@ -18,7 +18,7 @@ Parto de una instalación nueva de Ventura y el orden de instalación y configur
 <!--more-->
 
 
-#### Xcode command line tools
+### Xcode command line tools
 
 En algún momento vas a tener que instalar las **Apple command line tools** (también conocidas como *Xcode command line tools*) y aceptar la licencia. Hacerlo ahora es un buen momento.
 
@@ -29,7 +29,7 @@ sudo xcodebuild -license accept
 
 <br/>
 
-#### Fichero `~/.zshrc`
+### Fichero `~/.zshrc`
 
 Durante la preparación de mi Mac siguiendo este apunte menciono que hay que modificar este fichero varias veces. Dejo aquí la copia final completa, compatible con **Oh My Zsh** (aunque lo instalo dentro de un par de pasos). Es una versión bastante probada que siempre puedes adaptar. 
 
@@ -37,7 +37,7 @@ Durante la preparación de mi Mac siguiendo este apunte menciono que hay que mod
 
 <br/>
 
-#### Visual Studio Code 
+### Visual Studio Code 
 
 
 ![logo linux router](/assets/img/posts/logo-vscode.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
@@ -78,7 +78,7 @@ Aquí tienes la copia de mi [`.zshrc`](https://gist.github.com/LuisPalacios/f669
 
 <br/>
 
-#### iTerm2
+### iTerm2
 
 ![logo linux router](/assets/img/posts/logo-iterm2.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -95,7 +95,7 @@ Activo un atajo en Finder, para poder abrir un `iTerm` cuando el cursor está en
 
 <br/> 
 
-#### Oh My Zsh
+### Oh My Zsh
 
 ![logo linux router](/assets/img/posts/logo-ohmyzsh.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -162,7 +162,7 @@ export PATH="/opt/homebrew/opt/ruby/bin:~/.gems/bin:$PATH"   # Versión para Mac
 
 <br/>
 
-#### Git
+### Git
 
 ![logo linux router](/assets/img/posts/logo-git.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -191,7 +191,7 @@ Como cliente GUI uso [GitKraken](https://www.gitkraken.com). Tienes más informa
 
 <br/>
 
-#### SSH
+### SSH
 
 ![logo linux router](/assets/img/posts/logo-ssh.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -217,7 +217,7 @@ Tienes un par de apuntes adicionales en [SSH y X11]({% post_url 2017-02-11-x11-d
 
 <br/>
 
-#### Xcode
+### Xcode
 
 ![logo linux router](/assets/img/posts/logo-xcode.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -238,7 +238,7 @@ sudo xcodebuild -license accept
 
 <br/>
 
-#### Java
+### Java
 
 ![logo linux router](/assets/img/posts/logo-java.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -286,7 +286,7 @@ Te dejo aquí algunas referencias interesantes:
 
 <br/>
 
-#### Eclipse. 
+### Eclipse. 
 
 ![logo linux router](/assets/img/posts/logo-eclipse.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -314,7 +314,7 @@ Ya tienes Eclipse operativo para empezar a trabajar con él. Te dejo un apunte q
 
 <br/>
 
-#### Python, Pip y PipEnv
+### Python, Pip y PipEnv
 
 ![logo linux router](/assets/img/posts/logo-python.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -390,7 +390,7 @@ rm -fr proyecto
 
 <br/>
 
-#### Ruby
+### Ruby
 
 ![logo linux router](/assets/img/posts/logo-ruby.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -427,7 +427,7 @@ export PATH=~/.gems/bin:$PATH
 
 <br/>
 
-#### Jekyll y Bundler
+### Jekyll y Bundler
 
 ![logo linux router](/assets/img/posts/logo-jekyll.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -463,7 +463,7 @@ gem cleanup && gem pristine --all
 
 <br/>
 
-#### Node-JS
+### Node-JS
 
 
 ![logo linux router](/assets/img/posts/logo-nodejs.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
@@ -492,7 +492,7 @@ Vamos a hacer un ejemplo super sencillo:
 
 <br/>
 
-#### MongoDB
+### MongoDB
 
 ![logo linux router](/assets/img/posts/logo-mongodb.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -568,7 +568,7 @@ Te dejo una referencia a un pequeño proyecto en GitHub para que puedas probar `
 
 <br/>
 
-#### Jupyter Lab
+### Jupyter Lab
 
 [Jupyter Lab](https://jupyter.org) es una aplicación web que permite codificar, ejecutar y "documentar". Esta última es una de las partes más interesante del proyecto, puedes tener documentación y código a la vez y que se ejecute. 
 
@@ -576,11 +576,11 @@ He documentado el proceso en otro apunte, más antiguo. La parte de Python puede
 
 <br/>
 
-#### Indispensables
+### Otros
 
 Dejo aquí una lista de programas que considero indispensables y que instalo con Homebrew. Nota que puedes poner más de uno en la lína de comandos (separados por espacio).
 
-Instalación: `brew install <programa(s)>
+Instalación: `brew install <programa(s)>`
 
 |  Programa | Descripción |
 | -- | -- |
@@ -588,5 +588,3 @@ Instalación: `brew install <programa(s)>
 
 
 <br/>
-
---
