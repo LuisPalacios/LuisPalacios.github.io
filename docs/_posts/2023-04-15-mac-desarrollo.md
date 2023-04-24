@@ -2,14 +2,14 @@
 title: "MAC para desarrollo"
 date: "2023-04-15"
 categories: desarrollo
-tags: macos homebrew python git gem ruby ror iterm ohmyzsh zsh xcode code vscode visual studio
+tags: macos homebrew desarrollo python git gem ruby ror iterm ohmyzsh zsh xcode code vscode visual studio
 excerpt_separator: <!--more-->
 ---
 
 
 ![logo linux router](/assets/img/posts/logo-mac-desarrollo.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-En este apunte describo mi bitácora de configuración de un Mac (Ventura) como equipo de desarrollo. Instalo varias aplicaciones gráficas y de línea de comando que para mi son fundamentales para trabajar con el equipo. 
+En este apunte describo mi bitácora de configuración de un Mac (INTEL o ARM) como equipo de desarrollo. Instalo varias aplicaciones gráficas y de línea de comando que para mi son fundamentales para trabajar con el equipo. 
 
 Parto de una instalación nueva de Ventura y el orden de instalación y configuración es el del apunte. Empiezo por Visual Studio Code, continúo con iTerm, Oh My Zsh, Homebrew, etc. 
 
@@ -17,6 +17,11 @@ Parto de una instalación nueva de Ventura y el orden de instalación y configur
 <br clear="left"/>
 <!--more-->
 
+
+
+## Instalación
+
+Veamos todas las instalaciones que he hecho en el orden en el que están explicadas. Si estás buscando cómo actualizar o reparar, ve al final del apunte. 
 
 ### Xcode command line tools
 
@@ -126,21 +131,6 @@ Ejecuto el script de instalación.
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 source ~/.zshrc
-```
-
-Te dejo algunos comandos útiles a modo de referencia: 
-
-```zsh
-brew --version                         # Comprobar la versión
-brew list                              # Ver que está instalado
-brew cask list                         # Ver que cask’s está instalado
-brew [-v] update && brew [-v] upgrade  # Actualizar
-brew install wget                      # Instalar un paquete (ejemplo wget)
-
-# Comprobar que está correctamente instalado y actualizado
-brew update && brew upgrade
-brew doctor
-brew --version
 ```
 
 Líneas relevantes en mi `~/.zshrc` 
@@ -455,11 +445,6 @@ bundle exec jekyll serve
 
 Desde un browser conecto con [http://127.0.0.1:4000/](http://127.0.0.1:4000/) y veo que funciona!!
 
-Referencia. Si tienes problemas con el comando gem prueba a ejecutar lo siguiente:
-
-```zsh
-gem cleanup && gem pristine --all
-```
 
 <br/>
 
@@ -574,6 +559,21 @@ Te dejo una referencia a un pequeño proyecto en GitHub para que puedas probar `
 
 He documentado el proceso en otro apunte, más antiguo. La parte de Python puedes ignorarla porque la de aquí es más moderna, pero el resto te puede valer: [Python y JupyterLab en MacOS]({% post_url 2021-04-30-python-jupyter %}).
 
+
+<br/>
+
+### VirtualBox y Vagrant
+
+| Nota: Este punto solo me ha funcionado en un Mac on chip Intel, así que estás avisado, de momento no he encontrado cómo emular un Linux o Windows ARM con VirtualBox y Vagrant instalados en un Mac con Apple Silicon (ARM)  |
+
+[VirtualBox](https://www.virtualbox.org) es un software de virtualización que permite isntalar sistemas operativos adicionales, conocidos como «sistemas invitados, guest o máquinas virtuales», dentro de tu sistema «anfitrión» (en mi caso el MacOS), cada uno con su propio ambiente virtual. Puedes crear máquinas virtuales basadas en FreeBSD, GNU/Linux, OpenBSD, OS/2 Warp, Windows, Solaris, MS-DOS, Genode y muchos otros.
+
+[Vagrant](https://www.vagrantup.com/) permite crear y configurar entornos de desarrollo virtuales, ligeros y reproducibles, creando máquinas virtuales. Usa VirtualBox como virtualizador de forma nativa. 
+
+Podemos instalar ambos para montarnos **Servidores** virtuales para acompañar a nuestros desarrollos de software. 
+
+No dejes de leer el apunte [Vagrant para desarrollo]({% post_url 2023-04-23-mac-vagrant %}).
+
 <br/>
 
 ### Otros
@@ -586,5 +586,42 @@ Instalación: `brew install <programa(s)>`
 | -- | -- |
 | jq | Filtrar, buscar y mostrar de forma "bonita" el resultado de un JSON en lugar de en una sola línea. |
 
+
+<br/>
+
+## Mantenimiento
+
+Normalmente nos olvidamos de mantener lo que instalamos, así que **saber cómo hacer actualizaciones y reparaciones** es interesante. Suelo actualizar periódicamente, mínimo una vez al mes, aunque no instale nada nuevo. Compruebo que está todo al día. Los programas que no menciono en esta sección se actualizan automáticamente desde AppStore o sus propias opciones GUI.
+
+<br/>
+
+#### Actualizaciones
+
+* Homebrew
+
+```zsh
+brew update && brew upgrade            # Actualización estándar de homebrew
+```
+
+<br/>
+
+#### Reparaciones
+
+* Homebrew
+
+```zsh
+brew update && brew update
+brew doctor                            # Herramienta de autodiagnóstico de Homebrew.
+brew --version                         # Comprobar la versión
+brew list                              # Ver que está instalado
+brew cask list                         # Ver que cask’s están instalados
+```
+
+* Actualizar Homebrew
+
+
+```zsh
+gem cleanup && gem pristine --all      # Reparar problema con el comando gem
+```
 
 <br/>

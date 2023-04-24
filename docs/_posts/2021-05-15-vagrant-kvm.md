@@ -2,7 +2,7 @@
 title: "Vagrant con Libvirt KVM"
 date: "2021-05-15"
 categories: virtualización
-tags: linux kvm virtualización python jupyter
+tags: linux kvm virtualización python jupyter virtualbox desarrollo
 excerpt_separator: <!--more-->
 ---
 
