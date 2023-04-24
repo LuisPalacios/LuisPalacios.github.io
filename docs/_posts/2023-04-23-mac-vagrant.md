@@ -77,12 +77,12 @@ El disco virtual se crea en el HOME de tu usuario, en el subdiretorio ` ~/Virtua
 ```zsh
 ls -al ~/VirtualBox\ VMs/prueba_default_1682326653672_96128
 total 3119136
-drwx------  6 luis  staff         192 24 abr 10:59 .
-drwx------  3 luis  staff          96 24 abr 10:57 ..
-drwx------  5 luis  staff         160 24 abr 10:59 Logs
--rw-------  1 luis  staff  1584726016 24 abr 10:59 box-disk1.vmdk
--rw-------  1 luis  staff        4495 24 abr 10:59 prueba_default_1682326653672_96128.vbox
--rw-------  1 luis  staff        4904 24 abr 10:59 prueba_default_1682326653672_96128.vbox-prev
+drwx------  6 luis  staff         192 23 abr 10:59 .
+drwx------  3 luis  staff          96 23 abr 10:57 ..
+drwx------  5 luis  staff         160 23 abr 10:59 Logs
+-rw-------  1 luis  staff  1584726016 23 abr 10:59 box-disk1.vmdk
+-rw-------  1 luis  staff        4495 23 abr 10:59 prueba_default_1682326653672_96128.vbox
+-rw-------  1 luis  staff        4904 23 abr 10:59 prueba_default_1682326653672_96128.vbox-prev
 ```
 
 Conecto con la VM usando SSH
