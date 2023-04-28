@@ -11,8 +11,7 @@ excerpt_separator: <!--more-->
 
 En este apunte describo mi bitácora de configuración de un Mac (INTEL o ARM) como equipo de desarrollo. Instalo varias aplicaciones gráficas y de línea de comando que para mi son fundamentales para trabajar con el equipo. 
 
-Parto de una instalación nueva de Ventura y el orden de instalación y configuración es el del apunte. Empiezo por Visual Studio Code, continúo con iTerm, Oh My Zsh, Homebrew, etc. 
-
+Está documentado **partiendo de una instalación nueva de Ventura**, desde cero. El orden de instalación puede variarse, pero te recomiendo (si tu MacOS está recién instalado) que sigas el mismo orden para ver los mismos resultados. 
 
 <br clear="left"/>
 <!--more-->
@@ -21,24 +20,83 @@ Parto de una instalación nueva de Ventura y el orden de instalación y configur
 
 ## Instalación
 
-Veamos todas las instalaciones que he hecho en el orden en el que están explicadas. Si estás buscando cómo actualizar o reparar, ve al final del apunte. 
+Empezamos con la instalación, si estás buscando cómo **actualizar o reparar**, ve al final del apunte. 
 
-### Xcode command line tools
+<br/>
 
-En algún momento vas a tener que instalar las **Apple command line tools** (también conocidas como *Xcode command line tools*) y aceptar la licencia. Hacerlo ahora es un buen momento.
+### Xcode command line tools [+ Xcode]
+
+![logo linux router](/assets/img/posts/logo-xcode.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
+
+Es obligatorio instalar las **Apple command line tools** (también conocidas como *Xcode command line tools*) porque algunas herramientas te lo van a pedir más adelante. 
+
+La instalación de Xcode es opcional, solo si vas a desarrollar para macOS, iOS, watchOS y tvOS. Dependiendo de qué decidas, el orden sería este: 
+
+- Instalo Xcode: 
+  - Instalar Xcode desde el Apple Store. 
+  - Ejecutar desde el CLI: `xcode-select --install` 
+  - Ejecutar desde el CLI: `sudo xcodebuild -license accept`
+
+{% include showImagen.html
+    src="/assets/img/posts/2023-04-15-mac-desarrollo-01.png"
+    caption="Pantalla de inicio de Xcode."
+    width="500px"
+    %}
+
+- No instalo Xcode: 
+  - Ejecutar desde el CLI: `xcode-select --install` 
+
+
+<br/>
+
+
+### iTerm2
+
+![logo linux router](/assets/img/posts/logo-iterm2.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
+
+iTerm2 es un sustituto al **Terminal.app** del MacOS. Admite muchas más cosas que el Terminal como la transparencia de ventanas, modo de pantalla completa, paneles divididos, pestañas Exposé, notificaciones Growl y atajos de teclado, perfiles personalizables y reproducción instantánea de entradas/salidas de terminales anteriores. 
+
+Instalación: 
+
+- Descargo el programa desde [iTerm2](https://iterm2.com)
+- Lo *copio a Aplicaciones* 
+
+Un par de tips: 
+
+- Si sufres el problema: "Cuando iTerm arranca tarda mucho en mostrar el prompt", se resuelve con `sudo xcodebuild -license accept`
+- Activa un atajo en Finder, para poder abrir un `iTerm` cuando el cursor está en una carpeta de Finder. 
+  * `Ajustes Sistema → Teclado → Funciones rápidas de teclado → Servicios`
+  * `→ Archivos y carpetas → New iTerm2 Tab Here → Ctrl Shift T`
+
+<br/> 
+
+
+### Oh My Zsh
+
+![logo linux router](/assets/img/posts/logo-ohmyzsh.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
+
+[oh-my-zsh](https://ohmyz.sh) es un entorno de trabajo en línea de comando mucho más bonito para trabajar con **Zsh**. Viene con miles de funciones útiles, ayudantes, plugins, temas. Trae varios plugins que hacen la vida más fácil. [Lo mejor de Oh My Zsh son sus temas](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes).
+
+Instalación:
 
 ```zsh
-xcode-select --install
-sudo xcodebuild -license accept
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
 <br/>
 
 ### Fichero `~/.zshrc`
 
-Durante la preparación de mi Mac siguiendo este apunte menciono que hay que modificar este fichero varias veces. Dejo aquí la copia final completa, compatible con **Oh My Zsh** (aunque lo instalo dentro de un par de pasos). Es una versión bastante probada que siempre puedes adaptar. 
+Una vez instalado iTerm + Oh My Zsh te recomiendo que te copies el contenido de mi fichero **`~/.zshrc`**. Tras instalar iTerm2 y Oh-My-Zsh se habrá creado ya uno e irás viendo que te pido hacer modificaciones en este fichero más adelante. 
 
-- Copia de mi [`.zshrc`](https://gist.github.com/LuisPalacios/f66942b329af7920bebd4b95fa36cdb5)
+Te dejo el mío, es una copia final completa, compatible con lo que acabamos de instalar y lo que instalaremos. Ahora bien, **es muy importante que una vez copiado lo revises y adaptes a tu caso**. El mío está preparado para un Mac sobre chip ARM. **Si tu Mac usa chip Intel revisa el fichero**, verás notas en las líneas para saber qué comentar/descomentar. 
+
+* Salvo el que me acaba de crear Oh-My-Zsh y descargo una copia del mío.
+```zsh
+cd ~
+cp .zshrc .zshrc.ORIGINAL
+curl -s -O https://gist.githubusercontent.com/LuisPalacios/f66942b329af7920bebd4b95fa36cdb5/raw/52fe5b891b524bde6d315aab92a6b82d0dafa19e/.zshrc
+```
 
 <br/>
 
@@ -47,13 +105,15 @@ Durante la preparación de mi Mac siguiendo este apunte menciono que hay que mod
 
 ![logo linux router](/assets/img/posts/logo-vscode.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
-Visual Studio Code es un editor de código fuente desarrollado por Microsoft para Windows, Linux, macOS y Web. Incluye soporte para la depuración, control integrado de Git, resaltado de sintaxis, finalización inteligente de código, fragmentos y refactorización de código. Puedes editar, depurar, probar, controlar versiones e implementar en la nube. Con la diversidad de características, plugins y lenguajes soportados puedes usarlo como IDE para cualquier proyecto. 
+Visual Studio Code es un editor de código fuente desarrollado por Microsoft para Windows, Linux, macOS y Web. Incluye soporte de tantas cosas que es imposible explicarlo aquí. Con la inmensa diversidad de características, plugins y lenguajes soportados puedes usarlo como IDE para cualquier proyecto.
 
-Esta es fácil, descargo e instalo (versión Universal estable) [desde aquí](https://code.visualstudio.com/docs/?dv=osx).
+Instalación:
 
-Una vez instalado podrás arrancarlo desde `Aplicaciones`. Es muy comodo poder arrancarlo desde cualquier terminal (iTerm2 por ejemplo). Te lo recomiendo. Haz lo siguiente: 
+- Descargarlo [desde aquí](https://code.visualstudio.com/docs/?dv=osx).
+- Lo *copio a Aplicaciones* 
 
-1. Con VSCode lanzado, pulsa CMD-SHIFT-P e instala el comando '**code**' en el PATH. 
+Un par de tips: 
+- Para poder arrancarlo cómodamente desde iTerm2, con VSCode lanzado, pulsa CMD-SHIFT-P e instala el comando '**code**' en el PATH. 
 
 {% include showImagen.html
     src="/assets/img/posts/2023-04-15-mac-desarrollo-06.png"
@@ -61,15 +121,12 @@ Una vez instalado podrás arrancarlo desde `Aplicaciones`. Es muy comodo poder a
     width="600px"
     %}
 
-2. Crea un alias en tu `~/.zshrc` para lanzar el programa de forma rápida desde el CLI.
+- Crea un alias en tu `~/.zshrc` para lanzar el programa de forma rápida desde el CLI. **Si te bajaste mi copia no hace falta que lo hagas**.
 
 ```conf
 # Alias para llamar a VSCode desde CLI con "e"
 alias e="/usr/local/bin/code"
 ```
-
-Aquí tienes la copia de mi [`.zshrc`](https://gist.github.com/LuisPalacios/f66942b329af7920bebd4b95fa36cdb5).
-
 
 {% include showImagen.html
     src="/assets/img/posts/2023-04-15-mac-desarrollo-07.jpg"
@@ -78,41 +135,8 @@ Aquí tienes la copia de mi [`.zshrc`](https://gist.github.com/LuisPalacios/f669
     %}
 
 
-2. A partir de ahora, cuando estas en un directorio y quieres editar todo lo que cuelga de él, simplemente escribe `e .` 
+- A partir de ahora, cuando estas en un directorio y quieres editar todo lo que cuelga de él, simplemente escribe `e .` 
 
-
-<br/>
-
-### iTerm2
-
-![logo linux router](/assets/img/posts/logo-iterm2.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
-
-[iTerm2](https://iterm2.com) es un sustituto al **Terminal.app** del MacOS. Admite muchas más cosas que el Terminal como la transparencia de ventanas, modo de pantalla completa, paneles divididos, pestañas Exposé, notificaciones Growl y atajos de teclado, perfiles personalizables y reproducción instantánea de entradas/salidas de terminales anteriores. 
-
-Lo descargo, copio a Aplicaciones y lo ejecuto. Si no lo hiciste al principio, te pedirá que instales las "Apple Command Line Tools". 
-
-| Nota: Si sufres el siguiente problema: "Cuando iTerm arranca tarda mucho en mostrar el prompt", se resuelve con `sudo xcodebuild -license accept` |
-
-Activo un atajo en Finder, para poder abrir un `iTerm` cuando el cursor está en una carpeta. 
-
-* `Ajustes Sistema → Teclado → Funciones rápidas de teclado → Servicios`
-    * `Archivos y carpetas → Nueva pestaña Terminal en carpeta` → `Ctrl Shift T`
-
-<br/> 
-
-### Oh My Zsh
-
-![logo linux router](/assets/img/posts/logo-ohmyzsh.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
-
-[oh-my-zsh](https://ohmyz.sh) es un entorno de trabajo en línea de comando mucho más bonito para trabajar con **Zsh**. Viene con miles de funciones útiles, ayudantes, plugins, temas. Trae varios plugins que hacen la vida más fácil. [Lo mejor de Oh My Zsh son sus temas](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes).
-
-Ejecuto el proceso de instalación.
-
-```zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-```
-
-| Recordatorio: como dije al principio, una vez instalado iTerm + Oh My Zsh te recomiendo que copies el contenido de mi fichero [`.zshrc`](https://gist.github.com/LuisPalacios/f66942b329af7920bebd4b95fa36cdb5), salgas del terminal y vuelvas a arrancar *iTerm* |
 
 <br/>
 
@@ -125,10 +149,10 @@ Siendo desarrollador con un Mac, quieres [Homebrew](https://brew.sh/index_es) (o
 
 Con `brew` vas a poder instalar (**en paralelo a tu Mac OS sin tocarlo ni estropearlo**) un montón de programas de software libre super interesantes, software de bajo nivel, herramientas para la línea de commandos, aplicaciones, compiladores, lenguajes, etc. podrás instalar hasta MongoDB (ver más adelante).
 
-Ejecuto el script de instalación.
+Instalación:
 
 ```zsh
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 source ~/.zshrc
 ```
@@ -158,7 +182,7 @@ export PATH="/opt/homebrew/opt/ruby/bin:~/.gems/bin:$PATH"   # Versión para Mac
 
 [Git](https://git-scm.com) es un sistema de control de versiones distribuido, gratuito y de código abierto, diseñado para gestionar desde proyectos pequeños a muy grandes con rapidez y eficacia. Existen varias opciones de Instalación del cliente para la línea de comandos ([fuente original](https://git-scm.com/download/mac)), en mi caso utilizo la de Homebrew.
 
-Realizo la instalación de Git desde homebrew.  
+Instalación:
 
 ```zsh
 brew update && brew upgrade
@@ -181,50 +205,37 @@ Como cliente GUI uso [GitKraken](https://www.gitkraken.com). Tienes más informa
 
 <br/>
 
-### SSH
+### SSH clave pública-privada
 
 ![logo linux router](/assets/img/posts/logo-ssh.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
-Ahora es buen momento para configurar tu pareja de clave pública/privada para conectar con Hosts remotos y/o usarlo con servidor(es) Git, GitHub, GitLab, etc. 
+Ahora es buen momento para configurar tu pareja de claves pública/privada para conectar con Hosts remotos y/o usarlo con servidor(es) Git. La clave pública-privada SSH es un sistema de autenticación y encriptación utilizado para la conexión entre un cliente y un servidor. Se utilizan un par de claves: una clave pública y una clave privada. Los dos casos de uso más típicos son: 
 
-Una vez creado añade el contenido del fichero `.pub` a aquellos sitios con los que quiera conectar, por ejemplo: 
+- Conectar desde mi Terminal con un servidor remoto. 
+- Conectar mi cliente `git` con un servidor Git remoto (por ejemplo `github.com`) 
 
-* Linux remotos, añadir al final del fichero `~/.ssh/authorized_keys`
-* Servidores GIT, añadirla a su servidor usan el interfaz propio. 
-
+Creo mi clave pública-privada, crea dos archivos de texto bajo `~/.ssh`.
 
 ```zsh
 ➜  ~ ssh-keygen -t ed25519 -a 200 -C "luis@mihost" -f ~/.ssh/id_ed25519
-Generating public/private ed25519 key pair.
-Created directory '/Users/luis/.ssh'.
-Enter passphrase (empty for no passphrase):            <=== Pon una contraseña que usarás para hacer login remoto.
-Your identification has been saved in /Users/luis/.ssh/id_ed25519   <== NUNCA LO COMPARTAS
-Your public key has been saved in /Users/luis/.ssh/id_ed25519.pub   <== ESTE es el que compartes !!
+:
+Enter passphrase (empty for no passphrase):            <=== Pon una contraseña que usarás durante las futuras conexiones
+Your identification has been saved in /Users/luis/.ssh/id_ed25519   <== Clave PRIVADA. NUNCA LO COMPARTAS
+Your public key has been saved in /Users/luis/.ssh/id_ed25519.pub   <== Clave PÚBLICA. Este contenido es el que compartes !!
 :
 ```
 
+El contenido del fichero con la clave pública lo compartes con el servidor remoto (`github` o un linux para terminal remoto), mientras que la clave privada se mantiene en local. Simplificándolo muchísimo, mi clave *pública* que le paso a Github la va a usar para encriptar información que solo yo, que poseo la *privada equivalente*, puedo descifrar y así comunicarnos. 
+
+En el caso de Github se puede usar este método (SSH pública-privada) para acceso directo a tu cuenta y modificar repositorios de forma segura, sin necesidad de hacer login (https con usuario y contraseña). Es importante destacar que debes mantener tu clave privada segura, ya que si alguien más la tiene, puede acceder a tu cuenta y repositorios.
+
+El contenido de tu pública se comparte: 
+
+* En equipo linux remotos con los que quiero conectar: añadiéndolo al final del fichero `~/.ssh/authorized_keys`
+* En Servidores GIT, a través de su GUI, en la propiedades de mi cuenta. 
+
 Tienes un par de apuntes adicionales en [SSH y X11]({% post_url 2017-02-11-x11-desde-root %}) y [SSH en Linux]({% post_url 2009-02-01-ssh %})
 
-<br/>
-
-### Xcode
-
-![logo linux router](/assets/img/posts/logo-xcode.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
-
-Un clásico, Xcode es un entorno de desarrollo integrado para macOS que contiene un conjunto de herramientas creadas por Apple destinadas al desarrollo de software para macOS, iOS, watchOS y tvOS. Instalo Xcode directamente desde el App Store.
-
-A principio de este apunte recomendaba hacer los dos comandos siguientes. Si no lo hiciste, hazlo cuanto antes: 
-
-```zsh
-xcode-select --install
-sudo xcodebuild -license accept
-```
-
-{% include showImagen.html
-    src="/assets/img/posts/2023-04-15-mac-desarrollo-01.png"
-    caption="Pantalla de inicio de Xcode."
-    width="500px"
-    %}
 
 <br/>
 
@@ -236,7 +247,9 @@ Podemos instalar JRE (Java Runtime Environment) para ejecutar aplicaciones Java 
 
 En mi caso obviamente me instalo JDK, trae herramientas como el compilador (javac), el desensamblador de binarios (javap), el debugger, etc. y toda instalación de JDK incluye JRE. Te recomiendo echar un ojo a esta [imagen sobre la estructura de componentes de Java](https://stackoverflow.com/a/29160633/1065197).
 
-Para instalar accedo directamente al [Java SE Development Kit](https://www.oracle.com/java/technologies/downloads/) y me bajo la versión JDK 20 para macOS. En mi caso elegí la versión ARM64 DMG Installer
+Instalación:
+
+- Conecto con [Java SE Development Kit](https://www.oracle.com/java/technologies/downloads/) y me bajo la versión JDK 20 para macOS. En mi caso elegí la versión ARM64 DMG Installer
 
 {% include showImagen.html
     src="/assets/img/posts/2023-04-15-mac-desarrollo-08.png"
@@ -278,21 +291,26 @@ Te dejo aquí algunas referencias interesantes:
 
 ### Eclipse. 
 
+
 ![logo linux router](/assets/img/posts/logo-eclipse.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
 Podrías usar Visual Studio Code como IDE pero lo más normal es que te instales Eclipse, es **La plataforma** para trabajar con Java, y mucho más, en realidad con herramientas de programación de código abierto multiplataforma para desarrollar Aplicaciones. 
 
 Típicamente se ha usado para desarrollar IDE's (entornos de desarrollo integrados), como el del propio Java (Java Development Toolkit - JDT). 
 
-Lo primero es haber descargado e instalado el **Java JDK para macOS** (visto en el punto anterior). A continuación descargo la última versión de Eclipse mediante **Eclipse Installer**. 
+Instalación:
 
+- Conecto con [Eclipse](https://www.eclipse.org/downloads/) y me bajo el **Eclipse Installer**.
+- Lo copio a *Aplicaciones*, podré instalar ahora o en el futuro otras opciones
+- Lo ejecuto desde *Aplicaciones*,
+ 
 {% include showImagen.html
     src="/assets/img/posts/2023-04-15-mac-desarrollo-09.png"
     caption="Descargo la versión ARM del Eclipse Installer para Mac"
     width="500px"
     %}
 
-Arrastro el **Eclipse Installer** a Aplicaciones. Puedo utilizarlo para instalar varias cosas, de lo uso para instalar el «Eclipse IDE for Java Developers».
+- Instalo «Eclipse IDE for Java Developers».
 
 {% include showImagen.html
     src="/assets/img/posts/2023-04-15-mac-desarrollo-10.png"
@@ -300,7 +318,8 @@ Arrastro el **Eclipse Installer** a Aplicaciones. Puedo utilizarlo para instalar
     width="500px"
     %}
 
-Ya tienes Eclipse operativo para empezar a trabajar con él. Te dejo un apunte que hice sobre cómo trabajar con [Eclipse + Java sobre repositorio Git]({% post_url 2022-10-27-quidomi %}).
+Un tip: 
+- Un apunte que hice sobre cómo trabajar con [Eclipse + Java sobre repositorio Git]({% post_url 2022-10-27-quidomi %}).
 
 <br/>
 
@@ -314,7 +333,7 @@ Ya tienes Eclipse operativo para empezar a trabajar con él. Te dejo un apunte q
 
 **[PipEnv](https://pipenv.pypa.io/en/latest/)** es otro indispensable. Las aplicaciones en Python hacen uso de paquetes y módulos que no forman parte de la librería estándar. Gestionar todas las librerías que deben acompañar a mi programa es un infierno. Con **`PipEnv`** puedo "contener" todo dentro de un directorio, creando un entorno virtual, sin conflictos. Nota: hay dos paquetes equivalentes a **`PipEnv`**: [Virtualenv](https://virtualenv.pypa.io/en/latest/) y [Conda](https://docs.conda.io/projects/conda/en/latest/index.html) que no suelo utilizar. 
   
-Veamos el proceso de instalación vía Hombrebrew.
+Instalación:
 
 ```zsh
 brew install python     <--- (También nos instala pip)
@@ -386,6 +405,8 @@ rm -fr proyecto
 
 MacOS ya trae Ruby, pero voy a instalar la última versión con Hombrew en paralelo. Necesito `Bundler` y `Jekyll` (ver más adelante) para trabajar en mi blog en local (más info [aquí]({% post_url 2021-04-19-nuevo-blog %})). **Ruby** es un lenguaje de programación interpretado, reflexivo y orientado a objetos, creado por el programador japonés Yukihiro "Matz" Matsumoto, quien comenzó a trabajar en Ruby en 1993, y lo presentó públicamente en 1995.
 
+Instalación:
+
 ```zsh
 brew install ruby
 ```
@@ -421,9 +442,9 @@ export PATH=~/.gems/bin:$PATH
 
 ![logo linux router](/assets/img/posts/logo-jekyll.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
-Los necesito para trabajar con mi blog en local. **Jekyll** es un generador simple para sitios web estáticos con capacidades de blog (creas ficheros markdown y él te genera el HTML). Está escrito en Ruby por Tom Preston-Werner (cofundador de GitHub) y es rapidísimo. 
+Los necesito para trabajar con mi blog en local. **Jekyll** es un generador simple para sitios web estáticos con capacidades de blog (creas ficheros markdown y él te genera el HTML). Está escrito en Ruby por Tom Preston-Werner (cofundador de GitHub) y es rapidísimo. **Bundler** es un gestor de paquetes de software que va a facilitar el trabajo con Jekyll y sus dependencias. 
 
-**Bundler** es un gestor de paquetes de software que va a facilitar el trabajo con Jekyll y sus dependencias. 
+Instalación:
 
 ```zsh
 gem install jekyll bundler
@@ -457,6 +478,8 @@ Desde un browser conecto con [http://127.0.0.1:4000/](http://127.0.0.1:4000/) y 
 
 Podría instalar Node.js desde su sitio oficial, pero implica utilizar `sudo`. Si lo instalo con Homebrew lo tengo en el usuario, no tengo que tocar el PATH y además es más fácil instalar paquetes con NPM.
 
+Instalación:
+
 ```zsh
 brew install node
 node -v
@@ -485,12 +508,14 @@ Vamos a hacer un ejemplo super sencillo:
 
 Instalo MongoDB 6.0 Community Edition en macOS utilizando Homebrew ([fuente](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/)). Uso un [`tap`](https://docs.brew.sh/Taps), solo se hace una vez. Consiste en añadir un repositorio (externo) a la lista de sitios desde donde instala Homebrew. 
 
+Preparar la instalación:
+
 ```zsh
 brew tap mongodb/brew
 brew update
 ```
 
-Instalo MongoDB. Incluye el servidor `mongod`, el `mongos sharded cluster query router` y la shell `mongosh`.
+Instalación (incluye el servidor `mongod`, el `mongos sharded cluster query router` y la shell `mongosh`):
 
 ```zsh
 brew install mongodb-community@6.0
@@ -580,7 +605,11 @@ No dejes de leer el apunte [Vagrant para desarrollo]({% post_url 2023-04-23-mac-
 
 Dejo aquí una lista de programas que considero indispensables y que instalo con Homebrew. Nota que puedes poner más de uno en la lína de comandos (separados por espacio).
 
-Instalación: `brew install <programa(s)>`
+Instalación:
+
+```zsh
+brew install <programa(s)>
+```
 
 |  Programa | Descripción |
 | -- | -- |
