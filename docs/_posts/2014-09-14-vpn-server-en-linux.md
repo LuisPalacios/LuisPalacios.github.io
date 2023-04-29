@@ -162,9 +162,9 @@ nobody   13080     1  0 17:13 ?        00:00:00 /usr/sbin/openvpn --daemon --wri
  
 ## Cliente MacOSX
 
-Para conectar desde un MacOSX necesitas instalar un cliente especial. Uno muy popular es [Tunnelblick](https://code.google.com/p/tunnelblick/):
+Para conectar desde un MacOSX necesitas instalar un cliente. Uno muy popular es [Passepartout](https://passepartoutvpn.app/):
 
-- Descarga e instala el cliente OpenVPN para MacOSX: Tunnelblick
-- Ejecutar Tunnelblick
+- Descarga e instala el cliente OpenVPN para MacOSX: Passepartout
+- Ejecutar Passepartout
 
-El propio programa te guiará para que puedas crearte un fichero de configuración. Recuerda que tienes que hacerle llegar los ficheros `ca.crt, luis.crt y luis.key`.
+Recuerda que tienes que hacerle llegar los ficheros `ca.crt, luis.crt y luis.key`.

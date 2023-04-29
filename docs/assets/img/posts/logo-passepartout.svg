@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="15" height="15"/>
+  </defs>
+  <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: rgb(84, 84, 84); pointer-events: none; visibility: hidden;" x="15" y="15" bx:origin="0.5 0.5"/>
+  <g style="" transform="matrix(2.857142, 0, 0, 2.857142, -139.285645, -139.28566)">
+    <g transform="matrix(1, 0, 0, 1, 43, 42)">
+      <g>
+        <rect fill="#F5CF87" height="14" width="6" x="24" y="16"/>
+      </g>
+      <g>
+        <rect fill="#F5CF87" height="14" width="6" x="24" y="34"/>
+      </g>
+      <g>
+        <rect fill="#F5CF87" height="14" width="6" x="34" y="16"/>
+      </g>
+      <g>
+        <rect fill="#F5CF87" height="14" width="6" x="34" y="34"/>
+      </g>
+    </g>
+    <g opacity="0.2" transform="matrix(1, 0, 0, 1, 43, 42)">
+      <path d="M40,14H24c-2.209,0-4,1.791-4,4v32c0,2.209,1.791,4,4,4h16c2.209,0,4-1.791,4-4V18    C44,15.791,42.209,14,40,14z M30,50h-6V36h6V50z M30,32h-6V18h6V32z M40,50h-6V36h6V50z M40,32h-6V18h6V32z" fill="#231F20"/>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 43, 42)">
+      <path d="M40,12H24c-2.209,0-4,1.791-4,4v32c0,2.209,1.791,4,4,4h16c2.209,0,4-1.791,4-4V16    C44,13.791,42.209,12,40,12z M30,48h-6V34h6V48z M30,30h-6V16h6V30z M40,48h-6V34h6V48z M40,30h-6V16h6V30z" fill="#E0995E"/>
+    </g>
+    <g opacity="0.2" transform="matrix(1, 0, 0, 1, 43, 42)">
+      <circle cx="40" cy="34" fill="#231F20" r="3"/>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 43, 42)">
+      <circle cx="40" cy="32" fill="#F5CF87" r="3"/>
+    </g>
+  </g>
+</svg>
