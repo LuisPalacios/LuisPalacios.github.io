@@ -69,15 +69,15 @@ static domain_name_servers=127.0.0.1
 
 - Fichero resolv.conf
 
-domain parchis.org
-search parchis.org
+domain tudominio.com
+search tudominio.com
 nameserver 192.168.1.1   <== Temporalmente hasta que terminemos y lo cambiaré a 127.0.0.1
 
 - Es opcional pero a mi me gusta cambiarle el nombre al host, así que modifico los ficheros /etc/hostname y /etc/hosts
 
 apodix
 
-127.0.0.1   apodix.parchis.org apodix localhost localhost.localdomain
+127.0.0.1   apodix.tudominio.com apodix localhost localhost.localdomain
 ::1     localhost ip6-localhost ip6-loopback
 fe00::0     ip6-localnet
 ff00::0     ip6-mcastprefix
@@ -141,7 +141,7 @@ shared-network lan {
     subnet 192.168.1.0 netmask 255.255.255.0 {
         option routers 192.168.1.1;
         option subnet-mask 255.255.255.0;
-        option domain-name "parchis.org";
+        option domain-name "tudominio.com";
         option domain-name-servers 192.168.1.253;
         option interface-mtu 1496;
 
@@ -164,7 +164,7 @@ shared-network lan {
 
 host equipo1 {
     hardware ethernet 12:34:56:78:aa:bb;
-    fixed-address equipo1.parchis.org;
+    fixed-address equipo1.tudominio.com;
 }
 
 #####################
@@ -287,10 +287,10 @@ options {
    *   Zonas privadas
    */
  
-  zone "parchis.org" {
+  zone "tudominio.com" {
     notify no;
     type master;
-    file "/var/lib/bind/parchis.org";
+    file "/var/lib/bind/tudominio.com";
     allow-transfer { localhost; };
     allow-query { any; };
   };
@@ -305,20 +305,20 @@ options {
 
 - /etc/bind/named.conf.default.zones: Zonas por defecto del servidor. No hace falta modificar este fichero
 
-Zona privada para la intranet: parchis.org
+Zona privada para la intranet: tudominio.com
 
 ;
-; Fichero para zona parchis.org
+; Fichero para zona tudominio.com
 ;
 $TTL 3D
-@       IN      SOA     ns1.parchis.org. luis.parchis.org.  (
+@       IN      SOA     ns1.tudominio.com. luis.tudominio.com.  (
                                       2015031901 ; Serial
                                       28800      ; Refresh
                                       14400      ; Retry
                                       3600000    ; Expire
                                       86400 )    ; Minimum
                 TXT            "NS de Parchis"
-                NS          ns1.parchis.org.
+                NS          ns1.tudominio.com.
 ;
 localhost       A               127.0.0.1
 apodix          A               192.168.1.253
@@ -343,24 +343,24 @@ switch          A               192.168.1.254
 Resolución inversa
 
 ;
-; Fichero de la zona inversa parchis.org
+; Fichero de la zona inversa tudominio.com
 ;
 $TTL 3D
-@       IN      SOA     ns1.parchis.org. luis.parchis.org.  (
+@       IN      SOA     ns1.tudominio.com. luis.tudominio.com.  (
                                       2015031901 ; Serial
                                       28800      ; Refresh
                                       14400      ; Retry
                                       3600000    ; Expire
                                       86400 )    ; Minimum
-                NS      ns1.parchis.org.
+                NS      ns1.tudominio.com.
 
-1       PTR     cortafuegix.parchis.org.
-253     PTR     ns1.parchis.org.
-150     PTR     panoramix.parchis.org.
-151     PTR     luispa-mac.parchis.org.
-152     PTR     rasp-dormitorio.parchis.org.
-200     PTR     deco-movistar.parchis.org.
-254     PTR     switch.parchis.org.
+1       PTR     cortafuegix.tudominio.com.
+253     PTR     ns1.tudominio.com.
+150     PTR     panoramix.tudominio.com.
+151     PTR     luispa-mac.tudominio.com.
+152     PTR     rasp-dormitorio.tudominio.com.
+200     PTR     deco-movistar.tudominio.com.
+254     PTR     switch.tudominio.com.
 
 A partir de ahora hay que configurar a todos los clientes (incluyendose ella misa) para que consulten a la Pi1 los nombres DNS.
 
@@ -370,14 +370,14 @@ Una vez que tenemos la configuración del servidor DNS hay que cambiar la de los
 
 - La Raspberry (consulta a su propio servicio DNS)
 
-domain parchis.org
-search parchis.org
+domain tudominio.com
+search tudominio.com
 nameserver 127.0.0.1
 
 - Clientes de la Intranet
 
-domain parchis.org
-search parchis.org
+domain tudominio.com
+search tudominio.com
 nameserver 192.168.1.253
 
 ### Arranque de los servicios

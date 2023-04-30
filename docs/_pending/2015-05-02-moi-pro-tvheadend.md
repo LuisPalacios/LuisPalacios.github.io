@@ -91,7 +91,7 @@ Como has visto, el interfaz Web del MOI Pro es sencillo y simple, de hecho ya te
 Conectar vía SSH y trabajar con él desde la línea de comandos. **El usuario por defecto es "root" y la contraseña "root"**.
 
  
-$ ssh -l root moipro.parchis.org
+$ ssh -l root moipro.tudominio.com
 [root@MOIPro ~]# 
 
 ### Timezone
@@ -127,7 +127,7 @@ After=syslog.target
 Before=tvheadend.service
 
 [Mount]
-What=panoramix.parchis.org:/Recordings
+What=panoramix.tudominio.com:/Recordings
 Where=/media/Recordings
 Options=
 Type=nfs
@@ -269,10 +269,10 @@ En otro ordenador donde tengas git instalado:
 $ cd tmp
 $ git clone https://git.linuxtv.org//dtv-scan-tables.git
 $ cd dtv-scan-tables
-$ scp -r * root@moipro.parchis.org:/usr/share/tvheadend/data/dvb-scan
+$ scp -r * root@moipro.tudominio.com:/usr/share/tvheadend/data/dvb-scan
 
 Conecta con el MOIPro vía SSH:
-# ssh -l root moipro.parchis.org
+# ssh -l root moipro.tudominio.com
 # ln -s /usr/share/tvheadend/data/dvb-scan /usr/share/dvb
 # systemctl restart tvheadend
 
@@ -289,7 +289,7 @@ Conecta con el MOIPro vía SSH:
 # el comando siguiente en el MOI Pro, pero no me funcionó:
 #   # w_scan -ft -c ES -x 
 #
-# ssh -l root moipro.parchis.org
+# ssh -l root moipro.tudominio.com
 # cd /media/mmcblk0p1/usr/share/tvheadend/data/dvb-scan/dvb-t
 # cat > es-Madrid      (COPY / PASTE este fichero)
 # chown 1000:1000 es-Madrid
@@ -444,7 +444,7 @@ Conecta con el MOIPro vía SSH:
     INVERSION = AUTO
 
  
- $ ssh -l root moipro.parchis.org
+ $ ssh -l root moipro.tudominio.com
  # cd /media/mmcblk0p1/usr/share/tvheadend/data/dvb-scan/dvb-t
  # cat > es-Madrid
  
@@ -489,7 +489,7 @@ Si dejas un Terminal conectado por SSH con el MOI Pro y visualizas el "log" (jou
 Si te encuentras con que Services tienen como resultado de Scan "Fallido (Fail)", ignóralo de momento, lo importante es ir viendo cómo algunos otros dicen "OK" y crece el número de servicios detectados.
 
  
-$ ssh -l root moipro.parchis.org
+$ ssh -l root moipro.tudominio.com
 
 [root@MOIPro ~]# journalctl -f
 : 
@@ -539,9 +539,9 @@ Fíjate en un dato importante, Tvheadend ha asignado un nombre de icono muy espe
 
  
 
-$ scp LuisPa-Picon-TDT.tgz root@moipro.parchis.org:.
+$ scp LuisPa-Picon-TDT.tgz root@moipro.tudominio.com:.
 
-$ ssh -l root moipro.parchis.org
+$ ssh -l root moipro.tudominio.com
 :
 [root@MOIPro ~]# cd .hts/
 [root@MOIPro ~/.hts]# mkdir picon
@@ -622,8 +622,8 @@ El udpxy es una Daemon que se ejecuta en Linux y permite hacer relay del tráfic
 
 Antes de nada, haz un backup por si las moscas...
 
-obelix:~ luis$ ssh -l root moipro.parchis.org
-root@moipro.parchis.org's password:
+obelix:~ luis$ ssh -l root moipro.tudominio.com
+root@moipro.tudominio.com's password:
 :
 [root@MOIPro ~]# cd /(null)/.hts/
 [root@MOIPro /(null)/.hts]# systemctl stop tvheadend
@@ -1052,12 +1052,12 @@ Antes de explicarte cómo insertarlos te voy a explicar cómo borrarlos, por si 
 Asumiendo que tienes la configuración limpia el proceso para insertar los canales consiste en conectar por SSH con el MOI, descargar el proyecto iptv2hts desde GitHub y ejecutar el script iptv2hts.py para que inserte los canales en la configuración de Tvheadend:
 
 ___RECUERDA ENVIAR EL FICHERO "movistartv-canales.m3u" al MOI___
-luis@aplicacionix ~/iptv2hts-master/movistartv2xmltv $ scp movistartv-canales.m3u root@moipro.parchis.org:.
+luis@aplicacionix ~/iptv2hts-master/movistartv2xmltv $ scp movistartv-canales.m3u root@moipro.tudominio.com:.
 :
 
 ___CONECTO CON EL MOI PRO___
-obelix:~ luis$ ssh -l root moipro.parchis.org
-root@moipro.parchis.org's password:
+obelix:~ luis$ ssh -l root moipro.tudominio.com
+root@moipro.tudominio.com's password:
 :
 
 ___ME BAJO LOS SCRIPTS___
@@ -1173,10 +1173,10 @@ En otro ordenador donde tengas git instalado:
 $ cd tmp
 $ git clone https://git.linuxtv.org//dtv-scan-tables.git
 $ cd dtv-scan-tables
-$ scp -r * root@moipro.parchis.org:/usr/share/tvheadend/data/dvb-scan
+$ scp -r * root@moipro.tudominio.com:/usr/share/tvheadend/data/dvb-scan
 
 Conecta con el MOIPro vía SSH:
-# ssh -l root moipro.parchis.org
+# ssh -l root moipro.tudominio.com
 # ln -s /usr/share/tvheadend/data/dvb-scan /usr/share/dvb
 # systemctl restart tvheadend
 
@@ -1311,7 +1311,7 @@ After=syslog.target
 Before=tvheadend.service
 
 [Mount]
-What=panoramix.parchis.org:/NAS
+What=panoramix.tudominio.com:/NAS
 Where=/media/NAS
 Options=nolock
 Type=nfs
@@ -1427,8 +1427,8 @@ Si no te fias de la estabilidad del equipo o hace cosas raras igual te vendría 
 
 Conecto por SSH con el equipo, creo los ficheros para systemd: reboot.timer y reboot.service, habilito el primero (.timer) y lo arranco. A partir de ese momento todos los días se ejecutará un reboot a las 4 de la mañana, aquí los ficheros:
 
-$ ssh -l root moipro.parchis.org -p 22
-root@moipro.parchis.org's password:
+$ ssh -l root moipro.tudominio.com -p 22
+root@moipro.tudominio.com's password:
 [root@MOIPro ~]#
 [root@MOIPro ~]# cd /etc/systemd/system
 [root@MOIPro /etc/systemd/system]# cat > reboot.timer

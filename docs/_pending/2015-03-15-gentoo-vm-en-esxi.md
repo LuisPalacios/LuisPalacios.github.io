@@ -673,8 +673,8 @@ sigo con nfs-utils para montar volúmenes remotos desde mi NAS,
 Ejemplo de fichero fstab para acceder a recursos remotos NFS
 
 # Recursos en la NAS via NFS
-nas.parchis.org:/Recordings  /mnt/Recordings  nfs auto,user,exec,rsize=8192,wsize=8192,hard,intr,timeo=5   0 0
-nas.parchis.org:/Apps        /Apps            nfs auto,user,exec,rsize=8192,wsize=8192,hard,intr,timeo=5   0 0
+nas.tudominio.com:/Recordings  /mnt/Recordings  nfs auto,user,exec,rsize=8192,wsize=8192,hard,intr,timeo=5   0 0
+nas.tudominio.com:/Apps        /Apps            nfs auto,user,exec,rsize=8192,wsize=8192,hard,intr,timeo=5   0 0
 
 continúo con Docker,
 
@@ -739,7 +739,7 @@ La primera opción es crear una plantilla en formato OVF (varios ficheros) o bie
     
 
 ___ CONECTAR VIA SSH CON EL ESXi ___
-obelix:~ luis$ ssh -l root esxi.parchis.org
+obelix:~ luis$ ssh -l root esxi.tudominio.com
 Password:
 ~ #
 

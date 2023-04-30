@@ -40,7 +40,7 @@ Tras repetir esto un par de veces descubrí una forma mucho más óptima de trab
 
 Resulta escandalosamente fácil crear un ISO personalizado de Alpine Linux. Lo mejor es hacerlo todo desde el propio Alpine, así que voy a usar un contenedor Docker basado en Alpine para simplificar todo el proceso. 
 
-- Hay miles de ejemplos y tutoriales sobre cómo prepararte un host con Docker. En mi caso uso una máuqina virtual, que documenté en el apunte [Alpine para ejecutar contenedores]({% post_url 2022-03-20-alpine-docker %}). Mi VM se llama `docker.parchis.org`
+- Hay miles de ejemplos y tutoriales sobre cómo prepararte un host con Docker. En mi caso uso una máuqina virtual, que documenté en el apunte [Alpine para ejecutar contenedores]({% post_url 2022-03-20-alpine-docker %}). Mi VM se llama `docker.tudominio.com`
 
 <br/>
 

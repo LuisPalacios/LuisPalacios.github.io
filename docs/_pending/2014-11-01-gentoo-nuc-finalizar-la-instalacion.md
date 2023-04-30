@@ -102,7 +102,7 @@ mtu_eth0="8704"     # Usa esto si tienes un switch que soporte y tenga confi
  
 
  
-domain parchis.org
+domain tudominio.com
 nameserver 192.168.1.1
  
 

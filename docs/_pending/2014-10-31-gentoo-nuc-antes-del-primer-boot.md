@@ -34,14 +34,14 @@ Los siguientes pasos son muy importantes antes de arrancar el equipo, no te olvi
 
 Hostname y Resolución de nombres
 
-Preparo los ficheros /etc/hostname, /etc/hosts, /etc/resolv.conf y /etc/host.conf. Notar que en mi ejemplo mi equipo se llama "totobo", el dominio es "parchis.org" (servidor por un DNS Server en la 192.168.1.1)
+Preparo los ficheros /etc/hostname, /etc/hosts, /etc/resolv.conf y /etc/host.conf. Notar que en mi ejemplo mi equipo se llama "totobo", el dominio es "tudominio.com" (servidor por un DNS Server en la 192.168.1.1)
 
 hostname="totobo"        <== Poner aquí el nombre de tu equipo
 
 127.0.0.1  localhost
 ::1        localhost
 
-domain parchis.org
+domain tudominio.com
 nameserver 192.168.1.1
 
 order bind, hosts        <== Primero DNS Server (hará que funcione "hostname --fqdn")
@@ -54,7 +54,7 @@ Más tarde, cuando arranque el equipo, y asumiendo que el DNS server funciona, d
 totobo
  
 # hostname --fqdn
-totobo.parchis.org
+totobo.tudominio.com
  
 
 Contraseña de root

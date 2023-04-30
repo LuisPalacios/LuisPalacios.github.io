@@ -1383,7 +1383,7 @@ Tienes dos opciones, utilizar **/etc/fstab** o **automount**.
 Ejemplo con /etc/fstab para acceder a recursos remotos NFS.
 
 # Recursos en la NAS via NFS
-nas.parchis.org:/NAS  /mnt/NAS  nfs auto,user,exec,rsize=8192,wsize=8192,hard,intr,timeo=5   0 0
+nas.tudominio.com:/NAS  /mnt/NAS  nfs auto,user,exec,rsize=8192,wsize=8192,hard,intr,timeo=5   0 0
 
 Ejemplo usando automount
 
@@ -1393,7 +1393,7 @@ Wants=network.target rpc-statd.service
 After=network.target rpc-statd.service
 
 [Mount]
-What=panoramix.parchis.org:/NAS
+What=panoramix.tudominio.com:/NAS
 Where=/mnt/NAS
 Options=
 Type=nfs
@@ -1504,8 +1504,8 @@ virt-manager es un GUI para gestionar las máquinas virtuales de forma cómoda. 
 edaddepiedrix linux # emerge -v xclock xauth
 :
 ___DESDE MI ESTACIÓN DE TRABAJO, UN MACOS___
-obelix:~ luis$ ssh -Y -l root -p 22 edaddepiedrix.parchis.org
-root@edaddepiedrix.parchis.org's password:
+obelix:~ luis$ ssh -Y -l root -p 22 edaddepiedrix.tudominio.com
+root@edaddepiedrix.tudominio.com's password:
 :
 edaddepiedrix linux # xclock
 ___COMPRUEBA QUE EN EL MAC ARRANCA X11 Y SE VE EL RELOJ___

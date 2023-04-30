@@ -1200,7 +1200,7 @@ net-dns/bind   dlz ipv6 -mysql ssl xml
 
 **DNS Server**
 
-Si tienes un equipo Linux encendido 24 horas en tu intranet te recomiendo activar tu propio DNS Server, podrás asignar nombres a las direcciones IP y junto con un DHCP Server asignar direcciones IP estáticas sobre la base de la dirección MAC (usando el nombre DNS). Prepara el fichero **named.conf** y un par de ficheros más para tu dominio privado. Dejo un ejemplo para un dominio interno que he llamado "parchis.org". La ventaja que tiene es que hace de acelerador/proxy, cuando consultes un dominio desoncocido pues se irá a internet a buscar la respuesta.
+Si tienes un equipo Linux encendido 24 horas en tu intranet te recomiendo activar tu propio DNS Server, podrás asignar nombres a las direcciones IP y junto con un DHCP Server asignar direcciones IP estáticas sobre la base de la dirección MAC (usando el nombre DNS). Prepara el fichero **named.conf** y un par de ficheros más para tu dominio privado. Dejo un ejemplo para un dominio interno que he llamado "tudominio.com". La ventaja que tiene es que hace de acelerador/proxy, cuando consultes un dominio desoncocido pues se irá a internet a buscar la respuesta.
 
 /*
  * Refer to the named.conf(5) and named(8) man pages, and the documentation
@@ -1459,10 +1459,10 @@ view "privado" {
    *   Zonas privadas
    */
 
-  zone "parchis.org" {
+  zone "tudominio.com" {
     notify no;
     type master;
-    file "pri/privado/parchis.org";
+    file "pri/privado/tudominio.com";
     allow-transfer { localhost; };
     allow-query { any; };
   };
@@ -1476,20 +1476,20 @@ view "privado" {
   };
 };
 
-Zona interna (parchis.org)
+Zona interna (tudominio.com)
 
 ;
-; Fichero de la zona parchis.org
+; Fichero de la zona tudominio.com
 ;
 $TTL 3D
-@       IN      SOA     ns1.parchis.org. luis.parchis.org.  (
+@       IN      SOA     ns1.tudominio.com. luis.tudominio.com.  (
                                       2015031901 ; Serial
                                       28800      ; Refresh
                                       14400      ; Retry
                                       3600000    ; Expire
                                       86400 )    ; Minimum
                 TXT            "NS de Parchis"
-                NS          ns1.parchis.org.
+                NS          ns1.tudominio.com.
 ;
 localhost       A               127.0.0.1
 servidor        A               192.168.1.1
@@ -1514,28 +1514,28 @@ switch          A               192.168.1.254
 Resolución inversa
 
 ;
-; Fichero de la zona inversa parchis.org
+; Fichero de la zona inversa tudominio.com
 ;
 $TTL 3D
-@       IN      SOA     ns1.parchis.org. luis.parchis.org.  (
+@       IN      SOA     ns1.tudominio.com. luis.tudominio.com.  (
                                       2015031901 ; Serial
                                       28800      ; Refresh
                                       14400      ; Retry
                                       3600000    ; Expire
                                       86400 )    ; Minimum
-                NS      ns1.parchis.org.
+                NS      ns1.tudominio.com.
 
-1       PTR     servidor.parchis.org.
-1       PTR     ns1.parchis.org.
-150     PTR     panoramix.parchis.org.
-151     PTR     luispa-mac.parchis.org.
-152     PTR     rasp-dormitorio.parchis.org.
-200     PTR     deco-movistar.parchis.org.
-254     PTR     switch.parchis.org.
+1       PTR     servidor.tudominio.com.
+1       PTR     ns1.tudominio.com.
+150     PTR     panoramix.tudominio.com.
+151     PTR     luispa-mac.tudominio.com.
+152     PTR     rasp-dormitorio.tudominio.com.
+200     PTR     deco-movistar.tudominio.com.
+254     PTR     switch.tudominio.com.
 
 Tanto este servidor (él mismo) como cualquier otro equipo de la Intranet debe apuntar a él para las consultas DNS, y como decía antes si es necesario él irá a internet a buscar las respuestas.
 
-domain parchis.org
+domain tudominio.com
 nameserver 192.168.1.1
 
 Activo el servicio DNS Server, no necesitas crear ningún fichero .service, en esta ocasión voy a usar el que trae el sistema (se encuentran en /usr/lib64/systemd/system).
@@ -1565,7 +1565,7 @@ shared-network lan {
     subnet 192.168.1.0 netmask 255.255.255.0 {
         option routers 192.168.1.1;
         option subnet-mask 255.255.255.0;
-        option domain-name "parchis.org";
+        option domain-name "tudominio.com";
         option domain-name-servers 192.168.1.1;
         option interface-mtu 1496;
 
@@ -1588,7 +1588,7 @@ shared-network lan {
 
         host equipo1 {
                 hardware ethernet 12:34:56:78:aa:bb;
-                fixed-address equipo1.parchis.org;
+                fixed-address equipo1.tudominio.com;
         }
 
 #####################

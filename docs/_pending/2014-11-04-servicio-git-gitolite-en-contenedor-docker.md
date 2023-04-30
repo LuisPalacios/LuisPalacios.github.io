@@ -122,7 +122,7 @@ A continuación clonamos gitolite-admin y empiezo a trabajar, añadir otros pues
 
  
 ~ $ cd /home/luis/tmp
-tmp $ git clone ssh://git@totobo.parchis.org:1600/gitolite-admin
+tmp $ git clone ssh://git@totobo.tudominio.com:1600/gitolite-admin
  
 
  
@@ -144,7 +144,7 @@ servidor_antiguo # tar cfz /tmp/backup_repos.tgz ./repositories
 
  
 EN EL SERVIDOR ANTIGUO
-servidor_antiguo # scp /tmp/backup_repos.tgz luis@totobo.parchis.org:/tmp
+servidor_antiguo # scp /tmp/backup_repos.tgz luis@totobo.tudominio.com:/tmp
 
 EN EL NUEVO Servidor:
 totobo # cd /Apps/data/git
@@ -167,7 +167,7 @@ totobo docker-gitolite $ fig up
 Desde un cliente remoto que teníamos autorizado en el repositorio original
 
  
-obelix:~ luis$ ssh -p 1600 git@totobo.parchis.org
+obelix:~ luis$ ssh -p 1600 git@totobo.tudominio.com
 hello ClaveLuisObelix, this is git@1279cc5fb4ed running gitolite3 v3.6.2-3-ge7752fc on git 1.9.1
 
  R W abaco-swift
@@ -175,7 +175,7 @@ hello ClaveLuisObelix, this is git@1279cc5fb4ed running gitolite3 v3.6.2-3-ge775
  R W gitolite-admin
  R W espresso
  :
-Connection to totobo.parchis.org closed.
+Connection to totobo.tudominio.com closed.
 obelix:~ luis$
  
 
@@ -192,7 +192,7 @@ obelix:~ luis$
 **Línea de comandos**
 
  
-$ git clone ssh://git@totobo.parchis.org:1600/espresso
+$ git clone ssh://git@totobo.tudominio.com:1600/espresso
 :
  
 
@@ -268,7 +268,7 @@ Wants=network.target rpc-statd.service
 After=network.target rpc-statd.service
 
 [Mount]
-What=panoramix.parchis.org:/Apps
+What=panoramix.tudominio.com:/Apps
 Where=/Apps
 Type=nfs
 StandardOutput=syslog

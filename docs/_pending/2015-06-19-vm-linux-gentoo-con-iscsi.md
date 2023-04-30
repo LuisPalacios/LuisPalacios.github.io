@@ -708,7 +708,7 @@ Tienes dos opciones, utilizar **/etc/fstab** o **automount**.
 Ejemplo con /etc/fstab para acceder a recursos remotos NFS.
 
 # Recursos en la NAS via NFS
-nas.parchis.org:/NAS  /mnt/NAS  nfs auto,user,exec,rsize=8192,wsize=8192,hard,intr,timeo=5   0 0
+nas.tudominio.com:/NAS  /mnt/NAS  nfs auto,user,exec,rsize=8192,wsize=8192,hard,intr,timeo=5   0 0
 
 Ejemplo usando automount
 
@@ -718,7 +718,7 @@ Wants=network.target rpc-statd.service
 After=network.target rpc-statd.service
 
 [Mount]
-What=panoramix.parchis.org:/NAS
+What=panoramix.tudominio.com:/NAS
 Where=/mnt/NAS
 Options=
 Type=nfs
@@ -799,7 +799,7 @@ Para hacer backup de este tipo de VM lo que hacemos es backup del "disco iSCSI" 
     width="600px"
     %}
     
-- Desde un navegador y el interfaz GUI de mi NAS creo un trabajo de Backup instantáneo hacia un fichero en un directorio NFS remoto (/Volumes/Terabyte/0.BACKUP/iSCSI) en mi OSX (obelix.parchis.org):
+- Desde un navegador y el interfaz GUI de mi NAS creo un trabajo de Backup instantáneo hacia un fichero en un directorio NFS remoto (/Volumes/Terabyte/0.BACKUP/iSCSI) en mi OSX (obelix.tudominio.com):
     
 
 {% include showImagen.html

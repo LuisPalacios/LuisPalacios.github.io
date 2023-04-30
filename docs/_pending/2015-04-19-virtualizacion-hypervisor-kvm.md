@@ -70,8 +70,8 @@ El optar por Centos 7 como distribución en vez de Gentoo (después de tantos a�
 [root@edaddepiedrix ~]# yum install xclock xauth
 :
 ___DESDE MI ESTACIÓN DE TRABAJO, UN MACOS___
-obelix:~ luis$ ssh -Y -l root -p 22 edaddepiedrix.parchis.org
-root@edaddepiedrix.parchis.org's password:
+obelix:~ luis$ ssh -Y -l root -p 22 edaddepiedrix.tudominio.com
+root@edaddepiedrix.tudominio.com's password:
 :
 [root@edaddepiedrix ~]# xclock
 ___FUNCIONA, EN EL MAC ARRANCA X11 Y SE VE EL RELOJ___
@@ -287,7 +287,7 @@ vSwitch0        8000.00241d106d73   no      enp8s0
 Para que el Host KVM pueda llegar a internet (por ejemplo para instalar actualizaciones) puedes configurarle el fichero /etc/resolv.conf y añadirle una ruta por defecto:
 
 [root@edaddepiedrix ~]# cat /etc/resolv.conf
-search parchis.org
+search tudominio.com
 nameserver 192.168.1.1
 [root@edaddepiedrix ~]# ip route add default via 192.168.1.1
 
