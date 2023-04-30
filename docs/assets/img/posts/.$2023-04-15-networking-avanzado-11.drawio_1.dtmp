@@ -1,11 +1,11 @@
-<mxfile host="Electron" modified="2023-04-30T10:26:30.517Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.1 Chrome/112.0.5615.87 Electron/24.1.2 Safari/537.36" etag="t5bBVDkU4waboyoxRW77" version="21.2.1" type="device">
+<mxfile host="Electron" modified="2023-04-30T10:34:15.872Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.1 Chrome/112.0.5615.87 Electron/24.1.2 Safari/537.36" etag="dIJoadEihg7zLrOGWIAS" version="21.2.1" type="device">
   <diagram name="Page-1" id="sTeGwQV9_m6BofXgbJ5z">
-    <mxGraphModel dx="274" dy="218" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
+    <mxGraphModel dx="1221" dy="970" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="vNXa2KsQY14kPwiRae87-1" value="Casa" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacingLeft=12;spacingTop=7;spacing=0;fontSize=14;fillColor=none;strokeColor=#82b366;verticalAlign=top;arcSize=0;strokeWidth=1;fontFamily=Verdana;sketch=1;curveFitting=1;jiggle=2;shadow=0;glass=0;fillStyle=auto;" parent="1" vertex="1">
-          <mxGeometry x="90" y="340.58" width="550" height="169.42" as="geometry" />
+          <mxGeometry x="50" y="340.58" width="700" height="320" as="geometry" />
         </mxCell>
         <mxCell id="z99PI1cJXAMRWRogK8VI-193" value="" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#ae4132;fontSize=16;sketch=1;curveFitting=1;jiggle=2;fontFamily=Verdana;labelPosition=center;verticalLabelPosition=middle;align=center;verticalAlign=middle;" parent="1" vertex="1">
           <mxGeometry x="60" y="60" width="560" height="259.86" as="geometry" />
@@ -59,10 +59,10 @@
           <mxGeometry x="390" y="140" width="90" height="40" as="geometry" />
         </mxCell>
         <mxCell id="pu2SGln_cWuoecxfrxfS-4" value="&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;font-family: &amp;quot;Courier New&amp;quot;; background-color: initial;&quot;&gt;ssh.tudominio.com&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;font-family: &amp;quot;Courier New&amp;quot;; background-color: initial;&quot;&gt;ha.tudominio.com&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;font-family: &amp;quot;Courier New&amp;quot;; background-color: initial;&quot;&gt;git.tudominio.com&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;Courier New&quot;&gt;vpn.tudominio.com&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;Courier New&quot;&gt;vm-ha.tudominio.com&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;Courier New&quot;&gt;vm-git.tudominio.com&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;Courier New&quot;&gt;vm-grafana.tudominio.com&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;Courier New&quot;&gt;:&lt;/font&gt;&lt;/div&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=0;rounded=1;fontSize=11;strokeWidth=0.6;labelPosition=center;verticalLabelPosition=middle;align=left;verticalAlign=middle;" parent="1" vertex="1">
-          <mxGeometry x="450" y="372" width="170" height="113.42" as="geometry" />
+          <mxGeometry x="563" y="370" width="170" height="113.42" as="geometry" />
         </mxCell>
         <mxCell id="pu2SGln_cWuoecxfrxfS-5" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;Verdana&quot; data-font-src=&quot;https://fonts.googleapis.com/css?family=Rock+Salt&quot;&gt;DNS Server INTERNO&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;Courier New&quot;&gt;PiHole&lt;/font&gt;&lt;/div&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=0;rounded=1;fontSize=11;strokeWidth=0.6;labelPosition=center;verticalLabelPosition=middle;align=center;verticalAlign=middle;" parent="1" vertex="1">
-          <mxGeometry x="360" y="353.58" width="90" height="50" as="geometry" />
+          <mxGeometry x="473" y="351.58" width="90" height="50" as="geometry" />
         </mxCell>
         <mxCell id="pu2SGln_cWuoecxfrxfS-6" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;curved=1;strokeColor=#3333FF;strokeWidth=2;sketch=1;curveFitting=1;jiggle=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;startArrow=classicThin;startFill=1;" parent="1" source="vNXa2KsQY14kPwiRae87-22" target="pu2SGln_cWuoecxfrxfS-7" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -90,8 +90,62 @@
         <mxCell id="pu2SGln_cWuoecxfrxfS-9" value="&lt;div style=&quot;border-color: var(--border-color); color: rgb(0, 0, 0); font-size: 10px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;&quot;&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;Desde Internet todos mis subdominios siempre resuelven a la misma IP Pública de mi casa&lt;/font&gt;" style="text;whiteSpace=wrap;html=1;fontSize=10;align=right;fontFamily=Verdana;" parent="1" vertex="1">
           <mxGeometry x="210" y="195" width="190" height="50" as="geometry" />
         </mxCell>
+        <mxCell id="N-YsOx6hFJ3Ofn1LLEE7-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="pu2SGln_cWuoecxfrxfS-16" target="pu2SGln_cWuoecxfrxfS-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="N-YsOx6hFJ3Ofn1LLEE7-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="pu2SGln_cWuoecxfrxfS-16" target="pu2SGln_cWuoecxfrxfS-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="N-YsOx6hFJ3Ofn1LLEE7-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="pu2SGln_cWuoecxfrxfS-16" target="pu2SGln_cWuoecxfrxfS-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pu2SGln_cWuoecxfrxfS-16" value="&lt;span style=&quot;border-color: var(--border-color); font-size: 9px; text-align: left; background-color: initial;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color); font-size: 9px;&quot; face=&quot;Courier New&quot;&gt;Nginx Proxy Manager&lt;br&gt;&lt;b style=&quot;border-color: var(--border-color);&quot;&gt;https://ha.tudominio.com:28123&lt;br&gt;&lt;/b&gt;&lt;b style=&quot;border-color: var(--border-color);&quot;&gt;https://git.tudominio.com:443&lt;br&gt;&lt;/b&gt;&lt;b style=&quot;border-color: var(--border-color);&quot;&gt;https://grafana.tudominio.com:48123&lt;/b&gt;&lt;br&gt;&lt;/font&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;fillColor=#FFFBF0;strokeColor=#d6b656;fillStyle=solid;fontSize=9;" parent="1" vertex="1">
+          <mxGeometry x="90" y="440" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pu2SGln_cWuoecxfrxfS-17" value="&lt;span style=&quot;border-color: var(--border-color); font-size: 9px; text-align: left; background-color: initial;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color); font-size: 9px;&quot; face=&quot;Courier New&quot;&gt;Home Assistant&lt;br&gt;&lt;b&gt;http://vm-ha.tudominio.com&lt;/b&gt;&lt;/font&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;fillColor=#E6FDFF;strokeColor=#00CCCC;fillStyle=solid;fontSize=9;" parent="1" vertex="1">
+          <mxGeometry x="140" y="510" width="179.12" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pu2SGln_cWuoecxfrxfS-18" value="Cliente desde&lt;br&gt;&amp;nbsp;Intranet" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=10;rounded=1;sketch=1;curveFitting=1;jiggle=2;fontSize=11;strokeWidth=1;fillColor=#F2FFF2;strokeColor=#82b366;fillStyle=solid;arcSize=14;" parent="1" vertex="1">
+          <mxGeometry x="412" y="535.24" width="110" height="41.52" as="geometry" />
+        </mxCell>
+        <mxCell id="pu2SGln_cWuoecxfrxfS-19" value="" style="endArrow=classicThin;html=1;entryX=0.425;entryY=-0.015;entryDx=0;entryDy=0;curved=1;strokeColor=#3333FF;strokeWidth=2;sketch=1;curveFitting=1;jiggle=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;startArrow=classicThin;startFill=1;endFill=1;entryPerimeter=0;" parent="1" source="pu2SGln_cWuoecxfrxfS-5" target="pu2SGln_cWuoecxfrxfS-18" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="354" y="173" as="sourcePoint" />
+            <mxPoint x="218" y="204" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="533" y="460" />
+              <mxPoint x="483" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pu2SGln_cWuoecxfrxfS-21" value="" style="endArrow=none;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;curved=1;strokeColor=#3333FF;strokeWidth=2;sketch=1;curveFitting=1;jiggle=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;startArrow=classicThin;startFill=1;" parent="1" source="pu2SGln_cWuoecxfrxfS-16" target="pu2SGln_cWuoecxfrxfS-18" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="530" y="677" as="sourcePoint" />
+            <mxPoint x="454" y="540" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="350" y="470" />
+              <mxPoint x="410" y="570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pu2SGln_cWuoecxfrxfS-22" value="&lt;span style=&quot;border-color: var(--border-color); font-size: 9px; text-align: left; background-color: initial;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color); font-size: 9px;&quot; face=&quot;Courier New&quot;&gt;Gitea&lt;br&gt;&lt;b&gt;http://vm-git.tudominio.com&lt;/b&gt;&lt;/font&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;fillColor=#E6FDFF;strokeColor=#00CCCC;fillStyle=solid;fontSize=9;" parent="1" vertex="1">
+          <mxGeometry x="161.33" y="540" width="179.12" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pu2SGln_cWuoecxfrxfS-23" value="&lt;span style=&quot;border-color: var(--border-color); font-size: 9px; text-align: left; background-color: initial;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color); font-size: 9px;&quot; face=&quot;Courier New&quot;&gt;Grafana&lt;br&gt;&lt;b&gt;http://vm-grafana.tudominio.com&lt;/b&gt;&lt;/font&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;sketch=1;curveFitting=1;jiggle=2;fillColor=#E6FDFF;strokeColor=#00CCCC;fillStyle=solid;fontSize=9;" parent="1" vertex="1">
+          <mxGeometry x="181.88000000000002" y="570" width="179.12" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pu2SGln_cWuoecxfrxfS-24" value="" style="endArrow=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=1;strokeColor=#3333FF;strokeWidth=1;sketch=1;curveFitting=1;jiggle=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;startArrow=none;startFill=0;endFill=0;" parent="1" source="pu2SGln_cWuoecxfrxfS-27" target="pu2SGln_cWuoecxfrxfS-5" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="583" y="163.58" as="sourcePoint" />
+            <mxPoint x="587" y="340.58000000000004" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="580" y="120" />
+              <mxPoint x="560" y="301.58000000000004" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
         <mxCell id="pu2SGln_cWuoecxfrxfS-27" value="&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font face=&quot;Verdana&quot;&gt;Servidores Root DNS&lt;/font&gt;&lt;/span&gt;&lt;br&gt;&lt;/div&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=0;rounded=1;fontSize=11;strokeWidth=0.6;labelPosition=center;verticalLabelPosition=middle;align=center;verticalAlign=middle;" parent="1" vertex="1">
-          <mxGeometry x="254.99999999999997" y="60" width="220" height="40" as="geometry" />
+          <mxGeometry x="249.99999999999997" y="50" width="220" height="40" as="geometry" />
         </mxCell>
         <mxCell id="pu2SGln_cWuoecxfrxfS-29" value="" style="endArrow=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=1;strokeColor=#3333FF;strokeWidth=1;sketch=1;curveFitting=1;jiggle=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;startArrow=none;startFill=0;endFill=0;" parent="1" source="pu2SGln_cWuoecxfrxfS-27" target="pu2SGln_cWuoecxfrxfS-3" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -103,8 +157,38 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="cqfatpd7eaJQ5_4VdRqO-2" value="" style="rounded=1;whiteSpace=wrap;html=1;opacity=80;strokeColor=none;" parent="1" vertex="1">
-          <mxGeometry x="320" y="348.58" width="310" height="153.42" as="geometry" />
+        <mxCell id="pu2SGln_cWuoecxfrxfS-30" value="&lt;div style=&quot;border-color: var(--border-color); color: rgb(0, 0, 0); font-size: 10px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;&quot;&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;En el DNS Server interno doy de alta `tudominio.com` con todos mis subdominios internos, resolviendo a IP&#39;s internas privadas&lt;br&gt;&lt;br&gt;Este servidor (PiHole) además hace de Proxy DNS hacia los Root Servers cuando se le solicite un nombre externo.&lt;br&gt;&lt;/font&gt;" style="text;whiteSpace=wrap;html=1;fontSize=10;align=right;fontFamily=Verdana;" parent="1" vertex="1">
+          <mxGeometry x="533" y="510" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="pu2SGln_cWuoecxfrxfS-31" value="" style="endArrow=none;html=1;curved=1;strokeColor=#3333FF;strokeWidth=2;sketch=1;curveFitting=1;jiggle=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;startArrow=classicThin;startFill=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="pu2SGln_cWuoecxfrxfS-17" target="pu2SGln_cWuoecxfrxfS-18" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="480" as="sourcePoint" />
+            <mxPoint x="450" y="590" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="360" y="500" />
+              <mxPoint x="410" y="590" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pu2SGln_cWuoecxfrxfS-32" value="" style="endArrow=none;html=1;curved=1;strokeColor=#3333FF;strokeWidth=2;sketch=1;curveFitting=1;jiggle=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;startArrow=classicThin;startFill=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="pu2SGln_cWuoecxfrxfS-22" target="pu2SGln_cWuoecxfrxfS-18" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="329" y="535" as="sourcePoint" />
+            <mxPoint x="450" y="590" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="370" y="540" />
+              <mxPoint x="420" y="600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pu2SGln_cWuoecxfrxfS-33" value="" style="endArrow=none;html=1;curved=1;strokeColor=#3333FF;strokeWidth=2;sketch=1;curveFitting=1;jiggle=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;startArrow=classicThin;startFill=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="pu2SGln_cWuoecxfrxfS-23" target="pu2SGln_cWuoecxfrxfS-18" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="350" y="565" as="sourcePoint" />
+            <mxPoint x="450" y="590" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="390" y="580" />
+              <mxPoint x="430" y="610" />
+            </Array>
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>

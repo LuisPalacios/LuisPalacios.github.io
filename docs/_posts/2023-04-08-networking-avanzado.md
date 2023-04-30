@@ -197,7 +197,7 @@ Recuerda habilitarlos.
 
 #### Dominio dinámico
 
-Un dominio dinámico es un servicio que permite asignar un nombre (subdominio) a mi dirección IP pública, la cual puede cambiar periódicamente. Especialmente útil para saber a dónde llamar cuando quiera acceder desde Internet a mis servicios, por ejemplo **Home Assistant, SSHD, acceso OpenVPN**.
+Un dominio dinámico es un servicio que permite asignar un nombre (subdominio) a mi dirección IP pública, la cual puede cambiar periódicamente. Especialmente útil para saber a dónde llamar cuando quiera acceder desde Internet a mis servicios, por ejemplo **Home Assistant, ssh, acceso OpenVPN**.
 
 Asumiendo que eres propietario de un dominio de internet, por ejemplo `tudominio.com`, tendrás que trabajar con un proveedor de servicios de dominio **dinámico** como DynDNS, No-IP, DuckDNS, etc. Probablemente tu proveedor de DNS también lo soporte, como es mi caso. 
 
@@ -212,7 +212,12 @@ Yo trabajo con `cdmon.es` y entre sus páginas se encuentra la [documentación p
 # systemctl enable cdmon_update.timer
 ```
 
-Arquitectura de resolución de nombres. Mi dominio `tudominio.com` está siendo servido por mi proveedor de DNS en Internet, pero también lo doy de alta internamente usando IP's privadas. Lo vemos más tarde en la sección de Intranet.
+El dominio que tengo en internet (ej.: `tudominio.com`) está siendo servido por mi proveedor de DNS en Internet y en él tengo dados de alta varios registros de tipo `'A'` con los nombres de mis servicios, por ejemplo, Home Assistant -> `ha.tudominio.com`, SSH -> `ssh.tudominio.com`, OpenVPN -> `vpn.tudominio.com`. Todos resolverán a la misma IP Pública de mi servidor. 
+
+
+Veremos en la seccción de la Intranet -> DNS/DHCP que sirvo exactamente el mismo dominio (`tudominio.com`) desde mi servidor internet, de modo que estes dondes estés (internet o intranet) se resuelve siempre el nombre, bien con una IP pública (cuando se consulta a mi proveedor dns) o una privada (cuando se consulta a mi PiHole). 
+
+De momento muestro cómo está configurada la parte de Internet: 
 
 {% include showImagen.html
     src="/assets/img/posts/2023-04-15-networking-avanzado-06.svg"
@@ -228,7 +233,7 @@ El **Port Knocking** es una técnica que consiste en enviar varios paquetes al R
 
 
 {% include showImagen.html
-    src="/assets/img/posts/2023-04-15-networking-avanzado-08.jpg"
+    src="/assets/img/posts/2023-04-15-networking-avanzado-07.jpg"
     caption="Aplicaciones involucradas"
     width="300px"
     %} 
@@ -236,7 +241,7 @@ El **Port Knocking** es una técnica que consiste en enviar varios paquetes al R
 Uso **PortKnock** (App para smartphone): lanza la petición (1) "Ábreme el puerto para llegar a Home Assistant", envía una serie de paquetes con una cadencia determinada; el router/firewall se da por enterado y abre durante un rato el puerto `28123` (2) para que **Home asistant** pueda entrar. 
 
 {% include showImagen.html
-    src="/assets/img/posts/2023-04-15-networking-avanzado-09.svg"
+    src="/assets/img/posts/2023-04-15-networking-avanzado-08.svg"
     caption="Así funciona *Llamar a la puerta*"
     width="800px"
     %} 
@@ -290,7 +295,7 @@ Como cliente utilizo [Passepartout](https://passepartoutvpn.app/). Necesitamos a
 * Abrir un puerto bajo demanda con el método de **Llamar a la puerta**. Esta es mi opción, no dejas nada abierto. Tal como describí con el ejemplo con Home Assistant, hago lo mismo para entrar por IPSec; llamo a la puerta ([/etc/knockd.conf](https://gist.github.com/LuisPalacios/6132bb17999934f5eb51cf186d94910f)), se abre el canal contra el OpenVPN y arranco mi cliente Passepartout.
 
 {% include showImagen.html
-    src="/assets/img/posts/2023-04-15-networking-avanzado-10.svg"
+    src="/assets/img/posts/2023-04-15-networking-avanzado-09.svg"
     caption="Uso knockd para abrir el puerto del servidor OpenVPN"
     width="500px"
     %} 
@@ -323,7 +328,7 @@ Son varios los servicios de software y se pueden montar todos en el mismo Hardwa
 Cuando se me caía el "host" con mis VM's me quedaba sin casa 😂 y me caía la bronca, así que ahora tengo un par de Host (2xNUC's + 1xPi) formando un Cluster Proxmox VE para hospedar las máquinas virtuales, contenedores LXC o Docker con servicios. La Pi es una Pi3B que hace que el Cluster "negocie bien" la tolerancia a fallos.
 
 {% include showImagen.html
-    src="/assets/img/posts/2023-04-15-networking-avanzado-11.jpg"
+    src="/assets/img/posts/2023-04-15-networking-avanzado-10.jpg"
     caption="Como decía, llevo tiempo complicando mi instalación"
     width="600px"
     %} 
@@ -341,7 +346,7 @@ Mantengo en un excel la lista de equipos, MACs y la IP que les asigno, una CMDB 
 ya lo había mostrado pero es importante recordarlo, esta es la forma en la que funciona la resolución de nombres. En internet mi dominio `tudominio.com` está siendo servido por mi proveedor de DNS. En la Intranet mi `tudominio.com` está siendo servidor por PiHole.
 
 {% include showImagen.html
-    src="/assets/img/posts/2023-04-15-networking-avanzado-06.svg"
+    src="/assets/img/posts/2023-04-15-networking-avanzado-11.svg"
     caption="Cómo hago la resolución de nombres"
     width="800px"
     %} 
