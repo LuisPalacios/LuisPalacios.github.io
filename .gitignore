@@ -20,3 +20,6 @@ vendor
 # VSCode
 workspace.code-workspace
  
+# DrawIO temporary files
+*.dtmp
+*.bkp

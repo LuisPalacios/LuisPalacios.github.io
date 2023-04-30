@@ -22,11 +22,11 @@ La domótica hace crecer exponencialmente el número de dispositivos y mantener 
 
 ¿A que me refiero con **networking avanzado**?. Pues que soporte de forma resiliente y segura *muchos cacharros variopintos*, vía LAN/WiFi y puntualmente desde internet. Que pueda usar certificados para trabajar con `https`, que incluya la domótica y ya por pedir, que siga funcionando si cae internet o la WiFi (por lo menos la mayoría de las cosas).
 
-¿Cuanto puede crecer tu red? pues si sumamos switches, AP's, servidores físicos, virtuales, sensores, relés, actuadores, etc. yo veía el otro día 115 IP's únicas.
+¿Cuanto puede crecer tu red? pues si sumamos switches, AP's, servidores físicos, virtuales, sensores, relés, actuadores, etc. yo veía el otro día 122 IP's únicas.
 
 {% include showImagen.html
     src="/assets/img/posts/2023-04-15-networking-avanzado-01.png"
-    caption="En mi red hay, al menos, 115 equipos que hablan IP"
+    caption="En mi red hay, al menos, 122 equipos que hablan IP"
     width="400px"
     %}
 
@@ -39,7 +39,7 @@ La domótica hace crecer exponencialmente el número de dispositivos y mantener 
 
 ### Internet
 
-Empiezo la casa por el tejado, es fundamental decidir cómo conectar y controlar lo que entra y lo que sale. En esta sección: 
+Empiezo la casa por el tejado, es fundamental decidir cómo conectar y controlar lo que entra y sale: 
 
 - Qué uso como **router/firewall** para entrar/salir a Internet. 
 - Cómo montar el **dominio dinámico**, para llamar con nombre desde Internet.
@@ -48,7 +48,7 @@ Empiezo la casa por el tejado, es fundamental decidir cómo conectar y controlar
 
 Probablemente el **99% de los hogares usa el router del Proveedor de Servicios (Operadora) y cuelga todo debajo**, traen varios puertos y un punto de acceso embebido, suena bien. 
 
-Hasta que te das cuenta que no es suficiente. Mi **recomendación es poner detrás mi propio router + switch(es) + AP(s)** y desactivar el WiFi del Proveedor 😆. Partiendo de esta premisa, tenemos tres opciones (ojo!, mi proveedor es movistar, si tienes otro habrá ligeros cambios):
+Hasta que necesitas algo más, en ese caso mi **recomendación es poner detrás mi propio router + switch(es) + AP(s)** y desactivar el WiFi del Proveedor 😆. Partiendo de esta premisa, tenemos tres opciones (ojo!, mi proveedor es movistar, si tienes otro habrá ligeros cambios):
 
 <br/>
 
@@ -69,15 +69,13 @@ Hasta que te das cuenta que no es suficiente. Mi **recomendación es poner detr�
   - Desventajas: Te sales del estándar y no es nada recomendable si no tienes experiencia en routing/switching. 
   - Ventajas: Todos los beneficios de tener mi propio router en medio, además el control total del tráfico IPTV y VoIP, además me ahorro el doble port-forwaring y doble NAT. 
 
-Si no queires controlar el tráfico IPTV/VoIP te recomiendo la opción Estándar (izquierda), es perféctamente válidad para todo lo que explico en este apunte. Tendrás que hacer port forwarding "también" en el Router del Proveedor y con la opción de **Llamar a la puerta** tendrás que hacer un apaño para que funcione.
-
-En mi caso uso la opcion de ONT desde hace años. 
+Si no queires controlar el tráfico IPTV/VoIP te recomiendo la opción Estándar (izquierda), es perféctamente válidad para todo lo que explico en este apunte. Tendrás que hacer port forwarding "también" en el Router del Proveedor y para que **Llamar a la puerta** funcione tendrás que abrir un rango de puertos. El apunte se centra en mi caso, la opción ONT.
 
 <br/> 
 
 #### Mi router
 
-Yo monto un **Linux** sobre máquina virtual, uso su  **routing nativo + `iptables`** para el firewall. Conmuta el tráfico entre la sesión `pppoe (vlan6)` y la `vlan` de mi Intranet. Deniego todo el tráfico de entrada y hago `MASQUERADE` para salida. Se comporta exáctamente igual que el router de movistar. Utilizo IP pública dinámica y actualizo dinámicamente mi dominio.
+Yo monto un **Linux** sobre máquina virtual, uso el **routing nativo con `iptables`** para hacer la parte de firewall. Conmuta el tráfico entre la sesión `pppoe (vlan6)` y la `vlan` de mi Intranet. Deniego todo el tráfico de entrada y hago `MASQUERADE` para salida. Se comporta exáctamente igual que el router de movistar. Utilizo IP pública dinámica y actualizo dinámicamente mi dominio.
 
 | La diferencia es que puedo **hacer más cosas con un control total**: montar un sistema para llamar a la puerta y  abrir puertos bajo demanda a IP específica, openvpn de forma controlada, evitar que se conteste a los pings, identificar intentos de ataques, controlar el tráfico VoIP, controlar el tráfico IPTV, ... |
 
