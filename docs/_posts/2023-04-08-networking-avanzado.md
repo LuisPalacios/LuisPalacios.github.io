@@ -138,7 +138,7 @@ network:
           addresses:
           - 192.168.1.224                <== El DNS/DHCP server
           search:
-          - parchis.org
+          - tudominio.com
       vlan33:                            <== Un ejemplo de VLAN extra
         id: 33
         link: eth0
