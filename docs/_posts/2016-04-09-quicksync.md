@@ -674,12 +674,12 @@ Antes de nada miro en ek Kernel estaba,
 
 ```console
 # uname -a
- Linux marte.parchis.org 3.10.0-229.el7.x86_64 #1 SMP Fri Mar 6 11:36:42 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+ Linux marte.tudominio.com 3.10.0-229.el7.x86_64 #1 SMP Fri Mar 6 11:36:42 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
 
 # reboot
 
 # uname -a
- Linux marte.parchis.org 3.10.0-229.1.2.47109.MSSr1.el7.centos.x86_64 #1 SMP Tue Jul 11 23:24:57 CEST 2016 x86_64 x86_64 x86_64 GNU/Linux
+ Linux marte.tudominio.com 3.10.0-229.1.2.47109.MSSr1.el7.centos.x86_64 #1 SMP Tue Jul 11 23:24:57 CEST 2016 x86_64 x86_64 x86_64 GNU/Linux
                                     ^^^^^^^^^^^^^^^                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 COMPRUEBO QUE CARGA i915

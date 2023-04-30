@@ -46,7 +46,7 @@ Lo primero que vamos a hacer es que HA deje de guardar datos en su antiguo Influ
 ```
 :
 influxdb:
-  # New InfluxDB @ almacenix.parchis.org
+  # New InfluxDB @ almacenix.tudominio.com
   #
   api_version: 2
   ssl: false
@@ -99,7 +99,7 @@ root@XXXXXXX-influxdb:~# ls -al h*
 root@XXXXXXX-influxdb:~# exit
 :
 # docker cp addon_XXXXXXX_influxdb:/root/home_assistant.line.gz /mnt/data/
-# scp /mnt/data/home_assistant.line.gz luis@idefix.parchis.org:Desktop/
+# scp /mnt/data/home_assistant.line.gz luis@idefix.tudominio.com:Desktop/
 :
 ```
 
@@ -110,7 +110,7 @@ root@XXXXXXX-influxdb:~# exit
 Envío el fichero al nuevo servidor, lo descomprimo y cargo los datos en el Bucket `home_assistant`
 
 ```shell
-~/Desktop > scp home_assistant.line.gz luis@almacenix.parchis.org:.
+~/Desktop > scp home_assistant.line.gz luis@almacenix.tudominio.com:.
 
 luis@almacenix:~$ gunzip home_assistant.line.gz
 

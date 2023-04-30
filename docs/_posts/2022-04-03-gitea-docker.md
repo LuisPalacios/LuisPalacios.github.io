@@ -41,10 +41,10 @@ iptables -t nat -I PREROUTING -i ppp0 -p tcp -m multiport --dports 22,80,443 -j 
 iptables -I FORWARD -p tcp -m multiport --dports 22,80,443 -d ${GITIP} -j ACCEPT
 ```
 
-En mi proveedor DNS tengo `git.parchis.org` apuntando a mi dirección ip pública (dinámica) y en el Servidor DNS local en mi instalación casera está así: 
+En mi proveedor DNS tengo `git.tudominio.com` apuntando a mi dirección ip pública (dinámica) y en el Servidor DNS local en mi instalación casera está así: 
 
-- `traefik.parchis.org --> 192.168.1.200`
-- `git.parchis.org       --> 192.168.1.200`
+- `traefik.tudominio.com --> 192.168.1.200`
+- `git.tudominio.com       --> 192.168.1.200`
 
 He configurado el Servicio `openssh` del Alpine Linux para que escuche por otro puerto (22222), de modo que dejo libre el puerto `22` para git sobre SSH en el contenedor de `gitea`, y el acceso a la web de Gitea se realizara vía `HTTPS` por el puerto `443`.
 
@@ -52,11 +52,11 @@ He configurado el Servicio `openssh` del Alpine Linux para que escuche por otro 
 
 ### Máquina virtual con Alpine Linux
 
-El primer paso es la creación de **VM basada en Alpine Linux con todo lo necesario para ejecutar Docker**. Sigo la documentación y el ejemplo descrito en el apunte [Alpine para ejecutar contenedores]({% post_url 2022-03-20-alpine-docker %}). Llamo al equipo `git.parchis.org`.
+El primer paso es la creación de **VM basada en Alpine Linux con todo lo necesario para ejecutar Docker**. Sigo la documentación y el ejemplo descrito en el apunte [Alpine para ejecutar contenedores]({% post_url 2022-03-20-alpine-docker %}). Llamo al equipo `git.tudominio.com`.
 
 - Una vez que termino la instalación del Alpine Linux modifico su `/etc/hosts`
 ```console
-127.0.0.1	git.parchis.org git traefik traefik.parchis.org localhost.localdomain localhost
+127.0.0.1	git.tudominio.com git traefik traefik.tudominio.com localhost.localdomain localhost
 ::1		localhost localhost.localdomain
 ```
 - Entro en la VM con mi usuario y creo el directorio `gitea` donde colocaré todos los ficheros de trabajo para los contenedores.
@@ -95,7 +95,7 @@ services:
       - public
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.api.rule=Host(`git.parchis.org`)'
+      - 'traefik.http.routers.api.rule=Host(`git.tudominio.com`)'
       - 'traefik.http.routers.api.entrypoints=https'
       - 'traefik.http.routers.api.service=api@internal'
       - 'traefik.http.routers.api.tls=true'
@@ -187,7 +187,7 @@ services:
       - public
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.api.rule=Host(`git.parchis.org`)'
+      - 'traefik.http.routers.api.rule=Host(`git.tudominio.com`)'
       - 'traefik.http.routers.api.entrypoints=https'
       - 'traefik.http.routers.api.service=api@internal'
       - 'traefik.http.routers.api.tls=true'
@@ -233,10 +233,10 @@ services:
       - USER_GID=1000
       - USER=git
       - RUN_MODE=prod
-      - DOMAIN=git.parchis.org
-      - SSH_DOMAIN=git.parchis.org
+      - DOMAIN=git.tudominio.com
+      - SSH_DOMAIN=git.tudominio.com
       - HTTP_PORT=3000
-      - ROOT_URL=https://git.parchis.org
+      - ROOT_URL=https://git.tudominio.com
       - SSH_PORT=22
       - SSH_LISTEN_PORT=22
       - DB_TYPE=mysql
@@ -256,7 +256,7 @@ services:
       - GITEA__mailer__IS_TLS_ENABLED=true
       - GITEA__mailer__USER="TUCORREO@TUDOMINIO.com"
       - GITEA__mailer__PASSWD="TUCONTRASEÑA"
-      - GITEA__mailer__HELO_HOSTNAME="git.parchis.org"
+      - GITEA__mailer__HELO_HOSTNAME="git.tudominio.com"
     ports:
       - "22:22"
     networks:
@@ -273,7 +273,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.gitea.rule=Host(`git.parchis.org`)"
+      - "traefik.http.routers.gitea.rule=Host(`git.tudominio.com`)"
       - "traefik.http.routers.gitea.entrypoints=https"
       - "traefik.http.routers.gitea.tls.certresolver=letsencrypt"
       - "traefik.http.routers.gitea.service=gitea-service"
@@ -360,11 +360,11 @@ git:~/gitea$ docker-compose logs
 
 ### Parametrizar Gitea
 
-Me dirijo a mi `ROOT_URL`, `https://git.parchis.org` y entro en la configuración inicial.
+Me dirijo a mi `ROOT_URL`, `https://git.tudominio.com` y entro en la configuración inicial.
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-03-27-gitea-docker-3.png" 
-      caption="Conecto con https://git.parchis.org" 
+      caption="Conecto con https://git.tudominio.com" 
       width="600px"
       %}
 
@@ -391,7 +391,7 @@ USER           = tucorreo@gmail.com
 PASSWD         = tucontraseñadeaplicación
 MAILER_TYPE    = smtp
 IS_TLS_ENABLED = true
-HELO_HOSTNAME  = git.parchis.org
+HELO_HOSTNAME  = git.tudominio.com
 :
 git:~/gitea$ docker-compose start gitea
 ```
@@ -408,15 +408,15 @@ git:~/gitea$ docker-compose start gitea
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-03-27-gitea-docker-6.png" 
-      caption="Conecto con https://git.parchis.org" 
+      caption="Conecto con https://git.tudominio.com" 
       width="600px"
       %}
 
-- Si intento conectar desde INTERNET con `http://git.parchis.org` me redirige a `https://git.parchis.org` y veré lo siguiente
+- Si intento conectar desde INTERNET con `http://git.tudominio.com` me redirige a `https://git.tudominio.com` y veré lo siguiente
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-03-27-gitea-docker-7.png" 
-      caption="Página al conectar desde Internet con https://git.parchis.org" 
+      caption="Página al conectar desde Internet con https://git.tudominio.com" 
       width="600px"
       %}
 
@@ -465,7 +465,7 @@ Antes de poder trabajar con él, configuro mi cliente (`$HOME/.ssh/config`) y a�
 
 ```config
 # Gitea
-Host git.parchis.org
+Host git.tudominio.com
   IdentityFile ~/.ssh/id_gitea
   User git
   Port 22
@@ -473,7 +473,7 @@ Host git.parchis.org
 
 A partir de ahora ya puedo hacer clone, push, pull, etc... 
 ```console
-$ git clone git@git.parchis.org:luis/hola-mundo.git
+$ git clone git@git.tudominio.com:luis/hola-mundo.git
 Cloning into 'hola-mundo'...
 X11 forwarding request failed
 remote: Enumerating objects: 3, done.
@@ -574,7 +574,7 @@ En el fichero `docker-compose.yml`tengo la orden `restart: unless-stopped` en to
 cd /home/luis/gitea
 while true; do
     sleep 30
-    wget -q --no-verbose --tries=1 --spider https://git.parchis.org/explore/repos 2> /dev/null
+    wget -q --no-verbose --tries=1 --spider https://git.tudominio.com/explore/repos 2> /dev/null
     if [ "${?}" -ne "0" ]; then
         docker-compose restart gitea-traefik
     fi

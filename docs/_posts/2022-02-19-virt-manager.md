@@ -104,7 +104,7 @@ luis@ubuntu:~$ virt-manager
   - Hypervisor: QEMU/KVM
   - (x) Xonectar a anfitrión remoto mediante SSH
   - Nombre de usuario: luis
-  - Nombre de equipo: tierra.parchis.org
+  - Nombre de equipo: tierra.tudominio.com
   - Autoconectar: (X)
   - URI generado: qemu+ssh://luis@tierra... 
 
@@ -126,9 +126,9 @@ luis@ubuntu:~$ virt-manager
 También tienes la opción de conectar directamente desde la línea de comandos o si tienes tu servidor remoto escuchando por otro puerto para SSH, cambia XXXXX por el puerto.
 
 ```
-luis@ubuntu$ virt-manager -c 'qemu+ssh://luis@tierra.parchis.org/system?keyfile=id_rsa'
+luis@ubuntu$ virt-manager -c 'qemu+ssh://luis@tierra.tudominio.com/system?keyfile=id_rsa'
 
-luis@ubuntu$ virt-manager -c 'qemu+ssh://luis@tierra.parchis.org:XXXXX/system?keyfile=id_rsa'
+luis@ubuntu$ virt-manager -c 'qemu+ssh://luis@tierra.tudominio.com:XXXXX/system?keyfile=id_rsa'
 
 ```
 

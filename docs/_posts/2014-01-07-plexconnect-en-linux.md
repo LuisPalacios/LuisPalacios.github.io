@@ -55,13 +55,13 @@ Aquí lo único importante es que el ATV3 debe ser configurado (vía DHCP) para 
   subnet 192.168.1.0 netmask 255.255.255.0 {
     option routers 192.168.1.1;
     option subnet-mask 255.255.255.0;
-    option domain-name "parchis.org";
+    option domain-name "tudominio.com";
     option domain-name-servers 192.168.1.1;
     option interface-mtu 1496;
   :
   host atv3 {
     hardware ethernet f4:f9:51:b7:6c:da;
-    fixed-address atv3.parchis.org;
+    fixed-address atv3.tudominio.com;
   }
   :
 ```

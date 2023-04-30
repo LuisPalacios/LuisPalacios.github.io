@@ -28,13 +28,13 @@ Como decía, instalo [NodeRed](https://nodered.org) como un **contenedor en un H
 
 ### Máquina virtual con Alpine Linux
 
-Creo una Virtual Machine basada en Alpine Linux con todo lo necesario para ejecutar Docker y la llamo `nodered.parchis.org`.
+Creo una Virtual Machine basada en Alpine Linux con todo lo necesario para ejecutar Docker y la llamo `nodered.tudominio.com`.
 
 | IMPORTANTE: En este enlace tienes la [documentación para instalar Alpine + Docker]({% post_url 2022-03-20-alpine-docker %}). |
 
 - Una vez que termino la instalación verifico su `/etc/hosts`
 ```console
-127.0.0.1	nodered.parchis.org nodered localhost.localdomain localhost
+127.0.0.1	nodered.tudominio.com nodered localhost.localdomain localhost
 ::1		localhost localhost.localdomain
 ```
 - Entro en la VM con mi usuario (luis) y creo el directorio `nodered` donde colocaré todos los ficheros de trabajo para los contenedores.
@@ -132,7 +132,7 @@ node-red_1  | 3 Oct 15:38:18 - [info] Started flows
 
 ### Trabajar con NodeRED
 
-Me dirijo `http://nodered.parchis.org:1880` y realizo la configuración inicial. Si no tienes experiencia te recomiendo seguir la [documentación oficial de Node-RED](https://nodered.org/docs/).
+Me dirijo `http://nodered.tudominio.com:1880` y realizo la configuración inicial. Si no tienes experiencia te recomiendo seguir la [documentación oficial de Node-RED](https://nodered.org/docs/).
 
 {% include showImagen.html 
       src="/assets/img/posts/2022-10-02-nodered-docker-2.jpg" 

@@ -39,7 +39,7 @@ He instalado la versión 4.1 del software de QNAP y como se puede ver ya incorpo
     %}
 
 ```console
-obelix:~ luis$ ssh -l admin panoramix.parchis.org
+obelix:~ luis$ ssh -l admin panoramix.tudominio.com
 [~] # 
 [~] # /mnt/ext/opt/samba/sbin/smbd -V 
 Version 3.6.23

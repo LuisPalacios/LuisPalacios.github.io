@@ -296,7 +296,7 @@ Para los equipos cliente utilizo el que incluye systemd
 # See timesyncd.conf(5) for details
 
 [Time]
-NTP=cortafuegix.parchis.org apodix.parchis.org
+NTP=cortafuegix.tudominio.com apodix.tudominio.com
 FallbackNTP=0.gentoo.pool.ntp.org 1.gentoo.pool.ntp.org 2.gentoo.pool.ntp.org 3.gentoo.pool.ntp.org
 ```
 

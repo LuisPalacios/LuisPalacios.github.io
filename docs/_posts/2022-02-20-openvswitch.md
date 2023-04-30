@@ -176,7 +176,7 @@ network:
       gateway4: 192.168.100.1
       nameservers:
         addresses: [192.168.100.224]
-        search: [parchis.org]
+        search: [tudominio.com]
 :
 ```
 
@@ -239,7 +239,7 @@ network:
       gateway4: 192.168.100.1
       nameservers:
         addresses: [192.168.100.224]
-        search: [parchis.org]
+        search: [tudominio.com]
     vnet192:
       addresses: [192.168.1.3/24]
     vnet221:
@@ -263,7 +263,7 @@ network:
 #      gateway4: 192.168.100.1
 #      nameservers:
 #        addresses: [192.168.100.224]
-#        search: [parchis.org]
+#        search: [tudominio.com]
 #
 ```
 
@@ -629,7 +629,7 @@ network:
       gateway4: 192.168.100.1
       nameservers:
         addresses: [192.168.100.224]
-        search: [parchis.org]
+        search: [tudominio.com]
     vnet192:
       addresses: [192.168.1.3/24]
 ```

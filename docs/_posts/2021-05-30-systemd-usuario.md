@@ -26,7 +26,7 @@ Veamos un ejemplo. Tengo una [maquina virtual para desarrollo de software prepar
 * Conecto como `luis` 
 
 ```console
-luis @ idefix ➜  ~  ssh -Y -a luis@jupiter.parchis.org
+luis @ idefix ➜  ~  ssh -Y -a luis@jupiter.tudominio.com
 luis@jupiter:~$ 
 ```
 

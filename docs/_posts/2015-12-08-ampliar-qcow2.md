@@ -21,7 +21,7 @@ Antes de empezar voy a averiguar o confirmar el tamaño actual de la VM, me cone
 - Averiguo el tamaño actual de la VM (cortafuegix)
 
 ```console
-luis @ idefix ➜  ~  ssh -Y -a luis@cortafuegix.parchis.org
+luis @ idefix ➜  ~  ssh -Y -a luis@cortafuegix.tudominio.com
 luis@cortafuegix ~ $ sudo fdisk --list
 Disco /dev/vda: 10 GiB, 10737418240 bytes, 20971520 sectores
 Unidades: sectores de 1 * 512 = 512 bytes
@@ -49,15 +49,15 @@ La VM `cortafuegix` está alojada en el HOST `marte`, un equipo Linux con QEMU/K
 luis@marte:~$ sudo virsh list
  Id   Name                      State
 -----------------------------------------
- 1    apps.parchis.org          running
- 2    tv.parchis.org            running
+ 1    apps.tudominio.com          running
+ 2    tv.tudominio.com            running
  3    www.luispa.com            running
  4    UmbrellaForwarderVAHA     running
  5    UmbrellaForwarderVA       running
- 6    cortafuegix.parchis.org   running
+ 6    cortafuegix.tudominio.com   running
 
-luis@marte ~$ sudo virsh shutdown cortafuegix.parchis.org
-Domain cortafuegix.parchis.org is being shutdown
+luis@marte ~$ sudo virsh shutdown cortafuegix.tudominio.com
+Domain cortafuegix.tudominio.com is being shutdown
 
 ```
 
@@ -71,17 +71,17 @@ Domain cortafuegix.parchis.org is being shutdown
 - Hago propietario del fichero a mi usuario para trabajar más cómodo.
 
 ```console
-luis@tierra:~$ ls -al cortafuegix.parchis.org.*
--rw-r--r-- 1 libvirt-qemu kvm  21448556544 may 27 09:22 cortafuegix.parchis.org.qcow2
--rw-r--r-- 1 luis         luis        4975 abr  9  2017 cortafuegix.parchis.org.xml
+luis@tierra:~$ ls -al cortafuegix.tudominio.com.*
+-rw-r--r-- 1 libvirt-qemu kvm  21448556544 may 27 09:22 cortafuegix.tudominio.com.qcow2
+-rw-r--r-- 1 luis         luis        4975 abr  9  2017 cortafuegix.tudominio.com.xml
 
-luis@marte ~$ sudo chown luis:luis /home/luis/cortafuegix.parchis.org.qcow2
+luis@marte ~$ sudo chown luis:luis /home/luis/cortafuegix.tudominio.com.qcow2
 ```
     
 - Convierto `QCOW2` a `RAW` (tarda ~ 1min 15seg) - **Paso 1** en el gráfico.
     
 ```console
-luis@marte:~$ qemu-img convert cortafuegix.parchis.org.qcow2 -O raw cortafuegix.parchis.org.raw
+luis@marte:~$ qemu-img convert cortafuegix.tudominio.com.qcow2 -O raw cortafuegix.tudominio.com.raw
 ```
 
 - Creo un archivo RAW de 5GB (tarda ~ 20seg)
@@ -93,32 +93,32 @@ luis@marte ~$ dd if=/dev/zero of=extra5GBzeros.raw bs=1024k count=5120
 - Combino ambos RAWs creo un RAW final de 15GB. **Paso 2** en el gráfico.
     
 ```console
-luis@marte ~$ cat cortafuegix.parchis.org.raw extra5GBzeros.raw > cortafuegix.parchis.org.15GB.raw
+luis@marte ~$ cat cortafuegix.tudominio.com.raw extra5GBzeros.raw > cortafuegix.tudominio.com.15GB.raw
 ```
 
 - Hago un **backup del original QCOW2**
   
 ```console
-luis@marte ~ $ mv cortafuegix.parchis.org.qcow2 cortafuegix.parchis.org.BACKUP.qcow2
+luis@marte ~ $ mv cortafuegix.tudominio.com.qcow2 cortafuegix.tudominio.com.BACKUP.qcow2
 ```
     
 - Convierto el RAW de 15GB a formato QCOW2 (tarda ~1min 34seg). **Paso 3** del gráfico.
 
 ```console
-luis@marte ~$ qemu-img convert cortafuegix.parchis.org.15GB.raw -O qcow2 cortafuegix.parchis.org.qcow2
+luis@marte ~$ qemu-img convert cortafuegix.tudominio.com.15GB.raw -O qcow2 cortafuegix.tudominio.com.qcow2
 ```
 
 - Vuelvo a hacer propietario a qemu.
 
 ```console
-luis@marte ~$ sudo chown libvirt-qemu:kvm /home/luis/cortafuegix.parchis.org.qcow2
+luis@marte ~$ sudo chown libvirt-qemu:kvm /home/luis/cortafuegix.tudominio.com.qcow2
 ```
 
 Arranco la VM de nuevo. 
 
 ```console
-luis@marte ~$ sudo virsh start cortafuegix.parchis.org
-Domain cortafuegix.parchis.org started
+luis@marte ~$ sudo virsh start cortafuegix.tudominio.com
+Domain cortafuegix.tudominio.com started
 ```
 
 <br/>
@@ -137,7 +137,7 @@ Ahora que ya tengo la VM arrancada voy a conectar con ella (`cortafuegix`) y uti
 
 
 ```console
-luis @ idefix ➜  ~  ssh -Y -a luis@cortafuegix.parchis.org
+luis @ idefix ➜  ~  ssh -Y -a luis@cortafuegix.tudominio.com
 +------------------+
 | Bienvenido Luis! |
 +------------------+

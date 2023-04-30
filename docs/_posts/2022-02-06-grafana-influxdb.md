@@ -32,7 +32,7 @@ Instalo Ubuntu en una máquina virtual corriendo en KVM. He seguido la documenta
 ```console
 wget https://releases.ubuntu.com/20.04/ubuntu-20.04.3-live-server-amd64.iso
 ```
-Desde mi servidor con KVM lanzo `virt-manager` → Nueva máquina virtual, uso el ISO anterior y llamo al servidor `almacenix.parchis.org` (el dominio es privado, servido por mi [propio DNS Server]({% post_url 2021-06-20-pihole-casero %}))
+Desde mi servidor con KVM lanzo `virt-manager` → Nueva máquina virtual, uso el ISO anterior y llamo al servidor `almacenix.tudominio.com` (el dominio es privado, servido por mi [propio DNS Server]({% post_url 2021-06-20-pihole-casero %}))
 
 <br/>
 
@@ -91,8 +91,8 @@ systemctl restart influxdb
 
 #### Administración de InfluxDB
 
-- Conecto con [http://almacenix.parchis.org:8086](http://almacenix.parchis.org:8086) <-- Pon aquí tu nombre/dirección. 
-- Creo mi usuario (luis), establezco la contraseña y llamo a la Organización "parchis.org" (puede ser cualquiera)
+- Conecto con [http://almacenix.tudominio.com:8086](http://almacenix.tudominio.com:8086) <-- Pon aquí tu nombre/dirección. 
+- Creo mi usuario (luis), establezco la contraseña y llamo a la Organización "tudominio.com" (puede ser cualquiera)
 - Configuro y me guardo el `API Token` de mi usuario. 
 
 * Está en Data -> API Tokens -> luis Token - Será del tipo:
@@ -122,9 +122,9 @@ luis@almacenix:~$ influx config create --config-name influxdb-almacenix  --host-
 
 luis@almacenix:~$ cat .influxdbv2/configs
 [influxdb-almacenix]
-  url = "http://almacenix.parchis.org:8086"
+  url = "http://almacenix.tudominio.com:8086"
   token = "nC912345678901234567890M4MFFj-abcdefghijklmnopqrstu123847987sadkjhfklj9832498324908123=="
-  org = "parchis.org"
+  org = "tudominio.com"
   active = true
 
 Prueba de concepto
@@ -187,7 +187,7 @@ root@almacenix:~# apt install telegraf
 systemctl stop telegraf
 
 ```
-- Desde InfluxDB [http://almacenix.parchis.org:8086](http://almacenix.parchis.org:8086)
+- Desde InfluxDB [http://almacenix.tudominio.com:8086](http://almacenix.tudominio.com:8086)
 - Data > Buckets > Create Bucket > ‘telegraf’, retention ‘never’
 - Data > Telegraf > Create Configuration > Bucket ‘telegraf’ > System > Continue >
    - Create and verify.
@@ -199,7 +199,7 @@ Me creo una versión personalizada del telegraf.service, lo modifico y arranco e
 ```shell
 cp /lib/systemd/system/telegraf.service /etc/systemd/system/
 nano telegraf.service
-   ExecStart=/usr/bin/telegraf --config http://almacenix.parchis.org:8086/api/v2/telegrafs/XXXXXXXX $TELEGRAF_OPTS
+   ExecStart=/usr/bin/telegraf --config http://almacenix.tudominio.com:8086/api/v2/telegrafs/XXXXXXXX $TELEGRAF_OPTS
 systemctl daemon-reload
 nano /etc/defaults/telegraf
   INFLUX_TOKEN=XXXXXXXXX==
@@ -232,7 +232,7 @@ net-analyzer/telegraf ~amd64
 emerge -v telegraf
 ```
 
-- Desde InfluxDB [http://almacenix.parchis.org:8086](http://almacenix.parchis.org:8086)
+- Desde InfluxDB [http://almacenix.tudominio.com:8086](http://almacenix.tudominio.com:8086)
 - Data > Telegraf > Create Configuration > Bucket ‘telegraf’ > System > Continue >
 - Create and verify.
 - Copio el Token y el URL
@@ -244,7 +244,7 @@ Me creo una versión personalizada del telegraf.service, lo modifico y arranco e
 cp /lib/systemd/system/telegraf.service /etc/systemd/system/
 nano telegraf.service
 	EnvironmentFile=-/etc/conf.d/telegraf
-	ExecStart=/usr/bin/telegraf --config http://almacenix.parchis.org:8086/api/v2/telegrafs/XXXXXXXXX $TELEGRAF_OPTS
+	ExecStart=/usr/bin/telegraf --config http://almacenix.tudominio.com:8086/api/v2/telegrafs/XXXXXXXXX $TELEGRAF_OPTS
 systemctl daemon-reload
 nano /etc/conf.d/telegraf
 	INFLUX_TOKEN=XXXXXXX==
@@ -276,7 +276,7 @@ systemctl enable grafana-server
 
 Desde un navegador conecto con el nuevo servidor grafana y realizo la primera configuración.
 
-- Conecto con http://almacenix.parchis.org:3000 —> admin, admin (cambio la contraseña)
+- Conecto con http://almacenix.tudominio.com:3000 —> admin, admin (cambio la contraseña)
 
 - Conecto con mis dos Bucket's en InfluxDB (`telegraf` y `home_assistant`)
 
@@ -289,7 +289,7 @@ Name: Flux telegraf
  Access: Server
  Auth: Todo desactivado
  InfluxDB Details: 
-    Organization: parchis.org (la tuya)
+    Organization: tudominio.com (la tuya)
     Token: <El que pusiste con tu usuario principal>
     Default Bucket: telegraf
  SAVE & TEST -> Ok 
@@ -302,7 +302,7 @@ Name: Flux home_assistant
  Access: Server
  Auth: Todo desactivado
  InfluxDB Details: 
-    Organization: parchis.org (la tuya)
+    Organization: tudominio.com (la tuya)
     Token: <El que pusiste con tu usuario principal>
     Default Bucket: home_assistant
  SAVE & TEST -> Ok 
@@ -366,7 +366,7 @@ Me gusta ver los dashboards de Grafana desde Home Assistant lo más integrados p
 ```yaml
 [auth.anonymous]
 enabled = true
-org_name = parchis.org
+org_name = tudominio.com
 org_role = Viewer
 hide_version = true
 
@@ -410,7 +410,7 @@ root@almacenix:~# systemctl restart grafana-server.service
 ```
 type: iframe
 url: >-
-  http://almacenix.parchis.org:3000/d/123456-nk/servidores?orgId=1&from=now/d&to=now&kiosk=tv&refresh=5s
+  http://almacenix.tudominio.com:3000/d/123456-nk/servidores?orgId=1&from=now/d&to=now&kiosk=tv&refresh=5s
 aspect_ratio: 70%
 ```
 

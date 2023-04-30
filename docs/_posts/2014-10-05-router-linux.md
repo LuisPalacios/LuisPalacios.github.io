@@ -610,7 +610,7 @@ shared-network lan {
     subnet 192.168.1.0 netmask 255.255.255.0 {
         option routers 192.168.1.1;
         option subnet-mask 255.255.255.0;
-        option domain-name "parchis.org";
+        option domain-name "tudominio.com";
         option domain-name-servers 192.168.1.1;
         option interface-mtu 1496;
         allow bootp;

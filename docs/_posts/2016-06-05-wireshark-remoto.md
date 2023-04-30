@@ -37,7 +37,7 @@ $ wireshark -k -i /tmp/remote
 Sesión 2:
 
 ```console
-$ ssh luis@gentoopi.parchis.org "sudo tcpdump -s 0 -U -n -w - -i eth0 not port 22" > /tmp/remote
+$ ssh luis@gentoopi.tudominio.com "sudo tcpdump -s 0 -U -n -w - -i eth0 not port 22" > /tmp/remote
 ```
 
 <br/>
@@ -49,5 +49,5 @@ Lo anterior se puede reducir a una línea en una única sesión de Terminal:
 Sesión única, en este caso ejecuto el Wireshark en mi MacOS:
 
 ```console
-$ ssh luis@gentoopi.parchis.org "sudo tcpdump -s 0 -U -n -w - -i eth0 not port 22" | /Applications/Wireshark.app/Contents/MacOS/Wireshark -k -i -
+$ ssh luis@gentoopi.tudominio.com "sudo tcpdump -s 0 -U -n -w - -i eth0 not port 22" | /Applications/Wireshark.app/Contents/MacOS/Wireshark -k -i -
 ```

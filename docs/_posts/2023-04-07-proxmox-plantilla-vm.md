@@ -68,7 +68,7 @@ $ mv ubuntu-22.04-minimal-cloudimg-amd64.img ubuntu-22.04.img
 
 - Sigo desde el CLI (vía SSH) en el nodo donde creé la VM. *Importante a partir de ahora*: Usa el mismo número de VM (ID) que usaste durante la creación (en mi caso el **900**).
 ```console
-➜  ~ ssh root@pve-tierra.parchis.org
+➜  ~ ssh root@pve-tierra.tudominio.com
 Last login: Sat Apr  8 10:20:18 2023 from 192.168.100.3
 root@pve-tierra:~#
 ```

@@ -204,7 +204,7 @@ La Raspberry cuenta con soporte para codecs MPEG2 y VC1, pero están deshabilita
 Para adquirir la licencia, conecta vía SSH con tu raspberry como root, averigua el número de serie de la cpu, adquire la licencia para luego instalarla en el fichero config.txt
 
 ```console
-bolica ~ $ ssh -l root rasp-dormitorio.parchis.org
+bolica ~ $ ssh -l root rasp-dormitorio.tudominio.com
  :
 TV-Dormitorio:~ # cat /proc/cpuinfo
 :
@@ -214,7 +214,7 @@ Serial      : 000000005771f8a3
 Cuando pases por la tienda para comprar la licencia y tengas el número podrás instalarla dentro del fichero config.txt, mira un ejemplo donde indico el número de licencia para Mpeg-2
 
 ```console
- bolica ~ $ ssh -l root rasp-dormitorio.parchis.org
+ bolica ~ $ ssh -l root rasp-dormitorio.tudominio.com
  :
  TV-Dormitorio:~ #
  TV-Dormitorio:~ # mount -o remount,rw /flash
@@ -384,7 +384,7 @@ Antes de nada crea tres scripts de apoyo en tu equipo Openelec/LIbreelec. Conect
 - Conecta vía SSH
 
 ```console
-$ ssh -l root -p 22 tv-despacho.parchis.org
+$ ssh -l root -p 22 tv-despacho.tudominio.com
 password: openelec   <=== Por defecto
 ```
  
@@ -567,7 +567,7 @@ Por último, veamos cómo reprogramar el botón de apagado/encendido del mando p
 - **`keyPower.xml`** bajo **`.kodi/userdata/keymaps`**
 
 ```
-$ ssh -l root -p 22 tv-despacho.parchis.org
+$ ssh -l root -p 22 tv-despacho.tudominio.com
 password: openelec   <=== Por defecto
 
 TV-Despacho:~/.kodi/userdata/keymaps # cat keyPower.xml
@@ -630,7 +630,7 @@ Lo que describo a continuación NO lo hago en la Raspberry PI 3.
 Para modificar el overclocking conecta con tu raspberry (usa SSH, usuario root, password "openelec"). La configuración siguiente pone a "tope" la CPU cuando lo necesita, irá conmutando entre 700-1000 Mhz bajo demada. Una vez más, es MUY importante instalar al menos disipadores (y quizá necesites micro ventilador si la temperatura ambiente es alta).
 
 ```console
- bolica ~ $ ssh -l root rasp-dormitorio.parchis.org
+ bolica ~ $ ssh -l root rasp-dormitorio.tudominio.com
  :
  TV-Dormitorio:~ #
  TV-Dormitorio:~ # mount -o remount,rw /flash
@@ -652,7 +652,7 @@ Para modificar el overclocking conecta con tu raspberry (usa SSH, usuario root, 
 En el caso de la Pi2 he decidido usar la opción "High" y sin turbo, de hecho el monitor "High" demuestra que pocas veces necesita subir los MHz.
 
 ```console
-~ $ ssh -l root rasp-dormitorio.parchis.org
+~ $ ssh -l root rasp-dormitorio.tudominio.com
  :
  TV-Dormitorio:~ #
  TV-Dormitorio:~ # mount -o remount,rw /flash

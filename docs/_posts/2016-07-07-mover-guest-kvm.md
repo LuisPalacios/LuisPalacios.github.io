@@ -18,14 +18,14 @@ Para mover un Guest KVM a un nuevo Host:
 - Copiar el disco VM desde el servidor fuente al destino.
 
 ```bash
-# scp /home/luis/aplicacionix.qcow2 nuevo.parchis.org:/home/luis
+# scp /home/luis/aplicacionix.qcow2 nuevo.tudominio.com:/home/luis
 ```
 
 - En el Fuente exportar el fichero de configuracion y copiarlo al destino
 
 ```bash
 # virsh dumpxml aplicacionix > dom_aplicacionix.xml
-# scp dom_aplicacionix.xml nuevo.parchis.org:/home/luis
+# scp dom_aplicacionix.xml nuevo.tudominio.com:/home/luis
 ```
 
 - En el destino importar y añadir el fichero XML

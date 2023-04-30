@@ -71,7 +71,7 @@ luis@sol:~$ sudo ovs-vsctl add-port solbr v100vnet13 tag=100 -- set Interface v1
 ```console
 luis@sol:~/kvm$ mkdir docker
 ```
-- Creo una **máquina virtual** desde `virt-manager` con **1GB de RAM, 1 CPU, disco de 4GB y una NIC virtio**, usando la imagen: `alpine-virt-3.15.3-x86_64.iso`, la llamo `docker.parchis.org` y en la configuración de red uso el interfaz que acabo de crear `v100vnet13`.
+- Creo una **máquina virtual** desde `virt-manager` con **1GB de RAM, 1 CPU, disco de 4GB y una NIC virtio**, usando la imagen: `alpine-virt-3.15.3-x86_64.iso`, la llamo `docker.tudominio.com` y en la configuración de red uso el interfaz que acabo de crear `v100vnet13`.
 ```console
 luis@sol:~$ virt-manager
 ```
@@ -85,7 +85,7 @@ luis@sol:~$ virt-manager
 
 - Arranco la VM y entro en el setup de Alpine (más info en [esta guía](https://wiki.alpinelinux.org/wiki/QEMU)). 
 ```console
-luis@sol:~/kvm/gitea-traefik-docker$ virsh console docker.parchis.org
+luis@sol:~/kvm/gitea-traefik-docker$ virsh console docker.tudominio.com
 localhost login: root
 Welcome to Alpine!
 :
@@ -101,7 +101,7 @@ Which one do you want to initialize? (or '?' or 'done') [eth0]
 Ip address for eth0? (or 'dhcp', 'none', '?') [dhcp] 192.168.100.225/24
 Gateway? (or 'none') [none] 192.168.100.1
 Do you want to do any manual network configuration? (y/n) [n] n
-DNS domain name? (e.g 'bar.com') parchis.org
+DNS domain name? (e.g 'bar.com') tudominio.com
 DNS nameserver(s)? 192.168.100.224
 Changing password for root
 Which timezone are you in? ('?' for list) [UTC] Europe/Madrid
@@ -129,7 +129,7 @@ docker:~# adduser -h /home/luis -s /bin/ash -G luis --u 1000 luis
 docker:~# adduser luis wheel
 docker:~# su - luis
 docker:~$ 
-docker:~$ ssh-keygen -t rsa -b 2048 -C "luis@docker.parchis.org"
+docker:~$ ssh-keygen -t rsa -b 2048 -C "luis@docker.tudominio.com"
 :
 docker:~$ exit
 ```

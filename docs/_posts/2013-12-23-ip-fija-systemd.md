@@ -37,7 +37,7 @@ A continuación vamos a **parar el cliente dhcp** Nota que en mi caso el interfa
 Ya podemos asignar la **dirección IP fija**, preparamos el fichero `/etc/resolv.conf`
 
 ```console
-domain parchis.org
+domain tudominio.com
 nameserver 192.168.1.1
 ```
 
