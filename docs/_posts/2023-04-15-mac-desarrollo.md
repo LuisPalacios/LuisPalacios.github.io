@@ -384,6 +384,11 @@ response = requests.get('https://httpbin.org/ip')
 print('Tu dirección IP es: {0}'.format(response.json()['origin']))
 ```
 
+Ejecuta la prueba de concepto
+```console
+$ pipenv run python main.py
+```
+
 {% include showImagen.html
     src="/assets/img/posts/2023-04-15-mac-desarrollo-02.png"
     caption="Ejecuto desde el entorno seguro `pipenv` y funciona."
