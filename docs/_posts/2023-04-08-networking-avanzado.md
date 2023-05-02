@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 
 ![logo linux router](/assets/img/posts/logo-homenet.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-Comparto mi **networking doméstico avanzado**, resiliente, funcional y con una buena experiencia de usuario, con opciones como *llamar a la puerta* desde Internet para accesos puntuales. Las redes caseras de hoy en día acaban soportando múltiples servicios y con la irrupción de la domótica se complica la cosa.  
+Comparto mi **networking doméstico** con la opción de *llamar a la puerta* para accesos puntuales desde Internet. Las redes caseras de hoy en día acaban soportando múltiples servicios y con la irrupción de la domótica se complica la cosa, así que he decidido documentarlo para no perderme en el futuro.
 
 El número de dispositivos crece y mantener la red de un hogar inteligente y automatizado se convierte en una prioridad. Dedico el apunte a esos *Geeks* o *Techys* que, como yo, llevamos tiempo metidos en la *complicación del networking en una red casera domotizada*.
 
@@ -48,7 +48,7 @@ Empiezo la casa por el tejado describiendo:
 
 El **99% de los hogares usa el router del Proveedor de Servicios (Operadora) y cuelga todo debajo**, traen varios puertos y un punto de acceso embebido, suena bien. 
 
-Cuando tienes conocimientos de routing y switching mi **recomendación es poner detrás un router propio + switch(es) + AP(s)** y desactivar el WiFi del Proveedor 😆. El beneficio principal es que pasas a tener un control total, incluso permite añadir extras: sistema para llamar a la puerta abriendo puertos bajo demanda, túneles ipsec, silencio a los pings (si conectas directamente al ONT), identificar intentos de ataques, control del tráfico VoIP e IPTV y otros. 
+Cuando tienes conocimientos de routing y switching mi **recomendación es poner detrás un router propio + switch(es) + AP(s)** y desactivar el WiFi del Proveedor 😆. El beneficio principal es que pasas a tener un control total, incluso permite añadir extras: por ejemplo lo de llamar a la puerta abriendo puertos bajo demanda, levantar túneles ipsec, silenciar los pings (solo si conectas directamente al ONT), identificar intentos de ataques, control del tráfico VoIP e IPTV y otros. 
 
 Partiendo de esta premisa, tengo tres opciones. 
 
@@ -63,7 +63,7 @@ Partiendo de esta premisa, tengo tres opciones.
 <br/>
 
 - **Estándar**: Conecto mi Router al del Proveedor y recibo IP privada (`192.168.1.0/24`).
-  - Desventajas: Hay que hacer dos veces Port Forwarding y NAT. Pierdes el control de VoIP/IPTV (si lo tienes contratado). Puede tocarte un router "de baja generación/calidad" y darte problemas de rendimiento y/o cuelgues.
+  - Desventajas: Hay que hacer dos veces Port Forwarding y NAT. Pierdes el control de VoIP/IPTV (si lo tienes contratado). Puede "salirte rana" el router del Proveedor y darte problemas de rendimiento y/o cuelgues.
   - Ventajas: No tocas el servicio del Proveedor que suele ser suficientemente estable. El soporte funciona y no hay que dar explicaciones. 
 - **Modo Bridge**: Se comporta como un ONT, recibes todas las VLAN's. No lo he configurado nunca pero entiendo que sus ventajas y desventajas son las mismas que el punto siguiente (ONT),  
 - **ONT**: Conecto mi Router al *Optical Network Termination*, a su puerto ETH1, me presenta las 3 VLANs: 6 para Datos, 2 para IPTV y 3 para VoIP.
@@ -87,18 +87,22 @@ Uso **Linux** sobre máquina virtual, con su **routing nativo** e `iptables`. **
 {% include showImagen.html
     src="/assets/img/posts/2023-04-15-networking-avanzado-03.svg"
     caption="La seguridad es completa, por defecto no entra nada"
-    width="800px"
+    width="500px"
     %} 
 
-Volviendo a mi instalación. El hardware que uso para mi máquina virtual es un Host NUC de Intel. Siempre te hará falta un Switch (mínimo uno de 8xGbe con soporte de VLAN's e IGMP) y AP's con soporte de Roaming para la WiFi. A nivel físico, conecto el Host y el ONT a puertos TRUNK del Switch (puerto del ONT vlan's 2,3,6 y puerto del Host vlan's 2,3,6,100). 
+Volviendo a mi instalación. El hardware que uso para mi máquina virtual es un Host NUC de Intel. Siempre te hará falta un Switch (mínimo uno de 8xGbe con soporte de VLAN's e IGMP) y AP's con soporte de Roaming para la WiFi.
+
+En el gráfico dejo cómo sería la conexión física en la modalidad "Estándar" (no es mi caso). Si lo conectas así yo pondría el Router del Operador a un puerto de **Acceso** de mi switch y el Host con mi Router a un puerto TRUNK. Cearía una VLAN exclusiva para que puedan verse el router del Operador con el mío (por ejemplo la `192`) y subnet `192.168.1/24` y dejaría la `VLAN 100` para mi casa y mi propia subnet `192.168.100/24`. 
 
 {% include showImagen.html
     src="/assets/img/posts/2023-04-15-networking-avanzado-04.svg"
     caption="Representacion física de conexión"
-    width="450px"
+    width="800px"
     %} 
 
-Me he decantado por **[Ubuntu 22.04 LTS](https://ubuntu.com/blog/tag/LTS)**, robusto y fácil de mantener. Lo instalé usando la [Plantilla de VM en Proxmox]({% post_url 2023-04-07-proxmox-plantilla-vm %}) (luego explico qué es Proxmox). Concedo acceso a las vlan's 2,3,6,100. Una vez que tengo activo mi Linux termino su instalación con algunas herramientas, eliminando `cloud-init` y preparando el fichero `netplan`.
+En mi caso (que conecto directo al ONT), a nivel físico tanto mi Host como el ONT a puertos TRUNK del Switch (puerto del ONT vlan's 2,3,6 y puerto del Host vlan's 2,3,6,100). Hablaré `PPPoE` por la `vlan6` y la `VLAN 100` para mi casa y mi propia subnet `192.168.100/24`. 
+
+Como distribución Linux me he decantado por **[Ubuntu 22.04 LTS](https://ubuntu.com/blog/tag/LTS)**, robusto y fácil de mantener. Lo instalé usando la [Plantilla de VM en Proxmox]({% post_url 2023-04-07-proxmox-plantilla-vm %}) (luego explico qué es Proxmox). Concedo acceso a las vlan's 2,3,6,100. Una vez que tengo activo mi Linux termino su instalación con algunas herramientas, eliminando `cloud-init` y preparando el fichero `netplan`.
 
 ```console
 root@muro:~# apt install qemu-guest-agent
@@ -347,128 +351,164 @@ Poner todo los huevos en el mismo cesto no es aconsejable y los Tecky's lo sabem
 
 #### DNS y DHCP
 
-Un Servicio fundamental. Mi servidor DNS y DHCP es [Pi-hole](https://pi-hole.net). Tengo un rango dinámico de IP's privadas y muchísimas IP's fijas (por MAC a todos los equipos y servidores fijos). Uso una CMDB casera muy simple en un fichero excel. Cuando hago cambios solo tengo que tocar un par de ficheros de PiHole. En internet mi dominio `tudominio.com` está siendo servido por mi proveedor de DNS, en la Intranet el mismo `tudominio.com` está siendo servidor por PiHole.
+Utilizo [Pi-hole](https://pi-hole.net) como servidor DNS y DHCP. Para DHCP uso un rango dinámico y muchas IP's fijas (por MAC). Mi dominio interno es exactamente el mismo que el externo: `tudominio.com`. 
 
 {% include showImagen.html
     src="/assets/img/posts/2023-04-15-networking-avanzado-12.svg"
-    caption="Cómo hago la resolución de nombres"
-    width="800px"
+    caption="DNS y DHCP en mi intranet"
+    width="500px"
     %}
 
-Cuando alguien de la Intranet pide un nombre lo hace a PiHole. Te recomiendo consultar este apunte sobre [Pi-hole casero]({% post_url 2021-06-20-pihole-casero %}) para entender mejor cómo funciona. 
+Cuando se pide desde **Internet** un nombre bajo `tudominio.com` se entrega mi IP pública (que actualizo dinámicamente). Cuando se lanza una consulta DNS desde la **Intranet** siempre se hace a PiHole, si es un nombre bajo `tudominio.com` entregará una IP privada directamente, si es cualquier otro nombre irá a averiguarlo a su siguiente nivel (DNS Servers de Movistar por ejemplo). 
 
-* Un pequeño vistazo al fichero donde se hace la asignación estática para DHCP
+Te recomiendo consultar este apunte sobre [Pi-hole casero]({% post_url 2021-06-20-pihole-casero %}) para entender mejor cómo funciona. En casa uso una CMDB muy simple en un fichero excel para llevar el control de MAC->IP privada y actualizo un par de ficheros de PiHole cuando hay cambios. 
 
-```console
-pihole $ sudo cat /etc/dnsmasq.d/04-pihole-static-dhcp.conf
-dhcp-host=52:54:12:12:12:12,192.168.100.1,muro.tudominio.com
-dhcp-host=00:08:22:37:0E:A1,192.168.100.2,equipo.tudominio.com
-
-dhcp-host=38:34:D3:3E:DA:31,192.168.100.50,nodo1.tudominio.com
-dhcp-host=38:F9:34:B7:36:96,192.168.100.51,nodo2.tudominio.com
-```
-
-* El fichero donde se asignan nombres DNS a direcciones IP.
-  
-```console
-pihole $ sudo cat /etc/pihole/custom.list
-192.168.100.1 muro.tudominio.com
-192.168.100.2 equipo.tudominio.com
-:
-192.168.100.50 nodo1.tudominio.com
-192.168.100.51 nodo2.tudominio.com
-:
-192.168.100.224 pihole.tudominio.com
-```
 
 <br/>
 
 #### Proxy Inverso
 
-Un proxy inverso es un servidor que actúa como intermediario entre los usuarios y los servidores web que hay detrás de él. Cuando hago una solicitud a un sitio web (de mi intranet), en lugar de enviar la solicitud a él, se envía al proxy inverso y este a su vez al servidor web correspondiente. Permite que el navegador use `https` con el proxy inverso, aunque este a su vez use `http` con el Web original. 
+Un proxy inverso es un servidor que actúa como intermediario entre los usuarios y los servidores web que hay tras él. Cuando se solicita un sitio web, en lugar de enviarle la solicitud, se envía al proxy inverso y este a su vez al servidor web. Permite que el navegador use `https` con el proxy inverso y este use `http` con el Web original.
 
-He montado varios servicios que administro vía Navegador y quiero usar `https` con certificados válidos generados con [Let's Encrypt](https://letsencrypt.org/es/). Para configurarlo necesito solicitar un certificado para cada nombre del servidor Web. 
-
-Por lo tanto, necesito dar de alta los nombres tanto en mi proveedor DNS de internet (porque Let's Encrypt necesita verificar que soy el propietario) como en mi intranet.
+Podré usar `https` con certificados válidos generados con [Let's Encrypt](https://letsencrypt.org/es/), con un certificado para cada nombre del servidor Web al que quiero llegar. Todas mis sesiones `https` quedan centralizadas a través de él. 
 
 **Configuración DNS**
 
-Doy de alta los nombres de aquellos equipos Web a los que quiero llegar en ambos sitios: 
+Veamos con ejemplos la configuración DNS de los nombres de mis equipos Web cuando tengo el Proxy Inverso en medio. Tengo los servicios *git, grafana y home assistant**. Quiero poder llegar vía Web `https` (diferentes puertos) a los tres y además quiero poder llegar vía `ssh` (puerto 22) al servidor *git*.
 
-- En Internet (proveedor de DNS dinámico): Varios registros de tipo 'A' contra el mismo usuario, de modo que al cambiar la IP dinámica de dicho usuario se aplique la misma IP a todos; es decir, todos resolverán a mi misma IP pública.
-
-```consola
-    git.tudominio.com            Usuario: MiUsuarioEnMiProveedor 
-    grafana.tudominio.com        Usuario: MiUsuarioEnMiProveedor
-    ha.tudominio.com             Usuario: MiUsuarioEnMiProveedor
-    kuma.tudominio.com           Usuario: MiUsuarioEnMiProveedor
-    librenms.tudominio.com       Usuario: MiUsuarioEnMiProveedor
-    sol.tudominio.com            Usuario: MiUsuarioEnMiProveedor
-    tierra.tudominio.com         Usuario: MiUsuarioEnMiProveedor
-```
-
-- En Intranet, en Pihole, los doy de alta apuntando todos a la misma IP, la de mi (futuro) Nginx Proxy Manager.
+- En Internet añado un registro `A` a cada uno de ellos y todos resolverán a mi misma IP pública (w.x.y.z) que actualizo dinámicamente. 
 
 ```consola
-    git.tudominio.com            192.168.100.243
-    grafana.tudominio.com        192.168.100.243
-    ha.tudominio.com             192.168.100.243
-    kuma.tudominio.com           192.168.100.243
-    librenms.tudominio.com       192.168.100.243
-    sol.tudominio.com            192.168.100.243
-    tierra.tudominio.com         192.168.100.243
+    git.tudominio.com            w.x.y.z 
+    grafana.tudominio.com        w.x.y.z
+    ha.tudominio.com             w.x.y.z
 ```
+
+- En Intranet añado un registro `A` al mismo nombre y todos apuntando a la misma IP, la de mi Proxy Inverso. Además añado 3 nombres extra con los `hostname` reales de mis máquinas virtuales donde están los servicios. 
+
+
+```consola
+git.tudominio.com          192.168.100.243  <- VM de mi Proxy Inverso (NPM)
+grafana.tudominio.com      192.168.100.243  <- VM de mi Proxy Inverso (NPM)
+ha.tudominio.com           192.168.100.243  <- VM de mi Proxy Inverso (NPM)
+    :
+vm-git.tudominio.com       192.168.100.XXX  <- VM del servidor Gitea
+vm-grafana.tudominio.com   192.168.100.YYY  <- VM del servidor con grafana e influxdb
+vm-ha.tudominio.com        192.168.100.ZZZ  <- VM de HASS (Home Assistant)
+```
+
+La foto final quedaría así:
+
+{% include showImagen.html
+    src="/assets/img/posts/2023-04-15-networking-avanzado-13.svg"
+    caption="Cómo hago la resolución de nombres completa"
+    width="800px"
+    %}
 
 <br/> 
 
-**Instalación de Contenedor LXC [Nginx Proxy Manager](https://nginxproxymanager.com)** 
+**Configuración Proxy Inverso**
 
-Empiezo con la instalación de mi Proxy Inverso. Utilizo NPM (Nginx Proxy Manager) porque es muy rápido, ligero y además soporta las tres cosas que necesito: Proxy Inverso con soporte de `https`, gestión de Certificados SSL con Let's Encrypt y Port Forwarding (lo llama Streams).
+Lo primero es lo primero. Utilizo [Nginx Proxy Manager](https://nginxproxymanager.com) (NPM) como Proxy Inverso, porque es rápido, ligero y soporta lo que necesito, `https` con gestión de Certificados SSL vía Let's Encrypt y Port Forwarding (lo llama Streams).
 
-* Creo un contenedor LXC en Proxmox VE [mediante un Helper Script](https://tteck.github.io/Proxmox/): 
+Lo instalo como **Contenedor LXC** en Proxmox VE, [mediante un Helper Script](https://tteck.github.io/Proxmox/). Ocupa muy poca memoria y su arranque es ultra rápido.
 
 {% include showImagen.html
-    src="/assets/img/posts/2023-04-15-networking-avanzado-13.png"
-    caption="Instalación de Contenedor LCX usando un Helper Script"
+    src="/assets/img/posts/2023-04-15-networking-avanzado-14.png"
+    caption="Instalación de Contenedor LXC usando un Helper Script"
     width="700px"
     %} 
 
-Desde la consola de uno de mis Host lanzo el proceso de instalación: 
+La instalación se hace desde la consola de uno de mis Host:
 
 ```console
 root@pve-sol:~# LANG=C bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/nginxproxymanager.sh)"
 ```
 
 {% include showImagen.html
-    src="/assets/img/posts/2023-04-15-networking-avanzado-14.png"
-    caption="Contesto todas las preguntas y se crea el Contenedor LCX"
+    src="/assets/img/posts/2023-04-15-networking-avanzado-15.png"
+    caption="Contesto todas las preguntas para crear el Contenedor LXC"
     width="800px"
     %} 
 
-Hago la configuración a través de su interfaz Web
+<br/> 
+
+**Configuración de Proxy Hosts**
+
+Proxy Hosts creados a través de su interfaz Web.
 
 {% include showImagen.html
-    src="/assets/img/posts/2023-04-15-networking-avanzado-15.png"
+    src="/assets/img/posts/2023-04-15-networking-avanzado-16.png"
     caption="Varios Proxy Hosts, Certificados y un Stream"
     width="600px"
     %} 
 
-* Definición de los Proxy Hosts
-
 {% include showImagen.html
-    src="/assets/img/posts/2023-04-15-networking-avanzado-16.png"
+    src="/assets/img/posts/2023-04-15-networking-avanzado-17.png"
     caption="Lista de Proxy Hosts"
     width="600px"
     %} 
 
-Hago un paréntesis: Para el Proxy Host de Home Assistant he hecho una configuración personalizada para que funcione correctamente Visual Studio Code Server. También te pongo qué hay que configurar en el `configuration.yaml`de Home Assistant.
+Ejemplo de **Proxy Host** de *Home Assistant*.
+
+| *Domain Name* | *Nombre con el que se accede al servicio vía `https`*, por ejemplo `ha.tudominio.com`. Por omisión el puerto por el que escucha es el estándar: `443` (excepto Grafana, ver *Parámetros avanzados*). Estamos hablando de la conexión entre el Navegador y NPM |
+| *Scheme* | La forma en la que se llega al servidor web que hay detrás, típicamente será `http`. Esta es la conexión entre NPM y el Web Server |
+| *Forward Hostname/IP* | Nombre del servidor web que hay detrás o su IP, por ejemplo `vm-ha.tudominio.com` o su IP `192.168.100.ZZZ` (yo uso la IP) |
+| *Forward Port* | Número de puerto por el que escucha el servidor web que ha detrás, por ejemplo `8123` |
+| *Websockets Support* | Siempre lo activo. No suelo activar *Cache Assets* ni *Block Common Exploits*  |
+| Custom Locations | No añado nada|
+| SSL | Aquí añadiré el Certificado de `ha.tudominio.com` más adelante, cuando lo pida a Let's Encrypt en el siguiente paso. Siempre activaré la opción *Force SSL* |
+| Advanced | No añado nada, excepto para Home Asssistant y Grafana, ver *Parámetros avanzados* más adelante |
+
+
+Esta es la configuración de Certificados con Let's Encrypt. Para poder crear y renovar los certificados necesitas que Let's Encrypt valide que eres quien dices ser. Primero tu proveedor DNS debe resolver correctamente el subdominio sobre el cual estás solicitando el certificado (en este ejemplo de Home Assistant sería `ha.tudominio.com`). Segundo y más importante, confirmarlo con uno de los dos métodos siguientes. 
+
+{% include showImagen.html
+    src="/assets/img/posts/2023-04-15-networking-avanzado-18.png"
+    caption="Lista de Certificados vía Let's Encrypt"
+    width="600px"
+    %}
+
+- Método *DNS Challenge*: Es el mejor, no necesitas abrir ningún puerto en tu router.  *Tu proveedor DNS tiene que estar en la lista de los soportados por Let's Encrypt*. Si no está ni tampoco puedes crear registros TXT dinámicamente, tendrás que usar el método manual. 
+
+- Método *Manual*: Me fuerza a abrir temporalmente el puerto 80. Desde Let's Encrypt necesita hablar por ese puerto (y no otro) con un web server temporal que levanta NPM.
+
+Yo uso el método manual y un par de scripts, [open-npm-letsencrypt.sh](https://gist.github.com/LuisPalacios/3cff94bf807965b448d59523537eb9a6) para abrir el puerto `80` antes de solicitar o renovar el certificado y cuando acaba vuelvo a cerrarlo con [close-npm-letsencrypt.sh](https://gist.github.com/LuisPalacios/c10af93c6d3be7b1c5796899ad57d3f4).
+
+{% include showImagen.html
+    src="/assets/img/posts/2023-04-15-networking-avanzado-19.png"
+    caption="Tipo de comunicación con Let's Encrypt"
+    width="600px"
+    %} 
+
+<br/> 
+
+**Parámetros avanzados**
+
+* **Home Assistant**
+
+**En la VM de NPM:** *Proxy Hosts >* **Home Assistant** *> Advanced >* **Custom Nginx Configuration**. 
+
+```conf
+# Para que Visual Studio Server funcione correctamente.
+location / {
+  proxy_set_header Upgrade $http_upgrade;
+  proxy_set_header Connection $http_connection;
+  proxy_http_version 1.1;
+  proxy_set_header X-Forwarded-Host $http_host;
+  include /etc/nginx/conf.d/include/proxy.conf;
+}
+```
+
+**En Home Assistan:** Settings > System > Network: `http://192.168.100.ZZZ:8123` 
 
 {% include showImagen.html
     src="/assets/img/posts/2023-04-15-networking-avanzado-20.png"
-    caption="Configuración de un port forwarding"
+    caption="URL por la que escucha HASS"
     width="400px"
     %} 
 
+Y en su fichero `configuration.yaml` para que acepte peticiones de un proxy inverso:
 
 ```yaml
 ## Sección en el configuration.yaml de Home Assistant
@@ -479,59 +519,43 @@ http:
   - 192.168.100.243 ### IP del Nginx Proxy Manager LXC ###
 ```  
 
-* Configuración de Certificados con Let's Encrypt. Para poder crear y renovar los certificados necesitas que Let's Encrypt valide que eres quien dices ser. Utiliza dos métodos y dependiendo de qué soporte tu proveedor de dominios deberás usar uno u otro. 
+* **Grafana**
 
-{% include showImagen.html
-    src="/assets/img/posts/2023-04-15-networking-avanzado-17.png"
-    caption="Lista de Certificados vía Let's Encrypt"
-    width="600px"
-    %} 
+**En la VM de NPM:** *Proxy Hosts >* **Grafana** *> Advanced >* **Custom Nginx Configuration**. 
 
+```conf
+# Para que NPM también escuche por el puerto `48123` además del `443` para grafana
+listen 48123 ssl http2;
+```
 
-- Método DNS Challenge: Este método es el mejor, no necesitas abrir ningún puerto en tu router, pero *tu proveedor DNS tiene que estar en la lista de los soportados por Let's Encrypt*. Si no está o no puedes crear registros TXT dinámicamente en tu proveedor entonces tienes que usar el método manual. 
+**En la VM de Grafana:** Fichero `/etc/grafana/grafana.ini`
 
-- Método Manual: Este método necesita que abras, al menos temporalmente, el puerto 80 en tu router y firewall, además necesitas que tu proveedor DNS resuelva correctamente el subdominio sobre el cual quieres solicitar el certificado.
+```conf
+[server]
+protocol = http
+http_port = 3000
+```  
 
-Yo uso el método manual con un par de scripts. Antes de solicitar o renovar el certificado abro ejecutando `open-npm-letsencryp.sh` desde mi router Linux. Cuando acaba todo vuelvo a cerrar con `close-npm-letsencrypt.sh`.
+<br/> 
 
-{% include showImagen.html
-    src="/assets/img/posts/2023-04-15-networking-avanzado-22.png"
-    caption="Tipo de comunicación con Let's Encrypt"
-    width="600px"
-    %} 
+**Configuración de Stream (Port Forwarding)**
 
-- [open-npm-letsencrypt.sh](https://gist.github.com/LuisPalacios/3cff94bf807965b448d59523537eb9a6)
-- [close-npm-letsencrypt.sh](https://gist.github.com/LuisPalacios/c10af93c6d3be7b1c5796899ad57d3f4)
+Para aclarar la nomenclatura, he visto que NPM llama **Stream** al hecho de hacer **Port Forwarding**. Permite reenviar todo lo que recibe por un puerto hacia otro equipo por el mismo u otro puerto. **Hago Port Forwarding del puerto `22` hacia mi servidor GIT en la Intranet.**
 
+| ¡¡¡ MUY IMPORTANTE !!! Antes de hacer Port Forwarding del puerto `ssh (22)` en el **Nginx Proxy Manager** es importantísimo cambiar el puerto por el que escucha su propio daemon `sshd` por uno alternativo o perdería el aceso vía `ssh` al NPM. He documentado en el apunte [Socketed SSH]({% post_url 2023-04-14-ssh-socket %}) cómo se hace (en un Contenedor LXC con Ubuntu, donde he montado mi NPM). |
 
-* Todos los Proxy Hosts tienen activo el Websockets Support y Force SSL en el Certificado
+¿Porqué quiero hacer Port Forwarding hacia mi servidor Git?. Pues porque quiero usar `ssh` como método de comunicación para conectar con `git@git.tudominio.com:...` (commits, push, pull, etc...) y además usar el mismo nombre DNS que uso para administrar mi servidor Git vía `https`: `https://git.tudominio.com`. 
 
-{% include showImagen.html
-    src="/assets/img/posts/2023-04-15-networking-avanzado-19.png"
-    caption="Configuración de un port forwarding"
-    width="600px"
-    %} 
+Como Git usa el puerto (fijo) `22` cuando uso la nomenclatura `git@git.tudominio.com` no me queda más remedio que hacer algún truco para redirigir dicho puerto en mi NPM. 
 
-* Configuración de un Stream (Port Forwarding)
-
-{% include showImagen.html
-    src="/assets/img/posts/2023-04-15-networking-avanzado-18.png"
-    caption="Configuración de un port forwarding"
-    width="600px"
-    %} 
-
-¿Qué es esto de Port Forwarding para mi servidor Git?. Pues que si quiero usar el mismo nombre DNS para hacer `https` para la administración y `ssh` para sincronizar los repositorios, tengo que hacer un pequeño invento. Consiste en dar de alta un Proxy Host para la parte `https` y un Port Forwarding (Stream) para la parte de `ssh`. Así paso a tener disponible `https://git.tudominio.com` y `git@git.tudominio.com:privado/repositorio.git` para hacer commits, etc. Además me permite (previo knock, knock) acceder desde internet. 
+Como ya había dado de alta un Proxy Host para la parte `https` solo me falta añadir el Stream para reenviar el tráfico del puerto `22` hacia mi servidor Git en la intranet.
 
 {% include showImagen.html
     src="/assets/img/posts/2023-04-15-networking-avanzado-21.png"
-    caption="Detalle del port forwarding"
-    width="300px"
+    caption="Configuración de un port forwarding"
+    width="600px"
     %} 
 
-
-Cuando conecto desde Internet, con cualquiera de los tres primeros, vía `https`, conectaré con mi IP pública, me dejará entrar porque he llamado previamente a la puerta con `knockd` (como vimos en la sección de Internet), y mi router/firewall hace port-forwarding hacia NPM (Nginx Proxy Manager), que gracias al nombre que viene en la petición https reenvía a su vez hacia la IP del servicio concreto en la Intranet.
-
-Cuando estoy en casa y conecto desde la Intranet, con cualquiera de esos nombres o de los adicionales vía `https`, mi DNS Server interno resuelve a la IP interna de mi NPM (Nginx Proxy Manager), que por el nombre me deriva a su vez al servicio concreto.
-
+Ahora tengo disponible `https://git.tudominio.com (puerto 443)` para administrar y `git@git.tudominio.com:repositorio.git (puerto 22)` para trabajar con mi Git server privado. Lo mejor es que también es compatible con el acceso, previo *knock, knock*, desde internet. 
 
 <br/>
