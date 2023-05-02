@@ -374,9 +374,9 @@ Podré usar `https` con certificados válidos generados con [Let's Encrypt](http
 
 **Configuración DNS**
 
-Veamos con ejemplos la configuración DNS de los nombres de mis equipos Web cuando tengo el Proxy Inverso en medio. Tengo los servicios *git, grafana y home assistant**. Quiero poder llegar vía Web `https` (diferentes puertos) a los tres y además quiero poder llegar vía `ssh` (puerto 22) al servidor *git*.
+Veamos con ejemplos la configuración. Tengo los servicios *git, grafana y home assistant*. Quiero poder llegar vía `https` a los tres y además `ssh` al servidor *git*.
 
-- En Internet añado un registro `A` a cada uno de ellos y todos resolverán a mi misma IP pública (w.x.y.z) que actualizo dinámicamente. 
+- En **Internet** mantengo un registro `A` para cada uno y todos resuelven a mi misma IP pública (w.x.y.z), que actualizo dinámicamente. 
 
 ```consola
     git.tudominio.com            w.x.y.z 
@@ -384,7 +384,7 @@ Veamos con ejemplos la configuración DNS de los nombres de mis equipos Web cuan
     ha.tudominio.com             w.x.y.z
 ```
 
-- En Intranet añado un registro `A` al mismo nombre y todos apuntando a la misma IP, la de mi Proxy Inverso. Además añado 3 nombres extra con los `hostname` reales de mis máquinas virtuales donde están los servicios. 
+- En la **Intranet** esos mismos nombres resuelven A la IP del Proxy Inverso. También tengo nombres para los host reales de mis máquinas virtuales donde están los servicios. 
 
 
 ```consola
