@@ -409,7 +409,7 @@ La foto final quedaría así:
 
 **Configuración Proxy Inverso**
 
-Lo primero es lo primero. Utilizo [Nginx Proxy Manager](https://nginxproxymanager.com) (NPM) como Proxy Inverso, porque es rápido, ligero y soporta lo que necesito, `https` con gestión de Certificados SSL vía Let's Encrypt y Port Forwarding (lo llama Streams).
+Utilizo [Nginx Proxy Manager](https://nginxproxymanager.com) (NPM) como Proxy Inverso, porque es rápido, ligero y soporta lo que necesito, `https` con gestión de Certificados SSL vía Let's Encrypt y Port Forwarding (lo llama Streams).
 
 Lo instalo como **Contenedor LXC** en Proxmox VE, [mediante un Helper Script](https://tteck.github.io/Proxmox/). Ocupa muy poca memoria y su arranque es ultra rápido.
 
