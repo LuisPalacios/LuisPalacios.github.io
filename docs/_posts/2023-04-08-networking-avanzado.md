@@ -324,9 +324,9 @@ Vamos bajando por la casa y llegamos a la Intranet, cosas que he montado y algun
 
 - También desaconsejo (mucho) WiFi MESH, ese día que "pixela" el video, que falla la domótica (WiFi), que tus móviles se desasocian, que Homekit, Alexa o Google se va, en fin, te acordarás del cable!. Ya se que hay muchos casos donde no podemos pasar cable (o no nos dejan), pero lo recuerdo porque lo he sufrido.
 
-- Si tienes la fortuna de casa nueva o obra enorme, no lo dudes ni un segundo. Cable a "todos" los espacios de la casa con CAQT6 minimo. Decidir dónde (techos o paredes) van a ir los AP's y dejar tirado CAT6 a esos puntos (alimentar los AP's vía POE). 
+- Si tienes la fortuna de casa nueva o una obra, no lo dudes, cable a "todos" los espacios de la casa con CAT6 minimo. También a techos o paredes donde irán los AP's (mejor alimentarlos con PoE). 
 
-- Cuidado también con equipos WiFi super inteligentes que montan redes privadas en la WiFi, con NAT. Son equipos para consumo que desaconsejo encarecidamente. Si estás leyendo este apunte es que sabes de qué va esto. Huye de cualquier cosa que no te permite configurar transparentemente como tu quieras.
+- Cuidado también con equipos WiFi demasiado inteligentes que montan redes privadas en la WiFi y te obligan a hacer NAT. Son equipos para consumo que desaconsejo; suelo huir de tecnologías que no te permite configurar transparentemente como tu quieras.
 
 - Servicios de Red: Tengo un **Servidor DNS/DHCP sobre PiHole**, un controlador para los AP's, un **Proxy Inverso** y he probado algunas herramientas (opcionales) de monitorización como Gatus, Uptime Kuma, LibreNMS, Netdisco. Todo como VM/LXC's en mi(s) Host(s).
 
@@ -374,9 +374,9 @@ Podré usar `https` con certificados válidos generados con [Let's Encrypt](http
 
 **Configuración DNS**
 
-Veamos con ejemplos la configuración DNS de los nombres de mis equipos Web cuando tengo el Proxy Inverso en medio. Tengo los servicios *git, grafana y home assistant**. Quiero poder llegar vía Web `https` (diferentes puertos) a los tres y además quiero poder llegar vía `ssh` (puerto 22) al servidor *git*.
+Veamos con ejemplos la configuración. Tengo los servicios *git, grafana y home assistant*. Quiero poder llegar vía `https` a los tres y además `ssh` al servidor *git*.
 
-- En Internet añado un registro `A` a cada uno de ellos y todos resolverán a mi misma IP pública (w.x.y.z) que actualizo dinámicamente. 
+- En **Internet** mantengo un registro `A` para cada uno y todos resuelven a mi misma IP pública (w.x.y.z), que actualizo dinámicamente. 
 
 ```consola
     git.tudominio.com            w.x.y.z 
@@ -384,7 +384,7 @@ Veamos con ejemplos la configuración DNS de los nombres de mis equipos Web cuan
     ha.tudominio.com             w.x.y.z
 ```
 
-- En Intranet añado un registro `A` al mismo nombre y todos apuntando a la misma IP, la de mi Proxy Inverso. Además añado 3 nombres extra con los `hostname` reales de mis máquinas virtuales donde están los servicios. 
+- En la **Intranet** esos mismos nombres resuelven A la IP del Proxy Inverso. También tengo nombres para los host reales de mis máquinas virtuales donde están los servicios. 
 
 
 ```consola
@@ -409,7 +409,7 @@ La foto final quedaría así:
 
 **Configuración Proxy Inverso**
 
-Lo primero es lo primero. Utilizo [Nginx Proxy Manager](https://nginxproxymanager.com) (NPM) como Proxy Inverso, porque es rápido, ligero y soporta lo que necesito, `https` con gestión de Certificados SSL vía Let's Encrypt y Port Forwarding (lo llama Streams).
+Utilizo [Nginx Proxy Manager](https://nginxproxymanager.com) (NPM) como Proxy Inverso, porque es rápido, ligero y soporta lo que necesito, `https` con gestión de Certificados SSL vía Let's Encrypt y Port Forwarding (lo llama Streams).
 
 Lo instalo como **Contenedor LXC** en Proxmox VE, [mediante un Helper Script](https://tteck.github.io/Proxmox/). Ocupa muy poca memoria y su arranque es ultra rápido.
 
