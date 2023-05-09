@@ -63,7 +63,7 @@ Partiendo de esta premisa, tengo tres opciones.
 <br/>
 
 - **Estándar**: Conecto mi Router al del Proveedor y recibo IP privada (`192.168.1.0/24`).
-  - Desventajas: Hay que hacer dos veces Port Forwarding y NAT. Pierdes el control de VoIP/IPTV (si lo tienes contratado). Puede "salirte rana" el router del Proveedor y darte problemas de rendimiento y/o cuelgues.
+  - Desventajas: Hay que hacer dos veces Port Forwarding. Pierdes el control de VoIP/IPTV (si lo tienes contratado). Puede "salirte rana" el router del Proveedor y darte problemas de rendimiento y/o cuelgues. Si haces NAT en "MiRouter" estás haciendo doble NAT y eso no suele gustar. Si no haces NAT en "MiRouter" entonces hay que dar de alta las rutas de la intranet en el router del proveedor, que no me mola.
   - Ventajas: No tocas el servicio del Proveedor que suele ser suficientemente estable. El soporte funciona y no hay que dar explicaciones. 
 - **Modo Bridge**: Se comporta como un ONT, recibes todas las VLAN's. No lo he configurado nunca pero entiendo que sus ventajas y desventajas son las mismas que el punto siguiente (ONT),  
 - **ONT**: Conecto mi Router al *Optical Network Termination*, a su puerto ETH1, me presenta las 3 VLANs: 6 para Datos, 2 para IPTV y 3 para VoIP.
@@ -76,13 +76,13 @@ Partiendo de esta premisa, tengo tres opciones.
 
 - Modo bridge - si puedes y tu router lo soporta sería mi segunda opción. Ojo!, hay routers (p.ej GPT-2841GX4X5) que no soportan esta modalidad.
 
-- Modo estándar - sería la última si no me quedase más remedio. Ojo!, vale para todo lo que explico en este apunte pero me incomoda el uso de doble port forwarding, doble NAT, tener que abrir demasiados puertos y la pérdida del control total de VoIP e IPTV.
+- Modo estándar - sería la última si no me quedase más remedio. Ojo!, vale para todo lo que explico en este apunte pero me incomoda el uso de doble port forwarding, el posible doble NAT o tener que poner las estáticas a mi intranet, tener que abrir demasiados puertos y la pérdida del control total de VoIP e IPTV.
 
 <br/> 
 
 #### Router
 
-Uso **Linux** sobre máquina virtual, con su **routing nativo** e `iptables`. **Deniego todo el tráfico de entrada** y hago **Masquerade en salida**. Tienes otras opciones más fáciles, como usar [OpenWrt](https://openwrt.org), [IPFire](https://www.ipfire.org) o [pfSense](https://www.pfsense.org) (solo intel). También puede irte a hardware dedicado estilo Mikrotik o router neutro. Por cierto, si te gusta OpenWrt o IPFire hay una opción barata con Raspberry Pi 4B con 1GB.
+En mi caso tengo ONT y uso **Linux** sobre máquina virtual, con su **routing nativo** e `iptables`. **Deniego todo el tráfico de entrada** y hago **Masquerade en salida**. Tienes otras opciones más fáciles, como usar [OpenWrt](https://openwrt.org), [IPFire](https://www.ipfire.org) o [pfSense](https://www.pfsense.org) (solo intel). También puede irte a hardware dedicado estilo Mikrotik o router neutro. Por cierto, si te gusta OpenWrt o IPFire hay una opción barata con Raspberry Pi 4B con 1GB.
 
 {% include showImagen.html
     src="/assets/img/posts/2023-04-15-networking-avanzado-03.svg"
@@ -90,9 +90,9 @@ Uso **Linux** sobre máquina virtual, con su **routing nativo** e `iptables`. **
     width="500px"
     %} 
 
-Volviendo a mi instalación. El hardware que uso para mi máquina virtual es un Host NUC de Intel. Siempre te hará falta un Switch (mínimo uno de 8xGbe con soporte de VLAN's e IGMP) y AP's con soporte de Roaming para la WiFi.
+Volviendo a mi instalación (la de la derecha en la figura). El hardware que uso para mi máquina virtual es un Host NUC de Intel. Siempre te hará falta un Switch (mínimo uno de 8xGbe con soporte de VLAN's e IGMP) y AP's con soporte de Roaming para la WiFi.
 
-En el gráfico dejo cómo sería la conexión física en la modalidad "Estándar" (no es mi caso). Si lo conectas así yo pondría el Router del Operador a un puerto de **Acceso** de mi switch y el Host con mi Router a un puerto TRUNK. Cearía una VLAN exclusiva para que puedan verse el router del Operador con el mío (por ejemplo la `192`) y subnet `192.168.1/24` y dejaría la `VLAN 100` para mi casa y mi propia subnet `192.168.100/24`. 
+En el gráfico dejo cómo sería la conexión física en la modalidad "Estándar" (no es mi caso). Si lo conectas así yo pondría el Router del Operador a un puerto de **Acceso** de mi switch y el Host con mi Router a un puerto TRUNK. Cearía una VLAN exclusiva para que puedan verse el router del Operador con el mío (por ejemplo `VLAN 192`) y subnet `192.168.1/24` y dejaría la `VLAN 100` para mi casa y mi propia subnet `192.168.100/24`. No es obligatorio hacer Masquerade en la modalidad Estándar, pero yo lo prefiero (aunque haya doble NAT en salida) porque no quiero dar de alta todas las rutas estáticas en el router del operador.
 
 {% include showImagen.html
     src="/assets/img/posts/2023-04-15-networking-avanzado-04.svg"
