@@ -452,7 +452,7 @@ Por el interfaz del Bridge `br206` de `norte` van a llegar los `join` multicast 
 Instalo el software
 
 ```console
-# apt -y igmpproxy
+# apt install -y igmpproxy
 ```
 
 Preparo el fichero de configuración.
