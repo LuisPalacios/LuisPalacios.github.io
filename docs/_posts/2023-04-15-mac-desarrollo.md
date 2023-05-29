@@ -137,6 +137,12 @@ alias e="/usr/local/bin/code"
 
 - A partir de ahora, cuando estas en un directorio y quieres editar todo lo que cuelga de él, simplemente escribe `e .` 
 
+<br/>
+
+#### Consejos sobre VSCode
+
+- Con VSCode puedes hacerlo todo desde el teclado. Ya trae un subconjunto de comandos mapeado a [Atajos de teclado](https://code.visualstudio.com/docs/getstarted/keybindings). Si quieres aprender estos atajos por defecto, imprime el PDF para [Windows](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf), [macOS](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-macos.pdf) o [Linux](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-linux.pdf) y déjalo cerca. 
+
 
 <br/>
 
@@ -354,7 +360,7 @@ alias pip="/opt/homebrew/bin/pip3"
 #alias pip="/usr/local/bin/pip3"
 ```
 
-Compruevo las versiones
+Compruebo las versiones
 
 ```zsh
 python --version
@@ -401,6 +407,17 @@ Ya tienes `python` instalado y funcionando. Podemos borrar el directorio de prue
 cd ~/Desktop
 rm -fr proyecto
 ```
+
+<br/>
+
+#### Integración con Visual Studio Code
+
+Dejo aquí algunas recomendaciones para integrar Visual Studio Code y Python
+
+- Instalar [Python extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
+
+
+| Recomendado: [Advanced Visual Studio Code for Python Developers](https://realpython.com/advanced-visual-studio-code-python/) |
 
 <br/>
 
