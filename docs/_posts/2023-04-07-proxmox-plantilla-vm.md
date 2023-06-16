@@ -74,7 +74,7 @@ root@pve-tierra:~#
 ```
 - Asocio una consola serie de tipo VGA para poder *ver la consola* desde Proxmox.
 ```console
-# set 900 --serial0 socket --vga serial0
+# qm set 900 --serial0 socket --vga serial0
 ```
 - Averiguo el Path de la imagen a importar
 ```console
