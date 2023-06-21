@@ -654,9 +654,9 @@ Lo primero es instalarme los certificados como cliente de `norte`. Ya los había
 Ahora configuro el mi *servicio como cliente del Access Server de `norte`*. Creo el fichero principal de configuración y luego arranco el servicio.
 
 - [/etc/openvpn/client/sur_cliente_access_de_norte.conf](https://gist.github.com/LuisPalacios/1ea5bccae15675b98d6cc133780b0fff)
-- [/etc/openvpn/client/dubai_cliente_access_de_avila_CONFIG.sh](https://gist.github.com/LuisPalacios/571629103be2f4db92aa2fd620a90006)
-- [/etc/openvpn/client/dubai_cliente_access_de_avila_DOWN.sh](https://gist.github.com/LuisPalacios/b54b27d34e9f3c718eb27fc3de977559)
-- [/etc/openvpn/client/dubai_cliente_access_de_avila_UP.sh](https://gist.github.com/LuisPalacios/59ed7e4df2e232689c555cf88bfdb733)
+- [/etc/openvpn/client/sur_cliente_access_de_norte_CONFIG.sh](https://gist.github.com/LuisPalacios/571629103be2f4db92aa2fd620a90006)
+- [/etc/openvpn/client/sur_cliente_access_de_norte_DOWN.sh](https://gist.github.com/LuisPalacios/b54b27d34e9f3c718eb27fc3de977559)
+- [/etc/openvpn/client/sur_cliente_access_de_norte_UP.sh](https://gist.github.com/LuisPalacios/59ed7e4df2e232689c555cf88bfdb733)
 
 
 ```console
@@ -704,7 +704,7 @@ Ahora configuro el *servicio cliente del Bridge Ethernet de `norte`*. Creo el fi
 # systemctl start openvpn-client@sur_cliente_bridge_ethernet_de_norte
 # systemctl enable openvpn-server@sur_cliente_bridge_ethernet_de_norte
 # systemctl status openvpn-server@sur_cliente_bridge_ethernet_de_norte
-root@dubai:/etc/openvpn/client# systemctl status openvpn-client@dubai_cliente_bridge_ethernet_de_avila.service
+root@sur:/etc/openvpn/client# systemctl status openvpn-client@sur_cliente_bridge_ethernet_de_norte.service
 ● openvpn-client@sur_cliente_bridge_ethernet_de_norte.service - OpenVPN service for sur_cliente_bridge_ethernet_de_norte
      Loaded: loaded (/lib/systemd/system/openvpn-client@.service; enabled; vendor preset: enabled)
                                                                   =======
