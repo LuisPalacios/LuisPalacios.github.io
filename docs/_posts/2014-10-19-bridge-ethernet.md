@@ -484,6 +484,8 @@ Compilo e instalo en el sistema operativo Raspberry Pi OS de `norte`:
 # make
 # make modules_install
 
+# depmod -a
+
 # modprobe nf_nat_rtsp
 # lsmod | grep -i rtsp
 nf_nat_rtsp            16384  0
