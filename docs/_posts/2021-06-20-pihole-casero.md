@@ -555,6 +555,19 @@ Si deseas permitir a tus dispositivos Apple usar **iCloud Private Relay** y esqu
 
 <br/>
 
+### Servidor DNS recursivo
+
+Es posible configurar Pi-Hole como un servidor DNS recursivo. Un servidor DNS recursivo recorrerá la ruta completa (empezando por `root`) del nombre que le piden. Es decir, recorrerá camino dentro del dominio que le piden a través de Internet para entregar la respuesta a la petición. No usará ningún DNS Server intermediario, será más lento al principio pero evita posibles suplantaciones. 
+
+Si quieres conseguir que tu servidor Pi-Hole actúe además como un Servidor DNS recursivo entonces necesitas montar un software adicional. Uno recomendado es `unbound`, un servidor DNS recursivo seguro de código abierto desarrollado principalmente por NLnet Labs, VeriSign Inc, Nominet y Kirei.
+
+En el siguiente enlace tienes explicado todo el proceso para configurarlo
+
+* https://docs.pi-hole.net/guides/dns/unbound/
+
+
+<br/>
+
 ### Actualizaciones futuras. 
 
 En el futuro si quiero actualizar Raspbian OS y/o Pi-hole realizo lo siguiente: 
@@ -575,6 +588,9 @@ $ pihole -up
 ```
 
 <br/>
+
+
+
 
 ### Referencias
 
