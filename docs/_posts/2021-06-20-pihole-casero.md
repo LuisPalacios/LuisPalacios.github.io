@@ -563,7 +563,7 @@ Si quieres conseguir que tu servidor Pi-Hole actúe además como un Servidor DNS
 
 En el siguiente enlace tienes explicado todo el proceso para configurarlo
 
-* https://docs.pi-hole.net/guides/dns/unbound/
+* [Pi-hole as All-Around DNS Solution with Unbound](https://docs.pi-hole.net/guides/dns/unbound/)
 
 
 <br/>
