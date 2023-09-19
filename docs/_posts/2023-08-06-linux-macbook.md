@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 ![logo linux macbook](/assets/img/posts/logo-linux-macbook.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
 
 
-En este apunto describo cómo aprovechar un macbook air antiguo (2015) para instalarle Linux y extender su tiempo de vida. Con el tiempo estos mac's se convierten en equipos casi inútiles, con una velocidad pasmosa y memoria insuficiente. 
+En este apunte describo cómo aprovechar un macbook air antiguo (2015) para instalarle Linux y extender su tiempo de vida. Con el tiempo estos mac's se convierten en equipos casi inútiles, con una velocidad pasmosa y memoria insuficiente. 
 
 ¿Porqué no aprovecharlos con Linux?. Un Macbook Air del 2015, con 8GB y 128GB de disco puede convertirse en un equipo muy útil. 
 
@@ -18,7 +18,7 @@ En este apunto describo cómo aprovechar un macbook air antiguo (2015) para inst
 
 ### Instalación. 
 
-He elegido Ubuntu (sin GUI) para realizar la instalción. Estos son los pasos que he seguido: 
+He elegido Ubuntu Desktop para realizar la instalación. Estos son los pasos que he seguido: 
 
 - Descargo la ISO de [Ubuntu 22.04.2 LTS Desktop](https://ubuntu.com/download/desktop)
 - Flash del ISO en una USB con [balenaEtcher](https://etcher.balena.io) desde otro Mac.
@@ -63,13 +63,14 @@ He elegido Ubuntu (sin GUI) para realizar la instalción. Estos son los pasos qu
 - Inicia la instalación, tardará un rato.
 - Al terminar, **quito la USB y reinicio el sistema**
 
-A partir de aquí ya sólo me falta deshabilitar el GUI
+Si no quieres GUI, a partir de aquí ya sólo te haría falta deshabilitarlo
 
-- Deshabilito el GUI de Ubuntu
+- Cómo deshabilitar el GUI de Ubuntu
 ```console
 $ sudo systemctl set-default multi-user
 ```
-- Reinicio el equipo
+- Ya está, un ubuntu 100% operativo en un buen equipo, reinicio el equipo.
 ```console
 $ reboot
 ```
+
