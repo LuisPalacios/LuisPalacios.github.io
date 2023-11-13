@@ -33,7 +33,7 @@ Es obligatorio instalar las **Apple command line tools** (también conocidas com
 La instalación de Xcode es opcional, solo si vas a desarrollar para macOS, iOS, watchOS y tvOS. Dependiendo de qué decidas, el orden sería este: 
 
 - Instalo Xcode: 
-  - Instalar Xcode desde el Apple Store. 
+  - Instalar Xcode desde el Apple Store. Abrirlo una vez e instalar lo que necesites (por ejemplo la poder desarrollar para iOS)
   - Ejecutar desde el CLI: `xcode-select --install` 
   - Ejecutar desde el CLI: `sudo xcodebuild -license accept`
 
@@ -540,7 +540,7 @@ brew update
 Instalación (incluye el servidor `mongod`, el `mongos sharded cluster query router` y la shell `mongosh`):
 
 ```zsh
-brew install mongodb-community@6.0
+brew install mongodb-community@7.0
 ```
 
 |  | Intel | ARM |
@@ -555,7 +555,7 @@ brew install mongodb-community@6.0
 - Arrancar o Parar MongoDB como un servicio de macOS usando `brew`
 
 ```zsh
-brew services start mongodb-community@6.0
+brew services start mongodb-community@7.0
 ```
 
 {% include showImagen.html
@@ -565,7 +565,7 @@ brew services start mongodb-community@6.0
     %}
 
 ```zsh
-brew services stop mongodb-community@6.0
+brew services stop mongodb-community@7.0
 ```
 
 Si Mac OS no deja abrir mongodb o mongosh por un tema de seguridad: Preferencias -> Security and Privacy pane > Gemeral > mongod Open Anyway or Allow Anyway 
@@ -625,7 +625,7 @@ No dejes de leer el apunte [Vagrant para desarrollo]({% post_url 2023-04-23-mac-
 
 ### Otros
 
-Dejo aquí una lista de programas que considero indispensables y que instalo con Homebrew. Nota que puedes poner más de uno en la lína de comandos (separados por espacio).
+Dejo aquí una lista de programas que suelo instalar en mi portatil. Puedes instalar varios a la vez, poniendo más de uno en la lína de comandos (separados por espacio).
 
 Instalación:
 
@@ -635,7 +635,10 @@ brew install <programa(s)>
 
 |  Programa | Descripción |
 | -- | -- |
+| ffmpeg | Una solución completa y multiplataforma para grabar, convertir y transmitir audio y vídeo. |
+| iperf3 | Para hacer pruebas en redes. El caso de uso es crear flujos de datos TCP y UDP y medir el rendimiento de la red. |
 | jq | Filtrar, buscar y mostrar de forma "bonita" el resultado de un JSON en lugar de en una sola línea. |
+| knock | Cliente para hacer "Port Knocking" (llamar a la puerta), una técnica para aplicar seguridad a nuestro servidor. |
 
 
 <br/>
@@ -662,10 +665,11 @@ brew update && brew upgrade            # Actualización estándar de homebrew
 
 ```zsh
 brew update && brew update
-brew doctor                            # Herramienta de autodiagnóstico de Homebrew.
-brew --version                         # Comprobar la versión
-brew list                              # Ver que está instalado
-brew cask list                         # Ver que cask’s están instalados
+brew doctor                # Herramienta de autodiagnóstico de Homebrew.
+brew --version             # Comprobar la versión
+brew list                  # Ver que está instalado
+brew cask list             # Ver que cask’s están instalados
+brew leaves                # Top level instalados (es lo más interesante)
 ```
 
 * Actualizar Homebrew
