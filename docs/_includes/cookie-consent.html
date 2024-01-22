@@ -124,10 +124,12 @@
     if (theCookieValue == 'aprobado' || theCookieValue == 'declinado') {
         if (theCookieValue == 'aprobado') {
             // console.log('cookie: aprobado')
-            var script = document.createElement("script");
-            script.src = "https://plausible.io/js/plausible.js";
-            script.setAttribute('data-domain', 'luispa.com');
-            document.head.appendChild(script);
+            // NO HAGO NADA, DEJE DE USAR PLAUSIBLE.
+            // DESCOMENTAR LAS 4 SIGUIENTES SI QUIERES USARLO
+            // var script = document.createElement("script");
+            // script.src = "https://plausible.io/js/plausible.js";
+            // script.setAttribute('data-domain', 'luispa.com');
+            // document.head.appendChild(script);
         } else if (theCookieValue == 'declinado') {
             // Do nothing
             // console.log('cookie: declinado')
