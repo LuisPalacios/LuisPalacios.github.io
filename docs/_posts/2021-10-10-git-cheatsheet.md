@@ -79,6 +79,62 @@ $ git restore Capstone/dataset/0.dataclean/datos.ipynb
 
 <br/>
 
+**Importar un repositorio GIT local a GitHub**
+
+Está [aquí documentado](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github), hay dos formas de hacerlo y voy a describir la primera, con el GitHub CLI.
+
+- "[Adding a local repository to GitHub with GitHub CLI](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github#adding-a-local-repository-to-github-with-github-cli)" - Lo puedes hacer todo desde tu ordenador, previa instalación del comando `gh`
+- "[Adding a local repository to GitHub using Git](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github#adding-a-local-repository-to-github-using-git)" - Necesitas trabajar en tu ordenador y en GitHub.
+
+
+- Instalo **GitHub CLI (`gh`)**
+
+```shell
+brew install gh  (MacOS)
+apt install gh (Ubuntu)
+```
+
+- Creo un repositorio local `mirepo` con `git init`
+
+```shell
+mkdir -p /home/luis/prog/github-luispa/mirepo
+cd /home/luis/prog/github-luispa/mirepo
+git init
+e README.md
+git add . 
+git commit -m "primer commit"
+```
+
+- Antes de seguir, es bueno tener un Authentication Token. Puedes crear uno en [tu usuario de GitHub -> Token](https://github.com/settings/tokens). El token necesita los permisos de 'repo', 'read:org', 'admin:public_key'.
+
+```shell
+$ gh auth login
+? What account do you want to log into? GitHub.com
+? What is your preferred protocol for Git operations on this host? SSH
+? Upload your SSH public key to your GitHub account? /Users/luis/.ssh/id_ed25519.pub
+? Title for your SSH key: GitHub CLI
+? How would you like to authenticate GitHub CLI? Paste an authentication token
+? Paste your authentication token: ****************************************
+:
+```
+
+- A continuación uso `gh` para "subir" mi repositorio local `mirepo` a GitHub, prefiero hacerlo de golpe en un solo comando: 
+
+```shell
+cd /home/luis/prog/github-luispa/mirepo
+
+gh repo create --description "Composición sobre Herencia en C++" --remote "CompositionOverInheritance" --source=. --public --push
+
+✓ Created repository LuisPalacios/testLuisPa on GitHub
+  https://github.com/LuisPalacios/testLuisPa
+✓ Added remote git@github.com:LuisPalacios/testLuisPa.git
+:
+rama 'master' configurada para rastrear 'CompositionOverInheritance/master'.
+✓ Pushed commits to git@github.com:LuisPalacios/testLuisPa.git
+```
+
+<br/>
+
 **Github y Visual Studio Code basado en Web**
 
 Si quieres trabajar con [VSCode desde tu navegador](https://docs.github.com/en/codespaces/the-githubdev-web-based-editor), directamente conectado culaquier repositorio alojado en GitHub, solo tienes que reemplazar `.com` por `.dev`. Si el repositorio es tuyo (has hecho login en GitHub) entonces tendrás derechos de edición y podrás hacer commits directamente. Un par de ejemplos:
