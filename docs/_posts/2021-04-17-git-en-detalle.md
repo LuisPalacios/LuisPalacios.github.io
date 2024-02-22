@@ -73,9 +73,10 @@ usage: git [--version] [--help] [-C <path>] [-c <name>=<value>]
 ➜  ~ > git --version
 git version 2.24.3 (Apple Git-128)
 ```
+
 <br/>
 
-Ahora al lio, este apunte (post) nace desde otro en inglés que me gustó mucho. Se trata de [Git from the inside out](https://codewords.recurse.com/issues/two/git-from-the-inside-out) **(GIT desde el interior)**. Me gustó tanto que me he tomado la libertad de traducirlo y crear esta versión a medida con mis propias palabras, revisado y en algunos puntos mejorado para que se entienda mejor. Por supuesto todo el crédito va para su Autora [Mary Rose Cook](https://maryrosecook.com), muchas gracias desde aquí!.
+Ahora al lio, este apunte está inspirado desde otro en inglés que me gustó mucho, [git from the inside out](https://codewords.recurse.com/issues/two/git-from-the-inside-out). Considera el mío como un fork ampliado y mejorado, con más detalle y explicaciones más cercanas y sencillas. Por supuesto no me quiero olvidar de dar crédito a su Autora Mary Rose Cook, muchas gracias desde aquí!.
 
 <br/>
 
