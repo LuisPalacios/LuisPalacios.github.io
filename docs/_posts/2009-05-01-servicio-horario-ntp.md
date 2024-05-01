@@ -15,7 +15,7 @@ En este apunte explico cómo configurar NTP en un equipo GNU/Linux (distribució
 <br clear="left"/>
 <!--more-->
 
-# NTP + NTP-CLIENT
+## NTP + NTP-CLIENT
 
 [La calidad de los relojes](http://www.ntp.org/ntpfaq/NTP-s-sw-clocks-quality.htm): El sistema mantendrá el reloj a través de técnicas software mientras que el servidor está arrancado, pero una vez que apagas el servidor, el reloj HW puede que se quede bastante desincronizado, esa es la razón por la que forzaré una sincronización del reloj durante el re-arranque del sistema.
 
@@ -324,4 +324,3 @@ NTP synchronized: no                            <== En los Clientes aparece como
                   dom 2015-10-25 02:59:59 CEST
                   dom 2015-10-25 02:00:00 CET
 ```
-

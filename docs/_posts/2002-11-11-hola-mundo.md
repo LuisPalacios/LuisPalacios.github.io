@@ -6,9 +6,9 @@ tags: blog linux
 excerpt_separator: <!--more-->
 ---
 
-![nimble image](/assets/img/posts/logo-nibbleblog.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
+![nimble image](/assets/img/posts/logo-nibbleblog.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-En el 2002 me dió por empezar a compartir documentación técnica y este es el primer apunte que hice, explica cómo trabajar con un software llamado Nibbleblog. Poco después evolucioné a wordpress y hoy en día (2021) he cambiado a "Jekyll + GitHub Pages", dejo este primer `apunte` como referencia. 
+En el 2002 me dió por empezar a compartir documentación técnica y este es el primer apunte que hice, explica cómo trabajar con un software llamado Nibbleblog. Poco después evolucioné a wordpress y hoy en día (2021) he cambiado a "Jekyll + GitHub Pages", dejo este primer `apunte` como referencia.
 
 <br clear="left"/>
 <!--more-->
@@ -19,7 +19,7 @@ Mi primer `apunte` sobre la instalación y configuración de [NibbleBlog](http:/
 
 **Imprime las palabras: `hello, world`**
 
-Es el principal escollo y para sobrepasarlo había que empezar con esto: 
+Es el principal escollo y para sobrepasarlo había que empezar con esto:
 
 ```c
 main()
@@ -48,17 +48,17 @@ Creo un nuevo vhost que apunta al nuevo directorio:
 
 <br/>
 
-# Configuración
+## Configuración
 
 Conecta con tu blog, en la página de admin (algo parecido a [http://tu.servidor.com/admin](http://tu.servidor.com/admin)) Las preguntas son muy simples, si algo te salió mal, simplemente borra el contenido bajo el subdirectorio "content" y vuelve a intentarlo. Acceso al blog:
 
-* Como "lector" http://tublog.tudominio.com 
+* Como "lector" http://tublog.tudominio.com
 * Como "admin" http://tublog.tudominio.com/admin
 * El resto es tan intuitivo que no merece la pena explicarlo
 
 <br/>
 
-# Búsqueda en NibbleBlog
+## Búsqueda en NibbleBlog
 
 Vaya sorpresa que me he llevado. Al instalar NibbleBlog y estar un rato jugando con él me he dado cuenta que no trae un "buscador".
 
