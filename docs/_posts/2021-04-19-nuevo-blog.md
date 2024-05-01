@@ -6,7 +6,7 @@ tags: blog linux github jekyll
 excerpt_separator: <!--more-->
 ---
 
-![Logo Jekyll](/assets/img/posts/logo-jekyll.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
+![Logo Jekyll](/assets/img/posts/logo-jekyll.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
 En este apunte describo cómo he montado este blog estático "fabricado" con [jekyll](http://jekyllrb.com) y hospedado en las [GitHub Pages](https://pages.github.com). Los fuentes se encuentran a su vez en el repositorio [LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io). El sitio ha quedado finalmente configurado en mi dominio: [https://www.luispa.com](https://www.luispa.com)
 
@@ -17,17 +17,17 @@ Seguro que conoces GitHub, una plataforma de colaboración y compartición de c�
 
 Bueno, pues tiene una característica muy útil llamada **GitHub Pages**, que te permite publicar tus propias páginas web para que las hospede el propio **GitHub**. Se integra perfectamente con el generador de sitios estáticos llamado **Jekyll**, que tiene capacidades de blog y es super adecuado para montarte blogs o sitios web personales. Por cierto, está escrito en Ruby y su creador es Tom Preston-Werner, el cofundador de GitHub.
 
-{% include showImagen.html 
-      src="/assets/img/posts/nuevo-blog.jpg" 
-      caption="Arquitectura GitHub Pages" 
+{% include showImagen.html
+      src="/assets/img/posts/nuevo-blog.jpg"
+      caption="Arquitectura GitHub Pages"
       width="730px"
       %}
 
 El proceso que he seguido, muy, muy resumido:
 
-* Preparar el Mac (instalarme: **Brew, Ruby, Jekyll, Bundler, GIT**),
+* Preparar mi puesto de trabajo (instalarme: **Brew, Ruby, Jekyll, Bundler, GIT**),
 * Crear un directorio dedicado nuevo y un repositorio local para el futuro LuisPalacios.github.io
-* Escribir "apuntes" en formato **markdown** (nuevos o migrados desde mi blog antiguo) 
+* Escribir "apuntes" en formato **markdown** (nuevos o migrados desde mi blog antiguo)
 * Conectar con la versión local del sitio en mi ordenador e ir probando...
 * Hacer un `git push` al repositorio remoto para crear [LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io)
 * Ver cómo GitHub genera las páginas automáticamente.
@@ -35,12 +35,13 @@ El proceso que he seguido, muy, muy resumido:
 
 | Ah!, podrás encontrar trucos y documentación adicional sobre cómo he montado mi blog en los `issues` de GitHub, sobre todo en los haya [cerrado](https://github.com/LuisPalacios/LuisPalacios.github.io/issues?q=is%3Aissue+is%3Aclosed) y resuelto. |
 
-
 <br/>
 
-## Preparar el Mac
+## Preparar mi ordenador
 
-A continuación vemos paso a paso lo que he ido haciendo, pero para tener una visión global del proceso comentar que... uso la versión de Ruby que viene con [Homebrew](https://brew.sh/index_es) en vez de la que viene con el Mac para evitar problemas con SIP (Systems Integrity Protection - [fuente](https://jekyllrb.com/docs/troubleshooting/#jekyll--macos)). También he seguido un par de enlaces interesantes: [Jekyll Installation](https://jekyllrb.com/docs/installation/) o sobre [Git en GitHub](https://docs.github.com/en/articles/set-up-git) y también [Bundler](https://bundler.io). 
+A continuación vemos paso a paso lo que he ido haciendo en mi puesto de trabajo, un Mac. Puedes usar windows, mac o linux. De hecho más adelante explico comandos para linux.
+
+Si es un Mac, yo uso la versión de Ruby que viene con [Homebrew](https://brew.sh/index_es) en vez de la que viene con el Mac para evitar problemas con SIP (Systems Integrity Protection - [fuente](https://jekyllrb.com/docs/troubleshooting/#jekyll--macos)). También he seguido un par de enlaces interesantes: [Jekyll Installation](https://jekyllrb.com/docs/installation/) o sobre [Git en GitHub](https://docs.github.com/en/articles/set-up-git) y también [Bundler](https://bundler.io).
 
 <br/>
 
@@ -83,7 +84,7 @@ Me aseguro que *brew* está correctamente instalado y actulalizado
 ➜  ~ > brew --version
 Homebrew 3.1.2
 ➜  ~ > nano $HOME/.zshrc
-	PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
+    PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
     launchctl setenv PATH "/usr/local/bin:/usr/local/sbin:$PATH"
 ```
 
@@ -93,12 +94,13 @@ Homebrew 3.1.2
 
 No es necesario instalar Python para lo que estamos discutiendo aquí, pero es un buen momento para hacerlo si lo vas a necesitar en el futuro. Aquí tienes un [apunte sobre Python en MacOS]({% post_url 2021-04-30-python-jupyter %})
 
-
 <br/>
 
 ### Ruby
 
-Ruby es un lenguaje de programación interpretado, reflexivo y orientado a objetos, creado por el programador japonés Yukihiro "Matz" Matsumoto, quien comenzó a trabajar en Ruby en 1993, y lo presentó públicamente en 1995. Necesitamos Ruby para ejecutar Jekyll, así que voy a instalarlo utilizando Homebrew:
+Ruby es un lenguaje de programación interpretado, reflexivo y orientado a objetos, creado por el programador japonés Yukihiro "Matz" Matsumoto, quien comenzó a trabajar en Ruby en 1993, y lo presentó públicamente en 1995. Necesitamos Ruby para ejecutar Jekyll.
+
+* Instalación en MacOS con Homebrew:
 
 ```zsh
 ➜  ~ > brew install ruby
@@ -107,36 +109,41 @@ Ruby es un lenguaje de programación interpretado, reflexivo y orientado a objet
    launchctl setenv PATH "/usr/local/bin:/usr/local/sbin:/usr/local/opt/ruby/bin:$PATH"
 ```
 
-Para poder instalar gem’s en mi directorio HOME (y evitar tener que hacer instalaciones a nivel de todo el sistema)
+* Instalación en Ubuntu
 
 ```zsh
-➜  ~ > nano $HOME/.zshrc
-export GEM_HOME=$HOME/gems
-export PATH=$HOME/gems/bin:$PATH
+% apt-get install ruby-full
+```
+
+* Preparar la insalación de Gem's en HOME (y evitar tener que hacer instalaciones a nivel de todo el sistema), válido para MacOS y para Ubuntu
+
+```zsh
+➜  ~ > nano ~/.zshrc
+export GEM_HOME=~/gems
+export PATH=~/gems/bin:$PATH
 ```
 
 <br/>
 
 ### Bundler
 
-Es un gestor de paquetes de software que va a facilitar el trabajo con Jekyll y sus dependencias. 
+Es un gestor de paquetes de software que va a facilitar el trabajo con Jekyll y sus dependencias.
 
 ```zsh
 ➜  ~ > gem install jekyll bundler
 ```
 
-Meses después, tras actualizar Homebrew, Ruby y el propio Macos, me encontré con problemas con el comando gem. Lo resolví ejecutando lo siguiente: 
+Meses después, tras actualizar Homebrew, Ruby y el propio Macos, me encontré con problemas con el comando gem. Lo resolví ejecutando lo siguiente:
 
 ```zsh
 ➜  ~ > gem cleanup && gem pristine --all
 ```
 
-
 <br/>
 
 ### Jekyll
 
-Jekyll es un generador simple para sitios web estáticos con capacidades de blog; está escrito en Ruby por Tom Preston-Werner (cofundador de GitHub) y es rapidísimo. 
+Jekyll es un generador simple para sitios web estáticos con capacidades de blog; está escrito en Ruby por Tom Preston-Werner (cofundador de GitHub) y es rapidísimo.
 
 Para instalarlo en mi Mac he seguido esta [fuente](https://jekyllrb.com/docs/troubleshooting/#jekyll--macos)
 
@@ -144,7 +151,7 @@ Para instalarlo en mi Mac he seguido esta [fuente](https://jekyllrb.com/docs/tro
 
 ### Prueba de concepto
 
-Una vez que tengo todo lo anterior instalado, intento probar que todo va bien... 
+Una vez que tengo todo lo anterior instalado, intento probar que todo va bien...
 
 ```zsh
 ➜  ~ > jekyll new test
@@ -158,7 +165,7 @@ Desde un browser conecto (y funciona) con mi propio ordenador en: [http://127.0.
 
 <br/>
 
-## luispalacios.github.io 
+## luispalacios.github.io
 
 Sigo las instrucciones de [pages.github.com](https://pages.github.com) y su [documentación oficial](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/creating-a-github-pages-site-with-jekyll) para crear mi [Mi repositorio LuisPalacios.github.io](https://github.com/LuisPalacios/LuisPalacios.github.io)
 
@@ -178,8 +185,8 @@ Creo la nueva rama, sin history ni contenido, con el nombre `gh-pages` y cambio 
 ```zsh
 ➜  docs git:(master) > git checkout --orphan gh-pages
 Switched to a new branch 'gh-pages'
-➜  LuisPalacios.github.io git:(master) > mkdir docs 
-➜  LuisPalacios.github.io git:(master) > cd docs 
+➜  LuisPalacios.github.io git:(master) > mkdir docs
+➜  LuisPalacios.github.io git:(master) > cd docs
 ```
 
 Creo un nuevo “sitio” con jekyll
@@ -205,7 +212,7 @@ Por último hago un bundle update
 
 ### Acceso en local
 
-Una de las ventajas es que puedo activar un "web server" en local en el mismo ordenador donde estoy editanto los ficheros Markdown. Para conseguirlo, cambio al directorio de los posts (./docs) y ejecuto lo siguiente: 
+Una de las ventajas es que puedo activar un "web server" en local en el mismo ordenador donde estoy editanto los ficheros Markdown. Para conseguirlo, cambio al directorio de los posts (./docs) y ejecuto lo siguiente:
 
 ```zsh
 docs git:(gh-pages) ✗ > bundle add webrick             <== Esto solo una vez
@@ -230,21 +237,18 @@ Añado doc y sincronizo (push)
 
 En GitHub configuro el “[publishing source for your GitHub Pages site](https://docs.github.com/en/articles/configuring-a-publishing-source-for-your-github-pages-site#choosing-a-publishing-source)"
 
-- En GitHub, navego hasta el repositorio del sitio
-- Bajo el nombre del repositorio, clic en Configuración
-- En la barra lateral izquierda, clic en Páginas.
-- En Source selecciono la Branch gh-pages y el directorio /docs y lo salvo
-
-
+* En GitHub, navego hasta el repositorio del sitio
+* Bajo el nombre del repositorio, clic en Configuración
+* En la barra lateral izquierda, clic en Páginas.
+* En Source selecciono la Branch gh-pages y el directorio /docs y lo salvo
 
 |Al cabo de unos minutos estará aquí disponible|
 |:---:|
 | [https://luispalacios.github.io](https://luispalacios.github.io) |
 
+El siguiente paso es opcional. En mi caso tengo un dominio propio así que seguí la [guía para redirigir mi dominio](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site) a las páginas de GitHub (básicamente poner un CNAME en tu proveedor) y además activé SSL, por lo tanto mi sitio Blog ahora ya se encuentra aquí:
 
-El siguiente paso es opcional. En mi caso tengo un dominio propio así que seguí la [guía para redirigir mi dominio](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site) a las páginas de GitHub (básicamente poner un CNAME en tu proveedor) y además activé SSL, por lo tanto mi sitio Blog ahora ya se encuentra aquí: 
-
-| Documentación sobre [cómo redirigir tu dominio](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site)| 
+| Documentación sobre [cómo redirigir tu dominio](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site)|
 |:---:|
 | [https://www.luispa.com](https://www.luispa.com) |
 
@@ -258,14 +262,14 @@ En muchos sitios web, especialmente en los blogs, es muy común dividir el lista
 
 * Activo la paginación en el fichero `_config.yml`
 
-```
+```yml
 paginate: 3
 paginate_path: '/page-:num/'
 ```
 
 * Elimino el fichero `index` original `./docs/index.markdown`
 
-```
+```yml
 ➜  docs git:(gh-pages) ✗ > mv index.markdown ..
 ```
 
@@ -331,9 +335,9 @@ layout: default
 
 ### Búsqueda
 
-Una de las características más útiles de un blog es la posibilidad de buscar dentro de sus artículos pero por desgracia Jekyll no trae ni implementa dicha función. He encontrado una alternativa en este proyecto [Simple-Jekyll-Search](https://github.com/christian-fei/Simple-Jekyll-Search). 
+Una de las características más útiles de un blog es la posibilidad de buscar dentro de sus artículos pero por desgracia Jekyll no trae ni implementa dicha función. He encontrado una alternativa en este proyecto [Simple-Jekyll-Search](https://github.com/christian-fei/Simple-Jekyll-Search).
 
-* Me bajo los scripts a mi ordenador: 
+* Me bajo los scripts a mi ordenador:
 
 ```zsh
 ➜  ~ > npm install simple-jekyll-search
@@ -343,7 +347,7 @@ found 0 vulnerabilities
 
 * Copio los scripts a `docs/assets/js`
 
-```
+```zsh
 ➜  > cd $HOME/prog.git/github-luispa/LuisPalacios.github.io
 ➜  > cp $HOME/node_modules/simple-jekyll-search/dest/simple-jekyll-search.* docs/assets/js
 
@@ -358,7 +362,7 @@ drwxr-xr-x@ 7 luis  staff   224  2 may 12:38 ..
 
 * Creo el fichero `search.json` en el directorio raíz de mi blog (recuerdo que es `docs`)
 
-```
+```json
 ➜  ~ > cd prog.git/github-luispa/LuisPalacios.github.io/docs
 ➜  ✗ > cat > search.json
 {% raw %}
@@ -381,8 +385,7 @@ layout: none
 
 Modifico mi fichero [./docs/_includes/footer.html](https://github.com/LuisPalacios/LuisPalacios.github.io/blob/gh-pages/docs/_includes/footer.html):
 
-
-```
+```html
 {% raw %}
 <!-- Elemento HTML para realizar la búsqueda -->
 <div id="search-container">
@@ -410,10 +413,9 @@ Modifico mi fichero [./docs/_includes/footer.html](https://github.com/LuisPalaci
 
 ### Issues
 
-En vez de seguir ampliando este apunte lo que he hecho es crear `issues`en github con cada una de las modificaciones y mejoras que quería añadirle. 
+En vez de seguir ampliando este apunte lo que he hecho es crear `issues`en github con cada una de las modificaciones y mejoras que quería añadirle.
 
 Puedes encontrarlas entre mis [issues cerrados sobre este blog](https://github.com/LuisPalacios/LuisPalacios.github.io/issues?q=is%3Aissue+is%3Aclosed)
-
 
 <br/>
 
@@ -437,7 +439,7 @@ Actualizar bundle
 
 ### Enlaces interesantes
 
-Para mejorar mi sitio de apuntes, algunos enlaces interesantes: 
+Para mejorar mi sitio de apuntes, algunos enlaces interesantes:
 
-- [Setup a blog using Jekyll](https://blog.codecut.de/2019/06/11/how-to-setup-a-blog-using-jekyll)
-- [Setup tags](http://longqian.me/2017/02/09/github-jekyll-tag/)
+* [Setup a blog using Jekyll](https://blog.codecut.de/2019/06/11/how-to-setup-a-blog-using-jekyll)
+* [Setup tags](http://longqian.me/2017/02/09/github-jekyll-tag/)
