@@ -52,8 +52,8 @@ Creo un nuevo vhost que apunta al nuevo directorio:
 
 Conecta con tu blog, en la página de admin (algo parecido a [http://tu.servidor.com/admin](http://tu.servidor.com/admin)) Las preguntas son muy simples, si algo te salió mal, simplemente borra el contenido bajo el subdirectorio "content" y vuelve a intentarlo. Acceso al blog:
 
-* Como "lector" http://tublog.tudominio.com
-* Como "admin" http://tublog.tudominio.com/admin
+* Como "lector" [http://tublog.tudominio.com](http://tublog.tudominio.com)
+* Como "admin" [http://tublog.tudominio.com/admin](http://tublog.tudominio.com/admin)
 * El resto es tan intuitivo que no merece la pena explicarlo
 
 <br/>
