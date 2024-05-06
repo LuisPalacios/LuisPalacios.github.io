@@ -7,7 +7,7 @@ excerpt_separator: <!--more-->
 ---
 
 
-![logo rsync](/assets/img/posts/logo-rsync.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
+![logo rsync](/assets/img/posts/logo-rsync.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
 El programa rsync viene incluido con Mac OSX pero si necesitas una versión más moderna y que soporte más funcionalidades, como por ejemplo preservar metadatos, soporte de caracteres extendidos o caracteres multiplataforma entonces vas a tener que instalarte una de las últimas versiones.
 
@@ -67,28 +67,28 @@ Así que allá vamos. Crear el fichero `org.samba.rsync.plist`
         <array>
                 <string>/usr/bin/rsync</string>
                 <string>--daemon</string>
-		<string>--config=/etc/rsyncd.conf</string>      
+                <string>--config=/etc/rsyncd.conf</string>
         </array>
         <key>inetdCompatibility</key>
         <dict>
                 <key>Wait</key>
                 <false/>
         </dict>
-		<key>Sockets</key>
-		<dict>
-			<key>Listeners</key>
-			<dict>
-				<key>SockServiceName</key>
-				<string>rsync</string>
-				<key>SockType</key>
-				<string>stream</string>
-			</dict>
-		</dict>
+                <key>Sockets</key>
+                <dict>
+                        <key>Listeners</key>
+                        <dict>
+                                <key>SockServiceName</key>
+                                <string>rsync</string>
+                                <key>SockType</key>
+                                <string>stream</string>
+                        </dict>
+                </dict>
 </dict>
 </plist>
 {% endraw %}
-```          
-         
+```
+
 Desde Terminal.app y como root copio el fichero a /Library/LaunchDaemons
 
 ```console
@@ -102,7 +102,7 @@ pid file = /var/run/rsyncd.pid
 use chroot = yes
 read only = yes
 charset = utf-8
- 
+
 \[Datos\]
  path=/Volumes/Datos
  comment = Repositorio de Luis
@@ -121,7 +121,7 @@ luis:CONTRASEÑA
 ```
 
 ```console
-# chmod 400 rsyncd.secrets 
+# chmod 400 rsyncd.secrets
 ```
 
 Cargo el plist en el registro de launchd. El proceso "rsync --daemon" no arranca, lo que estamos haciendo es que se registre el servicio y cuando llegue una petición al puerto 783 el proceso launchd se encargará de arrancar "rsync --daemon".
@@ -132,9 +132,9 @@ Cargo el plist en el registro de launchd. El proceso "rsync --daemon" no arranca
 
 ```console
 :
-# launchctl load -w /Library/LaunchDaemons/org.samba.rsync.plist 
+# launchctl load -w /Library/LaunchDaemons/org.samba.rsync.plist
 # netstat -na|grep 873
-tcp6 0 0 \*.873 \*.\* LISTEN 
+tcp6 0 0 \*.873 \*.\* LISTEN
 tcp4 0 0 \*.873 \*.\* LISTEN
 ```
 
@@ -142,7 +142,7 @@ Desde un cliente podemos comprobar que está funcionando
 
 ```console
 $ rsync --stats luis@miservidor.midominio.com::Datos
-Password: 
+Password:
 :
 sent 58 bytes received 618 bytes 193.14 bytes/sec
 total size is 24580 speedup is 36.36

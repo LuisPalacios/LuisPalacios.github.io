@@ -6,7 +6,7 @@ tags: linux gentoo ntopng tiempo hora time
 excerpt_separator: <!--more-->
 ---
 
-![Logo ntopng](/assets/img/posts/logo-ntopng.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
+![Logo ntopng](/assets/img/posts/logo-ntopng.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
 Hace no demasiado se liberó "ntopng" 1.1 y ya es hora de echarle un ojo. Todavía no está en Portage, así que gracias al overlay (via layman) de Eigenlay he encontrado lo necesario para realizar la instalación.
 
@@ -20,14 +20,14 @@ Ya tenía instalado layman, así que estos son los pasos realizados:
 ```
 
 Configuro Portage para que acepte esta versión "beta"
- 
+
 ```zsh
 # echo "=net-analyzer/ntopng-9999 **" >> /etc/portage/package.accept_keywords
 # echo "=net-analyzer/ntopng-9999" >> /etc/portage/package.unmask
 ```
 
 Ejecuto el proceso de instalación, notar que elimino todas las opciones en las variables `MAKEOPTS` y `EMERGE_DEFAULT_OPTS`, es importante hacerlo para evitar que trabaje en modo silencioso.
- 
+
 ```zsh
 #  MAKEOPTS="" EMERGE_DEFAULT_OPTS="" emerge -v ntopng
 These are the packages that would be merged, in order:
@@ -211,10 +211,10 @@ drwxr-xr-x 9 root root 4096 nov 22 09:16 ..
 -rw-r--r-- 1 root root 16731716 nov 6 02:54 GeoLiteCityv6.dat
 ```
 
-* Conexión con ntopng: http://192.168.1.1:3000/login.html
+* Conexión con ntopng: [http://192.168.1.1:3000/login.html](http://192.168.1.1:3000/login.html)
 
-{% include showImagen.html 
-      src="/assets/img/original/ntop.jpg" 
-      caption="'ntopng' preaprado en http://192.168.1.1:3000/login.html" 
+{% include showImagen.html
+      src="/assets/img/original/ntop.jpg"
+      caption="'ntopng' listo  en localhost:3000"
       width="730px"
       %}

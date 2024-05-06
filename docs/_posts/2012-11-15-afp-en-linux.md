@@ -6,7 +6,7 @@ tags: afp linux discos
 excerpt_separator: <!--more-->
 ---
 
-![Apple AFP](/assets/img/posts/logo-afp.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
+![Apple AFP](/assets/img/posts/logo-afp.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
 Para poder compartir los discos de mi servidor Gentoo Linux con equipos Mac OS X en la red casera, el protocolo que voy a utilicé durante el 2012 fue el Apple Filling Protocol (AFP). Más adelante Apple empezó a recomendar SMB.
 
@@ -69,8 +69,8 @@ Ahora ya puedo arrancar el servicio
 
 Y desde un mac cliente conectar con el disco. Al hacerlo debo introducir el nombre de usuario y contraseña del equipo linux.
 
-{% include showImagen.html 
-      src="/assets/img/posts/afp.jpg" 
-      caption="Acceso desde Finder" 
+{% include showImagen.html
+      src="/assets/img/posts/afp.jpg"
+      caption="Acceso desde Finder"
       width="369px"
       %}
