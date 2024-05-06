@@ -25,4 +25,5 @@ workspace.code-workspace
 *.bkp
 
 # Gemfile.lock
-Gemfile.lock*
+docs/Gemfile.lock
+
