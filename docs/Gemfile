@@ -20,7 +20,8 @@ source "https://rubygems.org"
 #
 # Estudiar lo siguiente si quieres hacer un cambio de tema. No es sencillo...
 # https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-gem "minima", "~> 2.5"
+gem "minima", "~> 2.5.1"
+#gem "minima", "~> 2.5"
 #gem "jekyll-theme-cayman", "~> 0.1.1"
 
 # If you want to use GitHub Pages, remove the "gem "jekyll"" above and
@@ -31,7 +32,7 @@ gem "github-pages", "~> 231", group: :jekyll_plugins
 
 # If you have any plugins, put them here!
 group :jekyll_plugins do
-  gem "jekyll-feed", "~> 0.12"
+  gem "jekyll-feed", "~> 0.17.0"
 end
 #group :jekyll_plugins do
 #  gem "un-plugin"
@@ -49,3 +50,6 @@ end
 gem "wdm", "~> 0.1.1", :platforms => [:mingw, :x64_mingw, :mswin]
 
 gem "webrick", "~> 1.7"
+
+# Necesito el racc para que no de error
+gem "racc", "~> 1.7.3"
