@@ -6,9 +6,9 @@ tags: linux anuncios cortafuegos pihole whitelist adlist
 excerpt_separator: <!--more-->
 ---
 
-![logo pihole](/assets/img/posts/logo-pihole.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
+![logo pihole](/assets/img/posts/logo-pihole.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-Pi-hole es un servidor DNS (y DHCP) que protege tus equipos de contenido no deseado, sin necesidad de instalar ningún software en los clientes de tu red. **Su caso de uso es que haga de sumidero para la publicidad que inunda hoy en día las redes** 😅. Como lo oyes, un pequeño PC con Linux y Pi-hole en tu red de casa para evitar que te llegue mogollón de publicidad mientras navegas. 
+Pi-hole es un servidor DNS (y DHCP) que protege tus equipos de contenido no deseado, sin necesidad de instalar ningún software en los clientes de tu red. **Su caso de uso es que haga de sumidero para la publicidad que inunda hoy en día las redes** 😅. Como lo oyes, un pequeño PC con Linux y Pi-hole en tu red de casa para evitar que te llegue mogollón de publicidad mientras navegas.
 
 <br clear="left"/>
 <!--more-->
@@ -26,14 +26,14 @@ Antes de empezar, ventajas de Pi-hole, sacadas de su [propia](https://docs.pi-ho
 * Robusto: una interfaz de línea de comandos de calidad garantizada para la interoperabilidad
 * Inteligente: un panel de interfaz web con capacidad de respuesta para ver y controlar tu Pi-hole
 * Versátil: puede funcionar opcionalmente como servidor DHCP, asegurando que todos los dispositivos estén protegidos automáticamente
-* Escalable: capaz de gestionar cientos de millones de consultas si lo instalas en un servidor potente. 
+* Escalable: capaz de gestionar cientos de millones de consultas si lo instalas en un servidor potente.
 * Moderno: bloquea los anuncios tanto en IPv4 como en IPv6
-* Gratuito: software de código abierto, [funciona con DONACIONES, algo que te recomiendo hacer](https://docs.pi-hole.net). 
+* Gratuito: software de código abierto, [funciona con DONACIONES, algo que te recomiendo hacer](https://docs.pi-hole.net).
 
 
-{% include showImagen.html 
-      src="/assets/img/posts/pihole1.png" 
-      caption="Arquitectura Pi-hole" 
+{% include showImagen.html
+      src="/assets/img/posts/pihole1.png"
+      caption="Arquitectura Pi-hole"
       width="500px"
       %}
 
@@ -41,11 +41,11 @@ Antes de empezar, ventajas de Pi-hole, sacadas de su [propia](https://docs.pi-ho
 
 ¿Cómo funciona? pues de forma similar a un cortafuegos, los anuncios y los "rastreadores" se bloquean para todos los dispositivos que se encuentran en tu red casera. Cuando hagan una consulta al DNS de Pi-hole bloqueará los nombres que tenga en su lista negra.
 
-<br/> 
+<br/>
 
 ### Instalación
 
-Comprobé los [requisitos](https://docs.pi-hole.net/main/prerequisites/#supported-operating-systems) de Pi-hole y preparé el Hardware (Raspberry Pi), descargué el Sistema Operativo (Raspbian OS, documentado [aquí](https://www.raspberrypi.org/software/)), versión ([Raspberry Pi OS Lite](https://www.raspberrypi.org/software/operating-systems/), del 7 de Mayo de 2021) y lo copié a una memoria de 8GB usando [belenaEtcher](https://www.balena.io/etcher/).  
+Comprobé los [requisitos](https://docs.pi-hole.net/main/prerequisites/#supported-operating-systems) de Pi-hole y preparé el Hardware (Raspberry Pi), descargué el Sistema Operativo (Raspbian OS, documentado [aquí](https://www.raspberrypi.org/software/)), versión ([Raspberry Pi OS Lite](https://www.raspberrypi.org/software/operating-systems/), del 7 de Mayo de 2021) y lo copié a una memoria de 8GB usando [belenaEtcher](https://www.balena.io/etcher/).
 
 {% include showImagen.html
     src="/assets/img/posts/balenaEtcher2.png"
@@ -76,7 +76,7 @@ $ sudo raspi-config
 Vía SSH sigo con la [instalación](https://docs.pi-hole.net/main/basic-install/) de Pi-hole. Conecto con la dirección IP que ha recibido desde el DHCP Server que tengo en mi red (Router del proveedor) y que sustituiré más adelante, una vez asigne una IP fija.
 
 
-* Conecto con la Raspberry Pi y ejecuto el script de instalación. 
+* Conecto con la Raspberry Pi y ejecuto el script de instalación.
 
 ```console
 luis @ idefix ➜  ~  ssh pi@192.168.1.150
@@ -148,7 +148,7 @@ Una vez que termina me apunto datos importantes
 
 <br/>
 
-### Configuración 
+### Configuración
 
 Actualizo el sistema y termino de configurar manualmente algunos aspectos
 
@@ -157,7 +157,7 @@ Actualizo el sistema y termino de configurar manualmente algunos aspectos
  $ sudo apt upgrade -y
 ```
 
-* Configuro dirección IP estática, decido poner la `.224` (`192.168.1.224`) 
+* Configuro dirección IP estática, decido poner la `.224` (`192.168.1.224`)
 
 ```console
 pi@pihole:~ $ sudo cat /etc/dhcpcd.conf
@@ -228,17 +228,17 @@ pi@pihole:~ $ sudo pihole -a -p
 
 * Continúo con la administración vía Web
 
-{% include showImagen.html 
-      src="/assets/img/posts/pihole2.png" 
-      caption="Login en Pi-hole" 
+{% include showImagen.html
+      src="/assets/img/posts/pihole2.png"
+      caption="Login en Pi-hole"
       width="500px"
       %}
 
 <br/>
 
-{% include showImagen.html 
-      src="/assets/img/posts/pihole3.png" 
-      caption="Dashboard de Pi-hole" 
+{% include showImagen.html
+      src="/assets/img/posts/pihole3.png"
+      caption="Dashboard de Pi-hole"
       width="500px"
       %}
 
@@ -250,7 +250,7 @@ pi@pihole:~ $ sudo pihole -a -p
 * IMPORTANTE: Desactivo el DHCP Server que tenía antes en la misma red LAN. Estaba configurado en el router de Movistar, accedí a su configuración y lo desactivé.
 
 * Activo el DHCP Server de Pi-Hole
-  
+
 ```config
    Settings -> DHCP -> Habilito DHCP Server
 		From: 192.168.1.50
@@ -260,13 +260,13 @@ pi@pihole:~ $ sudo pihole -a -p
 		Lease time in hours: 1
 ```
 
-<br/> 
+<br/>
 
 ### Administración de Pi-hole
 
-A partir de este momento: 
+A partir de este momento:
 
-* Vía SSH `ssh pi@pihole.home.arpa` o bien `pi@192.168.1.224`. La contraseña es la que puse con raspi-config al principio. 
+* Vía SSH `ssh pi@pihole.home.arpa` o bien `pi@192.168.1.224`. La contraseña es la que puse con raspi-config al principio.
 
 * Admin: [http://pihole.home.arpa/admin](http://pihole.home.arpa/admin)  (o bien Admin: http://192.168.1.224/admin)
 
@@ -274,11 +274,11 @@ A partir de este momento:
 
 * DHCP server de mi red a partir de ahora: `192.168.1.224`
 
-<br/> 
+<br/>
 
 ### Parametrización
 
-El sistema ya debería estar operativo, sin embargo en mi caso he ido un poco más allá y realizado algunos cambios manualmente en los ficheros de configuración. 
+El sistema ya debería estar operativo, sin embargo en mi caso he ido un poco más allá y realizado algunos cambios manualmente en los ficheros de configuración.
 
 ```console
 $ sudo cat /etc/dnsmasq.d/01-pihole.conf
@@ -322,7 +322,7 @@ dhcp-host=38:F9:34:B7:36:96,vlan100,192.168.1.51,nodo2.home.arpa
 ```
 
 * Un ejemplo de cómo asignar Nombres DNS estáticos a direcciones IP.
-  
+
 ```console
 $ sudo cat /etc/pihole/custom.list
 192.168.1.1 router.home.arpa
@@ -340,11 +340,11 @@ $ sudo cat /etc/pihole/custom.list
 $ sudo pihole restartdns
 ```
 
-<br/> 
+<br/>
 
 ### Adlists y Whitelists
 
-Esta es mi configuración de ambos: 
+Esta es mi configuración de ambos:
 
 * Adlists: Group Management -> Adlists
 
@@ -352,7 +352,7 @@ Tengo tres listas configuradas, empecé por la de StevenBlack y en updates poste
 
 ```Config
 https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
-https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt		
+https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt
 https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
 ```
 
@@ -360,12 +360,12 @@ https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
 $ sudo pihole -g
 ```
 
-* Whitelists. Las he sacado de diferentes fuentes y estas son las que yo uso (y cómo las configuro desde cero)... 
+* Whitelists. Las he sacado de diferentes fuentes y estas son las que yo uso (y cómo las configuro desde cero)...
 
 ```console
 
 #
-# REGEX: 
+# REGEX:
 
 # Google Ads
 pihole --white-regex "(\.|^)dartsearch\.net$"
@@ -385,11 +385,11 @@ pihole --white-regex "(\.|^)reports\.crashlytics\.com$"
 pihole --white-regex "(\.|^)symcb\.com$"
 
 #
-# Exactas: 
+# Exactas:
 
 
 # NVIDIA GeForce
-pihole -w gfwsl.geforce.com 
+pihole -w gfwsl.geforce.com
 
 # GooglePay android updates
 pihole -w android.clients.google.com
@@ -397,18 +397,18 @@ pihole -w android.clients.google.com
 # Captive-portal tests
 # These domains are checked by the operating systems when connecting via wifi, and if they don't get the response they expect, they may try to open a wifi login page or similar as they believe they are located behind a captive portal.
 # Android/Chrome
-pihole -w connectivitycheck.android.com android.clients.google.com clients3.google.com connectivitycheck.gstatic.com 
+pihole -w connectivitycheck.android.com android.clients.google.com clients3.google.com connectivitycheck.gstatic.com
 
 # Windows/Microsoft
 pihole -w msftncsi.com www.msftncsi.com ipv6.msftncsi.com
 
 
 # Google Maps and other Google services
-pihole -w clients4.google.com 
+pihole -w clients4.google.com
 pihole -w clients2.google.com
 
 # YouTube history
-pihole -w s.youtube.com 
+pihole -w s.youtube.com
 pihole -w video-stats.l.google.com
 
 # Google Play
@@ -428,7 +428,7 @@ pihole -w dl.google.com
 pihole -w www.msftncsi.com
 
 # Microsoft Web Pages (Outlook, Office365, Live, Microsoft.com 685...)
-pihole -w outlook.office365.com products.office.com c.s-microsoft.com i.s-microsoft.com login.live.com login.microsoftonline.com 
+pihole -w outlook.office365.com products.office.com c.s-microsoft.com i.s-microsoft.com login.live.com login.microsoftonline.com
 
 # Backup bitlocker recovery key to Microsoft account
 pihole -w g.live.com
@@ -441,7 +441,7 @@ pihole -w sls.update.microsoft.com.akadns.net fe3.delivery.dsp.mp.microsoft.com.
 
 # Xbox Live
 # This domain is used for sign-ins, creating new accounts, and recovering existing Microsoft accounts on your (confirmed by Microsoft)
-pihole -w clientconfig.passport.net 
+pihole -w clientconfig.passport.net
 
 # These domains are used for Xbox Live Achievements (confirmed by Microsoft)
 pihole -w v10.events.data.microsoft.com
@@ -455,7 +455,7 @@ pihole -w xbox.ipv6.microsoft.com device.auth.xboxlive.com www.msftncsi.com titl
 
 # Skype
 # See the GitHub Topic 596 on these domains.
-pihole -w s.gateway.messenger.live.com client-s.gateway.messenger.live.com ui.skype.com pricelist.skype.com apps.skype.com m.hotmail.com 
+pihole -w s.gateway.messenger.live.com client-s.gateway.messenger.live.com ui.skype.com pricelist.skype.com apps.skype.com m.hotmail.com
 
 # Microsoft Office
 # Reddit link - r/pihole - MS Office issues 440
@@ -468,11 +468,11 @@ pihole -w pixel.wp.com
 pihole -w analytics.google.com
 
 # Apple
-# Aquí tienes la lista completa publicada por Apple: 
+# Aquí tienes la lista completa publicada por Apple:
 # https://support.apple.com/en-us/HT210060
 
 # Apple varios REGEX
-pihole --white-regex *.apps.apple.com *.amazonaws.com *.cdn-apple.com *.digicert.com deimos3.apple.com *.symcb.com *.symcd.com 
+pihole --white-regex *.apps.apple.com *.amazonaws.com *.cdn-apple.com *.digicert.com deimos3.apple.com *.symcb.com *.symcd.com
 
 # Apple varios Exacta
 pihole -w www.appleiphonecell.com gnf-mdn.apple.com gnf-mr.apple.com  gsp1.apple.com swpost.apple.com ocsp.verisign.net
@@ -488,7 +488,7 @@ pihole -w deviceenrollment.apple.com deviceservices-external.apple.com gdmf.appl
 pihole --white-regex *.business.apple.com *.school.apple.com *.itunes.apple.com *.mzstatic.com *.vertexsmb.com
 pihole -w appleid.cdn-apple.com idmsa.apple.com api.ent.apple.com api.edu.apple.com statici.icloud.com www.apple.com upload.appleschoolcontent.com ws-ee-maidsvc.icloud.com
 
-# Apple Business Essentials device management 
+# Apple Business Essentials device management
 pihole -w axm-adm-enroll.apple.com axm-adm-mdm.apple.com axm-adm-scep.apple.com axm-app.apple.com icons.axm-usercontent-apple.com
 pihole --white-regex *.apple-mapkit.com
 
@@ -496,9 +496,9 @@ pihole --white-regex *.apple-mapkit.com
 pihole -w s.mzstatic.com play.itunes.apple.com ws-ee-maidsvc.icloud.com ws.school.apple.com pg-bootstrap.itunes.apple.com cls-iosclient.itunes.apple.com cls-ingest.itunes.apple.com
 
 # Apple macOS, iOS, iPadOS, watchOS, and tvOS
-pihole -w appldnld.apple.com configuration.apple.com gdmf.apple.com gg.apple.com gs.apple.com ig.apple.com mesu.apple.com ns.itunes.apple.com oscdn.apple.com	 osrecovery.apple.com skl.apple.com swcdn.apple.com swdist.apple.com swdownload.apple.com swscan.apple.com updates-http.cdn-apple.com	updates.cdn-apple.com xp.apple.com 
+pihole -w appldnld.apple.com configuration.apple.com gdmf.apple.com gg.apple.com gs.apple.com ig.apple.com mesu.apple.com ns.itunes.apple.com oscdn.apple.com	 osrecovery.apple.com skl.apple.com swcdn.apple.com swdist.apple.com swdownload.apple.com swscan.apple.com updates-http.cdn-apple.com	updates.cdn-apple.com xp.apple.com
 
-# App Store 
+# App Store
 pihole --white-regex *.itunes.apple.com *.apps.apple.com *.mzstatic.com
 pihole -w itunes.apple.com ppq.apple.com
 
@@ -525,7 +525,7 @@ pihole -w doh.dns.apple.com
 pihole -w certs.apple.com crl.apple.com crl.entrust.net crl3.digicert.com crl4.digicert.com ocsp.apple.com ocsp.digicert.cn ocsp.digicert.com ocsp.entrust.net ocsp2.apple.com valid.apple.com
 
 # Apple ID
-pihole -w appleid.apple.com appleid.cdn-apple.com idmsa.apple.com  gsa.apple.com  
+pihole -w appleid.apple.com appleid.cdn-apple.com idmsa.apple.com  gsa.apple.com
 
 # Apple iCloud
 pihole --white-regex *.apple-cloudkit.com *.apple-livephotoskit.com *.cdn-apple.com *.gc.apple.com *.icloud.com *.icloud.apple.com *.icloud-content.com *.iwork.apple.com
@@ -539,7 +539,7 @@ pihole --white-regex *.smoot.apple.com
 pihole -w app-site-association.cdn-apple.com app-site-association.networking.apple
 
 # Apple Tap to Pay on iPhone
-pihole -w pos-device.apple.com humb.apple.com phonesubmissions.apple.com 
+pihole -w pos-device.apple.com humb.apple.com phonesubmissions.apple.com
 
 # Apple Additional content
 pihole -w audiocontentdownload.apple.com devimages-cdn.apple.com download.developer.apple.com playgrounds-assets-cdn.apple.com playgrounds-cdn.apple.com sylvan.apple.com
@@ -551,13 +551,13 @@ pihole -w audiocontentdownload.apple.com devimages-cdn.apple.com download.develo
 
 PiHole bloquea por defecto el acceso a los dominios `mask.icloud.com` y `mask-h2.icloud.com`. El objetivo es **bloquear** el acceso al servicio **iCloud Private Relay** para prevenir que los dispositivos de Apple se salten PiHole a la torera. El equipo de PiHole lo ha implementado siguiendo las recomendaciones de la propia empresa Apple (puedes consultarlo [aquí](https://developer.apple.com/support/prepare-your-network-for-icloud-private-relay))
 
-Si deseas permitir a tus dispositivos Apple usar **iCloud Private Relay** y esquivar por completo a PiHole debes configurar `BLOCK_ICLOUD_PR=false` en el fichero `/etc/pihole/pihole-FTL.conf` y rearrancar pihole-FTL (`sudo service pihole-FTL restart`). 
+Si deseas permitir a tus dispositivos Apple usar **iCloud Private Relay** y esquivar por completo a PiHole debes configurar `BLOCK_ICLOUD_PR=false` en el fichero `/etc/pihole/pihole-FTL.conf` y rearrancar pihole-FTL (`sudo service pihole-FTL restart`).
 
 <br/>
 
 ### Servidor DNS recursivo
 
-Es posible configurar Pi-Hole como un servidor DNS recursivo. Un servidor DNS recursivo recorrerá la ruta completa (empezando por `root`) del nombre que le piden. Es decir, recorrerá camino dentro del dominio que le piden a través de Internet para entregar la respuesta a la petición. No usará ningún DNS Server intermediario, será más lento al principio pero evita posibles suplantaciones. 
+Es posible configurar Pi-Hole como un servidor DNS recursivo. Un servidor DNS recursivo recorrerá la ruta completa (empezando por `root`) del nombre que le piden. Es decir, recorrerá camino dentro del dominio que le piden a través de Internet para entregar la respuesta a la petición. No usará ningún DNS Server intermediario, será más lento al principio pero evita posibles suplantaciones.
 
 Si quieres conseguir que tu servidor Pi-Hole actúe además como un Servidor DNS recursivo entonces necesitas montar un software adicional. Uno recomendado es `unbound`, un servidor DNS recursivo seguro de código abierto desarrollado principalmente por NLnet Labs, VeriSign Inc, Nominet y Kirei.
 
@@ -568,21 +568,21 @@ En el siguiente enlace tienes explicado todo el proceso para configurarlo
 
 <br/>
 
-### Actualizaciones futuras. 
+### Actualizaciones futuras.
 
-En el futuro si quiero actualizar Raspbian OS y/o Pi-hole realizo lo siguiente: 
+En el futuro si quiero actualizar Raspbian OS y/o Pi-hole realizo lo siguiente:
 
 * Actualización de Raspbian OS
 
 ```console
 $ sudo apt-get update
-$ sudo apt-get upgrade -y 
-$ sudo apt-get dist-upgrade -y 
+$ sudo apt-get upgrade -y
+$ sudo apt-get dist-upgrade -y
 $ sudo apt autoremove -y
 ```
 
 * Actualización de Pi-hole
-  
+
 ```console
 $ pihole -up
 ```

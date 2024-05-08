@@ -6,9 +6,9 @@ tags: systemd service usuario
 excerpt_separator: <!--more-->
 ---
 
-![logo systemd](/assets/img/posts/logo-systemd.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
+![logo systemd](/assets/img/posts/logo-systemd.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-El gestor [systemd](https://systemd.io/) permite configurar servicios desde un usuario normal del sistema. Estos ***servicios de usuario de systemd*** son una funcionalidad poco conocida pero muy útil. Consiste en poder crear y usar ficheros `.service` desde un directorio local del usuario y que se ejecuten con sus privilegios. 
+El gestor [systemd](https://systemd.io/) permite configurar servicios desde un usuario normal del sistema. Estos ***servicios de usuario de systemd*** son una funcionalidad poco conocida pero muy útil. Consiste en poder crear y usar ficheros `.service` desde un directorio local del usuario y que se ejecuten con sus privilegios.
 
 <br clear="left"/>
 <!--more-->
@@ -17,17 +17,17 @@ El gestor [systemd](https://systemd.io/) permite configurar servicios desde un u
 
 Tiene una funcionalidad muy interesante llamada "user lingering" que consiste en ejecutar instancias de *systemd* como usuario normal del sistema. Eso nos va a permitir lanzar procesos de usuario durante el arranque del sistema.
 
-<br/> 
+<br/>
 
 ### Configuración
 
 Veamos un ejemplo. Tengo una [maquina virtual para desarrollo de software preparada con Vagrant](https://github.com/LuisPalacios/devbox) que quiero arrancar durante el boot de un equipo Linux llamado `jupiter` *como usuario* normal `luis`.
 
-* Conecto como `luis` 
+* Conecto como `luis`
 
 ```console
 luis @ idefix ➜  ~  ssh -Y -a luis@jupiter.tudominio.com
-luis@jupiter:~$ 
+luis@jupiter:~$
 ```
 
 * Le doy permiso a `luis` (desde `root`) para habilitar esta función de *lingering*
@@ -77,7 +77,7 @@ luis@jupiter:~$ systemctl --user status devbox
 :
 ```
 
-* A partir de ahora, cada vez que se rearranque el gestor `systemd` ejecutará el comando `vagrant up` (como usuario `luis`) durante el boot. 
+* A partir de ahora, cada vez que se rearranque el gestor `systemd` ejecutará el comando `vagrant up` (como usuario `luis`) durante el boot.
 
 <br/>
 

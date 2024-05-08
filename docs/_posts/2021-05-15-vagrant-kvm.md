@@ -6,7 +6,7 @@ tags: linux kvm virtualización python jupyter virtualbox desarrollo
 excerpt_separator: <!--more-->
 ---
 
-![logo vagrant kvm](/assets/img/posts/logo-vagrantkvm.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
+![logo vagrant kvm](/assets/img/posts/logo-vagrantkvm.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
 
 [Vagrant](https://www.vagrantup.com/) crea y ejecuta máquinas virtuales, apoyándose en proveedores de virtualización como Virtualbox, KVM, Docker, VMWare y otros [30 más](https://github.com/hashicorp/vagrant/wiki/Available-Vagrant-Plugins#providers). Siempre tenderá a arrancar la VM con Virtualbox a menos que le digamos explícitamente un proveedor específico. En esta guía explico cómo he montado **Vagrant con el proveedor Libvirt KVM  en Linux**.
@@ -17,25 +17,25 @@ excerpt_separator: <!--more-->
 
 ## Instalación de KVM
 
-Como no tenía KVM instlado seguí estos pasos en mi Desktop Linux (*debian 11 - bullseye*) para instalar KVM. 
+Como no tenía KVM instlado seguí estos pasos en mi Desktop Linux (*debian 11 - bullseye*) para instalar KVM.
 
 ### Soporte de virtualización en el Hardware
 
-Primero compruebo que mi equipo soporta virtualización en el hardware. Busco "vmx" (Intel-VT) o "svm" (AMD-V) en la salida del comando: 
+Primero compruebo que mi equipo soporta virtualización en el hardware. Busco "vmx" (Intel-VT) o "svm" (AMD-V) en la salida del comando:
 
 ```console
 luis@jupiter:~$ egrep --color -i "svm|vmx" /proc/cpuinfo
 ```
 
-{% include showImagen.html 
-      src="/assets/img/posts/vagrantkvm-1.png" 
-      caption="Busco 'vmx' (Intel-VT) o 'svm' (AMD-V)" 
+{% include showImagen.html
+      src="/assets/img/posts/vagrantkvm-1.png"
+      caption="Busco 'vmx' (Intel-VT) o 'svm' (AMD-V)"
       width="500px"
       %}
 
-En algunos modelos de CPU, el soporte de VT puede estar deshabilitado en la BIOS. Compruébalo para habilitarlo... 
+En algunos modelos de CPU, el soporte de VT puede estar deshabilitado en la BIOS. Compruébalo para habilitarlo...
 
-Otro método es usar el comando: 
+Otro método es usar el comando:
 
 ```console
 luis@jupiter:~$ lscpu | grep -i Virtualiz
@@ -61,7 +61,7 @@ luis@jupiter:~$ sudo apt install qemu qemu-kvm libvirt-clients libvirt-daemon-sy
 * virtinst - programas para crear y clonar máquinas virtuales,
 * bridge-utils - utilidades para configurar el Bridge Ethernet en Linux.
 
-El servicio debería haber arrancado (ubuntu arranca los servicios cuando los instala), en cualquier caso se haría así: 
+El servicio debería haber arrancado (ubuntu arranca los servicios cuando los instala), en cualquier caso se haría así:
 
 ```console
 $ sudo systemctl enable libvirtd
@@ -80,21 +80,21 @@ sudo adduser luis libvirt
 $ systemctl status libvirtd
 ```
 
-{% include showImagen.html 
-      src="/assets/img/posts/vagrantkvm-2.png" 
-      caption="Compruebo los servicios" 
+{% include showImagen.html
+      src="/assets/img/posts/vagrantkvm-2.png"
+      caption="Compruebo los servicios"
       width="500px"
       %}
 
-**Instalo Virt-Manager** y lo arranco. Aunque es el software indicado para gestionar VMs, en este apunte lo uso como monitor, me va a venir bien para ver cómo Vagrant las crea, arranca, para y destruye. 
+**Instalo Virt-Manager** y lo arranco. Aunque es el software indicado para gestionar VMs, en este apunte lo uso como monitor, me va a venir bien para ver cómo Vagrant las crea, arranca, para y destruye.
 
 
 ```console
 luis@jupiter:~$ sudo apt install virt-manager
 ```
 
-{% include showImagen.html 
-      src="/assets/img/posts/vagrantkvm-3.png" 
+{% include showImagen.html
+      src="/assets/img/posts/vagrantkvm-3.png"
       caption="Arranco el Gestor de VMs"
       width="500px"
       %}
@@ -106,10 +106,10 @@ luis@jupiter:~$ sudo apt install virt-manager
 <br/>
 
 
-## Instalación de Vagrant. 
+## Instalación de Vagrant.
 
 
-Instalo `vagrant` y el plugin `vagrant-libvirt`. 
+Instalo `vagrant` y el plugin `vagrant-libvirt`.
 
 ```console
 luis@jupiter:~$ sudo apt update
@@ -120,7 +120,7 @@ luis@jupiter:~$ sudo apt-get install vagrant-libvirt
 
 **Creo mi primera VM**
 
-Siempre en un directorio dedicado creo el fichero `Vagrantfile` y levanto mi primera VM, en este ejemplo un simple `Vanilla Debian box`. 
+Siempre en un directorio dedicado creo el fichero `Vagrantfile` y levanto mi primera VM, en este ejemplo un simple `Vanilla Debian box`.
 
 | Nota: Aquí tienes la lista de [boxes](https://app.vagrantup.com/boxes/search) (equipos) que puedes instalarte. Te recomiendo leer esta [guía](https://www.vagrantup.com/vagrant-cloud/boxes/catalog) |
 
@@ -136,8 +136,8 @@ the comments in the Vagrantfile as well as documentation on
 luis@jupiter:~/miproyecto$ vagrant up --provider=libvirt
 ```
 
-{% include showImagen.html 
-      src="/assets/img/posts/vagrantkvm-4.png" 
+{% include showImagen.html
+      src="/assets/img/posts/vagrantkvm-4.png"
       caption="Desde el gestor vemos la VM"
       width="500px"
       %}
@@ -162,9 +162,9 @@ vagrant@buster:~$
 
 ## Networking
 
-Por defecto las máquinas virtuales con Vagrant se crean una red privada y usan DHCP. Yo prefiero usar IP fija para mi laboratorio, pero eso va por gustos y caso de uso. Estas son las configuraciones que suelo manejar: 
+Por defecto las máquinas virtuales con Vagrant se crean una red privada y usan DHCP. Yo prefiero usar IP fija para mi laboratorio, pero eso va por gustos y caso de uso. Estas son las configuraciones que suelo manejar:
 
-**Networking privado + IP fija**, fichero `Vagrantfile`: 
+**Networking privado + IP fija**, fichero `Vagrantfile`:
 
 ```config
     # Networking Privado, con IP fija para que sea más fácil hacer SSH desde el Host.
@@ -173,10 +173,10 @@ Por defecto las máquinas virtuales con Vagrant se crean una red privada y usan 
                       :libvirt__domain_name => "coder.local"
 ```
 
-**Networking público + IP fija**, fichero `Vagrantfile`: 
+**Networking público + IP fija**, fichero `Vagrantfile`:
 
 ```console
-    # Networking Público, con IP fija 
+    # Networking Público, con IP fija
     config.vm.network "public_network",
                       :dev => "br0",
                       :mode => "bridge",
@@ -184,7 +184,7 @@ Por defecto las máquinas virtuales con Vagrant se crean una red privada y usan 
                       :ip => "192.168.1.100"
 ```
 
-Ojo!... si vas a usar la versión de IP pública tienes que prearar el Host (tu servidor linux). Es necesario configurar la interfaz Ethernet con un bridge y recomiendo hacer una configuración manual (no usar NetworkManager o similar). Aquí tienes un ejemplo de lo que he hecho en Linux con Debian 11: 
+Ojo!... si vas a usar la versión de IP pública tienes que prearar el Host (tu servidor linux). Es necesario configurar la interfaz Ethernet con un bridge y recomiendo hacer una configuración manual (no usar NetworkManager o similar). Aquí tienes un ejemplo de lo que he hecho en Linux con Debian 11:
 
 ```console
 root@jupiter:~# cat /etc/network/interfaces.d/br0
@@ -227,4 +227,4 @@ iface br0 inet static
 
 ## Caso de uso
 
-En este repositorio en GitHub tienes un [maquina virtual para desarrollo de software preparada con Vagrant](https://github.com/LuisPalacios/devbox). Además podrás encontrar en el apunte "[Servicios Systemd de usuario]({% post_url 2021-05-30-systemd-usuario %})" cómo ejecutar procesos de usuario durante el arranque del sistema, para arrancar esta máquina virtual con Vagrant durante el boot. 
+En este repositorio en GitHub tienes un [maquina virtual para desarrollo de software preparada con Vagrant](https://github.com/LuisPalacios/devbox). Además podrás encontrar en el apunte "[Servicios Systemd de usuario]({% post_url 2021-05-30-systemd-usuario %})" cómo ejecutar procesos de usuario durante el arranque del sistema, para arrancar esta máquina virtual con Vagrant durante el boot.

@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/luis/00.git/02.github-luispa/refrescar/29-oop-rpg/src",
+      "program": "/Users/luis/00.git/02.github-luispa/refrescar/29-oop-rpg/src/build/Debug/outDebug"
+    }
+  ]
+}
