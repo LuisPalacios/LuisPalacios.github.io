@@ -186,11 +186,11 @@ ddea7e7  Update README.md    2
 - Se abrirá el editor automáticamente y mostrará todos los commits, desde el tercero #86dc978 (48-45=3) hasta el último #28f5b2d.
 
 ```txt
-pick 86dc978 update readme     <== 3er commit (48-45)    \
-pick 483583a update gitignore                            |
-:                                                         > Fusionar
-pick fe1dd07 oop                                         |
-pick 28f5b2d oop               <== ÚLTIMO COMMIT         /
+pick   86dc978 update readme     <== 3er commit (48-45)    \
+squash 483583a update gitignore                            |
+:                                                           > Fusionar
+squash fe1dd07 oop                                         |
+squash 28f5b2d oop               <== ÚLTIMO COMMIT         /
 ````
 
 - En el editor aparecen todos los commits con la palabra `pick`. Ahora tengo que decidir, entre estas opciones:
@@ -222,66 +222,25 @@ No se pudo aplicar 357d14f... oop
 🍏 luis@asterix:refrescarA ● ●(main) rebase-i +?) % e 29-oop-rpg/src/programa.cpp
 ```
 
-- Continúo con el rebase
+- Los marco como resueltos añadiendolos y continúo con el rebase
 
 ```zsh
+🍏 luis@asterix:refrescarA ● ●(main) rebase-i +?) % git add .
 🍏 luis@asterix:refrescarA ● ●(main) rebase-i +?) % git rebase --continue
 ```
 
-- Vuelve a aparecer el editor (comentario del commit), agrego todos los comentarios o los limpio y dejo solo uno. A gustos. Continúo
+- Podriá volver a ocurrir que hay conflictos, repito los pasos...
 
 ```zsh
+🍏 luis@asterix:refrescar (main) % e fichero-con-conflicto...
+🍏 luis@asterix:refrescar (main) % git add .
 🍏 luis@asterix:refrescar (main) % git rebase --continue
+
+Irá mostrando el editor y este proceso puede tardar un rato, depende de cuantos conflictos tengas...
+
 ```
 
-- Vuelve a darme otro error de fusión, en el mismo fichero
-
-```zsh
-Auto-fusionando 29-oop-rpg/src/programa.cpp
-CONFLICTO (contenido): Conflicto de fusión en 29-oop-rpg/src/programa.cpp
-error: no se pudo aplicar 28f5b2d... oop
-hint: Resolve all conflicts manually, mark them as resolved with
-hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
-hint: You can instead skip this commit: run "git rebase --skip".
-hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
-hint: Disable this message with "git config advice.mergeConflict false"
-No se pudo aplicar 28f5b2d... oop
-🍏 luis@asterix:refrescarA ● ●(main) rebase-i +!?) %
-```
-
-- Edito el fichero con el conflicto en cuestión, resuelvo los conflictos y lo salvo.
-
-```zsh
-🍏 luis@asterix:refrescarA ● ●(main) rebase-i +?) % e 29-oop-rpg/src/programa.cpp
-
-🍏 luis@asterix:refrescarA ● (main) rebase-i +!) % git status
-rebase interactivo en progreso; sobre ddea7e7
-Los últimos comandos realizados (45 comandos realizados):
-   squash fe1dd07 oop
-   squash 28f5b2d oop
-  (ver más en el archivo .git/rebase-merge/done)
-No quedan más comandos.
-Estás aplicando un rebase de la rama 'main' sobre 'ddea7e7.
-  (todos los conflictos corregidos: ejecuta "git rebase --continue")
-
-Cambios a ser confirmados:
-(usa "git restore --staged <archivo>..." para sacar del área de stage)
-nuevos archivos: 29-oop-rpg/src/arquero.h
-nuevos archivos: 29-oop-rpg/src/caballero.h
-nuevos archivos: 29-oop-rpg/src/mago.h
-modificados:     29-oop-rpg/src/personaje.h
-nuevos archivos: 29-oop-rpg/src/picaro.h
-modificados:     29-oop-rpg/src/programa.cpp
-nuevos archivos: 29-oop-rpg/src/sacerdote.h
-```
-
-- Continúo de nuevo
-
-```zsh
-🍏 luis@asterix:refrescarA ● (main) rebase-i +!) % git rebase --continue
-```
-
-- Vuelve a aparecer el editor para el comentario del commit a dejar, lo salvo y salgo. Por fin dejo de tener conflictos.
+- Llegará un momento donde dejas de tener conflictos, verás el mensaje `Rebase aplicado satisfactoriamente y actualizado refs/heads/main.`
 
 ```zsh
 Rebase aplicado satisfactoriamente y actualizado refs/heads/main.
@@ -306,7 +265,16 @@ Escribiendo objetos: 100% (114/114), 30.13 KiB | 10.04 MiB/s, listo.
 Total 114 (delta 19), reused 82 (delta 8), pack-reused 0 (from 0)
 remote: Resolving deltas: 100% (19/19), completed with 1 local object.
 To github.com-LuisPalacios:LuisPalacios/refrescar.git
- + 28f5b2d...f05ed9f main -> main (forced update)
+ + 5a42ca6...96b4c8d main -> main (forced update)
+```
+
+- Muestro el log de mis commits
+
+```zsh
+🍏 luis@asterix:refrescar (main) % git log --all --decorate --oneline --graph
+* 96b4c8d (HEAD -> main, origin/main, origin/HEAD) Commit agregado de 45 commits final
+* ddea7e7 Update README.md
+* 326d415 Initial commit
 ```
 
 - El repo queda ya con solo 3 commits !!
@@ -320,11 +288,35 @@ To github.com-LuisPalacios:LuisPalacios/refrescar.git
 - Los commits que han quedado son:
 
 ```zsh
-f05ed9f  Commit agregado de 45 commits     3er  <== COMMIT que agrega todo
+96b4c8d  Commit agregado de 45 commits     3er  <== COMMIT que agrega todo
 ddea7e7  Update README.md                  2o
 326d415  Initial commit                    1er commit
 ```
 
 <br/>
 
----
+||
+|-|
+| Nota: **ATENCIÓN !!!! Es muy importante que el resto de desarrolladores borren su copia local o hagan un reset de su clone actual** |
+||
+
+Si otro desarrollador hace un push (--force) desde una rama local (antigua) volverán a aparecer todos los commits. La recomendación es volver a hacer una de las opciones siguientes:
+
+1. Borrar el repositorio local y volver a hacer un clone
+
+2. Reset del respositorio local y pull. A continuación muestro un ejemplo, tenía el repositorio ANTIGUO copiado en "refrescar.old"
+
+```zsh
+🍏 luis@asterix:refrescar.old (● main ↕) % git reset --hard origin/main
+HEAD está ahora en 96b4c8d Commit agregado de 45 commits final
+🍏 luis@asterix:refrescar.old (main) % git clean -xdf
+🍏 luis@asterix:refrescar.old (main) % git pull
+Ya está actualizado.
+
+🍏 luis@asterix:refrescar.old (main) % git log --all --decorate --oneline --graph
+* 96b4c8d (HEAD -> main, origin/main, origin/HEAD) Commit agregado de 45 commits final
+* ddea7e7 Update README.md
+* 326d415 Initial commit
+```
+
+<br/>
