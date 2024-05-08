@@ -158,7 +158,7 @@ El caso de uso es cuando tengo una única rama `main` en GitHub y solo estoy yo 
 🍏 luis@asterix:refrescar (main) % git pull
 🍏 luis@asterix:refrescar (main) % git rev-parse --short HEAD
 28f5b2d
-🍏 luis@asterix:refrescar (main) % git ls-remote --quiet --sort=committerdate | tail -1 | cut -c 1-7
+🍏 luis@asterix:refrescar (main) % git ls-remote --quiet | grep HEAD | cut -c 1-7
 28f5b2d
 
 Estos son los hash de los 48 commits...
