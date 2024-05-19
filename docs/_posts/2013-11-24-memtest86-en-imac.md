@@ -7,7 +7,7 @@ excerpt_separator: <!--more-->
 ---
 
 
-![Logo memtest](/assets/img/posts/logo-memtest.png){: width="150px" style="float:left; padding-right:25px" } 
+![Logo memtest](/assets/img/posts/logo-memtest.png){: width="150px" style="float:left; padding-right:25px" }
 
 Para mi nuevo iMac 27" (finales del 2013) compré una ampliación de 32GB de memoria. Apple soporta que instales memoria de terceros, compré la ampliación en Crucial.com y una de las cosas que quería hacer era probar la memoria en profundidad.
 
@@ -26,9 +26,9 @@ Ah!, hay una alternativa a todo esto, consiste en ejecutar memtest desde MacOSX,
 
 Vamos a por la opción "arriesgada :-)"... [Descarga rEFInd](http://www.rodsbooks.com/refind/index.html), en concreto utilicé el "binary zip file", que es compatible con el iMac 27" (late 2013, también probado en mid 2011). Una vez que lo tengas bucea en el subdirectorio `refind-bin-0.7.5`
 
-{% include showImagen.html 
-      src="/assets/img/original/refind1.png" 
-      caption="Directorio desde donde instalaré rEFInd." 
+{% include showImagen.html
+      src="/assets/img/original/refind1.png"
+      caption="Directorio desde donde instalaré rEFInd."
       width="600px"
       %}
 
@@ -54,12 +54,11 @@ Installation has completed successfully.
 
 Se instala en el directorio /EFI de tu equipo y "toca" el firmware, como avisé :-). La próxima vez que arranques lo harás con el nuevo Boot Manager rEFInd, pero espera, antes de arrancar tienes que instalar MemTest86...
 
-{% include showImagen.html 
-      src="/assets/img/original/refind2.png" 
-      caption="Ubicación de la instalación rEFInd." 
+{% include showImagen.html
+      src="/assets/img/original/refind2.png"
+      caption="Ubicación de la instalación rEFInd."
       width="600px"
       %}
-      
 
 ## Instalación de MemTest86
 
@@ -67,26 +66,25 @@ El siguiente paso consiste en añadir MemTest86 al directorio /EFI/tools. Lo pri
 
 Así que después de descargar, accede usando Finder y deberías ver el fichero "memtest86-usb.tar". Haz doble click sobre él, busca la imagen "memtest86-pro-usb.img", vuelve a hacer doble clic sobre ella,  se montará un disco llamado "Untitled" y dentro encontrarás un subdirectorio llamado "EFI", y si sigues navegando llegarás  a donde nos interesa...
 
-{% include showImagen.html 
-      src="/assets/img/original/refind3.png" 
-      caption="Subdirectorio EFI." 
+{% include showImagen.html
+      src="/assets/img/original/refind3.png"
+      caption="Subdirectorio EFI."
       width="600px"
       %}
 
 Crea el directorio /EFI/tools/memtest86 y copia desde la imagen el contenido del directorio EFI/BOOT. Ojo!!! no copies el fichero BOOTIA32.efi, dado que no hace falta, de hecho "NO" debe copiarse.
 
-{% include showImagen.html 
-      src="/assets/img/original/refind4.png" 
-      caption="Copia del directorio EFI/BOOT" 
+{% include showImagen.html
+      src="/assets/img/original/refind4.png"
+      caption="Copia del directorio EFI/BOOT"
       width="600px"
       %}
 
-
 Ahora solo tienes que reiniciar el Mac, justo después del sonido de campana del arranque verás la pantalla de rEFInd, desde la cual podrás ejecutar MemTest86
 
-{% include showImagen.html 
-      src="/assets/img/original/refind5.png" 
-      caption="Vistazo a la nueva pantalla de BOOT" 
+{% include showImagen.html
+      src="/assets/img/original/refind5.png"
+      caption="Vistazo a la nueva pantalla de BOOT"
       width="600px"
       %}
 
@@ -96,9 +94,8 @@ Este proceso lo he probado con éxito tanto en un iMac 27" mid 2011 como un iMac
 
 Si quieres quitar rEFInd de tu Mac, tan simple como entrar en Manzana->Preferencias del Sistema-Disco de Arranque. Selecciona (aunque ya lo está) el Disco duro y pulsa en "Reiniciar". Después de comprobar que arranca correctamente ya puedes borrar el directorio /EFI de tu disco duro.
 
-
-{% include showImagen.html 
-      src="/assets/img/original/refind6.png" 
-      caption="Opción para eliminar rEFInd" 
+{% include showImagen.html
+      src="/assets/img/original/refind6.png"
+      caption="Opción para eliminar rEFInd"
       width="600px"
       %}
