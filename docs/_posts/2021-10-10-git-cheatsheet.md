@@ -295,6 +295,53 @@ ddea7e7  Update README.md                  2o
 
 <br/>
 
+## Cambiar Autor de commits
+
+Esto es PELIGROSO, DESACONSEJADO y solo recomendado SI TIENES MUY CLARO LO QUE ESTÁS HACIENDO. El caso de uso es cuando tenemos muy claro que el nombre (y/o email) del autor de commits es erroneo.
+
+Vamos a usar el comando `git filter-branch` que reescribe el historial del repositorio, por lo que debes tener cuidado y hacer un respaldo del repositorio antes de realizar estos cambios.
+
+Navega a tu repositorio
+
+```zsh
+cd /ruta/al/repositorio/mirepo
+```
+
+Copia de seguridad del proyecto
+
+```zsh
+git clone --mirror /ruta/al/repositorio/mirepo /ruta/al/respaldo/mirepo
+```
+
+Vamos a por ello. Utiliza `git filter-branch` para cambiar el nombre y el email del autor en todos los commits:
+
+```zsh
+git filter-branch --env-filter '
+OLD_EMAIL="email_incorrecto@ejemplo.com"
+CORRECT_NAME="Nombre Nuevo"
+CORRECT_EMAIL="email_nuevo@ejemplo.com"
+
+if [ "$GIT_COMMITTER_EMAIL" = "$OLD_EMAIL" ]
+then
+    export GIT_COMMITTER_NAME="$CORRECT_NAME"
+    export GIT_COMMITTER_EMAIL="$CORRECT_EMAIL"
+fi
+if [ "$GIT_AUTHOR_EMAIL" = "$OLD_EMAIL" ]
+then
+    export GIT_AUTHOR_NAME="$CORRECT_NAME"
+    export GIT_AUTHOR_EMAIL="$CORRECT_EMAIL"
+fi
+' --tag-name-filter cat -- --branches --tags
+```
+
+Fuerza el push de los cambios al repositorio remoto
+
+```zsh
+git push --force --tags origin 'refs/heads/*'
+```
+
+</br>
+
 ||
 |-|
 | Nota: **ATENCIÓN !!!! Es muy importante que el resto de desarrolladores borren su copia local o hagan un reset de su clone actual** |
