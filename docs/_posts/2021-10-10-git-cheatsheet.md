@@ -301,6 +301,12 @@ Esto es PELIGROSO, DESACONSEJADO y solo recomendado SI TIENES MUY CLARO LO QUE E
 
 Vamos a usar el comando `git filter-branch` que reescribe el historial del repositorio, por lo que debes tener cuidado y hacer un respaldo del repositorio antes de realizar estos cambios.
 
+Si necesitas averiguar el email porque solo ves el nombre, elije un commit y usa este commando:
+
+```zsh
+git show -s --format='%ae' <HASH corto del commit>
+```
+
 Navega a tu repositorio
 
 ```zsh
