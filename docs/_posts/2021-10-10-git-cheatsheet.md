@@ -316,7 +316,7 @@ cd /ruta/al/repositorio/mirepo
 Copia de seguridad del proyecto
 
 ```zsh
-git clone --mirror /ruta/al/repositorio/mirepo /ruta/al/respaldo/mirepo
+cp -r /ruta/al/repositorio/mirepo /ruta/al/respaldo/mirepo.bak
 ```
 
 Vamos a por ello. Utiliza `git filter-branch` para cambiar el nombre y el email del autor en todos los commits:
