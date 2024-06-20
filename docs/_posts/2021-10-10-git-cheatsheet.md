@@ -346,7 +346,7 @@ Fuerza el push de los cambios al repositorio remoto
 git push --force --tags origin 'refs/heads/*'
 ```
 
-</br>
+<br/>
 
 ||
 |-|
