@@ -325,25 +325,29 @@ Ya está actualizado.
 
 Esto es PELIGROSO, DESACONSEJADO y solo recomendado SI TIENES MUY CLARO LO QUE ESTÁS HACIENDO. El caso de uso es cuando tenemos muy claro que el nombre (y/o email) del autor de commits es erroneo.
 
-Vamos a usar el comando `git filter-branch` que reescribe el historial del repositorio, por lo que debes tener cuidado y hacer un respaldo del repositorio antes de realizar estos cambios.
+Usaremos el comando `git filter-branch` que reescribe el historial del repositorio, por lo que debes tener cuidado y hacer un respaldo del repositorio antes de realizar estos cambios.
 
-Si necesitas averiguar el email porque solo ves el nombre, elije un commit y usa este commando:
+### Repasar commit
+
+Para averiguar el mail con el que se hizo un determinado commit:
 
 ```zsh
 git show -s --format='%ae' <HASH corto del commit>
 ```
 
-Si necesitas repasar quién hizo los commits, puedes mostrarlo así:
+Para repasar quién hizo los commits:
 
 ```zsh
 git log --pretty=format:"%h %ce %ae"| grep -i <nombre o email>
 ```
 
+### Renombrar autor/email de los commit
+
 Navega a tu repositorio y asegúrate que lo tienes actualizado
 
 ```zsh
 cd /ruta/al/repositorio/mirepo
-commit pull
+git pull
 ```
 
 Te recomiendo que hagas una copia de seguridad
@@ -357,8 +361,8 @@ Utiliza `git filter-branch` para cambiar el nombre + email del autor en todos lo
 ```zsh
 git filter-branch --env-filter '
 OLD_EMAIL="email_incorrecto@ejemplo.com"
-CORRECT_NAME="Nombre Nuevo"
-CORRECT_EMAIL="email_nuevo@ejemplo.com"
+CORRECT_NAME="Nombre Correcto"
+CORRECT_EMAIL="email_correcto@ejemplo.com"
 
 if [ "$GIT_COMMITTER_EMAIL" = "$OLD_EMAIL" ]
 then
@@ -373,8 +377,20 @@ fi
 ' --tag-name-filter cat -- --branches --tags
 ```
 
-Haz el push de los cambios al repositorio remoto
+El comando anterior crea una copia de seguridad bajo `.git/refs/original/*`. Es muy buena idea tenerla para el caso de que hayas hecho algo mal. Recomiendo inspeccionar que todo ha ido bien, con el comando siguiente:
+
+```zsh
+git log
+```
+
+Una vez revisado, haz push de los cambios al repositorio remoto
 
 ```zsh
 git push --force --tags origin 'refs/heads/*'
+```
+
+Cuando terminas y estas seguro de que todo está bien puedes eliminar la copia de seguridad de la referencia (en mi caso, en este ejemplo el nombre de la rama es `main`)
+
+```zsh
+git update-ref -d refs/original/refs/heads/main
 ```
