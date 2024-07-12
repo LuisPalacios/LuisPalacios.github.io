@@ -6,7 +6,7 @@ tags: movistar mac iptables router
 excerpt_separator: <!--more-->
 ---
 
-![logo linux router](/assets/img/posts/logo-linux-router.svg){: width="150px" height="150px" style="float:left; padding-right:25px" } 
+![logo linux router](/assets/img/posts/logo-linux-router.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
 Este apunte describe qué hay detrás (a nivel técnico) del servicio IP que nos ofrece Movistar Fusión FTTH (Fibra) y como sustituir el router que nos instalan por un equipo basado en GNU/Linux, que hará de Router (junto con un Switch Ethernet) para ofrecer los mismos servicios de Datos, Televisión (IPTV) y Voz (VoIP).
 
@@ -35,7 +35,7 @@ El siguiente equipo es el **Router**, que va a recibir, desde el ONT a través d
 
 ## Objetivo Final
 
-Consiste en sustituir el Router de Movistar por un equipo con Linux (yo uso **Gentoo**) junto con un Switch Ethernet y poder ofrecer los tres servicios: Datos, IPTV y VoIP. 
+Consiste en sustituir el Router de Movistar por un equipo con Linux (yo uso **Gentoo**) junto con un Switch Ethernet y poder ofrecer los tres servicios: Datos, IPTV y VoIP.
 
 Necesitamos un switch porque necesitamos sus puertos ethernet y sobre todo porque es mucho más sencillo (y barato) que instalar tarjetas de puertos ethernet en tu Linux... Importantísimo que tu **Switch Ethernet 10/100/1000 tenga soporte de VLAN's (802.1q) y Multicast (IGMP Snooping), y sobre todo que tu equipo Linux tenga una NIC que soporte VLAN's** (es lo más habitual).
 
@@ -48,7 +48,7 @@ Ah!, si tienes que adquirir dicho switch y ya puestos te recomiendo que aprovech
     width="600px"
     %}
 
-En el gráfico anterior tienes la configuración final, en mi caso uso un Mac Mini «reconvertido» con Gentoo GNU/Linux (y que en breve voy a evolucionar a un equipo NUC de Intel), un [Switch Ethernet SG 200-08 de Cisco](http://www.cisco.com/c/dam/en/us/products/collateral/switches/small-business-100-series-unmanaged-switches/data_sheet_c78-634369_Spanish.pdf). 
+En el gráfico anterior tienes la configuración final, en mi caso uso un Mac Mini «reconvertido» con Gentoo GNU/Linux (y que en breve voy a evolucionar a un equipo NUC de Intel), un [Switch Ethernet SG 200-08 de Cisco](http://www.cisco.com/c/dam/en/us/products/collateral/switches/small-business-100-series-unmanaged-switches/data_sheet_c78-634369_Spanish.pdf).
 
 Conecto la salida Ethernet (ETH1) del ONT al puerto del Switch (donde configuraré las vlan’s 2, 3 y 6 tagged; en mi ejemplo he usado el puerto 1), conecto el Linux al puerto-2 (donde configuro las vlan’s 2, 3, 6 y 100 Tagged) y el resto de puertos quedan configurados como de acceso de la vlan 100 (untagged)  donde conectaré los equipos de la Intranet: ordenador, punto de acceso wifi y Deco.
 
@@ -101,13 +101,13 @@ La configuración del fichero anterior supone lo siguiente:
 
 ```
 - WAN (Exterior)
-    
+
     - vlan6 (datos) - PPPoE para recibir la IP. Ruta por defecto
     - vlan2 (iptv) - IP estática y RIP para recibir rutas IPTV
     - vlan3 (voip) - IP vía DHCP. Ruta vía RIP. No DNS/NIS/NTP
 
 - LAN (Interior)
-    
+
     - vlan100 (intranet) - Rango privado 192.168.1/24 y la ".1" al linux.
 ```
 
@@ -258,29 +258,29 @@ default via 80.58.67.163 dev ppp0 metric 4010
 
 _____(VLAN3 VoIP)___________
 10.25.192.0/19 dev vlan3 proto kernel scope link src <10.25.X.X> metric 5
-10.31.255.128/27 via 10.25.192.1 dev vlan3 proto zebra metric 3  
+10.31.255.128/27 via 10.25.192.1 dev vlan3 proto zebra metric 3
 
 _____(Internal localhost)___
 127.0.0.0/8 dev lo scope host
 127.0.0.0/8 via 127.0.0.1 dev lo
 
 _____(VLAN2 IPTV)___________
-10.128.0.0/9 dev vlan2 proto kernel scope link src <10.214.XX.YY> 
-172.26.22.0/26 via 10.128.0.1 dev vlan2 proto zebra metric 3    
-172.26.22.56/29 via 10.128.0.1 dev vlan2 proto zebra metric 3    
-172.26.23.0/27 via 10.128.0.1 dev vlan2 proto zebra metric 3     
-172.26.23.4 via 10.128.0.1 dev vlan2 proto zebra metric 3        
-172.26.23.5 via 10.128.0.1 dev vlan2 proto zebra metric 3        
-172.26.23.23 via 10.128.0.1 dev vlan2 proto zebra metric 3       
-172.26.23.24 via 10.128.0.1 dev vlan2 proto zebra metric 3       
-172.26.23.30 via 10.128.0.1 dev vlan2 proto zebra metric 3       
+10.128.0.0/9 dev vlan2 proto kernel scope link src <10.214.XX.YY>
+172.26.22.0/26 via 10.128.0.1 dev vlan2 proto zebra metric 3
+172.26.22.56/29 via 10.128.0.1 dev vlan2 proto zebra metric 3
+172.26.23.0/27 via 10.128.0.1 dev vlan2 proto zebra metric 3
+172.26.23.4 via 10.128.0.1 dev vlan2 proto zebra metric 3
+172.26.23.5 via 10.128.0.1 dev vlan2 proto zebra metric 3
+172.26.23.23 via 10.128.0.1 dev vlan2 proto zebra metric 3
+172.26.23.24 via 10.128.0.1 dev vlan2 proto zebra metric 3
+172.26.23.30 via 10.128.0.1 dev vlan2 proto zebra metric 3
 172.26.80.0/21 via 10.128.0.1 dev vlan2 proto zebra metric 3
 
 _____(VLAN100 Intranet)_____
 192.168.1.0/24 dev vlan100 proto kernel scope link src 192.168.1.1
 ```
 
-El siguiente paso es que arranques ambos daemos, estas son las órdenes en Gentoo: 
+El siguiente paso es que arranques ambos daemos, estas son las órdenes en Gentoo:
 
 
 ```console 
@@ -325,33 +325,32 @@ A continuación muestro las líneas para configurar el Source NAT para los tres 
 
 Para la vlan 6 (datos internet)
 
-```console 
+```console
 # export ipVLAN6=\`ip addr show dev vlan6 | grep inet | awk '{print $2}' | sed 's;\/.*;;'\`
 # iptables -t nat -A POSTROUTING -o ppp0 -s 192.168.1.0/24 -j SNAT --to-source ${ipVLAN6}
 
-o más fácil: 
+o más fácil:
 
 # iptables -t nat -A POSTROUTING -o ppp0 -j MASQUERADE
 ```
 
 Para la vlan 2 (IPTV)
 
-```console 
+```console
 # iptables -t nat -A POSTROUTING -o vlan2 -s 192.168.1.0/24 -j SNAT --to-source 10.214.XX.YY
 
-o más fácil: 
+o más fácil:
 
 # iptables -t nat -A POSTROUTING -o vlan2 -j MASQUERADE
 ```
 
 Para la vlan 3 (VoIP)
 
-
-```console 
+```console
 # export ipVLAN3=\`ip addr show dev vlan3 | grep inet | awk '{print $2}' | sed 's;\/.*;;'\`
 # iptables -t nat -A POSTROUTING -o vlan3 -s 192.168.1.0/24 -j SNAT --to-source ${ipVLAN3}
 
-o más fácil: 
+o más fácil:
 
 # iptables -t nat -A POSTROUTING -o vlan3 -j MASQUERADE
 ```
@@ -362,23 +361,23 @@ o más fácil:
 
 Como acabo de mencionar, recibimos Internet por la VLAN-6 y se utiliza PPPoE (PPP over Ethernet) para recibir la dirección IP, así que lo único que hay que hacer es activar PPPoE sobre el interfaz VLAN6 (ver el ejemplo anterior `/etc/conf.d/net`)
 
-Si tienes problemas te recomiendo que añadas una linea con la cadena `debug` en la opción `pppd_ppp0="..."`. Así podrás observar en el syslog lo que ocurre. Una vez lo tengas estable quita dicha línea. 
+Si tienes problemas te recomiendo que añadas una linea con la cadena `debug` en la opción `pppd_ppp0="..."`. Así podrás observar en el syslog lo que ocurre. Una vez lo tengas estable quita dicha línea.
 
 Tanto si has contratado una IP fija como una dinámica la configuración es la misma, al arrancar el daemon PPP el equipo recibirá su IP, instalará una ruta por defecto por dicho interfaz y listo.
 
-<br/> 
+<br/>
 
-**MTU**
+#### MTU
 
 OJO!: Una de las desventajas de PPPoE es que reduce la MTU a 1492 y el MSS (Maximum Segment Size) negociado de TCP a 1452, así que tenemos que hacer lo mismo en nuestro Linux. ¿Dónde?, pues la MTU en un sitio y el MSS en otro:
 
-- MTU: El PPPD se encarga de definir la MTU en `/etc/conf.d/net`
-- MSS: El MSS se tiene que configurar con `iptables`
+* MTU: El PPPD se encarga de definir la MTU en `/etc/conf.d/net`
+* MSS: El MSS se tiene que configurar con `iptables`
 
 Dentro de iptables tenemos dos opciones para especificar el MSS:
 
-- `--clamp-mss-to-pmtu` Restringe el MSS al valor del Path MTU menos 40 bytes = 1452
-- `--set-mss` Pone el valor a "pelo", (equivale al comando IOS: `ip tcp adjust-mss 1452`)
+* `--clamp-mss-to-pmtu` Restringe el MSS al valor del Path MTU menos 40 bytes = 1452
+* `--set-mss` Pone el valor a "pelo", (equivale al comando IOS: `ip tcp adjust-mss 1452`)
 
 En mi caso uso la primera opción, he añadido las líneas siguientes al "principio" de mi script donde tengo todos los comandos iptables, de modo que afecte a todos los paquetes:
 
@@ -389,33 +388,29 @@ iptables -t mangle -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-m
 :
 ```
 
-<br/> 
+<br/>
 
-**Source NAT**
+**Source NAT**: Como decía antes, necesario hacer source NAT, de modo que el tráfico originado por los clientes de la red salgan a internet con la dirección que tenemos en el interfaz ppp0
 
-Como decía antes, necesario hacer source NAT, de modo que el tráfico originado por los clientes de la red salgan a internet con la dirección que tenemos en el interfaz ppp0
-
-```console 
+```console
 # export ipVLAN6=\`ip addr show dev vlan6 | grep inet | awk '{print $2}' | sed 's;\/.*;;'\`
 # iptables -t nat -A POSTROUTING -o ppp0 -s 192.168.1.0/24 -j SNAT --to-source ${ipVLAN6}
 
-o más fácil: 
+o más fácil:
 
 # iptables -t nat -A POSTROUTING -o ppp0 -j MASQUERADE
 ```
 
-<br/> 
+<br/>
 
-**Arranque**
-
-Preparamos el arranque futuro
+**Arranque**: Preparamos el arranque futuro
 
 ```console  
 # ln -s /etc/init.d/net.lo net.ppp0
 # rc-update add net.ppp0 default
 ```
 
-* Arranco el servicio: 
+* Arranco el servicio:
 
 ```console
 # /etc/init.d/net.ppp0 start
@@ -425,15 +420,13 @@ Recibirás una IP fija o dinámica dependiendo de tu contrato. Dicha IP será de
 
 <br/>
 
-# II. Servicio de Voz VoIP (vlan 3)
+## II. Servicio de Voz VoIP (vlan 3)
 
 El Servicio VoIP nos llega por la VLAN-3. La configuración es sencilla, el equipo linux debe recibir una dirección IP mediante DHCP, hacer Source NAT por esta interfaz e instalar una única ruta (Ojo!, instalar un único prefijo específico para dicha ruta, no ponerla como ruta por defecto, o default route).
 
 <br/>
 
-**Cliente dhcp**
-
-En la configuración cliente DHCP de linux hay que especificar que "no" sobreescriba NIS, NTP ni DNS, y además que "no" se instale una ruta por defecto por dicha VLAN3. Lo vimos en la configuración de la red al principio, pero como recordatorio estas son las líneas específicas en /etc/conf.d/net
+**Cliente dhcp**: En la configuración cliente DHCP de linux hay que especificar que "no" sobreescriba NIS, NTP ni DNS, y además que "no" se instale una ruta por defecto por dicha VLAN3. Lo vimos en la configuración de la red al principio, pero como recordatorio estas son las líneas específicas en /etc/conf.d/net
 
 ```config
 vlan3_name="vlan3"
@@ -442,26 +435,22 @@ config_vlan3="dhcp"
 dhcp_vlan3="nogateway nodns nontp nosendhost nonis"
 ```
 
-<br/>
+Si utilizas `netplan` las líneas correspondientes serían:
 
-**Source NAT**
-
-De nuevo, para que el tráfico originado por tu cliente SIP (que reside en la VLAN100 con dirección 192.168.1.xxx)  que salga por la vlan3 lo haga con la dirección IP fuente del linux (recibida por dhcp y del estilo 10.25.ZZZ.ZZZ), como recordatorio estos son los comandos que ejecuto:
-
-```console
-# export ipVLAN3=\`ip addr show dev vlan3 | grep inet | awk '{print $2}' | sed 's;\/.*;;'\`
-# iptables -t nat -A POSTROUTING -o vlan3 -s 192.168.1.0/24 -j SNAT --to-source ${ipVLAN3}
-
-o más fácil: 
-
-# iptables -t nat -A POSTROUTING -o vlan3 -j MASQUERADE
+```yml
+    # Movistar VoIP
+    vlan3:
+    id: 3
+    link: eth0
+    dhcp4: yes
+    dhcp4-overrides:
+        use-routes: false
+    routes:
+    - to: 10.31.255.128/27
+        via: 10.22.0.1
 ```
 
-<br/>
-
-**La "ruta" para Voip***
-
-Por este interfaz solo vamos a necesitar una única ruta y podemos aprenderla por RIP pasivo o bien instalarla manualmente. En mi caso he preferido usar RIP.  Lo vimos al principio, estas son las líneas específicas en `/etc/quagga/ripd.conf`
+Por este interfaz solo vamos a necesitar una única ruta y podemos instalarla manualmente (como en el ejemplo anterior de `netplan`), o bien si usas RIP y quagga, aprenderla; modificando el fichero `/etc/quagga/ripd.conf` sería así:
 
 ```config
  router rip
@@ -469,7 +458,7 @@ Por este interfaz solo vamos a necesitar una única ruta y podemos aprenderla po
  passive-interface vlan3
 ```
 
-Para que puedas comprobar si lo estás configurando bien, estas son las rutas que deberías recibir:
+Recuerda comprobar si lo estás configurando bien, estas son las rutas que deberías recibir. Ten en cuenta que la 10.25.192.1 irá variando con el tiempo, esa es una IP que pone Movistar y que es conocida en el momento en el que te entrega tu IP vía DHPC. Otra que he visto frecuentamente es la 10.22.0.1.
 
 ```console
 # ip route
@@ -477,6 +466,19 @@ Para que puedas comprobar si lo estás configurando bien, estas son las rutas qu
 10.25.192.0/19 dev vlan3 proto kernel scope link src 10.25.ZZZ.ZZZ metric 5
 10.31.255.128/27 via 10.25.192.1 dev vlan3 proto zebra metric 3
 :
+```
+
+<br/>
+
+**Source NAT**: De nuevo, para que el tráfico originado por tu cliente SIP (que reside en la VLAN100 con dirección 192.168.1.xxx)  que salga por la vlan3 lo haga con la dirección IP fuente del linux (recibida por dhcp y del estilo 10.25.ZZZ.ZZZ), como recordatorio estos son los comandos que ejecuto:
+
+```console
+# export ipVLAN3=\`ip addr show dev vlan3 | grep inet | awk '{print $2}' | sed 's;\/.*;;'\`
+# iptables -t nat -A POSTROUTING -o vlan3 -s 192.168.1.0/24 -j SNAT --to-source ${ipVLAN3}
+
+o más fácil:
+
+# iptables -t nat -A POSTROUTING -o vlan3 -j MASQUERADE
 ```
 
 <br/>
@@ -525,19 +527,25 @@ Otro cliente para MacOSX mucho más simple es [Telephone](http://www.tlphn.com/)
 
 Otro cliente que he probado es «[PhonerLite](http://phonerlite.de/index_en.htm)» para Windows (en mi caso ejecutado en Parallels para MacOSX), y tengo que decir que ha funcionado mucho mejor, (muy limpio y sin errores al ver el tráfico de registro, llamadas, recepción de llamadas). Una pena que solo exista para Windows.
 
-
-
 {% include showImagen.html
     src="/assets/img/posts/phonerlite_0_o.jpg"
     caption="Cliente PhonerLite"
     width="600px"
     %}
 
-Durante las pruebas de VoIP me he quedado con una sensación de inestabilidad, aparentemente no se registra a veces, alguna llamada no llega a sonar en el Softphone, por lo que tengo seguir investigando. También he detectado mucha diferencia entre un software y otro (en cuanto a estabilidad). El tráfico entre el softphone y el servidor de registro ocurre en UDP y es importante que tengas activo SourceNAT en el linux tal como describí en la sección de red.
+Un buen cliente para Mobile que he probado es  «[Zoiper](http://www.zoiper.com/en)» para iPhone
+
+{% include showImagen.html
+    src="/assets/img/posts/2014-10-05-voip-00.png"
+    caption="Zoiper para iPhone"
+    width="800px"
+    %}
+
+He detectado mucha diferencia entre un software y otro (en cuanto a estabilidad). El tráfico entre el softphone y el servidor de registro ocurre en UDP y es importante que tengas activo SourceNAT en el linux tal como describí en la sección de red.
 
 <br/>
 
-# III. Servicio de Televisión (vlan2)
+## III. Servicio de Televisión (vlan2)
 
 El tráfico IPTV es entregado desde el ONT a través de la VLAN-2, por donde encontraremos los servicios OPCH, DVBSTP y Streams Multicast.
 
@@ -557,8 +565,8 @@ A continuación el tipo de tráfico que he visto en la vlan2 con WireShark:
 
 - Desde el Deco hacia Imagenio:
     - Consultas via udp al DNS Server (172.26.23.3)
-    - Conexión vía HTTP/TCP a Servicios Imagenio (172.26.22.23), por ejemplo Grabaciones, Configuración, Personalización, 
-- Desde Imagenio hacia el Deco [UDP - Flujos Multicast]:    
+    - Conexión vía HTTP/TCP a Servicios Imagenio (172.26.22.23), por ejemplo Grabaciones, Configuración, Personalización,
+- Desde Imagenio hacia el Deco [UDP - Flujos Multicast]:
     - 239.0.[0,3,4,5,6,7,8,9].* CANALES.
     - 239.0.2.30:22222 OPCH
     - 239.0.2.129:3937 DVBSTP
@@ -566,7 +574,7 @@ A continuación el tipo de tráfico que he visto en la vlan2 con WireShark:
     - 239.0.2.132:3937 DVBSTP
     - 239.0.2.155:3937 DVBSTP
 
-- El resto de rangos deben estar configurados para enrutarse por la VLAN6 (o VLAN3 para VoIP). Los Decos consumen la VLAN2 para el 99% del tráfico, pero observe cierto tráfico en la VLAN6 ... 
+- El resto de rangos deben estar configurados para enrutarse por la VLAN6 (o VLAN3 para VoIP). Los Decos consumen la VLAN2 para el 99% del tráfico, pero observe cierto tráfico en la VLAN6 ...
 
 <br/>
 
@@ -579,16 +587,16 @@ Apago el Deco durante más de 30seg (para que haga un arranque completo), lo enc
 * Hace un IGMP Report (Join) al grupo `239.0.2.30`, el tráfico multicast empieza a llegar y se va suscribiendo a otros grupos (`239.0.2.2, 239.0.2.129-134, 239.0.2.154-155`)
 * En paralelo pide (al DNS) la IP de `main.acs.telefonica.net`, se intenta conectar con él por el puerto `7008`.
   * La sesión TLS fracasa por **Error de Certificado Expirado** - Probablemente (aunque nunca lo he verificado) tenga que ver que el Deco en este punto **todavía no ha actualizado su fecha, tiene 1/1/1970**.
-  * NOTA: ES IMPORTANTE QUE CONECTE CON ESTE SITIO, a pesar de dar el error de Certificado (si no lo consigue no progresa en su arranque). Da igual que de error de certificado. 
+  * NOTA: ES IMPORTANTE QUE CONECTE CON ESTE SITIO, a pesar de dar el error de Certificado (si no lo consigue no progresa en su arranque). Da igual que de error de certificado.
 * Entro en la *Configuración del descodificador* (cada mando con una tecla distinta). Par cuando llegamos aquí veo que **ha conseguido actualizar la fecha** (gracias al tráfico multicast) y podremos confirmar los parámetros DHCP, etc...
 * Si dejo el Deco en el menú de configuración observo que sigue llegando tráfico multicast y de vez en cuando intenta conectar con `main.acs.telefonica.net` (y dando error de certificado, algo que por lo que he visto se puede ignorar).
-* Salgo del Configurador, muestra durante un rato "Cargando ()()()"... y por detrás se va conectando en TCP/HTTP a varios sitios, entre ellos `http://www-60.svc.imagenio.telefonica.net:2001/appserver/mvtv.do?...". 
+* Salgo del Configurador, muestra durante un rato "Cargando ()()()"... y por detrás se va conectando en TCP/HTTP a varios sitios, entre ellos `http://www-60.svc.imagenio.telefonica.net:2001/appserver/mvtv.do?...".
 * Tras bastante intercambio de tráfico TCP (y por supuesto va llegando mucho en multicast) empiezo a ver imágenes en la pantalla de la TV.
-* Al cabo de un rato tengo los menús cargados y todo preparado. 
+* Al cabo de un rato tengo los menús cargados y todo preparado.
 * En cuanto pulso un canal, hace un IGM Report (Join) y se empieza a visualizar el canal.
 
 Ocurren bastantes cosas por detrás incluso antes de llegar al menú de configuración. Si no tienes bien configurado el routing (ver el punto anterior), el DNS Server (172.26.23.3), el IGMP Snooping, el Multicast forwarding, RPF (ver más adelante), etc... vas a tener algún tipo de problema. Ten cuidado porque despista mucho cuando unas cosas funcionan y otras no (multicast, unicast, nat, rtsp)...
- 
+
 
 <br/>
 
@@ -663,7 +671,7 @@ Después viene la parte que más dolores de cabeza genera, ya tenemos todo, pero
 ¿Cual es la solución?, pues consiste en desactivar la comprobación RPF (Reverse Path Forwarding) en "ALL" y en el interfaz upstream (VLAN2), que es por donde viene el tráfico desde las fuentes, debes ejecutar los dos comandos siguientes durante el boot de tu equipo:
 
 | **IMPORTANTE**: No te olvides de desactivar RPF en la opción "All" además de la "vlan2" o no funcionará. |
- 
+
 ```conf
 ___ Pon a "0" la opción "All" ____
 # echo "0" > /proc/sys/net/ipv4/conf/all/rp_filter
@@ -676,7 +684,7 @@ ___ Pon a "0" el Interfaz Upstream ____
 
 Tienes que desactivar (0) en `All` y en `vlan2`, dejando el resto activas (1), donde el RPF seguirá actuando. Notarás que la `loopback` (lo) también está desactivado, es correcto.
 
-```conf 
+```conf
 /proc/sys/net/ipv4/conf/all/rp_filter        0
 /proc/sys/net/ipv4/conf/default/rp_filter    1
 /proc/sys/net/ipv4/conf/vlan100/rp_filter    1
@@ -700,14 +708,14 @@ Aunque ya lo expliqué antes, recordatorio: para que los paquetes de los Decos s
 ```console 
 # iptables -t nat -A POSTROUTING -o vlan2 -s 192.168.1.0/24 -j SNAT --to-source 10.214.XX.YY
 
-o más fácil: 
+o más fácil:
 
 # iptables -t nat -A POSTROUTING -o vlan2 -j MASQUERADE
 ```
 
 Opcional, si tu Linux es un router de internet y usas iptables para hacer de firewall, recuerda aceptar los paquetes multicast. Te dejo un recordatorio:
 
-```console 
+```console
 iptables -I INPUT -d 224.0.0.0/4 -j ACCEPT
 iptables -I OUTPUT -d 224.0.0.0/4 -j ACCEPT
 iptables -I FORWARD -d 224.0.0.0/4 -j ACCEPT
@@ -739,7 +747,7 @@ phyint vlan6 disabled
 
 Arranque en Gentoo:
 
-```console 
+```console
 # rc-update add igmpproxy default
 # /etc/init.d/igmpproxy start
 ```
@@ -751,7 +759,7 @@ Arranque en Gentoo:
 Comprueba varias cosas si estás teniendo problemas con el servicio de IPTV. Para empezar deberías poder hacer ping al DNS Server interno que tiene Movistar en su propia red para este servicio de Televisión.
 
 ```console
-# ping 172.26.23.3 
+# ping 172.26.23.3
 64 bytes from 172.26.23.3: icmp_seq=1 ttl=126 time=7.54 ms
 64 bytes from 172.26.23.3: icmp_seq=2 ttl=126 time=4.24 ms
 :
@@ -759,7 +767,7 @@ Comprueba varias cosas si estás teniendo problemas con el servicio de IPTV. Par
 
 OJo!. Algunos me han comentado que a ellos no les funciona este "ping" pero sí les va el resto de funciones. De hecho a mi me ha estado funcionando muchos meses y de repente ha dejado de funcionar, así que mejor usa lo siguiente, esto Sí que debería funcionar y es consultas DNS. Prueba por ejemplo a consultar el registro SOA del dicho DNS Server:
 
-```console 
+```console
 # dig @172.26.23.3 imagenio.telefonica.net | grep SOA
 imagenio.telefonica.net. 10800  IN  SOA mmsdmco1-01.imagenio.telefonica.net. postmaster.imagenio.telefonica.net. 2015080901 86400 7200 2592000 345600
 :
@@ -791,7 +799,7 @@ Interface      BytesIn  PktsIn  BytesOut PktsOut Flags Local    Remote
  1 vlan3             0       0         0       0 00000 6BC2190A 00000000
  2 vlan100           0       0  774846616  584180 00000 0101A8C0 00000000
  5 ppp0              0       0         0       0 00000 B9FB1C50 00000000
- 
+
 # ip mroute
 (172.26.20.41, 239.0.2.2) Iif: vlan2 Oifs: vlan100
 (172.26.20.41, 239.0.2.30) Iif: vlan2 Oifs: vlan100
@@ -802,24 +810,24 @@ Interface      BytesIn  PktsIn  BytesOut PktsOut Flags Local    Remote
 
 Verificar que tienes activo el routing (y desactivo el RPF) en el kernel:
 
-```console 
-___ GENERAL ____  
+```console
+___ GENERAL ____
 # cat /proc/sys/net/ipv4/ip_forward
 1
 
-___ INTERFAZ UPSTREAM (VLAN2) ____  
+___ INTERFAZ UPSTREAM (VLAN2) ____
 bolica ~ # cat /proc/sys/net/ipv4/conf/vlan2/forwarding
 1
 bolica ~ # cat /proc/sys/net/ipv4/conf/vlan2/rp_filter
 0
 
-___ INTERFAZ DOWNSTREAM (VLAN100) ____  
+___ INTERFAZ DOWNSTREAM (VLAN100) ____
 bolica ~ # cat /proc/sys/net/ipv4/conf/vlan100/forwarding
 1
 bolica ~ # cat /proc/sys/net/ipv4/conf/vlan100/rp_filter   (NO hace falta desactivar aquí el RPF)
 1
 
-___ AL ARRANCAR IGMPPROXY VERAS QUE SE PONEN A 1 ____  
+___ AL ARRANCAR IGMPPROXY VERAS QUE SE PONEN A 1 ____
 bolica ~ # cat /proc/sys/net/ipv4/conf/vlan2/mc_forwarding
 1
 bolica ~ # cat /proc/sys/net/ipv4/conf/vlan100/mc_forwarding
@@ -828,7 +836,7 @@ bolica ~ # cat /proc/sys/net/ipv4/conf/vlan100/mc_forwarding
 
 Verificar cómo tienes el RPF
 
-```console 
+```console
 # for i in /proc/sys/net/ipv4/conf/*/rp_filter ; do echo $i; cat $i; done
 ```
 
@@ -1017,7 +1025,7 @@ Configuración: notar que solo muestro qué opciones he cambiado respecto al fic
 
 * Fichero `/etc/xupnpd/xupnpd.lua
 
-```conf 
+```conf
 :
 cfg.ssdp_interface='vlan100'
 cfg.embedded=true <== Desactivo el Logging
@@ -1043,7 +1051,7 @@ Ya lo tienes, ahora solo hay que consumir este servicio, con cualquier cliente U
 
 En el caso de dicho PVR IPTV Simple Client se configura así:
 
-```conf 
+```conf
 :
 General
  Location: Remote Path (internet address)
