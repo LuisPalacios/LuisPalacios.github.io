@@ -10,7 +10,7 @@ excerpt_separator: <!--more-->
 
 Este apunte describe qué hay detrás (a nivel técnico) del servicio IP que nos ofrece Movistar Fusión FTTH (Fibra) y como sustituir el router que nos instalan por un equipo basado en GNU/Linux, que hará de Router (junto con un Switch Ethernet) para ofrecer los mismos servicios de Datos, Televisión (IPTV) y Voz (VoIP).
 
-Después de leer este apunte te recomiendo que sigas con el apunte sobre cómo hacer que funcionen los [videos bajo demanda para Movistar]({% post_url 2014-10-18-movistar-bajo-demanda %}) y el apunte sobre un laboratorio para extender con un [Bridge Ethernet]({% post_url 2014-10-19-bridge-ethernet %}) tu red local a un sitio remoto.
+Después de leer este apunte te recomiendo que sigas con el de [videos bajo demanda para Movistar]({% post_url 2014-10-18-movistar-bajo-demanda %}) y el laboratorio para extender con un [Bridge Ethernet]({% post_url 2014-10-19-bridge-ethernet %}) tu red local a un sitio remoto.
 
 <br clear="left"/>
 <!--more-->
@@ -19,7 +19,7 @@ Después de leer este apunte te recomiendo que sigas con el apunte sobre cómo h
 
 ## Punto de partida
 
-Veamos cual es la instalación que nos queda cuando instalan "la fibra". El cable "negro" que nos llega a casa es una fibra (monomodo 657-A2) que el técnico "empalma" dentro de una roseta de tipo ICT-2, que a su vez ofrece un conector SC/APC de salida. De dicho conector sale un latiguillo de fibra estándar al ONT y desde ahí salen dos cables, uno de teléfono que normalmente conectan a la entrada de teléfono de tu casa y otro Ethernet que se conecta al router.
+Veamos que te dejan cuanto instalan "la fibra". El cable "negro" que nos llega a casa es una fibra (monomodo 657-A2) que el técnico "empalma" dentro de una roseta de tipo ICT-2, que a su vez ofrece un conector SC/APC de salida. De dicho conector sale un latiguillo de fibra estándar al ONT y desde ahí salen dos cables, uno de teléfono que normalmente conectan a la entrada de teléfono de tu casa y otro Ethernet que se conecta al router.
 
 {% include showImagen.html
     src="/assets/img/posts/mv-partida.png"
@@ -40,7 +40,6 @@ Consiste en sustituir el Router de Movistar por un equipo con Linux (yo uso **Ge
 Necesitamos un switch porque necesitamos sus puertos ethernet y sobre todo porque es mucho más sencillo (y barato) que instalar tarjetas de puertos ethernet en tu Linux... Importantísimo que tu **Switch Ethernet 10/100/1000 tenga soporte de VLAN's (802.1q) y Multicast (IGMP Snooping), y sobre todo que tu equipo Linux tenga una NIC que soporte VLAN's** (es lo más habitual).
 
 Ah!, si tienes que adquirir dicho switch y ya puestos te recomiendo que aproveches y soporte «port mirroring» que te vendrá muy bien para hacer «troubleshooting» capturando y analizando el tráfico con [WireShark](https://www.wireshark.org/).
-
 
 {% include showImagen.html
     src="/assets/img/posts/mv-final.png"
@@ -99,7 +98,7 @@ rc_net_ppp0_provide="!net"
 
 La configuración del fichero anterior supone lo siguiente:
 
-```
+```config
 - WAN (Exterior)
 
     - vlan6 (datos) - PPPoE para recibir la IP. Ruta por defecto
@@ -113,9 +112,7 @@ La configuración del fichero anterior supone lo siguiente:
 
 <br/>
 
-#### Salida del comando ifconfig
-
-He cambiado las IP's para hacerlas coincidir con el gráfico anterior.
+**Salida del comando ifconfig**: He cambiado las IP's para hacerlas coincidir con el gráfico anterior.
 
 ```console
 # ifconfig
@@ -246,7 +243,6 @@ line vty
 !
 ```
 
-
 Muestro a continuación las rutas que verás, cuando esté todo funcionando (Ojo que no hemos llegado, pero aquí te pongo el resultado final)
 
 ```console
@@ -282,8 +278,7 @@ _____(VLAN100 Intranet)_____
 
 El siguiente paso es que arranques ambos daemos, estas son las órdenes en Gentoo:
 
-
-```console 
+```console
 # /etc/init.d/zebra start
 # /etc/init.d/ripd start
 ```
@@ -483,6 +478,33 @@ o más fácil:
 
 <br/>
 
+### Comprobar Servicio SIP
+
+Usando netcat/nc/ncat. Instálalo en tu linux para conseguir ver si el servidor SIP responde. Primero ejecuta:
+
+```console
+ncat -u 10.31.255.134 5070
+```
+
+A continuación copia y pega la línea siguiente y pulsa Intro.
+
+`REGISTER sip:telefonica.net SIP/2.0`
+
+Deberías recibir algo así:
+
+```console
+SIP/2.0 400 Missing CSeq Header
+CSeq: 0 REGISTER
+```
+
+{% include showImagen.html
+    src="/assets/img/posts/2014-10-05-voip-01.png"
+    caption="Prueba de conexión con ncat"
+    width="600px"
+    %}
+
+<br/>
+
 ### Clientes SIP
 
 Deberías estar ya preparado para probar con un cliente SIP desde un ordenador de la intranet (vlan100) o desde un teléfono SIP. Aquí tienes un [artículo](https://en.wikipedia.org/wiki/Comparison_of_VoIP_software) donde compara muchos clientes VoIP.
@@ -533,7 +555,7 @@ Otro cliente que he probado es «[PhonerLite](http://phonerlite.de/index_en.htm)
     width="600px"
     %}
 
-Un buen cliente para Mobile que he probado es  «[Zoiper](http://www.zoiper.com/en)» para iPhone
+Otro ejemplo, con un App para iPhone. En este caso «[Zoiper](http://www.zoiper.com/en)» para iPhone. Si estoy en la red local de mi casa no es necesario, solo si estoy fuera (por ejemplo viajando por otro páis), necesito levantar una VPN contra mi casa para poder hacer llamadas como si estuviese en España:
 
 {% include showImagen.html
     src="/assets/img/posts/2014-10-05-voip-00.png"
@@ -555,26 +577,26 @@ El tráfico IPTV es entregado desde el ONT a través de la VLAN-2, por donde enc
 
 En la VLAN2 es importante que utilices la misma dirección IP estática asignada por Movistar al Router original, es decir, debes averiguar qué dirección del tipo 10.214.X.Y/9 tiene. Para encontrar dicha IP tienes un par de opciones: 1) acceder a la configuración del router original o 2) "espiar" con tcpdump o wireshark el tráfico de la van 2 (si tu switch soporta port-mirroring).
 
-**Nota**: Si quieres intentar la opción (1), configuración del router original, tendrás que cambiarle la contraseña del Router de Movistar. Ojo! que dejará de ser gestionable desde el portal de Movistar así que haz esto bajo tu responsabilidad y sigue este sencillo proceso: Haz un reset del router a factory defaults, arráncalo de nuevo y conéctalo al ONT, se auto-provisionará y se le asigna una contraseña aleatoria, espera a que todo funcione de nuevo. Entra a la configuración del router vía Alejandra (movistar.es->Mi Movistar->Configura tu router). Entre los menús verás una opción “Contraseña”, sigue todos los pasos (pedirá múltiples confirmaciones) para cambiar la contraseña. A partir de ahí ya puedes conectar al router desde tu intranet, usando http://192.168.1.1, usuario 1234 y la contraseña que hayas puesto.
+**Nota**: Si quieres intentar la opción (1), configuración del router original, tendrás que cambiarle la contraseña del Router de Movistar. Ojo! que dejará de ser gestionable desde el portal de Movistar así que haz esto bajo tu responsabilidad y sigue este sencillo proceso: Haz un reset del router a factory defaults, arráncalo de nuevo y conéctalo al ONT, se auto-provisionará y se le asigna una contraseña aleatoria, espera a que todo funcione de nuevo. Entra a la configuración del router vía Alejandra (movistar.es->Mi Movistar->Configura tu router). Entre los menús verás una opción “Contraseña”, sigue todos los pasos (pedirá múltiples confirmaciones) para cambiar la contraseña. A partir de ahí ya puedes conectar al router desde tu intranet, usando [http://192.168.1.1](http://192.168.1.1), usuario 1234 y la contraseña que hayas puesto.
 
-<br/> 
+<br/>
 
 ### Tipo de tráfico en la vlan 2
 
 A continuación el tipo de tráfico que he visto en la vlan2 con WireShark:
 
-- Desde el Deco hacia Imagenio:
-    - Consultas via udp al DNS Server (172.26.23.3)
-    - Conexión vía HTTP/TCP a Servicios Imagenio (172.26.22.23), por ejemplo Grabaciones, Configuración, Personalización,
-- Desde Imagenio hacia el Deco [UDP - Flujos Multicast]:
-    - 239.0.[0,3,4,5,6,7,8,9].* CANALES.
-    - 239.0.2.30:22222 OPCH
-    - 239.0.2.129:3937 DVBSTP
-    - 239.0.2.131:3937 DVBSTP
-    - 239.0.2.132:3937 DVBSTP
-    - 239.0.2.155:3937 DVBSTP
+* Desde el Deco hacia Imagenio:
+  * Consultas via udp al DNS Server (172.26.23.3)
+  * Conexión vía HTTP/TCP a Servicios Imagenio (172.26.22.23), por ejemplo Grabaciones, Configuración, Personalización,
+* Desde Imagenio hacia el Deco [UDP - Flujos Multicast]:
+  * `239.0.[0,3,4,5,6,7,8,9].* CANALES`
+  * `239.0.2.30:22222 OPCH`
+  * `239.0.2.129:3937 DVBSTP`
+  * `239.0.2.131:3937 DVBSTP`
+  * `239.0.2.132:3937 DVBSTP`
+  * `239.0.2.155:3937 DVBSTP`
 
-- El resto de rangos deben estar configurados para enrutarse por la VLAN6 (o VLAN3 para VoIP). Los Decos consumen la VLAN2 para el 99% del tráfico, pero observe cierto tráfico en la VLAN6 ...
+* El resto de rangos deben estar configurados para enrutarse por la VLAN6 (o VLAN3 para VoIP). Los Decos consumen la VLAN2 para el 99% del tráfico, pero observe cierto tráfico en la VLAN6 ...
 
 <br/>
 
@@ -590,13 +612,12 @@ Apago el Deco durante más de 30seg (para que haga un arranque completo), lo enc
   * NOTA: ES IMPORTANTE QUE CONECTE CON ESTE SITIO, a pesar de dar el error de Certificado (si no lo consigue no progresa en su arranque). Da igual que de error de certificado.
 * Entro en la *Configuración del descodificador* (cada mando con una tecla distinta). Par cuando llegamos aquí veo que **ha conseguido actualizar la fecha** (gracias al tráfico multicast) y podremos confirmar los parámetros DHCP, etc...
 * Si dejo el Deco en el menú de configuración observo que sigue llegando tráfico multicast y de vez en cuando intenta conectar con `main.acs.telefonica.net` (y dando error de certificado, algo que por lo que he visto se puede ignorar).
-* Salgo del Configurador, muestra durante un rato "Cargando ()()()"... y por detrás se va conectando en TCP/HTTP a varios sitios, entre ellos `http://www-60.svc.imagenio.telefonica.net:2001/appserver/mvtv.do?...".
+* Salgo del Configurador, muestra durante un rato "Cargando ()()()"... y por detrás se va conectando en TCP/HTTP a varios sitios, entre ellos `[http://www-60.svc.imagenio.telefonica.net:2001/appserver/mvtv.do?...](http://www-60.svc.imagenio.telefonica.net:2001/appserver/mvtv.do?...)".
 * Tras bastante intercambio de tráfico TCP (y por supuesto va llegando mucho en multicast) empiezo a ver imágenes en la pantalla de la TV.
 * Al cabo de un rato tengo los menús cargados y todo preparado.
 * En cuanto pulso un canal, hace un IGM Report (Join) y se empieza a visualizar el canal.
 
 Ocurren bastantes cosas por detrás incluso antes de llegar al menú de configuración. Si no tienes bien configurado el routing (ver el punto anterior), el DNS Server (172.26.23.3), el IGMP Snooping, el Multicast forwarding, RPF (ver más adelante), etc... vas a tener algún tipo de problema. Ten cuidado porque despista mucho cuando unas cosas funcionan y otras no (multicast, unicast, nat, rtsp)...
-
 
 <br/>
 
@@ -645,15 +666,14 @@ host deco-cocina {
 
 Los JOIN’s de los Decos entrarán por la VLAN100 al Linux y será responsabilidad de este útimo re-enviarlos hacia la VLAN2. Esto se puede hacer de dos formas 1) Activando en el Kernel la opción de convertirlo en un Bridge Ethernet o 2) mucho más fácil y recomendado: usar un programa llamado [igmpproxy](http://sourceforge.net/projects/igmpproxy/).
 
-
 Este pequeño programa hace dos cosas:
 
-- 1) Escucha los Joins/Leaves IGMP de los Deco’s en el interface downstream (VLAN100, donde están los decos) y los replica en el interfaz upstream (VLAN2 donde están las fuentes). En el mismo instante en que replica (envía a movistar) el JOIN se empezará a recibir por el interfaz upstream (VLAN2) el tráfico multicast (el video).
-- 2) Instala y "Activa" rutas en el kernel del Linux para que este (kernel) conmute los paquetes multicast. En el mismo momento en que recibió el JOIN (1) intentará instalar y "Activar" una ruta en el Kernel. Si lo consigue entonces el Kernel empezará a conmutar (forwarding) los paquetes que está recibiendo por el VLAN2 hacia los el(los) Deco(s) en el interfaz VLAN100 (downstream).
+* 1) Escucha los Joins/Leaves IGMP de los Deco’s en el interface downstream (VLAN100, donde están los decos) y los replica en el interfaz upstream (VLAN2 donde están las fuentes). En el mismo instante en que replica (envía a movistar) el JOIN se empezará a recibir por el interfaz upstream (VLAN2) el tráfico multicast (el video).
+* 2) Instala y "Activa" rutas en el kernel del Linux para que este (kernel) conmute los paquetes multicast. En el mismo momento en que recibió el JOIN (1) intentará instalar y "Activar" una ruta en el Kernel. Si lo consigue entonces el Kernel empezará a conmutar (forwarding) los paquetes que está recibiendo por el VLAN2 hacia los el(los) Deco(s) en el interfaz VLAN100 (downstream).
 
 | **IMPORTANTE**: igmpproxy no conmuta los paquetes Multicast, solo replica los Joing/Leave e instala/activa las rutas en el Kernel. Será este, el kernel, el que se encargue de conmutar los paquetes que vienen desde Movistar (upstream) hacia los decos (downstream). |
 
-<br/> 
+<br/>
 
 ### Preparar el Kernel para la Conmutación Multicast
 
@@ -699,13 +719,13 @@ ___ COMPRUEBA TU INSTALACIÓN ___
 # for i in /proc/sys/net/ipv4/conf/*/rp_filter ; do echo $i; cat $i; done
 ```
 
-<br/> 
+<br/>
 
 ### Source NAT y Firewall (iptables)
 
 Aunque ya lo expliqué antes, recordatorio: para que los paquetes de los Decos salgan hacia la VLAN2 con tú dirección IP (en la vlan2) es necesario hacer Source NAT.
 
-```console 
+```console
 # iptables -t nat -A POSTROUTING -o vlan2 -s 192.168.1.0/24 -j SNAT --to-source 10.214.XX.YY
 
 o más fácil:
@@ -884,15 +904,13 @@ Otro método evidente y sencillo, usar el mejor cliente de video que existe: VLC
 
 <br/>
 
-**Fichero de ejemplo con la Lista de canales**
+#### Fichero de ejemplo con la Lista de canales
 
 | En este enlace dejo la [Lista de canales de Movistar TV](https://gist.github.com/LuisPalacios/b906b58128a2d4cb62799220df628bd0) (válidos en Octubre de 2014). Sálva el contenido en un fichero con el nombre `Movistar.m3u` y úsalo desde VLC. |
 
- 
 <br/>
 
 ### TVHeadend (como cliente IPTV)
-
 
 Otra opción mucho mejor, pásate al mundo de los Media Center’s, donde necesitaras clientes del estilo XBMC/KODI en ordenadores o en Raspberry’s. Para poder «servirlos» el mejor que he probado hasta ahora es Tvheadend, así que te recomiendo instalar [Tvheadend](https://tvheadend.org/projects/tvheadend) ([GitHub tvheadend](https://github.com/tvheadend/tvheadend)), se trata de un DVR (Digital Video Recorder) y un servidor de streaming de TV que soporta todo tipo de fuentes: DVB-C, DVB-T(2), DVB-S(2), ATSC y además «IPTV (UDP o HTTP)«, siendo esta última precisamente la que me interesa.
 
@@ -957,7 +975,7 @@ Arranque en Gentoo: `/etc/init.d/udpxy start`
 
 A partir de aquí ya podremos conectar con las fuentes usando el protocolo HTTP. A modo de ejemplo con VLC usando la siguiente dirección de Red deberías ver TVE2:
 
-- `http://192.168.1.1:4022/udp/239.0.0.2:8208`
+* `[http://192.168.1.1:4022/udp/239.0.0.2:8208](http://192.168.1.1:4022/udp/239.0.0.2:8208)`
 
 <br/>
 **Fichero de ejemplo con la Lista de canales en formato HTTP**
@@ -972,7 +990,7 @@ Otra joya... que viene con updxy y nos permite programar grabaciones. No está n
 
 Ejemplo:
 
-```console 
+```console
 udpxrec -b 15:45.00 -e +2:00.00 -M 1.5Gb -n 2 -B 64K -c 239.0.0.2:8208 /mnt/Multimedia/0.MASTER/videos/Pelicula.mpg
 ```
 
@@ -1045,9 +1063,9 @@ El siguiente es preparar un fichero "m3u", te recomiendo que copies/pegues todos
 
 Ya lo tienes, ahora solo hay que consumir este servicio, con cualquier cliente UPnP, por ejemplo Televisiones SmartTV (para las que no tengas un Descodificador) o con VLC o con mediacenters basados en XBMC.
 
-- Desde un SmartTV busca la opción de *Plug’n’Play*
-- VLC, selecciona `Red local` > `Plug’n’Play Universal`
-- Media Center, por ejemplo basado en Raspberry Pi + XBMC y configurarlo con un Add-On «PVR IPTV Simple Client» para acceder a este servicio.
+* Desde un SmartTV busca la opción de *Plug’n’Play*
+* VLC, selecciona `Red local` > `Plug’n’Play Universal`
+* Media Center, por ejemplo basado en Raspberry Pi + XBMC y configurarlo con un Add-On «PVR IPTV Simple Client» para acceder a este servicio.
 
 En el caso de dicho PVR IPTV Simple Client se configura así:
 
@@ -1084,4 +1102,4 @@ El orden de arranque de todos los scripts vistos en este artículo es el que tie
 # /etc/init.d/xupnpd start
 ```
 
-<br/> 
+<br/>
