@@ -2,7 +2,7 @@
 title: "Chuleta sobre GIT"
 date: "2021-10-10"
 categories: desarrollo
-tags: git
+tags: git ssh multicuenta software
 excerpt_separator: <!--more-->
 ---
 
@@ -15,7 +15,7 @@ Este apunte contiene **mi ficha de ayuda sobre GIT**: Es mi hoja recordatorio qu
 
 | **Importante**: Este apunte lo uso como *referencia*, por lo tanto asume que conoces GIT. Si necesitas saber más te recomiendo este otro [apunte sobre GIT en detalle]({% post_url 2021-04-17-git-en-detalle %}) |
 
-### Básico
+## Básicos
 
 ```zsh
 git config --global user.name "Don Quijote"
@@ -73,62 +73,168 @@ $ git lg
 Técnicamente consiste en *Volver a la versión anterior de un archivo de la working copy*. Muy útil cuando hemos borrado o  modificado un archivo por error y queremos deshacer por completo y volver a su versión anterior (la del último commit).  Ojo que es destructivo, vuelve a dejar el contenido anterior del fichero y lo que hayamos modificado se pierde...
 
 ```zsh
-$ git restore Capstone/dataset/0.dataclean/datos.ipynb
+git restore Capstone/dataset/0.dataclean/datos.ipynb
 ```
 
 <br/>
 
+## GitHub CLI (`gh`)
+
+El 95% de las veces uso el comando `git` para todo lo relacionado con Git, pero trabajamos mucho con GitHub y si tú también lo haces, te recomiendo instalarte [GitHub CLI](https://cli.github.com/), es un gran invento:
+
+```shell
+brew install gh  (MacOS)
+apt install gh   (Ubuntu)
+```
+
+Trabaja siempre estando **Autenticado con un usuario concreto** y todas las operaciones las realiza usando un **Personal Access Token**. Si tienes más de una cuenta (personal y trabajo) deberás conmutar entre ellas según el repositorio en el que te encuentras.
+
+### Configurar `ssh`
+
+Imprescindible tener SSH bien configurado, tanto si tienes una única cuenta Personal como si tienes varias. Te recomiendo el apunte [Git y SSH multicuenta]({% post_url 2021-10-09-ssh-git-dual %}) si tienes varias cuentas, es imprescindible tener perfectamente operativa tu configuración SSH para que `gh` se comporte como esperas.
+
+### Configurar `gh` cuenta Personal
+
+Este es el caso más habitual, solo trabajas con un usuario y lo único que necesitas es dar de alta tu PAT (Personal Access Token) e ir renovándolo cuando caduque.
+
+- [Login en GitHub](https://github.com/login) con mi cuenta PERSONAL (`LuisPalacios`)
+- [Generate New Token (Classic)](https://github.com/settings/tokens) desde Settings/Developer Settings.
+  - El token necesita los permisos de 'repo', 'read:org', 'admin:public_key'.
+
+{% include showImagen.html
+      src="/assets/img/posts/2021-10-10-git-cheatsheet-01.jpg"
+      caption="Permisos de mi PAT"
+      width="600px"
+      %}
+
+{% include showImagen.html
+      src="/assets/img/posts/2021-10-10-git-cheatsheet-02.png"
+      caption="Recuerda copiar el Token (PAT)"
+      width="500px"
+      %}
+
+- `gh auth status` Verifico estado (no debería estar autenticado con ningún usuario)
+
+```zsh
+🍏 luis@asterix:~ % gh auth status
+You are not logged into any GitHub hosts. To log in, run: gh auth login
+```
+
+- `gh auth login` con mi cuenta personal, usando SSH y el token PAT del paso anterior
+
+{% include showImagen.html
+      src="/assets/img/posts/2021-10-10-git-cheatsheet-03.png"
+      caption="gh auth login con cuenta personal, SSH y PAT"
+      width="800px"
+      %}
+
+Terminaste, si solo tienes una única cuenta en GitHub has terminado, puedes trabajar con `gh`, por ejemplo para [Importar un repositorio GIT local a GitHub](#importar-un-repositorio-git-local-a-github).
+
+### Configurar `gh` cuenta Profesional
+
+Este es un caso también habitual entre los desarrolladores. Tienes un par de cuentas, una privada para tus repos y otra que usas trabajando para Organizaciones (empresas). Te recomiendo este apunte sobre [gh trabajando con múltiples cuentas](https://github.com/cli/cli/blob/54d56cab3a0882b43ac794df59924dc3f93bb75c/docs/multiple-accounts.md). Se añadió soporte a esta modalidad a partir de la v2.40.0. Ah!, aunque lo mencioné antes, te recomiendo tener bien configurado SSH en este tipo de entorno multicuenta, échale un ojo al apunte [Git y SSH multicuenta]({% post_url 2021-10-09-ssh-git-dual %}).
+
+De nuevo, necesito dar de alta mi PAT (Personal Access Token) en mi cuenta profesional, e ir renovándolo cuando caduque. Lo creo y me lo guardo.
+
+- [Login en GitHub](https://github.com/login) con mi cuenta PROFESIONAL (`EMPRESA-Luis-Palacios`)
+- [Generate New Token (Classic)](https://github.com/settings/tokens) desde Settings/Developer Settings.
+  - El token necesita los permisos de 'repo', 'read:org', 'admin:public_key'.
+
+Verifico que efectivametne solo tengo dada de alta y autenticada una una única cuenta, la que configuré en el paso anterior.
+
+```zsh
+🍏 luis@asterix:~ % gh auth switch
+✓ Switched active account for github.com to LuisPalacios
+🍏 luis@asterix:~ % gh auth status
+github.com
+  ✓ Logged in to github.com account LuisPalacios (keyring)
+  - Active account: true
+  - Git operations protocol: ssh
+  - Token: ghp_************************************
+  - Token scopes: 'admin:public_key', 'read:org', 'repo'
+```
+
+- `gh auth login` con mi cuenta Profesional, usando SSH y el token PAT del paso anterior
+
+```zsh
+🍏 luis@asterix:~ % gh auth login
+? What account do you want to log into? GitHub.com
+? What is your preferred protocol for Git operations on this host? SSH
+? Upload your SSH public key to your GitHub account? /Users/luis/.ssh/id_ed25519_git_EMPRESA-luis-palacios.pub
+? Title for your SSH key: Clave SSH EMPRESA-Luis-Palacios para GitHub CLI
+? How would you like to authenticate GitHub CLI? Paste an authentication token
+? Paste your authentication token: ****************************************
+- gh config set -h github.com git_protocol ssh
+✓ Configured git protocol
+✓ SSH key already existed on your GitHub account: /Users/luis/.ssh/id_ed25519_git_EMPRESA-luis-palacios.pub
+✓ Logged in as EMPRESA-Luis-Palacios
+```
+
+- Podemos comprobar a partir de ahora en qué cuenta estamos y cambiar entre ellas
+
+```zsh
+🍏 luis@asterix:~ % gh auth status
+github.com
+  ✓ Logged in to github.com account EMPRESA-Luis-Palacios (keyring)
+  - Active account: true
+  - Git operations protocol: ssh
+  - Token: ghp_************************************
+  - Token scopes: 'admin:public_key', 'read:org', 'repo'
+
+  ✓ Logged in to github.com account LuisPalacios (keyring)
+  - Active account: false
+  - Git operations protocol: ssh
+  - Token: ghp_************************************
+  - Token scopes: 'admin:public_key', 'read:org', 'repo'
+
+🍏 luis@asterix:~ % gh auth switch
+✓ Switched active account for github.com to LuisPalacios
+🍏 luis@asterix:~ % gh auth switch
+✓ Switched active account for github.com to EMPRESA-Luis-Palacios
+🍏 luis@asterix:~ % gh auth switch
+✓ Switched active account for github.com to LuisPalacios
+
+```
+
 ## Importar un repositorio GIT local a GitHub
 
-Está [aquí documentado](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github), hay dos formas de hacerlo y voy a describir la primera, con el GitHub CLI.
+Siguiendo la [documentación oficial](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github), hay dos formas de hacerlo y voy a describir la primera, con el GitHub CLI, que es la más cómoda.
 
 - "[Adding a local repository to GitHub with GitHub CLI](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github#adding-a-local-repository-to-github-with-github-cli)" - Lo puedes hacer todo desde tu ordenador, previa instalación del comando `gh`
 - "[Adding a local repository to GitHub using Git](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github#adding-a-local-repository-to-github-using-git)" - Necesitas trabajar en tu ordenador y en GitHub.
 
-- Instalo **GitHub CLI (`gh`)**
-
-```shell
-brew install gh  (MacOS)
-apt install gh (Ubuntu)
-```
+No olvides instalar `gh` tal como describo en [Preparar GitHub CLI](#github-cli-gh) y tenerlo bien configurado para tu cuenta (o cuentas) en GitHub.
 
 - Creo un repositorio local `mirepo` con `git init`
 
 ```shell
-mkdir -p /home/luis/prog/github-luispa/mirepo
-cd /home/luis/prog/github-luispa/mirepo
+mkdir -p /Users/luis/00.git/02.github-luispa/zsh-zshrc
+cd /Users/luis/00.git/02.github-luispa/zsh-zshrc
 git init
 e README.md
 git add .
 git commit -m "primer commit"
 ```
 
-- Antes de seguir, es bueno tener un Authentication Token. Puedes crear uno en [tu usuario de GitHub -> Token](https://github.com/settings/tokens). El token necesita los permisos de 'repo', 'read:org', 'admin:public_key'.
+- A continuación uso `gh` para "subir" mi repositorio local a GitHub, prefiero hacerlo de golpe en un solo comando.
 
 ```shell
-$ gh auth login
-? What account do you want to log into? GitHub.com
-? What is your preferred protocol for Git operations on this host? SSH
-? Upload your SSH public key to your GitHub account? /Users/luis/.ssh/id_ed25519.pub
-? Title for your SSH key: GitHub CLI
-? How would you like to authenticate GitHub CLI? Paste an authentication token
-? Paste your authentication token: ****************************************
-:
+cd /Users/luis/00.git/02.github-luispa/zsh-zshrc
+
+gh repo create --description "Mi .zshrc" --remote "zsh-zshrc" --source=. --public --push
+✓ Created repository LuisPalacios/zsh-zshrc on GitHub
+✓ Added remote git@github.com:LuisPalacios/zsh-zshrc.git
+git@github.com: Permission denied (publickey).
 ```
 
-- A continuación uso `gh` para "subir" mi repositorio local `mirepo` a GitHub, prefiero hacerlo de golpe en un solo comando:
+La buena noticia es que el repositorio remoto se ha creado, pero no parece reconocer bien mi nombre de Host en `~/.ssh/config` y se quedó a medias, no configuró bien el "remote" bajo `.git/config`. Termino de hacerlo manualmente
 
-```shell
-cd /home/luis/prog/github-luispa/mirepo
-
-gh repo create --description "Composición sobre Herencia en C++" --remote "CompositionOverInheritance" --source=. --public --push
-
-✓ Created repository LuisPalacios/testLuisPa on GitHub
-  https://github.com/LuisPalacios/testLuisPa
-✓ Added remote git@github.com:LuisPalacios/testLuisPa.git
-:
-rama 'master' configurada para rastrear 'CompositionOverInheritance/master'.
-✓ Pushed commits to git@github.com:LuisPalacios/testLuisPa.git
+```zsh
+git config user.name "Luis Palacios"
+git config user.email "micorreopersonal@personal.com"
+git branch -M main
+git remote add origin gh-LuisPalacios:LuisPalacios/zsh-zshrc.git
+git push -u origin main
 ```
 
 <br/>
