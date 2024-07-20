@@ -221,7 +221,7 @@ git commit -m "primer commit"
 ```shell
 cd /Users/luis/00.git/02.github-luispa/zsh-zshrc
 
-gh repo create --description "Mi .zshrc" --remote "zsh-zshrc" --source=. --public --push
+gh repo create --description "Mi .zshrc" --remote "gh-LuisPalacios:LuisPalacios/zsh-zshrc.git" --source=. --public --push
 ✓ Created repository LuisPalacios/zsh-zshrc on GitHub
 ✓ Added remote git@github.com:LuisPalacios/zsh-zshrc.git
 git@github.com: Permission denied (publickey).
