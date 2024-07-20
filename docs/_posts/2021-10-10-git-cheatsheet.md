@@ -128,7 +128,7 @@ You are not logged into any GitHub hosts. To log in, run: gh auth login
       width="800px"
       %}
 
-Terminaste, si solo tienes una única cuenta en GitHub has terminado, puedes trabajar con `gh`, por ejemplo para [Importar un repositorio GIT local a GitHub](#importar-un-repositorio-git-local-a-github).
+Terminaste, si solo tienes una única cuenta en GitHub has terminado, puedes trabajar con `gh`, por ejemplo para, desde [GitHub, hacer la importación de un repositorio local existente](#github-hacer-importacion-de-repositorio-local).
 
 ### Configurar `gh` cuenta Profesional
 
@@ -196,14 +196,14 @@ github.com
 
 ```
 
-## Importar un repositorio GIT local a GitHub
+## GitHub hacer importación de repositorio local
 
-Siguiendo la [documentación oficial](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github), hay dos formas de hacerlo y voy a describir la primera, con el GitHub CLI, que es la más cómoda.
+Si ya tenemos un repositorio en local, inicializado con GIT y queremos crear lo mismo en GitHub, pues solo tenemos que seguir la [documentación oficial](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github). Básicamente hay dos formas de hacerlo:
 
 - "[Adding a local repository to GitHub with GitHub CLI](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github#adding-a-local-repository-to-github-with-github-cli)" - Lo puedes hacer todo desde tu ordenador, previa instalación del comando `gh`
 - "[Adding a local repository to GitHub using Git](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github#adding-a-local-repository-to-github-using-git)" - Necesitas trabajar en tu ordenador y en GitHub.
 
-No olvides instalar `gh` tal como describo en [Preparar GitHub CLI](#github-cli-gh) y tenerlo bien configurado para tu cuenta (o cuentas) en GitHub.
+En este apunte describo la primera, con el GitHub CLI, que es la más cómoda. Tienes que instalar `gh` como puse arriba, [Preparar GitHub CLI](#github-cli-gh), y tenerlo bien configurado para tu cuenta (o cuentas) en GitHub.
 
 - Creo un repositorio local `mirepo` con `git init`
 
