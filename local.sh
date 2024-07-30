@@ -1,7 +1,7 @@
 #!/bin/zsh
 #
-# SCRIPT pare ejecutar JEKYLL en local y servir las páginas de mi blog 
-# durante su desarrollo. 
+# SCRIPT pare ejecutar JEKYLL en local y servir las páginas de mi blog
+# durante su desarrollo.
 #
 
 # Averiguo el directorio desde el que se ejecuta este script.
@@ -12,9 +12,9 @@ cd ${SCRIPT_DIR}/docs
 
 # Ejecuto el servidor en localhost, incluyendo los posts bajo ./docs/_drafts
 # Nota: Los archivos .md que están bajo ./docs/_drafts no se mostrarán en producción.
-JEKYLL_ENV=development bundle exec jekyll serve --drafts --port 4001 #--host=192.168.100.3
+JEKYLL_ENV=development bundle exec jekyll serve --drafts --port 4001 --host=0.0.0.0 #--host=192.168.100.12
 
-# Ejecuto el servidor en mi hostname en mi LAN para poder probarlo 
+# Ejecuto el servidor en mi hostname en mi LAN para poder probarlo
 # desde otros clientes (por ejemplo una tablet o un móvil)
 #JEKYLL_ENV=development bundle exec jekyll serve --drafts --host idefix.parchis.org --port 4001
 

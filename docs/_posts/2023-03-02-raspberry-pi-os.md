@@ -18,7 +18,6 @@ Este apunte describo el proceso de instalación de una **Raspberry `Pi4B Rev1.5`
 
 Lo primero es lo primero, preparar una tarjeta Micro SD con el sistema operativo, he elegido Raspbian OS Lite 64bits. No necesito la parte gráfica, voy a utilizarlo como un servidor corriendo diferentes servcios. Podemos usar cualquier método para clonar la imagen en una tarjeta SD, en mi caso he usado programa **Raspberry Pi imager**.
 
-
 {% include showImagen.html
     src="/assets/img/posts/2023-03-02-raspberry-pi-os-01.png"
     caption="Preparo la tarjeta SD con Raspberry Pi imager"
@@ -39,13 +38,13 @@ Cuando termina retiro la tarjeta y la introduzco en la Pi. Conecto la Pi a un mo
 
 <br/>
 
-### Primera fase de la instalación.
+### Primera fase de la instalación
 
 Un rato después de arrancar la Pi empezaremos a ver una serie de menús donde hacemos la configuración básica. A continuación describo lo que configuré en mi caso:
 
 - Layout del Teclado: `Other -> Spanish`, `Spanish`
 - New Username: `luis`
-  
+
 Hago login con el usuario y contraseña que acabo de configurar y lo primero que voy a hacer es activar `sshd` para poder conectar con la Pi a través de la red local y continuar desde ahí.
 
 ```console
@@ -85,23 +84,23 @@ Use raspi-config to set the country before use.
 luis@raspberrypi:~ $
 ```
 
-Vuelvo a ejecutar `raspi-config` para terminar de configurar múltiples aspectos importantes: 
+Vuelvo a ejecutar `raspi-config` para terminar de configurar múltiples aspectos importantes:
 
 ```console
 luis@raspberrypi:~ $ sudo raspi-config
 ```
 
-* `System Options > hostname > "idefix"`
-* `Localisation Options > Locale >`
-  * `[ ] en_GB.UTF-8 UTF-8 <---- Lo quito`
-  * `[*] es_ES.UTF-8 UTF-8 <---- Lo pongo` 
-  * `Default Locale: es_ES.UTF-8 UTF-8`
-* `Localisation Options > Timezone > Europa, Madrid`
-* `Localisation Options > WLAN Country > ES`
-* `Advance Options > Network interface names > No`
-  * `No`: Si quieres usar eth0, eth1, etc..
-  * `Yes`: Si quieres usar nombres predecibles
-* `Finish y Reboot`
+- `System Options > hostname > "idefix"`
+- `Localisation Options > Locale >`
+  - `[ ] en_GB.UTF-8 UTF-8 <---- Lo quito`
+  - `[*] es_ES.UTF-8 UTF-8 <---- Lo pongo`
+  - `Default Locale: es_ES.UTF-8 UTF-8`
+- `Localisation Options > Timezone > Europa, Madrid`
+- `Localisation Options > WLAN Country > ES`
+- `Advance Options > Network interface names > No`
+  - `No`: Si quieres usar eth0, eth1, etc..
+  - `Yes`: Si quieres usar nombres predecibles
+- `Finish y Reboot`
 
 Por último hacemos una actualización del sistema operativo !
 
@@ -118,7 +117,7 @@ Ya hemos terminado, tengo una Raspberry Pi perfectamente operativa, actualizada 
 
 ### Personalización
 
-Esta parte del proceso es opcional, a mi me gusta tener algunos ficheros y scripts de apoyo en todos los sistemas linux con los que trabajo y algunas modificaciones al sistema. Los dejo aquí como referencia. 
+Esta parte del proceso es opcional, a mi me gusta tener algunos ficheros y scripts de apoyo en todos los sistemas linux con los que trabajo y algunas modificaciones al sistema. Los dejo aquí como referencia.
 
 <br />
 
@@ -126,29 +125,28 @@ Esta parte del proceso es opcional, a mi me gusta tener algunos ficheros y scrip
 
 De nuevo opcional, solo si lo necesitas, así es como se elimina IPv6, la tarjeta Wifi de la Pi y el Bluetooth. En mi caso cuando hago laboratorios de IPv4 y no lo necesito prefiero desactivarlo todo.
 
-* Fichero `/boot/cmdline.txt`, añado al final de la línea `ipv6.disable=1`
+- Fichero `/boot/cmdline.txt`, añado al final de la línea `ipv6.disable=1`
 
 ```console
 console=serial0,115200 console=tty1 root=PARTUUID=2c310193-02 rootfstype=ext4 fsck.repair=yes rootwait ipv6.disable=1
 ```
 
-* Fichero `/boot/config.txt`, añado al final del fichero dos líneas adicionales:
+- Fichero `/boot/config.txt`, añado al final del fichero dos líneas adicionales:
 
 ```console
 dtoverlay=disable-wifi
 dtoverlay=disable-bt
 ```
 
-* Recuerda que para que estos cambios sean efectivos tienes que hacer un `reboot` de la Pi.
-
+- Recuerda que para que estos cambios sean efectivos tienes que hacer un `reboot` de la Pi.
 
 <br />
 
 #### Asigno una IP fija
 
-Normalmente dejo que la Pi trabaje con el cliente dhcp por defecto, pero a veces necesito asignarle una IP fija. No es evidente cómo hacerlo, porque depende de la versión del SO. En mi caso he configurado `raspi-config` -> Avanzado -> Netowrk -> Nombres de interfaces predecibles -> No. Después modifico estos dos ficheros: 
+Normalmente dejo que la Pi trabaje con el cliente dhcp por defecto, pero a veces necesito asignarle una IP fija. No es evidente cómo hacerlo, porque depende de la versión del SO. En mi caso he configurado `raspi-config` -> Avanzado -> Netowrk -> Nombres de interfaces predecibles -> No. Después modifico estos dos ficheros:
 
-* Fichero `/etc/dhcpcd.conf`, añado al final lo siguiente:
+- Fichero `/etc/dhcpcd.conf`, añado al final lo siguiente:
 
 ```console
 interface eth0
@@ -157,7 +155,7 @@ static routers=192.168.100.1
 static domain_name_servers=192.168.100.224
 ```
 
-* Fichero `/etc/network/interfaces`, añado al final lo siguiente:
+- Fichero `/etc/network/interfaces`, añado al final lo siguiente:
 
 ```console
 auto eth0
@@ -189,7 +187,6 @@ root@idefix:~# chmod 755 /usr/bin/e
 - Recuerda cambiar los permisos
   - `luis@idefix:~ $ sudo chmod 755 /usr/bin/e /usr/bin/confcat /usr/bin/s`
 
-El fichero `/etc/sudoers.d/010_pi-nopasswd` ya viene preparado para que al usuario `luis` no le pida contraseña de root y pueda ejecutar `sudo` directamente. 
+El fichero `/etc/sudoers.d/010_pi-nopasswd` ya viene preparado para que al usuario `luis` no le pida contraseña de root y pueda ejecutar `sudo` directamente.
 
 A partir de ahora al ejecutar el comando `e fichero` se arrancará el editor `nano`. El editor funcionará con el esquema de teclado descrito en `/etc/nanorc`. Al ejecutar `s` me convertiré en `root` y por último el comando `confcat` muestra el contenido de archivos de texto ignorando las líneas de comentarios.
-
