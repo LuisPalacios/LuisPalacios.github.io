@@ -62,7 +62,14 @@ sudo apt install -y python3-pip pipenv
 Recomendados
 
 ```zsh
-sudo apt-get install xscreensaver xscreensaver-data-extra xscreensaver-gl-extra
+sudo apt install -y xscreensaver xscreensaver-data-extra xscreensaver-gl-extra
+```
+
+Instalación desde los fuentes
+
+```zsh
+cd ~/ && git clone https://github.com/tmux/tmux.git && cd tmux && ./autogen && ./configure
+make && sudo make install
 ```
 
 ## Shell
