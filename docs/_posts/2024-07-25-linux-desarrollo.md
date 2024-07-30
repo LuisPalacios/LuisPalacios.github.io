@@ -32,7 +32,7 @@ Antes de empezar, utilizo el terminal predeterminado de Ubuntu, aunque a veces m
 
 ### Instalación de software
 
-Actualizo Ubuntu a la última, incluidos `flatpak` y `snap`.
+**Actualizar** el sistema
 
 ```zsh
 sudo apt update && sudo apt upgrade -y && sudo apt full-upgrade -y
@@ -40,36 +40,78 @@ sudo flatpak udpate
 sudo snap refresh
 ```
 
-Esenciales
+**Esenciales** para empeza
 
 ```zsh
 sudo apt install -y vim git libfuse2
 ```
 
-Desarrollo en C/C++
+**C/C++** aunque no programes en estos lenguajes
 
 ```zsh
 sudo apt install -y build-essential cmake autotools-dev automake \
                libevent-dev libncurses5-dev bison flex
 ```
 
-Python (nota, python3 venía preinstalado)
+**Python, pip, pipenv** (nota, python3 venía preinstalado)
 
 ```zsh
 sudo apt install -y python3-pip pipenv
 ```
 
-Recomendados
+**Recomendados** que vendrán bien
 
 ```zsh
 sudo apt install -y xscreensaver xscreensaver-data-extra xscreensaver-gl-extra
+sudo apt install -y ca-certificates curl wget
 ```
 
-Instalación desde los fuentes
+**Docker** (más en [Docker](#docker))
+
+```zsh
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+
+# Instalo la última verión
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# Añado mi usuario al grupo de Docker (salir y volver a hacer login tras este comando)
+sudo usermod -aG docker $USER
+
+# Compruebo que funciona
+docker run hello-world
+```
+
+**[Portainer CE](https://docs.portainer.io/start/install-ce/server/docker/linux)** para la gestión de contenedores.
+
+```zsh
+docker volume create portainer_data
+docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
+https://localhost:9443   (Asigno contraseña al administrador)
+```
+
+**`tmux`** desde los fuentes
 
 ```zsh
 cd ~/ && git clone https://github.com/tmux/tmux.git && cd tmux && ./autogen && ./configure
 make && sudo make install
+```
+
+**Networking**, varias herramientas útiles
+
+```zsh
+apt install -y net-tools iputils-ping tcpdump ppp
 ```
 
 ## Shell
@@ -146,3 +188,9 @@ El contenido de tu pública se comparte:
 ## AppImageLauncher
 
 Vas a encontrar muchas aplicaciones en formato .AppImage y para instalarlas y gestionarlas te recomiendo que te instales el [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher/releases). Te recomiendo leer [AppImageLauncher, integra las aplicaciones AppImages al lanzador de aplicaciones](https://ubunlog.com/appimagelauncher-integra-appimges-en-ubuntu/) donde explican muy bien cómo instalarlo.
+
+## Docker
+
+Si vas a hacer desarrollos de backend, servicios, middleware, es muy probable que necesites Docker. Tienes dos opciones, la primera es [Docker Engine](https://docs.docker.com/engine/install/ubuntu/) y la segunda usar [Docker Desktop para Linux](https://docs.docker.com/desktop/install/linux-install/), o incluso podrías montar ambos en el mismo equipo. Si tienes dudas mira las [diferencias](https://docs.docker.com/desktop/faqs/linuxfaqs/#what-is-the-difference-between-docker-desktop-for-linux-and-docker-engine).
+
+En mi caso prefiero usar **[Docker Engine](https://docs.docker.com/engine/install/ubuntu/)** y leventar un contenedor con [Portainer CE](https://docs.portainer.io/start/install-ce/server/docker/linux) para hacer la gestión.

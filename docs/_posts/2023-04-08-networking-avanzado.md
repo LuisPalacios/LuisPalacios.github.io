@@ -13,14 +13,12 @@ Comparto mi **networking doméstico** con la opción de *llamar a la puerta* par
 
 El número de dispositivos crece y mantener la red de un hogar inteligente y automatizado se convierte en una prioridad. Dedico el apunte a esos *Geeks* o *Techys* que, como yo, llevamos tiempo metidos en la *complicación del networking en una red casera domotizada*.
 
-
 <br clear="left"/>
 <!--more-->
- 
- 
+
 ## Punto de partida
 
-El objetivo es que el diseño soporte *muchos cacharros variopintos*, vía LAN/WiFi, que se puedan usar certificados con `https`, poder entrar *llamando a la puerta* desde intenet y ya por pedir, que la domótica siga funcionando si cae internet o la WiFi (que haya unos mínimos). 
+El objetivo es que el diseño soporte *muchos cacharros variopintos*, vía LAN/WiFi, que se puedan usar certificados con `https`, poder entrar *llamando a la puerta* desde intenet y ya por pedir, que la domótica siga funcionando si cae internet o la WiFi (que haya unos mínimos).
 
 ¿Cuanto puede crecer tu red? pues sin darte cuenta, sumando switches, AP's, servidores físicos, virtuales, sensores, relés, actuadores, clientes, etc. el otro día veía 122 IP's únicas 😱 en mi router Linux.
 
@@ -29,7 +27,6 @@ El objetivo es que el diseño soporte *muchos cacharros variopintos*, vía LAN/W
     caption="Nos quedamos cortos pronosticando los dispositivos conectados"
     width="400px"
     %}
-
 
 <br/>
 
@@ -41,16 +38,16 @@ El objetivo es que el diseño soporte *muchos cacharros variopintos*, vía LAN/W
 
 Empiezo la casa por el tejado describiendo:
 
-- Qué uso como **router/firewall** para entrar/salir a Internet. 
+- Qué uso como **router/firewall** para entrar/salir a Internet.
 - Cómo montar el **dominio dinámico**, para llamar con nombre desde Internet.
 - Cómo **llamar a la puerta** para abrir puertos bajo demanda.
 - Cómo hacer **ssh, OpenVPN, etc.** para entrar desde Internet.
 
-El **99% de los hogares usa el router del Proveedor de Servicios (Operadora) y cuelga todo debajo**, traen varios puertos y un punto de acceso embebido, suena bien. 
+El **99% de los hogares usa el router del Proveedor de Servicios (Operadora) y cuelga todo debajo**, traen varios puertos y un punto de acceso embebido, suena bien.
 
-Cuando tienes conocimientos de routing y switching mi **recomendación es poner detrás un router propio + switch(es) + AP(s)** y desactivar el WiFi del Proveedor 😆. El beneficio principal es que pasas a tener un control total, incluso permite añadir extras: por ejemplo lo de llamar a la puerta abriendo puertos bajo demanda, levantar túneles ipsec, silenciar los pings (solo si conectas directamente al ONT), identificar intentos de ataques, control del tráfico VoIP e IPTV y otros. 
+Cuando tienes conocimientos de routing y switching mi **recomendación es poner detrás un router propio + switch(es) + AP(s)** y desactivar el WiFi del Proveedor 😆. El beneficio principal es que pasas a tener un control total, incluso permite añadir extras: por ejemplo lo de llamar a la puerta abriendo puertos bajo demanda, levantar túneles ipsec, silenciar los pings (solo si conectas directamente al ONT), identificar intentos de ataques, control del tráfico VoIP e IPTV y otros.
 
-Partiendo de esta premisa, tengo tres opciones. 
+Partiendo de esta premisa, tengo tres opciones.
 
 <br/>
 
@@ -58,27 +55,27 @@ Partiendo de esta premisa, tengo tres opciones.
     src="/assets/img/posts/2023-04-15-networking-avanzado-02.svg"
     caption="Para un control total pongo mi propio router"
     width="800px"
-    %} 
+    %}
 
 <br/>
 
 - **Estándar**: Conecto mi Router al del Proveedor y recibo IP privada (`192.168.1.0/24`).
   - Desventajas: Hay que hacer dos veces Port Forwarding. Pierdes el control de VoIP/IPTV (si lo tienes contratado). Puede "salirte rana" el router del Proveedor y darte problemas de rendimiento y/o cuelgues. Si haces NAT en "MiRouter" estás haciendo doble NAT y eso no suele gustar. Si no haces NAT en "MiRouter" entonces hay que dar de alta las rutas de la intranet en el router del proveedor, que no me mola.
-  - Ventajas: No tocas el servicio del Proveedor que suele ser suficientemente estable. El soporte funciona y no hay que dar explicaciones. 
-- **Modo Bridge**: Se comporta como un ONT, recibes todas las VLAN's. No lo he configurado nunca pero entiendo que sus ventajas y desventajas son las mismas que el punto siguiente (ONT),  
+  - Ventajas: No tocas el servicio del Proveedor que suele ser suficientemente estable. El soporte funciona y no hay que dar explicaciones.
+- **Modo Bridge**: Se comporta como un ONT, recibes todas las VLAN's. No lo he configurado nunca pero entiendo que sus ventajas y desventajas son las mismas que el punto siguiente (ONT),
 - **ONT**: Conecto mi Router al *Optical Network Termination*, a su puerto ETH1, me presenta las 3 VLANs: 6 para Datos, 2 para IPTV y 3 para VoIP.
   - Desventajas: Si no tienes experiencia en routing/switching tendrás muchos problemas.
   - Ventajas: Definitivamente control total, incluyendo tráfico IPTV/VoIP además de evitar el doble port-forwaring y doble NAT.
 
 ¿Cuál recomiendo?
 
-- Si tienes el ONT, es la mejor opción. Llevo usándolo años, cuando Movistar lo instalaba junto con el router. Por desgracia hoy en día no se puede pedir en un alta nueva. 
+- Si tienes el ONT, es la mejor opción. Llevo usándolo años, cuando Movistar lo instalaba junto con el router. Por desgracia hoy en día no se puede pedir en un alta nueva.
 
 - Modo bridge - si puedes y tu router lo soporta sería mi segunda opción. Ojo!, hay routers (p.ej GPT-2841GX4X5) que no soportan esta modalidad.
 
 - Modo estándar - sería la última si no me quedase más remedio. Ojo!, vale para todo lo que explico en este apunte pero me incomoda el uso de doble port forwarding, el posible doble NAT o tener que poner las estáticas a mi intranet, tener que abrir demasiados puertos y la pérdida del control total de VoIP e IPTV.
 
-<br/> 
+<br/>
 
 #### Router
 
@@ -88,7 +85,7 @@ En mi caso tengo ONT y uso **Linux** sobre máquina virtual, con su **routing na
     src="/assets/img/posts/2023-04-15-networking-avanzado-03.svg"
     caption="La seguridad es completa, por defecto no entra nada"
     width="500px"
-    %} 
+    %}
 
 Volviendo a mi instalación (la de la derecha en la figura). El hardware que uso para mi máquina virtual es un Host NUC de Intel. Siempre te hará falta un Switch (mínimo uno de 8xGbe con soporte de VLAN's e IGMP) y AP's con soporte de Roaming para la WiFi.
 
@@ -98,9 +95,9 @@ En el gráfico dejo cómo sería la conexión física en la modalidad "Estándar
     src="/assets/img/posts/2023-04-15-networking-avanzado-04.svg"
     caption="Representacion física de conexión"
     width="800px"
-    %} 
+    %}
 
-En mi caso (que conecto directo al ONT), a nivel físico tanto mi Host como el ONT a puertos TRUNK del Switch (puerto del ONT vlan's 2,3,6 y puerto del Host vlan's 2,3,6,100). Hablaré `PPPoE` por la `vlan6` y la `VLAN 100` para mi casa y mi propia subnet `192.168.100/24`. 
+En mi caso (que conecto directo al ONT), a nivel físico tanto mi Host como el ONT a puertos TRUNK del Switch (puerto del ONT vlan's 2,3,6 y puerto del Host vlan's 2,3,6,100). Hablaré `PPPoE` por la `vlan6` y la `VLAN 100` para mi casa y mi propia subnet `192.168.100/24`.
 
 Como distribución Linux me he decantado por **[Ubuntu 22.04 LTS](https://ubuntu.com/blog/tag/LTS)**, robusto y fácil de mantener. Lo instalé usando la [Plantilla de VM en Proxmox]({% post_url 2023-04-07-proxmox-plantilla-vm %}) (luego explico qué es Proxmox). Concedo acceso a las vlan's 2,3,6,100. Una vez que tengo activo mi Linux termino su instalación con algunas herramientas, eliminando `cloud-init` y preparando el fichero `netplan`.
 
@@ -113,14 +110,14 @@ root@muro:~# apt purge -y cloud-init
 root@muro:~# rm /etc/netplan/50-cloud-init.yaml
 ```
 
-Netplan para la configuración de red. 
+Netplan para la configuración de red.
 
 ```console
 
 root@muro:~# cat /etc/netplan/50-muro.yaml
 #
 # Ejemplo de fichero netplan para Ubuntu Linux como VM
-# en un Host que está conectado a un puerto TRUNK en el Switch. 
+# en un Host que está conectado a un puerto TRUNK en el Switch.
 #
 # Recibo mi interfaz eth0 en modo TRUNK y habilito las
 # vlans que necesito para hacer de Router con Movistar
@@ -163,7 +160,7 @@ Importante en el Software de Virtualización del Host (en mi caso Proxmox: `muro
     src="/assets/img/posts/2023-04-15-networking-avanzado-05.png"
     caption="Configuro la tarjeta para que reciba el TRUNK"
     width="600px"
-    %} 
+    %}
 
 Verifico que el router Linux reciba el Trunk. En el caso de Proxmox basta con dejar vacío el campo `VLAN Tag`. Ah! también **recomiendo quitar la opción `Firewall` en las opciones**. No se porqué, pero me dió problemas con `IGMP` mullticast a pesar de tenerlo desactivado a nivel global.
 
@@ -171,10 +168,10 @@ Verifico que el router Linux reciba el Trunk. En el caso de Proxmox basta con de
     src="/assets/img/posts/2023-04-15-networking-avanzado-06.svg"
     caption="El Router software se encarga de conmutar de forma segura"
     width="600px"
-    %}  
+    %}
 
-Ficheros que configuro alrededor de `PPP`, `NAT` e `iptables`. Recuerda que son solo una referencia y que debes **revisarlos para adaptarlos a tu instalación**. 
-  
+Ficheros que configuro alrededor de `PPP`, `NAT` e `iptables`. Recuerda que son solo una referencia y que debes **revisarlos para adaptarlos a tu instalación**.
+
 - [/etc/systemd/system/internet_wait.service](https://gist.github.com/LuisPalacios/68fccb64e9e1b8ef598ee7bf6de181ee)
 - [/etc/systemd/system/firewall_1_pre_network.service](https://gist.github.com/LuisPalacios/d90ff449e2e9886341ffa019008757b4)
 - [/etc/systemd/system/firewall_2_post_network.service](https://gist.github.com/LuisPalacios/3345a1ad94231a74fe5442c738e97cb0)
@@ -200,15 +197,15 @@ Recuerda habilitarlos. También dejé unidades para el arranque de `PPPoE`, una 
 # systemctl enable ppp_wait@movistar.service
 ```
 
-<br/> 
+<br/>
 
 #### Dominio dinámico
 
-Tu proveedor de servicios puede cambiar la IP que te asigna vía PPPoE en cada arranque o reconexión. Si quiero tener un nombre fijo (p.ej. `miservidor.tudominio.com`) para saber a dónde llamar desde Internet necesito tener un dominio propio y que mi proveedor DNS soporte alguna forma de hacer "Dominio Dinámico". 
+Tu proveedor de servicios puede cambiar la IP que te asigna vía PPPoE en cada arranque o reconexión. Si quiero tener un nombre fijo (p.ej. `miservidor.tudominio.com`) para saber a dónde llamar desde Internet necesito tener un dominio propio y que mi proveedor DNS soporte alguna forma de hacer "Dominio Dinámico".
 
-Es un servicio que permite actualizar mi nueva IP en mi dominio en Internet. Hay proveedores de DNS **dinámico** como DynDNS, No-IP, DuckDNS. Probablemente tu proveedor DNS también lo soporte, como es mi caso. 
+Es un servicio que permite actualizar mi nueva IP en mi dominio en Internet. Hay proveedores de DNS **dinámico** como DynDNS, No-IP, DuckDNS. Probablemente tu proveedor DNS también lo soporte, como es mi caso.
 
-Yo tengo mi dominio alojado en `cdmon.es` y soportan esta función ([documentación para actualizar la IP](https://ticket.cdmon.com/es/support/solutions/articles/7000005922-api-de-actualización-de-ip-del-dns-gratis-dinámico/)). A modo de ejemplo estos son los servicio en `systemd` y un pequeño `script` que uso en mi router Linux. 
+Yo tengo mi dominio alojado en `cdmon.es` y soportan esta función ([documentación para actualizar la IP](https://ticket.cdmon.com/es/support/solutions/articles/7000005922-api-de-actualización-de-ip-del-dns-gratis-dinámico/)). A modo de ejemplo estos son los servicio en `systemd` y un pequeño `script` que uso en mi router Linux.
 
 - [/etc/systemd/system/cdmon_update.service](https://gist.github.com/LuisPalacios/0455cff3e67d500772c23b58b2a8ff10)
 - [/etc/systemd/system/cdmon_update.timer](https://gist.github.com/LuisPalacios/415e188233fa71e3651413580281839a)
@@ -219,10 +216,10 @@ Yo tengo mi dominio alojado en `cdmon.es` y soportan esta función ([documentaci
 # systemctl enable cdmon_update.timer
 ```
 
-Cada 5 minutos mira a ver si ha cambiado la IP y si es así la actualiza. Tengo dados de alta varios registros de tipo `'A'` resolviendo a la misma IP Pública de mi casa: 
+Cada 5 minutos mira a ver si ha cambiado la IP y si es así la actualiza. Tengo dados de alta varios registros de tipo `'A'` resolviendo a la misma IP Pública de mi casa:
 
-- Home Assistant -> `ha.tudominio.com`, 
-- SSH -> `ssh.tudominio.com`, 
+- Home Assistant -> `ha.tudominio.com`,
+- SSH -> `ssh.tudominio.com`,
 - :
 
 Resolución de nombres desde internet:
@@ -231,15 +228,15 @@ Resolución de nombres desde internet:
     src="/assets/img/posts/2023-04-15-networking-avanzado-07.svg"
     caption="Cómo hago la resolución de nombres"
     width="800px"
-    %} 
+    %}
 
-Luego veremos cómo lo hago en mi Intranet. Te anticipo que cuento con un servidor DNS interno que sirve el mismo dominio (`tudominio.com`) en local, entregando IP's privadas de casa. Este donde esté (internet o intranet) las App's siempre saben cómo llegar a los servicios caseros. 
+Luego veremos cómo lo hago en mi Intranet. Te anticipo que cuento con un servidor DNS interno que sirve el mismo dominio (`tudominio.com`) en local, entregando IP's privadas de casa. Este donde esté (internet o intranet) las App's siempre saben cómo llegar a los servicios caseros.
 
 <br/>
 
 #### Llamar a la puerta
 
-Durante años he usado varias técnicas para protegerme de ataques y desde hace tiempo he optado por no abrir ningún puerto. Mi router descarta/tira todos los paquetes que llegan desde internet, siempre. Bueno, casi siempre. Hay un par de servicios a los que sí que me gustaría poder acceder desde Internet: levantar un túnel `ssh` o `ipsec` para hacer una administración puntual y acceso a mi servidor *Home Assistant* para la domótica. 
+Durante años he usado varias técnicas para protegerme de ataques y desde hace tiempo he optado por no abrir ningún puerto. Mi router descarta/tira todos los paquetes que llegan desde internet, siempre. Bueno, casi siempre. Hay un par de servicios a los que sí que me gustaría poder acceder desde Internet: levantar un túnel `ssh` o `ipsec` para hacer una administración puntual y acceso a mi servidor *Home Assistant* para la domótica.
 
 Descubrí la técnica del **Port Knocking** (llamar a la puerta) y me gustó mucho. Se trata de un App que envia 3 o 4 paquetes especiales al Router/Firewall para que reconozca que estás "llamando a la puerta" y si llamas como a él le gusta te abre temporalmente (solo a la IP desde la que llamo) el puerto del servicio que quieras consumir.
 
@@ -247,29 +244,29 @@ Descubrí la técnica del **Port Knocking** (llamar a la puerta) y me gustó muc
     src="/assets/img/posts/2023-04-15-networking-avanzado-08.jpg"
     caption="Aplicaciones involucradas"
     width="300px"
-    %} 
-    
-Uso **PortKnock** (App para smartphone): lanza la petición (1) Ábreme el puerto para llegar a Home Assistant (envía una serie de paquetes con una cadencia determinada), el router/firewall se da por enterado y abre durante un rato el puerto `p.ej. 28123`. (2) **Home asistant** pueda entrar. 
+    %}
+
+Uso **PortKnock** (App para smartphone): lanza la petición (1) Ábreme el puerto para llegar a Home Assistant (envía una serie de paquetes con una cadencia determinada), el router/firewall se da por enterado y abre durante un rato el puerto `p.ej. 28123`. (2) **Home asistant** pueda entrar.
 
 {% include showImagen.html
     src="/assets/img/posts/2023-04-15-networking-avanzado-09.svg"
     caption="Así funciona *Llamar a la puerta*"
     width="800px"
-    %} 
+    %}
 
 Podemos configurar cuántos toques se dan a la puerta y a qué puertos. Deben coincidir en el servidor y cliente. Por ejemplo, dar tres toques cada segundo sería: Envía un `SYN` al puerto #1, espera un segundo, un `SYN` al puerto #2, espera otro segundo y envía un último `SYN` al puerto #3. En ese instante nuestro daemon `knockd` ejecuta lo que queramos, que será típicamente `iptables` para abrir el puerto (`28123` en este ejemplo).
 
-Veremos que HomeAssistant siempre conecta con `ha.tudominio.com:28123`, en casa o en internet. Si estoy en casa mi DNS Server resuelve con la IP privada correcta. Así no tengo que cambiar su configuración. 
+Veremos que HomeAssistant siempre conecta con `ha.tudominio.com:28123`, en casa o en internet. Si estoy en casa mi DNS Server resuelve con la IP privada correcta. Así no tengo que cambiar su configuración.
 
 **Instalación y activación**
-  
+
 ```console
 root@muro:~# apt install knockd
 :
 root@muro:~# systemctl enable knockd
 ```
 
-Aquí tienes un ejemplo del fichero de configuración, **revísalo para adaptarlo a tu instalación**. 
+Aquí tienes un ejemplo del fichero de configuración, **revísalo para adaptarlo a tu instalación**.
 
 - [/etc/knockd.conf](https://gist.github.com/LuisPalacios/6132bb17999934f5eb51cf186d94910f)
 
@@ -277,7 +274,7 @@ Aquí tienes un ejemplo del fichero de configuración, **revísalo para adaptarl
 
 #### OpenVPN
 
-Para montar un Servidor de Acceso IPSec uso [OpenVPN](https://openvpn.net/) que sigue siendo la mejor solución, es fiable, rápido y seguro. Como cliente utilizo [Passepartout](https://passepartoutvpn.app/). 
+Para montar un Servidor de Acceso IPSec uso [OpenVPN](https://openvpn.net/) que sigue siendo la mejor solución, es fiable, rápido y seguro. Como cliente utilizo [Passepartout](https://passepartoutvpn.app/).
 
 * Si optas por **dejar siempre un puerto abierto**, esto es lo que iría en el fichero [firewall_1_pre_network.sh](https://gist.github.com/LuisPalacios/b648ef38206caa8c28cbc148a89ff364).
 
@@ -299,7 +296,7 @@ Para montar un Servidor de Acceso IPSec uso [OpenVPN](https://openvpn.net/) que 
     src="/assets/img/posts/2023-04-15-networking-avanzado-10.svg"
     caption="Uso knockd para abrir el puerto OpenVPN"
     width="500px"
-    %} 
+    %}
 
 Este sería un ejemplo de configuración a modo de referencia, recomiendo **revisarlo**.
 
@@ -308,7 +305,7 @@ Este sería un ejemplo de configuración a modo de referencia, recomiendo **revi
 Te dejo un par de apuntes (algo antiguos pero válidos) como referencia para la instalación de OpenVPN.
 
 - [Bridge Ethernet]({% post_url 2014-10-19-bridge-ethernet %}) sobre cómo extender la red de mi casa a un sitio remoto a través de internet, donde instalo y configuro OpenVPN
-- [OpenVPN Server]({% post_url 2014-09-14-vpn-server-en-linux %}) donde describo describir cómo montar un servidor VPN casero sobre linux Gentoo. 
+- [OpenVPN Server]({% post_url 2014-09-14-vpn-server-en-linux %}) donde describo describir cómo montar un servidor VPN casero sobre linux Gentoo.
 
 <br/>
 
@@ -318,13 +315,13 @@ Te dejo un par de apuntes (algo antiguos pero válidos) como referencia para la 
 
 ### Intranet
 
-Vamos bajando por la casa y llegamos a la Intranet, cosas que he montado y algunos consejos humildes después de muchas experiencias negativas: 
+Vamos bajando por la casa y llegamos a la Intranet, cosas que he montado y algunos consejos humildes después de muchas experiencias negativas:
 
-- La red física: Dos switches principales, de 24 y 10 puertos de 1Gbe y luego switches pequeños en los cuartos. Tardé años aprovechando obras para ir tirando cables 🤗. Recomiendo encarecidamente cablear todo lo posible. No os fiéis del alcance y potencia de los AP's WiFi, un muro de carga o ciertos materiales pueden destrozarte la cobertura en un santiamén. 
+- La red física: Dos switches principales, de 24 y 10 puertos de 1Gbe y luego switches pequeños en los cuartos. Tardé años aprovechando obras para ir tirando cables 🤗. Recomiendo encarecidamente cablear todo lo posible. No os fiéis del alcance y potencia de los AP's WiFi, un muro de carga o ciertos materiales pueden destrozarte la cobertura en un santiamén.
 
 - También desaconsejo (mucho) WiFi MESH, ese día que "pixela" el video, que falla la domótica (WiFi), que tus móviles se desasocian, que Homekit, Alexa o Google se va, en fin, te acordarás del cable!. Ya se que hay muchos casos donde no podemos pasar cable (o no nos dejan), pero lo recuerdo porque lo he sufrido.
 
-- Si tienes la fortuna de casa nueva o una obra, no lo dudes, cable a "todos" los espacios de la casa con CAT6 minimo. También a techos o paredes donde irán los AP's (mejor alimentarlos con PoE). 
+- Si tienes la fortuna de casa nueva o una obra, no lo dudes, cable a "todos" los espacios de la casa con CAT6 minimo. También a techos o paredes donde irán los AP's (mejor alimentarlos con PoE).
 
 - Cuidado también con equipos WiFi demasiado inteligentes que montan redes privadas en la WiFi y te obligan a hacer NAT. Son equipos para consumo que desaconsejo; suelo huir de tecnologías que no te permite configurar transparentemente como tu quieras.
 
@@ -345,13 +342,13 @@ Poner todo los huevos en el mismo cesto no es aconsejable y los Tecky's lo sabem
     src="/assets/img/posts/2023-04-15-networking-avanzado-11.jpg"
     caption="Como decía, llevo tiempo complicando mi instalación"
     width="600px"
-    %} 
+    %}
 
 <br/>
 
 #### DNS y DHCP
 
-Utilizo [Pi-hole](https://pi-hole.net) como servidor DNS y DHCP. Para DHCP uso un rango dinámico y muchas IP's fijas (por MAC). Mi dominio interno es exactamente el mismo que el externo: `tudominio.com`. 
+Utilizo [Pi-hole](https://pi-hole.net) como servidor DNS y DHCP. Para DHCP uso un rango dinámico y muchas IP's fijas (por MAC). Mi dominio interno es exactamente el mismo que el externo: `tudominio.com`.
 
 {% include showImagen.html
     src="/assets/img/posts/2023-04-15-networking-avanzado-12.svg"
@@ -359,9 +356,9 @@ Utilizo [Pi-hole](https://pi-hole.net) como servidor DNS y DHCP. Para DHCP uso u
     width="500px"
     %}
 
-Cuando se pide desde **Internet** un nombre bajo `tudominio.com` se entrega mi IP pública (que actualizo dinámicamente). Cuando se lanza una consulta DNS desde la **Intranet** siempre se hace a PiHole, si es un nombre bajo `tudominio.com` entregará una IP privada directamente, si es cualquier otro nombre irá a averiguarlo a su siguiente nivel (DNS Servers de Movistar por ejemplo). 
+Cuando se pide desde **Internet** un nombre bajo `tudominio.com` se entrega mi IP pública (que actualizo dinámicamente). Cuando se lanza una consulta DNS desde la **Intranet** siempre se hace a PiHole, si es un nombre bajo `tudominio.com` entregará una IP privada directamente, si es cualquier otro nombre irá a averiguarlo a su siguiente nivel (DNS Servers de Movistar por ejemplo).
 
-Te recomiendo consultar este apunte sobre [Pi-hole casero]({% post_url 2021-06-20-pihole-casero %}) para entender mejor cómo funciona. En casa uso una CMDB muy simple en un fichero excel para llevar el control de MAC->IP privada y actualizo un par de ficheros de PiHole cuando hay cambios. 
+Te recomiendo consultar este apunte sobre [Pi-hole casero]({% post_url 2021-06-20-pihole-casero %}) para entender mejor cómo funciona. En casa uso una CMDB muy simple en un fichero excel para llevar el control de MAC->IP privada y actualizo un par de ficheros de PiHole cuando hay cambios.
 
 
 <br/>
@@ -370,21 +367,21 @@ Te recomiendo consultar este apunte sobre [Pi-hole casero]({% post_url 2021-06-2
 
 Un proxy inverso es un servidor que actúa como intermediario entre los usuarios y los servidores web que hay tras él. Cuando se solicita un sitio web, en lugar de enviarle la solicitud, se envía al proxy inverso y este a su vez al servidor web. Permite que el navegador use `https` con el proxy inverso y este use `http` con el Web original.
 
-Podré usar `https` con certificados válidos generados con [Let's Encrypt](https://letsencrypt.org/es/), con un certificado para cada nombre del servidor Web al que quiero llegar. Todas mis sesiones `https` quedan centralizadas a través de él. 
+Podré usar `https` con certificados válidos generados con [Let's Encrypt](https://letsencrypt.org/es/), con un certificado para cada nombre del servidor Web al que quiero llegar. Todas mis sesiones `https` quedan centralizadas a través de él.
 
 **Configuración DNS**
 
 Veamos con ejemplos la configuración. Tengo los servicios *git, grafana y home assistant*. Quiero poder llegar vía `https` a los tres y además `ssh` al servidor *git*.
 
-- En **Internet** mantengo un registro `A` para cada uno y todos resuelven a mi misma IP pública (w.x.y.z), que actualizo dinámicamente. 
+- En **Internet** mantengo un registro `A` para cada uno y todos resuelven a mi misma IP pública (w.x.y.z), que actualizo dinámicamente.
 
 ```consola
-    git.tudominio.com            w.x.y.z 
+    git.tudominio.com            w.x.y.z
     grafana.tudominio.com        w.x.y.z
     ha.tudominio.com             w.x.y.z
 ```
 
-- En la **Intranet** esos mismos nombres resuelven A la IP del Proxy Inverso. También tengo nombres para los host reales de mis máquinas virtuales donde están los servicios. 
+- En la **Intranet** esos mismos nombres resuelven A la IP del Proxy Inverso. También tengo nombres para los host reales de mis máquinas virtuales donde están los servicios.
 
 
 ```consola
@@ -405,7 +402,7 @@ La foto final quedaría así:
     width="800px"
     %}
 
-<br/> 
+<br/>
 
 **Configuración Proxy Inverso**
 
@@ -417,7 +414,7 @@ Lo instalo como **Contenedor LXC** en Proxmox VE, [mediante un Helper Script](ht
     src="/assets/img/posts/2023-04-15-networking-avanzado-14.png"
     caption="Instalación de Contenedor LXC usando un Helper Script"
     width="700px"
-    %} 
+    %}
 
 La instalación se hace desde la consola de uno de mis Host:
 
@@ -429,9 +426,9 @@ root@pve-sol:~# LANG=C bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/r
     src="/assets/img/posts/2023-04-15-networking-avanzado-15.png"
     caption="Contesto todas las preguntas para crear el Contenedor LXC"
     width="800px"
-    %} 
+    %}
 
-<br/> 
+<br/>
 
 **Configuración de Proxy Hosts**
 
@@ -441,13 +438,13 @@ Proxy Hosts creados a través de su interfaz Web.
     src="/assets/img/posts/2023-04-15-networking-avanzado-16.png"
     caption="Varios Proxy Hosts, Certificados y un Stream"
     width="600px"
-    %} 
+    %}
 
 {% include showImagen.html
     src="/assets/img/posts/2023-04-15-networking-avanzado-17.png"
     caption="Lista de Proxy Hosts"
     width="600px"
-    %} 
+    %}
 
 Ejemplo de **Proxy Host** de *Home Assistant*.
 
@@ -461,7 +458,7 @@ Ejemplo de **Proxy Host** de *Home Assistant*.
 | Advanced | No añado nada, excepto para Home Asssistant y Grafana, ver *Parámetros avanzados* más adelante |
 
 
-Esta es la configuración de Certificados con Let's Encrypt. Para poder crear y renovar los certificados necesitas que Let's Encrypt valide que eres quien dices ser. Primero tu proveedor DNS debe resolver correctamente el subdominio sobre el cual estás solicitando el certificado (en este ejemplo de Home Assistant sería `ha.tudominio.com`). Segundo y más importante, confirmarlo con uno de los dos métodos siguientes. 
+Esta es la configuración de Certificados con Let's Encrypt. Para poder crear y renovar los certificados necesitas que Let's Encrypt valide que eres quien dices ser. Primero tu proveedor DNS debe resolver correctamente el subdominio sobre el cual estás solicitando el certificado (en este ejemplo de Home Assistant sería `ha.tudominio.com`). Segundo y más importante, confirmarlo con uno de los dos métodos siguientes.
 
 {% include showImagen.html
     src="/assets/img/posts/2023-04-15-networking-avanzado-18.png"
@@ -469,7 +466,7 @@ Esta es la configuración de Certificados con Let's Encrypt. Para poder crear y 
     width="600px"
     %}
 
-- Método *DNS Challenge*: Es el mejor, no necesitas abrir ningún puerto en tu router.  *Tu proveedor DNS tiene que estar en la lista de los soportados por Let's Encrypt*. Si no está ni tampoco puedes crear registros TXT dinámicamente, tendrás que usar el método manual. 
+- Método *DNS Challenge*: Es el mejor, no necesitas abrir ningún puerto en tu router.  *Tu proveedor DNS tiene que estar en la lista de los soportados por Let's Encrypt*. Si no está ni tampoco puedes crear registros TXT dinámicamente, tendrás que usar el método manual.
 
 - Método *Manual*: Me fuerza a abrir temporalmente el puerto 80. Desde Let's Encrypt necesita hablar por ese puerto (y no otro) con un web server temporal que levanta NPM.
 
@@ -479,15 +476,15 @@ Yo uso el método manual y un par de scripts, [open-npm-letsencrypt.sh](https://
     src="/assets/img/posts/2023-04-15-networking-avanzado-19.png"
     caption="Tipo de comunicación con Let's Encrypt"
     width="600px"
-    %} 
+    %}
 
-<br/> 
+<br/>
 
 **Parámetros avanzados**
 
 * **Home Assistant**
 
-**En la VM de NPM:** *Proxy Hosts >* **Home Assistant** *> Advanced >* **Custom Nginx Configuration**. 
+**En la VM de NPM:** *Proxy Hosts >* **Home Assistant** *> Advanced >* **Custom Nginx Configuration**.
 
 ```conf
 # Para que Visual Studio Server funcione correctamente.
@@ -500,13 +497,13 @@ location / {
 }
 ```
 
-**En Home Assistan:** Settings > System > Network: `http://192.168.100.ZZZ:8123` 
+**En Home Assistan:** Settings > System > Network: `http://192.168.100.ZZZ:8123`
 
 {% include showImagen.html
     src="/assets/img/posts/2023-04-15-networking-avanzado-20.png"
     caption="URL por la que escucha HASS"
     width="400px"
-    %} 
+    %}
 
 Y en su fichero `configuration.yaml` para que acepte peticiones de un proxy inverso:
 
@@ -517,11 +514,11 @@ http:
   use_x_forwarded_for: true
   trusted_proxies:
   - 192.168.100.243 ### IP del Nginx Proxy Manager LXC ###
-```  
+```
 
 * **Grafana**
 
-**En la VM de NPM:** *Proxy Hosts >* **Grafana** *> Advanced >* **Custom Nginx Configuration**. 
+**En la VM de NPM:** *Proxy Hosts >* **Grafana** *> Advanced >* **Custom Nginx Configuration**.
 
 ```conf
 # Para que NPM también escuche por el puerto `48123` además del `443` para grafana
@@ -534,9 +531,9 @@ listen 48123 ssl http2;
 [server]
 protocol = http
 http_port = 3000
-```  
+```
 
-<br/> 
+<br/>
 
 **Configuración de Stream (Port Forwarding)**
 
@@ -544,9 +541,9 @@ Para aclarar la nomenclatura, he visto que NPM llama **Stream** al hecho de hace
 
 | ¡¡¡ MUY IMPORTANTE !!! Antes de hacer Port Forwarding del puerto `ssh (22)` en el **Nginx Proxy Manager** es importantísimo cambiar el puerto por el que escucha su propio daemon `sshd` por uno alternativo o perdería el aceso vía `ssh` al NPM. He documentado en el apunte [Socketed SSH]({% post_url 2023-04-14-ssh-socket %}) cómo se hace (en un Contenedor LXC con Ubuntu, donde he montado mi NPM). |
 
-¿Porqué quiero hacer Port Forwarding hacia mi servidor Git?. Pues porque quiero usar `ssh` como método de comunicación para conectar con `git@git.tudominio.com:...` (commits, push, pull, etc...) y además usar el mismo nombre DNS que uso para administrar mi servidor Git vía `https`: `https://git.tudominio.com`. 
+¿Porqué quiero hacer Port Forwarding hacia mi servidor Git?. Pues porque quiero usar `ssh` como método de comunicación para conectar con `git@git.tudominio.com:...` (commits, push, pull, etc...) y además usar el mismo nombre DNS que uso para administrar mi servidor Git vía `https`: `https://git.tudominio.com`.
 
-Como Git usa el puerto (fijo) `22` cuando uso la nomenclatura `git@git.tudominio.com` no me queda más remedio que hacer algún truco para redirigir dicho puerto en mi NPM. 
+Como Git usa el puerto (fijo) `22` cuando uso la nomenclatura `git@git.tudominio.com` no me queda más remedio que hacer algún truco para redirigir dicho puerto en mi NPM.
 
 Como ya había dado de alta un Proxy Host para la parte `https` solo me falta añadir el Stream para reenviar el tráfico del puerto `22` hacia mi servidor Git en la intranet.
 
@@ -554,8 +551,8 @@ Como ya había dado de alta un Proxy Host para la parte `https` solo me falta a�
     src="/assets/img/posts/2023-04-15-networking-avanzado-21.png"
     caption="Configuración de un port forwarding"
     width="600px"
-    %} 
+    %}
 
-Ahora tengo disponible `https://git.tudominio.com (puerto 443)` para administrar y `git@git.tudominio.com:repositorio.git (puerto 22)` para trabajar con mi Git server privado. Lo mejor es que también es compatible con el acceso, previo *knock, knock*, desde internet. 
+Ahora tengo disponible `https://git.tudominio.com (puerto 443)` para administrar y `git@git.tudominio.com:repositorio.git (puerto 22)` para trabajar con mi Git server privado. Lo mejor es que también es compatible con el acceso, previo *knock, knock*, desde internet.
 
 <br/>
