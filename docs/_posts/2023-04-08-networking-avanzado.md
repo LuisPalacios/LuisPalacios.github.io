@@ -457,7 +457,6 @@ Ejemplo de **Proxy Host** de *Home Assistant*.
 | SSL | Aquí añadiré el Certificado de `ha.tudominio.com` más adelante, cuando lo pida a Let's Encrypt en el siguiente paso. Siempre activaré la opción *Force SSL* |
 | Advanced | No añado nada, excepto para Home Asssistant y Grafana, ver *Parámetros avanzados* más adelante |
 
-
 Esta es la configuración de Certificados con Let's Encrypt. Para poder crear y renovar los certificados necesitas que Let's Encrypt valide que eres quien dices ser. Primero tu proveedor DNS debe resolver correctamente el subdominio sobre el cual estás solicitando el certificado (en este ejemplo de Home Assistant sería `ha.tudominio.com`). Segundo y más importante, confirmarlo con uno de los dos métodos siguientes.
 
 {% include showImagen.html
