@@ -59,6 +59,13 @@ sudo apt install -y build-essential cmake autotools-dev automake \
 sudo apt install -y python3-pip pipenv
 ```
 
+
+**Golang** (el lenguaje de programación más famoso del mundo)
+
+```zsh
+sudo apt install -y golang-go
+```
+
 **Recomendados** que vendrán bien
 
 ```zsh
