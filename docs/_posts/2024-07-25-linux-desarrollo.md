@@ -27,8 +27,10 @@ Antes de empezar, utilizo el terminal predeterminado de Ubuntu, aunque a veces m
   - Creo los directorios de backup (`sudo mkdir /root/.nano` y `mkdir ~/.nano`
 - Script [/usr/bin/confcat](https://gist.githubusercontent.com/LuisPalacios/d646638f7571d6e74c20502b3033cf07/raw/f0f015d9b1d806919ec0295a22f3710b4f3096e0/confcat), un cat sin las líneas de comentarios
 - Script [/usr/bin/s](https://gist.githubusercontent.com/LuisPalacios/8e334583ad28e681326c65b665457eaa/raw/201a2ace950dcbb14b341b31ae70c9fffde29540/s) para cambiar a root mucho más rápido
-  - Normalmente añado mi usuario a `echo 'luis ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/90-mi-usuario`
-- Cambiar los permisos: `sudo chmod 755 /usr/bin/e /usr/bin/confcat /usr/bin/s`
+  - Añado mi usuario a sudoers
+  - `echo 'luis ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/90-mi-usuario`
+- Cambiar los permisos:
+  - `sudo chmod 755 /usr/bin/e /usr/bin/confcat /usr/bin/s`
 
 ### Instalación de software
 
@@ -142,9 +144,9 @@ Aquí las referencias a mis ficheros, importante que las revises y adaptes a tu 
 
 No necesita muchos comentarios, te dejo aquí enlaces a mis apuntes sobre Git
 
-- [Chuleta sobre GIT]({% post_url 2021-10-10-git-ceatsheet %}), donde recomiendo instalar [gh en tu cuenta Personal]({% post_url 2021-10-10-git-ceatsheet#configurar-gh-cuenta-personal %}) o [gh en multicuenta]({% post_url 2021-10-10-git-ceatsheet#configurar-gh-cuenta-profesional %}).
+- [Chuleta sobre GIT]({% post_url 2021-10-10-git-cheatsheet %}), donde recomiendo instalar `gh` en tu cuenta Personal o Multicuenta.
 - [Git y SSH multicuenta]({% post_url 2021-10-09-ssh-git-dual %}), donde trato más en detalle cómo trabajar con varias cuentas en GitHub
-- [GIT en detalle]({% post_url 2021-04-17-git-en-detalle %}), un buen apunte para profundizar en Git y entenderlo de una vez por todas, ojo que es muy técnico.
+- [GIT en detalle]({% post_url 2021-04-17-git-en-detalle %}), para profundizar en Git y entenderlo de una vez por todas, ojo que es muy técnico.
 
 ## Chrome
 
