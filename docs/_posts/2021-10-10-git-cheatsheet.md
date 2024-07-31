@@ -8,7 +8,7 @@ excerpt_separator: <!--more-->
 
 ![Logo GIT Cheatsheet](/assets/img/posts/logo-git-cheatsheet.svg){: width="150px" style="float:left; padding-right:25px" }
 
-Este apunte contiene **mi ficha de ayuda sobre GIT**: Es mi hoja recordatorio que utilizo como programador, donde tengo las comando que más utilizo. Viene bien por ejemplo cuando borro accidentalmente un fichero, quiero consultar una versión anterior de código o quiero ignorar una modificación en un archivo concreto.
+Este apunte contiene **mi chuleta sobre GIT**: Es mi hoja recordatorio que utilizo como programador, donde tengo las comando que más utilizo. Viene bien por ejemplo cuando borro accidentalmente un fichero, quiero consultar una versión anterior de código o quiero ignorar una modificación en un archivo concreto.
 
 <br clear="left"/>
 <!--more-->
@@ -55,15 +55,15 @@ $ git push origin --tags
 ### Alias
 
 ```zsh
-$ git config --global alias.lo '!git --no-pager log --graph --decorate --pretty=oneline --abbrev-commit'
-$ git config --global alias.lg '!git lg1'
-$ git config --global alias.lg1 '!git lg1-specific --all'
-$ git config --global alias.lg1-specific "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %s - %an %C(blue)%d%C(reset)'"
+git config --global alias.lo '!git --no-pager log --graph --decorate --pretty=oneline --abbrev-commit'
+git config --global alias.lg '!git lg1'
+git config --global alias.lg1 '!git lg1-specific --all'
+git config --global alias.lg1-specific "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %s - %an %C(blue)%d%C(reset)'"
 ```
 
 ```zsh
-$ git lo
-$ git lg
+git lo
+git lg
 ```
 
 <br/>
@@ -128,7 +128,7 @@ You are not logged into any GitHub hosts. To log in, run: gh auth login
       width="800px"
       %}
 
-Terminaste, si solo tienes una única cuenta en GitHub has terminado, puedes trabajar con `gh`, por ejemplo para, desde [GitHub, hacer la importación de un repositorio local existente](#github-hacer-importacion-de-repositorio-local).
+Terminaste, si solo tienes una única cuenta en GitHub has terminado, puedes trabajar con `gh`, por ejemplo para, desde [GitHub, hacer la importación de un repositorio local existente](#github-hacer-importación-de-repositorio-local).
 
 ### Configurar `gh` cuenta Profesional
 
@@ -221,7 +221,7 @@ git commit -m "primer commit"
 ```shell
 cd /Users/luis/00.git/02.github-luispa/zsh-zshrc
 
-gh repo create --description "Mi .zshrc" --remote "gh-LuisPalacios:LuisPalacios/zsh-zshrc.git" --source=. --public --push
+gh repo create --description "Mi .zshrc" --remote=origin --source=. --public --push
 ✓ Created repository LuisPalacios/zsh-zshrc on GitHub
 ✓ Added remote git@github.com:LuisPalacios/zsh-zshrc.git
 git@github.com: Permission denied (publickey).
