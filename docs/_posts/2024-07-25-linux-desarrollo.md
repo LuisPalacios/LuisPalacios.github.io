@@ -43,7 +43,13 @@ sudo snap refresh
 **Esenciales** para empeza
 
 ```zsh
-sudo apt install -y vim git libfuse2
+sudo apt install -y vim libfuse2
+```
+
+**GIT**, sin comentarios
+
+```zsh
+sudo apt install -y git gh
 ```
 
 **C/C++** aunque no programes en estos lenguajes
@@ -58,7 +64,6 @@ sudo apt install -y build-essential cmake autotools-dev automake \
 ```zsh
 sudo apt install -y python3-pip pipenv
 ```
-
 
 **Golang** (el lenguaje de programación más famoso del mundo)
 
@@ -132,6 +137,14 @@ Aquí las referencias a mis ficheros, importante que las revises y adaptes a tu 
 - **[~/.zshrc](https://gist.github.com/LuisPalacios/7507ce0b84adcad067320e9631648fd7)**. Mi fichero de configuración de `zsh`
 - **[~/.tmux.conf](https://gist.github.com/LuisPalacios/065f4f0491d472d65ef62f67f1f418a1)**. Mi fichero de configuración de `tmux`.
 - **[t](https://gist.github.com/LuisPalacios/860b689687bc239ab9f3549be67df499)**. Script para lanar `tmux`
+
+## Git
+
+No necesita muchos comentarios, te dejo aquí enlaces a mis apuntes sobre Git
+
+- [Chuleta sobre GIT]({% post_url 2021-10-10-git-ceatsheet %}), donde recomiendo instalar [gh en tu cuenta Personal]({% post_url 2021-10-10-git-ceatsheet#configurar-gh-cuenta-personal %}) o [gh en multicuenta]({% post_url 2021-10-10-git-ceatsheet#configurar-gh-cuenta-profesional %}).
+- [Git y SSH multicuenta]({% post_url 2021-10-09-ssh-git-dual %}), donde trato más en detalle cómo trabajar con varias cuentas en GitHub
+- [GIT en detalle]({% post_url 2021-04-17-git-en-detalle %}), un buen apunte para profundizar en Git y entenderlo de una vez por todas, ojo que es muy técnico.
 
 ## Chrome
 
