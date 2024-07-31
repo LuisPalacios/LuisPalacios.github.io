@@ -205,36 +205,47 @@ Si ya tenemos un repositorio en local, inicializado con GIT y queremos crear lo 
 
 En este apunte describo la primera, con el GitHub CLI, que es la más cómoda. Tienes que instalar `gh` como puse arriba, [Preparar GitHub CLI](#github-cli-gh), y tenerlo bien configurado para tu cuenta (o cuentas) en GitHub.
 
-- Creo un repositorio local `mirepo` con `git init`
+- Creo un directorio para mi proyecto, o accedo a un directorio que tiene un proyecto y quiero importar
 
 ```shell
 mkdir -p /Users/luis/00.git/02.github-luispa/zsh-zshrc
 cd /Users/luis/00.git/02.github-luispa/zsh-zshrc
-git init
 e README.md
-git add .
-git commit -m "primer commit"
+e zsh-zshrc.sh
 ```
 
-- A continuación uso `gh` para "subir" mi repositorio local a GitHub, prefiero hacerlo de golpe en un solo comando.
+- Entro en el directorio e inicializo Git con `git init`
 
 ```shell
 cd /Users/luis/00.git/02.github-luispa/zsh-zshrc
+git init
+git branch -M main           # Renombro desde master a main, es el estándar en GitHub
+```
 
+- Añadimos a la zona de staging y hacemos los commits que necesitemos..
+
+```shell
+cd /Users/luis/00.git/02.github-luispa/zsh-zshrc
+e LICENSE  # Puedo seguir editando/añadiendo etc...
+git add .
+git config user.name "Luis Palacios"
+git config user.email "micorreopersonal@personal.com"
+git commit -m "primer commit"
+```
+
+- Ya estamos listos para subirlo. Uso `gh` para "subir" mi repositorio local a GitHub, en un solo comando.
+
+```shell
+cd /Users/luis/00.git/02.github-luispa/zsh-zshrc
 gh repo create --description "Mi .zshrc" --remote=origin --source=. --public --push
 ✓ Created repository LuisPalacios/zsh-zshrc on GitHub
 ✓ Added remote git@github.com:LuisPalacios/zsh-zshrc.git
-git@github.com: Permission denied (publickey).
 ```
 
-La buena noticia es que el repositorio remoto se ha creado, pero no parece reconocer bien mi nombre de Host en `~/.ssh/config` y se quedó a medias, no configuró bien el "remote" bajo `.git/config`. Termino de hacerlo manualmente
+Si el remote es distinto (por ejemplo en el caso de mútiples usuarios) lo cambio
 
 ```zsh
-git config user.name "Luis Palacios"
-git config user.email "micorreopersonal@personal.com"
-git branch -M main
-git remote add origin gh-LuisPalacios:LuisPalacios/zsh-zshrc.git
-git push -u origin main
+git remote set-url origin gh-LuisPalacios:LuisPalacios/zsh-zshrc.git
 ```
 
 <br/>
