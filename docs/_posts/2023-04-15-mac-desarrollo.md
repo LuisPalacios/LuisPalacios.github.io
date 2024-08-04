@@ -16,15 +16,7 @@ Está documentado **partiendo de una instalación nueva de Ventura**, desde cero
 <br clear="left"/>
 <!--more-->
 
-
-
-## Instalación
-
-Empezamos con la instalación, si estás buscando cómo **actualizar o reparar**, ve al final del apunte.
-
-<br/>
-
-### Xcode command line tools [+ Xcode]
+## Xcode command line tools [+ Xcode]
 
 ![logo linux router](/assets/img/posts/logo-xcode.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -46,11 +38,7 @@ La instalación de Xcode es opcional, solo si vas a desarrollar para macOS, iOS,
 - No instalo Xcode:
   - Ejecutar desde el CLI: `xcode-select --install`
 
-
-<br/>
-
-
-### iTerm2
+## iTerm2
 
 ![logo linux router](/assets/img/posts/logo-iterm2.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -65,13 +53,10 @@ Un par de tips:
 
 - Si sufres el problema: "Cuando iTerm arranca tarda mucho en mostrar el prompt", se resuelve con `sudo xcodebuild -license accept`
 - Activa un atajo en Finder, para poder abrir un `iTerm` cuando el cursor está en una carpeta de Finder.
-  * `Ajustes Sistema → Teclado → Funciones rápidas de teclado → Servicios`
-  * `→ Archivos y carpetas → New iTerm2 Tab Here → Ctrl Shift T`
+  - `Ajustes Sistema → Teclado → Funciones rápidas de teclado → Servicios`
+  - `→ Archivos y carpetas → New iTerm2 Tab Here → Ctrl Shift T`
 
-<br/>
-
-
-### Oh My Zsh
+## Oh My Zsh
 
 ![logo linux router](/assets/img/posts/logo-ohmyzsh.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -83,25 +68,21 @@ Instalación:
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
-<br/>
-
-### Fichero `~/.zshrc`
+## Fichero `~/.zshrc`
 
 Una vez instalado iTerm + Oh My Zsh te recomiendo que te copies el contenido de mi fichero **`~/.zshrc`**. Tras instalar iTerm2 y Oh-My-Zsh se habrá creado ya uno e irás viendo que te pido hacer modificaciones en este fichero más adelante.
 
 Te dejo el mío, es una copia final completa, compatible con lo que acabamos de instalar y lo que instalaremos. Ahora bien, **es muy importante que una vez copiado lo revises y adaptes a tu caso**. El mío está preparado para un Mac sobre chip ARM. **Si tu Mac usa chip Intel revisa el fichero**, verás notas en las líneas para saber qué comentar/descomentar.
 
-* Salvo el que me acaba de crear Oh-My-Zsh y descargo una copia del mío.
+- Salvo el que me acaba de crear Oh-My-Zsh y descargo una copia del mío.
+
 ```zsh
 cd ~
 cp .zshrc .zshrc.ORIGINAL
 curl -s -O https://gist.githubusercontent.com/LuisPalacios/f66942b329af7920bebd4b95fa36cdb5/raw/52fe5b891b524bde6d315aab92a6b82d0dafa19e/.zshrc
 ```
 
-<br/>
-
-### Visual Studio Code
-
+## Visual Studio Code
 
 ![logo linux router](/assets/img/posts/logo-vscode.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -113,6 +94,7 @@ Instalación:
 - Lo *copio a Aplicaciones*
 
 Un par de tips:
+
 - Para poder arrancarlo cómodamente desde iTerm2, con VSCode lanzado, pulsa CMD-SHIFT-P e instala el comando '**code**' en el PATH.
 
 {% include showImagen.html
@@ -134,20 +116,15 @@ alias e="/usr/local/bin/code"
     width="600px"
     %}
 
-
 - A partir de ahora, cuando estas en un directorio y quieres editar todo lo que cuelga de él, simplemente escribe `e .`
 
 <br/>
 
-#### Consejos sobre VSCode
+### Consejos sobre VSCode
 
 - Con VSCode puedes hacerlo todo desde el teclado. Ya trae un subconjunto de comandos mapeado a [Atajos de teclado](https://code.visualstudio.com/docs/getstarted/keybindings). Si quieres aprender estos atajos por defecto, imprime el PDF para [Windows](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf), [macOS](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-macos.pdf) o [Linux](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-linux.pdf) y déjalo cerca.
 
-
-<br/>
-
-### Homebrew
-
+## Homebrew
 
 ![logo linux router](/assets/img/posts/logo-homebrew.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -237,15 +214,12 @@ En el caso de Github se puede usar este método (SSH pública-privada) para acce
 
 El contenido de tu pública se comparte:
 
-* En equipo linux remotos con los que quiero conectar: añadiéndolo al final del fichero `~/.ssh/authorized_keys`
-* En Servidores GIT, a través de su GUI, en la propiedades de mi cuenta.
+- En equipo linux remotos con los que quiero conectar: añadiéndolo al final del fichero `~/.ssh/authorized_keys`
+- En Servidores GIT, a través de su GUI, en la propiedades de mi cuenta.
 
 Tienes un par de apuntes adicionales en [SSH y X11]({% post_url 2017-02-11-x11-desde-root %}) y [SSH en Linux]({% post_url 2009-02-01-ssh %})
 
-
-<br/>
-
-### Java
+## Java
 
 ![logo linux router](/assets/img/posts/logo-java.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -270,9 +244,9 @@ $ mkdir -p ~/Desktop/hola
 $ cd ~/Desktop/hola
 $ cat > HolaMundo.java << EOF
 public class HolaMundo {
-	public static void main(String[] args) {
-		System.out.println("Hola Mundo!");
-	}
+  public static void main(String[] args) {
+  System.out.println("Hola Mundo!");
+ }
 }
 EOF
 
@@ -295,8 +269,7 @@ Te dejo aquí algunas referencias interesantes:
 
 <br/>
 
-### Eclipse.
-
+## Eclipse
 
 ![logo linux router](/assets/img/posts/logo-eclipse.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -325,11 +298,10 @@ Instalación:
     %}
 
 Un tip:
+
 - Un apunte que hice sobre cómo trabajar con [Eclipse + Java sobre repositorio Git]({% post_url 2022-10-27-quidomi %}).
 
-<br/>
-
-### Python, Pip y PipEnv
+## Python, Pip y PipEnv
 
 ![logo linux router](/assets/img/posts/logo-python.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -371,7 +343,7 @@ pipenv --version
   pipenv, version 2023.3.20
 ```
 
-* Prueba de concepto: Crear un mini proyecto.
+- Prueba de concepto: Crear un mini proyecto.
 
 Voy a crear un mini proyecto en Python, con un único fuente llamado `main.py` bajo un entorno virtual preparado con `pipenv`. Recuerda que **debes instalar las librerías necesarias con `pipenv` siempre desde el directorio de tu proyecto**. En este ejemplo uso la librería `requests`.
 
@@ -384,6 +356,7 @@ pipenv lock
 ```
 
 Copia el código siguiente, ejecuta `cat > main.py`, pégalo y sal: `⌘V, ⮐, ⌃D`
+
 ```python
 import requests
 response = requests.get('https://httpbin.org/ip')
@@ -391,8 +364,9 @@ print('Tu dirección IP es: {0}'.format(response.json()['origin']))
 ```
 
 Ejecuta la prueba de concepto
+
 ```console
-$ pipenv run python main.py
+pipenv run python main.py
 ```
 
 {% include showImagen.html
@@ -408,20 +382,15 @@ cd ~/Desktop
 rm -fr proyecto
 ```
 
-<br/>
-
-#### Integración con Visual Studio Code
+### Integración con Visual Studio Code
 
 Dejo aquí algunas recomendaciones para integrar Visual Studio Code y Python
 
 - Instalar [Python extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
 
-
 | Recomendado: [Advanced Visual Studio Code for Python Developers](https://realpython.com/advanced-visual-studio-code-python/) |
 
-<br/>
-
-### Ruby
+## Ruby
 
 ![logo linux router](/assets/img/posts/logo-ruby.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -449,7 +418,7 @@ Para poder instalar gem’s sin necesidad de ser `root` (es decir sin `sudo`) y 
 mkdir ~/.gems
 ```
 
-* Añadir al final de `~/.zshrc`
+- Añadir al final de `~/.zshrc`
 
 ```zsh
 export GEM_HOME=~/.gems
@@ -460,7 +429,7 @@ export PATH=~/.gems/bin:$PATH
 
 <br/>
 
-### Jekyll y Bundler
+## Jekyll y Bundler
 
 ![logo linux router](/assets/img/posts/logo-jekyll.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -488,11 +457,7 @@ bundle exec jekyll serve
 
 Desde un browser conecto con [http://127.0.0.1:4000/](http://127.0.0.1:4000/) y veo que funciona!!
 
-
-<br/>
-
-### Node-JS
-
+## Node-JS
 
 ![logo linux router](/assets/img/posts/logo-nodejs.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -518,11 +483,7 @@ Vamos a hacer un ejemplo super sencillo:
     width="500px"
     %}
 
-
-
-<br/>
-
-### MongoDB
+## MongoDB
 
 ![logo linux router](/assets/img/posts/logo-mongodb.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
@@ -549,8 +510,7 @@ brew install mongodb-community@7.0
 | Log | /usr/local/var/log/mongodb | /opt/homebrew/var/log/mongodb |
 | Datos | /usr/local/var/mongodb | /opt/homebrew/var/mongodb |
 
-
-**Ejecutar MongoDB**
+Ahora a **ejecutar MongoDB**
 
 - Arrancar o Parar MongoDB como un servicio de macOS usando `brew`
 
@@ -591,25 +551,19 @@ tail -f /opt/homebrew/var/log/mongodb/mongo.log
     width="600px"
     %}
 
-**Programa de ejemplo**
+Un **programa de ejemplo**
 
 Te dejo una referencia a un pequeño proyecto en GitHub para que puedas probar `npm` y `mongod`.
 
 - [Proyecto Tienda](https://github.com/LuisJal/ProyectoTienda)
 
-
-<br/>
-
-### Jupyter Lab
+## Jupyter Lab
 
 [Jupyter Lab](https://jupyter.org) es una aplicación web que permite codificar, ejecutar y "documentar". Esta última es una de las partes más interesante del proyecto, puedes tener documentación y código a la vez y que se ejecute.
 
 He documentado el proceso en otro apunte, más antiguo. La parte de Python puedes ignorarla porque la de aquí es más moderna, pero el resto te puede valer: [Python y JupyterLab en MacOS]({% post_url 2021-04-30-python-jupyter %}).
 
-
-<br/>
-
-### VirtualBox y Vagrant
+## VirtualBox y Vagrant
 
 | Nota: Este punto solo me ha funcionado en un Mac on chip Intel, así que estás avisado, de momento no he encontrado cómo emular un Linux o Windows ARM con VirtualBox y Vagrant instalados en un Mac con Apple Silicon (ARM)  |
 
@@ -623,7 +577,41 @@ No dejes de leer el apunte [Vagrant para desarrollo]({% post_url 2023-04-23-mac-
 
 <br/>
 
-### Otros
+## HTTPie
+
+Recomiendo la herramienta [HTTPie](https://httpie.io/) si vas a trabajar con API's. Te ayuda a trabajar con tus API's de forma sencilla e intuitiva. Tienen una versión gráfica y otra CLI.
+
+El proceso para instalarlo en el Mac:
+
+- Desde la página de [Descargas](https://httpie.io/download) accedo a Download for MAC y me instalo la versión GUI
+
+Ejemplos:
+
+- Hola Mundo
+  - `https httpie.io/hello`
+- Método HTTP personalizado, encabezados HTTP y datos JSON
+  - `http PUT pie.dev/put X-API-Token:123 name=John`
+- Envío de formularios
+  - `http -f POST pie.dev/post hello=World`
+- Ver la solicitud que se está enviando utilizando una de las opciones de salida
+  - `http -v pie.dev/get`
+- Construir e imprimir una solicitud sin enviarla utilizando el modo offline
+  - `http --offline pie.dev/post hello=offline`
+- Usar la API de Github para publicar un comentario en un issue con autenticación
+  - `http -a USERNAME POST https://api.github.com/repos/httpie/cli/issues/83/comments body=HTTPie is awesome! :heart:`
+- Subir un archivo utilizando entrada redirigida
+  - `http pie.dev/post < files/data.json`
+- Descargar un archivo y guardarlo mediante salida redirigida
+  - `http pie.dev/image/png > image.png`
+- Descargar un archivo al estilo wget
+  - `http --download pie.dev/image/png`
+- Usar sesiones nombradas para hacer persistentes ciertos aspectos de la comunicación entre solicitudes al mismo host
+  - `http --session=logged-in -a username:password pie.dev/get API-Key:123`
+  - `http --session=logged-in pie.dev/headers`
+- Establecer un encabezado de host personalizado para evitar la falta de registros DNS
+  - `http localhost:8000 Host:example.com`
+
+## Otros
 
 Dejo aquí una lista de programas que suelo instalar en mi portatil. Puedes instalar varios a la vez, poniendo más de uno en la lína de comandos (separados por espacio).
 
@@ -640,28 +628,17 @@ brew install <programa(s)>
 | jq | Filtrar, buscar y mostrar de forma "bonita" el resultado de un JSON en lugar de en una sola línea. |
 | knock | Cliente para hacer "Port Knocking" (llamar a la puerta), una técnica para aplicar seguridad a nuestro servidor. |
 
-
-<br/>
-
 ## Mantenimiento
 
 Normalmente nos olvidamos de mantener lo que instalamos, así que **saber cómo hacer actualizaciones y reparaciones** es interesante. Suelo actualizar periódicamente, mínimo una vez al mes, aunque no instale nada nuevo. Compruebo que está todo al día. Los programas que no menciono en esta sección se actualizan automáticamente desde AppStore o sus propias opciones GUI.
 
-<br/>
-
-#### Actualizaciones
-
-* Homebrew
+### Actualizaciones
 
 ```zsh
 brew update && brew upgrade            # Actualización estándar de homebrew
 ```
 
-<br/>
-
-#### Reparaciones
-
-* Homebrew
+### Reparaciones
 
 ```zsh
 brew update && brew update
@@ -672,11 +649,6 @@ brew cask list             # Ver que cask’s están instalados
 brew leaves                # Top level instalados (es lo más interesante)
 ```
 
-* Actualizar Homebrew
-
-
 ```zsh
-gem cleanup && gem pristine --all      # Reparar problema con el comando gem
+gem cleanup && gem pristine --all  # Actualizar hombrew cuado necesitas reparar problemas con el comando gem
 ```
-
-<br/>

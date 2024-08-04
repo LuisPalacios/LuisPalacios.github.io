@@ -216,3 +216,38 @@ Vas a encontrar muchas aplicaciones en formato .AppImage y para instalarlas y ge
 Si vas a hacer desarrollos de backend, servicios, middleware, es muy probable que necesites Docker. Tienes dos opciones, la primera es [Docker Engine](https://docs.docker.com/engine/install/ubuntu/) y la segunda usar [Docker Desktop para Linux](https://docs.docker.com/desktop/install/linux-install/), o incluso podrías montar ambos en el mismo equipo. Si tienes dudas mira las [diferencias](https://docs.docker.com/desktop/faqs/linuxfaqs/#what-is-the-difference-between-docker-desktop-for-linux-and-docker-engine).
 
 En mi caso prefiero usar **[Docker Engine](https://docs.docker.com/engine/install/ubuntu/)** y leventar un contenedor con [Portainer CE](https://docs.portainer.io/start/install-ce/server/docker/linux) para hacer la gestión.
+
+## HTTPie
+
+Recomiendo la herramienta [HTTPie](https://httpie.io/) si vas a trabajar con API's. Te ayuda a trabajar con tus API's de forma sencilla e intuitiva. Tienen una versión gráfica y otra CLI.
+
+El proceso para instalarlo en mi linux es el siguiente:
+
+- Desde la página de [Descargas](https://httpie.io/download) accedo a Download for Linux
+- Desde la página de [Descargas CLI](https://httpie.io/cli) sigo las instrucciones para instalarme la versión CLI, `snap install httpie`
+
+Ejemplos:
+
+- Hola Mundo
+  - `https httpie.io/hello`
+- Método HTTP personalizado, encabezados HTTP y datos JSON
+  - `http PUT pie.dev/put X-API-Token:123 name=John`
+- Envío de formularios
+  - `http -f POST pie.dev/post hello=World`
+- Ver la solicitud que se está enviando utilizando una de las opciones de salida
+  - `http -v pie.dev/get`
+- Construir e imprimir una solicitud sin enviarla utilizando el modo offline
+  - `http --offline pie.dev/post hello=offline`
+- Usar la API de Github para publicar un comentario en un issue con autenticación
+  - `http -a USERNAME POST https://api.github.com/repos/httpie/cli/issues/83/comments body=HTTPie is awesome! :heart:`
+- Subir un archivo utilizando entrada redirigida
+  - `http pie.dev/post < files/data.json`
+- Descargar un archivo y guardarlo mediante salida redirigida
+  - `http pie.dev/image/png > image.png`
+- Descargar un archivo al estilo wget
+  - `http --download pie.dev/image/png`
+- Usar sesiones nombradas para hacer persistentes ciertos aspectos de la comunicación entre solicitudes al mismo host
+  - `http --session=logged-in -a username:password pie.dev/get API-Key:123`
+  - `http --session=logged-in pie.dev/headers`
+- Establecer un encabezado de host personalizado para evitar la falta de registros DNS
+  - `http localhost:8000 Host:example.com`
