@@ -20,7 +20,9 @@ Partiendo de una instalación nueva de Ubuntu, el orden de instalación puede va
 
 Antes de empezar, utilizo el terminal predeterminado de Ubuntu, aunque a veces me da por usar otro (Terminator, Xfce Terminal, Konsole, ...).
 
-### Ficheros y scripts que uso habitualmente
+### Scripts
+
+Que uso habitualmente
 
 - Script [/usr/bin/e](https://gist.githubusercontent.com/LuisPalacios/14b0198abc35c26ab081df531a856971/raw/8b6e278b4e89f105b2d573ebc79c67e915e6ab47/e)
 - Fichero [/etc/nanorc](https://gist.githubusercontent.com/LuisPalacios/4e07adf45ec1ba074939317b59d616a4/raw/b50efd22130a0129e408bca10fc7b8dbab7e03ff/nanorc) personalizado para `nano`
@@ -31,6 +33,14 @@ Antes de empezar, utilizo el terminal predeterminado de Ubuntu, aunque a veces m
   - `echo 'luis ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/90-mi-usuario`
 - Cambiar los permisos:
   - `sudo chmod 755 /usr/bin/e /usr/bin/confcat /usr/bin/s`
+
+No olvides ***SSH***, tengo varios apuntes al respecto: [Git y SSH multicuenta]({% post_url 2021-10-09-ssh-git-dual %}), [SSH y X11]({% post_url 2017-02-11-x11-desde-root %}) y [SSH en Linux]({% post_url 2009-02-01-ssh %}). Un resumen,
+
+```zsh
+ssh-keygen -t ed25519 -a 200 -C "luis@kymerax" -f ~/.ssh/id_ed25519
+```
+
+Añade el contenido de la pública al `~/.ssh/authorized_keys` de tus servidores o estaciones remotas.
 
 ### Instalación de software
 
@@ -69,9 +79,7 @@ sudo apt install -y python3-pip pipenv
 
 **Golang** (el lenguaje de programación más famoso del mundo)
 
-```zsh
-sudo apt install -y golang-go
-```
+Lo describo más adelante en la sección [Golang](#golang).
 
 **Recomendados** que vendrán bien
 
@@ -142,7 +150,23 @@ Aquí las referencias a mis ficheros, importante que las revises y adaptes a tu 
 
 ## Git
 
-No necesita muchos comentarios, te dejo aquí enlaces a mis apuntes sobre Git
+Ya realicé la instalación arriba, en cualquier caso, lo repito:
+
+```zsh
+sudo apt update
+sudo apt install git -y
+```
+
+Creo mis ficheros [~/.gitconfig](https://gist.github.com/LuisPalacios/0ee871ee236485d4a064179b16ada400) y [~/.gitignore_global](https://gist.github.com/LuisPalacios/6923f8cc708ce10f3bd4a6772625fb0c), que te puedes bajar
+
+```zsh
+curl -s -O https://gist.githubusercontent.com/LuisPalacios/0ee871ee236485d4a064179b16ada400/raw/348a8a448095a460756f85ef0362521b886b0a2e/.gitconfig
+curl -s -O https://gist.githubusercontent.com/LuisPalacios/6923f8cc708ce10f3bd4a6772625fb0c/raw/65d0ed6acba83ece4db78228821589212b9f9f4b/.gitignore_global
+```
+
+Como cliente GUI uso [GitKraken](https://www.gitkraken.com). Tienes más información sobre git en esta [chuleta sobre GIT]({% post_url 2021-10-10-git-cheatsheet %}) y [GIT en detalle]({% post_url 2021-04-17-git-en-detalle %}).
+
+Dejo aquí enlaces a mis apuntes sobre Git
 
 - [Chuleta sobre GIT]({% post_url 2021-10-10-git-cheatsheet %}), donde recomiendo instalar `gh` en tu cuenta Personal o Multicuenta.
 - [Git y SSH multicuenta]({% post_url 2021-10-09-ssh-git-dual %}), donde trato más en detalle cómo trabajar con varias cuentas en GitHub
@@ -173,39 +197,6 @@ source ~/.zshrc
 
 - [Settings Sync](https://code.visualstudio.com/docs/editor/settings-sync) - sincroniza settings, snippets, temas, iconos, extensiones, usando tu cuenta de GitHub o Microsoft
 - Con VSCode puedes hacerlo todo desde el teclado. Ya trae un subconjunto de comandos mapeado a [Atajos de teclado](https://code.visualstudio.com/docs/getstarted/keybindings). Si quieres aprender estos atajos por defecto, imprime el PDF para [Windows](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf), [macOS](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-macos.pdf) o [Linux](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-linux.pdf) y déjalo cerca.
-
-## Git
-
-Ya realicé la instalación arriba, en cualquier caso:
-
-```zsh
-sudo apt update
-sudo apt install git -y
-```
-
-Creo mis ficheros [~/.gitconfig](https://gist.github.com/LuisPalacios/0ee871ee236485d4a064179b16ada400) y [~/.gitignore_global](https://gist.github.com/LuisPalacios/6923f8cc708ce10f3bd4a6772625fb0c), que te puedes bajar
-
-```zsh
-curl -s -O https://gist.githubusercontent.com/LuisPalacios/0ee871ee236485d4a064179b16ada400/raw/348a8a448095a460756f85ef0362521b886b0a2e/.gitconfig
-curl -s -O https://gist.githubusercontent.com/LuisPalacios/6923f8cc708ce10f3bd4a6772625fb0c/raw/65d0ed6acba83ece4db78228821589212b9f9f4b/.gitignore_global
-```
-
-Como cliente GUI uso [GitKraken](https://www.gitkraken.com). Tienes más información sobre git en esta [chuleta sobre GIT]({% post_url 2021-10-10-git-cheatsheet %}) y [GIT en detalle]({% post_url 2021-04-17-git-en-detalle %}).
-
-## SSH
-
-Ahora es buen momento para configurar tu pareja de claves pública/privada para conectar con Hosts remotos y/o usarlo con servidor(es) Git. La clave pública-privada SSH es un sistema de autenticación y encriptación utilizado para la conexión entre un cliente y un servidor. Se utilizan un par de claves: una clave pública y una clave privada. Los dos casos de uso más típicos son:
-
-Tengo un apunte que te va a ser muy útil para conseguirlo, se trata de ["Git y SSH multicuenta"]({% post_url 2021-10-09-ssh-git-dual %}) y un par más [SSH y X11]({% post_url 2017-02-11-x11-desde-root %}) y [SSH en Linux]({% post_url 2009-02-01-ssh %}). Un resumen,
-
-```zsh
-➜  ~ ssh-keygen -t ed25519 -a 200 -C "luis@kymerax" -f ~/.ssh/id_ed25519
-```
-
-El contenido de tu pública se comparte:
-
-- En equipo remotos con los que quiero conectar: añadiéndolo al final del fichero `~/.ssh/authorized_keys`
-- En Servidores GIT, a través de su GUI, en la propiedades de mi cuenta.
 
 ## AppImageLauncher
 
@@ -251,3 +242,42 @@ Ejemplos:
   - `http --session=logged-in pie.dev/headers`
 - Establecer un encabezado de host personalizado para evitar la falta de registros DNS
   - `http localhost:8000 Host:example.com`
+
+## Golang
+
+Hago la instalación manual desde su sitio en internet. Primero elimino el golang de mi Ubuntu
+
+Veo que tenía una versión que se instaló en el pasado usando `apt`
+
+```zsh
+sudo dpkg -l | grep -i golang
+# Me enseña que tengo la 1.22
+sudo apt-cache policy golang-go golang-src
+# Me muestra su detalle
+```
+
+Las borro
+
+```zsh
+sudo apt-get remove golang-go
+sudo apt-get remove --auto-remove golang-go
+sudo dpkg -l | grep -i golang
+# No muestra nada
+```
+
+Instalo desde el sitio de Go la [última versión disponible](https://go.dev/doc/install)
+
+```zsh
+# Desde root
+wget https://go.dev/dl/go1.22.5.linux-amd64.tar.gz
+rm -rf /usr/local/go && tar -C /usr/local -xzf go1.22.5.linux-amd64.tar.gz
+```
+
+Me aseguro de tener `/usr/local/go/bin` en mi PATH (mi [~/.zshrc](https://gist.github.com/LuisPalacios/7507ce0b84adcad067320e9631648fd7) lo tiene configurado).
+
+```zsh
+% go version
+go version go1.22.5 linux/amd64
+```
+
+Si no has programado nunca en Go, ya estás tardando 😂, sigue el manual [https://go.dev/doc/](https://go.dev/doc/).
