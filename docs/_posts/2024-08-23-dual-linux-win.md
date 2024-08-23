@@ -1,7 +1,7 @@
 ---
 title: "Dualboot Linux Windows"
-date: "2024-07-25"
-categories: desarrollo
+date: "2024-08-23"
+categories: administración
 tags: linux windows win11 ubuntu desarrollo dualboot
 excerpt_separator: <!--more-->
 ---
