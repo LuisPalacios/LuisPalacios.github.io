@@ -289,6 +289,8 @@ Found Windows Boot Manager on /dev/nvme0n1p1@/EFI/Microsoft/Boot/bootmgfw.efi
 :
 ```
 
+Ya puedo volver a dejar en `/etc/default/grub`, la línea comentada `#GRUB_DISABLE_OS_PROBER=false`
+
 Rearranco el equipo y veo el nuevo menú
 
 {% include showImagen.html
@@ -325,4 +327,46 @@ Después de Salvar, vuelvo a hacer boot para comprobar.
       width="650px"
       %}
 
-Con esto llego al final, queda mucho por hacer, sobre todo la personalización del Windows 11, pero eso es otra historia.
+Con esto llego al final, queda mucho por hacer, sobre todo la personalización del Windows 11, pero eso es otra historia. Dejo un extra por si te apetece personalizar tu menú de arranque.
+
+### Personalizo Grub
+
+Grub permite aplicar temas y personalizar la apariencia de su gestor de arranque. Si desea un menú de arranque que sea visualmente atractivo y también fácil de navegar, puede personalizar los temas de Grub. Lo primero que tienes que hacer es buscar y descargar temas de Grub. Una buena fuemte es [Gnome-Look.org](https://www.gnome-look.org/browse?cat=109&ord=rating). Selecciona un tema de Grub que te guste. Basta con descargar el archivo del tema, que generalmente viene en un archivo zip o tar.gz, colocarlo en el sitio adecuado y ...
+
+En mi ejemplo descargué `Stylish-1080p.tar.xz` desde [aquí](https://www.gnome-look.org/p/1009237). Este tema en concreto trae su propio instalador, bastaría con
+
+```shell
+mkdir -p /boot/grub/themes
+cd /boot/grub/themes
+tar xvf Stylish-1080p.tar.xz
+```
+
+Modifico los fichero bajo `/etc/default/grub.d`, elimino el que venía con mi sistema y pongo el nuevo
+
+```config
+rm /etc/default/grub.d/slimbook.cfg
+
+cat /etc/default/grub.d/tema-grub.cfg
+
+GRUB_THEME="/boot/grub/themes/Stylish/theme.txt"
+```
+
+Así es como queda mi fichero `/etc/default/grub`
+
+```conf
+GRUB_DEFAULT="0"
+GRUB_TIMEOUT="5"
+GRUB_DISTRIBUTOR="Slimbook-OS"
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+GRUB_CMDLINE_LINUX=""
+GRUB_GFXMODE="1920x1080x32"
+GRUB_GFXPAYLOAD_LINUX="1920x1080x32"
+GRUB_INIT_TUNE="1000 334 1 334 1 0 1 334 1 0 1 261 1 334 1 0 1 392 2 0 4 196 2"
+GRUB_ENABLE_BLSCFG="false"
+```
+
+Ejecuto `update-grub`
+
+```shell
+update-grub
+```
