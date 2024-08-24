@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 
 ![logo linux desarrollo](/assets/img/posts/logo-dual-boot.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-El dual boot normalmente se hace cuando tienes un Windows y luego instalas Linux. Mi caso es justo al revés, tengo un Ubuntu perfectamente instalado y funcionando, ocupando un disco de 4TB. Por circustancias necesito "añadir" Windows (11) y poder hacer dualboot, es decir, elegir durante el arranque qué Sistema Operativo voy a usar. Mi objetivo es dejarle 2TB a cada uno.
+El dual boot normalmente se hace cuando tienes Windows y luego añades Linux. Mi caso es justo al revés, tengo Ubuntu perfectamente instalado y funcionando en un disco de 4TB. Por circustancias necesito "añadir" Windows (11) y poder hacer dualboot, elegir durante el arranque qué Sistema Operativo usar. En este apunte describo todo el proceso, cómo he redimensionado el disco dejándole 2TB a cada uno y activando la opción de dualboot.
 
 <br clear="left"/>
 <!--more-->
@@ -34,19 +34,17 @@ Empezamos con Linux como único OS, en una única partición principal, en el di
       width="500px"
       %}
 
-Recalco que todo lo que documento aquí se ha hecho con un sistema **con UEFI, Ubuntu y esquema de particionamiento GPT**. En teoría, los mismos pasos deberían ser aplicables a otras distribuciones.
-
 ## Requisitos
 
-Esto es lo que vas a necesitar
+Voy a necesitar
 
-- Una USB para Ubuntu Live (mín. 8GB)
-- Una USB para Windows 11 (mín. 8GB)
-- Que tu ordenador tenga UEFI y Ubuntu instalado
-- Preferiblemente conexión a internet para instalar Windows
-- Hacer un backup de tu linux (opcional pero recomendado)
+- USB para Ubuntu Live (mín. 8GB)
+- USB para Windows 11 (mín. 8GB)
+- Importante UEFI y GPT (y en este ejemplo Ubuntu instalado)
+- Conexión a internet para instalar Windows (preferible)
+- Backup de Linux (opcional pero recomendado)
 
-Podríamos usar una única USB, pero es más cómodo tener dos. Si solo tienes una, primero creas la de Ubuntu, arrancas con ella, creas la partición para Windows y luego creas la de Windows y haces boot con ella para instalar Windows.
+Podría usar una única USB, pero es más cómodo tener dos. Si solo tienes una, primero creas la Live de Ubuntu, arrancas con ella, preparas las particiones, rearrancas con Linux, creas la USB de Windows y haces boot con ella para instalarlo.
 
 ## Copia de seguridad
 
@@ -56,13 +54,9 @@ Usa el sistema que quieras. En mi caso, cuando hago cosas de estas suelo usar [c
 
 ## Crear USB con Ubuntu Live
 
-El motivo de necesitarla es para modificar la partición de 4TB y estrecharla. Necesito liberar espacio para instalar Windows, pero no lo puedo hacer desde el mismo linux, con la partición ya montada. Por eso necesitas una Live USB, arrancaremos con ella para manipular las particiones.
+Solo la necesito para manipular estrechar la partición de Linux y dejar sitio. Como no se puedo hacer desde el mismo linux, porque está montada, hace falta hacer boot con una Live USB. Primer descargo la ISO de Ubuntu desde [Download Ubuntu Desktop](https://ubuntu.com/download/desktop). Usé Desktop 24.04 LTS (6GB)
 
-Primer descargo la ISO de Ubuntu con la última versión desde [Download Ubuntu Desktop](https://ubuntu.com/download/desktop). Usé Desktop 24.04 LTS (6GB)
-
-Ahora a quemarla en la USB. Puedes usar **Startup Disk Creator** (que viene con Ubuntu) o mejor [Balena Etcher](https://etcher.balena.io/#download-etcher) (aquí una [buena guía](https://itsfoss.com/install-etcher-linux/) por si no lo conoces). 
-
-En mi caso me decanto por Balena Etcher, me bajé el fichero ***Etcher for Linux x64 (64-bit) (zip)***, lo descomprimí en un directorio, cambié permisos y ejecuté:
+Para quemar esa imagen en una USB puedo usar **Startup Disk Creator** (que viene con Ubuntu), pero prefiero [Balena Etcher](https://etcher.balena.io/#download-etcher) (aquí una [guía](https://itsfoss.com/install-etcher-linux/)). En mi caso me decanto por Balena Etcher, me bajé ***Etcher for Linux x64 (64-bit) (zip)***, lo descomprimí en un directorio, cambié permisos y ejecuté:
 
 ```shell
 unzip ../Downloads/balenaEtcher-linux-x64-1.19.21.zip
@@ -72,9 +66,9 @@ sudo chmod 4755 chrome-sandbox
 ./balena-etcher.sh
 ```
 
-***Importante***, cuando inserto la USB me fijo en qué dispositivo queda; en mi caso fué `/dev/sdc`. Un comando muy útil para verlo. **Asegúrate de elegir el correcto, que sea la USB el destino de la copia** y no el disco principal u otro cualquiera...
+***Importante***, cuando inserto la USB me fijo en qué dispositivo queda; en mi caso `/dev/sdc`.
 
-```bash
+```shell
 # lsblk -p -o NAME,VENDOR,MODEL,SIZE,TYPE,SERIAL
 NAME             VENDOR   MODEL                    SIZE TYPE SERIAL
 /dev/loop0                                        10,1M loop
@@ -93,6 +87,8 @@ NAME             VENDOR   MODEL                    SIZE TYPE SERIAL
 └─/dev/nvme0n1p2                                   3,6T part
 ```
 
+Insisto, **asegúrate de elegir el dispositivo destino correcto, que sea la USB y no el disco principal u otro cualquiera**.
+
 {% include showImagen.html
       src="/assets/img/posts/2024-08-23-dual-linux-win-02.png"
       caption="Quemo la imagen Ubuntu"
@@ -105,15 +101,15 @@ NAME             VENDOR   MODEL                    SIZE TYPE SERIAL
       width="200px"
       %}
 
-Cuando termina salgo del programa, ya tenemos lista la USB de Ubuntu.
+Cuando termina ya tenemos lista la USB de Ubuntu.
 
 ## Crear USB Live con Windows
 
 Primero **descargo Windows 11**, desde el sitio oficial de [descargas](https://www.microsoft.com/software-download/windows11). Sección ISO, opción `Windows 11 (multi-edition ISO for x64 devices)`. Selecciono el Product language y empiezo la descarga (aprox. 6,3GB).
 
-Para pasarla a la USB puedes hacerlo de forma sencilla si tienes ya un Windows ([aquí las instrucciones](https://support.microsoft.com/en-us/windows/create-installation-media-for-windows-99a58364-8c02-206f-aa6f-40c3b507420d)). En mi caso tengo un Linux así que me uso [Ventoy](https://www.ventoy.net/en/download.html) (una [guía](https://itsfoss.com/use-ventoy/) por si no lo conoces).
+Para pasarla a una USB es sencillo si tienes ya un Windows ([aquí las instrucciones](https://support.microsoft.com/en-us/windows/create-installation-media-for-windows-99a58364-8c02-206f-aa6f-40c3b507420d)). En mi caso lo hago desde mi linux con [Ventoy](https://www.ventoy.net/en/download.html) (una [guía](https://itsfoss.com/use-ventoy/)).
 
-Con Ventoy vamos a crear una USB que hace boot, con dos particiones, una propia y otra para copiar el ISO de Windows. Empiezo descargando la última versión desde [Ventoy](https://www.ventoy.net/en/download.html), descomprimo el archivo `ventoy-1.0.99-linux.tar.gz` y ejecuto
+Ventoy preparar la USB, la hace bootable con dos particiones. En una de ellas copiaremos el ISO de Windows. Descargo la última versión desde [Ventoy](https://www.ventoy.net/en/download.html), descomprimo y ejecuto.
 
 ```shell
 cd Downloads
@@ -122,7 +118,7 @@ cd ventoy-1.0.99
 sudo ./VentoyWeb.sh
 ```
 
-Me contecto con [http://127.0.0.1:24680](http://127.0.0.1:24680). desde `Option` deshabilito *Secure Boot* y selecciono `GPT` como tipo de partición.
+Desde un browser me contecto con [http://127.0.0.1:24680](http://127.0.0.1:24680). En `Option` deshabilito *Secure Boot* y selecciono `GPT` como tipo de partición.
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-23-dual-linux-win-04.png"
@@ -130,7 +126,7 @@ Me contecto con [http://127.0.0.1:24680](http://127.0.0.1:24680). desde `Option`
       width="500px"
       %}
 
-Selecciona la ruta de almacenamiento en la que voy a instalar Ventoy y pulsa en Install. En mi caso, al conectar mi segunda USB lo hizo en `/dev/sdd`, lo selecciono, pulso Install y en breves segundos tenemos Ventoy en la USB.
+Selecciono la ruta de almacenamiento en la que voy a instalar Ventoy (en mi caso ahora es `/dev/sdd`) y pulso Install.
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-23-dual-linux-win-05.png"
@@ -138,7 +134,7 @@ Selecciona la ruta de almacenamiento en la que voy a instalar Ventoy y pulsa en 
       width="500px"
       %}
 
-El proceso de instalación crea una segunda partición que es donde copiaremos la ISO. Uso el administrador de archivos para copiar la ISO descargada a la partición "***Ventoy***".
+Copio el ISO de Windows a la segunda partición "***Ventoy***".
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-23-dual-linux-win-07.png"
@@ -146,7 +142,7 @@ El proceso de instalación crea una segunda partición que es donde copiaremos l
       width="400px"
       %}
 
-Fíjate cómo quedan las particiones de esta USB:
+Así queda la USB
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-23-dual-linux-win-06.png"
@@ -154,11 +150,11 @@ Fíjate cómo quedan las particiones de esta USB:
       width="500px"
       %}
 
-Expulso ambas particiones (`Ventoy, VTOYEFI`), ya hemos terminado, tenemos lista la segunda USB Windows. Si están insertadas puedes extraer las USBs.
+Expulso ambas particiones (`Ventoy, VTOYEFI`), ya hemos terminado, tenemos lista la segunda USB Windows.
 
 ## Liberar espacio en el disco
 
-Primero toca hacer ***boot con la Live USB de Ubuntu***. Introduzco la USB de Ubuntu y reinicio el sistema, pulso la tecla que me permita entrar en el menú para elegir desde dónde hacer Boot (puede ser F2/F10/F12/ESC, depende tu BIOS).
+Introduzco la ***USB Live de ubuntu y hago boot***. Tengo que pedirle a la BIOS que me muesre la opción de hacer boot desde ella. En todos los ordenadores se hace pulsando una tecla durante el boot, puede ser F2/F10/F12/ESC, depende tu BIOS.
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-23-dual-linux-win-08.png"
@@ -166,9 +162,7 @@ Primero toca hacer ***boot con la Live USB de Ubuntu***. Introduzco la USB de Ub
       width="500px"
       %}
 
-Seleccino la USB, pulso Enter y cuando Ubuntu muestra su menú de `grub` selecciono ***Try or Install Ubuntu***, el idioma, accesibilidad, teclado, conexión a internet, me salto actualizar el instalador y selecciono **Try Ubuntu**, pulso en Close.
-
-Ya esoty en Ubuntu, ahora ejecuto la Aplicación Discos (Disks)
+Seleccino la USB, pulso Enter. Aparece un menú, selecciono ***Try or Install Ubuntu***, pongo el idioma, accesibilidad, teclado, conexión a internet, me salto actualizar el instalador y selecciono **Try Ubuntu**, pulso en Close. Una vez que tengo Ubuntu arrancado, ejecuto la Aplicación Discos (Disks)
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-23-dual-linux-win-09.png"
@@ -212,9 +206,7 @@ Rearranco el equipo, quito la USB de Ubuntu y compruebo que puede seguir haciend
 
 ## Instalar Windows
 
-Le toca al "pesado" de Windows. Digo pesado porque verás que sigue siendo tremenda la instalación, tarda muchísimo, hace muchos reboots, es confusa. En fin, lo normal, no ha cambiado nada en 25 años.
-
-Introduzco la USB con Ventoy + el ISO de Windows 11. Repito el proceso, rearranco el ordenador, pulso mi tecla (F12) para que la BIOS muestre las opciones de Boot, selecciono la USB (ahora de Ventoy/Windows).
+Ahora toca instalar Windows, ten paciencia, tarda bastante, con varios reboots, por lo que veo no ha cambiado nada en 25 años. Introduzco la USB con Ventoy + el ISO de Windows 11. Repito el proceso, rearranco el ordenador, pulso mi tecla para que la BIOS muestre las opciones de Boot, selecciono la USB.
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-23-dual-linux-win-14.jpg"
@@ -222,33 +214,19 @@ Introduzco la USB con Ventoy + el ISO de Windows 11. Repito el proceso, rearranc
       width="500px"
       %}
 
-Pulso Enter sobre la ISO, selecciono `Boot in normal mode`, veo el logo de Windows. Después de unos segundos, elijo el `idioma y el teclado`. La siguiente pantalla da la opción de iniciar la instalación. Hago clic en `Instalar ahora`.
+Pulso Enter sobre la ISO, selecciono `Boot in normal mode`, veo el logo de Windows. Elijo el `idioma y el teclado`, `Instalar ahora`, en la clave de licencia de Windows omito el paso, lo activaré luego. Elijo la versión de Windows (en mi caso Windowss 11 Pro), acepto la licencia, selecciono `Install Windows Custom`, me ofrece instalar en la única partición que está vacía `Unalloated Space`. A partir de aquí copia los ficheros y al terminar hace boot automáticamente. Por suerte continúa instalando. Alguna vez que he hecho todo este proceso no seguía por donde debía, se enrocaba haciendo boot en la USB. Lo resolvía seleccionando el disco duro y la partición Windows vía BIOS.
 
-En las siguientes pantallas, te pedirá la clave de licencia de Windows. Omito este paso porque lo activaré más tarde. Elijo la versión de Windows (en mi caso Windowss 11 Pro) y acepto la licencia de usuario final.
+Con este ordenador va todo bien, muestra `Getting ready`, otro reboot, acaba pidiendo país, teclado, comprueba updates y hace un reboot de nuevo. Pide que le ponga un mote al ordenador, vuelve a hacer reboot, pide cómo voy a usar el dispositivo (personal o trabajo). Me gustaría saltarme esta parte pero es imposible (hay un truco pero no lo he seguido). Selecciono "Personal", hago login con mi cuenta de microsoft y continúo. Indico que no quiero hacer copia desde ningún otro equipo y lo configuro como nuevo. Creo un PIN, localización, buscar dispositivo, diagnósticos, inking, typing, tailored experiences, ads ID, etc... básicamente digo que no a todo. Me salto lo del teléfono, pido que no haga backups, que no importe nada de otro navegador. Hace un útimo update que tarda lo suyo, tras varios minutos, reboots y trabajos misteriosos, acaba terminando y podemos entrar en Windows.
 
-Selecciono la opción `Install Windows Custom`, automáticamente me ofrece instalar en la única partición que está vacía `Unalloated Space`, la selecciono y pulso en Next. A partir de aquí copia los ficheros y al terminar hace boot automáticamente.
+En fin, voy a terminar con el tema del dual boot. Aparco el Win11 y vuelvo al Linux.
 
-Por suerte continúa instalando. Alguna vez que he hecho todo este proceso no seguía por donde debía, se enrocaba haciendo boot en la USB. Lo resolvía seleccionando el disco duro y la partición Windows vía la BIOS.
-
-Con este ordenador hace bien el proceso, muestra un mensaje de `Getting ready`, vuelve a hacer reboot y continúa él solo. Al final acaba mostrando una ventana de Windows 11 donde selecciono el país, teclado, comprueba updates y hace un reboot de nuevo.
-
-En el siguiente arranque me pide el nombre del dispositivo, vuelve a hacer reboot, pide que elija cómo voy a usar el dispositivo (personal o trabajo). Me gustaría saltarme esta parte pero es imposible (hay un truco pero no lo he seguido). Selecciono "Personal", hago login con mi cuenta de microsoft y continúo. Indico que no quiero hacer copia desde ningún otro equipo y lo configuro como nuevo.
-
-Creo un PIN, parametrizo localización, buscar dispositivo, diagnósticos, inking, typing, tailored experiences, ads ID, etc... básicamente digo que no a todo. Me salto el temita del teléfono, le pido que no haga backups, que no importe nada de otro navegador y ya casi estamos.
-
-Hace un útimo update que tarda lo suyo, tras varios minutos, reboots y trabajos misteriosos, acaba terminando y podemos entrar en Windows.
-
-Poco que añadir, la instalación de Windows sigue siendo ineficiente y cansina. En fin, voy a terminar con el tema del dual boot. Aparco el Win11 y vuelvo al Linux.
-
-En otro apunte explicaré cómo ***personalizarlo***, ***quitarle chorradas***, ***instalar drivers*** y ***dejarlo lo más decente posible*** (quitando todo lo que pueda).
+Por cierto, en el apunte [Un Windows decente]({% post_url 2024-08-24-win-decente %}) explico como termino de instalar y configurar este Win11, cómo ***personalizar***, ***quitar anuncios***, ***instalar drivers*** y ***dejarlo lo más decente posible*** (quitando todo lo que sobra).
 
 ## Vamos a por el dual boot
 
-Ya tengo Windows instalado, pero debido a su endogamia, tiene la manía esconder mi Linux, de hecho a partir de ahora siempre hará boot con Windows a no ser que lo cambie. Podría dejarlo así y usar su boot manager, pero no me gusta, prefiero usar `grub`.
+Ya tengo Windows instalado, pero debido a su endogamia, esconde al Linux. En la BIOS ha quedado marcado que haga boot desde la partición de Windows y Linux pasa a segundo lugar. Podría dejarlo así y usar su boot manager, pero no me gusta. Voy a reconfigurar la BIOS para que haga boot con ***Linux*** y configuraré ***grub*** para que me muestre un menú.
 
-Voy a reconfigurar la BIOS y `grub` para que el sistema haga boot con ***Linux y Grub*** y que sea este último el que me permita elegir el Sistema Operativo con el que voy a trabajar.
-
-Para conseguirlo es necesario ***entrar y hacerlo desde la BIOS***, porque como dije, Windows elimina toda opcion de volver a hacer boot desde Linux. Lo siguiente depende de tu sistema, explico aquí cómo lo hice en el mío. Reinicio el sistema y, pulso F12 (que es mi tecla de menú) que me permite entrar en el ***Setup de la BIOS***. Me voy a las opciones de boot, secuencia de arranque y cambio el orden de arranque, muevo Ubuntu hacia arriba en el orden.
+Reinicio el sistema entro en ***Setup de la BIOS***, cambio la secuencia de arranque, así es como lo tenía, subí Ubuntu hacia arriba en el orden.
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-23-dual-linux-win-15.jpg"
@@ -256,11 +234,9 @@ Para conseguirlo es necesario ***entrar y hacerlo desde la BIOS***, porque como 
       width="650px"
       %}
 
-Como véis en la captura, el Linux quedó segundo. Lo muevo a la primera posición, salvo los cambios y rearranco el equipo.
-
 ### Añadir Windows a Grub
 
-Una vez en Linux y desde root confirmo que `os-prober` detecta la nueva partición "arrancable":
+Una vez en Linux y desde root voy a parametrizr `grub`. Primero confirmo que `os-prober` detecta la nueva partición "arrancable":
 
 ```shell
 os-prober
@@ -327,13 +303,9 @@ Después de Salvar, vuelvo a hacer boot para comprobar.
       width="650px"
       %}
 
-Con esto llego al final, queda mucho por hacer, sobre todo la personalización del Windows 11, pero eso es otra historia. Dejo un extra por si te apetece personalizar tu menú de arranque.
-
 ### Personalizo Grub
 
-Grub permite aplicar temas y personalizar la apariencia de su gestor de arranque. Si desea un menú de arranque que sea visualmente atractivo y también fácil de navegar, puede personalizar los temas de Grub. Lo primero que tienes que hacer es buscar y descargar temas de Grub. Una buena fuemte es [Gnome-Look.org](https://www.gnome-look.org/browse?cat=109&ord=rating). Selecciona un tema de Grub que te guste. Basta con descargar el archivo del tema, que generalmente viene en un archivo zip o tar.gz, colocarlo en el sitio adecuado y ...
-
-En mi ejemplo descargué `Stylish-1080p.tar.xz` desde [aquí](https://www.gnome-look.org/p/1009237). Este tema en concreto trae su propio instalador, bastaría con
+Grub permite aplicar temas y personalizar la apariencia de su gestor de arranque. Si desea un menú de arranque que sea visualmente atractivo y también fácil de navegar, puedes personalizar con temasa. Una buena fuemte es [Gnome-Look.org](https://www.gnome-look.org/browse?cat=109&ord=rating). En mi ejemplo descargué `Stylish-1080p.tar.xz` desde [aquí](https://www.gnome-look.org/p/1009237).
 
 ```shell
 mkdir -p /boot/grub/themes
@@ -341,7 +313,7 @@ cd /boot/grub/themes
 tar xvf Stylish-1080p.tar.xz
 ```
 
-Modifico los fichero bajo `/etc/default/grub.d`, elimino el que venía con mi sistema y pongo el nuevo
+Modifico bajo `/etc/default/grub.d`, elimino el que venía con mi sistema y pongo el nuevo
 
 ```config
 rm /etc/default/grub.d/slimbook.cfg
@@ -365,8 +337,10 @@ GRUB_INIT_TUNE="1000 334 1 334 1 0 1 334 1 0 1 261 1 334 1 0 1 392 2 0 4 196 2"
 GRUB_ENABLE_BLSCFG="false"
 ```
 
-Ejecuto `update-grub`
+Ejecuto
 
 ```shell
 update-grub
 ```
+
+Listo, ya tengo dualboot. Ahora ya solo me queda configurar y dejar el Windows 11 [lo más decente]({% post_url 2024-08-24-win-decente %}) posible. Sin anuncios, ni florituras.
