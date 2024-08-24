@@ -155,6 +155,14 @@ Instalo ***Powershell 7***. Por defecto incluye CMD y PowerShell 5 (se ve con el
   * Microsoft Edge Update > No me deja hacer un Uninstall
   * Microsoft Edge WEbView2 > No me deja hacer un Uninstall
 
+Si busco empiezo a ver que cada vez salen menos morralla
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-24-win-decente-01.png"
+      caption="Versión minimalista de Buscar"
+      width="450px"
+      %}
+
 ***Habilitar File Sharing***. Lo voy a necesitar
 
 * Start > Settings > `Network and Internet` > `Advanced network settings`
@@ -184,6 +192,13 @@ Instalo ***Powershell 7***. Por defecto incluye CMD y PowerShell 5 (se ve con el
 * He descubierto que Windows no pone bien la hora del ordenador, a pesar de configurarlo para que la tome de internet.
   * Encontré un par de artículos [aquí](https://itsfoss.com/wrong-time-dual-boot/) y [aquí](https://www.howtogeek.com/323390/how-to-fix-windows-and-linux-showing-different-times-when-dual-booting/)
 
+Al pulsar sobre Start obtengo una versión minimalista.
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-24-win-decente-02.png"
+      caption="Versión minimalista de Start"
+      width="450px"
+      %}
 
 ## Recomendaciones adicionales
 
@@ -221,3 +236,9 @@ Al seguir los pasos anteriores obtengo un Windows 11 mucho más limpio, rápido 
   * Identifico los servicios que no necesito (por ejemplo, "xbox*", etc.). Hago doble clic en el servicio, cambio el “Startup type” a “Disabled” y aplico los cambios.
 
 Con estas recomendaciones adicionales, el sistema estará preparado para ofrecer una experiencia de usuario más directa, sin distracciones ni interrupciones innecesarias.
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-24-win-decente-03.png"
+      caption="Versión minimalista del escritorio"
+      width="800px"
+      %}
