@@ -161,6 +161,13 @@ Instalo ***Powershell 7***. Por defecto incluye CMD y PowerShell 5 (se ve con el
   * `Advance Sharing Settings`
   * `File & Printer sharing`: On
   * `Public folder sharing`: On
+* Start > Settings > System > About
+  * `Advance System Settings` > Computer Name > Change > "Me aseguro que está en WORKGROUP"
+* Habilito SMB1.0
+  * Start > busco "Control Panel"
+  * > `Programs` > `Programs and features`
+  * > `Turn Windows features on or off`
+  * Activo SMB 1.0/CIFS File Shring Support.
 
 ***Firewall de Windows***
 
@@ -171,6 +178,12 @@ Instalo ***Powershell 7***. Por defecto incluye CMD y PowerShell 5 (se ve con el
   * Start > busco "Control Panel" > System & Security > Windows Defender Firewall > Advanced Settings”
   * Creo reglas de entrada y salida para bloquear o permitir aplicaciones específicas según lo necesite.
   * Desactivo las notificaciones del firewall yendo a “System and Security > Windows Defender Firewall > Change notification settings”, y desmarco las casillas de “Notify me when Windows Defender Firewall blocks a new app”.
+
+***Poner bien la hora con dualboot***
+
+* He descubierto que Windows no pone bien la hora del ordenador, a pesar de configurarlo para que la tome de internet.
+  * Encontré un par de artículos [aquí](https://itsfoss.com/wrong-time-dual-boot/) y [aquí](https://www.howtogeek.com/323390/how-to-fix-windows-and-linux-showing-different-times-when-dual-booting/)
+
 
 ## Recomendaciones adicionales
 
