@@ -155,22 +155,56 @@ Instalo ***Powershell 7***. Por defecto incluye CMD y PowerShell 5 (se ve con el
   * Microsoft Edge Update > No me deja hacer un Uninstall
   * Microsoft Edge WEbView2 > No me deja hacer un Uninstall
 
-## Conclusiones
+***Habilitar File Sharing***. Lo voy a necesitar
 
-Al seguir los pasos anteriores obtengo un Windows 11 mucho más limpio, rápido y libre de distracciones, ideal para su uso en entornos específicos como kioskos o demostraciones. Además de las optimizaciones mencionadas, dejo aquí algunas medidas adicionales, a modo de ejercicio, que pueden llevar la personalización un paso más allá:
+* Start > Settings > `Network and Internet` > `Advanced network settings`
+  * `Advance Sharing Settings`
+  * `File & Printer sharing`: On
+  * `Public folder sharing`: On
 
-* Desactivar Cortana.
-* Deshabilitar las actualizaciones automáticas.
-* Eliminar aplicaciones preinstaladas (bloatware) mediante PowerShell.
-* Desactivar la telemetría y recopilación de datos.
-* Configurar un perfil de energía personalizado para maximizar el rendimiento.
-* Desactivar OneDrive y eliminarlo del inicio.
-* Optimizar el registro con herramientas como CCleaner.
-* Deshabilitar servicios innecesarios a través de services.msc.
-* Configurar el Firewall de Windows para minimizar alertas y notificaciones.
-* Desactivar los efectos visuales y animaciones para mejorar la velocidad.
-* Crear un punto de restauración del sistema después de la optimización.
-* Usar herramientas de limpieza de disco para eliminar archivos innecesarios.
-* Configurar una política de grupo para evitar que se reinstalen aplicaciones de Microsoft Store.
+***Firewall de Windows***
+
+* Lo configuro para minimizar alertas y notificaciones. El ordenador está conectado a una red privada pero por defecto al instalar lo configura como si estuviese en una red pública.
+  * Start > Settings > Network & Internet > Ethernet (y también WiFi)
+    * Cambio ambas a `Private Network`
+* Configuro el Firewall de Windows para minimizar alertas y notificaciones
+  * Start > busco "Control Panel" > System & Security > Windows Defender Firewall > Advanced Settings”
+  * Creo reglas de entrada y salida para bloquear o permitir aplicaciones específicas según lo necesite.
+  * Desactivo las notificaciones del firewall yendo a “System and Security > Windows Defender Firewall > Change notification settings”, y desmarco las casillas de “Notify me when Windows Defender Firewall blocks a new app”.
+
+## Recomendaciones adicionales
+
+Al seguir los pasos anteriores obtengo un Windows 11 mucho más limpio, rápido y libre de distracciones, ideal para su uso en entornos específicos como kioskos o demostraciones. Además de las optimizaciones mencionadas, dejo aquí algunas medidas adicionales, que pueden llevar la personalización un paso más allá:
+
+***Desactivar Cortana***
+
+* Busco “gpedit.msc” en el menú de inicio y abro el Editor de directivas de grupo local (Local Group Policy Editor).
+  * Navego a “Computer Configuration > Administrative Templates > Windows Components > Search”.
+  * Hago doble clic en “Allow Cortana” y selecciono “Disabled”. Aplico los cambios para desactivar Cortana.
+
+***Quitar bloatware/crapware***
+
+* Eliminar aplicaciones preinstaladas (bloatware o crapware) mediante PowerShell.
+* ¿Qué desinstalar? pues depende del fabricante de tu PC puedes echarle un ojo a [Should I Remove It?](http://www.shouldiremoveit.com) que no está mal y te da indicaciones.
+* Puede usarse PowerShell como administrador. Comando para listar todas las aplicaciones instaladas
+  * `Get-AppxPackage | Select Name, PackageFullName`
+* Luego, uso este comando para desinstalar las aplicaciones que no necesito
+  * `Get-AppxPackage *NombreDeLaApp* | Remove-AppxPackage`
+
+***Desactivar la telemetría y recopilación de datos***
+
+* Con lo que hice antes respectoa  Diagnostics & feedback debería ser suficiente, pero confirmo abriend `gpedit.ms`, compruebo si existe:
+  * `Computer Configuration > Administrative Templates > Windows Components > Data Collection and Preview Builds`
+  * Si existe `Allow Telemetry` selecciono “Disabled”. Esto asegura que Windows no recopile datos sobre mi uso.
+
+***Optimizar el registro con herramientas como CCleaner***
+
+* Descargo e instalo CCleaner desde su sitio oficial. Una vez instalado, lo abro y navego a la sección “Registry”.
+  * Hago clic en “Scan for Issues” y luego en “Fix selected Issues”. Siempre hago una copia de seguridad del registro cuando lo solicita.
+
+***Deshabilitar servicios innecesarios***
+
+* Abro `services.msc` desde el menú de inicio.
+  * Identifico los servicios que no necesito (por ejemplo, "xbox*", etc.). Hago doble clic en el servicio, cambio el “Startup type” a “Disabled” y aplico los cambios.
 
 Con estas recomendaciones adicionales, el sistema estará preparado para ofrecer una experiencia de usuario más directa, sin distracciones ni interrupciones innecesarias.
