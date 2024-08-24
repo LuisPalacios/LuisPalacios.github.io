@@ -242,3 +242,9 @@ Con estas recomendaciones adicionales, el sistema estará preparado para ofrecer
       caption="Versión minimalista del escritorio"
       width="800px"
       %}
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-24-win-decente-04.png"
+      caption="Idoneo para trabajar"
+      width="600px"
+      %}
