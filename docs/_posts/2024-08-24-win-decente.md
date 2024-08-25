@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 
 ![logo linux desarrollo](/assets/img/posts/logo-windows.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-En este apunte explico cómo parametrizo un Windows 11 que voy a usar como kiosko, para pruebas y demos. No necesito florituras, no va a tener datos sensibles, quiero Windows a pelo, con pocas apliaciones, algo de navegación y punto.
+En este apunte explico cómo parametrizo un Windows 11 que voy a usar para pruebas y demos. No necesito florituras ya que no va a tener datos sensibles, quiero Windows a pelo, con pocas apliaciones, algo de navegación y punto.
 
 Al final se ha convertido en un ejercicio técnico. ¿Cómo se haría?. Suena raro, pero sería como tener un Win 3.11, que estaba disponible de forma inmediata. Voy a quitarle todo lo que pueda, anuncios, edge, extras, instalaré drivers mínimos, una cuenta local, que arranque, haga login directo y esté disponible lo antes posible.
 
@@ -22,131 +22,132 @@ Parto de un equipo donde acabo de instalar Windows 11 desde cero. Lo he document
 
 Lo ***básico***
 
-* Descargo e instalo [Chrome para Windows](https://www.google.com/intl/es_es/chrome).
-  * Lo hago desde *Edge* (diciendole que no a todo lo que propone)
+* Instalo [Chrome para Windows](https://www.google.com/intl/es_es/chrome).
+  * Lo descargué desde *Edge* (diciendole que no a todo lo que propone por cierto)
   * Durante la instalación me ofrece cambiar el navegador por defecto.
-  * Settings > Apps > Default apps > Google Chrome. Pongo Chrome como el valor por defecto y en todas las extensiones, incluidas las que no tenían nada.
-* 7-Zip. Lo instalo desde [7-Zip.org](https://7-zip.org), Lo voy a necesitar.
+  * `Settings > Apps > Default apps` > Google Chrome.
+    * Pongo Chrome como el valor por defecto
+    * Aprovecho y cambio todas las extensiones (las que me deja) a Chrome.
+* Instalo 7-Zip desde [7-Zip.org](https://7-zip.org), es un clásico.
 
 ***Teclado y Ratón***
 
-* Empiecé con teclado USB por cable y he añadido un Logitech K380 bluetooth
-  * Conecto el K380: Start > Settings > Bluetooth & devices > Add device > Bluetooth.
-* Empiezo con un ratón Bluetooth normal pero estoy investigando la opción de usar un Apple Magic Trackpad 2.
-  * Me vendría bien para compartir teclado/ratón con un Mac usando [Barrier](https://github.com/debauchee/barrier) (un KVM por software). De momento no me funciona.
-  * Bootcamp [Support 5.1.5769](https://support.apple.com/en-gb/106378) - Descomprimo y ejecuto `BootCamp/Drivers/Apple/AppleWirelessTrackpad64.exe` como Admin
-  * Bootcamp [Update 2.2](desconocido) - Descargo y descomprimo con 7-Zip. Ejecuto BCUpdateInstaller.exe como adimn
-  * Bootcamp [Update 3.3](https://support.apple.com/en-gb/106463)
+* Empecé con teclado USB por cable y he añadido un Logitech K380 bluetooth
+  * Conecto el K380
+    * `Start > Settings > Bluetooth & devices`
+    * `Add device > Bluetooth`
+* Estoy investigando la opción de usar un Apple Magic Trackpad 2. De momento no me funciona bien.
 * Instalo [Barrier](https://github.com/debauchee/barrier). Un KVM por software. Mi setup son dos ordenadores, con dos monitores. El objetivo es usar un único teclado/ratón.
-  * Enable autoconfig and install Bonjour - Yes. Aún así siempre configuro Barrier en manual. Pongo la IP del server. Cambio settings para que ararnque durante el boot.
+  * Al instalar me pregunta `Enable autoconfig and install Bonjour`, le digo que Sí.
 
 ## Parametrización
 
 Cambios en la ***seguridad***
 
-* Start > Settings > Privacy & Security
-  * Security > Windows Security: Open Windows Security: Todo en On
-  * Security > Location: Todo en Off
-  * Security > Windows Permissions: Entro en todas y Off
-    * General, Speech, Inking..., todo a off
-    * Diagnostics: todo a off y Feedback frequency: Never.
-    * Activity, Search permissions, Searching Windows: todo off
-  * Security > App Permissions: Entro en todas y Off
-  * Security > App Permissions: Location Off, el resto a valor por defecto
+* Start > Settings > **Privacy & Security**
+  * Security > Windows Security > `Open Windows Security`: **Todo en On**
+  * Security > `Location`: **Todo en Off**
+  * Security > `Windows Permissions`: **Todas en Off**
+    * `General, Speech, Inking`, **todo en Off**
+    * `Diagnostics`: **todo a off y Feedback frequency: Never**.
+    * Activity, `Search permissions, Searching Windows`: **todo off**
+  * Security > `App Permissions`: **Location Off**, el **resto a valor por defecto**
 * Start > Settings > Apps
-  * Startup > Quito todas, sobre todo Edge, excepto Security notification icon.
-  * Default apps > Microsoft Edge : Reviso que todo lo posible sea Chrome
-  * Apps for Websites > todo a off
+  * `Startup` > **Quito todas, sobre todo Edge, excepto Security notification icon**.
+  * `Default apps` > Microsoft Edge : **Reviso que todo sea Chrome**
+  * `Apps for Websites` > **todo a off**
 
 ***Activación*** de Windows 11
 
-* Compro una copia digital de Windows 11 Pro retail a un minorista autorizado. Mucho más barato y asequible. Me llega un correo con la clave de producto. Desde Start > Settings > Sytem Activation > Change product key, añado la clave recibida por correo y queda activado.
+* Compro una copia digital de Windows 11 Pro retail a un minorista autorizado. Mucho más barato y asequible. Me llega un correo con la clave de producto.
+  * `Start > Settings > Sytem Activation > Change product key`, añado la clave recibida y queda activado.
 
 Configuro que ***no pregunte*** cada vez que quiero arrancar un App
 
-* Start > busco por "User Account Control settings" > Never notify
+* `Start > busco por "User Account Control settings"` > **Never notify**
 
-***Eliminar el PIN***, no lo necesito, como decía al principio, es un equipo para demos y documentar.
+***Eliminar el PIN***, no lo quiero. Esto me va a obligar (durante un rato) a hacer login con mi cuenta de microsoft pero inmediatemente también voy a cambiar eso.
 
-* Start > Settings > Accounts > Sign-in options
+* Start > Settings > Accounts > `Sign-in options`
   * Desactivo Only allow Windows Hello sign-in.
-  * Quito PIN.
-  * Cambio a "Never" que solicite login cuando despierta.
+  * **Quito PIN**.
+  * Cambio a "**Never**" que solicite login cuando despierta.
 
-Cambio el ***Home*** de mi usuario y cambio a ***login con Usuario local***. Durante la instalación me obligó a 2 cosas que no me gustan: 1) Obliga a usar una cuenta de microsoft usando un mail registrado. 2) Obliga a que el nombre corto del usuario seran los 5 primeros caracteres del mail, por lo que mi  usuario quedó como `luisp`, por lo tanto el HOME de mi usuario es `\Users\luisp\`
+Cambio el ***Home*** de mi usuario y cambio a ***login con Usuario local***. Durante la instalación me obligó a 2 cosas que no me gustan: 1) usar una cuenta de Microsoft usando un mail registrado. 2) creó el nombre corto del usuario con los 5 primeros caracteres de dicho mail, por lo que quedó comoo `luisp` y el HOME de mi usuario en `C:\Users\luisp\`.
 
-* Primero cambio el nombre del directorio HOME ([fuente](https://www.elevenforum.com/t/change-name-of-user-profile-folder-in-windows-11.2133/))
-  * Habilito al Administrador, rearranco el ordenador, hago login con él y sigo los pasos para cambiar el Home
+* Primero cambio el nombre del directorio HOME ([guía](https://www.elevenforum.com/t/change-name-of-user-profile-folder-in-windows-11.2133/))
+  * Habilito al Administrador
     * `net user Administrator /active:yes`
-  * Al rearrancar
+  * Rearranco el ordenador, hago login con Administrador sin contraseña
     * CMD > `wmic useraccount get name,SID`
     * Registry -> `HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\S-1* -> ProfileImagePath`
-    * Explorer -> Renombro el HOME
+    * Explorer -> **Renombro el HOME**
     * CMD `mklink /d "C:\Users\luisp" "C:\Users\luis"`
 * Luego cambio a Cuenta Local, en vez de usar una Microsoft Account con mi mail
-  * Start > Settings > Account > Your Info >
-  * ***Cambio a cuenta local***, usuario `luis`, con contraseña
+  * `Start > Settings > Account > Your Info`
+  * ***Cambio a cuenta local***, usuario `luis`, le pongo una contraseña
 
 ***Autologon***
 
-* Start > netplwiz - desactivo que pida contraseña
-* Abro `regedit`, bajo la clave siguiente creo 3 entradas:
-  * `HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon`
-  * `AutoAdminLogon` > `1`
-  * `DefaultUserName` > `luis`
-  * `DefaultPassword` > `<la-contraseña`
+* Start > busco "**`netplwiz`**" y lo arranco
+  * Selecciono `luis` y quito la marca de "`Users must enter name and password to use this computer`"
+* Start > busco "**`regedit`**", abro `HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon`
+  * Añado (si no estaban) estas tres entradas de tipo cadena/string:
+    * `AutoAdminLogon` > `1`
+    * `DefaultUserName` > `luis`
+    * `DefaultPassword` > `<la-contraseña>`
 * Rearranco el equipo, que entra automáticamente en Windows, sin pedir Login/Password.
 
-Instalo ***Powershell 7***. Por defecto incluye CMD y PowerShell 5 (se ve con el comando `$PSVersionTable`)
+Instalo ***Powershell 7***. Por defecto el equipo trae `CMD` y `PowerShell 5` (para ver la versión de PS usé el comando: `$PSVersionTable`)
 
-* Desde GitHub [PowerShell Tags](https://github.com/PowerShell/PowerShell/tags) entro en el link de Downloads de la última versión, que era PowerShell-7.4.5-win-x64.msi
+* Desde [PowerShell Tags](https://github.com/PowerShell/PowerShell/tags) descargo desde el link "Downloads" la última versión (`PowerShell-7.4.5-win-x64.msi`) y la instalo.
 
 ***Eliminar anuncios***
 
 * Quitar Ads del Lock Screen
   * Start > Settings > Personalization
-    * Personalize your lock screen: Selecciono una foto
-    * Get fun facts, tips, tricks, and more on your lock screen: quito el checkbox
+    * Personalize your lock screen: **Selecciono una foto**
+    * Get fun facts, tips, tricks, and more on your lock screen: **quito el checkbox**
 * Quitar Ads/Apss del Start
-  * Start > Botón derecho sobre los iconos que quiera hacer Unpin o "Uninstall" (por ejemplo en mi caso quité Xbox, Spottify, ...)
+  * Start > Botón derecho sobre los iconos que quiera hacer Unpin o "Uninstall" (por ejemplo en mi caso **quité Xbox, Spottify**, ...)
 * Quitar Ads de la búsqueda
-  * Start > Settings > Privacy and Security” > “Search Permissions“, me aseguro que está todo a off
+  * Start > Settings > Privacy and Security > “Search Permissions“, me aseguro que está **todo a off**
 * Quitar Ads de los Widgets
   * Start > Settings > “Personalization” > “Taskbar”
-    * Bajo “Taskbar items” quito “Widgets“.
+    * Bajo “Taskbar items” **quito Widgets**
 * Quitar contenido de Widgets
   * Pulso la tecla Windows+W, abre los Widgets
-  * Clic en el icono de Profile Icon (arriba a la dcha.), Sign-out button.
-  * Ejecuto Local Group Policy Editor `gpedit.msc`
-    * `Computer Configuration\Administrative Templates\Windows Components\Widgets​` > disabled.
-    * Hago reboot.
+  * Clic en el icono de Profile Icon (arriba a la dcha.), **Sign-out button**.
+  * Ejecuto Local Group Policy Editor **`gpedit.msc`**
+    * `Computer Configuration\Administrative Templates\Windows Components\Widgets​` > **disabled**.
+    * Hago **reboot**.
 * Quitar Ads del Explorer
-  * Window + E > tres puntos horizontales > Options > View > Quito "Show sync provider notifications" > Apply
+  * Window + E > tres puntos horizontales > Options > View > **Quito "Show sync provider notifications" > Apply**
 * Quitar Notification Ads
-  * Start > Settings > System > Notifications > Additional Settings > Quitar las tres opciones que aparecen
+  * Start > Settings > System > Notifications > Additional Settings > **Quito las tres opciones** que aparecen
 * Quitar "Device Usage Settings"
-  * Start > Settings > Personalization > Device Usage > Me aseguro de quitarlas todas.
+  * Start > Settings > Personalization > Device Usage > **Quito todas**.
 * Quitar contenido sugerido
-  * Start > Settings > Privacy and Security > General > Me aseguro de que "Show me notifications in the Settings app" esté desactivado.
+  * Start > Settings > Privacy and Security > General > Me aseguro de que **"Show me notifications in the Settings app" esté desactivado**
 * Quitar Ads de Diagnostic Data
-  * Start > Settings > Privacy and Security > Diagnostics & feedback > Tailored experiences > Let Microsoft use your diagnostic data - OFF
-  * De hecho tengo en Off todas las opciones bajo Diagnostics & feedback
+  * Start > Settings > Privacy and Security > Diagnostics & feedback > Tailored experiences > Let Microsoft use your diagnostic data - **Off**
+  * De hecho **tengo en Off todas las opciones bajo Diagnostics & feedback**
 * Quito la papelera del escritorio
-  * Start > Settings > Personalization > Themes > Desktop icon settings > Quito el checkbox a Recycle Bin
+  * Start > Settings > Personalization > Themes > Desktop icon settings > **Quito el checkbox de Recycle Bin**
 * Personalizo el Taskbar
-  * Botón derecho sobre taskbar, quito iconos que no uso.
+  * Botón derecho sobre taskbar, **quito iconos que no uso**.
   * Start > tecleo "Start settings" >
     * Layout > More pins
-    * Show recently added apps > Off
-    * Show reocmmendations .. > Off
-    * Show account notifications > Off
-    * Show recently opened > Off
+    * Show recently added apps > **Off**
+    * Show reocmmendations .. > **Off**
+    * Show account notifications > **Off**
+    * Show recently opened > **Off**
 * Elimino el teclado US que me instaló por defecto.
-  * Start > Settings > Time & Language > Language & Region > Options > Keyboards > US (lo elimino y dejo solo el de Spanish)
+  * Start > Settings > Time & Language > Language & Region > Options > Keyboards > **Quito US** (dejo solo el de Spanish)
 
 ***Actualización*** del sistema operativo
 
-* Ya va siendo hora, Start > escribo "Update " > Check for Updates > Hago todas las actualizaciones/reboots que me pide.
+* Ya va siendo hora, Start > escribo "Update " > Check for Updates > Hago todas las **actualizaciones/reboots** que me pide.
 
 ***Desinstalar Edge*** (En Europa es posible desde el propio Sistema)
 
@@ -155,44 +156,37 @@ Instalo ***Powershell 7***. Por defecto incluye CMD y PowerShell 5 (se ve con el
   * Microsoft Edge Update > No me deja hacer un Uninstall
   * Microsoft Edge WEbView2 > No me deja hacer un Uninstall
 
-Si busco empiezo a ver que cada vez salen menos morralla
+Si ahora entro en "buscar" ya empiezo a ver los efectos, cada vez menos morralla.
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-24-win-decente-01.png"
       caption="Versión minimalista de Buscar"
-      width="450px"
+      width="400px"
       %}
 
-***Habilitar File Sharing***. Lo voy a necesitar
+***Habilitar File Sharing***. Es algo que voy a necesitar, así que lo configuro
 
 * Start > Settings > `Network and Internet` > `Advanced network settings`
   * `Advance Sharing Settings`
-  * `File & Printer sharing`: On
-  * `Public folder sharing`: On
+  * `File & Printer sharing`: **On**
+  * `Public folder sharing`: **On**
 * Start > Settings > System > About
-  * `Advance System Settings` > Computer Name > Change > "Me aseguro que está en WORKGROUP"
+  * `Advance System Settings` > Computer Name > Change > "Me aseguro que está en **WORKGROUP**"
 * Habilito SMB1.0
   * Start > busco "Control Panel"
-  * > `Programs` > `Programs and features`
-  * > `Turn Windows features on or off`
-  * Activo SMB 1.0/CIFS File Shring Support.
+  * `Programs` > `Programs and features`
+  * `Turn Windows features on or off`
+  * **Activo SMB 1.0/CIFS** File Sharing Support.
 
 ***Firewall de Windows***
 
-* Lo configuro para minimizar alertas y notificaciones. El ordenador está conectado a una red privada pero por defecto al instalar lo configura como si estuviese en una red pública.
+* Lo configuro para minimizar alertas y notificaciones. El ordenador está conectado a una red privada pero por defecto la instalación lo puso en red Pública (error).
   * Start > Settings > Network & Internet > Ethernet (y también WiFi)
-    * Cambio ambas a `Private Network`
+    * **Cambio ambas a `Private Network`**
 * Configuro el Firewall de Windows para minimizar alertas y notificaciones
   * Start > busco "Control Panel" > System & Security > Windows Defender Firewall > Advanced Settings”
-  * Creo reglas de entrada y salida para bloquear o permitir aplicaciones específicas según lo necesite.
-  * Desactivo las notificaciones del firewall yendo a “System and Security > Windows Defender Firewall > Change notification settings”, y desmarco las casillas de “Notify me when Windows Defender Firewall blocks a new app”.
-
-***Poner bien la hora con dualboot***
-
-* He descubierto que Windows no pone bien la hora del ordenador, a pesar de configurarlo para que la tome de internet.
-  * Encontré un par de artículos [aquí](https://itsfoss.com/wrong-time-dual-boot/) y [aquí](https://www.howtogeek.com/323390/how-to-fix-windows-and-linux-showing-different-times-when-dual-booting/)
-
-Al pulsar sobre Start obtengo una versión minimalista.
+  * Reviso reglas de entrada y salida para bloquear o permitir aplicaciones específicas según lo necesite.
+  * Desactivo las notificaciones del firewall en “System and Security > Windows Defender Firewall > Change notification settings”, y **desmarco las casillas de “Notify me when Windows Defender Firewall blocks a new app”**
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-24-win-decente-02.png"
@@ -202,7 +196,7 @@ Al pulsar sobre Start obtengo una versión minimalista.
 
 ## Recomendaciones adicionales
 
-Al seguir los pasos anteriores obtengo un Windows 11 mucho más limpio, rápido y libre de distracciones, ideal para su uso en entornos específicos como kioskos o demostraciones. Además de las optimizaciones mencionadas, dejo aquí algunas medidas adicionales, que pueden llevar la personalización un paso más allá:
+Al seguir los pasos anteriores obtengo un Windows 11 mucho más limpio, rápido y libre de distracciones, ideal para su uso en entornos específicos como pruebas o demostraciones. Además de las optimizaciones mencionadas, dejo aquí algunas medidas adicionales, que pueden llevar la personalización un paso más allá:
 
 ***Desactivar Cortana***
 
