@@ -80,26 +80,16 @@ Cambio el ***Home*** de mi usuario y cambio a ***login con Usuario local***. Dur
     * `net user Administrator /active:yes`
   * Rearranco el ordenador, hago login con Administrador sin contraseña
     * CMD > `wmic useraccount get name,SID`
-    * Registry -> `HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\S-1* -> ProfileImagePath`
+    * ***`regedit`*** -> `HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\S-1* -> ProfileImagePath`
     * Explorer -> **Renombro el HOME**
     * CMD `mklink /d "C:\Users\luisp" "C:\Users\luis"`
 * Luego cambio a Cuenta Local, en vez de usar una Microsoft Account con mi mail
   * `Start > Settings > Account > Your Info`
   * ***Cambio a cuenta local***, usuario `luis`, le pongo una contraseña
 
-***Autologon***
+***Powershell 7***.
 
-* Start > busco "**`netplwiz`**" y lo arranco
-  * Selecciono `luis` y quito la marca de "`Users must enter name and password to use this computer`"
-* Start > busco "**`regedit`**", abro `HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon`
-  * Añado (si no estaban) estas tres entradas de tipo cadena/string:
-    * `AutoAdminLogon` > `1`
-    * `DefaultUserName` > `luis`
-    * `DefaultPassword` > `<la-contraseña>`
-* Rearranco el equipo, que entra automáticamente en Windows, sin pedir Login/Password.
-
-Instalo ***Powershell 7***. Por defecto el equipo trae `CMD` y `PowerShell 5` (para ver la versión de PS usé el comando: `$PSVersionTable`)
-
+* Por defecto el equipo trae `CMD` y `PowerShell 5` (para ver la versión de PS usé el comando: `$PSVersionTable`)
 * Desde [PowerShell Tags](https://github.com/PowerShell/PowerShell/tags) descargo desde el link "Downloads" la última versión (`PowerShell-7.4.5-win-x64.msi`) y la instalo.
 
 ***Eliminar anuncios***
@@ -132,8 +122,13 @@ Instalo ***Powershell 7***. Por defecto el equipo trae `CMD` y `PowerShell 5` (p
 * Quitar Ads de Diagnostic Data
   * Start > Settings > Privacy and Security > Diagnostics & feedback > Tailored experiences > Let Microsoft use your diagnostic data - **Off**
   * De hecho **tengo en Off todas las opciones bajo Diagnostics & feedback**
-* Quito la papelera del escritorio
+* Quito la papelera de reciclaje del Escritorio/Desktop
   * Start > Settings > Personalization > Themes > Desktop icon settings > **Quito el checkbox de Recycle Bin**
+* Añado la papelera de reciclaje al Explorer (para que aparezca en "Este equipo / This PC")
+  * ***`regedit`*** ->
+    * `HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace`
+    * Nueva clave/Key: `{645FF040-5081-101B-9F08-00AA002F954E}`
+    * **Reboot**
 * Personalizo el Taskbar
   * Botón derecho sobre taskbar, **quito iconos que no uso**.
   * Start > tecleo "Start settings" >
@@ -144,6 +139,8 @@ Instalo ***Powershell 7***. Por defecto el equipo trae `CMD` y `PowerShell 5` (p
     * Show recently opened > **Off**
 * Elimino el teclado US que me instaló por defecto.
   * Start > Settings > Time & Language > Language & Region > Options > Keyboards > **Quito US** (dejo solo el de Spanish)
+* Añado ""Turn off display" al menú de contexto del escritorio
+  * Sigo este apunte de [aquí](https://www.elevenforum.com/t/add-turn-off-display-context-menu-in-windows-11.8267/)
 
 ***Actualización*** del sistema operativo
 

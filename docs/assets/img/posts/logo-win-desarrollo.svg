@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="15" height="15"/>
+  </defs>
+  <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: rgb(84, 84, 84); pointer-events: none; visibility: hidden;" x="15" y="15"/>
+  <path d="M 59.793 15 C 59.793 15 44.587 27.889 39.518 32.186 C 29.38 40.777 29.38 40.777 39.518 49.371 C 44.587 53.667 46.768 55.612 54.723 62.259 C 59.793 66.555 64.861 70.853 69.931 57.963 C 80.068 23.592 69.931 57.963 80.068 23.592 C 85.137 10.704 90.206 15 95.275 19.296 C 100.344 23.592 105.412 27.889 110.481 32.186 C 120.62 40.777 120.62 40.777 110.481 49.371 C 105.412 53.667 95.275 62.259 90.206 66.555" style="fill: none; stroke: rgb(0, 0, 0); stroke-width: 2px;"/>
+  <g transform="matrix(1.313032, 0, 0, 1.313032, -32.489395, -73.009293)" style="">
+    <title>Win11</title>
+    <rect x="57.491" y="113.751" width="23.105" height="23.105" style="fill: rgb(0, 120, 212);"/>
+    <rect x="83.131" y="113.751" width="23.105" height="23.105" style="fill: rgb(0, 120, 212);"/>
+    <rect x="57.491" y="139.393" width="23.105" height="23.105" style="fill: rgb(0, 120, 212);"/>
+    <rect x="83.131" y="139.393" width="23.105" height="23.105" style="fill: rgb(0, 120, 212);"/>
+  </g>
+</svg>

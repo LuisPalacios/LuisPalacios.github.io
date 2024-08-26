@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="15" height="15"/>
+  </defs>
+  <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: rgb(84, 84, 84); pointer-events: none; visibility: hidden;" x="15" y="15"/>
+  <circle cx="32.158" cy="40.727" r="17.137" fill="rgba(76, 175, 80, 0.6)" style=""/>
+  <circle cx="117.842" cy="40.727" r="17.137" style="fill: rgba(255, 191, 0, 0.725);"/>
+  <circle cx="32.158" cy="109.274" r="17.137" fill="rgba(244, 67, 54, 0.6)" style=""/>
+  <circle cx="117.842" cy="109.274" r="17.137" fill="rgba(103, 58, 183, 0.6)" style=""/>
+  <line x1="75" y1="75" x2="32.158" y2="40.727" stroke="#333" stroke-width="2" style=""/>
+  <line x1="75" y1="75" x2="117.842" y2="40.727" stroke="#333" stroke-width="2" style=""/>
+  <line x1="75" y1="75" x2="32.158" y2="109.274" stroke="#333" stroke-width="2" style=""/>
+  <line x1="75" y1="75" x2="117.842" y2="109.274" stroke="#333" stroke-width="2" style=""/>
+  <circle cx="53.579" cy="57.864" r="2.142" fill="#333" style=""/>
+  <circle cx="96.421" cy="57.864" r="2.142" fill="#333" style=""/>
+  <circle cx="53.579" cy="92.137" r="2.142" fill="#333" style=""/>
+  <circle cx="96.421" cy="92.137" r="2.142" fill="#333" style=""/>
+  <circle cx="75" cy="40.727" r="2.142" fill="#333" style=""/>
+  <circle cx="75" cy="109.274" r="2.142" fill="#333" style=""/>
+  <circle cx="75" cy="75" r="25.705" style="fill: rgb(33, 150, 243);"/>
+  <text style="fill: rgb(255, 255, 255); font-family: 'Courier New'; font-size: 16.3391px; line-height: 29.8772px; text-anchor: middle; white-space: pre;" transform="matrix(0.428421, 0, 0, 0.428421, -44.304447, -22.164135)" y="196.56199645996094"><tspan x="278.3330078125" dy="1em">​</tspan><tspan>zsh/bash</tspan><tspan x="278.3330078125" dy="1em">​</tspan><tspan>+<tspan x="278.3330078125" dy="1em">​</tspan>linux<tspan x="278.3330078125" dy="1em">​</tspan>FOSS</tspan></text>
+  <text style="fill: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 6.9px; text-anchor: middle; white-space: pre;" x="31.375" y="36.997">Linux</text>
+  <text style="fill: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 6.9px; text-anchor: middle; white-space: pre;" x="118.583" y="36.997">MacOS</text>
+  <text style="fill: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 6.9px; text-anchor: middle; white-space: pre;" x="31.375" y="117.234">Win</text>
+  <text style="fill: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 6.9px; text-anchor: middle; white-space: pre;" x="118.583" y="117.234">Cloud</text>
+</svg>
