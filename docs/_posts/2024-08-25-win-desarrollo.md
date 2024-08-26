@@ -2,15 +2,15 @@
 title: "Windows para desarrollo"
 date: "2024-08-25"
 categories: desarrollo
-tags: windows wls linux ubuntu desarrollo visual studio python git cli vscode
+tags: windows wsl wsl2 linux ubuntu desarrollo visual studio python git cli vscode compilador
 excerpt_separator: <!--more-->
 ---
 
 ![logo win desarrollo](/assets/img/posts/logo-win-desarrollo.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-En este apunte describo los pasos para preparar un Windows 11 como equipo de desarrollo. Teniendo en cuenta que soy *Unixero* y trabajo en Linux, MacOS y Windows, veras que este apunte no está orientado a desarrolladores *solo-microsoft* o *solo-windows*, sino que está orientado a los que les gusta la línea de comandos y desarrollan en múltiples plataformas.
+En este apunte describo los pasos para preparar un Windows 11 como equipo de desarrollo. Teniendo en cuenta que soy *Unixero* y trabajo en entorno multiplataforma, Linux, MacOS y Windows, veras que este apunte no está orientado a desarrolladores *solo-microsoft* o *solo-windows*, sino que está orientado a los que les gusta la línea de comandos y desarrollan para múltiples plataformas y/o entornos.
 
-Parto de una instalación desde cero, instalé Windows en modo [dualboot]({% post_url 2024-08-23-dual-linux-win %}) y lo configuré de la forma más [ligera]({% post_url 2024-08-24-win-decente %}) posible. A continuación describo los componentes, cómo los he configurado, instalado y preparado para tener una buena plataforma de desarrollo de Aplicaciones y Servicios.
+Parto de una instalación de Windows limpia, los instalé en modo [dualboot]({% post_url 2024-08-23-dual-linux-win %}) y lo configuré de la forma más [ligera]({% post_url 2024-08-24-win-decente %}) posible. Describo los componentes, cómo los he configurado, instalado y preparado para tener una buena plataforma de desarrollo de Aplicaciones y Servicios.
 
 <br clear="left"/>
 <!--more-->
@@ -19,7 +19,7 @@ Parto de una instalación desde cero, instalé Windows en modo [dualboot]({% pos
 
 ## Preparar el equipo
 
-Antes de entrar en herramientas de desarrollo, como Git, VSCode, compiladores, etc. creo que es importante tener el equipo bien preparado y una de las áreas más importantes es el CLI y la aparición de WSL2. Esta primera sección la dedico a ambos.
+Antes de entrar en herramientas de desarrollo, como Git, VSCode, compiladores, etc. creo que es importante tener el equipo bien preparado y una de las áreas más importantes es el CLI y cómo mejorarlo con WSL2. Esta primera sección la dedico principalmente a ambos.
 
 ### CLI
 
@@ -27,7 +27,7 @@ Antes de nada es imprescindible hablar del terminal, es fundamental, tanto si es
 
 En mi caso he trabajado en multiples Sistemas Operativos, no estoy obsesionado con ninguno, ni mucho menos me considero un [BOFH](https://es.wikipedia.org/wiki/Bastard_Operator_from_Hell#:~:text=BOFH%20son%20las%20iniciales%20del,como%20Infame%20Administrador%20del%20Demonio), lo que sí que tengo claro y he aprendido durante años es a **elegir lo que me ahorra tiempo**.
 
-Anticipo que mi solución "final" es usar en Windows 11 la **Shell de Unix** (`zsh o bash`), junto con **las decenas de herramientas de línea de comandos Open Source existentes para Linux** (`ls, cd, mkdir, cp, tar, sed, awk, nano, vi, etc.`). Se hicieron siguiendo la filosofía Unix, que establece que un programa '*debería hacer una cosa y hacerla bien*'.
+Anticipo que mi Consola elegida en Windows es la **Shell de Unix** (`zsh o bash`), junto con **las decenas de herramientas de línea de comandos Open Source existentes para Linux** (`ls, cd, mkdir, cp, tar, sed, awk, nano, vi, etc.`). Todas ellas se hicieron siguiendo la filosofía Unix, que establece que un programa '*debería hacer una cosa y hacerla bien*', y funcionan así de bien desde hace años.
 
 El trabajo de millones de horas de otras personas me van a ahorrar mucho tiempo. Es inteligente invertir unas cuantas horas en aprender la Shell y el subconjunto de las herramientas de línea de comandos más utilizadas.
 
@@ -41,7 +41,7 @@ Cuando bajamos a tierra Windows, el entorno CLI ha sido históricamente un desaf
 
 Afortunadamente hay luz, en los últimos años, Windows ha dado un paso importante, la introducción de WSL-2 (Windows Subsystem for Linux). Gracias a él, **podemos trabajar con la Shell y herramientas Linux** en el ecosistema de Windows, permitiendo una experiencia de desarrollo mucho más fluida y eficiente, combinando lo mejor de ambos mundos.
 
-Pero antes de entrar en WSL2, déjame dar dar un repaso a todas las opciones disponibles en el ámbito del CLI en un Windows 11, ya te anticipo que acabo teniendo cuatro (si 4) consolas distintas.
+Pero antes de entrar en WSL2, déjame dar dar un repaso a todas las opciones disponibles en el ámbito del CLI en Windows 11, ya te anticipo que acabo teniendo cuatro (si 4) consolas distintas.
 
 **Command Prompt (`command.com` / CMD)**: la línea de comandos tradicional de Windows. Es uno de los entornos más antiguos y básicos para ejecutar comandos en Windows, sus scripts son los famosos ***`*.BAT`***. No necesita explicación. Trabajar en esta línea de comandos o hacer scripts en BAT es literalmente hacerse el Harakiri.
 
@@ -74,7 +74,7 @@ PS C:\> $PSVersionTable
 :
 ```
 
-Puede que PowerShell le sea ***útil a desarrolladores que trabajan exclusivamente en .NET, con C#, en entornos solo Microsoft, para automatizaciones y DevOps CI en esos entornos***. Para el resto, mi recomendación es ***ni aprenderlo, ni usarlo, a no ser que no te quede más remedio***. Lo suyo es irse a la siguiente opción (WSL2).
+Puede que PowerShell le sea ***útil a desarrolladores que trabajan exclusivamente en .NET, con C#, en entornos solo Microsoft, para automatizaciones***, o si quieres diferenciarte en el mundo DevOps CI en entornos exclusivos Microsoft/Windows, ***debes aprenderla***. Pero para el resto de casos, mi opción es ***ni aprenderlo, ni usarlo***, así que, a no ser que no me quede más remedio, la PS es para mi un mal necesario, que está ahí, instalo, mantengo, uso de vez en cuando, y punto.
 
 ***Windows Subsystem for Linux (WSL 2)***: permite ejecutar un entorno Linux directamente en Windows sin la necesidad de una máquina virtual. Puedes instalar distribuciones de Linux (como Ubuntu, Debian, etc.) y usar la Shell que quieras de forma nativa, con altísimo rendimiento, completamente integrado con el File System de Windows (excepto los permisos). ***¡Esto es justo lo que necesito y recomiendo usar!***. En la siguiente sección explico cómo lo he instalado.
 
@@ -95,19 +95,17 @@ Hasta aquí he listado las cuatro opciones de consola que voy a tener en mi Wind
 
 #### Mi estrategia
 
-Mi estrategia es sencilla. He elegido trabajar siempre con lo mismo, esté donde este. Recomiendo que tu Consola ejecute siempre ***Shell y Herramientas Linux***. ¿Cómo?
+Mi estrategia es sencilla y simple, que mi Consola ejecute siempre ***Shell y Herramientas Linux***. ¿Cómo?
 
-* Windows: ***Bash para Windows*** (`WSL 2` > `Ubuntu` >  `bash`), contarás con acceso nativo al `C:\` vía `/mnt/c` y cuentas con un Ubuntu nativo debajo, por lo que tienes acceso a **todas las herramientas open source disponibles en Linux**. Como Terminal uso "Windows Terminal" (más adelante lo explico).
-* [MacOS]({% post_url 2023-04-15-mac-desarrollo %}): Uso **zsh**, pero instalo también **bash** (para todos mis scripts), junto con las herramientas preinstaladas y **Homebrew** para tener acceso a **todas las herramientas open source disponibles en Linux**. Como Terminal yo uso "iTerm". En el enlace tienes un apunte mío.
-* [Linux]({% post_url 2024-07-25-linux-desarrollo %}): Uso **zsh**, pero tengo también **bash** (para todos mis scripts), junto con **todas las herramientas open source disponibles en Linux**. Como Terminal yo uso "Gnome Termianl". En el enlace tienes un apunte mío.
+* Windows: Instalando `WSL 2` > `<Distribución>` >  ***`zsh o bash`***. Me dará acceso nativo al `C:\` vía `/mnt/c`. Tendré una Distribución Linux completa con acceso a **todas las herramientas open source disponibles en Linux**. Como Terminal uso "Windows Terminal" (más adelante lo explico).
+* [MacOS]({% post_url 2023-04-15-mac-desarrollo %}): Uso **zsh**, también **bash** (scripts), junto con las herramientas preinstaladas y **Homebrew** para tener acceso a **todas las herramientas open source disponibles en Linux**. Como Terminal uso "iTerm2". En el enlace tienes un apunte.
+* [Linux]({% post_url 2024-07-25-linux-desarrollo %}): Uso **zsh**, tamibén **bash** (scripts), junto con **todas las herramientas open source disponibles en Linux**. Como Terminal yo uso "Gnome Terminal". En el enlace tienes un apunte.
 
-En el caso de Windows, que es sobre lo que va este apunte, rara vez y solo cuando no me quede más remedio iré al CLI nativo de Microsoft: `command.com`, `powershell.exe` o `pwsh.exe`. Documentaré las configuraciones, como modificar el PATH en ambos mundos. Así podré arrancar el Terminal que necesite cuando lo necesite.
-
-A la hora de automatizar con scripts y dado que son todos incompatibles entre sí (`.BAT`, `.PS1`, `scripts bash`) mi objetivo es que todos mis scripts estén siempre hechos para `bash`, ya que, gracias a WSL, podemos ejecutar en los tres sistemas operativos.
+En el caso de Windows, que es sobre lo que va este apunte, rara vez y solo cuando no me quede más remedio iré al CLI nativo de Microsoft: `command.com`, `powershell.exe` o `pwsh.exe`.  A la hora de automatizar con scripts y dado que son todos incompatibles entre sí (`.BAT`, `.PS1`, `scripts bash`) estandarizo mis scripts para que usen `bash`. Ahora con WSL2 también van a funcionarme en Windows.
 
 ### WSL 2
 
-Instalo el Subsistema de Windows para Linux 2, que como decia permite ejecutar un entorno completo de Linux directamente sobre Windows.
+Instalo el Subsistema de Windows para Linux 2, que como decía permite ejecutar un entorno completo de Linux directamente sobre Windows.
 
 Utiliza una máquina virtual ligera con un **kernel completo de Linux real**, tiene un **rendimiento** altísimo, está super **integrado con Windows**, permite que los archivos y scripts de Linux se ejecuten desde el explorador de Windows, y viceversa; y muy importante, tiene **compatibilidad con Docker**, de hecho WSL2 es el backend preferido para [Docker Desktop en Windows](https://www.docker.com/products/docker-desktop/) (que instalaré más adelante).
 
@@ -152,7 +150,7 @@ Proceso de instalación:
 
   * Cuando termina lanza la consola con el CLI de `bash`. Me salgo con `exit`, ya volveremos.
 
-* Verifico la instalación y establecer WSL2 como predeterminado. Abro PowerShell como Administrador, muestro que tengo y me aseguro de que siempre sea la versión 2 (no hace falta porque no tengo la verisón 1)
+* Abro PowerShell como Administrador, muestro que tengo y me aseguro de que siempre sea la versión 2 (en mi caso no hace falta, solo si tienes otra versión)
 
   ```PS
   wsl --list --verbose
@@ -179,7 +177,7 @@ Efectivamente estamos en una máquina virtual con Ubuntu, así que puedo instala
 luis@kymeraw:~$ sudo apt install -y jq
 ```
 
-***Actualizar Ubuntu***: Es importante que cuando hayas terminado actualices el Ubuntu de la VM a la última. Ejecuta el comandos siguiente, sal del Terminal y vuelve a arrancarlo.
+***Actualizar Ubuntu***: Es importante que cuando hayas terminado actualices el Ubuntu de la VM a la última.
 
 ```bash
 luis@kymeraw:~$ sudo apt update && sudo apt upgrade -y
@@ -187,7 +185,7 @@ luis@kymeraw:~$ sudo apt update && sudo apt upgrade -y
 
 #### WSL 2 - Cambiar HOME
 
-Quiero que al entrar en WSL2 Ubuntu el home de mi usuario sea `/mnt/c/Users/luis`, para que de forma nativa esté en el directorio a partir de donde trabajo siempre en Windows. Voy a usar el comando `usermod` de linux, pero debo hacerlo como root, así que estos son los pasos:
+Quiero que al entrar en WSL2 el HOME de mi usuario sea `/mnt/c/Users/luis`, para que `cd` me lleve a mi `C:\Users\luis`. Voy a usar el comando `usermod` de linux, pero debo hacerlo como root, así que estos son los pasos:
 
 * Desde Powershell cambio Ubuntu para que entre con `root`:
 
@@ -195,7 +193,7 @@ Quiero que al entrar en WSL2 Ubuntu el home de mi usuario sea `/mnt/c/Users/luis
 PS C:\Users\luis> ubuntu2024.exe config --default-user root
 ```
 
-* Arranco Ubuntu, entro como root y cambio el home
+* Arranco Ubuntu, entro como root y cambio el HOME
 
 ```bash
 usermod --home /mnt/c/Users/luis/ luis
@@ -211,11 +209,11 @@ PS C:\Users\luis> ubuntu2024.exe config --default-user luis
 
 Los permisos de los archivos Linux que se crean en el disco NTFS [se intepretan de una forma muy concreta](https://learn.microsoft.com/en-us/windows/wsl/file-permissions). En una instalación por defecto, cada archivo o directorio que se crea en el disco NTFS (por ejemplo `/mnt/c/Users/luis`) se hace con permisos 777.
 
-En general no debería afectar en nada porque "no" voy a usar el Linux de WSL como entorno principal, sino como herramienta para scripts, moverme por los directorios, ver ficheros, etc. Lo que pasa es que si que hay algunas herramientas a las que esto les preocupa.
+En general no debería afectar en nada porque "no" voy a usar el Linux de WSL como "plataforma de desarrollo", simplemente como herramienta de apoyo, moverme por los directorios, ver ficheros, etc. Lo que pasa es que si que hay algunas herramientas a las que esto les preocupa.
 
-Un ejemplo es SSH. El cliente de OpenSSH necesita que el directorio y los archivos bajo `~/.ssh` tengan unos permisos específicos. Si no es así da problemas, traducido significa que no podría abrir una sesión `ssh` desde la consola de Ubuntu a ningún sitio.
+Un ejemplo es SSH. El cliente de OpenSSH necesita que el directorio y los archivos bajo `~/.ssh` tengan unos permisos específicos. Si no es así da problemas, traducido significa que no podría abrir una sesión `ssh` desde la consola de WSL a ningún sitio.
 
-La solución es activar los ***metadatos*** en la [configuración avanzada de WSL](https://learn.microsoft.com/en-us/windows/wsl/wsl-config). Para ello entro en mi Ubuntu, cambio a root, edito un fichero, lo salvo y me salgo de WSL. La sección `[boot]` ya estaba, he añadido la sección `[automount]`
+La solución es activar los ***metadatos*** en la [configuración avanzada de WSL](https://learn.microsoft.com/en-us/windows/wsl/wsl-config). Para ello entro en la consola WSL, cambio a root, edito un fichero, lo salvo y me salgo de WSL. La sección `[boot]` ya estaba, he añadido la sección `[automount]`
 
 ```zsh
 luis@kymeraw:~$ sudo su -
@@ -274,7 +272,7 @@ luis@kymeraw:~$ chsh -s $(which zsh)
 Password:
 ```
 
-Salgo del Terminal y vuelvo a entrar. La primera vez que entras con `zsh` te ofrece ayuda para crear el fichero `.zshrc`. En mi caso ya lo tengo creado porque uso el mismo para MacOS, Linux y ahora Windows. Descargo mi **[~/.zshrc](https://gist.github.com/LuisPalacios/7507ce0b84adcad067320e9631648fd7)**, fichero de configuración de `zsh` y lo copio al HOME del usuario `/mnt/c/Users/luis`.
+Salgo del Terminal y vuelvo a entrar. La primera vez que entras con `zsh` te ofrece ayuda para crear el fichero `.zshrc`. En mi caso ya lo tengo creado porque uso el mismo para MacOS, Linux y ahora Windows. Descargo mi **[~/.zshrc](https://gist.github.com/LuisPalacios/7507ce0b84adcad067320e9631648fd7)** y lo copio al HOME `/mnt/c/Users/luis`.
 
 Instalo tmux, que lo suelo utilizar:
 
@@ -282,7 +280,7 @@ Instalo tmux, que lo suelo utilizar:
 apt install tmux
 ```
 
-También tengo un **[~/.tmux.conf](https://gist.github.com/LuisPalacios/065f4f0491d472d65ef62f67f1f418a1)**, fichero de configuración de `tmux` que copio al HOME (`/mnt/c/Users/luis`).
+También tengo un **[~/.tmux.conf](https://gist.github.com/LuisPalacios/065f4f0491d472d65ef62f67f1f418a1)**, que también copio al HOME (`/mnt/c/Users/luis`).
 
 #### WSL 2 - Scripts
 
@@ -300,9 +298,9 @@ Tengo unos scripts que uso habitualmente y que suelo instalar en todos los equip
 
 #### WSL 2 - Cliente SSH
 
-Para poder conectar desde el Terminal WSL2 vía ***SSH*** a equipos remotos, usar GIT desde Ubuntu, etc. tengo que configurar el cliente SSH.
+Para poder conectar desde el Terminal WSL2 vía ***SSH*** a equipos remotos, usar GIT desde WSL, etc. tengo que configurar el cliente SSH.
 
-* Creo `/mnt/home/luis/.ssh`, luego creo una clave y aquí es donde estarán `authorization_keys`, `config`, etc.
+* Creo `/mnt/c/Users/luis/.ssh`, luego creo una clave y aquí es donde estarán `authorization_keys`, `config`, etc.
 
 ```zsh
 ⚡ luis@kymeraw:luis % cd     # Vuelvo a HOME
@@ -313,7 +311,7 @@ Para poder conectar desde el Terminal WSL2 vía ***SSH*** a equipos remotos, usa
 ⚡ luis@kymeraw:luis % ssh-keygen -t ed25519 -a 200 -C "luis@kymeraw" -f ~/.ssh/id_ed25519
 ```
 
-Tengo varios apuntes sobre SSH: [Git y SSH multicuenta]({% post_url 2021-10-09-ssh-git-dual %}), [SSH y X11]({% post_url 2017-02-11-x11-desde-root %}) y [SSH en Linux]({% post_url 2009-02-01-ssh %}).
+Tengo varios apuntes sobre SSH [Git y SSH multicuenta]({% post_url 2021-10-09-ssh-git-dual %}), [SSH y X11]({% post_url 2017-02-11-x11-desde-root %}) y [SSH en Linux]({% post_url 2009-02-01-ssh %}) por si necesitas ayuda con SSH.
 
 #### WSL 2 - CRLF vs LF
 
@@ -385,16 +383,13 @@ Como dije antes, Windows Terminal es una herramienta poderosa y flexible que te 
 
 * Abro Windows Terminal desde el menú de inicio o utilizando la búsqueda en Windows. El App se llama "Terminal" a secas
 * Accedo a la configuración
-  * Clic en la **flecha hacia abajo** al lado de la pestaña activa > "Settings" (Configuración) o `Ctrl + ,`.
+  * Clic **flecha hacia abajo** cerca pestaña activa > "Settings" (Configuración) o `Ctrl + ,`.
 * Configurar perfiles de consola:
   * En el panel izquierdo, veo perfiles como `Windows PowerShell`, `Command Prompt`, `Ubuntu`, etc. Aquí puedo personalizar cada uno de ellos.
   * Cambiar el shell predeterminado: Si deseas que siempre se abra un perfil específico al iniciar Windows Terminal, selecciona el perfil en el menú "Startup" bajo "Default profile".
 * Personalizar apariencia:
   * Puedes cambiar el tema, fuente, esquema de colores y más para cada perfil.
-* Agregar nuevas consolas (opcional):**
-  * Si tienes otro shell instalado (como `pwsh.exe` para PowerShell 7), puedes agregar un nuevo perfil manualmente:
-    * En el menú de configuración, selecciona "Add a new profile".
-    * Configura el comando de inicio, nombre, ícono, etc.
+* Agregar nuevas consolas (opcional)
 
 ***Anclar Windows Terminal al Taskbar***, tan sencillo como con otras Apps
 
@@ -411,7 +406,7 @@ Tendrás acceso rápido a Windows Terminal directamente desde tu taskbar, y podr
 * Cerrar pestañas: ícono `X` o `Ctrl + Shift + W`.
 * Sacar las pestañas como ventanas independientes: Botón derecho sobre la pestaña
 
-Empiezo a trabajar de manera más eficiente y organizada. Tengo la posibilidad de abrir la consola que necesite, por defecto lo he configurado para que abra `bash` (Ubuntu 22.04.3 LTS), he cambiado los colores ligeramente para diferenciar dónde estoy y en el caso de command.com la fuente.
+Empiezo a trabajar de manera más eficiente y organizada. Tengo la posibilidad de abrir la consola que necesite, por defecto lo he configurado para que WSL (Ubuntu 22.04.3 LTS), he cambiado los colores ligeramente para diferenciar dónde estoy y en el caso de `command.com` he puesto otro tipo de fuente de letra.
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-25-win-desarrollo-04.png"
@@ -430,9 +425,9 @@ Empiezo a trabajar de manera más eficiente y organizada. Tengo la posibilidad d
 
 ### Modificar el PATH
 
-Unificación del PATH: En Windows la la variable PATH se usa para localizar ejecutables. En las shells de Windows (`command.com, powershell.exe, pwsh.exe`) habrás visto que son distintas, de modo que priorizan (por ejemplo CMD incluye el path de pwsh pero no el de powershell, o pwsh pone antes el directorio de la versión 7). Conclusión, son casi identicas, pero están bien tal cual las instala.
+Unificación del PATH: En Windows, al igual que la Shell de Unix, la variable PATH se usa para localizar ejecutables. En el pantallazo anterior, en las shells de Windows (`command.com, powershell.exe, pwsh.exe`) habrás visto que son distintas, de modo que priorizan donde buscar los ejecutables. Son casi identicas, pero están bien tal cual las instala.
 
-* Directorio personal. Recomiendo dedicar un directorio personal para mis scripts y ejetables. Para incluir tu directorio personal en el PATH y asegurar que esté disponible en todos los shells:
+* Directorio personal. Dedico un directorio específicio para mis scripts y ejecutables. Para incluir tu directorio personal en el PATH y asegurar que esté disponible en todos sitios:
 
   * Editar el PATH Global en Windows
     * `Start > Settings > About > Advance System Settings`
@@ -450,7 +445,9 @@ Unificación del PATH: En Windows la la variable PATH se usa para localizar ejec
 
 ## Herramientas de desarrollo
 
-A continuación entro las herramientas mínimas recomendadas para instalar en el entorno de desarrollo de software en Windows y algunas de las herramientas más populares y útiles. Describo cuales son las que yo he instalado. Ten en cuenta que mi caso no tiene porqué ser igual al tuyo. Este mundo es amplísimo.
+Nota: A partir de aquí todavía estoy documentando y realizaré cambios...
+
+Ahora que tenemos el CLI y WSL listos, voy a pasar a las herramientas recomendadas en el entorno de desarrollo de software en Windows; algunas de las herramientas más populares y útiles. También indicaré cuales son las que yo he instalado.
 
 ### Git
 
@@ -467,10 +464,6 @@ Soporta una amplia variedad de lenguajes de programación y una gran cantidad de
 ### Docker Desktop
 
 Permite la creación y gestión de contenedores, lo que es esencial para el desarrollo y despliegue de aplicaciones en entornos aislados. Muy útil cuando estás desarrollando Servicios (por ejemplo en Go, NodeJS, ...). En mi caso lo necesito, así que lo instalo desde el [sitio oficial de Docker](https://www.docker.com/products/docker-desktop). Su integración con WSL2 es fundamental y el haberlo preparado antes nos ayuda a una instalación fluída.
-
-### Chocolatey
-
-Se trata de una administrador de paquetes para Windows que facilita la instalación, actualización y configuración de software. Yo no lo utilizo (de momento), pero si te interesa puedes instalarlo siguiendo las instrucciones en el [sitio oficial de Chocolatey](https://chocolatey.org/install).
 
 ### Postman
 
@@ -500,7 +493,7 @@ Una herramienta para gestionar y administrar bases de datos SQL Server. Disponib
 
 ## Conclusión
 
-Hay decenas, sino cietnos, de apps, utilidades, comandos, entornos de desarrollo que NO he documentado. Es imposible, no hay espacio suficiente. El objetivo realmente era romper el hielo. Realmente estos apuntes me vienen muy bien para tener una bitácora de mis instalaciones, por si tengo que repetirles y espero que te vengan bien a ti como referencia o ejemplo de una experiencia.
+Hay decenas de apps, utilidades, comandos, entornos de desarrollo y es imposible documentarlos todos. Mi objetivo realmente era romper el hielo si tienes un Windows y vas a desarrollar. Realmente estos apuntes me vienen muy bien para tener una bitácora de mi instalación, por si tengo que repetirla y espero que te vengan bien a ti como ejemplo.
 
 ### Aprendizaje continuo
 
@@ -511,14 +504,14 @@ Voy a insistirte sobre la Shell y Linux. Si vienes de Windows, te recomiendo apr
 * **Comandos Bash**: [GNU Bash Reference Manual](https://www.gnu.org/software/bash/manual/bash.html)
 * **Comandos Zsh**: [Zsh Users Guide](https://zsh.sourceforge.io/Guide/zshguide.html)
 
-Además te recomiendo que eches un ojo a alggún curso sobre la filosofía de trabajo en Unix, fundamental para comprender Linux. Cómo y por qué los comandos y programas de Unix/Linux están diseñados de la manera en que lo están. La idea principal es que un programa ‘debería hacer una cosa y hacerla bien’. Esta filosofía también abarca conceptos clave como la entrada y salida, el sistema de archivos, la estructura de directorios y la idea de que ‘todo es un fichero’ en Unix. A continuación, se listan algunos cursos cortos y didácticos que cubren estos temas:
+Además te recomiendo que eches un ojo a algún curso sobre la filosofía de trabajo en Unix, fundamental para comprender Linux. Cómo y por qué los comandos y programas de Unix/Linux están diseñados de la manera en que lo están. La idea principal es que un programa ‘debería hacer una cosa y hacerla bien’. Esta filosofía también abarca conceptos clave como la entrada y salida, el sistema de archivos, la estructura de directorios y la idea de que ‘todo es un fichero’ en Unix. Te dejo algunos cursos cortos y didácticos que cubren estos temas:
 
 * **Curso en Español**: [Introducción a Unix y Linux - Filosofía y Conceptos Básicos](https://cursoswebgratis.com/curso-de-linux/), donde se abordan la estructura de directorios, la gestión de ficheros, y la filosofía Unix de diseño de programas.
 * **Curso en Inglés**: [The Unix Workbench (Coursera)](https://www.coursera.org/learn/unix), un curso introductorio que explica la filosofía de Unix, incluyendo la entrada y salida, y cómo interactuar con el sistema de archivos.
 * **Curso en Inglés**: [Linux Command Line Basics - Learn the Shell, Philosophy, and More (Udemy)](https://www.udemy.com/course/linux-command-line-basics/), un curso que cubre tanto los comandos esenciales como los principios filosóficos de Unix/Linux.
 * **Curso en Inglés**: [Understanding the Unix Philosophy (LinkedIn Learning)](https://www.linkedin.com/learning/understanding-the-unix-philosophy), un curso corto que ofrece una visión general sobre la filosofía de Unix y su aplicación práctica.
 
-Por último, he seleccionado 50 comandos (hay muchos más) que deberías conocer como desarrollador de software multiplataforma. Diría que es suficiente con los 30 primeros, pero bueno, creo que son esenciales para la navegación del sistema de archivos, gestión de procesos, manipulación de texto, y otras tareas comunes en el desarrollo de software. Cada comando incluye un enlace a su respectiva manpage en Ubuntu 24.04.
+Por último, he seleccionado 50 comandos (hay muchos más) que deberías conocer como desarrollador de software multiplataforma. Son esenciales para la navegación del sistema de archivos, gestión de procesos, manipulación de texto, y otras tareas comunes en el desarrollo de software. Cada comando incluye un enlace a su respectiva manpage en Ubuntu 24.04.
 
 <style>
 table {

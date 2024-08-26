@@ -11,7 +11,7 @@ excerpt_separator: <!--more-->
 
 Dualboot consiste en tener dos sistemas operativos en el mismo ordenador y elegir con cuál arrancar durante la fase de boot. Normalmente se instala Windows primero y luego se añade Linux. En mi caso voy a hacerlo justo al revés, ya tenía Ubuntu y funcionando en un disco de 4TB.
 
-Por circustancias necesito "añadir" Windows (11) y poder hacer dualboot. En este apunte describo cómo lo he hecho, todo el proceso, cómo he redimensionado el disco duro, añadido windows y personalizado un menú de arranque.
+Necesito "añadir" Windows (11) y poder hacer dualboot. En este apunte describo cómo lo he hecho, todo el proceso, cómo he redimensionado el disco duro, añadido windows y personalizado un menú de arranque.
 
 <br clear="left"/>
 <!--more-->
