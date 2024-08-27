@@ -6,9 +6,9 @@ tags: linux servidor alpine docker
 excerpt_separator: <!--more-->
 ---
 
-![Logo docker](/assets/img/posts/logo-docker.svg){: width="150px" style="float:left; padding-right:25px" } 
+![Logo docker](/assets/img/posts/logo-docker-a.svg){: width="150px" style="float:left; padding-right:25px" }
 
-En este apunte describo como instalar Alpine Linux en una máquina virtual en mi servidor QEMU/KVM y cómo instalar Docker en ella. Necesitaba, para pruebas de concepto y servicios caseros, poder instalar contenedores sobre un servidor con Docker que ocupase "poquísimo". ¿Se puede instalar un Host Docker encima de una Máquina Virtual?. La respuesta es un sí rotundo, de hecho es un lugar excelente para hacerlo, sobre todo en entornos de laboratorio, caseros, pequeños despliegues. 
+En este apunte describo como instalar Alpine Linux en una máquina virtual en mi servidor QEMU/KVM y cómo instalar Docker en ella. Necesitaba, para pruebas de concepto y servicios caseros, poder instalar contenedores sobre un servidor con Docker que ocupase "poquísimo". ¿Se puede instalar un Host Docker encima de una Máquina Virtual?. La respuesta es un sí rotundo, de hecho es un lugar excelente para hacerlo, sobre todo en entornos de laboratorio, caseros, pequeños despliegues.
 
 
 <br clear="left"/>
@@ -17,11 +17,11 @@ En este apunte describo como instalar Alpine Linux en una máquina virtual en mi
 
 ## Introducción
 
-Necesitaba montar microservicios encima de Docker (hacía tiempo que no ([jugaba con Docker]({% post_url 2014-11-01-inicio-docker %})) dudé entre añadir Docker a mi servidor donde tengo KVM, dedicar un PC antiguo a Docker o pensar en algo más creativo... 
+Necesitaba montar microservicios encima de Docker (hacía tiempo que no ([jugaba con Docker]({% post_url 2014-11-01-inicio-docker %})) dudé entre añadir Docker a mi servidor donde tengo KVM, dedicar un PC antiguo a Docker o pensar en algo más creativo...
 
-Al final decidí optar por la tercera opción: **montar máquinas virtuales dedicadas a contenedores Docker corriendo en mi servidor KVM**. Mi potente y pequeño servidor [Meerkat de System76](https://system76.com/desktops/meerkat) es donde tengo todas mis VM's, pues bien, algunas de ellas van a soportar microservicio encima de Docker. 
+Al final decidí optar por la tercera opción: **montar máquinas virtuales dedicadas a contenedores Docker corriendo en mi servidor KVM**. Mi potente y pequeño servidor [Meerkat de System76](https://system76.com/desktops/meerkat) es donde tengo todas mis VM's, pues bien, algunas de ellas van a soportar microservicio encima de Docker.
 
-La segunda opción (añadir Docker a mi servidor donde tengo KVM) hubiese sido un infierno con el networking (openvswitch + docker switches + iptables), así que opté por aislar y contener problemas/troubleshooting de Docker en VM's dedicadas. Así que mi servidor de VM's queda como sigue: 
+La segunda opción (añadir Docker a mi servidor donde tengo KVM) hubiese sido un infierno con el networking (openvswitch + docker switches + iptables), así que opté por aislar y contener problemas/troubleshooting de Docker en VM's dedicadas. Así que mi servidor de VM's queda como sigue:
 
 - Hardware: Meerkat de System76
 - Software: [Pop!_OS](https://pop.system76.com), Ubuntu Server LTS.
@@ -29,16 +29,16 @@ La segunda opción (añadir Docker a mi servidor donde tengo KVM) hubiese sido u
 - QEMU/KVM con Hypervisor
 - Varios Guest's con máquinas virtuales corriendo Linux (Ubuntu Server LTS) y servicios.
 - Varios Guest's appliances como [Umbrella](https://umbrella.cisco.com) o [vWLC](https://www.cisco.com/c/en/us/products/wireless/wireless-lan-controller/index.html) de Cisco.
-- Varios Guest's con **máquinas virtuales corriendo Alpine Linux con Docker y contenedores para servicios (git, nodered, ...)**. 
+- Varios Guest's con **máquinas virtuales corriendo Alpine Linux con Docker y contenedores para servicios (git, nodered, ...)**.
 
 <br/>
 
-### ¿Donde ejecutar Docker? 
+### ¿Donde ejecutar Docker?
 
-Lo primero que necesitaba decidir es sobre qué SO iba a montar Docker, teniendo en cuenta que: 
+Lo primero que necesitaba decidir es sobre qué SO iba a montar Docker, teniendo en cuenta que:
 
-- Voy a correr Docker dentro de una Máquina Virtual en mi Servidor QEMU/KVM. 
-- El Sistema Operativo `Guest` solo va a tener Docker, no necesito una distribución enorme. 
+- Voy a correr Docker dentro de una Máquina Virtual en mi Servidor QEMU/KVM.
+- El Sistema Operativo `Guest` solo va a tener Docker, no necesito una distribución enorme.
 - Busco algo pequeño, fácil de mantener y robusto
 
 Entre las diferentes opciones que he visto por [ahí](https://kuberty.io/blog/best-os-for-docker/) he optado por [Alpine Linux](https://alpinelinux.org)
@@ -56,7 +56,7 @@ luis@sol:~/kvm/base$ wget https://dl-cdn.alpinelinux.org/alpine/v3.15/releases/x
 luis@sol:~/kvm/base$ sha256sum -c alpine-virt-3.15.3-x86_64.iso.sha256
 alpine-virt-3.15.3-x86_64.iso: La suma coincide
 ```
-- Creo un puerto `estático` en mi switch virtual (más info aquí: [Open vSwitch y KVM]({% post_url 2022-02-20-openvswitch %})). 
+- Creo un puerto `estático` en mi switch virtual (más info aquí: [Open vSwitch y KVM]({% post_url 2022-02-20-openvswitch %})).
 ```
 luis@sol:~/kvm/base$ sudo ovs-vsctl list-br
 solbr
@@ -76,14 +76,14 @@ luis@sol:~/kvm$ mkdir docker
 luis@sol:~$ virt-manager
 ```
 
-{% include showImagen.html 
-      src="/assets/img/posts/2022-03-20-alpine-docker-1.png" 
-      caption="Creo VM desde virt-manager" 
+{% include showImagen.html
+      src="/assets/img/posts/2022-03-20-alpine-docker-1.png"
+      caption="Creo VM desde virt-manager"
       width="450px"
       %}
 
 
-- Arranco la VM y entro en el setup de Alpine (más info en [esta guía](https://wiki.alpinelinux.org/wiki/QEMU)). 
+- Arranco la VM y entro en el setup de Alpine (más info en [esta guía](https://wiki.alpinelinux.org/wiki/QEMU)).
 ```console
 luis@sol:~/kvm/gitea-traefik-docker$ virsh console docker.tudominio.com
 localhost login: root
@@ -115,7 +115,7 @@ Installation is complete. Please reboot.
 docker:~# reboot
 ```
 
-- Hago login como root e instalo unas cuantas herramientas útiles. 
+- Hago login como root e instalo unas cuantas herramientas útiles.
 ```console
 docker:~# apk add iproute2 nano tzdata
 docker:~# cp /usr/share/zoneinfo/Europe/Madrid /etc/localtime
@@ -128,7 +128,7 @@ docker:~# addgroup -g 1000 luis
 docker:~# adduser -h /home/luis -s /bin/ash -G luis --u 1000 luis
 docker:~# adduser luis wheel
 docker:~# su - luis
-docker:~$ 
+docker:~$
 docker:~$ ssh-keygen -t rsa -b 2048 -C "luis@docker.tudominio.com"
 :
 docker:~$ exit
@@ -153,7 +153,7 @@ Subsystem sftp /usr/lib64/misc/sftp-server
 AcceptEnv LANG LC_*
 docker:~# service sshd restart
 ```
-- Creo el fichero `/etc/nanorc` ([fuente aquí](https://gist.github.com/LuisPalacios/4e07adf45ec1ba074939317b59d616a4)) para el editor `nano` 
+- Creo el fichero `/etc/nanorc` ([fuente aquí](https://gist.github.com/LuisPalacios/4e07adf45ec1ba074939317b59d616a4)) para el editor `nano`
 - Acelero el tiempo de boot a unos 5 segundos
 ```console
 docker:~# cat /boot/extlinux.conf
@@ -214,7 +214,7 @@ nodered:~# chmod 755 /usr/bin/s
 ```console
 docker:~# apk update
 docker:~# apk upgrade --available
-docker:~# apk add bash-completion procps util-linux 
+docker:~# apk add bash-completion procps util-linux
 docker:~# apk add readline findutils sed coreutils sudo
 docker:~# apk add docker docker-bash-completion docker-compose docker-compose-bash-completion docker-cli-compose
 docker:~# rc-update add docker boot
@@ -240,4 +240,3 @@ docker:~$ docker stop myalpine
 docker:~$ docker rm myalpine
 ```
 - Que no te sorprenda que `docker stop myalpine`tarde un rato en pararse, [aquí](https://stackoverflow.com/questions/60493765/running-and-stopping-an-alpine-docker-container-takes-about-10x-as-long-as-cento) tienes la explicacion.
- 

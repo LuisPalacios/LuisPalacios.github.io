@@ -8,9 +8,9 @@ excerpt_separator: <!--more-->
 
 ![logo win desarrollo](/assets/img/posts/logo-win-desarrollo.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-En este apunte describo los pasos para preparar un Windows 11 como equipo de desarrollo. Teniendo en cuenta que soy *Unixero* y trabajo en entorno multiplataforma, Linux, MacOS y Windows, veras que este apunte no está orientado a desarrolladores *solo-microsoft* o *solo-windows*, sino que está orientado a los que les gusta la línea de comandos y desarrollan para múltiples plataformas y/o entornos.
+En este apunte describo los pasos para preparar un Windows 11 como equipo de desarrollo. Teniendo en cuenta que soy *Unixero* y trabajo en entorno multiplataforma, Linux, MacOS y Windows, veras que este apunte no está orientado a desarrolladores *solo-microsoft/windows*, sino a los que les gusta desarrollar en múltiples plataformas y/o entornos.
 
-Parto de una instalación de Windows limpia, los instalé en modo [dualboot]({% post_url 2024-08-23-dual-linux-win %}) y lo configuré de la forma más [ligera]({% post_url 2024-08-24-win-decente %}) posible. Describo los componentes, cómo los he configurado, instalado y preparado para tener una buena plataforma de desarrollo de Aplicaciones y Servicios.
+Parto de una instalación de Windows limpia, aproveché que necesitaba hacer [dualboot]({% post_url 2024-08-23-dual-linux-win %}) y parametricé el sistema de forma [ligera]({% post_url 2024-08-24-win-decente %}). La primera parte la dedico al CLI y WSL2. La segunda es donde instalo las herramientas de desarrollo.
 
 <br clear="left"/>
 <!--more-->
@@ -19,13 +19,13 @@ Parto de una instalación de Windows limpia, los instalé en modo [dualboot]({% 
 
 ## Preparar el equipo
 
-Antes de entrar en herramientas de desarrollo, como Git, VSCode, compiladores, etc. creo que es importante tener el equipo bien preparado y una de las áreas más importantes es el CLI y cómo mejorarlo con WSL2. Esta primera sección la dedico principalmente a ambos.
+Como todos mis apuntes, se trata de la bitácora de mi instalación, es decir, voy ejecutando y documentando a la vez, así me sirve para tener una referencia en el futuro. Empiezo con un Windows que no tiene nada instalado.
 
 ### CLI
 
-Antes de nada es imprescindible hablar del terminal, es fundamental, tanto si estás acostumbrado a trabajar desde la línea de comandos como si no, los desarrolladores lo valoran mucho.
+Es imprescindible hablar de la Consola que vas a usar, tanto si estás acostumbrado a trabajar desde la línea de comandos como si no, los desarrolladores multiplataforma lo valoramos mucho.
 
-En mi caso he trabajado en multiples Sistemas Operativos, no estoy obsesionado con ninguno, ni mucho menos me considero un [BOFH](https://es.wikipedia.org/wiki/Bastard_Operator_from_Hell#:~:text=BOFH%20son%20las%20iniciales%20del,como%20Infame%20Administrador%20del%20Demonio), lo que sí que tengo claro y he aprendido durante años es a **elegir lo que me ahorra tiempo**.
+En mi caso he trabajado en multiples Sistemas Operativos, no estoy obsesionado con ninguno, ni quiero imponer nada (soy todo lo contrario a un [BOFH](https://es.wikipedia.org/wiki/Bastard_Operator_from_Hell#:~:text=BOFH%20son%20las%20iniciales%20del,como%20Infame%20Administrador%20del%20Demonio)), lo que sí que tengo claro y he aprendido durante años es a **elegir lo que me ahorra tiempo**.
 
 Anticipo que mi Consola elegida en Windows es la **Shell de Unix** (`zsh o bash`), junto con **las decenas de herramientas de línea de comandos Open Source existentes para Linux** (`ls, cd, mkdir, cp, tar, sed, awk, nano, vi, etc.`). Todas ellas se hicieron siguiendo la filosofía Unix, que establece que un programa '*debería hacer una cosa y hacerla bien*', y funcionan así de bien desde hace años.
 
@@ -33,8 +33,8 @@ El trabajo de millones de horas de otras personas me van a ahorrar mucho tiempo.
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-25-win-desarrollo-01.svg"
-      caption="Escojo bash/tools de linux que ahorran tiempo"
-      width="400px"
+      caption="Siempre Shell+Herramientas Linux"
+      width="350px"
       %}
 
 Cuando bajamos a tierra Windows, el entorno CLI ha sido históricamente un desafío. Desde el anticuado `command.com`, la complicada PowerShell, la obsoleta y confusa nomenclatura del sistema de archivos, la gestión de variables de entorno y PATH, y el omnipresente Registro de Windows, todo parece estar diseñado para frustrar al desarrollador.
@@ -82,7 +82,7 @@ Puede que PowerShell le sea ***útil a desarrolladores que trabajan exclusivamen
 luis@kymeraw:/mnt/c/Users/luis$ ls -al
 ```
 
-Hasta aquí he listado las cuatro opciones de consola que voy a tener en mi Windows: `command.com`, `powershell.exe`, `pwsh.exe`, `bash (linux)`, pero hay un programa muy interesante que permite ordenar el acceso a ellas, se trata de Windows Terminal.
+Hasta aquí he listado las cuatro opciones de consola que voy a tener en mi Windows: `command.com`, `powershell.exe`, `pwsh.exe`, `Shell linux`, pero hay un programa muy interesante que permite ordenar el acceso a ellas, se trata de Windows Terminal.
 
 ***Windows Terminal***: Una aplicación moderna que permite utilizar múltiples pestañas con diferentes consolas, como `CMD`, `PowerShell`, `WSL` y otras. Es muy personalizable y soporta características avanzadas como temas y configuraciones de fuentes. Más adelante muestro cómo lo he configurado.
 
@@ -105,18 +105,16 @@ En el caso de Windows, que es sobre lo que va este apunte, rara vez y solo cuand
 
 ### WSL 2
 
-Instalo el Subsistema de Windows para Linux 2, que como decía permite ejecutar un entorno completo de Linux directamente sobre Windows.
-
 Utiliza una máquina virtual ligera con un **kernel completo de Linux real**, tiene un **rendimiento** altísimo, está super **integrado con Windows**, permite que los archivos y scripts de Linux se ejecuten desde el explorador de Windows, y viceversa; y muy importante, tiene **compatibilidad con Docker**, de hecho WSL2 es el backend preferido para [Docker Desktop en Windows](https://www.docker.com/products/docker-desktop/) (que instalaré más adelante).
 
 Mis **dos casos de uso principales** son:
 
-* Tener `bash` con acceso nativo a `C:\` (vía `/mnt/c`), junto con cualquier herramienta o programa existente en Linux.
+* Tener Shell + Herramientas con acceso nativo a `C:\` (vía `/mnt/c`).
 * Poder instalar Docker Desktop en Windows
 
 Proceso de instalación:
 
-* Abrir **“Características de Windows**” - Pulso Win + R, escribo `optionalfeatures`, pulso enter. En la ventana marco las opciones:
+* Abrir **“Características de Windows**” - Win + R, `optionalfeatures`. Marco:
   * Virtual Machine Platform (Plataforma de Máquina Virtual)
   * Windows Subsystem for Linux (Subsistema de Windows para Linux)
   * Hyper-V (recomendado para Docker con WSL2).
@@ -127,7 +125,7 @@ Proceso de instalación:
       width="2560px"
       %}
 
-* **Reboot** - rearranco el equipo
+* **Reboot**
 * **Instalo WSL**, desde PowerShell como administrador
 
   ```PS
@@ -163,7 +161,7 @@ Proceso de instalación:
   wsl --update
   ```
 
-Opcionalmente puedo añadir un icono a Ubuntu en el Taskbar. Busco en la lista de aplicaciones instaladas: `Start > All > "Ubuntu 24.04"` y con el botón derecho hago un *Pin to taskbar* para tener un acceso rápido a mi `bash` (Ubuntu 24.04 en WSL2).
+Opcionalmente puedo añadir un icono a Ubuntu en el Taskbar. Busco en la lista de aplicaciones instaladas: `Start > All > "Ubuntu 24.04"` y con el botón derecho hago un *Pin to taskbar* para tener un acceso rápido a mi `bash` (Ubuntu 24.04 en WSL2). Nota: Luego lo quité, una vez que instalo "Windows Terminal" más adelante.
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-25-win-desarrollo-03.png"
@@ -171,13 +169,7 @@ Opcionalmente puedo añadir un icono a Ubuntu en el Taskbar. Busco en la lista d
       width="650px"
       %}
 
-Efectivamente estamos en una máquina virtual con Ubuntu, así que puedo instalar lo que quiera, por ejemplo, si necesito trabajar con scripts que manipulan JSON's, pues añado `jq`.
-
-```bash
-luis@kymeraw:~$ sudo apt install -y jq
-```
-
-***Actualizar Ubuntu***: Es importante que cuando hayas terminado actualices el Ubuntu de la VM a la última.
+Efectivamente estamos en una máquina virtual con Ubuntu, así que puedo instalar la herramienta que quiera. Lo siguiente imporante a hacer es actualizala.
 
 ```bash
 luis@kymeraw:~$ sudo apt update && sudo apt upgrade -y
@@ -185,21 +177,21 @@ luis@kymeraw:~$ sudo apt update && sudo apt upgrade -y
 
 #### WSL 2 - Cambiar HOME
 
-Quiero que al entrar en WSL2 el HOME de mi usuario sea `/mnt/c/Users/luis`, para que `cd` me lleve a mi `C:\Users\luis`. Voy a usar el comando `usermod` de linux, pero debo hacerlo como root, así que estos son los pasos:
+Quiero que al entrar en WSL2 el HOME de mi usuario sea `/mnt/c/Users/luis`, para que `cd` me lleve al mismo HOME que en Windows: `C:\Users\luis`. Voy a usar el comando `usermod` de linux, pero debo hacerlo como root:
 
-* Desde Powershell cambio Ubuntu para que entre con `root`:
+* Desde Powershell, pido que WSL arranque como `root`:
 
 ```PS
 PS C:\Users\luis> ubuntu2024.exe config --default-user root
 ```
 
-* Arranco Ubuntu, entro como root y cambio el HOME
+* Abro una nueva Shell y cambio el HOME de `luis`
 
 ```bash
 usermod --home /mnt/c/Users/luis/ luis
 ```
 
-* Desde Powershell vuelvo a poner a `luis` como usuario por defecto
+* Vuelvo a dejar que el login por defecto lo haga con `luis`
 
 ```PS
 PS C:\Users\luis> ubuntu2024.exe config --default-user luis
@@ -207,13 +199,11 @@ PS C:\Users\luis> ubuntu2024.exe config --default-user luis
 
 #### WSL 2 - Permisos de ficheros
 
-Los permisos de los archivos Linux que se crean en el disco NTFS [se intepretan de una forma muy concreta](https://learn.microsoft.com/en-us/windows/wsl/file-permissions). En una instalación por defecto, cada archivo o directorio que se crea en el disco NTFS (por ejemplo `/mnt/c/Users/luis`) se hace con permisos 777.
+Los permisos de los archivos Linux que se crean en el disco NTFS [se intepretan de una forma muy concreta](https://learn.microsoft.com/en-us/windows/wsl/file-permissions). Los archivos/directorios que se crean en el disco NTFS (debajo de `/mnt/c/Users/luis`) van con permisos 777.
 
-En general no debería afectar en nada porque "no" voy a usar el Linux de WSL como "plataforma de desarrollo", simplemente como herramienta de apoyo, moverme por los directorios, ver ficheros, etc. Lo que pasa es que si que hay algunas herramientas a las que esto les preocupa.
+A mi eso no me gusta. Quiero que WSL sea coherente, además hay programas a los que no les gusta tanto permiso, un ejemplo es SSH. El cliente de OpenSSH necesita que el directorio y los archivos bajo `~/.ssh` tengan unos permisos específicos.
 
-Un ejemplo es SSH. El cliente de OpenSSH necesita que el directorio y los archivos bajo `~/.ssh` tengan unos permisos específicos. Si no es así da problemas, traducido significa que no podría abrir una sesión `ssh` desde la consola de WSL a ningún sitio.
-
-La solución es activar los ***metadatos*** en la [configuración avanzada de WSL](https://learn.microsoft.com/en-us/windows/wsl/wsl-config). Para ello entro en la consola WSL, cambio a root, edito un fichero, lo salvo y me salgo de WSL. La sección `[boot]` ya estaba, he añadido la sección `[automount]`
+La solución es activar los ***metadatos*** en la [configuración avanzada de WSL](https://learn.microsoft.com/en-us/windows/wsl/wsl-config). Desd WSL, como `root`, edito `/etc/wsl.con`. La sección `[boot]` ya estaba, he añadido la sección `[automount]`
 
 ```zsh
 luis@kymeraw:~$ sudo su -
@@ -247,9 +237,9 @@ Generation complete.
 
 #### WSL 2 - Cambio a ZSH
 
-La shell que viene por defecto en Ubuntu para WSL2 es `bash` pero como expliqué en [¡Adiós Bash, hola Zsh!]({% post_url 2024-04-23-zsh %}), me he cambiado a `zsh`, asi que aquí hago lo mismo. Me paso a `zsh` ([otro apunte donde hablo de esto]({% post_url 2024-07-25-linux-desarrollo %})). Además voy a instalar ["tmux"]({% post_url 2024-04-25-tmux %}), un multiplexor de terminales opcional potentísimo.
+La shell que viene por defecto en Ubuntu para WSL2 es `bash` pero como expliqué en [¡Adiós Bash, hola Zsh!]({% post_url 2024-04-23-zsh %}), me paso a `zsh` ([un apunte interesante]({% post_url 2024-07-25-linux-desarrollo %})). También me instalo ["tmux"]({% post_url 2024-04-25-tmux %}), un multiplexor de terminales opcional potentísimo.
 
-Primero instalo `zsh` en mi máquina virtual. Arranco el Terminal y ejecuto lo siguiente
+Primero `zsh`
 
 ```bash
 luis@kymeraw:~$ sudo apt update && sudo apt upgrade -y
@@ -265,14 +255,14 @@ luis@kymeraw:~$ cat /etc/shells
 /usr/bin/zsh
 ```
 
-Cambio la shell por defecto a `zsh` para mi usuario `luis`
+Cambio la shell por defecto
 
 ```bash
 luis@kymeraw:~$ chsh -s $(which zsh)
 Password:
 ```
 
-Salgo del Terminal y vuelvo a entrar. La primera vez que entras con `zsh` te ofrece ayuda para crear el fichero `.zshrc`. En mi caso ya lo tengo creado porque uso el mismo para MacOS, Linux y ahora Windows. Descargo mi **[~/.zshrc](https://gist.github.com/LuisPalacios/7507ce0b84adcad067320e9631648fd7)** y lo copio al HOME `/mnt/c/Users/luis`.
+Salgo y vuelvo a entrar. La primera vez que entras con `zsh` te ofrece ayuda para crear el fichero `.zshrc`. En mi caso ya lo tengo creado porque uso el mismo para MacOS, Linux y ahora Windows. Me lo descargo **[~/.zshrc](https://gist.github.com/LuisPalacios/7507ce0b84adcad067320e9631648fd7)** y lo copio al HOME `/mnt/c/Users/luis`.
 
 Instalo tmux, que lo suelo utilizar:
 
@@ -284,7 +274,7 @@ También tengo un **[~/.tmux.conf](https://gist.github.com/LuisPalacios/065f4f04
 
 #### WSL 2 - Scripts
 
-Tengo unos scripts que uso habitualmente y que suelo instalar en todos los equipos Linux con los que trabajo.
+Me instalo mis scripts que suelo usar en todos los Linux/MacOS,
 
 * Script [/usr/bin/e](https://gist.githubusercontent.com/LuisPalacios/14b0198abc35c26ab081df531a856971/raw/8b6e278b4e89f105b2d573ebc79c67e915e6ab47/e)
 * Fichero [/etc/nanorc](https://gist.githubusercontent.com/LuisPalacios/4e07adf45ec1ba074939317b59d616a4/raw/b50efd22130a0129e408bca10fc7b8dbab7e03ff/nanorc) personalizado para `nano`
@@ -298,9 +288,15 @@ Tengo unos scripts que uso habitualmente y que suelo instalar en todos los equip
 
 #### WSL 2 - Cliente SSH
 
-Para poder conectar desde el Terminal WSL2 vía ***SSH*** a equipos remotos, usar GIT desde WSL, etc. tengo que configurar el cliente SSH.
+Para poder conectar desde la Consola WSL2 a equipos remotos.
 
-* Creo `/mnt/c/Users/luis/.ssh`, luego creo una clave y aquí es donde estarán `authorization_keys`, `config`, etc.
+* Verifico que el cliente de OpenSSH está instalado:
+
+```powershell
+Get-WindowsCapability -Online | ? Name -like 'OpenSSH*'
+```
+
+* Desde WSL creo `/mnt/c/Users/luis/.ssh`, luego creo una clave pública/privada.
 
 ```zsh
 ⚡ luis@kymeraw:luis % cd     # Vuelvo a HOME
@@ -311,79 +307,121 @@ Para poder conectar desde el Terminal WSL2 vía ***SSH*** a equipos remotos, usa
 ⚡ luis@kymeraw:luis % ssh-keygen -t ed25519 -a 200 -C "luis@kymeraw" -f ~/.ssh/id_ed25519
 ```
 
-Tengo varios apuntes sobre SSH [Git y SSH multicuenta]({% post_url 2021-10-09-ssh-git-dual %}), [SSH y X11]({% post_url 2017-02-11-x11-desde-root %}) y [SSH en Linux]({% post_url 2009-02-01-ssh %}) por si necesitas ayuda con SSH.
+Tengo varios apuntes sobre SSH [Git y SSH multicuenta]({% post_url 2021-10-09-ssh-git-dual %}), [SSH y X11]({% post_url 2017-02-11-x11-desde-root %}) y [SSH en Linux]({% post_url 2009-02-01-ssh %}) por si lo necesitas.
+
+#### WSL 2 - Servidor SSH
+
+Configuro que los clientes **accedan directamente a la shell de WSL2** cuando se conecten a mi Windows 11. Nota: todos los comandos desde **PowerShell** como Administrador
+
+* Verifico que OpenSSH está instalado:
+
+```powershell
+Get-WindowsCapability -Online | ? Name -like 'OpenSSH*'
+```
+
+* Agrego el Servidor OpenSSH:
+
+```powershell
+Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+```
+
+* Cambio a que la Shell predeterminada sea WSL. Importante, nunca usar los ejecutables bajo `C:\Users\luis\AppData\Local\Microsoft\WindowsApps` o tardará muchos segundos en mostrarte el prompt al conectar desde los clientes.
+
+```powershell
+New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\Windows\System32\wsl.exe" -PropertyType String -Force
+```
+
+* Inicio el Servicio, Compruebo y Configuro que arranque siempre al hacer boot
+
+```powershell
+Start-Service sshd
+Get-Service sshd
+Set-Service -Name sshd -StartupType 'Automatic'
+```
+
+* Respecto a los ***Credenciales***, el Server está ejecutándose en Windows (no en Ubuntu), por lo tanto: Mi usuario es `luis` LOCAL (no uso Microsoft Account) y la contraseña es la de Windows.
+
+* Fichero `C:\ProgramData\ssh\sshd_config`. Desactivo usar el fichero `administrators_authorized_keys`. Para `luis` usará `/mnt/c/Users/luis/authorized_keys`
+
+```config
+AuthorizedKeysFile	.ssh/authorized_keys
+AcceptEnv LANG LC_*
+Subsystem	sftp	sftp-server.exe
+#Match Group administrators
+#       AuthorizedKeysFile __PROGRAMDATA__/ssh/administrators_authorized_keys
+```
+
+Lo edito y rearranco el servicio
+
+```powershell
+notepad C:\ProgramData\ssh\sshd_config
+Restart-Service sshd
+```
+
+* Edito las claves que acepto en `authorized_keys`
+
+```powershell
+notepad C:\ProgramData\ssh\administrators_authorized_keys
+```
+
+* Cómo comprobar si el puerto 22 está abierto. Por defecto lo tenía abierto en mi caso
+
+Si necesitas comprobarlo aquí tienes un script [VerificarPuertoFirewall.ps1](https://gist.github.com/LuisPalacios/f1013d3a0cc0d540b94df2d7d42c2f40). Para abrirlo
+
+```powershell
+New-NetFirewallRule -DisplayName "Allow SSH Port 22" -Direction Inbound -Protocol TCP -LocalPort 22 -Action Allow
+```
+
+* A partir de ahora me puedo conectar perfectamente con mi Windows desde cualquier otro equipo de la red.
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-25-win-desarrollo-04.png"
+      caption="Conexión vía SSH desde un Mac"
+      width="550px"
+      %}
 
 #### WSL 2 - CRLF vs LF
 
-Al trabajar en desarrollo de software, uno de los aspectos más sutiles pero cruciales que debes tener en cuenta es la diferencia entre los finales de línea en archivos de texto entre Windows y Linux. Este pequeño detalle puede generar grandes problemas si no se maneja correctamente, especialmente cuando se trabaja en entornos mixtos.
+Al trabajar en desarrollo de software, uno de los aspectos más sutiles pero cruciales que debes tener en cuenta es la diferencia entre los finales de línea en archivos de texto entre Windows y Linux.
 
-* **Windows (CRLF):** En sistemas Windows, los finales de línea en los archivos de texto se representan con una secuencia de dos caracteres: `Carriage Return` (`\r`) seguido de `Line Feed` (`\n`). Esto es conocido como `CRLF` (`\r\n`).
+Este pequeño detalle puede generar grandes problemas si no se maneja correctamente, especialmente cuando se trabaja en entornos mixtos, **conflictos en el control de versiones** **incompatibilidades en scripts**, **problemas de compilación o ejecución**. Estas son algunas soluciones:
 
-* **Linux/MacOS (LF):** En Linux y MacOS, los finales de línea se representan con un solo carácter: `Line Feed` (`\n`). Esto se conoce como `LF` (`\n`).
-
-Estas diferencias surgen de las historias y convenciones de cada sistema operativo. En la práctica, esto significa que los archivos de texto creados en Windows tendrán `CRLF` al final de cada línea, mientras que los creados en Linux o MacOS solo tendrán `LF`.
-
-***Problemas Comunes al Trabajar en Entornos Mixtos***: Cuando trabajas en un entorno donde se utilizan tanto Windows como Linux (por ejemplo, usando WSL2 en Windows), es fundamental estar consciente de estos finales de línea porque:
-
-* **Conflictos en el control de versiones:** Los sistemas de control de versiones como Git pueden interpretar los finales de línea diferentes como cambios en el archivo, generando conflictos innecesarios y diffs confusos.
-
-* **Incompatibilidades en scripts:** Algunos scripts, especialmente aquellos escritos en bash o zsh, pueden fallar si encuentran un `CRLF` en lugar de un `LF`, ya que el `CR` extra puede ser interpretado como parte del comando.
-
-* **Problemas de compilación o ejecución:** Al compilar código o ejecutar scripts en Linux que fueron creados en Windows, el `CRLF` puede causar errores inesperados y difíciles de depurar.
-
-***Herramientas y Estrategias para Manejar CRLF y LF***: Para evitar problemas con los finales de línea, existen varias estrategias y herramientas que puedes utilizar:
-
-* **Que Git lo [gestione](https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings):**
-
-  * Puede manejaro automáticamente
+* Que Git lo gestione ([documentación aquí](https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings)). Es decir, revisa los finales de línea antes de los commits.
+  * Puede hacerse a nivel global
     * `git config --global core.autocrlf true`  - Para convertir LF a CRLF al hacer checkout en Windows
     * `git config --global core.autocrlf input` - Para mantener LF en los repositorios y convertir CRLF a LF al hacer commit
-  * O de forma más granular
+  * Puede hacerse de forma más granular
     * Usando el archivo `.gitattributes` en la raiz del repositorio.
+* Usar un editor de texto que te permita elegir el tipo de final de línea. Por ejemplo, Visual Studio Code, Sublime Text, etc
+* Conversión manual con `dos2unix` y `unix2dos` (yo los he instalado en mi WSL2 con `apt install -y dos2unix`)
+* Sobre todo **mantener el control**, yo me aseguro de que mis ediciones, herramientas, editores y scripts estén configurados correctamente para manejar y respetar el formato de finales de línea.
 
-* **Editor de texto:**
+#### Modificar el PATH
 
-  * Usa un editor de texto que te permita elegir el tipo de final de línea. Por ejemplo, Visual Studio Code, Sublime Text y otros permiten definir si quieres que el archivo use `LF` o `CRLF`.
-    * En VS Code, puedes ver y cambiar el final de línea en la barra de estado en la parte inferior derecha.
+* Yo siempre dedico un directorio personal específicio para mis scripts y ejecutables. Asñu ne asegyri de qye está disponible en todos ordenadores. Dicho directorio lo puedes sincronizar de múltiples formas, en mi caso utilizo un servidor NextCloud:
 
-* **Conversión manual con `dos2unix` y `unix2dos`:**
+* PATH Global en Windows para `command.com y PowerShell`
+  * `Start > Settings > About > Advance System Settings`
+  * `Environment Variables`
+  * ***`System variables`***
+  * Añado `C:\Users\luis\Nextcloud\priv\bin` al final de la lista.
 
-  * Puedes convertir archivos de `CRLF` a `LF` y viceversa usando herramientas de línea de comandos como `dos2unix` y `unix2dos`:
-
-    ```zsh
-    # Convertir de CRLF a LF
-    dos2unix archivo.txt
-
-    # Convertir de LF a CRLF
-    unix2dos archivo.txt
-    ```
-
-* **WSL2 y Metadata:**
-
-  * Como he cambiado mi HOME a `/mnt/c/Users/...` y tengo activado `metadata` para manejar correctamente los permisos de archivos desde Linux, tengo que ser MUY consciente de este problema CRLF/LF, así que si haces lo mismo, asegúrate también de mantener un **control estricto sobre los finales de línea**. Esto es especialmente importante si tu `$HOME` está en `/mnt/c/Users/...` donde los archivos se crean nativamente con `CRLF`.
-
-### Buenas Prácticas
-
-* **Establece un estándar en tu equipo de desarrollo:** Decide si todos los desarrolladores deben usar `LF` o `CRLF` en los archivos de texto y configuren sus entornos de acuerdo a eso. En mi caso lo tengo claro: `LF`.
-
-* **Revisa los finales de línea antes de los commits:** Configura Git para advertirte si hay inconsistencias en los finales de línea antes de hacer un commit.
-
-* **Mantén el control:** Asegúrate de que tus herramientas, editores y scripts estén configurados correctamente para manejar y respetar el formato de finales de línea acordado en tu proyecto.
+* PATH Linux (WSL2)
+  * Edito el fichero `~/.bashrc` o `.zshrc`
+  * Añado: `export PATH=$PATH:/mnt/c/Users/luis/Nextcloud/priv/bin`
 
 ### Windows Terminal
 
-Como dije antes, Windows Terminal es una herramienta poderosa y flexible que te permite utilizar múltiples consolas en pestañas separadas, lo que simplifica enórmemente el punto de entrada a la consola. Solo tengo un sitio donde hacer clic, y dentro de él ya elegiré que quiero arrancar. Explico cómo configurarlo y anclarlo al taskbar.
+Ahora que tengo WSL2 perfectamente operativo, voy a instalarme ***Windows Terminal***, una herramienta que permite utilizar múltiples consolas en pestañas o ventanas separadas, lo que simplifica enórmemente el punto de entrada a la consola. Solo tengo un sitio donde hacer clic, y dentro de él ya elegiré que quiero arrancar.
 
-***Instalación de Windows Terminal***, necesitamos ir al Microsoft Store. En mi caso ya la tenía instalada, pero quería actualizarla y el proceso es el mismo.
-
-* Abro la Microsoft Store, Start > busco por "Store"
-* Arranco y una vez dentro busco por "Windows Terminal". Instalo o Actualizo
+* Abro la Microsoft Store, `Start` > busco por "Store"
+* Busco por "Windows Terminal". Instalo o Actualizo
 
 ***Configuración inicial*** de Windows Terminal
 
-* Abro Windows Terminal desde el menú de inicio o utilizando la búsqueda en Windows. El App se llama "Terminal" a secas
+* Abro Windows Terminal `Start` busco "Terminal"
 * Accedo a la configuración
-  * Clic **flecha hacia abajo** cerca pestaña activa > "Settings" (Configuración) o `Ctrl + ,`.
+  * Clic en 'flecha abajo' > `Settings` o `Ctrl + ,`.
 * Configurar perfiles de consola:
   * En el panel izquierdo, veo perfiles como `Windows PowerShell`, `Command Prompt`, `Ubuntu`, etc. Aquí puedo personalizar cada uno de ellos.
   * Cambiar el shell predeterminado: Si deseas que siempre se abra un perfil específico al iniciar Windows Terminal, selecciona el perfil en el menú "Startup" bajo "Default profile".
@@ -409,35 +447,12 @@ Tendrás acceso rápido a Windows Terminal directamente desde tu taskbar, y podr
 Empiezo a trabajar de manera más eficiente y organizada. Tengo la posibilidad de abrir la consola que necesite, por defecto lo he configurado para que WSL (Ubuntu 22.04.3 LTS), he cambiado los colores ligeramente para diferenciar dónde estoy y en el caso de `command.com` he puesto otro tipo de fuente de letra.
 
 {% include showImagen.html
-      src="/assets/img/posts/2024-08-25-win-desarrollo-04.png"
+      src="/assets/img/posts/2024-08-25-win-desarrollo-05.png"
       caption="Por opciones que no sea"
       width="2560px"
       %}
 
-***Configuración `settings.json` y `state.json`***: Gran parte de esta personalización de Windows Terminal se gestiona a través de dos archivos clave: `settings.json` y `state.json`. Juegan roles diferentes pero complementarios en la configuración del terminal.
-
-* El archivo `settings.json` es el núcleo de la personalización. Aquí se definen los perfiles de las consolas, la apariencia, los atajos de teclado, el comportamiento de las pestañas, y mucho más. Es un archivo en formato JSON que puedes editar para ajustar el Terminal a tus preferencias exactas. Ejemplo de ruta donde se guarda el archivo:
-  * `C:\Users\luis\AppData\Local\Packages`
-  * `+--> Microsoft.WindowsTerminal_...\LocalState\settings.json`
-* El archivo `state.json` almacena información sobre el estado actual del Terminal, como la disposición de las pestañas, las ventanas abiertas, y otros detalles de la sesión. A diferencia del `settings.json`, que es para configuraciones permanentes, `state.json` se utiliza para recordar la configuración temporal entre sesiones. Ejemplo de ruta donde se guarda el archivo:
-  * `C:\Users\luis\AppData\Local\Packages`
-  * `+--> Microsoft.WindowsTerminal_...\LocalState\state.json`
-
-### Modificar el PATH
-
-Unificación del PATH: En Windows, al igual que la Shell de Unix, la variable PATH se usa para localizar ejecutables. En el pantallazo anterior, en las shells de Windows (`command.com, powershell.exe, pwsh.exe`) habrás visto que son distintas, de modo que priorizan donde buscar los ejecutables. Son casi identicas, pero están bien tal cual las instala.
-
-* Directorio personal. Dedico un directorio específicio para mis scripts y ejecutables. Para incluir tu directorio personal en el PATH y asegurar que esté disponible en todos sitios:
-
-  * Editar el PATH Global en Windows
-    * `Start > Settings > About > Advance System Settings`
-    * `Environment Variables`
-    * ***`System variables`*** > la edito
-    * Agrego por ejemplo `C:\Users\luis\priv\bin` al final de la lista.
-
-  * Me aseguro que WSL2 Importe el PATH de Windows Correctamente
-    * Edito el fichero `~/.bashrc`
-    * Añado: `export PATH=$PATH:/mnt/c/Users/luis/Nextcloud/priv/bin`
+***Configuración `settings.json` y `state.json`***: Gran parte de esta personalización de Windows Terminal se gestiona a través de dos archivos clave: `settings.json` (nucleo de la personalización, puedes editarlo desde el propio menú) y `state.json` (estado actual del Terminal).
 
 <br/>
 
@@ -445,59 +460,91 @@ Unificación del PATH: En Windows, al igual que la Shell de Unix, la variable PA
 
 ## Herramientas de desarrollo
 
-Nota: A partir de aquí todavía estoy documentando y realizaré cambios...
-
-Ahora que tenemos el CLI y WSL listos, voy a pasar a las herramientas recomendadas en el entorno de desarrollo de software en Windows; algunas de las herramientas más populares y útiles. También indicaré cuales son las que yo he instalado.
-
-### Git
-
-Necesita poca presentación, un sistema de control de versiones distribuido, fundamental para cualquier flujo de trabajo de desarrollo moderno. Lo instalo desde el [sitio oficial de Git](https://git-scm.com/). Es opcional **Git Bash** que junto con `GIT`, al instalarlo en Windows, nos ofrece una herramienta que proporciona un emulador de Bash para Windows. Es especialmente útil para desarrolladores que trabajan con Git y necesitan una CLI con comandos Unix. En mi caso solo lo necesitaré si trabajo desde la consola CMD o PowerShell, nunca desde WSL/linux.
-
-La aplicación contiene numerosas utilidades de Unix, como SCP y SSH, así como la ventana de terminal Mintty. Dado que Windows normalmente ejecuta comandos de CMD, se necesita Git Bash para instalar estas utilidades en la carpeta `C:\programas\Git\usr\bin`.
+La segunda parte del apunte, la instalación de las herramientas de desarrollo, como hay miles y es inviable documentarlo, espero que las que instalo te sirvan de ejemplo. IMPORTANTE!! verás que la gran mayoría las instalo en Windows 11, lo digo porque quizá alguna merecería la pena instalarlas dentro del WSL2 (por ejemplo `Ruby`?). Mientras que no diga lo contrario instalo siempre en Windows.
 
 ### VSCode
 
-***Visual Studio Code - Terminal Integrado***: Visual Studio Code (VS Code) es un editor de código fuente que incluye un terminal integrado. Puedo abrir diferentes terminales dentro de la misma ventana de VS Code, como CMD, PowerShell, Git Bash o WSL.
+![VSCode](/assets/img/posts/logo-vscode.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-Soporta una amplia variedad de lenguajes de programación y una gran cantidad de extensiones para mejorar su funcionalidad. Lo instalo desde el [sitio oficial de Visual Studio Code](https://code.visualstudio.com/).
+Lo ***instalo*** desde el [sitio oficial de Visual Studio Code](https://code.visualstudio.com/). Diría que es el editor de código fuente más potente que he visto nunca, con soporte de cientos de extensiones muy últiles, la posibilidad de abrir diferentes **terminales integrados** dentro de la misma ventana de VS Code, como CMD, PowerShell, Git Bash o WSL. S
+
+Además, soporta una amplia variedad de lenguajes de programación y la posibilidad de trabajar con equipos remotos. El fichero de settings del usuario está en este directorio. Muestro cómo lo suelo configurar yo (ojo que esto ya es muy personal)
+
+* `PS C:\Users\luis\AppData\Roaming\Code\User\settings.json`
+
+```json
+{
+    "debug.javascript.autoAttachFilter": "always",
+    "redhat.telemetry.enabled": false,
+    "security.workspace.trust.untrustedFiles": "open",
+    "git.openRepositoryInParentFolders": "always",
+    "[python]": {
+        "editor.formatOnType": true
+    },
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    "cmake.configureOnOpen": true,
+    "cmake.showOptionsMovedNotification": false,
+    "openInDefaultBrowser.run.openWithLocalHttpServer": false,
+    "terminal.integrated.enableMultiLinePasteWarning": "never",
+    "markdownlint.config": {
+        "MD023": false
+    },
+    "explorer.confirmDelete": false,
+    "workbench.colorTheme": "Default Light Modern",
+    "editor.accessibilitySupport": "off",
+    "search.followSymlinks": false
+}
+```
+
+### Git
+
+![Git para Windows](/assets/img/posts/2024-08-25-win-desarrollo-06.png){: width="150px" height="150px" style="float:left; padding-right:25px" }
+
+El objetivo principal es tener acceso al ejecutable `git.exe` desde las consolas de Microsoft (`CMD` y `PowerShell`) y aplicaciones de terceros. Selecciono Use external OpenSSH porque ya viene instalado con Windows 11. Selecciono Use the OpenSSL library (para los server certificates). El ejecutable `git` dentro de WSL2 es distinto y también lo usaré, pero quiero tener la opcion de ambos.
+
+***Instalo*** desde el [sitio oficial de Git](https://git-scm.com/). Durante la instalación elijo la opción de "Git from the command line and also from 3rd-party software". No elijo la tercera opción (Use Git and optional Unix tools). Selecciono `Checkout Windows-style, commit Unix-style line endings` (lo mencioné en [CRLF vs LF](#wsl-2---crlf-vs-lf)). Dejo la opción de Use MinTTY, aunque no creo que lo use (no creo que use `git bash`). Selecciono `Fast-forward or merge`, [Git Credential Manager](https://github.com/git-ecosystem/git-credential-manager) y "Enable file system caching`.
+
+Se instala en `C:\Program Files\Git`. Importante: Debajo incluye un ejecutable llamado `.\bin\bash.exe` que no usaré porque tengo WSL2 (`C:\Windows\System32\bash.exe`).
 
 ### Docker Desktop
 
-Permite la creación y gestión de contenedores, lo que es esencial para el desarrollo y despliegue de aplicaciones en entornos aislados. Muy útil cuando estás desarrollando Servicios (por ejemplo en Go, NodeJS, ...). En mi caso lo necesito, así que lo instalo desde el [sitio oficial de Docker](https://www.docker.com/products/docker-desktop). Su integración con WSL2 es fundamental y el haberlo preparado antes nos ayuda a una instalación fluída.
+![Docker Desktop](/assets/img/posts/logo-docker.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-### Postman
+Permite la creación y gestión de contenedores, lo que es esencial para el desarrollo y despliegue de aplicaciones en entornos aislados. Muy útil cuando estás desarrollando Servicios (por ejemplo en `Go`, `NodeJS`).
 
-Herramienta para probar y documentar APIs. Es muy útil para desarrolladores que trabajan con servicios web. En mi caso la necesito también y la voy a instalar desde el [sitio oficial de Postman](https://www.postman.com/).
+Mis casos de uso son varios, poder ejecutar procesos contenerizados (por ejemplo una base de datos), dockerizar Servicios desarrollados (por ejemplo en Go o NodeJS), hacer pruebas de CI para DevOps, laboratorios de Microservicios, etc. ***Instalo*** desde el [sitio oficial de Docker](https://www.docker.com/products/docker-desktop). Su integración con WSL2 es fundamental y el haberlo preparado antes nos ayuda a tener una instalación fluída.
 
-### HTTPie (alternativa a Postman)
+Durante el proceso de instalación selecciono usar WSL2 en vez de Hyper-V
 
-Se trata de una herramienta de línea de comandos o GUI para realizar solicitudes HTTP, diseñada para ser simple y fácil de usar, ideal para probar y depurar APIs de manera rápida y eficiente. La descubrí hace poco y me gusta más que Postman, sobre todo por la parte de la línea de comandos. La instalo desde el [sitio oficial de HTTPie](https://httpie.io/).
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-25-win-desarrollo-07.png"
+      caption="Opción WSL2"
+      width="300px"
+      %}
 
-Por cierto, se puede instalar utilizando Chocolatey con el comando `choco install httpie`.
+### Postman o HTTPie
 
-### Node.js
+![Docker HTTPie](/assets/img/posts/logo-httpie.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-Entorno de ejecución para JavaScript en el lado del servidor. Es una herramienta imprescindible para desarrolladores de aplicaciones web. Si la necesitas instalar la tienes disponible en el [sitio oficial de Node.js](https://nodejs.org/).
+O ambos. Quizá estás más habituado al primero, puedes instalar desde el [sitio oficial de Postman](https://www.postman.com/). Es una herramienta muy conocida para probar y documentar APIs. Es muy útil para desarrolladores que trabajan con servicios web. En mi caso de momento la dejo en la recámara, quizá la instale más adelante.
 
-### JDK (Java Development Kit)
+Hace poco encontré esta otra herramienta, soporta trabajar tanto en la línea de comandos o GUI para realizar solicitudes HTTP, diseñada para ser simple y fácil de usar, ideal para probar y depurar APIs de manera rápida y eficiente. Me gusta más que Postman, sobre todo por la parte de la línea de comandos. La ***instalo*** desde el [sitio oficial de HTTPie](https://httpie.io/).
 
-Necesario para el desarrollo en Java, que sigue siendo uno de los lenguajes de programación más populares. Disponible en el [sitio oficial de Oracle](https://www.oracle.com/java/technologies/javase-downloads.html).
+### Work in Progress
 
-### SQL Server Management Studio (SSMS)
+Esta sección la marco como "WiP", porque hay decenas de apps, utilidades, comandos, entornos de desarrollo y es imposible documentarlos todos. Mi objetivo realmente era romper el hielo. Realmente estos apuntes vienen bien para tener una bitácora de mi instalación, por si tengo que repetirla, pero sobre todo porque espero que te venga bien a ti como ejemplo.
 
-Una herramienta para gestionar y administrar bases de datos SQL Server. Disponible en el [sitio oficial de Microsoft](https://docs.microsoft.com/sql/ssms/download-sql-server-management-studio-ssms).
+Iré documentado/añadiendo lo nuevo que vaya instalando, cosas que tengo en la cabeza: Compilador de C/C++, GoLang, Node.js, JDK de Java, BBDD locales (Si lo hago será con Docker).
 
 <br/>
 
 ---
 
-## Conclusión
+## Aprendizaje continuo
 
-Hay decenas de apps, utilidades, comandos, entornos de desarrollo y es imposible documentarlos todos. Mi objetivo realmente era romper el hielo si tienes un Windows y vas a desarrollar. Realmente estos apuntes me vienen muy bien para tener una bitácora de mi instalación, por si tengo que repetirla y espero que te vengan bien a ti como ejemplo.
-
-### Aprendizaje continuo
-
-Voy a insistirte sobre la Shell y Linux. Si vienes de Windows, te recomiendo aprender a utilizar la Shell; es una habilidad fundamental para cualquier desarrollador de software. La Shell permite automatizar tareas, ejecutar comandos, y manejar el sistema de una manera más eficiente y rápida que a través de interfaces gráficas. Existen muchos recursos disponibles para aprender a utilizar la Shell, tanto en `bash` como en `zsh`, te dejo algunas referencias
+Para terminar, voy a insistir un poco más sobre ***Shell y Linux***. Si vienes de Windows, te recomiendo aprender a utilizar la Shell; es una habilidad fundamental para cualquier desarrollador de software. La Shell permite automatizar tareas, ejecutar comandos, y manejar el sistema de una manera más eficiente y rápida que a través de interfaces gráficas. Existen muchos recursos disponibles para aprender a utilizar la Shell, tanto en `bash` como en `zsh`, te dejo algunas referencias
 
 * **Curso en Español**: [Curso de Introducción a la Terminal y Comandos Básicos](https://platzi.com/cursos/comandos-terminal/)
 * **Curso en Inglés**: [Command Line Basics (Udemy)](https://www.udemy.com/course/command-line-bash-for-beginners/)

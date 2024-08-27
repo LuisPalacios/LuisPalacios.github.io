@@ -4,24 +4,29 @@
     <bx:grid x="0" y="0" width="15" height="15"/>
   </defs>
   <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: rgb(84, 84, 84); pointer-events: none; visibility: hidden;" x="15" y="15"/>
-  <circle cx="32.158" cy="40.727" r="17.137" fill="rgba(76, 175, 80, 0.6)" style=""/>
-  <circle cx="117.842" cy="40.727" r="17.137" style="fill: rgba(255, 191, 0, 0.725);"/>
-  <circle cx="32.158" cy="109.274" r="17.137" fill="rgba(244, 67, 54, 0.6)" style=""/>
-  <circle cx="117.842" cy="109.274" r="17.137" fill="rgba(103, 58, 183, 0.6)" style=""/>
-  <line x1="75" y1="75" x2="32.158" y2="40.727" stroke="#333" stroke-width="2" style=""/>
-  <line x1="75" y1="75" x2="117.842" y2="40.727" stroke="#333" stroke-width="2" style=""/>
-  <line x1="75" y1="75" x2="32.158" y2="109.274" stroke="#333" stroke-width="2" style=""/>
-  <line x1="75" y1="75" x2="117.842" y2="109.274" stroke="#333" stroke-width="2" style=""/>
+  <circle cx="32.158" cy="40.727" r="17.137" style="fill: rgba(76, 175, 80, 0.78);"/>
+  <circle cx="117.842" cy="40.727" r="17.137" style="fill: rgba(0, 192, 255, 0.84);"/>
+  <circle cx="32.158" cy="109.274" r="17.137" style="fill: rgba(244, 67, 54, 0.77);"/>
+  <circle cx="117.842" cy="109.274" r="17.137" style="fill: rgba(103, 58, 183, 0.804);"/>
+  <line x1="75" y1="75" x2="40.753" y2="47.603" stroke="#333" stroke-width="2" style=""/>
+  <line x1="75" y1="75" x2="107.132" y2="49.295" stroke="#333" stroke-width="2" style=""/>
+  <line x1="75" y1="75" x2="40.753" y2="102.398" stroke="#333" stroke-width="2" style=""/>
+  <line x1="75" y1="75" x2="107.081" y2="100.665" stroke="#333" stroke-width="2" style=""/>
   <circle cx="53.579" cy="57.864" r="2.142" fill="#333" style=""/>
   <circle cx="96.421" cy="57.864" r="2.142" fill="#333" style=""/>
   <circle cx="53.579" cy="92.137" r="2.142" fill="#333" style=""/>
   <circle cx="96.421" cy="92.137" r="2.142" fill="#333" style=""/>
-  <circle cx="75" cy="40.727" r="2.142" fill="#333" style=""/>
-  <circle cx="75" cy="109.274" r="2.142" fill="#333" style=""/>
-  <circle cx="75" cy="75" r="25.705" style="fill: rgb(33, 150, 243);"/>
-  <text style="fill: rgb(255, 255, 255); font-family: 'Courier New'; font-size: 16.3391px; line-height: 29.8772px; text-anchor: middle; white-space: pre;" transform="matrix(0.428421, 0, 0, 0.428421, -44.304447, -22.164135)" y="196.56199645996094"><tspan x="278.3330078125" dy="1em">​</tspan><tspan>zsh/bash</tspan><tspan x="278.3330078125" dy="1em">​</tspan><tspan>+<tspan x="278.3330078125" dy="1em">​</tspan>linux<tspan x="278.3330078125" dy="1em">​</tspan>FOSS</tspan></text>
-  <text style="fill: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 6.9px; text-anchor: middle; white-space: pre;" x="31.375" y="36.997">Linux</text>
-  <text style="fill: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 6.9px; text-anchor: middle; white-space: pre;" x="118.583" y="36.997">MacOS</text>
-  <text style="fill: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 6.9px; text-anchor: middle; white-space: pre;" x="31.375" y="117.234">Win</text>
-  <text style="fill: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 6.9px; text-anchor: middle; white-space: pre;" x="118.583" y="117.234">Cloud</text>
+  <g>
+    <circle cx="75" cy="40.727" r="2.142" fill="#333" style=""/>
+    <circle cx="75" cy="109.274" r="2.142" fill="#333" style=""/>
+  </g>
+  <circle cx="75" cy="75" r="27.461" style="fill: rgb(255, 255, 255); stroke: rgb(57, 57, 57);"/>
+  <text style="font-family: 'Courier New'; font-size: 14.0049px; line-height: 29.8772px; text-anchor: middle; white-space: pre;" transform="matrix(0.428421, 0, 0, 0.428421, -44.266354, -29.45833)" y="196.56199645996094"><tspan x="278.3330078125" dy="1em">​</tspan><tspan>zsh/bash</tspan><tspan x="278.3330078125" dy="1em">​</tspan><tspan>+</tspan><tspan x="278.3330078125" dy="1em">​</tspan><tspan>herramientas</tspan><tspan x="278.3330078125" dy="1em">​</tspan><tspan>Linux y FOSS</tspan></text>
+  <text style="fill: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 6.9px; text-anchor: middle; white-space: pre;" x="30.78" y="42.529">Linux</text>
+  <text style="fill: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 6.9px; text-anchor: middle; white-space: pre;" x="118.988" y="42.529">MacOS</text>
+  <text style="fill: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 6px; text-anchor: middle; white-space: pre;" transform="matrix(1, 0, 0, 1, -0.119999, -1.905218)"><tspan x="31.278" y="111.269">Windows</tspan><tspan x="31.278" dy="1em">​</tspan><tspan>+WLS2</tspan></text>
+  <text style="fill: rgb(255, 255, 255); font-family: Arial, sans-serif; font-size: 6.9px; text-anchor: middle; white-space: pre;" x="117.486" y="111.269">Cloud</text>
+  <circle cx="86.635" cy="32.568" r="2.142" fill="#333" style="transform-box: fill-box; transform-origin: 50% 50%;" transform="matrix(0, 1, -1, 0, 22.081269, 42.047914)"/>
+  <circle cx="86.635" cy="101.115" r="2.142" fill="#333" style="transform-box: fill-box; transform-origin: 50% 50%;" transform="matrix(0, 1, -1, 0, -46.46573, -26.499071)"/>
+  <path d="M 71.622 84.94 C 71.622 84.94 68.573 87.524 67.556 88.386 C 65.523 90.109 65.523 90.109 67.556 91.832 C 68.573 92.694 69.01 93.084 70.606 94.417 C 71.622 95.279 72.639 96.14 73.655 93.556 C 75.688 86.663 73.655 93.556 75.688 86.663 C 76.704 84.078 77.721 84.94 78.737 85.802 C 79.754 86.663 80.77 87.524 81.787 88.386 C 83.82 90.109 83.82 90.109 81.787 91.832 C 80.77 92.694 78.737 94.417 77.721 95.279" style="fill: none; stroke: rgb(0, 0, 0); stroke-width: 0.5px;"/>
 </svg>
