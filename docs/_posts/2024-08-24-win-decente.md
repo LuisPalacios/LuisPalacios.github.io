@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 
 ![logo linux desarrollo](/assets/img/posts/logo-windows.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-En este apunte explico cómo parametrizo un Windows 11 que voy a usar para desarrollo de software, pruebas o demos. No necesito florituras ya que no va a tener datos sensibles, quiero su esencia, a pelo, con pocas apliaciones, algo de navegación y punto.
+En este apunte explico cómo parametrizo un Windows 11 que voy a usar para desarrollo de software, pruebas o demos. No necesito florituras ya que no va a tener datos sensibles, quiero su esencia, a pelo, con pocas aplicaciones, algo de navegación y punto.
 
 Al final se ha convertido en un ejercicio técnico. ¿Cómo se haría?. Suena raro, pero sería como tener un Windows de los de antes, que estaban disponible de forma inmediata. Voy a quitarle todo lo que pueda, anuncios, Edge, extras, instalaré drivers mínimos, una cuenta local, que arranque, haga login directo y esté disponible lo antes posible.
 
