@@ -263,20 +263,19 @@ La mejor opción que he encontrado es **usar el PC como Server** (Windows o Linu
 
 Tal como comenté en el punto anterior lo necesito. Tuve que pasar un pequeño calvario para que me funcionase. Hay múltiples posts en múltiples sitios en internet. Lo que ha mi me ha funcionado es lo siguiente, que saqué de [aquí](https://www.reddit.com/r/bootcamp/comments/ygv1mh/any_way_to_get_magic_trackpad_2_working_on/?tl=es&onetap_auto=true&one_tap=true):
 
-* Descargo esta versión en concreto de los drivers de Apple para Windows (6.1.8000.6 de 07/4/22) desde [este sitio de Apple](https://swcdn.apple.com/content/downloads/03/60/041-96205/61hhcnj7q5dxosc171ytixty20vuqg0r0n/AppleBcUpdate.exe)
+* Descargo específiciamente la versión de Apple 6.1.8000.6 de 07/4/22 desde [el sitio oficial de Apple](https://swcdn.apple.com/content/downloads/03/60/041-96205/61hhcnj7q5dxosc171ytixty20vuqg0r0n/AppleBcUpdate.exe)
 * Extraigo con 7-Zip a subdirectorio `AppleBcUpdate`
 * Conecto el Magic Trackpad 2 vía Bluetooth (no cable), `Setting > Bluetooth > Add device > Bluetooth`, encender el MT2 y asociarlo.
-* Instalo los Drivers, uno tras otro, sin rearrancar
-  * Primero el de USB - Explorer (`View > Show > Filename extensions` para ver los `.inf`)
-  * Botón derecho sobre `ApplePrecisionTrackpadUSB.inf` -> Instalar (bajo "AppleBcUpdate\ApplePrecisionTrackpadUSB".
-  * Después el de Bluetooth
-  * Botón derecho sobre `ApplePrecisionTrackpadBluetooth.inf` -> Instalar (bajo "AppleBcUpdate\ApplePrecisionTrackpadBluetooth".
-* Reboot
-* El Trackpad (Windows lo llama Touchpad) funciona perfecto. De hecho puedo entrar en `Settings > Bluetooth & devices > Touchpad` para ajustes de precisión.
+* Instalo los Drivers, uno tras otro, sin rearrancar (activo ver los `.inf` en Explorer `View > Show > Filename extensions`)
+  * Primero el de USB, bajo el directorio `ApplePrecisionTrackpadUSB` click derecho sobre `ApplePrecisionTrackpadUSB.inf` -> **Instalar**
+  * Después el de Bluetooth, bajo el directorio `ApplePrecisionTrackpadBluetooth` click derecho sobre `ApplePrecisionTrackpadBluetooth.inf` -> **Instalar**
+* **Reboot**
+* El Trackpad (Windows lo llama Touchpad) funciona perfecto.
+* Es posible entrar en los ajustes de precisión en `Settings > Bluetooth & devices > Touchpad`.
 
-Importante: si instalaste drivers antiguos o hiciste pruebas con drivers de terceros, desinstálalos antes de hacer los pasos anteriores. A mi me pasó y estos son los pasos que seguí:
+Importante: si instalaste drivers antiguos o hiciste pruebas con drivers de terceros, desinstálalos antes de hacer los pasos anteriores. A mi me pasó:
 
-* Mostrar drivers instalados y fijarte en el valor de la columna Published Name para el que quieres desinstalar (en mi caso fue `oem19.inf`)
+* Lita drivers instalados y fíjate en el valor de la columna **Published Name** para el que quieres desinstalar (en mi caso fue `oem19.inf`)
 
 ```PS
 dism /Online /Get-Drivers /Format:Table
@@ -289,7 +288,7 @@ oem19.inf      | applewtp64.inf     | No    | HIDClass          | Apple Inc.    
 :
 ```
 
-* Lo desinstalé con `pnputil /delete-driver oem19.inf /uninstall` (puedes añadir `/force` si lo necesitas). Rearranqué el equipo antes de pasar a la instalación mencionada antes.
+* Lo desinstalé con `pnputil /delete-driver oem19.inf /uninstall` (puedes añadir `/force` si lo necesitas). Rearranqué el equipo antes de pasar a la instalación que mencionada antes.
 
 ***Herramientas útiles***
 
