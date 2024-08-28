@@ -11,7 +11,7 @@ excerpt_separator: <!--more-->
 
 En este apunte explico cómo parametrizo un Windows 11 que voy a usar para desarrollo de software, pruebas o demos. No necesito florituras ya que no va a tener datos sensibles, quiero su esencia, a pelo, con pocas aplicaciones, algo de navegación y punto.
 
-Al final se ha convertido en un ejercicio técnico. ¿Cómo se haría?. Suena raro, pero sería como tener un Windows de los de antes, que estaban disponible de forma inmediata. Voy a quitarle todo lo que pueda, anuncios, Edge, extras, instalaré drivers mínimos, una cuenta local, que arranque, haga login directo y esté disponible lo antes posible.
+Al final se ha convertido en un ejercicio técnico. ¿Cómo se haría?. Suena raro, pero sería como tener un Windows de los primeros, que estaban disponibles de forma inmediata. Voy a quitarle todo lo que pueda, anuncios, Edge, extras, instalaré drivers mínimos, una cuenta local, que arranque, haga login directo y esté disponible lo antes posible.
 
 <br clear="left"/>
 <style>
@@ -39,11 +39,10 @@ Lo ***básico***
 
 ***Teclado y Ratón***
 
-* Uso un Ratón/Teclado USB's por cable para la instalación
+* Durante la [instalación dualboot]({% post_url 2024-08-23-dual-linux-win %}) usé Ratón/Teclado USB's por cable.
 * Al terminar añadí un Ratón Logitech (con un plugin USB) y el teclado Logitech K380 vía bluetooth
-  * Conecto el K380
-    * `Start > Settings > Bluetooth & devices`
-    * `Add device > Bluetooth`
+  * `Start > Settings > Bluetooth & devices > Add device > Bluetooth`
+* Al final del apunte explico porqué y cómo instalo un Magic Trackpad 2 de Apple
 
 ## Parametrización
 

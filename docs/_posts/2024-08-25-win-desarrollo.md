@@ -56,6 +56,8 @@ Pero antes de entrar en WSL2, déjame dar dar un repaso a todas las opciones dis
 C:\> echo Bye bye, World!
 ```
 
+Nota: yo me instalo [Clink](https://github.com/chrisant996/), super últil, enriquece muchísimo al CMD, añade readline (de linux), múltiples funcionalidades, colores, history.
+
 **PowerShell**: Entorno de scripting y línea de comandos avanzada desarrollada por Microsoft. Es más potente que CMD, permite el uso de comandos más complejos, scripts, y el acceso al framework .NET. ***Los scripts terminan en `*.PS1`***.
 
 Windows 11 trae la versión 5.1 y lo primero que voy a hacer es instalar la versión 7.
