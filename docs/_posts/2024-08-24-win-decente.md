@@ -224,11 +224,6 @@ Al seguir los pasos anteriores obtengo un Windows 11 mucho más limpio, rápido 
   * `Computer Configuration > Administrative Templates > Windows Components > Data Collection and Preview Builds`
   * Si existe `Allow Telemetry` selecciono “Disabled”. Esto asegura que Windows no recopile datos sobre mi uso.
 
-***Optimizar el registro con herramientas como CCleaner***
-
-* Descargo e instalo CCleaner desde su sitio oficial. Una vez instalado, lo abro y navego a la sección “Registry”.
-  * Hago clic en “Scan for Issues” y luego en “Fix selected Issues”. Siempre hago una copia de seguridad del registro cuando lo solicita.
-
 ***Deshabilitar servicios innecesarios***
 
 * Abro `services.msc` desde el menú de inicio.
@@ -247,3 +242,24 @@ Con estas recomendaciones adicionales, el sistema estará preparado para ofrecer
       caption="Idoneo para trabajar"
       width="600px"
       %}
+
+***Herramientas útiles***
+
+Las que siempre instalo
+
+* ***[7-Zip.org](https://7-zip.org)***: Ya la comenté, es un básico para mi
+* ***[Clink](https://github.com/chrisant996/)***: Enriquece muchísimo el CMD (`command.com`) con readline (de linux), añade múltiples funcionalidades, colores, history.
+
+***Mantenimiento: Optimizar el registro con CCleaner***
+
+* Descargo e instalo CCleaner desde su sitio oficial. Una vez instalado, lo abro y navego a la sección “Registry”.
+  * Hago clic en “Scan for Issues” y luego en “Fix selected Issues”. Siempre hago una copia de seguridad del registro cuando lo solicita.
+  * Si quieres más tiene una versión de Pago profesional.
+
+***Mantenimiento: Comandos útiles***
+
+Los ejecuto desde CMD como administrador
+
+* `chkdsk`: Comprueba el estado del disco duro y nos muestra un informe con la información necesaria. Además, se encarga de corregir problemas e incluso recuperar información perdida.
+* `dism /online /cleanup-image /restorehealth`: Se conecta con el **Windows Update service** para bajarse y reemplazar cualquier archivo importante que falte o esté corrupto.
+* `sfc`. Analizar la integridad de todos los archivos de sistema y solucionar problemas en los mismos. ***AVISO!!***: Microsoft tiene un problema conocido que lleva años sin resolverse. De hecho a mi me ha pasado. Al ejecutarlo por primera vez (`sfc /SCANNOW` encuentra un problema en el archivo `bthmodem.sys` y lo elimina. La solución pasa por ejecutar el comando anterior.  Cuando lo ejecutes indicará que ha encontrado corrupción y lo podrás encontrar en el log `\Windows\Logs\CBS\CBS.log` un `Corrupt File: bthmodem.sys`. Ejecuto el `dism /online /cleanup-image /restorehealth` que resuelve el entuerto.
