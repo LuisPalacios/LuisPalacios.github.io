@@ -13,7 +13,14 @@ En este apunte describo los pasos para preparar un Windows 11 como equipo de des
 Parto de una instalación de Windows limpia, aproveché que necesitaba hacer [dualboot]({% post_url 2024-08-23-dual-linux-win %}) y parametricé el sistema de forma [ligera]({% post_url 2024-08-24-win-decente %}). La primera parte la dedico al CLI y WSL2. La segunda es donde instalo las herramientas de desarrollo.
 
 <br clear="left"/>
+<style>
+table {
+    font-size: 0.8em;
+}
+</style>
 <!--more-->
+
+| Este apunte pertenece a una serie:<br><br>• Preparo PC para [Dualboot Linux Windows]({% post_url 2024-08-23-dual-linux-win %}) e instalo Windows 11 Pro.<br>• Configuro [un Windows 11 decente]({% post_url 2024-08-24-win-decente %}), en su esencia, le quito morralla.<br>• Preparo el [Windows para desarrollo]({% post_url 2024-08-25-win-desarrollo %}) de software, CLI, WSL2 y herramientas. |
 
 ---
 
@@ -559,12 +566,6 @@ Además te recomiendo que eches un ojo a algún curso sobre la filosofía de tra
 * **Curso en Inglés**: [Understanding the Unix Philosophy (LinkedIn Learning)](https://www.linkedin.com/learning/understanding-the-unix-philosophy), un curso corto que ofrece una visión general sobre la filosofía de Unix y su aplicación práctica.
 
 Por último, he seleccionado 50 comandos (hay muchos más) que deberías conocer como desarrollador de software multiplataforma. Son esenciales para la navegación del sistema de archivos, gestión de procesos, manipulación de texto, y otras tareas comunes en el desarrollo de software. Cada comando incluye un enlace a su respectiva manpage en Ubuntu 24.04.
-
-<style>
-table {
-    font-size: 0.8em;
-}
-</style>
 
 | Comando                                         | Descripción                                                      | Comando                                           | Descripción                                                      |
 |-------------------------------------------------|------------------------------------------------------------------|---------------------------------------------------|------------------------------------------------------------------|

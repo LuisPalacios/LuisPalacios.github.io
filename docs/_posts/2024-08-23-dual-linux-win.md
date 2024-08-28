@@ -9,26 +9,31 @@ excerpt_separator: <!--more-->
 
 ![logo linux desarrollo](/assets/img/posts/logo-dual-boot.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-Dualboot consiste en tener dos sistemas operativos en el mismo ordenador y elegir con cuál arrancar durante la fase de boot. Normalmente se instala Windows primero y luego se añade Linux. En mi caso voy a hacerlo justo al revés, ya tenía Ubuntu y funcionando en un disco de 4TB.
+Dualboot consiste en tener dos sistemas operativos en el mismo ordenador y elegir con cuál arrancar durante la fase de boot. Mi objetivo es preparar mi PC para dualboot e instalar Windows 11 Pro. Normalmente se instala primero Windows y Luego Linux, pero en mi caso parto de tener ya Linux (Ubuntu) funcionando perfectamente y ocupando el disco de 4TB por completo.
 
-Necesito "añadir" Windows (11) y poder hacer dualboot. En este apunte describo cómo lo he hecho, todo el proceso, cómo he redimensionado el disco duro, añadido windows y personalizado un menú de arranque.
+Voy a "añadir" Windows para poder hacer dualboot. Describo todo el proceso, cómo lo he hecho, cómo he redimensionado el disco duro, añadido windows y personalizado el menú de arranque.
 
 <br clear="left"/>
+<style>
+table {
+    font-size: 0.8em;
+}
+</style>
 <!--more-->
+
+| Este apunte pertenece a una serie:<br><br>• Preparo PC para [Dualboot Linux Windows]({% post_url 2024-08-23-dual-linux-win %}) e instalo Windows 11 Pro.<br>• Configuro [un Windows 11 decente]({% post_url 2024-08-24-win-decente %}), en su esencia, le quito morralla.<br>• Preparo el [Windows para desarrollo]({% post_url 2024-08-25-win-desarrollo %}) de software, CLI, WSL2 y herramientas. |
 
 ## Primeros pasos
 
-Voy a trabajar en un [Slimbook Kymera ATX](https://slimbook.com/kymera-atx) con estas características:
+Los características del mi PC [Slimbook Kymera ATX](https://slimbook.com/kymera-atx)
 
-- Ubuntu 24.04
-- Kernel: 6.8.0-41-generic
-- Motherboard: Gigabyte Z790 UD AX CPU: Intel Core i9-14900K
-- BIOS Version: F11d
-- Memory: 96GB (2x48GB) DDR5 6000MT/s / x2 Channel
-- HD: 1 disco 4TB nvme + 2 discos 2TB SDD
+- Motherboard Gigabyte Z790 UD AX con BIOS F11d y una CPU Intel Core i9-14900K
+- Memoria: 96GB (2x48GB) DDR5 6000MT/s / x2 Channel
+- Discos: 1 disco 4TB nvme (*principal*) + 2 discos para datos de 2TB SDD
 - Sistema con ***UEFI*** y esquema de particionamiento ***GPT***
+- Tengo ya Ubuntu 24.04 instalado (Kernel: 6.8.0-41-generic)
 
-Detalles del disco principal, de momento solo con linux:
+Detalles del disco *principal*, de momento solo con linux:
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-23-dual-linux-win-01.png"
@@ -38,7 +43,7 @@ Detalles del disco principal, de momento solo con linux:
 
 ## Requisitos
 
-Lo que necesito y lo que espero tener
+Estos son los requisitos que establezco para hacer bien todo el proceso.
 
 - USB para Ubuntu Live (mín. 8GB)
 - USB para Windows 11 (mín. 8GB)

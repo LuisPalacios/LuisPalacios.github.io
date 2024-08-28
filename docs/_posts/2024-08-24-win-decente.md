@@ -14,7 +14,14 @@ En este apunte explico cómo parametrizo un Windows 11 que voy a usar para prueb
 Al final se ha convertido en un ejercicio técnico. ¿Cómo se haría?. Suena raro, pero sería como tener un Win 3.11, que estaba disponible de forma inmediata. Voy a quitarle todo lo que pueda, anuncios, edge, extras, instalaré drivers mínimos, una cuenta local, que arranque, haga login directo y esté disponible lo antes posible.
 
 <br clear="left"/>
+<style>
+table {
+    font-size: 0.8em;
+}
+</style>
 <!--more-->
+
+| Este apunte pertenece a una serie:<br><br>• Preparo PC para [Dualboot Linux Windows]({% post_url 2024-08-23-dual-linux-win %}) e instalo Windows 11 Pro.<br>• Configuro [un Windows 11 decente]({% post_url 2024-08-24-win-decente %}), en su esencia, le quito morralla.<br>• Preparo el [Windows para desarrollo]({% post_url 2024-08-25-win-desarrollo %}) de software, CLI, WSL2 y herramientas. |
 
 ## Primeros pasos
 
@@ -32,13 +39,11 @@ Lo ***básico***
 
 ***Teclado y Ratón***
 
-* Empecé con teclado USB por cable y he añadido un Logitech K380 bluetooth
+* Uso un Ratón/Teclado USB's por cable para la instalación
+* Al terminar añadí un Ratón Logitech (con un plugin USB) y el teclado Logitech K380 vía bluetooth
   * Conecto el K380
     * `Start > Settings > Bluetooth & devices`
     * `Add device > Bluetooth`
-* Estoy investigando la opción de usar un Apple Magic Trackpad 2. De momento no me funciona bien.
-* Instalo [Barrier](https://github.com/debauchee/barrier). Un KVM por software. Mi setup son dos ordenadores, con dos monitores. El objetivo es usar un único teclado/ratón.
-  * Al instalar me pregunta `Enable autoconfig and install Bonjour`, le digo que Sí.
 
 ## Parametrización
 
@@ -199,9 +204,9 @@ Las Microsoft PowerToys son un conjunto de utilidades para que los usuarios avan
 
 Soporta una amplia variedad de lenguajes de programación y una gran cantidad de extensiones para mejorar su funcionalidad. Lo instalo desde el [sitio oficial de Visual Studio Code](https://code.visualstudio.com/).
 
-## Recomendaciones adicionales
+## Extras
 
-Al seguir los pasos anteriores obtengo un Windows 11 mucho más limpio, rápido y libre de distracciones, ideal para su uso en entornos específicos como pruebas o demostraciones. Además de las optimizaciones mencionadas, dejo aquí algunas medidas adicionales, que pueden llevar la personalización un paso más allá:
+Al seguir los pasos anteriores obtengo un Windows 11 mucho más limpio, rápido y libre de distracciones, ideal para su uso en entornos específicos como pruebas o demostraciones. Además de las optimizaciones mencionadas, dejo aquí algunas cosillas adicionales, que pueden llevar la personalización un paso más allá, ten en cuenta que a partir de aquí ya es decisión personal.
 
 ***Desactivar Cortana***
 
@@ -242,6 +247,49 @@ Con estas recomendaciones adicionales, el sistema estará preparado para ofrecer
       caption="Idoneo para trabajar"
       width="600px"
       %}
+
+***Instalación de Barrier para KVM por software***
+
+Trabajo con dos ordenadores (mac mini y PC con dualboot Windows y Linux), cada uno con su monitor. Mi objetivo es poder tener un KVM por software para poder compartir el Teclado y el Ratón.
+
+* Instalo [Barrier](https://github.com/debauchee/barrier).
+  * Al instalar me pregunta `Enable autoconfig and install Bonjour`, le digo que Sí.
+
+| Nota: Lo ideal sería configurar el Mac como **Server** para usar su teclado y su trackpad (contar con todas sus virguerías). Pero, no se pueden generar en el PC las AltGr Keys `\|@#[]{}~€¬` ni ` < > `. He dedicado muchas horas investigando este tema y no consigo encontrar la solución. |
+
+La mejor opción que he encontrado es **usar el PC como Server** (Windows o Linux). He instalado un Magic Trackpad 2 de Apple para que la experiencia (gobernar el Mac desde el teclado/mouse del PC) sea lo más parecida posible.
+
+***Drivers para Magic Trackpad 2***
+
+Tal como comenté en el punto anterior lo necesito. Tuve que pasar un pequeño calvario para que me funcionase. Hay múltiples posts en múltiples sitios en internet. Lo que ha mi me ha funcionado es lo siguiente, que saqué de [aquí](https://www.reddit.com/r/bootcamp/comments/ygv1mh/any_way_to_get_magic_trackpad_2_working_on/?tl=es&onetap_auto=true&one_tap=true):
+
+* Descargo esta versión en concreto de los drivers de Apple para Windows (6.1.8000.6 de 07/4/22) desde [este sitio de Apple](https://swcdn.apple.com/content/downloads/03/60/041-96205/61hhcnj7q5dxosc171ytixty20vuqg0r0n/AppleBcUpdate.exe)
+* Extraigo con 7-Zip a subdirectorio `AppleBcUpdate`
+* Conecto el Magic Trackpad 2 vía Bluetooth (no cable), `Setting > Bluetooth > Add device > Bluetooth`, encender el MT2 y asociarlo.
+* Instalo los Drivers, uno tras otro, sin rearrancar
+  * Primero el de USB - Explorer (`View > Show > Filename extensions` para ver los `.inf`)
+  * Botón derecho sobre `ApplePrecisionTrackpadUSB.inf` -> Instalar (bajo "AppleBcUpdate\ApplePrecisionTrackpadUSB".
+  * Después el de Bluetooth
+  * Botón derecho sobre `ApplePrecisionTrackpadBluetooth.inf` -> Instalar (bajo "AppleBcUpdate\ApplePrecisionTrackpadBluetooth".
+* Reboot
+* El Trackpad (Windows lo llama Touchpad) funciona perfecto. De hecho puedo entrar en `Settings > Bluetooth & devices > Touchpad` para ajustes de precisión.
+
+Importante: si instalaste drivers antiguos o hiciste pruebas con drivers de terceros, desinstálalos antes de hacer los pasos anteriores. A mi me pasó y estos son los pasos que seguí:
+
+* Mostrar drivers instalados y fijarte en el valor de la columna Published Name para el que quieres desinstalar (en mi caso fue `oem19.inf`)
+
+```PS
+dism /Online /Get-Drivers /Format:Table
+:
+-------------- | ------------------ | ----- | ----------------- | -------------------- | ---------- | ---------------
+Published Name | Original File Name | Inbox | Class Name        | Provider Name        | Date       | Version
+-------------- | ------------------ | ----- | ----------------- | -------------------- | ---------- | ---------------
+:
+oem19.inf      | applewtp64.inf     | No    | HIDClass          | Apple Inc.           | 29/10/2011 | 5.0.0.0
+:
+```
+
+* Lo desinstalé con `pnputil /delete-driver oem19.inf /uninstall` (puedes añadir `/force` si lo necesitas). Rearranqué el equipo antes de pasar a la instalación mencionada antes.
 
 ***Herramientas útiles***
 
