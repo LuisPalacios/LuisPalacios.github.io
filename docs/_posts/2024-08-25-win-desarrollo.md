@@ -353,11 +353,11 @@ Set-Service -Name sshd -StartupType 'Automatic'
 * Fichero `C:\ProgramData\ssh\sshd_config`. Desactivo usar el fichero `administrators_authorized_keys`. Para `luis` usará `/mnt/c/Users/luis/authorized_keys`
 
 ```config
-AuthorizedKeysFile	.ssh/authorized_keys
+AuthorizedKeysFile .ssh/authorized_keys
 AcceptEnv LANG LC_*
-Subsystem	sftp	sftp-server.exe
+Subsystem sftp sftp-server.exe
 #Match Group administrators
-#       AuthorizedKeysFile __PROGRAMDATA__/ssh/administrators_authorized_keys
+# AuthorizedKeysFile __PROGRAMDATA__/ssh/administrators_authorized_keys
 ```
 
 Lo edito y rearranco el servicio
@@ -475,37 +475,11 @@ La segunda parte del apunte, la instalación de las herramientas de desarrollo, 
 
 ![VSCode](/assets/img/posts/logo-vscode.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-Lo ***instalo*** desde el [sitio oficial de Visual Studio Code](https://code.visualstudio.com/). Diría que es el editor de código fuente más potente que he visto nunca, con soporte de cientos de extensiones muy últiles, la posibilidad de abrir diferentes **terminales integrados** dentro de la misma ventana de VS Code, como CMD, PowerShell, Git Bash o WSL. S
+Lo ***instalo*** desde el [sitio oficial de Visual Studio Code](https://code.visualstudio.com/). Diría que es el editor de código fuente más potente que he visto nunca, con soporte de cientos de extensiones muy útiles, la posibilidad de abrir diferentes **terminales integrados** dentro de la misma ventana de VS Code, como CMD, PowerShell, Git Bash o WSL. S
 
-Además, soporta una amplia variedad de lenguajes de programación y la posibilidad de trabajar con equipos remotos. El fichero de settings del usuario está en este directorio. Muestro cómo lo suelo configurar yo (ojo que esto ya es muy personal)
+Además, soporta una amplia variedad de lenguajes de programación y la posibilidad de trabajar con equipos remotos.
 
-* `PS C:\Users\luis\AppData\Roaming\Code\User\settings.json`
-
-```json
-{
-    "debug.javascript.autoAttachFilter": "always",
-    "redhat.telemetry.enabled": false,
-    "security.workspace.trust.untrustedFiles": "open",
-    "git.openRepositoryInParentFolders": "always",
-    "[python]": {
-        "editor.formatOnType": true
-    },
-    "git.enableSmartCommit": true,
-    "git.confirmSync": false,
-    "git.autofetch": true,
-    "cmake.configureOnOpen": true,
-    "cmake.showOptionsMovedNotification": false,
-    "openInDefaultBrowser.run.openWithLocalHttpServer": false,
-    "terminal.integrated.enableMultiLinePasteWarning": "never",
-    "markdownlint.config": {
-        "MD023": false
-    },
-    "explorer.confirmDelete": false,
-    "workbench.colorTheme": "Default Light Modern",
-    "editor.accessibilitySupport": "off",
-    "search.followSymlinks": false
-}
-```
+***Settigs y Sincronización***: Echa un ojo al apunte [VSCode settings y extensiones]({% post_url 2023-06-20-vscode %}) donde mantengo cómo lo gestiono y mi configuración.
 
 ### Git
 

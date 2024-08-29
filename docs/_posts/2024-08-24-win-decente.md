@@ -11,7 +11,7 @@ excerpt_separator: <!--more-->
 
 En este apunte explico cómo parametrizo un Windows 11 que voy a usar para desarrollo de software, pruebas o demos. No necesito florituras ya que no va a tener datos sensibles, quiero su esencia, a pelo, con pocas aplicaciones, algo de navegación y punto.
 
-Al final se ha convertido en un ejercicio técnico. ¿Cómo se haría?. Suena raro, pero sería como tener un Windows de los primeros, que estaban disponibles de forma inmediata. Voy a quitarle todo lo que pueda, anuncios, Edge, extras, instalaré drivers mínimos, una cuenta local, que arranque, haga login directo y esté disponible lo antes posible.
+Al final se ha convertido en un ejercicio técnico. ¿Cómo se haría?. Suena raro, pero sería como tener un Windows de los primeros, que estaban disponibles de forma inmediata. Voy a quitarle todo lo que pueda, anuncios, Edge, extras, instalaré drivers mínimos, una cuenta local, que arranque y esté disponible lo antes posible.
 
 <br clear="left"/>
 <style>
@@ -294,13 +294,10 @@ oem19.inf      | applewtp64.inf     | No    | HIDClass          | Apple Inc.    
 Las que siempre instalo
 
 * ***[7-Zip.org](https://7-zip.org)***: Ya la comenté, es un básico para mi
-* ***[Clink](https://github.com/chrisant996/)***: Enriquece muchísimo el CMD (`command.com`) con readline (de linux), añade múltiples funcionalidades, colores, history.
-
-***Mantenimiento: Optimizar el registro con CCleaner***
-
-* Descargo e instalo CCleaner desde su sitio oficial. Una vez instalado, lo abro y navego a la sección “Registry”.
-  * Hago clic en “Scan for Issues” y luego en “Fix selected Issues”. Siempre hago una copia de seguridad del registro cuando lo solicita.
-  * Si quieres más tiene una versión de Pago profesional.
+* ***[Clink](https://github.com/chrisant996/)***: Enriquece muchísimo el CMD (`command.com`) con una readline como el de Linux, añade múltiples funcionalidades, colores, history.
+* ***[Ccleaner](https://www.ccleaner.com/)*** Muy buena pinta, aunque para tener acceso a lo "chulo" hay que comprar la licencia Profesinoal.
+* ***[BleachBit](https://www.bleachbit.org/)*** Una alternativa Open Source a CCleaner, que tiene una pinta buenísima. Le falta la parte del Registry y la Optimización de rendimiento.
+  * Antes de instalar la última versión, hay que bajarse el **[Visual Studio 2919 (VC++ 10.0) redistributable SP1 x86](https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe)**, es la versión x86. Aunque mi sistema es de 64-bit da igual porque va a usar la dll de la versión x86.
 
 ***Mantenimiento: Comandos útiles***
 
