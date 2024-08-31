@@ -481,6 +481,15 @@ Además, soporta una amplia variedad de lenguajes de programación y la posibili
 
 ***Settigs y Sincronización***: Echa un ojo al apunte [VSCode settings y extensiones]({% post_url 2023-06-20-vscode %}) donde mantengo cómo lo gestiono y mi configuración.
 
+***Alias***: En todos mis sistemas me gusta crear un alias a ***e*** para llamar a mi editor preferido.
+
+Desde una sesión de Administrador edito `c:\windows\e.cmd`, será válido para cmd y powershell
+
+```cmd
+@echo off
+"C:\Users\luis\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd" %*
+```
+
 ### Git
 
 ![Git para Windows](/assets/img/posts/2024-08-25-win-desarrollo-06.png){: width="150px" height="150px" style="float:left; padding-right:25px" }
