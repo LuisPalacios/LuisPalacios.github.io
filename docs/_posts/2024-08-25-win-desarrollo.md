@@ -97,16 +97,18 @@ Hasta aquí he listado las cuatro opciones de consola que voy a tener en mi Wind
 
 ***Más CLI's o Terminales***: Las dos primeras las voy a tratar más adelante.
 
-* *Git Bash:* Junto con `GIT`, al instalarlo en Windows, podemos acceder a `Git bash`, una herramienta que proporciona un emulador de Bash para Windows. Es especialmente útil para desarrolladores que trabajan con Git y necesitan una CLI con comandos Unix.
+* *Git for Windows:* Junto con `GIT`, al instalarlo en Windows, podemos acceder a `Git bash`, una herramienta que proporciona un emulador de Bash para Windows. Es especialmente útil para desarrolladores que trabajan con Git y necesitan una CLI con comandos Unix. Una de las ventajas que tiene es que si añades los path's `C:\Program Files\Git\mingw64\bin` y `C:\Program Files\Git\usr\bin`, tendras gratis un montón de comandos estilo Linux.
 * *Visual Studio Code - Terminal Integrado***: Visual Studio Code (VS Code) es un editor de código fuente que incluye un terminal integrado. Puedo abrir diferentes terminales dentro de la misma ventana de VS Code, como CMD, PowerShell, Git Bash o WSL.
-  *[ConEmu](https://conemu.github.io/)*: otro emulador de terminal avanzado que soporta múltiples consolas dentro de la misma ventana. Puedes abrir CMD, PowerShell, Bash, entre otros, en pestañas diferentes.
-* *[Cmder](https://cmder.app/)*: es una consola portátil para Windows, basada en ConEmu y extendida con herramientas Unix como Git para Windows, que proporciona una experiencia CLI unificada.
+* *[Cmder](https://cmder.app/)*: ***super recomendado***, basada en *[ConEmu](https://conemu.github.io/)* (emulador de terminal) y extendida con [Clink](https://github.com/chrisant996/clink/) y si has instalado Git for Windows, se integra perfecto, con acceso en el PATH a todas las herramientas.
 
 #### Mi estrategia
 
-Mi estrategia es sencilla y simple, que mi Consola ejecute siempre ***Shell y Herramientas Linux***. ¿Cómo?
+Mi estrategia es sencilla y simple, que mi Consola ejecute siempre ***Shell y Herramientas Linux*** y en el caso concreto de Windows preparé ***Windows Terminal*** como lanzado único de "**cmder**, **pwsh**".
 
-* Windows: Instalando `WSL 2` > `<Distribución>` >  ***`zsh o bash`***. Me dará acceso nativo al `C:\` vía `/mnt/c`. Tendré una Distribución Linux completa con acceso a **todas las herramientas open source disponibles en Linux**. Como Terminal uso "Windows Terminal" (más adelante lo explico).
+* Windows
+  * Instalando `WSL 2` > `<Distribución>` >  ***`zsh o bash`***. Me dará acceso nativo al `C:\` vía `/mnt/c`. Tendré una Distribución Linux completa con acceso a **todas las herramientas open source disponibles en Linux**. Como Terminal uso "Windows Terminal" (más adelante lo explico).
+  * Instalando *[Cmder](https://cmder.app/)*
+  * Instalando y personalizando **Windows Terminal**
 * [MacOS]({% post_url 2023-04-15-mac-desarrollo %}): Uso **zsh**, también **bash** (scripts), junto con las herramientas preinstaladas y **Homebrew** para tener acceso a **todas las herramientas open source disponibles en Linux**. Como Terminal uso "iTerm2". En el enlace tienes un apunte.
 * [Linux]({% post_url 2024-07-25-linux-desarrollo %}): Uso **zsh**, tamibén **bash** (scripts), junto con **todas las herramientas open source disponibles en Linux**. Como Terminal yo uso "Gnome Terminal". En el enlace tienes un apunte.
 
@@ -409,11 +411,15 @@ Este pequeño detalle puede generar grandes problemas si no se maneja correctame
 
 * Yo siempre dedico un directorio personal específicio para mis scripts y ejecutables. Asñu ne asegyri de qye está disponible en todos ordenadores. Dicho directorio lo puedes sincronizar de múltiples formas, en mi caso utilizo un servidor NextCloud:
 
-* PATH Global en Windows para `command.com y PowerShell`
-  * `Start > Settings > About > Advance System Settings`
-  * `Environment Variables`
-  * ***`System variables`***
-  * Añado `C:\Users\luis\Nextcloud\priv\bin` al final de la lista.
+* PATH Global para `command.com y PowerShell`
+  * desde cualquiera de estos dos sitios:
+    * `Start > Settings > System > About > Advance System Settings`
+    * `Search > "Advance System Settings"`
+  * elegir
+    * `Environment Variables` > ***`System variables`***
+    * Añado `C:\Users\luis\Nextcloud\priv\bin` al final de la lista.
+
+Ejemplo [de mi PATH (gist)](https://gist.github.com/LuisPalacios/d38dd10a92fa1ab6bbaec799e8afe2f3).
 
 * PATH Linux (WSL2)
   * Edito el fichero `~/.bashrc` o `.zshrc`
