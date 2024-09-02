@@ -10,7 +10,7 @@ excerpt_separator: <!--more-->
 
 En este apunte describo los pasos para preparar un Windows 11 como equipo de desarrollo. Teniendo en cuenta que soy *Unixero* y trabajo en entorno multiplataforma, Linux, MacOS y Windows, veras que este apunte no está orientado a desarrolladores *solo-microsoft/windows*, sino a los que les gusta desarrollar en múltiples plataformas y/o entornos.
 
-Parto de una instalación de Windows limpia, aproveché que necesitaba hacer [dualboot]({% post_url 2024-08-23-dual-linux-win %}) y parametricé el sistema de forma [ligera]({% post_url 2024-08-24-win-decente %}). La primera parte la dedico al CLI y WSL2. La segunda es donde instalo las herramientas de desarrollo.
+Parto de una instalación de Windows (en inglés) limpia, aproveché que necesitaba hacer [dualboot]({% post_url 2024-08-23-dual-linux-win %}) y parametricé el sistema de forma [ligera]({% post_url 2024-08-24-win-decente %}). La primera parte la dedico al CLI y WSL2. La segunda es donde instalo las herramientas de desarrollo.
 
 <br clear="left"/>
 <style>
@@ -32,11 +32,7 @@ Como todos mis apuntes, se trata de la bitácora de mi instalación, es decir, v
 
 Es imprescindible hablar de la Consola que vas a usar, tanto si estás acostumbrado a trabajar desde la línea de comandos como si no, los desarrolladores multiplataforma lo valoramos mucho.
 
-En mi caso he trabajado en multiples Sistemas Operativos, no estoy obsesionado con ninguno, ni quiero imponer nada (soy todo lo contrario a un [BOFH](https://es.wikipedia.org/wiki/Bastard_Operator_from_Hell#:~:text=BOFH%20son%20las%20iniciales%20del,como%20Infame%20Administrador%20del%20Demonio)), lo que sí que tengo claro y he aprendido durante años es a **elegir lo que me ahorra tiempo**.
-
-Anticipo que mi Consola elegida en Windows es la **Shell de Unix** (`zsh o bash`), junto con **las decenas de herramientas de línea de comandos Open Source existentes para Linux** (`ls, cd, mkdir, cp, tar, sed, awk, nano, vi, etc.`). Todas ellas se hicieron siguiendo la filosofía Unix, que establece que un programa '*debería hacer una cosa y hacerla bien*', y funcionan así de bien desde hace años.
-
-El trabajo de millones de horas de otras personas me van a ahorrar mucho tiempo. Es inteligente invertir unas cuantas horas en aprender la Shell y el subconjunto de las herramientas de línea de comandos más utilizadas.
+Anticipo que voy a usar casi siempre WSL2, la **Shell de Unix** (`zsh o bash`), junto con **las herramientas de línea de comandos Open Source existentes para Linux** (`ls, cd, mkdir, cp, tar, sed, awk, nano, vi, etc.`). Además preparo el equipo para tener acceso al resto (PowerShell, CMD, ...).
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-25-win-desarrollo-01.svg"
@@ -44,27 +40,20 @@ El trabajo de millones de horas de otras personas me van a ahorrar mucho tiempo.
       width="350px"
       %}
 
-Cuando bajamos a tierra Windows, el entorno CLI ha sido históricamente un desafío. Desde el anticuado `command.com`, la complicada PowerShell, la obsoleta y confusa nomenclatura del sistema de archivos, la gestión de variables de entorno y PATH, y el omnipresente Registro de Windows, todo parece estar diseñado para frustrar al desarrollador.
+Cuando bajamos a tierra Windows, el entorno CLI ha sido históricamente un desafío, esta es la lista de opcion:
 
-Afortunadamente hay luz, en los últimos años, Windows ha dado un paso importante, la introducción de WSL-2 (Windows Subsystem for Linux). Gracias a él, **podemos trabajar con la Shell y herramientas Linux** en el ecosistema de Windows, permitiendo una experiencia de desarrollo mucho más fluida y eficiente, combinando lo mejor de ambos mundos.
-
-Pero antes de entrar en WSL2, déjame dar dar un repaso a todas las opciones disponibles en el ámbito del CLI en Windows 11, ya te anticipo que acabo teniendo cuatro (si 4) consolas distintas.
-
-**Command Prompt (`command.com` / CMD)**: la línea de comandos tradicional de Windows. Es uno de los entornos más antiguos y básicos para ejecutar comandos en Windows, sus scripts son los famosos ***`*.BAT`***. No necesita explicación. Trabajar en esta línea de comandos o hacer scripts en BAT es literalmente hacerse el Harakiri.
+**Command Prompt (`command.com` / CMD)**: la línea de comandos tradicional de Windows. Es uno de los entornos más antiguos y básicos para ejecutar comandos en Windows, sus scripts son los famosos ***`*.BAT`***. No necesita mucha explicación.
 
 ```PS
 C:\> echo Bye bye, World!
 ```
 
-Nota: yo me instalo [Clink](https://github.com/chrisant996/), super últil, enriquece muchísimo al CMD, añade readline (de linux), múltiples funcionalidades, colores, history.
+* Instalo [Clink](https://github.com/chrisant996/), super últil, enriquece muchísimo al CMD, añade readline (de linux), múltiples funcionalidades, colores, history.
+* Puedes ir un paso más allá e instalarte *[Cmder](https://cmder.app/)*: una consola muy potente que incluye el emulador *[ConEmu](https://conemu.github.io/)* (emulador de terminal) y [Clink](https://github.com/chrisant996/clink/) y si has instalado Git for Windows, se integra perfecto, con acceso en el PATH a todas las herramientas.
 
 **PowerShell**: Entorno de scripting y línea de comandos avanzada desarrollada por Microsoft. Es más potente que CMD, permite el uso de comandos más complejos, scripts, y el acceso al framework .NET. ***Los scripts terminan en `*.PS1`***.
 
-Windows 11 trae la versión 5.1 y lo primero que voy a hacer es instalar la versión 7.
-
-* Instalo ***Powershell 7***. Desde [PowerShell Tags](https://github.com/PowerShell/PowerShell/tags) en "Downloads".
-
-Me quedan dos versiones en paralalelo, puedo arrancar la que quiera o ambas.
+* Windows 11 trae la versión 5.1, instalo la ***Powershell 7*** desde [PowerShell Tags](https://github.com/PowerShell/PowerShell/tags) > "Downloads".
 
 * PowerShell **5.x** - PowerShell (**powershell.exe**), conocido como "**Desktop**". Funciona **exclusivamente en Windows**.
   1. Basado en el motor PowerShell 5.1.
@@ -83,42 +72,44 @@ PS C:\> $PSVersionTable
 :
 ```
 
-Puede que PowerShell le sea ***útil a desarrolladores que trabajan exclusivamente en .NET, con C#, en entornos solo Microsoft, para automatizaciones***, o si quieres diferenciarte en el mundo DevOps CI en entornos exclusivos Microsoft/Windows, ***debes aprenderla***. Pero para el resto de casos, mi opción es ***ni aprenderlo, ni usarlo***, así que, a no ser que no me quede más remedio, la PS es para mi un mal necesario, que está ahí, instalo, mantengo, uso de vez en cuando, y punto.
+PowerShell es muy ***útil para desarrolladores que trabajan exclusivamente en .NET, con C#, en entornos solo Microsoft, automatizaciones***, o si quieres diferenciarte en el mundo DevOps CI en entornos exclusivos Microsoft/Windows. Pero para el resto va por gustos. Yo tengo CMD y PowerShell preparados y bien configurados (PATHs) para usarlos bajo demanda, según qué y cuando lo necesite.
 
-***Windows Subsystem for Linux (WSL 2)***: permite ejecutar un entorno Linux directamente en Windows sin la necesidad de una máquina virtual. Puedes instalar distribuciones de Linux (como Ubuntu, Debian, etc.) y usar la Shell que quieras de forma nativa, con altísimo rendimiento, completamente integrado con el File System de Windows (excepto los permisos). ***¡Esto es justo lo que necesito y recomiendo usar!***. En la siguiente sección explico cómo lo he instalado.
+***Windows Subsystem for Linux (WSL 2)***: permite ejecutar un entorno Linux directamente en Windows sin la necesidad de una máquina virtual. Puedes instalar distribuciones de Linux (como Ubuntu, Debian, etc.) y usar la Shell que quieras de forma nativa, con altísimo rendimiento, completamente integrado con el File System de Windows (excepto los permisos). ***¡ WSL2 es lo que más uso!***. Entro en detalle más adelante.
 
 ```bash
 luis@kymeraw:/mnt/c/Users/luis$ ls -al
 ```
 
-Hasta aquí he listado las cuatro opciones de consola que voy a tener en mi Windows: `command.com`, `powershell.exe`, `pwsh.exe`, `Shell linux`, pero hay un programa muy interesante que permite ordenar el acceso a ellas, se trata de Windows Terminal.
+***Windows Terminal***: Una aplicación moderna que permite utilizar múltiples pestañas con diferentes consolas, como `CMD`, `PowerShell`, `WSL`, `Git Bash`, `Cmder`, ... Es muy personalizable y soporta características avanzadas como temas y configuraciones de fuentes.  Entro en detalle más adelante.
 
-***Windows Terminal***: Una aplicación moderna que permite utilizar múltiples pestañas con diferentes consolas, como `CMD`, `PowerShell`, `WSL` y otras. Es muy personalizable y soporta características avanzadas como temas y configuraciones de fuentes. Más adelante muestro cómo lo he configurado.
+***Git for Windows:*** Se trata del importantísimo **`git.exe`** para trabajar desde la línea de comandos que además incluye **Git Bash**, una herramienta que proporciona un emulador de Bash para Windows. Otro terminal más, algo parecido a lo que vemos en un terminal WSL2 de Ubuntu, pero usando un emulador de terminal y ejecutables nativos de Windows. Entro en detalle más adelante.
 
-***Más CLI's o Terminales***: Las dos primeras las voy a tratar más adelante.
-
-* *Git for Windows:* Junto con `GIT`, al instalarlo en Windows, podemos acceder a `Git bash`, una herramienta que proporciona un emulador de Bash para Windows. Es especialmente útil para desarrolladores que trabajan con Git y necesitan una CLI con comandos Unix. Una de las ventajas que tiene es que si añades los path's `C:\Program Files\Git\mingw64\bin` y `C:\Program Files\Git\usr\bin`, tendras gratis un montón de comandos estilo Linux.
 * *Visual Studio Code - Terminal Integrado***: Visual Studio Code (VS Code) es un editor de código fuente que incluye un terminal integrado. Puedo abrir diferentes terminales dentro de la misma ventana de VS Code, como CMD, PowerShell, Git Bash o WSL.
-* *[Cmder](https://cmder.app/)*: ***super recomendado***, basada en *[ConEmu](https://conemu.github.io/)* (emulador de terminal) y extendida con [Clink](https://github.com/chrisant996/clink/) y si has instalado Git for Windows, se integra perfecto, con acceso en el PATH a todas las herramientas.
 
 #### Mi estrategia
 
-Mi estrategia es sencilla y simple, que mi Consola ejecute siempre ***Shell y Herramientas Linux*** y en el caso concreto de Windows preparé ***Windows Terminal*** como lanzado único de "**cmder**, **pwsh**".
+Mi estrategia consiste en usar lo que mejor encaje con lo que necesite. Instalo y configuro todo. Preparo ***Windows Terminal*** para poder lanzar el terminal que necesite cuando necesite.
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-25-win-desarrollo-08.png"
+      caption="Uso el terminal que necesito según el caso de uso"
+      width="450px"
+      %}
+
+Lo que más uso es la ***Shell (zsh) y las herramientas nativas Linux***. Dependiendo del sistema operativo en el que estoy, accedo a ella vía:
 
 * Windows
-  * Instalando `WSL 2` > `<Distribución>` >  ***`zsh o bash`***. Me dará acceso nativo al `C:\` vía `/mnt/c`. Tendré una Distribución Linux completa con acceso a **todas las herramientas open source disponibles en Linux**. Como Terminal uso "Windows Terminal" (más adelante lo explico).
-  * Instalando *[Cmder](https://cmder.app/)*
-  * Instalando y personalizando **Windows Terminal**
+  * Instalando `WSL 2` > `<Distribución>` >  ***`zsh o bash`***. Me dará acceso nativo al `C:\` vía `/mnt/c`. Tendré una Distribución Linux completa con acceso a **todas las herramientas open source disponibles en Linux**. Llego al terminal WSL2 vía **Windows Terminal**
 * [MacOS]({% post_url 2023-04-15-mac-desarrollo %}): Uso **zsh**, también **bash** (scripts), junto con las herramientas preinstaladas y **Homebrew** para tener acceso a **todas las herramientas open source disponibles en Linux**. Como Terminal uso "iTerm2". En el enlace tienes un apunte.
-* [Linux]({% post_url 2024-07-25-linux-desarrollo %}): Uso **zsh**, tamibén **bash** (scripts), junto con **todas las herramientas open source disponibles en Linux**. Como Terminal yo uso "Gnome Terminal". En el enlace tienes un apunte.
-
-En el caso de Windows, que es sobre lo que va este apunte, rara vez y solo cuando no me quede más remedio iré al CLI nativo de Microsoft: `command.com`, `powershell.exe` o `pwsh.exe`.  A la hora de automatizar con scripts y dado que son todos incompatibles entre sí (`.BAT`, `.PS1`, `scripts bash`) estandarizo mis scripts para que usen `bash`. Ahora con WSL2 también van a funcionarme en Windows.
+* [Linux]({% post_url 2024-07-25-linux-desarrollo %}): Uso **zsh** (y **bash** para scripts), junto con **todas las herramientas open source disponibles en Linux**. Como Terminal uso "Gnome Terminal".
 
 ### WSL 2
 
-Utiliza una máquina virtual ligera con un **kernel completo de Linux real**, tiene un **rendimiento** altísimo, está super **integrado con Windows**, permite que los archivos y scripts de Linux se ejecuten desde el explorador de Windows, y viceversa; y muy importante, tiene **compatibilidad con Docker**, de hecho WSL2 es el backend preferido para [Docker Desktop en Windows](https://www.docker.com/products/docker-desktop/) (que instalaré más adelante).
+WSL2 utiliza una máquina virtual ligera con un **kernel real completo de Linux**, tiene un **rendimiento** altísimo, está super **integrado con Windows**, permite que los archivos y scripts de Linux se ejecuten desde el explorador de Windows, y viceversa; y muy importante, tiene **compatibilidad con Docker**, de hecho WSL2 es el backend preferido para [Docker Desktop en Windows](https://www.docker.com/products/docker-desktop/) (que instalaré más adelante).
 
-Mis **dos casos de uso principales** son:
+> ***Aviso:*** Solo le he encontrado un pero. Ten cuidado si desde la shell de WSL2 accedes a un directorio de `/mnt/c (C:)` del que cuelgan cientos o miles de archivos. Un ejemplo es un repositorio GIT grande. Irá lento, bastante lento. En ese caso, accede y usa comandos nativos de Windows desde cualquier Terminal nativo (`cmd, powershell, cmder, git bash, ...`)
+
+Mis **casos de uso de WSL2**:
 
 * Tener Shell + Herramientas con acceso nativo a `C:\` (vía `/mnt/c`).
 * Poder instalar Docker Desktop en Windows
@@ -409,25 +400,35 @@ Este pequeño detalle puede generar grandes problemas si no se maneja correctame
 
 #### Modificar el PATH
 
-* Yo siempre dedico un directorio personal específicio para mis scripts y ejecutables. Asñu ne asegyri de qye está disponible en todos ordenadores. Dicho directorio lo puedes sincronizar de múltiples formas, en mi caso utilizo un servidor NextCloud:
+* Para modificar el PATH Global para `CMD`, `PowerShell's`, `cmder`, ...
+  * Desde cualquiera de estos dos sitios:
+    * `Start` > `Settings > System > About > Advance System Settings`
+    * `Search` > "`Advance System Settings`"
+  * Elegir
+    * `Environment Variables` > ***`System variables`*** y ***`User variables`***
+    * Ejemplo [de mi PATH (gist)](https://gist.github.com/LuisPalacios/d38dd10a92fa1ab6bbaec799e8afe2f3).
 
-* PATH Global para `command.com y PowerShell`
-  * desde cualquiera de estos dos sitios:
-    * `Start > Settings > System > About > Advance System Settings`
-    * `Search > "Advance System Settings"`
-  * elegir
-    * `Environment Variables` > ***`System variables`***
-    * Añado `C:\Users\luis\Nextcloud\priv\bin` al final de la lista.
+* Para modificar el PATH de la consola WSL2
+  * Entro en sesión WSL2, como root edit `/etc/wsl.conf` y añado lo siguiente
 
-Ejemplo [de mi PATH (gist)](https://gist.github.com/LuisPalacios/d38dd10a92fa1ab6bbaec799e8afe2f3).
+    ```bash
+    ⚡ luis@kymeraw:~ % confcat /etc/wsl.conf
+    [interop]
+    appendWindowsPath=false
+    ```
 
-* PATH Linux (WSL2)
-  * Edito el fichero `~/.bashrc` o `.zshrc`
-  * Añado: `export PATH=$PATH:/mnt/c/Users/luis/Nextcloud/priv/bin`
+  * Entro en ella y edito el fichero `~/.bashrc` o `.zshrc` y preparo mi PATH.
+
+    ```bash
+    ⚡ luis@kymeraw:~ % echo $PATH
+    /mnt/c/Users/luis//.gems/bin:.:/mnt/c/Users/luis//Nextcloud/priv/bin:/usr/local/bin:/usr/local/sbin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib
+    ```
+
+* Casi todos usamos un directorio personal específicio para los scripts y ejecutables. Un truco que yo uso es tenerlo en un sitio compartido, de modo que puedo tener todos los scripts y ejecutables disponibles en varios sistemas operativos. En mi caso uso un servidor NextCloud casero.
 
 ### Windows Terminal
 
-Ahora que tengo WSL2 perfectamente operativo, voy a instalarme ***Windows Terminal***, una herramienta que permite utilizar múltiples consolas en pestañas o ventanas separadas, lo que simplifica enórmemente el punto de entrada a la consola. Solo tengo un sitio donde hacer clic, y dentro de él ya elegiré que quiero arrancar.
+Ahora que tengo WSL2 perfectamente operativo, voy a instalarme ***Windows Terminal***, una herramienta que permite configurar y arrancar múltiples consolas en pestañas o ventanas separadas, lo que simplifica enórmemente el punto de entrada. Solo tengo un sitio desde donde configurar y hacer clic.
 
 * Abro la Microsoft Store, `Start` > busco por "Store"
 * Busco por "Windows Terminal". Instalo o Actualizo
@@ -467,7 +468,16 @@ Empiezo a trabajar de manera más eficiente y organizada. Tengo la posibilidad d
       width="2560px"
       %}
 
+
 ***Configuración `settings.json` y `state.json`***: Gran parte de esta personalización de Windows Terminal se gestiona a través de dos archivos clave: `settings.json` (nucleo de la personalización, puedes editarlo desde el propio menú) y `state.json` (estado actual del Terminal).
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-25-win-desarrollo-08.png"
+      caption="Uso el terminal que necesito según el caso de uso"
+      width="450px"
+      %}
+
+Aquí tienes el [mi fichero de configuración settings.json](https://gist.github.com/LuisPalacios/ba989c7d8f2f65cd49308402754df82e) que utilizo en mi ordenador. Nota: los `uuid` del mismo serán distintos en tu caso. No lo copies/pegues tal cual o no te funcionará.
 
 <br/>
 
@@ -475,7 +485,21 @@ Empiezo a trabajar de manera más eficiente y organizada. Tengo la posibilidad d
 
 ## Herramientas de desarrollo
 
-La segunda parte del apunte, la instalación de las herramientas de desarrollo, como hay miles y es inviable documentarlo, espero que las que instalo te sirvan de ejemplo. IMPORTANTE!! verás que la gran mayoría las instalo en Windows 11, lo digo porque quizá alguna merecería la pena instalarlas dentro del WSL2 (por ejemplo `Ruby`?). Mientras que no diga lo contrario instalo siempre en Windows.
+La segunda parte del apunte, la instalación de las herramientas de desarrollo, como hay miles y es inviable documentarlo, espero que las que instalo te sirvan de ejemplo. Verás que la gran mayoría las instalo en Windows 11, lo digo porque quizá alguna merecería la pena instalarlas dentro del WSL2 (por ejemplo `Ruby`?). Mientras que no diga lo contrario instalo siempre en Windows.
+
+### CLANG
+
+![LLVM](/assets/img/posts/logo-llvm.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
+
+Como es un apunte multiplataforma, voy a instalarme CLANG, y compilaré un programita en C/C++ y cómo usar este windows para desarollo multtiplataforma. Antes de nada, el logo es de `LLVM`, se trata de un entorno, un conjunto de herramientas de compilación diseñado para optimizar programas en diferentes lenguajes de programación durante las distintas fases de su compilación. Originalmente, LLVM era un acrónimo de "Low-Level Virtual Machine", pero con el tiempo, su alcance ha crecido más allá de una máquina virtual, por lo que hoy en día se refiere simplemente como "LLVM". Es modular, multiplataforma y se centra en optiomizar el código.
+
+Clang es un compilador que forma parte del proyecto LLVM y que está diseñado para compilar lenguajes de programación como C, C++, y Objective-C. Clang se destaca por su arquitectura modular, velocidad de compilación y generación de mensajes de error y advertencias claros y fáciles de entender.
+
+Si quieres instalar **CLANG**, por ejemplo la versión Clang 17, puedes hacerlo desde aqúí: [LLVM 64bits](https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.1/LLVM-17.0.1-win64.exe). Ten en cuenta que el método de instalación es GUI y acuérdate de pedirle que ***Añada Clang al Path***, recuerda cómo va [Modificar el PATH](#modificar-el-path) por si necesitas ajustes.
+
+### CMake
+
+Pdte de escribr esta sección
 
 ### VSCode
 
@@ -487,7 +511,7 @@ Además, soporta una amplia variedad de lenguajes de programación y la posibili
 
 ***Settigs y Sincronización***: Echa un ojo al apunte [VSCode settings y extensiones]({% post_url 2023-06-20-vscode %}) donde mantengo cómo lo gestiono y mi configuración.
 
-***Alias***: En todos mis sistemas me gusta crear un alias a ***e*** para llamar a mi editor preferido.
+***Alias***: En todos mis sistemas me gusta crear un alias a "***e***" para llamar a mi editor preferido.
 
 Desde una sesión de Administrador edito `c:\windows\e.cmd`, será válido para cmd y powershell
 
@@ -496,15 +520,53 @@ Desde una sesión de Administrador edito `c:\windows\e.cmd`, será válido para 
 "C:\Users\luis\AppData\Local\Programs\Microsoft VS Code\bin\code.cmd" %*
 ```
 
-### Git
+### Git for Windows
 
 ![Git para Windows](/assets/img/posts/2024-08-25-win-desarrollo-06.png){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-El objetivo principal es tener acceso al ejecutable `git.exe` desde las consolas de Microsoft (`CMD` y `PowerShell`) y aplicaciones de terceros. Selecciono Use external OpenSSH porque ya viene instalado con Windows 11. Selecciono Use the OpenSSL library (para los server certificates). El ejecutable `git` dentro de WSL2 es distinto y también lo usaré, pero quiero tener la opcion de ambos.
+El objetivo principal es tener acceso a `git.exe` desde las consolas nativas `CMD`, `PowerShell` y aplicaciones de terceros.
 
-***Instalo*** desde el [sitio oficial de Git](https://git-scm.com/). Durante la instalación elijo la opción de "Git from the command line and also from 3rd-party software". No elijo la tercera opción (Use Git and optional Unix tools). Selecciono `Checkout Windows-style, commit Unix-style line endings` (lo mencioné en [CRLF vs LF](#wsl-2---crlf-vs-lf)). Dejo la opción de Use MinTTY, aunque no creo que lo use (no creo que use `git bash`). Elijo que use **su propio ssh** (he visto problemas documentados con el que viene en Windows**. Selecciono `Fast-forward or merge`, [Git Credential Manager](https://github.com/git-ecosystem/git-credential-manager) y "Enable file system caching`.
+***Instalo*** desde el [sitio oficial de Git](https://git-scm.com/). Se instala en `C:\Program Files\Git`. Nota: incluye el ejecutable `.\bin\bash.exe`, tienes otro bajo WSL2 `C:\Windows\System32\bash.exe`, tenlo en cuenta (orden del PATH).
 
-Se instala en `C:\Program Files\Git`. Importante: Debajo incluye un ejecutable llamado `.\bin\bash.exe` que no usaré porque tengo WSL2 (`C:\Windows\System32\bash.exe`).
+Decisiones que he tomado durante la instalación:
+
+* Bundled `ssh` & `openssl`: Selecciono **Use the bundled OpenSSH (voids W11 issue) and bundle OpenSSL**. Cuando preparé este apunte la versión de SSH de Windows 11 tiene problemas con repositorios grandes de Git.
+* Handling of CRLF: Selecciono siempre **Checkout as-is, commit Unix-style line endings**
+* PATH (related to Git Bash): Yo no uso Git Bash, por lo que selecciono **Git from the command line and also from 3rd-party software**. Aunque luego añado dicho PATH manualmente al sistema (mira [Modificar el PATH](#modificar-el-path)).
+
+Usé la versión `Git-2.46.0-64-bit.exe`:
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-25-win-desarrollo-09.png"
+      caption="Proceso de instalaicón de Git for Windows"
+      width="1024px"
+      %}
+
+Decía que no Git Bash, pero si que me aprovecho de todo lo que trae, es una pasada, tengo a mi disposición un montón de ejecutables "estilo linux" pero en CMD/PowerShell, por lo tanto añado manualmente al PATH un par de directorios, (mira [Modificar el PATH](#modificar-el-path)).
+
+Añado `C:\Program Files\Git\mingw64\bin` y `C:\Program Files\Git\usr\bin` al PATH del sistema para tener acceso a estos regalos:
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-25-win-desarrollo-10.png"
+      caption="Aprovecho los ejecutables que trae Git for Windows"
+      width="1024px"
+      %}
+
+Git for Windows además te instala MinGW-w64, una bifurcación de MinGW (Minimalist GNU for Windows) que proporciona un conjunto de herramientas y un entorno de desarrollo para compilar y ejecutar aplicaciones de código abierto, principalmente en C y C++, en sistemas Windows. Es crucial si compilas aplicaciones para Windows usando herramientas y entornos tradicionales de GNU/Linux.
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-25-win-desarrollo-11.png"
+      caption="Y además los que instala del proyecto mingw64"
+      width="1024px"
+      %}
+
+Por cierto, cuando no sepas dónde está el ejecutable...
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-25-win-desarrollo-12.png"
+      caption="¿De dónde va a cargar el ejecutable?"
+      width="1024px"
+      %}
 
 ### Docker Desktop
 
@@ -522,17 +584,61 @@ Durante el proceso de instalación selecciono usar WSL2 en vez de Hyper-V
       width="300px"
       %}
 
-### Postman o HTTPie
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-25-win-desarrollo-13.png"
+      caption="Consola de Docker"
+      width="1024px"
+      %}
+
+### Postman
+
+Puedes instalar desde el [sitio oficial de Postman](https://www.postman.com/). Es una herramienta muy conocida para probar y documentar APIs. Es muy útil para desarrolladores que trabajan con servicios web. En mi caso de momento la dejo en la recámara, quizá la instale más adelante.
+
+### HTTPie
 
 ![Docker HTTPie](/assets/img/posts/logo-httpie.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-O ambos. Quizá estás más habituado al primero, puedes instalar desde el [sitio oficial de Postman](https://www.postman.com/). Es una herramienta muy conocida para probar y documentar APIs. Es muy útil para desarrolladores que trabajan con servicios web. En mi caso de momento la dejo en la recámara, quizá la instale más adelante.
+Muy en la línea de Postman, hace poco encontré esta otra herramienta, soporta trabajar tanto en la línea de comandos o GUI para realizar solicitudes HTTP, diseñada para ser simple y fácil de usar, ideal para probar y depurar APIs de manera rápida y eficiente. Me gusta más que Postman, sobre todo por la parte de la línea de comandos. La ***instalo*** desde el [sitio oficial de HTTPie](https://httpie.io/).
 
-Hace poco encontré esta otra herramienta, soporta trabajar tanto en la línea de comandos o GUI para realizar solicitudes HTTP, diseñada para ser simple y fácil de usar, ideal para probar y depurar APIs de manera rápida y eficiente. Me gusta más que Postman, sobre todo por la parte de la línea de comandos. La ***instalo*** desde el [sitio oficial de HTTPie](https://httpie.io/).
+Necesitas instalar [Chocolatey](https://chocolatey.org/), un gestor de paquetes potentísimo para Windows. Yo lo he [instalado](https://chocolatey.org/install) para instalarme `httpie`, pero de momento no lo estoy usando para nada más, reconozco que tengo que investigarlo.
+
+### .NET
+
+Hablar de `.NET` lia un poco a no ser que hayas vivido y experimentado toda su evolución. Ha fecha de hoy tenemos:
+
+* ***.NET Framework***: Solo está disponible en Windows y se mantendrá en su versión 4.8, principalmente para soportar aplicaciones que lo necesitan.
+* ***.NET (5 y versiones posteriores)***: Es multiplataforma, más moderno y la evolución natural de .NET Core, no de .NET Framework.
+
+#### .NET Framework
+
+El .NET Framework es una plataforma de desarrollo creada por Microsoft para construir y ejecutar aplicaciones en Windows. Incluye muchas bibliotecas de clases para hacer Apps de escritorio, servicios web, aplicaciones web, etc. Se usa mucho en todo tipo de Apps que corren en Windows.
+
+Lo **vas a instalar sí o sí**, aunque el futuro sea .NET (core .5), me da igual si acabas teniendo el Runtime como si acabas teniendo el Developer Pack (incluye el Runtime, necesario para desarrollar). Yo no voy a necesitar el .NET 3.5 (incluye .NET 2.0) porque no creo que instale Apps antiguas que requieran dicho Framework, pero el que sí que voy a necesitar es el .NET 4.8 porque es el último y seguro que algún app me lo pide. Por ejemplo, [HTTPie](#httpie) necesita que tengas el Runtime.
+
+Puedes instalarlo desde la **Programas y características** del panel de control o desde la Web de microsoft). Si uso el primer método, verifico antes qué tengo y luego instalo.
+
+1. Abro **Control Panel** > **Programs** > **Programs and Features** > **Turn Windows features on or off**.
+2. Aquí se puede ver la versión de .NET Framework instaladas.
+3. En la lista de características, busca las versiones de .NET Framework disponibles (por ejemplo, .NET Framework 3.5 o .NET Framework 4.8).
+4. Marca la casilla junto a la versión que deseas instalar.
+5. Haz clic en **Aceptar** y espera a que Windows complete la instalación.
+
+Si la versión no está en la lista, puedo ir a la Web de microsoft, ([ejemplo para la 4.8.1](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net481)
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-25-win-desarrollo-14.png"
+      caption="Opción de instalar .NET desde la Web"
+      width="640px"
+      %}
+
+#### .NET 5 / Core
+
+Pendiente de documentar
 
 ### Work in Progress
 
-Esta sección la marco como "WiP", porque hay decenas de apps, utilidades, comandos, entornos de desarrollo y es imposible documentarlos todos. Mi objetivo realmente era romper el hielo. Realmente estos apuntes vienen bien para tener una bitácora de mi instalación, por si tengo que repetirla, pero sobre todo porque espero que te venga bien a ti como ejemplo.
+Esta sección la marco como "Trabajo en curso (WiP en inglés)", porque hay decenas de apps, utilidades, comandos, entornos de desarrollo y es imposible documentarlos todos. Mi objetivo realmente era romper el hielo. Realmente estos apuntes vienen bien para tener una bitácora de mi instalación, por si tengo que repetirla, pero sobre todo porque espero que te venga bien a ti como ejemplo.
 
 Iré documentado/añadiendo lo nuevo que vaya instalando, cosas que tengo en la cabeza: Compilador de C/C++, GoLang, Node.js, JDK de Java, BBDD locales (Si lo hago será con Docker).
 
