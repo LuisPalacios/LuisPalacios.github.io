@@ -122,6 +122,20 @@ scripts : C:\Program Files (x86)\clink ; C:\Users\luis\AppData\Local\clink
 C:\Users\luis>notepad C:\Users\luis\AppData\Local\clink\prompt_filters.lua
 ```
 
+**Startship.rs**: Lo siguiente es https://starship.rs/
+
+Starship aprovecha símbolos y caracteres especiales que no están presentes en las fuentes predeterminadas. Para que el prompt se vea correctamente, es necesario instalar una **Nerd Font**, que incluye estos glifos adicionales.
+
+Pasos para instalar una Nerd Font:
+
+1. Dirígete al repositorio oficial de [Nerd Fonts](https://www.nerdfonts.com/).
+2. Descarga la fuente de tu preferencia (ej: `Fira Code`, `Hack`, `Cascadia Code`).
+3. Instala la fuente descargada: Haz clic derecho sobre el archivo de la fuente y selecciona "Instalar para todos los usuarios".
+4. Configura tu terminal para usar la Nerd Font instalada: En Windows Terminal, abre las configuraciones (Ctrl + `,`), navega a la sección "Profiles" y selecciona la fuente instalada para tu shell preferido (PowerShell, WSL, etc.).
+
+Nota: Este paso es esencial para evitar que los caracteres especiales aparezcan incorrectamente.
+
+Lo primero es instalar un *Nerd Font**, un agregador de fuentes, colecciones.  fuentes
 
 **Cmder**: puedes ir un paso más allá e instalarte *[Cmder](https://cmder.app/)*: una consola muy potente que incluye el emulador *[ConEmu](https://conemu.github.io/)* (emulador de terminal) y [Clink](https://github.com/chrisant996/clink/) y si has instalado Git for Windows, se integra perfecto, con acceso en el PATH a todas las herramientas.
 
