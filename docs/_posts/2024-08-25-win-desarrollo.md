@@ -42,14 +42,13 @@ Anticipo que voy a usar casi siempre WSL2, la **Shell de Unix** (`zsh o bash`), 
 
 Cuando bajamos a tierra Windows, el entorno CLI ha sido históricamente un desafío, esta es la lista de opcion:
 
-**Command Prompt (`command.com` / CMD)**: la línea de comandos tradicional de Windows. Es uno de los entornos más antiguos y básicos para ejecutar comandos en Windows, sus scripts son los famosos ***`*.BAT`***. No necesita mucha explicación.
+**CMD (`cmd.exe`))**: La línea de comandos tradicional de Windows. Es uno de los entornos más antiguos y básicos para ejecutar comandos en Windows, sus scripts son los famosos ***`*.BAT`***.
 
 ```PS
 C:\> echo Bye bye, World!
 ```
 
-* Instalo [Clink](https://github.com/chrisant996/), super últil, enriquece muchísimo al CMD, añade readline (de linux), múltiples funcionalidades, colores, history.
-* Puedes ir un paso más allá e instalarte *[Cmder](https://cmder.app/)*: una consola muy potente que incluye el emulador *[ConEmu](https://conemu.github.io/)* (emulador de terminal) y [Clink](https://github.com/chrisant996/clink/) y si has instalado Git for Windows, se integra perfecto, con acceso en el PATH a todas las herramientas.
+Es lo que es, no necesita mucha explicación, bastante austero, no mola y teniendo PowerShell casi que te cambias; pero si realmente te gusta, he añadido una sección sobre cómo mejorar considerablente el CMD más adelante. Mejora tanto que te hace usarlo!
 
 **PowerShell**: Entorno de scripting y línea de comandos avanzada desarrollada por Microsoft. Es más potente que CMD, permite el uso de comandos más complejos, scripts, y el acceso al framework .NET. ***Los scripts terminan en `*.PS1`***.
 
@@ -80,7 +79,7 @@ PowerShell es muy ***útil para desarrolladores que trabajan exclusivamente en .
 luis@kymeraw:/mnt/c/Users/luis$ ls -al
 ```
 
-***Windows Terminal***: Una aplicación moderna que permite utilizar múltiples pestañas con diferentes consolas, como `CMD`, `PowerShell`, `WSL`, `Git Bash`, `Cmder`, ... Es muy personalizable y soporta características avanzadas como temas y configuraciones de fuentes.  Entro en detalle más adelante.
+***Windows Terminal***: Una aplicación moderna que permite utilizar múltiples pestañas con diferentes consolas, como `CMD`, `PowerShell`, `WSL`, `Git Bash`, ... Es muy personalizable y soporta características avanzadas como temas y configuraciones de fuentes.  Entro en detalle más adelante.
 
 ***Git for Windows:*** Se trata del importantísimo **`git.exe`** para trabajar desde la línea de comandos que además incluye **Git Bash**, una herramienta que proporciona un emulador de Bash para Windows. Otro terminal más, algo parecido a lo que vemos en un terminal WSL2 de Ubuntu, pero usando un emulador de terminal y ejecutables nativos de Windows. Entro en detalle más adelante.
 
@@ -88,7 +87,7 @@ luis@kymeraw:/mnt/c/Users/luis$ ls -al
 
 #### Mi estrategia
 
-Mi estrategia consiste en usar lo que mejor encaje con lo que necesite. Instalo y configuro todo. Preparo ***Windows Terminal*** para poder lanzar el terminal que necesite cuando necesite.
+Mi estrategia consiste en usar lo que mejor encaje en cada momento. Instalo y configuro todas las opciones anteriores, [mejoro el cmd](#cmd-mejorado) e instalo [Windows Terminal](#windows-terminal) como "lanzador unificado" del Terminal que necesite.
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-25-win-desarrollo-08.png"
@@ -96,14 +95,43 @@ Mi estrategia consiste en usar lo que mejor encaje con lo que necesite. Instalo 
       width="450px"
       %}
 
-Lo que más uso es la ***Shell (zsh) y las herramientas nativas Linux***. Dependiendo del sistema operativo en el que estoy, accedo a ella vía:
+### CMD Mejorado
+
+Hoy en día, sobre todo para los que venimos de Unix/Linux/MacOS, huímos del CMD. Pero, se puede mejorar muchísimo, tanto que reconozco que yo he acabado usándolo bastante.
+
+**Clink**: Lo primero que hay que hacer es instalar [Clink](https://github.com/chrisant996/clink/). Súper recomendado; le añade todo lo que le falta, lo que trae la readline (de linux), múltiples funcionalidades, colores, historia, Scriptable Prompt.
+
+Es importante que leas la sección de [instalación y uso](https://github.com/chrisant996/clink?tab=readme-ov-file#installation) para configurarlo de forma adecuada y sobre todo para inyectarlo en el CMD, de tal forma que arranque automáticamente al arrancar `cmd.exe`. Básicamente mete la siguiente entrada en el Registry:
+
+```conf
+  Computer\HKEY_CURRENT_USER\Software\Microsoft\Command Processor
+    |
+    +--> AutoRun   "C:\Program Files (x86)\clink\clink.bat" inject --autorun
+```
+
+Tiene un potencia enorme porque soporta [Scriptable Prompt]( https://chrisant996.github.io/clink/clink.html#customizing-the-prompt), que significa que puedas modificar el PROMPT usando scripts LUA en tiempo real, por ejemplo para el **estado de Git**. Lee la documentación [extendiendo Clink con LUA](https://chrisant996.github.io/clink/clink.html#extending-clink-with-lua).
+
+Creo mi script LUA ([prompt_filters.lua](https://gist.githubusercontent.com/LuisPalacios/f0f86aa9ed476bd8286b4d058cc8a34c/raw/prompt_filters.lua)) en `C:\Users\luis\AppData\Local\clink`:
+
+```cmd
+clink-reload
+
+C:\Users\luis>clink info | findstr scripts
+scripts : C:\Program Files (x86)\clink ; C:\Users\luis\AppData\Local\clink
+
+C:\Users\luis>notepad C:\Users\luis\AppData\Local\clink\prompt_filters.lua
+```
+
+
+**Cmder**: puedes ir un paso más allá e instalarte *[Cmder](https://cmder.app/)*: una consola muy potente que incluye el emulador *[ConEmu](https://conemu.github.io/)* (emulador de terminal) y [Clink](https://github.com/chrisant996/clink/) y si has instalado Git for Windows, se integra perfecto, con acceso en el PATH a todas las herramientas.
+
+### WSL 2
 
 * Windows
   * Instalando `WSL 2` > `<Distribución>` >  ***`zsh o bash`***. Me dará acceso nativo al `C:\` vía `/mnt/c`. Tendré una Distribución Linux completa con acceso a **todas las herramientas open source disponibles en Linux**. Llego al terminal WSL2 vía **Windows Terminal**
 * [MacOS]({% post_url 2023-04-15-mac-desarrollo %}): Uso **zsh**, también **bash** (scripts), junto con las herramientas preinstaladas y **Homebrew** para tener acceso a **todas las herramientas open source disponibles en Linux**. Como Terminal uso "iTerm2". En el enlace tienes un apunte.
 * [Linux]({% post_url 2024-07-25-linux-desarrollo %}): Uso **zsh** (y **bash** para scripts), junto con **todas las herramientas open source disponibles en Linux**. Como Terminal uso "Gnome Terminal".
 
-### WSL 2
 
 WSL2 utiliza una máquina virtual ligera con un **kernel real completo de Linux**, tiene un **rendimiento** altísimo, está super **integrado con Windows**, permite que los archivos y scripts de Linux se ejecuten desde el explorador de Windows, y viceversa; y muy importante, tiene **compatibilidad con Docker**, de hecho WSL2 es el backend preferido para [Docker Desktop en Windows](https://www.docker.com/products/docker-desktop/) (que instalaré más adelante).
 
@@ -439,7 +467,7 @@ Ahora que tengo WSL2 perfectamente operativo, voy a instalarme ***Windows Termin
 * Accedo a la configuración
   * Clic en 'flecha abajo' > `Settings` o `Ctrl + ,`.
 * Configurar perfiles de consola:
-  * En el panel izquierdo, veo perfiles como `Windows PowerShell`, `Command Prompt`, `Ubuntu`, etc. Aquí puedo personalizar cada uno de ellos.
+  * En el panel izquierdo, veo perfiles como `Windows PowerShell`, `CMD`, `Ubuntu`, etc. Aquí puedo personalizar cada uno de ellos.
   * Cambiar el shell predeterminado: Si deseas que siempre se abra un perfil específico al iniciar Windows Terminal, selecciona el perfil en el menú "Startup" bajo "Default profile".
 * Personalizar apariencia:
   * Puedes cambiar el tema, fuente, esquema de colores y más para cada perfil.
@@ -460,7 +488,7 @@ Tendrás acceso rápido a Windows Terminal directamente desde tu taskbar, y podr
 * Cerrar pestañas: ícono `X` o `Ctrl + Shift + W`.
 * Sacar las pestañas como ventanas independientes: Botón derecho sobre la pestaña
 
-Empiezo a trabajar de manera más eficiente y organizada. Tengo la posibilidad de abrir la consola que necesite, por defecto lo he configurado para que WSL (Ubuntu 22.04.3 LTS), he cambiado los colores ligeramente para diferenciar dónde estoy y en el caso de `command.com` he puesto otro tipo de fuente de letra.
+Empiezo a trabajar de manera más eficiente y organizada. Tengo la posibilidad de abrir la consola que necesite, por defecto lo he configurado para que WSL (Ubuntu 22.04.3 LTS), he cambiado los colores ligeramente para diferenciar dónde estoy y en el caso de `cmd.exe` he puesto otro tipo de fuente de letra.
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-25-win-desarrollo-05.png"
