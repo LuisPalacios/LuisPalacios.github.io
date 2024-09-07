@@ -678,11 +678,54 @@ Si la versión no está en la lista, puedo ir a la Web de microsoft, ([ejemplo p
 
 Pendiente de documentar
 
+#### Golang
+
+![Golang](/assets/img/posts/logo-golang.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
+
+Golang es un lenguaje que combina la simplicidad y eficiencia de lenguajes antiguos como C, con las características modernas necesarias para el desarrollo de software concurrente y de alto rendimiento. Es especialmente popular en el desarrollo de sistemas distribuidos, servicios en la nube y herramientas de red, gracias a su enfoque en la concurrencia y la escalabilidad.
+
+* Para ***instalarlo en Windows***, ve a la página de [descargas de Go](https://go.dev/dl/) me bajo la útima versión del MSI para windows-amd64, lo instala por defecto con `C:\Program Files\Go\bin` que añade al PATH.
+* Para ***integrarlo con VSCode*** instalo la extensión [`golang.go`](https://marketplace.visualstudio.com/items?itemName=golang.Go).
+
+Algunas variables críticas para un entorno de desarrollo eficiente en Go:
+
+* `$GOROOT`: Ruta de instalación (por defecto `C:\Program Files\Go`).
+* `$GOPATH`: Directorio de trabajo por defecto `C:\Users\<usuario>\go`.
+* La instalación añade al PATH `$GOROOT\bin` y `$GOPATH\bin`.
+
+A partir de Go 1.11, se introdujo el sistema de módulos **Go Modules** que gestiona dependencias de manera más eficiente. Lo habilito con `go env -w GO111MODULE=on` y hago un pequeño programa para comprobar que todo está bien.
+
+Inicializo el módulo del proyecto:
+
+```bash
+go mod init hola
+```
+
+Creo el archivo `main.go`:
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hola, mundo")
+}
+```
+
+Compilo y ejecuto y luego compilo el binario `hola.exe`
+
+```bash
+go run main.go
+
+go build
+```
+
 ### Work in Progress
 
 Esta sección la marco como "Trabajo en curso (WiP en inglés)", porque hay decenas de apps, utilidades, comandos, entornos de desarrollo y es imposible documentarlos todos. Mi objetivo realmente era romper el hielo. Realmente estos apuntes vienen bien para tener una bitácora de mi instalación, por si tengo que repetirla, pero sobre todo porque espero que te venga bien a ti como ejemplo.
 
-Iré documentado/añadiendo lo nuevo que vaya instalando, cosas que tengo en la cabeza: Compilador de C/C++, GoLang, Node.js, JDK de Java, BBDD locales (Si lo hago será con Docker).
+Iré documentado/añadiendo lo nuevo que vaya instalando, cosas que tengo en la cabeza: Compilador de C/C++, Node.js, JDK de Java, BBDD locales (Si lo hago será con Docker).
 
 <br/>
 
