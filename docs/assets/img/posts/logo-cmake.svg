@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="15" height="15"/>
+  </defs>
+  <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: rgb(84, 84, 84); pointer-events: none; visibility: hidden;" x="15" y="15"/>
+  <g transform="matrix(1, 0, 0, 1, 0.046367, 0.376699)">
+    <g id="Layer_2" transform="matrix(1.873552, 0, 0, 1.873552, 15.000004, 49.517742)" style=""/>
+    <g id="g922" transform="matrix(4.157499, 0, 0, 4.157499, -12.360326, -50.101658)" style="">
+      <polygon transform="matrix(0.79452357,0,0,0.79452357,3.8001251,12.63966)" class="st0" points="21.3,3.8 3.6,38.8 22.9,22.4 " id="polygon6" style="fill:#064f8c"/>
+      <polygon transform="matrix(0.79452357,0,0,0.79452357,3.8001251,12.63966)" class="st1" points="38.6,39.9 14.8,30.3 3.5,39.9 " id="polygon8" style="fill:#249847"/>
+      <polygon transform="matrix(0.79452357,0,0,0.79452357,3.8001251,12.63966)" class="st2" points="39.8,39.6 22.1,4.4 24.7,33.5 " id="polygon10" style="fill:#be2128"/>
+      <polygon transform="matrix(0.79452357,0,0,0.79452357,3.8001251,12.63966)" style="fill:#cdcdce" id="polygon34" points="23.9,33.2 23,23.3 15.4,29.8 " class="st4"/>
+    </g>
+  </g>
+</svg>

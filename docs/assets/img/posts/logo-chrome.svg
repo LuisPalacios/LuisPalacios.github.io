@@ -1,94 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg viewBox="1 1 176 176" xmlns="http://www.w3.org/2000/svg">
-  <style>.B{clip-path:url(#C)}.C{fill:#3e2723}.D{fill-opacity:.15}.E{fill-opacity:.2}</style>
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
   <defs>
-    <circle id="A" cx="96" cy="96" r="88"/>
-    <path id="B" d="M8 184h83.77l38.88-38.88V116h-69.3L8 24.48z"/>
+    <bx:grid x="0" y="0" width="15" height="15"/>
+    <linearGradient id="a" x1="3.2173" y1="15" x2="44.7812" y2="15" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d93025"/>
+      <stop offset="1" stop-color="#ea4335"/>
+    </linearGradient>
+    <linearGradient id="b" x1="20.7219" y1="47.6791" x2="41.5039" y2="11.6837" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fcc934"/>
+      <stop offset="1" stop-color="#fbbc04"/>
+    </linearGradient>
+    <linearGradient id="c" x1="26.5981" y1="46.5015" x2="5.8161" y2="10.506" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1e8e3e"/>
+      <stop offset="1" stop-color="#34a853"/>
+    </linearGradient>
   </defs>
-  <clipPath id="C">
-    <circle cx="96" cy="96" r="88" transform="matrix(1, 0, 0, 1, 0, 0)"/>
-  </clipPath>
-  <g class="B" transform="translate(-7 -7)">
-    <path d="M21.97 8v108h39.4L96 56h88V8z" fill="#db4437"/>
-    <linearGradient id="D" x1="29.34" x2="81.84" y1="75.02" y2="44.35" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#a52714" stop-opacity=".6" offset="0"/>
-      <stop stop-color="#a52714" stop-opacity="0" offset="0.66"/>
-    </linearGradient>
-    <path d="M21.97 8v108h39.4L96 56h88V8z" fill="url(#D)"/>
-    <path d="M62.3 115.6L22.48 47.3l-.58 1 39.54 67.8z" class="C D"/>
-    <path d="M8 184h83.77l38.88-38.88V116h-69.3L8 24.48z" transform="matrix(1, 0, 0, 1, 0, 0)" fill="#0f9d58"/>
-    <linearGradient id="E" x1="110.9" x2="52.54" y1="164.5" y2="130.3" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#055524" stop-opacity=".4" offset="0"/>
-      <stop stop-color="#055524" stop-opacity="0" offset="0.33"/>
-    </linearGradient>
-    <path d="M8 184h83.77l38.88-38.88V116h-69.3L8 24.48z" fill="url(#E)"/>
-    <path d="M129.8 117.3l-.83-.48-38.4 67.15h1.15l38.1-66.64z" fill="#263238" class="D"/>
-    <defs>
-      <path id="F" d="M8 184h83.77l38.88-38.88V116h-69.3L8 24.48z"/>
-    </defs>
-    <clipPath id="G">
-      <path d="M8 184h83.77l38.88-38.88V116h-69.3L8 24.48z" transform="matrix(1, 0, 0, 1, 0, 0)"/>
-    </clipPath>
-    <g clip-path="url(#G)">
-      <path d="M96 56l34.65 60-38.88 68H184V56z" fill="#ffcd40"/>
-      <linearGradient id="H" x1="121.9" x2="136.6" y1="49.8" y2="114.1" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#ea6100" stop-opacity=".3" offset="0"/>
-        <stop stop-color="#ea6100" stop-opacity="0" offset="0.66"/>
-      </linearGradient>
-      <path d="M96 56l34.65 60-38.88 68H184V56z" fill="url(#H)"/>
-    </g>
-    <path d="M96 56l34.65 60-38.88 68H184V56z" fill="#ffcd40"/>
-    <path d="M96 56l34.65 60-38.88 68H184V56z" fill="url(#H)"/>
-    <defs>
-      <path id="I" d="M96 56l34.65 60-38.88 68H184V56z"/>
-    </defs>
-    <clipPath id="J">
-      <path d="M96 56l34.65 60-38.88 68H184V56z" transform="matrix(1, 0, 0, 1, 0, 0)"/>
-    </clipPath>
-    <g clip-path="url(#J)">
-      <path d="M21.97 8v108h39.4L96 56h88V8z" fill="#db4437"/>
-      <path d="M21.97 8v108h39.4L96 56h88V8z" fill="url(#D)"/>
-    </g>
-  </g>
-  <radialGradient id="K" cx="668.2" cy="55.95" r="84.08" gradientTransform="translate(-576)" gradientUnits="userSpaceOnUse">
-    <stop stop-color="#3e2723" stop-opacity=".2" offset="0"/>
-    <stop stop-color="#3e2723" stop-opacity="0" offset="1"/>
-  </radialGradient>
-  <g transform="translate(-7 -7)">
-    <path d="M96 56v20.95L174.4 56z" fill="url(#K)" class="B"/>
-    <g class="B">
-      <defs>
-        <path id="L" d="M21.97 8v40.34L61.36 116 96 56h88V8z"/>
-      </defs>
-      <clipPath id="M">
-        <path d="M21.97 8v40.34L61.36 116 96 56h88V8z" transform="matrix(1, 0, 0, 1, 0, 0)"/>
-      </clipPath>
-      <g clip-path="url(#M)">
-        <path d="M8 184h83.77l38.88-38.88V116h-69.3L8 24.48z" transform="matrix(1, 0, 0, 1, 0, 0)" fill="#0f9d58"/>
-        <path d="M8 184h83.77l38.88-38.88V116h-69.3L8 24.48z" fill="url(#E)"/>
-      </g>
-    </g>
-  </g>
-  <radialGradient id="N" cx="597.9" cy="48.52" r="78.04" gradientTransform="translate(-576)" gradientUnits="userSpaceOnUse">
-    <stop stop-color="#3e2723" stop-opacity=".2" offset="0"/>
-    <stop stop-color="#3e2723" stop-opacity="0" offset="1"/>
-  </radialGradient>
-  <path d="M21.97 48.45l57.25 57.24L61.36 116z" fill="url(#N)" class="B" transform="translate(-7 -7)"/>
-  <radialGradient id="O" cx="671.8" cy="96.14" r="87.87" gradientTransform="translate(-576)" gradientUnits="userSpaceOnUse">
-    <stop stop-color="#263238" stop-opacity=".2" offset="0"/>
-    <stop stop-color="#263238" stop-opacity="0" offset="1"/>
-  </radialGradient>
-  <g transform="translate(-7 -7)">
-    <path d="M91.83 183.9l20.96-78.2 17.86 10.3z" fill="url(#O)" class="B"/>
-    <g class="B">
-      <circle cx="96" cy="96" r="40" fill="#f1f1f1"/>
-      <circle cx="96" cy="96" r="32" fill="#4285f4"/>
-      <path d="M96 55c-22.1 0-40 17.9-40 40v1c0-22.1 17.9-40 40-40h88v-1H96z" class="C E"/>
-      <path d="M130.6 116c-6.92 11.94-19.8 20-34.6 20-14.8 0-27.7-8.06-34.6-20h-.04L8 24.48v1L61.4 117c6.92 11.94 19.8 20 34.6 20 14.8 0 27.68-8.05 34.6-20h.05v-1h-.06z" fill="#fff" fill-opacity=".1"/>
-      <path d="M97 56c-.17 0-.33.02-.5.03C118.36 56.3 136 74.08 136 96s-17.64 39.7-39.5 39.97c.17 0 .33.03.5.03 22.1 0 40-17.9 40-40s-17.9-40-40-40z" opacity=".1" class="C"/>
-      <path d="M131 117.3c3.4-5.88 5.37-12.68 5.37-19.96a39.87 39.87 0 0 0-1.87-12.09c.95 3.42 1.5 7 1.5 10.73 0 7.28-1.97 14.08-5.37 19.96l.02.04-38.88 68h1.16L131 117.3z" fill="#fff" class="E"/>
-      <path d="M96 9c48.43 0 87.72 39.13 88 87.5 0-.17.01-.33.01-.5 0-48.6-39.4-88-88-88S8 47.4 8 96c0 .17.01.33.01.5C8.28 48.13 47.57 9 96 9z" fill="#fff" class="E"/>
-      <path d="M96 183c48.43 0 87.72-39.13 88-87.5 0 .17.01.33.01.5 0 48.6-39.4 88-88 88S8 144.6 8 96c0-.17.01-.33.01-.5.27 48.37 39.56 87.5 88 87.5z" class="C D"/>
-    </g>
+  <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: rgb(84, 84, 84); pointer-events: none; visibility: hidden;" x="15" y="15"/>
+  <g transform="matrix(2.498068, 0, 0, 2.498068, 15.046335, 15.376801)" style="">
+    <circle cx="24" cy="23.9947" r="12" style="fill:#fff"/>
+    <path d="M3.2154,36A24,24,0,1,0,12,3.2154,24,24,0,0,0,3.2154,36ZM34.3923,18A12,12,0,1,1,18,13.6077,12,12,0,0,1,34.3923,18Z" style="fill:none"/>
+    <path d="M24,12H44.7812a23.9939,23.9939,0,0,0-41.5639.0029L13.6079,30l.0093-.0024A11.9852,11.9852,0,0,1,24,12Z" style="fill:url(#a)"/>
+    <circle cx="24" cy="24" r="9.5" style="fill:#1a73e8"/>
+    <path d="M34.3913,30.0029,24.0007,48A23.994,23.994,0,0,0,44.78,12.0031H23.9989l-.0025.0093A11.985,11.985,0,0,1,34.3913,30.0029Z" style="fill:url(#b)"/>
+    <path d="M13.6086,30.0031,3.218,12.006A23.994,23.994,0,0,0,24.0025,48L34.3931,30.0029l-.0067-.0068a11.9852,11.9852,0,0,1-20.7778.007Z" style="fill:url(#c)"/>
   </g>
 </svg>

@@ -529,20 +529,6 @@ Aquí tienes el [mi fichero de configuración settings.json](https://gist.github
 
 La segunda parte del apunte, la instalación de las herramientas de desarrollo, como hay miles y es inviable documentarlo, espero que las que instalo te sirvan de ejemplo. Verás que la gran mayoría las instalo en Windows 11, lo digo porque quizá alguna merecería la pena instalarlas dentro del WSL2 (por ejemplo `Ruby`?). Mientras que no diga lo contrario instalo siempre en Windows.
 
-### CLANG
-
-![LLVM](/assets/img/posts/logo-llvm.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
-
-Como es un apunte multiplataforma, voy a instalarme CLANG, y compilaré un programita en C/C++ y cómo usar este windows para desarollo multtiplataforma. Antes de nada, el logo es de `LLVM`, se trata de un entorno, un conjunto de herramientas de compilación diseñado para optimizar programas en diferentes lenguajes de programación durante las distintas fases de su compilación. Originalmente, LLVM era un acrónimo de "Low-Level Virtual Machine", pero con el tiempo, su alcance ha crecido más allá de una máquina virtual, por lo que hoy en día se refiere simplemente como "LLVM". Es modular, multiplataforma y se centra en optiomizar el código.
-
-Clang es un compilador que forma parte del proyecto LLVM y que está diseñado para compilar lenguajes de programación como C, C++, y Objective-C. Clang se destaca por su arquitectura modular, velocidad de compilación y generación de mensajes de error y advertencias claros y fáciles de entender.
-
-Si quieres instalar **CLANG**, por ejemplo la versión Clang 17, puedes hacerlo desde aqúí: [LLVM 64bits](https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.1/LLVM-17.0.1-win64.exe). Ten en cuenta que el método de instalación es GUI y acuérdate de pedirle que ***Añada Clang al Path***, recuerda cómo va [Modificar el PATH](#modificar-el-path) por si necesitas ajustes.
-
-### CMake
-
-Pdte de escribr esta sección
-
 ### VSCode
 
 ![VSCode](/assets/img/posts/logo-vscode.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
@@ -630,7 +616,7 @@ Durante el proceso de instalación selecciono usar WSL2 en vez de Hyper-V
 {% include showImagen.html
       src="/assets/img/posts/2024-08-25-win-desarrollo-13.png"
       caption="Consola de Docker"
-      width="1024px"
+      width="600px"
       %}
 
 ### Postman
@@ -644,6 +630,32 @@ Puedes instalar desde el [sitio oficial de Postman](https://www.postman.com/). E
 Muy en la línea de Postman, hace poco encontré esta otra herramienta, soporta trabajar tanto en la línea de comandos o GUI para realizar solicitudes HTTP, diseñada para ser simple y fácil de usar, ideal para probar y depurar APIs de manera rápida y eficiente. Me gusta más que Postman, sobre todo por la parte de la línea de comandos. La ***instalo*** desde el [sitio oficial de HTTPie](https://httpie.io/).
 
 Necesitas instalar [Chocolatey](https://chocolatey.org/), un gestor de paquetes potentísimo para Windows. Yo lo he [instalado](https://chocolatey.org/install) para instalarme `httpie`, pero de momento no lo estoy usando para nada más, reconozco que tengo que investigarlo.
+
+### CLANG
+
+![LLVM](/assets/img/posts/logo-llvm.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
+
+Como este es un apunte multiplataforma, para trabajar en C/C++ elijo **CLang**. Está incluido en el proyecto `LLVM`, acrónimo de "Low-Level Virtual Machine", que se convirtió en algo mucho más grande con el tiempo. Clang es un compilador de C, C++, y Objective-C, modular, rápido y definitivamente multiplataforma
+
+Como es un tema extenso, prefiero compartir un ejemplo, consulta mi proyecto [`git-repo-eol-analyzer`](https://github.com/LuisPalacios/git-repo-eol-analyzer), que demuestra el trabajo multiplataforma, funciona en Windows, Linux y MacOS y explica todos los pasos para preparar el entorno: instalar Clang, CMake, Clang-format e integración con VSCode.
+
+Para instalar en Windows: - Descargo e instalo ***CLANG 17.0.1*** desde el sitio de [Releases oficial](https://github.com/llvm/llvm-project/releases) (link directo a [LLVM 64bits 17.0.1 para Windows)](https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.1/LLVM-17.0.1-win64.exe).
+
+### CMake
+
+![CMake](/assets/img/posts/logo-cmake.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
+
+CMake es una herramienta de código abierto que gestiona la configuración y generación de scripts de compilación para proyectos multiplataforma. Permite abstraer las configuraciones específicas de cada plataforma, simplificando la creación de archivos de construcción (Makefiles, proyectos de Visual Studio, etc.). En proyectos C++ en Windows, CMake se integra perfectamente con VSCode, permite generar de forma automática los proyectos, etc.
+
+Para instalarlo en Windows: desde el [sitio oficial](https://cmake.org/download/), me bajo el *Windows x64 Installer*. También te recomiendo instalar **Ninja (Generador)** desde [su repositorio oficial](https://github.com/ninja-build/ninja/releases) y guardarlo en un directorio que ya tengas en el PATH.
+
+El proceso básico de CMake consta de dos pasos:
+
+1. **Configurar (Configure)**: Analiza el archivo `CMakeLists.txt`, crea todos los scripts y ficheros específicos para que el sistema luego pueda generar (compilar) el código. El resultado de la configuración se realiza en el subdirectorio **./build**.
+
+2. **Generar (Build)**: A partir del paso anterior, CMake compila para el entorno de desarrollo y sistema en el que estemos, por ejemplo un proyecto con un `Makefile` o cosas más complejas.
+
+CMake sigue un enfoque declarativo, se define lo que el proyecto necesita (fuentes, bibliotecas, dependencias) en el archivo `CMakeLists.txt`. Repasa el que he creado en el proyecto que mencionaba antes: [`git-repo-eol-analyzer`](https://github.com/LuisPalacios/git-repo-eol-analyzer).
 
 ### .NET
 
