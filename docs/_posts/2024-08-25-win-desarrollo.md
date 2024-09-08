@@ -28,6 +28,16 @@ table {
 
 Como todos mis apuntes, se trata de la bitácora de mi instalación, es decir, voy ejecutando y documentando a la vez, así me sirve para tener una referencia en el futuro. Empiezo con un Windows que no tiene nada instalado.
 
+### Nota sobre el PATH
+
+En Linux y MacOS es fácil, pero en Windows modificar el PATH es un poco extraño: se hace gráficamente y hay un PATH de Usuario y un PATH de Sistema, que combinados nos dan el PATH completo. Durante el apunte verás que indico que hay que modificar el PATH. Dejo aquí el cómo:
+
+* Para modificar el PATH Global para `CMD`, `PowerShell's`, etc. Desde cualquiera de estos dos sitios:
+  * `Start` > `Settings > System > About > Advance System Settings` o bien `Search` > "`Advance System Settings`" o "`Environment Variables`"
+> Mirar el PATH tanto en ***`System variables`*** como e ***`User variables`***
+
+Dejo un ejemplo [de mi PATH final en un Gist en GitHub](https://gist.github.com/LuisPalacios/d38dd10a92fa1ab6bbaec799e8afe2f3).
+
 ### CLI
 
 Es imprescindible hablar de la Consola que vas a usar, tanto si estás acostumbrado a trabajar desde la línea de comandos como si no, los desarrolladores multiplataforma lo valoramos mucho.
@@ -71,7 +81,7 @@ PS C:\> $PSVersionTable
 :
 ```
 
-PowerShell es muy ***útil para desarrolladores que trabajan exclusivamente en .NET, con C#, en entornos solo Microsoft, automatizaciones***, o si quieres diferenciarte en el mundo DevOps CI en entornos exclusivos Microsoft/Windows. Pero para el resto va por gustos. Yo tengo CMD y PowerShell preparados y bien configurados (PATHs) para usarlos bajo demanda, según qué y cuando lo necesite.
+PowerShell es muy ***útil para desarrolladores que trabajan exclusivamente en .NET, con C#, en entornos solo Microsoft, automatizaciones***, o si quieres diferenciarte en el mundo DevOps CI en entornos exclusivos Microsoft/Windows. Pero para el resto va por gustos. Yo tengo CMD y PowerShell preparados y bien configurados (PATH) para usarlos bajo demanda, según qué necesite y cuando lo necesite.
 
 ***Windows Subsystem for Linux (WSL 2)***: permite ejecutar un entorno Linux directamente en Windows sin la necesidad de una máquina virtual. Puedes instalar distribuciones de Linux (como Ubuntu, Debian, etc.) y usar la Shell que quieras de forma nativa, con altísimo rendimiento, completamente integrado con el File System de Windows (excepto los permisos). ***¡ WSL2 es lo que más uso!***. Entro en detalle más adelante.
 
@@ -442,16 +452,9 @@ Este pequeño detalle puede generar grandes problemas si no se maneja correctame
 
 #### Modificar el PATH
 
-* Para modificar el PATH Global para `CMD`, `PowerShell's`, `cmder`, ...
-  * Desde cualquiera de estos dos sitios:
-    * `Start` > `Settings > System > About > Advance System Settings`
-    * `Search` > "`Advance System Settings`"
-  * Elegir
-    * `Environment Variables` > ***`System variables`*** y ***`User variables`***
-    * Ejemplo [de mi PATH (gist)](https://gist.github.com/LuisPalacios/d38dd10a92fa1ab6bbaec799e8afe2f3).
+* Para modificar el PATH Global para `CMD`, `PowerShell's`, etc mira la [nota sobre el PATH](#nota-sobre-el-path) que puse al principio de este apunte.
 
-* Para modificar el PATH de la consola WSL2
-  * Entro en sesión WSL2, como root edit `/etc/wsl.conf` y añado lo siguiente
+* Para modificar el PATH de la consola WSL2, entro en sesión WSL2, como root edit `/etc/wsl.conf` y añado lo siguiente
 
     ```bash
     ⚡ luis@kymeraw:~ % confcat /etc/wsl.conf
@@ -525,9 +528,13 @@ Aquí tienes el [mi fichero de configuración settings.json](https://gist.github
 
 ---
 
-## Herramientas de desarrollo
+<br/>
 
-La segunda parte del apunte, la instalación de las herramientas de desarrollo, como hay miles y es inviable documentarlo, espero que las que instalo te sirvan de ejemplo. Verás que la gran mayoría las instalo en Windows 11, lo digo porque quizá alguna merecería la pena instalarlas dentro del WSL2 (por ejemplo `Ruby`?). Mientras que no diga lo contrario instalo siempre en Windows.
+A partir de aquí empieza la segunda parte del apunte, la instalación de las herramientas y lenguajes de programación. Las instalo todas en Windows 11 (lo digo porque quizá alguna merecería la pena instalarlas dentro del WSL2, por ejemplo `Ruby`).
+
+Un aviso respecto a **.NET**, lo dejo para el final, empiezo por las herramientas multiplataforma, porque considero hay que instalarlas en todo equipo de desarrollo (tanto en Windows como Linux o Mac), continúo con los lenguajes que he elegido para mi Windows y dejo para el final .NET y Visual Studio.
+
+## Herramientas multiplataforma
 
 ### VSCode
 
@@ -539,9 +546,7 @@ Además, soporta una amplia variedad de lenguajes de programación y la posibili
 
 ***Settigs y Sincronización***: Echa un ojo al apunte [VSCode settings y extensiones]({% post_url 2023-06-20-vscode %}) donde mantengo cómo lo gestiono y mi configuración.
 
-***Alias***: En todos mis sistemas me gusta crear un alias a "***e***" para llamar a mi editor preferido.
-
-Desde una sesión de Administrador edito `c:\windows\e.cmd`, será válido para cmd y powershell
+Creo una especie de ***alias***, en linux y en Mac me gusta crear un alias que llamo "***e***" (de **e**ditor), para llamar a mi editor preferido. Desde una sesión de Administrador edito el script `c:\windows\e.cmd`. Ya tengo mi alias, será válido para cmd y powershell
 
 ```cmd
 @echo off
@@ -554,13 +559,13 @@ Desde una sesión de Administrador edito `c:\windows\e.cmd`, será válido para 
 
 El objetivo principal es tener acceso a `git.exe` desde las consolas nativas `CMD`, `PowerShell` y aplicaciones de terceros.
 
-***Instalo*** desde el [sitio oficial de Git](https://git-scm.com/). Se instala en `C:\Program Files\Git`. Nota: incluye el ejecutable `.\bin\bash.exe`, tienes otro bajo WSL2 `C:\Windows\System32\bash.exe`, tenlo en cuenta (orden del PATH).
+***Instalo*** desde el [sitio oficial de Git](https://git-scm.com/). Se instala en `C:\Program Files\Git`. Nota: incluye el ejecutable `.\bin\bash.exe`, tienes otro bajo WSL2 `C:\Windows\System32\bash.exe`, tenlo en cuenta (el orden en el PATH, mira la [nota sobre el PATH](#nota-sobre-el-path)).
 
 Decisiones que he tomado durante la instalación:
 
 * Bundled `ssh` & `openssl`: Selecciono **Use the bundled OpenSSH (voids W11 issue) and bundle OpenSSL**. Cuando preparé este apunte la versión de SSH de Windows 11 tiene problemas con repositorios grandes de Git.
 * Handling of CRLF: Selecciono siempre **Checkout as-is, commit Unix-style line endings**
-* PATH (related to Git Bash): Yo no uso Git Bash, por lo que selecciono **Git from the command line and also from 3rd-party software**. Aunque luego añado dicho PATH manualmente al sistema (mira [Modificar el PATH](#modificar-el-path)).
+* PATH (related to Git Bash): Yo no uso Git Bash, por lo que selecciono **Git from the command line and also from 3rd-party software**. Aunque luego añado dicho PATH manualmente al sistema.
 
 Usé la versión `Git-2.46.0-64-bit.exe`:
 
@@ -570,9 +575,7 @@ Usé la versión `Git-2.46.0-64-bit.exe`:
       width="1024px"
       %}
 
-Decía que no Git Bash, pero si que me aprovecho de todo lo que trae, es una pasada, tengo a mi disposición un montón de ejecutables "estilo linux" pero en CMD/PowerShell, por lo tanto añado manualmente al PATH un par de directorios, (mira [Modificar el PATH](#modificar-el-path)).
-
-Añado `C:\Program Files\Git\mingw64\bin` y `C:\Program Files\Git\usr\bin` al PATH del sistema para tener acceso a estos regalos:
+Decía que no Git Bash, pero si que me aprovecho de todo lo que trae, es una pasada, tengo a mi disposición un montón de ejecutables "estilo linux" pero en CMD/PowerShell, por lo tanto añado manualmente al PATH un par de directorios, `C:\Program Files\Git\mingw64\bin` y `C:\Program Files\Git\usr\bin`, al PATH del sistema para tener acceso a estos regalos:
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-25-win-desarrollo-10.png"
@@ -612,7 +615,6 @@ Durante el proceso de instalación selecciono usar WSL2 en vez de Hyper-V
       width="300px"
       %}
 
-
 {% include showImagen.html
       src="/assets/img/posts/2024-08-25-win-desarrollo-13.png"
       caption="Consola de Docker"
@@ -631,21 +633,105 @@ Muy en la línea de Postman, hace poco encontré esta otra herramienta, soporta 
 
 Necesitas instalar [Chocolatey](https://chocolatey.org/), un gestor de paquetes potentísimo para Windows. Yo lo he [instalado](https://chocolatey.org/install) para instalarme `httpie`, pero de momento no lo estoy usando para nada más, reconozco que tengo que investigarlo.
 
-### CLANG
+## Lenguajes de programación
+
+### Python, Pip y PipEnv
+
+![logo python](/assets/img/posts/logo-python.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
+
+**[Python](https://www.python.org)** es un lenguaje de programación interpretado, versátil y fácil de aprender, lo que más me gusta es que es muy legible y soporta múltiples paradigmas como la programación orientada a objetos, funcional e imperativa. Hay mucha herramienta que lo necesita y tiene muchos casos de uso. Aunque en mi caso no lo uso casi nunca, siempre lo instalo.
+
+**[Pip](https://pypi.org/project/pip/)** es una herramienta fundamental para gestionar paquetes de Python. Es el sistema utilizado para instalar y manejar librerías de terceros desde el [Python Package Index (PyPI)](https://pypi.org), el repositorio oficial de Python.
+
+**[PipEnv](https://pipenv.pypa.io/en/latest/)** es otra herramienta imprescindible para gestionar entornos virtuales. Cuando se desarrollan aplicaciones en Python, es necesario utilizar varias librerías externas que pueden entrar en conflicto entre proyectos. Con **`PipEnv`**, podemos gestionar un entorno virtual donde todos los paquetes se instalan sin afectar al sistema principal. Existen alternativas como [Virtualenv](https://virtualenv.pypa.io/en/latest/) y [Conda](https://docs.conda.io/projects/conda/en/latest/index.html), pero en mi caso siempre uso **`PipEnv`**.
+
+1. **Instalar Python** desde [python.org](https://www.python.org/downloads/windows/). Descargo la última versión.
+
+Antes de ejecutar el instalador: **Importante quitar los alias que Windows 11 trae por defecto a `python.exe` o `python3.exe`**. Ejecuta desde `Search` > "`Manage app execution aliases`". Desactiva los dos alias "python" and "python3".
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-25-win-desarrollo-15.png"
+      caption="Desactivar los dos alias a python/python3"
+      width="450px"
+      %}
+
+Durante la instalación selecciono las siguientes opciones, para tener disponible `py.exe`, `python.exe` desde cualquier terminal.
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-25-win-desarrollo-16.png"
+      caption="Opciones durante la instalación"
+      width="2048px"
+      %}
+
+Además creo un ***alias*** a `python3`, creo el script `c:\windows\python3.cmd`.
+
+```cmd
+@echo off
+"C:\Program Files\Python312\python.exe" %*
+```
+
+1. **Instalar PipEnv**. Una vez tengas Python y Pip instalados, abre una terminal de Windows (cmd o PowerShell) y ejecuta:
+
+```powershell
+pip install --user pipenv
+```
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-25-win-desarrollo-17.png"
+      caption="Log de la instalación de pipenv"
+      width="650px"
+      %}
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-25-win-desarrollo-18.png"
+      caption="Versiones de python, pip y pipenv"
+      width="600px"
+      %}
+
+**Importante**, añadir el directorio de los scripts al PATH, tal como se recomienda durante la instalación de `pipenv`:
+
+  `C:\Users\<usuario>\AppData\Roaming\Python\Python312\Scripts`
+
+Siempre que instalo hago una **prueba de concepto**, con un mini proyecto, un único fuente llamado `main.py` bajo el entorno virtual `pipenv`, con una única librería `requests`.
+
+```cmd
+mkdir tmp
+cd tmp
+pipenv install requests
+pipenv lock
+```
+
+Creo el fuente con `notepad main.py`
+
+```python
+import requests
+response = requests.get('https://httpbin.org/ip')
+print('Tu dirección IP es: {0}'.format(response.json()['origin']))
+```
+
+Ejecuto la prueba de concepto con `pipenv run python main.py`
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-25-win-desarrollo-19.png"
+      caption="Ejecuto desde el entorno seguro `pipenv` y funciona."
+      width="500px"
+      %}
+
+### C/C++
 
 ![LLVM](/assets/img/posts/logo-llvm.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-Como este es un apunte multiplataforma, para trabajar en C/C++ elijo **CLang**. Está incluido en el proyecto `LLVM`, acrónimo de "Low-Level Virtual Machine", que se convirtió en algo mucho más grande con el tiempo. Clang es un compilador de C, C++, y Objective-C, modular, rápido y definitivamente multiplataforma
+Como este es un apunte multiplataforma, para trabajar en C/C++ elijo **CLang V17, estándar C++20**. El compilador CLang pertenece al proyecto `LLVM`, acrónimo de "Low-Level Virtual Machine", que se convirtió en algo mucho más grande con el tiempo. Clang es un compilador de C, C++, y Objective-C, modular, rápido y definitivamente multiplataforma.
 
-Como es un tema extenso, prefiero compartir un ejemplo, consulta mi proyecto [`git-repo-eol-analyzer`](https://github.com/LuisPalacios/git-repo-eol-analyzer), que demuestra el trabajo multiplataforma, funciona en Windows, Linux y MacOS y explica todos los pasos para preparar el entorno: instalar Clang, CMake, Clang-format e integración con VSCode.
+Para saber cómo instalarlo en Windows mejor consulta este ejemplo que tengo en GitHub, [`git-repo-eol-analyzer`](https://github.com/LuisPalacios/git-repo-eol-analyzer), que demuestra el trabajo multiplataforma, funciona en Windows, Linux y MacOS y explica todos los pasos para preparar el entorno: instalar Clang, CMake, Clang-format e incluso la integración con VSCode.
 
-Para instalar en Windows: - Descargo e instalo ***CLANG 17.0.1*** desde el sitio de [Releases oficial](https://github.com/llvm/llvm-project/releases) (link directo a [LLVM 64bits 17.0.1 para Windows)](https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.1/LLVM-17.0.1-win64.exe).
+Si quieres un acceso rápido a la instalación en Windows: - Descarga e instala ***CLANG 17.0.1*** desde el sitio de las [Releases oficiales](https://github.com/llvm/llvm-project/releases) (link directo a [LLVM 64bits 17.0.1 para Windows)](https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.1/LLVM-17.0.1-win64.exe).
 
-### CMake
+#### CMake
 
 ![CMake](/assets/img/posts/logo-cmake.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-CMake es una herramienta de código abierto que gestiona la configuración y generación de scripts de compilación para proyectos multiplataforma. Permite abstraer las configuraciones específicas de cada plataforma, simplificando la creación de archivos de construcción (Makefiles, proyectos de Visual Studio, etc.). En proyectos C++ en Windows, CMake se integra perfectamente con VSCode, permite generar de forma automática los proyectos, etc.
+Muy vinculado a C/C++, CMake es una herramienta de código abierto que gestiona la configuración y generación de scripts de compilación para proyectos multiplataforma. Permite abstraer las configuraciones específicas de cada plataforma, simplificando la creación de archivos de construcción (Makefiles, proyectos de Visual Studio, etc.). En proyectos C++ en Windows, CMake se integra perfectamente con VSCode, permite generar de forma automática los proyectos, etc.
 
 Para instalarlo en Windows: desde el [sitio oficial](https://cmake.org/download/), me bajo el *Windows x64 Installer*. También te recomiendo instalar **Ninja (Generador)** desde [su repositorio oficial](https://github.com/ninja-build/ninja/releases) y guardarlo en un directorio que ya tengas en el PATH.
 
@@ -657,40 +743,7 @@ El proceso básico de CMake consta de dos pasos:
 
 CMake sigue un enfoque declarativo, se define lo que el proyecto necesita (fuentes, bibliotecas, dependencias) en el archivo `CMakeLists.txt`. Repasa el que he creado en el proyecto que mencionaba antes: [`git-repo-eol-analyzer`](https://github.com/LuisPalacios/git-repo-eol-analyzer).
 
-### .NET
-
-Hablar de `.NET` lia un poco a no ser que hayas vivido y experimentado toda su evolución. Ha fecha de hoy tenemos:
-
-* ***.NET Framework***: Solo está disponible en Windows y se mantendrá en su versión 4.8, principalmente para soportar aplicaciones que lo necesitan.
-* ***.NET (5 y versiones posteriores)***: Es multiplataforma, más moderno y la evolución natural de .NET Core, no de .NET Framework.
-
-#### .NET Framework
-
-El .NET Framework es una plataforma de desarrollo creada por Microsoft para construir y ejecutar aplicaciones en Windows. Incluye muchas bibliotecas de clases para hacer Apps de escritorio, servicios web, aplicaciones web, etc. Se usa mucho en todo tipo de Apps que corren en Windows.
-
-Lo **vas a instalar sí o sí**, aunque el futuro sea .NET (core .5), me da igual si acabas teniendo el Runtime como si acabas teniendo el Developer Pack (incluye el Runtime, necesario para desarrollar). Yo no voy a necesitar el .NET 3.5 (incluye .NET 2.0) porque no creo que instale Apps antiguas que requieran dicho Framework, pero el que sí que voy a necesitar es el .NET 4.8 porque es el último y seguro que algún app me lo pide. Por ejemplo, [HTTPie](#httpie) necesita que tengas el Runtime.
-
-Puedes instalarlo desde la **Programas y características** del panel de control o desde la Web de microsoft). Si uso el primer método, verifico antes qué tengo y luego instalo.
-
-1. Abro **Control Panel** > **Programs** > **Programs and Features** > **Turn Windows features on or off**.
-2. Aquí se puede ver la versión de .NET Framework instaladas.
-3. En la lista de características, busca las versiones de .NET Framework disponibles (por ejemplo, .NET Framework 3.5 o .NET Framework 4.8).
-4. Marca la casilla junto a la versión que deseas instalar.
-5. Haz clic en **Aceptar** y espera a que Windows complete la instalación.
-
-Si la versión no está en la lista, puedo ir a la Web de microsoft, ([ejemplo para la 4.8.1](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net481)
-
-{% include showImagen.html
-      src="/assets/img/posts/2024-08-25-win-desarrollo-14.png"
-      caption="Opción de instalar .NET desde la Web"
-      width="640px"
-      %}
-
-#### .NET 5 / Core
-
-Pendiente de documentar
-
-#### Golang
+### Golang
 
 ![Golang](/assets/img/posts/logo-golang.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
@@ -733,7 +786,40 @@ go run main.go
 go build
 ```
 
-### Work in Progress
+## .NET
+
+Hablar de `.NET` lia un poco a no ser que hayas vivido y experimentado toda su evolución. Ha fecha de hoy tenemos:
+
+* ***.NET Framework***: Solo está disponible en Windows y se mantendrá en su versión 4.8, principalmente para soportar aplicaciones que lo necesitan.
+* ***.NET (5 y versiones posteriores)***: Es multiplataforma, más moderno y la evolución natural de .NET Core, no de .NET Framework.
+
+### .NET Framework
+
+El .NET Framework es una plataforma de desarrollo creada por Microsoft para construir y ejecutar aplicaciones en Windows. Incluye muchas bibliotecas de clases para hacer Apps de escritorio, servicios web, aplicaciones web, etc. Se usa mucho en todo tipo de Apps que corren en Windows.
+
+Lo **vas a instalar sí o sí**, aunque el futuro sea .NET (core .5), me da igual si acabas teniendo el Runtime como si acabas teniendo el Developer Pack (incluye el Runtime, necesario para desarrollar). Yo no voy a necesitar el .NET 3.5 (incluye .NET 2.0) porque no creo que instale Apps antiguas que requieran dicho Framework, pero el que sí que voy a necesitar es el .NET 4.8 porque es el último y seguro que algún app me lo pide. Por ejemplo, [HTTPie](#httpie) necesita que tengas el Runtime.
+
+Puedes instalarlo desde la **Programas y características** del panel de control o desde la Web de microsoft). Si uso el primer método, verifico antes qué tengo y luego instalo.
+
+1. Abro **Control Panel** > **Programs** > **Programs and Features** > **Turn Windows features on or off**.
+2. Aquí se puede ver la versión de .NET Framework instaladas.
+3. En la lista de características, busca las versiones de .NET Framework disponibles (por ejemplo, .NET Framework 3.5 o .NET Framework 4.8).
+4. Marca la casilla junto a la versión que deseas instalar.
+5. Haz clic en **Aceptar** y espera a que Windows complete la instalación.
+
+Si la versión no está en la lista, puedo ir a la Web de microsoft, ([ejemplo para la 4.8.1](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net481)
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-25-win-desarrollo-14.png"
+      caption="Opción de instalar .NET desde la Web"
+      width="640px"
+      %}
+
+### .NET 5 / Core
+
+Pendiente de documentar
+
+## Work in Progress
 
 Esta sección la marco como "Trabajo en curso (WiP en inglés)", porque hay decenas de apps, utilidades, comandos, entornos de desarrollo y es imposible documentarlos todos. Mi objetivo realmente era romper el hielo. Realmente estos apuntes vienen bien para tener una bitácora de mi instalación, por si tengo que repetirla, pero sobre todo porque espero que te venga bien a ti como ejemplo.
 

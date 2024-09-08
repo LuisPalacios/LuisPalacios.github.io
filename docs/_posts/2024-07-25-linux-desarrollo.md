@@ -6,7 +6,6 @@ tags: linux ubuntu desarrollo python git gem ruby ror iterm ohmyzsh zsh vscode
 excerpt_separator: <!--more-->
 ---
 
-
 ![logo linux desarrollo](/assets/img/posts/logo-linux-desarrollo.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
 En este apunte describo mi bitácora de configuración de un Linux (Ubuntu) como equipo de desarrollo. Instalo varias aplicaciones gráficas y de línea de comando que para mí son fundamentales para trabajar con el equipo.

@@ -6,7 +6,6 @@ tags: macos homebrew desarrollo python git gem ruby ror iterm ohmyzsh zsh xcode 
 excerpt_separator: <!--more-->
 ---
 
-
 ![logo mac desarrollo](/assets/img/posts/logo-mac-desarrollo.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
 En este apunte describo mi bitácora de configuración de un Mac (INTEL o ARM) como equipo de desarrollo. Instalo varias aplicaciones gráficas y de línea de comando que para mi son fundamentales para trabajar con el equipo.
