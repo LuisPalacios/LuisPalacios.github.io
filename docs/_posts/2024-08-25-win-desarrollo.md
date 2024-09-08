@@ -8,9 +8,9 @@ excerpt_separator: <!--more-->
 
 ![logo win desarrollo](/assets/img/posts/logo-win-desarrollo.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
-En este apunte describo los pasos para preparar un Windows 11 como equipo de desarrollo. Teniendo en cuenta que soy *Unixero* y trabajo en entorno multiplataforma, Linux, MacOS y Windows, veras que este apunte no está orientado a desarrolladores *solo-microsoft/windows*, sino a los que les gusta desarrollar en múltiples plataformas y/o entornos.
+En este apunte describo los pasos para preparar un Windows 11 como equipo de desarrollo para un entorno multiplataforma, Linux, MacOS y Windows, es decir que no estará orientado a desarrollo de software *solo-microsoft/windows*, sino a los que les gusta desarrollar en y para múltiples plataformas y/o entornos.
 
-Parto de una instalación de Windows (en inglés) limpia, aproveché que necesitaba hacer [dualboot]({% post_url 2024-08-23-dual-linux-win %}) y parametricé el sistema de forma [ligera]({% post_url 2024-08-24-win-decente %}). La primera parte la dedico al CLI y WSL2. La segunda es donde instalo las herramientas de desarrollo.
+Parto de una instalación de Windows (en inglés), sin nada instalado, aproveché que necesitaba hacer [dualboot]({% post_url 2024-08-23-dual-linux-win %}) y parametricé el sistema operativo de forma [ligera]({% post_url 2024-08-24-win-decente %}). El apunte empieza por el CLI y WSL2 y en la segunda parte entro en las herramientas y los lenguajes de programación.
 
 <br clear="left"/>
 <style>
@@ -20,70 +20,70 @@ table {
 </style>
 <!--more-->
 
-| Este apunte pertenece a una serie:<br><br>• Preparo PC para [Dualboot Linux Windows]({% post_url 2024-08-23-dual-linux-win %}) e instalo Windows 11 Pro.<br>• Configuro [un Windows 11 decente]({% post_url 2024-08-24-win-decente %}), en su esencia, le quito morralla.<br>• Preparo el [Windows para desarrollo]({% post_url 2024-08-25-win-desarrollo %}) de software, CLI, WSL2 y herramientas. |
+| Este apunte pertenece a una serie:<br><br>• Preparo un PC para [Dualboot Linux Windows]({% post_url 2024-08-23-dual-linux-win %}) e instalo Windows 11 Pro.<br>• Configuro [un Windows 11 decente]({% post_url 2024-08-24-win-decente %}), en su esencia, le quito morralla.<br>• Preparo el [Windows para desarrollo]({% post_url 2024-08-25-win-desarrollo %}) de software, CLI, WSL2, herramientas y lenguajes de programación. |
 
 ---
 
 ## Preparar el equipo
 
-Como todos mis apuntes, se trata de la bitácora de mi instalación, es decir, voy ejecutando y documentando a la vez, así me sirve para tener una referencia en el futuro. Empiezo con un Windows que no tiene nada instalado.
+Como todos mis apuntes, se trata de la bitácora de mi instalación, es decir, voy ejecutando y documentando a la vez, así me sirve para tener una referencia en el futuro.
 
 ### Nota sobre el PATH
 
-En Linux y MacOS es fácil, pero en Windows modificar el PATH es un poco extraño: se hace gráficamente y hay un PATH de Usuario y un PATH de Sistema, que combinados nos dan el PATH completo. Durante el apunte verás que indico que hay que modificar el PATH. Dejo aquí el cómo:
+En Linux y MacOS es inmediato, pero en Windows modificar el PATH es distinto, hay un PATH de Usuario y uno de Sistema, que combinados nos dan el PATH completo. Durante el apunte verás que indico que hay que modificar el PATH. Dejo aquí el cómo:
 
-* Para modificar el PATH Global para `CMD`, `PowerShell's`, etc. Desde cualquiera de estos dos sitios:
-  * `Start` > `Settings > System > About > Advance System Settings` o bien `Search` > "`Advance System Settings`" o "`Environment Variables`"
-> Mirar el PATH tanto en ***`System variables`*** como e ***`User variables`***
-
-Dejo un ejemplo [de mi PATH final en un Gist en GitHub](https://gist.github.com/LuisPalacios/d38dd10a92fa1ab6bbaec799e8afe2f3).
+* Para modificar el PATH Global
+  * `Start` > `Settings > System > About > Advance System Settings`
+  * o bien `Search` > "`Advance System Settings`" o "`Environment Variables`"
+* Modificar en ***`System variables`*** y/o ***`User variables`***
+* Dejo un ejemplo [de mi PATH final en un Gist](https://gist.github.com/LuisPalacios/d38dd10a92fa1ab6bbaec799e8afe2f3).
 
 ### CLI
 
 Es imprescindible hablar de la Consola que vas a usar, tanto si estás acostumbrado a trabajar desde la línea de comandos como si no, los desarrolladores multiplataforma lo valoramos mucho.
 
-Anticipo que voy a usar casi siempre WSL2, la **Shell de Unix** (`zsh o bash`), junto con **las herramientas de línea de comandos Open Source existentes para Linux** (`ls, cd, mkdir, cp, tar, sed, awk, nano, vi, etc.`). Además preparo el equipo para tener acceso al resto (PowerShell, CMD, ...).
+Anticipo que voy a usar mucho WSL2, la **Shell de Unix** (`zsh o bash`), junto con **las herramientas de línea de comandos Open Source existentes para Linux** (`ls, cd, mkdir, cp, tar, sed, awk, nano, vi, etc.`), pero tambien usaré el CMD (con retoques para mejorarlo) y PowerShell.
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-25-win-desarrollo-01.svg"
-      caption="Siempre Shell+Herramientas Linux"
+      caption="La ventaja  de Shell+Herramientas Linux"
       width="350px"
       %}
 
-Cuando bajamos a tierra Windows, el entorno CLI ha sido históricamente un desafío, esta es la lista de opcion:
-
-**CMD (`cmd.exe`))**: La línea de comandos tradicional de Windows. Es uno de los entornos más antiguos y básicos para ejecutar comandos en Windows, sus scripts son los famosos ***`*.BAT`***.
+**CMD (`cmd.exe`))**: La línea de comandos tradicional de Windows. Es uno de los entornos más antiguos y básicos para ejecutar comandos en Windows, sus scripts son los famosos ***`*.BAT, *.CMD`***.
 
 ```PS
 C:\> echo Bye bye, World!
 ```
 
-Es lo que es, no necesita mucha explicación, bastante austero, no mola y teniendo PowerShell casi que te cambias; pero si realmente te gusta, he añadido una sección sobre cómo mejorar considerablente el CMD más adelante. Mejora tanto que te hace usarlo!
+Es lo que es, no necesita mucha explicación, bastante austero; pero si realmente te gusta, he añadido una sección sobre cómo mejorarlo considerablente !
 
 **PowerShell**: Entorno de scripting y línea de comandos avanzada desarrollada por Microsoft. Es más potente que CMD, permite el uso de comandos más complejos, scripts, y el acceso al framework .NET. ***Los scripts terminan en `*.PS1`***.
 
-* Windows 11 trae la versión 5.1, instalo la ***Powershell 7*** desde [PowerShell Tags](https://github.com/PowerShell/PowerShell/tags) > "Downloads".
-
-* PowerShell **5.x** - PowerShell (**powershell.exe**), conocido como "**Desktop**". Funciona **exclusivamente en Windows**.
+* Windows 11 trae la PowerShell **5.x** - (**powershell.exe**), conocido como "**Desktop**". Funciona **exclusivamente en Windows**.
   1. Basado en el motor PowerShell 5.1.
   2. Totalmente integrado con Windows, soportando todas las características, módulos y cmdlets específicos de Windows.
   3. Corre sobre el .NET Framework.
   4. Ideal para gestionar entornos Windows, incluyendo Active Directory, Exchange y otros servicios específicos de Windows.
 
-* PowerShell **7.x** - PowerShell (**pwsh.exe**), conocido como "**Core**". **Multiplataforma** (Windows, macOS, Linux).
+* ***Powershell 7***: (**pwsh.exe**), conocido como "**Core**". **Multiplataforma** (Windows, macOS, Linux).
   1. Basado en el motor de PowerShell 6.0+.
   2. Diseñado para ser más modular y liviano, pero puede carecer de algunas características y módulos específicos de Windows.
   3. Corre sobre .NET Core (ahora .NET 5+).
   4. Adecuado para gestionar entornos diversos, incluyendo servicios en la nube y sistemas no Windows.
+
+Ahora es buen momento para instalarla,
+
+* Instalo [PowerShell 7](https://github.com/PowerShell/PowerShell/tags) > "Downloads".
 
 ```PS
 PS C:\> $PSVersionTable
 :
 ```
 
-PowerShell es muy ***útil para desarrolladores que trabajan exclusivamente en .NET, con C#, en entornos solo Microsoft, automatizaciones***, o si quieres diferenciarte en el mundo DevOps CI en entornos exclusivos Microsoft/Windows. Pero para el resto va por gustos. Yo tengo CMD y PowerShell preparados y bien configurados (PATH) para usarlos bajo demanda, según qué necesite y cuando lo necesite.
+PowerShell es muy ***útil para desarrolladores que trabajan exclusivamente en .NET, con C#, en entornos solo Microsoft***, para automatizaciones, para el mundo DevOps CI en entornos Windows/Azure.
 
-***Windows Subsystem for Linux (WSL 2)***: permite ejecutar un entorno Linux directamente en Windows sin la necesidad de una máquina virtual. Puedes instalar distribuciones de Linux (como Ubuntu, Debian, etc.) y usar la Shell que quieras de forma nativa, con altísimo rendimiento, completamente integrado con el File System de Windows (excepto los permisos). ***¡ WSL2 es lo que más uso!***. Entro en detalle más adelante.
+***Windows Subsystem for Linux (WSL 2)***: permite ejecutar un entorno Linux directamente en Windows sin la necesidad de una máquina virtual. Puedes instalar distribuciones de Linux (como Ubuntu, Debian, etc.) y usar la Shell que quieras de forma nativa, con altísimo rendimiento, completamente integrado con el File System de Windows (excepto los permisos).
 
 ```bash
 luis@kymeraw:/mnt/c/Users/luis$ ls -al
@@ -91,25 +91,25 @@ luis@kymeraw:/mnt/c/Users/luis$ ls -al
 
 ***Windows Terminal***: Una aplicación moderna que permite utilizar múltiples pestañas con diferentes consolas, como `CMD`, `PowerShell`, `WSL`, `Git Bash`, ... Es muy personalizable y soporta características avanzadas como temas y configuraciones de fuentes.  Entro en detalle más adelante.
 
-***Git for Windows:*** Se trata del importantísimo **`git.exe`** para trabajar desde la línea de comandos que además incluye **Git Bash**, una herramienta que proporciona un emulador de Bash para Windows. Otro terminal más, algo parecido a lo que vemos en un terminal WSL2 de Ubuntu, pero usando un emulador de terminal y ejecutables nativos de Windows. Entro en detalle más adelante.
+***Git for Windows:*** Se trata del importantísimo **`git.exe`** para trabajar desde la línea de comandos que además incluye **Git Bash**, una herramienta que proporciona un emulador de Bash para Windows. Otro terminal más, algo parecido a lo que vemos en un terminal WSL2 de Ubuntu, pero usando un emulador de terminal y ejecutables nativos de Windows. Lo veremos.
 
-* *Visual Studio Code - Terminal Integrado***: Visual Studio Code (VS Code) es un editor de código fuente que incluye un terminal integrado. Puedo abrir diferentes terminales dentro de la misma ventana de VS Code, como CMD, PowerShell, Git Bash o WSL.
+***Visual Studio Code - Terminal Integrado***: Visual Studio Code (VS Code) es un editor de código fuente que incluye un terminal integrado. Puedo abrir diferentes terminales dentro de la misma ventana de VS Code, como CMD, PowerShell, Git Bash o WSL.
 
 #### Mi estrategia
 
-Mi estrategia consiste en usar lo que mejor encaje en cada momento. Instalo y configuro todas las opciones anteriores, [mejoro el cmd](#cmd-mejorado) e instalo [Windows Terminal](#windows-terminal) como "lanzador unificado" del Terminal que necesite.
+Mi estrategia consiste en usar lo que mejor encaje en cada momento. Instalo y configuro todas las opciones anteriores, [mejoro el cmd](#cmd-mejorado) e instalo [Windows Terminal](#windows-terminal) como "lanzador unificado" del CLI que necesite en cada momento.
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-25-win-desarrollo-08.png"
-      caption="Uso el terminal que necesito según el caso de uso"
+      caption="Uso el terminal que quiero según el caso de uso"
       width="450px"
       %}
 
 ### CMD Mejorado
 
-Hoy en día, sobre todo para los que venimos de Unix/Linux/MacOS, huímos del CMD. Pero, se puede mejorar muchísimo, tanto que reconozco que yo he acabado usándolo bastante.
+Hoy en día, sobre todo para los que venimos de Unix/Linux/MacOS, se puede mejorar muchísimo, tanto he acabado usándolo bastante.
 
-**Clink**: Lo primero que hay que hacer es instalar [Clink](https://github.com/chrisant996/clink/). Súper recomendado; le añade todo lo que le falta, lo que trae la readline (de linux), múltiples funcionalidades, colores, historia, Scriptable Prompt.
+**Clink**: Lo primero que hay que hacer es instalar [Clink](https://github.com/chrisant996/clink/). Súper recomendado; le añade todo lo que le falta, la readline (de linux), múltiples funcionalidades, colores, historia, Scriptable Prompt.
 
 Es importante que leas la sección de [instalación y uso](https://github.com/chrisant996/clink?tab=readme-ov-file#installation) para configurarlo de forma adecuada y sobre todo para inyectarlo en el CMD, de tal forma que arranque automáticamente al arrancar `cmd.exe`. Básicamente mete la siguiente entrada en el Registry:
 
@@ -119,7 +119,7 @@ Es importante que leas la sección de [instalación y uso](https://github.com/ch
     +--> AutoRun   "C:\Program Files (x86)\clink\clink.bat" inject --autorun
 ```
 
-Tiene un potencia enorme porque soporta [Scriptable Prompt]( https://chrisant996.github.io/clink/clink.html#customizing-the-prompt), que significa que puedas modificar el PROMPT usando scripts LUA en tiempo real, por ejemplo para el **estado de Git**. Lee la documentación [extendiendo Clink con LUA](https://chrisant996.github.io/clink/clink.html#extending-clink-with-lua).
+Tiene un potencia enorme porque soporta [Scriptable Prompt]( https://chrisant996.github.io/clink/clink.html#customizing-the-prompt), que significa que puedas modificar el PROMPT usando scripts LUA en tiempo real, por ejemplo para el **estado de Git**. Lee la [documentación](https://chrisant996.github.io/clink/clink.html#extending-clink-with-lua).
 
 Creo mi script LUA ([prompt_filters.lua](https://gist.githubusercontent.com/LuisPalacios/f0f86aa9ed476bd8286b4d058cc8a34c/raw/prompt_filters.lua)) en `C:\Users\luis\AppData\Local\clink`:
 
@@ -132,20 +132,19 @@ scripts : C:\Program Files (x86)\clink ; C:\Users\luis\AppData\Local\clink
 C:\Users\luis>notepad C:\Users\luis\AppData\Local\clink\prompt_filters.lua
 ```
 
-**Startship.rs**: Lo siguiente es https://starship.rs/
+**Startship.rs**: Lo siguiente que instalo es [startship.rs](https://starship.rs/), que se vende como "un Prompt para cualquier Shell, mínimo, super-rápido, y altamente personalizable". Starship aprovecha símbolos y caracteres especiales que no están presentes en las fuentes predeterminadas. Para que el prompt se vea correctamente, es necesario instalar una **Nerd Font**.
 
-Starship aprovecha símbolos y caracteres especiales que no están presentes en las fuentes predeterminadas. Para que el prompt se vea correctamente, es necesario instalar una **Nerd Font**, que incluye estos glifos adicionales.
+* Lo primero es instalarme una Nerd Font, desde su [repositorio oficial](https://www.nerdfonts.com/) > `Downloads`. Busco y descargo `Fira Code` (puede ser cualquiera). Unzip del fichero, selecciono todos los `.ttf` > botón derecho > `Install`. Lo configuro como fuente por defecto en [Windows Terminal](#windows-terminal), Settings -> Profiles -> Defaults -> Appearance -> Font Face `FiraCode`
 
-Pasos para instalar una Nerd Font:
+* El siguiente paso es instalar la última versión con: `winget install starship`
 
-1. Dirígete al repositorio oficial de [Nerd Fonts](https://www.nerdfonts.com/).
-2. Descarga la fuente de tu preferencia (ej: `Fira Code`, `Hack`, `Cascadia Code`).
-3. Instala la fuente descargada: Haz clic derecho sobre el archivo de la fuente y selecciona "Instalar para todos los usuarios".
-4. Configura tu terminal para usar la Nerd Font instalada: En Windows Terminal, abre las configuraciones (Ctrl + `,`), navega a la sección "Profiles" y selecciona la fuente instalada para tu shell preferido (PowerShell, WSL, etc.).
-
-Nota: Este paso es esencial para evitar que los caracteres especiales aparezcan incorrectamente.
-
-Lo primero es instalar un *Nerd Font**, un agregador de fuentes, colecciones.  fuentes
+* Añado el script de inicio a la Shell
+  * Powershell: Añado lo siguiente al final de `C:\Program Files\PowerShell\7\Microsoft.PowerShell_profile.ps1` (PS7)
+    * `Invoke-Expression (&starship init powershell)`
+  * CMD: Necesito tener Clink instalado y operativo
+    * Creo el archivo `C:\Users\luis\AppData\Local\clink\starship.lua` con este contenido
+    * `load(io.popen('starship init cmd'):read("*a"))()`
+    * Elimino el fichero que creé en el paso anterior (Clink): `C:\Users\luis\AppData\Local\clink\prompt_filters.lua`
 
 **Cmder**: puedes ir un paso más allá e instalarte *[Cmder](https://cmder.app/)*: una consola muy potente que incluye el emulador *[ConEmu](https://conemu.github.io/)* (emulador de terminal) y [Clink](https://github.com/chrisant996/clink/) y si has instalado Git for Windows, se integra perfecto, con acceso en el PATH a todas las herramientas.
 
