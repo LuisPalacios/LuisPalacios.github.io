@@ -148,26 +148,23 @@ C:\Users\luis>notepad C:\Users\luis\AppData\Local\clink\prompt_filters.lua
 
 **Cmder**: puedes ir un paso más allá e instalarte *[Cmder](https://cmder.app/)*: una consola muy potente que incluye el emulador *[ConEmu](https://conemu.github.io/)* (emulador de terminal) y [Clink](https://github.com/chrisant996/clink/) y si has instalado Git for Windows, se integra perfecto, con acceso en el PATH a todas las herramientas.
 
+Yo lo he instalado para probarlo, pero si soy sincero no lo estoy usando, me parecen ya demasiadasa opciones.
+
 ### WSL 2
-
-* Windows
-  * Instalando `WSL 2` > `<Distribución>` >  ***`zsh o bash`***. Me dará acceso nativo al `C:\` vía `/mnt/c`. Tendré una Distribución Linux completa con acceso a **todas las herramientas open source disponibles en Linux**. Llego al terminal WSL2 vía **Windows Terminal**
-* [MacOS]({% post_url 2023-04-15-mac-desarrollo %}): Uso **zsh**, también **bash** (scripts), junto con las herramientas preinstaladas y **Homebrew** para tener acceso a **todas las herramientas open source disponibles en Linux**. Como Terminal uso "iTerm2". En el enlace tienes un apunte.
-* [Linux]({% post_url 2024-07-25-linux-desarrollo %}): Uso **zsh** (y **bash** para scripts), junto con **todas las herramientas open source disponibles en Linux**. Como Terminal uso "Gnome Terminal".
-
 
 WSL2 utiliza una máquina virtual ligera con un **kernel real completo de Linux**, tiene un **rendimiento** altísimo, está super **integrado con Windows**, permite que los archivos y scripts de Linux se ejecuten desde el explorador de Windows, y viceversa; y muy importante, tiene **compatibilidad con Docker**, de hecho WSL2 es el backend preferido para [Docker Desktop en Windows](https://www.docker.com/products/docker-desktop/) (que instalaré más adelante).
 
-> ***Aviso:*** Solo le he encontrado un pero. Ten cuidado si desde la shell de WSL2 accedes a un directorio de `/mnt/c (C:)` del que cuelgan cientos o miles de archivos. Un ejemplo es un repositorio GIT grande. Irá lento, bastante lento. En ese caso, accede y usa comandos nativos de Windows desde cualquier Terminal nativo (`cmd, powershell, cmder, git bash, ...`)
+> ***Aviso:*** Solo le he encontrado un pero. Ten cuidado al acceder desde WSL2 a un directorio de `/mnt/c (C:)` del que cuelgan cientos o miles de archivos. Un ejemplo es un repositorio GIT grande. Irá lento, bastante lento. En esos casos es mejor "atacar" dichos directorios dessde el CMD o Powershell.
 
 Mis **casos de uso de WSL2**:
 
-* Tener Shell + Herramientas con acceso nativo a `C:\` (vía `/mnt/c`).
+* Tener Shell + Herramientas con acceso nativo a `C:\` (vía `/mnt/c`). Tendré una Distribución Linux completa con acceso a **todas las herramientas open source disponibles en Linux**. Llego al terminal WSL2 vía **Windows Terminal**
+* Equipararme a lo que uso en [MacOS]({% post_url 2023-04-15-mac-desarrollo %}) o [Linux]({% post_url 2024-07-25-linux-desarrollo %}) para desarrollo de software.
 * Poder instalar Docker Desktop en Windows
 
 Proceso de instalación:
 
-* Abrir **“Características de Windows**” - Win + R, `optionalfeatures`. Marco:
+* Abrir **“Características de Windows**” - Win + R, `optionalfeatures`. Marco las opciones:
   * Virtual Machine Platform (Plataforma de Máquina Virtual)
   * Windows Subsystem for Linux (Subsistema de Windows para Linux)
   * Hyper-V (recomendado para Docker con WSL2).
