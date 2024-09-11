@@ -338,7 +338,7 @@ Me instalo mis scripts que suelo usar en todos los Linux/MacOS,
 
 #### WSL 2 - Cliente SSH
 
-Para poder conectar desde la Consola WSL2 a equipos remotos.
+Para poder conectar desde la Consola WSL2 a equipos remotos. Nota: todos los comandos desde **PowerShell** como Administrador
 
 * Verifico que el cliente de OpenSSH está instalado:
 
@@ -361,27 +361,15 @@ Tengo varios apuntes sobre SSH [Git y SSH multicuenta]({% post_url 2021-10-09-ss
 
 #### WSL 2 - Servidor SSH
 
-Configuro que los clientes **accedan directamente a la shell de WSL2** cuando se conecten a mi Windows 11. Nota: todos los comandos desde **PowerShell** como Administrador
-
-* Verifico que OpenSSH está instalado:
+Veamos el proceso de activación del servidor SSH. Lo primero es verifico si OpenSSH está instalado. A continuación agrego el Servidor OpenSSH:
 
 ```powershell
 Get-WindowsCapability -Online | ? Name -like 'OpenSSH*'
-```
-
-* Agrego el Servidor OpenSSH:
-
-```powershell
+:
 Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
 ```
 
-* Cambio a que la Shell predeterminada sea WSL. Importante, nunca usar los ejecutables bajo `C:\Users\luis\AppData\Local\Microsoft\WindowsApps` o tardará muchos segundos en mostrarte el prompt al conectar desde los clientes.
-
-```powershell
-New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\Windows\System32\wsl.exe" -PropertyType String -Force
-```
-
-* Inicio el Servicio, Compruebo y Configuro que arranque siempre al hacer boot
+Inicio el Servicio, compruebo y configuro que arranque siempre al hacer boot
 
 ```powershell
 Start-Service sshd
@@ -389,9 +377,9 @@ Get-Service sshd
 Set-Service -Name sshd -StartupType 'Automatic'
 ```
 
-* Respecto a los ***Credenciales***, el Server está ejecutándose en Windows (no en Ubuntu), por lo tanto: Mi usuario es `luis` LOCAL (no uso Microsoft Account) y la contraseña es la de Windows.
+El Servidor SSH se ejecuta en Windows (no en WSL2/Ubuntu), por lo tanto los ***Credenciales*** son los de windows, mi usuaario LOCAL `luis` (no uso Microsoft Account) y su contraseña es la de Windows. El fichero **sshd_config** se encuentra en `C:\ProgramData\ssh\sshd_config`.
 
-* Fichero `C:\ProgramData\ssh\sshd_config`. Desactivo usar el fichero `administrators_authorized_keys`. Para `luis` usará `/mnt/c/Users/luis/authorized_keys`
+En mi caso desactivo usar el fichero `administrators_authorized_keys` porque prefiero que use el del HOME de mi usuario `luis` que está en `C:\Users\luis\.ssh\authorized_keys`
 
 ```config
 AuthorizedKeysFile .ssh/authorized_keys
@@ -408,27 +396,31 @@ notepad C:\ProgramData\ssh\sshd_config
 Restart-Service sshd
 ```
 
-* Edito las claves que acepto en `authorized_keys`
+Edito las claves que acepto en `authorized_keys`
 
 ```powershell
 notepad C:\ProgramData\ssh\administrators_authorized_keys
 ```
 
-* Cómo comprobar si el puerto 22 está abierto. Por defecto lo tenía abierto en mi caso
-
-Si necesitas comprobarlo aquí tienes un script [VerificarPuertoFirewall.ps1](https://gist.github.com/LuisPalacios/f1013d3a0cc0d540b94df2d7d42c2f40). Para abrirlo
+Compruebo si el puerto 22 está abierto. Si necesitas comprobarlo aquí tienes un script [VerificarPuertoFirewall.ps1](https://gist.github.com/LuisPalacios/f1013d3a0cc0d540b94df2d7d42c2f40). En mi caso estaba ya abierto; si necesitas abrir el puerto en el firewall usa el comando siguietne.
 
 ```powershell
 New-NetFirewallRule -DisplayName "Allow SSH Port 22" -Direction Inbound -Protocol TCP -LocalPort 22 -Action Allow
 ```
 
-* A partir de ahora me puedo conectar perfectamente con mi Windows desde cualquier otro equipo de la red.
+A partir de ahora me puedo conectar perfectamente con mi Windows desde cualquier otro equipo de la red. Si te fijas me conectó directamente con WSL2, sigue leyendo...
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-25-win-desarrollo-04.png"
       caption="Conexión vía SSH desde un Mac"
       width="550px"
       %}
+
+Por defecto, si activamos el Servidor SSH en Windows, cuando conectemos con él nos redirigirá a una sesión de `cmd.exe`, pero puedes cambiarlo para que los clientes **accedan directamente a la shell de WSL2**. Importante, nunca usar los ejecutables de wsl que también están bajo `C:\Users\luis\AppData\Local\Microsoft\WindowsApps` o tardará muchos segundos en mostrarte el prompt.
+
+```powershell
+New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\Windows\System32\wsl.exe" -PropertyType String -Force
+```
 
 #### WSL 2 - CRLF vs LF
 
