@@ -232,7 +232,7 @@ Quiero que al entrar en WSL2 el HOME de mi usuario sea `/mnt/c/Users/luis`, para
 * Desde Powershell, pido que WSL arranque como `root`:
 
 ```PS
-PS C:\Users\luis> ubuntu2024.exe config --default-user root
+PS C:\Users\luis> ubuntu2404.exe config --default-user root
 ```
 
 * Abro una nueva Shell y cambio el HOME de `luis`
@@ -244,7 +244,7 @@ usermod --home /mnt/c/Users/luis/ luis
 * Vuelvo a dejar que el login por defecto lo haga con `luis`
 
 ```PS
-PS C:\Users\luis> ubuntu2024.exe config --default-user luis
+PS C:\Users\luis> ubuntu2404.exe config --default-user luis
 ```
 
 #### WSL 2 - Permisos de ficheros
@@ -493,7 +493,7 @@ Tendrás acceso rápido a Windows Terminal directamente desde tu taskbar, y podr
 * Cerrar pestañas: ícono `X` o `Ctrl + Shift + W`.
 * Sacar las pestañas como ventanas independientes: Botón derecho sobre la pestaña
 
-Empiezo a trabajar de manera más eficiente y organizada. Tengo la posibilidad de abrir la consola que necesite, por defecto lo he configurado para que WSL (Ubuntu 22.04.3 LTS), he cambiado los colores ligeramente para diferenciar dónde estoy y en el caso de `cmd.exe` he puesto otro tipo de fuente de letra.
+Empiezo a trabajar de manera más eficiente y organizada. Tengo la posibilidad de abrir la consola que necesite, por defecto lo he configurado para que WSL (Ubuntu 24.04.3 LTS), he cambiado los colores ligeramente para diferenciar dónde estoy y en el caso de `cmd.exe` he puesto otro tipo de fuente de letra.
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-25-win-desarrollo-05.png"
