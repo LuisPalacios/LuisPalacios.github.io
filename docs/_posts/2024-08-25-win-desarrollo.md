@@ -238,7 +238,8 @@ PS C:\Users\luis> ubuntu2404.exe config --default-user root
 * Abro una nueva Shell y cambio el HOME de `luis`
 
 ```bash
-usermod --home /mnt/c/Users/luis/ luis
+C:\Users\luis> ubuntu2404.exe
+root@kymeraw:~# usermod --home /mnt/c/Users/luis/ luis
 ```
 
 * Vuelvo a dejar que el login por defecto lo haga con `luis`
@@ -266,7 +267,27 @@ options = "metadata,uid=1000,gid=1000,umask=022,fmask=11,case=off"
 systemd=true
 ```
 
-Hay que salir de la Shell y esperar al menos 8 segundos. Puedes verificar si WSL ha terminado del todo con el comando `wsl --list --running` desde una sesión de PowerShell.
+Hay que salir de la Shell, parar WSL, esperar a que nos diga que no hay nada ejecutándose.
+
+```PS
+root@kymeraw:~# exit
+logout
+luis@kymeraw:~$ exit
+logout
+PS C:\Users\luis> wsl --shutdown
+PS C:\Users\luis> wsl --list --running
+There are no running distributions.
+```
+
+Volvemos a entrar en la Shell y no está de más asegurarse de que mis archivos son míos (si has cambiado de distribución podría ocurrirte que pertenecen a otro usuario, por ejemplo `ubuntu:lxd`).
+
+```PS
+PS C:\Users\luis>  ubuntu2404.exe
+luis@kymeraw:~$ pwd
+/mnt/c/Users/luis
+luis@kymeraw:~$ sudo chown -R luis:luis /mnt/c/Users/luis
+[sudo] password for luis:
+```
 
 #### WSL 2 - Locale
 
@@ -317,10 +338,10 @@ Salgo y vuelvo a entrar. La primera vez que entras con `zsh` te ofrece ayuda par
 Instalo tmux, que lo suelo utilizar:
 
 ```bash
-apt install tmux
+sudo apt install tmux
 ```
 
-También tengo un **[~/.tmux.conf](https://gist.github.com/LuisPalacios/065f4f0491d472d65ef62f67f1f418a1)**, que también copio al HOME (`/mnt/c/Users/luis`).
+Aquí tengo un **[~/.tmux.conf](https://gist.github.com/LuisPalacios/065f4f0491d472d65ef62f67f1f418a1)**, que también copio al HOME (`/mnt/c/Users/luis`).
 
 #### WSL 2 - Scripts
 
@@ -335,12 +356,13 @@ Me instalo mis scripts que suelo usar en todos los Linux/MacOS,
   * `echo 'luis ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/90-mi-usuario`
 * Cambiar los permisos:
   * `sudo chmod 755 /usr/bin/e /usr/bin/confcat /usr/bin/s`
+* Crear el directorio `mkdir ~/.nano` tanto para root como para mi usuario
 
 #### WSL 2 - Cliente SSH
 
-Para poder conectar desde la Consola WSL2 a equipos remotos. Nota: todos los comandos desde **PowerShell** como Administrador
+Para poder conectar desde la Consola WSL2 a equipos remotos.
 
-* Verifico que el cliente de OpenSSH está instalado:
+* Verifico que el cliente de OpenSSH está instalado (Esta sesión de Powershell como Administrador)
 
 ```powershell
 Get-WindowsCapability -Online | ? Name -like 'OpenSSH*'
@@ -416,7 +438,7 @@ A partir de ahora me puedo conectar perfectamente con mi Windows desde cualquier
       width="550px"
       %}
 
-Por defecto, si activamos el Servidor SSH en Windows, cuando conectemos con él nos redirigirá a una sesión de `cmd.exe`, pero puedes cambiarlo para que los clientes **accedan directamente a la shell de WSL2**. Importante, nunca usar los ejecutables de wsl que también están bajo `C:\Users\luis\AppData\Local\Microsoft\WindowsApps` o tardará muchos segundos en mostrarte el prompt.
+***Opcional***: Por defecto, si activamos el Servidor SSH en Windows, cuando conectemos con él nos redirigirá a una sesión de `cmd.exe`, pero puedes cambiarlo para que los clientes **accedan directamente a la shell de WSL2**. Importante, nunca usar los ejecutables de wsl que también están bajo `C:\Users\luis\AppData\Local\Microsoft\WindowsApps` o tardará muchos segundos en mostrarte el prompt. Ejecuto desde Powershell como administrador.
 
 ```powershell
 New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\Windows\System32\wsl.exe" -PropertyType String -Force
@@ -430,34 +452,61 @@ Este pequeño detalle puede generar grandes problemas si no se maneja correctame
 
 * Que Git lo gestione ([documentación aquí](https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings)). Es decir, revisa los finales de línea antes de los commits.
   * Puede hacerse a nivel global
-    * `git config --global core.autocrlf true`  - Para convertir LF a CRLF al hacer checkout en Windows
-    * `git config --global core.autocrlf input` - Para mantener LF en los repositorios y convertir CRLF a LF al hacer commit
+    * `git config --global core.autocrlf true`  - Recomendado cuando trabajas en Windows
+    * `git config --global core.autocrlf input` - Recomendado cuando trabajas en Linux
   * Puede hacerse de forma más granular
     * Usando el archivo `.gitattributes` en la raiz del repositorio.
 * Usar un editor de texto que te permita elegir el tipo de final de línea. Por ejemplo, Visual Studio Code, Sublime Text, etc
 * Conversión manual con `dos2unix` y `unix2dos` (yo los he instalado en mi WSL2 con `apt install -y dos2unix`)
 * Sobre todo **mantener el control**, yo me aseguro de que mis ediciones, herramientas, editores y scripts estén configurados correctamente para manejar y respetar el formato de finales de línea.
 
+#### WSL 2 - Starship
+
+Hablé de **startship** en la sección de [CMD mejorado](#cmd-mejorado), aquí explico cómo lo añado a mi WSL2. En este ejemplo he seleccionado descargar las NerdFonts FiraCode (que son las mismas que instalé a nivel Windows para CMD y Powershell).
+
+Abro una sesión de WSL2:
+
+```bash
+sudo apt install fontconfig unzip
+mkdir -p ~/.fonts
+cd .fonts
+curl -LJs -o FiraCode.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraCode.zip
+unzip FiraCode.zip && rm FiraCode.zip
+fc-cache -fv
+```
+
+Instalo la última versión de **startship** en WSL2 con: `curl -sS https://starship.rs/install.sh | sh`
+
+El siguiente paso es configurar el `.zshrc` (mira la sección anterior [WSL 2 - Cambio a ZSH](#wsl-2---cambio-a-zsh) donde tengo un enlace al que utilizo yo.
+
 #### Modificar el PATH
 
-* Para modificar el PATH Global para `CMD`, `PowerShell's`, etc mira la [nota sobre el PATH](#nota-sobre-el-path) que puse al principio de este apunte.
+**PATH de Windows (para `CMD`, `PowerShell`)**:
 
-* Para modificar el PATH de la consola WSL2, entro en sesión WSL2, como root edit `/etc/wsl.conf` y añado lo siguiente
+Consulta la [nota sobre el PATH](#nota-sobre-el-path) que puse al principio de este apunte.
 
-    ```bash
-    ⚡ luis@kymeraw:~ % confcat /etc/wsl.conf
-    [interop]
-    appendWindowsPath=false
-    ```
+**WSL2**:
 
-  * Entro en ella y edito el fichero `~/.bashrc` o `.zshrc` y preparo mi PATH.
+En mi caso prefiero que WSL2 no me añada todos las entradas del PATH de Windows al de Linux. Modifico como root `/etc/wsl.conf` y añado la sección `[interop]`.
 
-    ```bash
-    ⚡ luis@kymeraw:~ % echo $PATH
-    /mnt/c/Users/luis//.gems/bin:.:/mnt/c/Users/luis//Nextcloud/priv/bin:/usr/local/bin:/usr/local/sbin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib
-    ```
+```bash
+⚡ luis@kymeraw:~ % sudo e /etc/wsl.conf
+[boot]
+systemd=true
 
-* Casi todos usamos un directorio personal específicio para los scripts y ejecutables. Un truco que yo uso es tenerlo en un sitio compartido, de modo que puedo tener todos los scripts y ejecutables disponibles en varios sistemas operativos. En mi caso uso un servidor NextCloud casero.
+[automount]
+options = "metadata,uid=1000,gid=1000,umask=022,fmask=11,case=off"
+
+[interop]
+appendWindowsPath=false
+```
+
+* Salgo de WSL, lo apago (`wsl --shutdown`), vuelvo a entrar y edito `~/.bashrc` o `.zshrc`. Este es un ejemplo de cómo queda (soy selectivo en qué quiero del PATH de windows en mi sesión WSL2).
+
+```bash
+⚡ luis@kymeraw:~ % echo $PATH
+/mnt/c/Users/luis/.gems/bin:.:/mnt/c/Users/luis/Nextcloud/priv/bin:/usr/local/bin:/usr/local/sbin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Windows/System32:/mnt/c/Windows:/mnt/c/Windows/System32/wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0:/mnt/c/Program Files/PowerShell/7
+```
 
 ### Windows Terminal
 
