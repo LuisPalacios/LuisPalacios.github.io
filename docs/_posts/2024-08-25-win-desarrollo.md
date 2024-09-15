@@ -760,6 +760,11 @@ CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 :
 ```
 
+| |
+| -- |
+| **CUIDADO!!** si has cambiado el HOME de WSL 2 a `/mnt/c/Users/<usuario>` (ver [aquí](#wsl-2---cambiar-home)) cada vez que arranques Docker sobreescribe el fichero `C:\Users\<usuario>\.docker\config.json` por lo que es inútil editarlo. La solución consiste en eñadir `docker context use default` al final de tu `.bashrc/.zshrc` |
+| |
+
 ### Postman
 
 Puedes instalar desde el [sitio oficial de Postman](https://www.postman.com/). Es una herramienta muy conocida para probar y documentar APIs. Es muy útil para desarrolladores que trabajan con servicios web. En mi caso de momento la dejo en la recámara, quizá la instale más adelante.
