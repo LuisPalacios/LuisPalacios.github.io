@@ -489,6 +489,56 @@ curl -sS https://starship.rs/install.sh | sh
 
 El siguiente paso es configurar el `.zshrc` (mira la sección anterior [WSL 2 - Cambio a ZSH](#wsl-2---cambio-a-zsh) donde tengo un enlace al que utilizo yo.
 
+#### WSL 2 - Cambiar UID/GID
+
+Durante la instalación tube un problema, la primera vez me instaló Ubuntu22.04 y puso a mi usuario `luis` el UID/GID 1000:1000, activé metada como mencionaba antes para la gestión de permisos y todo bajo `/mnt/c` pasó a ser propiedad de 1000:1000. Hasta ahí todo bien.
+
+El problema vino al instalar Ubuntu24.04 y eliminar la 22.04. Observé que crea por defecto el usuario `ubuntu y el grupo lxc` con UID/GID 1000, y al usuario `luis` le asignó el `1002`. Eso provocó un líó de permisos enorme.
+
+Esto es lo que hice para arreglarlo:
+
+``` bash
+PS > wsl --install Ubuntu24-04
+PS > ubuntu2404.exe config --default-user root
+PS > wsl --shutdown
+PS > ubuntu2404.exe
+
+nano /etc/group cambié los gid
+lxc 1000 -> 1001
+ubuntu 1001 -> 1002
+luis 1002 -> 1000
+
+nano /etc/passwd cambié los uid
+ubuntu 1000 -> 1002
+luis 1002 -> 1000
+
+cd /home
+chown -R luis:luis luis
+chown -R ubuntu:ubuntu ubuntu
+
+/etc/wsl.conf
+[boot]
+systemd=true
+[automount]
+options = "metadata,uid=1000,gid=1000,umask=022,fmask=11,case=off"
+[interop]
+appendWindowsPath=false
+
+exit
+
+PS > ubuntu2404.exe config --default-user root
+PS > wsl --shutdown
+PS > ubuntu2404.exe
+
+```
+
+Nota: Para hacer búsquedas de los permisos y que no se eternice entrando en `/mnt/c` uso el comando siguiente:
+
+```bash
+cd /
+find . -not \( -path "./mnt*" -type d -prune \) -user ubuntu
+```
+
 #### Modificar el PATH
 
 **PATH de Windows (para `CMD`, `PowerShell`)**:
