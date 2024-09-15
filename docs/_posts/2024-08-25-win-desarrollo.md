@@ -182,6 +182,12 @@ Proceso de instalación:
   wsl --install
   ```
 
+* Miro las distribuciones disponibles
+
+  ```PS
+  wsl --list --online
+  ```
+
 * **Instalo una distribución**, en mi caso Ubuntu 24.04 (podrías instalar otra como Debian, Kali-Linux, Suse, ...). Abro PowerShell como Administrador
 
   ```PS
@@ -475,7 +481,11 @@ unzip FiraCode.zip && rm FiraCode.zip
 fc-cache -fv
 ```
 
-Instalo la última versión de **startship** en WSL2 con: `curl -sS https://starship.rs/install.sh | sh`
+Instalo la última versión de **startship** en WSL2:
+
+```bash
+curl -sS https://starship.rs/install.sh | sh
+```
 
 El siguiente paso es configurar el `.zshrc` (mira la sección anterior [WSL 2 - Cambio a ZSH](#wsl-2---cambio-a-zsh) donde tengo un enlace al que utilizo yo.
 
@@ -657,6 +667,36 @@ Durante el proceso de instalación selecciono usar WSL2 en vez de Hyper-V
       caption="Consola de Docker"
       width="600px"
       %}
+
+#### Troubleshooting
+
+Tras la instalación puedo ejecutar comandos docker desde WSL2. Es importante que estemos en el contexto adecuado o podría recibir errores del tipo `Failed to initialize: protocol not available`. En mi caso me ocurrió y lo resolví como sigue:
+
+```bash
+PS > ubuntu2404.exe
+
+$ docker ps -a
+Failed to initialize: protocol not available
+
+$ docker context ls
+NAME              DESCRIPTION                               DOCKER ENDPOINT                             ERROR
+default           Current DOCKER_HOST based configuration   unix:///var/run/docker.sock
+desktop-linux *   Docker Desktop                            npipe:////./pipe/dockerDesktopLinuxEngine
+
+ESTA MAL!!!! Mi sesión es ubuntu2404.exe, no es desktop-linux
+
+$ docker context use default
+default
+
+$ docker context ls
+NAME            DESCRIPTION                               DOCKER ENDPOINT                             ERROR
+default *       Current DOCKER_HOST based configuration   unix:///var/run/docker.sock
+desktop-linux   Docker Desktop                            npipe:////./pipe/dockerDesktopLinuxEngine
+
+$ docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+:
+```
 
 ### Postman
 
