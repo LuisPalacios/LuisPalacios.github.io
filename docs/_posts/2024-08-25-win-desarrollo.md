@@ -718,9 +718,11 @@ Durante el proceso de instalación selecciono usar WSL2 en vez de Hyper-V
       width="600px"
       %}
 
-#### Troubleshooting
+#### Integración con WSL2
 
-Tras la instalación puedo ejecutar comandos docker desde WSL2. Es importante que estemos en el contexto adecuado o podría recibir errores del tipo `Failed to initialize: protocol not available`. En mi caso me ocurrió y lo resolví como sigue:
+La integración con WSL2 es inmediata, no tienes que hacer nada. Bueno, casi nada. Hay un tema importante "El contexto".
+
+Al entrar en una sesión de WSL2 es importante estar en el Contexto adecuado de Docker. Si no tienes el correcto puedes encontrarte con el error `Failed to initialize: protocol not available`.
 
 ```bash
 PS > ubuntu2404.exe
@@ -732,11 +734,21 @@ $ docker context ls
 NAME              DESCRIPTION                               DOCKER ENDPOINT                             ERROR
 default           Current DOCKER_HOST based configuration   unix:///var/run/docker.sock
 desktop-linux *   Docker Desktop                            npipe:////./pipe/dockerDesktopLinuxEngine
+```
 
-ESTA MAL!!!! Mi sesión es ubuntu2404.exe, no es desktop-linux
+En este caso estamos en el contexto `desktop-linux` lo que provocará que WSL2 no se pueda comunicar correctamente con Docker. Puedes cambiar de contexto con el comando `docker context use default` pero no será permanente. Lo mejor es editar el fichero `~/.docker/config.json`
 
-$ docker context use default
-default
+```bash
+nano ~/.docker/config.json
+:
+        "currentContext": "default",
+:
+```
+
+A partir de este momento funcionará correctamente
+
+```bash
+PS > ubuntu2404.exe
 
 $ docker context ls
 NAME            DESCRIPTION                               DOCKER ENDPOINT                             ERROR
