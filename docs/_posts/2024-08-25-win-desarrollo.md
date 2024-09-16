@@ -254,23 +254,44 @@ root@kymeraw:~# usermod --home /mnt/c/Users/luis/ luis
 PS C:\Users\luis> ubuntu2404.exe config --default-user luis
 ```
 
+#### WSL 2 - Fichero /etc/wsl.conf
+
+Lo menciono en varias partes de este apunte, dejo aquí la copia final que utilizo en mi ordenador, hay que editarla en WSL2 como root.
+
+```zsh
+[boot]
+systemd=true
+[automount]
+options = "metadata,uid=1000,gid=1000,umask=022,fmask=11,case=off"
+[interop]
+enabled=true
+appendWindowsPath=false
+```
+
+Importante: Cuando modificas este fichero hay que salirse de WSL y pararlo, esperar a que nos diga que no hay nada ejecutándose y volver a ejecutarlo. Veamos un ejemplo, donde estoy en una sesíón WSL2 en la shell como root.
+
+```PS
+root@kymeraw:~# exit
+logout
+luis@kymeraw:~$ exit
+logout
+PS C:\Users\luis> wsl --shutdown
+:
+PS C:\Users\luis> wsl --list --running
+There are no running distributions.
+```
+
 #### WSL 2 - Permisos de ficheros
 
 Los permisos de los archivos Linux que se crean en el disco NTFS [se intepretan de una forma muy concreta](https://learn.microsoft.com/en-us/windows/wsl/file-permissions). Los archivos/directorios que se crean en el disco NTFS (debajo de `/mnt/c/Users/luis`) van con permisos 777.
 
 A mi eso no me gusta. Quiero que WSL sea coherente, además hay programas a los que no les gusta tanto permiso, un ejemplo es SSH. El cliente de OpenSSH necesita que el directorio y los archivos bajo `~/.ssh` tengan unos permisos específicos.
 
-La solución es activar los ***metadatos*** en la [configuración avanzada de WSL](https://learn.microsoft.com/en-us/windows/wsl/wsl-config). Desd WSL, como `root`, edito `/etc/wsl.con`. La sección `[boot]` ya estaba, he añadido la sección `[automount]`
+La solución es activar los ***metadatos*** en la [configuración avanzada de WSL](https://learn.microsoft.com/en-us/windows/wsl/wsl-config), en el fichero `/etc/wsl.conf` en la sección `[automount]`.
 
 ```zsh
-luis@kymeraw:~$ sudo su -
-
-root@kymeraw:~# cat /etc/wsl.conf
 [automount]
 options = "metadata,uid=1000,gid=1000,umask=022,fmask=11,case=off"
-
-[boot]
-systemd=true
 ```
 
 Hay que salir de la Shell, parar WSL, esperar a que nos diga que no hay nada ejecutándose.
@@ -515,21 +536,14 @@ luis 1002 -> 1000
 cd /home
 chown -R luis:luis luis
 chown -R ubuntu:ubuntu ubuntu
+```
 
-/etc/wsl.conf
-[boot]
-systemd=true
-[automount]
-options = "metadata,uid=1000,gid=1000,umask=022,fmask=11,case=off"
-[interop]
-appendWindowsPath=false
+Reviso el fichero de configuración. Aquí tienes una copia: [/etc/wsl.conf](#wsl-2---fichero-etcwslconf).
 
-exit
-
-PS > ubuntu2404.exe config --default-user root
+```Powershell
+PS > ubuntu2404.exe config --default-user luis
 PS > wsl --shutdown
 PS > ubuntu2404.exe
-
 ```
 
 Nota: Para hacer búsquedas de los permisos y que no se eternice entrando en `/mnt/c` uso el comando siguiente:
@@ -547,19 +561,14 @@ Consulta la [nota sobre el PATH](#nota-sobre-el-path) que puse al principio de e
 
 **WSL2**:
 
-En mi caso prefiero que WSL2 no me añada todos las entradas del PATH de Windows al de Linux. Modifico como root `/etc/wsl.conf` y añado la sección `[interop]`.
+En mi caso prefiero que WSL2 no me añada todos las entradas del PATH de Windows al de Linux, modifico `/etc/wsl.conf` y añado la sección:
 
-```bash
-⚡ luis@kymeraw:~ % sudo e /etc/wsl.conf
-[boot]
-systemd=true
-
-[automount]
-options = "metadata,uid=1000,gid=1000,umask=022,fmask=11,case=off"
-
+```conf
 [interop]
 appendWindowsPath=false
 ```
+
+Aquí tienes una copia: [/etc/wsl.conf](#wsl-2---fichero-etcwslconf).
 
 * Salgo de WSL, lo apago (`wsl --shutdown`), vuelvo a entrar y edito `~/.bashrc` o `.zshrc`. Este es un ejemplo de cómo queda (soy selectivo en qué quiero del PATH de windows en mi sesión WSL2).
 
