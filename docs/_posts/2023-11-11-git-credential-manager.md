@@ -93,10 +93,14 @@ Es un repositorio público que me pertenece y necesito poder hacer push sobre é
 Clono el repositorio utilizando la URL HTTPS:
 
 ```bash
-❯ git clone https://github.com/LuisPalacios/git-repo-eol-analyzer.git
+❯ git clone https://github.com/LuisPalacios/LuisPalacios.github.io
 ❯ git config user.name "Luis Palacios"
 ❯ git config user.email "mi.correo@personal.com"
+
+❯ git config credential.https://github.com/Renueva/LuisPalacios.github.io.username LuisPalacios
 ```
+
+Se transforma en el siguiente `.git/config`. ¿Porqué pongo el `credential "http...`? para asegurarme que el comando `git` identifica a qué cuenta pertenece este repositorio y que no se vuelva loco (cosa que pasará en uanto empieces a añadir otras cuentas). Además, si estás trabajando con un repositorio "invisible" privado en internet, podría pasarte que el pull no te funcione. Al añadir el credential se resuelve, [más información aquí](https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/multiple-users.md)
 
 En cuanto vaya a hacer cualquier operación que necesite autenticación, GCM solicitará las credenciales y las almacenará de manera segura.
 
@@ -122,7 +126,7 @@ En este instante abre el navegador y pide credenciales para asociar el repositor
 info: please complete authentication in your browser...
 Enumerando objetos: 3, listo.
 :
-To https://github.com/LuisPalacios/git-repo-eol-analyzer.git
+To https://github.com/LuisPalacios/LuisPalacios.github.io.git
    e8411a6..46f38aa  main -> main
 ```
 
@@ -133,13 +137,23 @@ No cambia nada, es siempre lo mismo, de todas formas pongo un ejemplo. Se trata 
 Clono el repositorio utilizando la URL HTTPS:
 
 ```bash
-❯ git clone https://github.com/RenuevaConsulting/repo-privado.git
+❯ git clone https://github.com/RenuevaConsulting/repo.profesional
 ❯ git config user.name "Luis Renueva"
 ❯ git config user.email "mi.correo-profesional@renueva.com"
+
+❯ git config credential.https://github.com/RenuevaConsulting/repo.profesional.username LuisRenueva
 ```
 
-```bash
-git clone https://github.com/LuisProfesional/mi-repo-profesional.git
+```conf
+[remote "origin"]
+  url = https://github.com/RenuevaConsulting/repo.profesional
+
+[user]
+  name = Luis Renueva
+  email = mi.correo-profesional@renueva.com
+
+[credential "https://github.com/RenuevaConsulting/repo.profesional"]
+  username = LuisRenueva
 ```
 
 En cuanto vaya a hacer cualquier operación que necesite autenticación, GCM solicitará las credenciales y las almacenará de manera segura.
@@ -158,7 +172,12 @@ En este instante abre el navegador de nuevo, pide credenciales para asociar el r
 De nuevo, no cambia nada, siempre funcina igual. La primera vez que quieres hacer un `push` o algo que requiere autenticación, se arranca el proceso. Si cambia la URL, como en este ejemplo, en una Gitea casero, con HTTPS, ...
 
 ```bash
-git clone https://gitea.luiscasa.com/LuisCasa/mi-repo-casa.git
+git clone
+❯ git clone https://gitea.luiscasa.com/LuisCasa/mi-repo-casa
+❯ git config user.name "Luis Casa"
+❯ git config user.email "mi.correo-casa@yahoo.com"
+
+❯ git config credential.https://gitea.luiscasa.com/LuisCasa/mi-repo-casa.username LuisCasa
 :
 :
 git push
@@ -189,6 +208,9 @@ Cuando hice este documento me encontré en los alamacenes seguros credenciales a
   - Comprueba y limpia lo que encuentres en keychain.
   - Una vez tuve un problema con `homebrew` y su fichero de config, que borré !!
     - `rm /opt/homebrew/etc/gitconfig`
+
+- Al hacer un `pull` de un repositorio privado no abre el navegador.
+  - Usa la opción `git config credential.https://...`
 
 ## Conclusión
 
