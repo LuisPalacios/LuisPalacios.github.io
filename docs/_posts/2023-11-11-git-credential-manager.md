@@ -97,7 +97,7 @@ Clono el repositorio utilizando la URL HTTPS:
 ❯ git config user.name "Luis Palacios"
 ❯ git config user.email "mi.correo@personal.com"
 
-❯ git config credential.https://github.com/Renueva/LuisPalacios.github.io.username LuisPalacios
+❯ git config credential.https://github.com/LuisPalacios/LuisPalacios.github.io.username LuisPalacios
 ```
 
 Se transforma en el siguiente `.git/config`. ¿Porqué pongo el `credential "http...`? para asegurarme que el comando `git` identifica a qué cuenta pertenece este repositorio y que no se vuelva loco (cosa que pasará en uanto empieces a añadir otras cuentas). Además, si estás trabajando con un repositorio "invisible" privado en internet, podría pasarte que el pull no te funcione. Al añadir el credential se resuelve, [más información aquí](https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/multiple-users.md)
