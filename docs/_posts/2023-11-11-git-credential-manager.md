@@ -100,7 +100,21 @@ Clono el repositorio utilizando la URL HTTPS:
 ❯ git config credential.https://github.com/LuisPalacios/LuisPalacios.github.io.username LuisPalacios
 ```
 
-Se transforma en el siguiente `.git/config`. ¿Porqué pongo el `credential "http...`? para asegurarme que el comando `git` identifica a qué cuenta pertenece este repositorio y que no se vuelva loco (cosa que pasará en uanto empieces a añadir otras cuentas). Además, si estás trabajando con un repositorio "invisible" privado en internet, podría pasarte que el pull no te funcione. Al añadir el credential se resuelve, [más información aquí](https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/multiple-users.md)
+El motivo por el que añado `credential "http...`? es para asegurarme que el comando `git` identifica a qué cuenta pertenece este repositorio y que no se vuelva loco (cosa que pasará en uanto empieces a añadir otras cuentas). Además, si estás trabajando con un repositorio "invisible" privado en internet, podría pasarte que el pull no te funcione. Al añadir el credential se resuelve, [más información aquí](https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/multiple-users.md)
+
+El fichero `.git/config` incorporará estas entradas:
+
+```conf
+[remote "origin"]
+  url = https://github.com/LuisPalacios/LuisPalacios.github.io
+
+[user]
+  name = Luis Palacios
+  email = luis.palacios.derqui@gmail.com
+
+[credential "https://github.com/LuisPalacios/LuisPalacios.github.io"]
+  username = LuisPalacios
+```
 
 En cuanto vaya a hacer cualquier operación que necesite autenticación, GCM solicitará las credenciales y las almacenará de manera segura.
 
@@ -143,6 +157,8 @@ Clono el repositorio utilizando la URL HTTPS:
 
 ❯ git config credential.https://github.com/RenuevaConsulting/repo.profesional.username LuisRenueva
 ```
+
+El fichero `.git/config` incorporará estas entradas:
 
 ```conf
 [remote "origin"]
