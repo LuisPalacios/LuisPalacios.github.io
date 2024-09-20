@@ -81,6 +81,14 @@ PS C:\> $PSVersionTable
 :
 ```
 
+* Modifico el script que se ejecuta al iniciar una sesión de PS7
+  * Añado lo siguiente al final de `C:\Program Files\PowerShell\7\Microsoft.PowerShell_profile.ps1` (PS7)
+
+```PS
+# Quito el alias de por defecto 'where' para evitar conflictos con el 'where.exe' que instalo desde Git para Windows
+Remove-Item alias:\where -Force
+```
+
 PowerShell es muy ***útil para desarrolladores que trabajan exclusivamente en .NET, con C#, en entornos solo Microsoft***, para automatizaciones, para el mundo DevOps CI en entornos Windows/Azure.
 
 ***Windows Subsystem for Linux (WSL 2)***: permite ejecutar un entorno Linux directamente en Windows sin la necesidad de una máquina virtual. Puedes instalar distribuciones de Linux (como Ubuntu, Debian, etc.) y usar la Shell que quieras de forma nativa, con altísimo rendimiento, completamente integrado con el File System de Windows (excepto los permisos).
