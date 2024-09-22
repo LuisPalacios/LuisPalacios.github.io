@@ -33,7 +33,7 @@ Que uso habitualmente
 - Cambiar los permisos:
   - `sudo chmod 755 /usr/bin/e /usr/bin/confcat /usr/bin/s`
 
-No olvides ***SSH***, tengo varios apuntes al respecto: [Git y SSH multicuenta]({% post_url 2021-10-09-ssh-git-dual %}), [SSH y X11]({% post_url 2017-02-11-x11-desde-root %}) y [SSH en Linux]({% post_url 2009-02-01-ssh %}). Un resumen,
+No olvides ***SSH***, tengo varios apuntes al respecto: [Git multicuenta]({% post_url 2024-09-21-git-multicuenta %}), [SSH y X11]({% post_url 2017-02-11-x11-desde-root %}) y [SSH en Linux]({% post_url 2009-02-01-ssh %}). Un resumen,
 
 ```zsh
 ssh-keygen -t ed25519 -a 200 -C "luis@kymerax" -f ~/.ssh/id_ed25519
@@ -168,7 +168,7 @@ Como cliente GUI uso [GitKraken](https://www.gitkraken.com). Tienes más informa
 Dejo aquí enlaces a mis apuntes sobre Git
 
 - [Chuleta sobre GIT]({% post_url 2021-10-10-git-cheatsheet %}), donde recomiendo instalar `gh` en tu cuenta Personal o Multicuenta.
-- [Git y SSH multicuenta]({% post_url 2021-10-09-ssh-git-dual %}), donde trato más en detalle cómo trabajar con varias cuentas en GitHub
+- [Git multicuenta]({% post_url 2024-09-21-git-multicuenta %}), donde trato más en detalle cómo trabajar con varias cuentas en GitHub
 - [GIT en detalle]({% post_url 2021-04-17-git-en-detalle %}), para profundizar en Git y entenderlo de una vez por todas, ojo que es muy técnico.
 
 ## Chrome

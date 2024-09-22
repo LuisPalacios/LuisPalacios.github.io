@@ -414,7 +414,7 @@ Get-WindowsCapability -Online | ? Name -like 'OpenSSH*'
 ⚡ luis@kymeraw:luis % ssh-keygen -t ed25519 -a 200 -C "luis@kymeraw" -f ~/.ssh/id_ed25519
 ```
 
-Tengo varios apuntes sobre SSH [Git y SSH multicuenta]({% post_url 2021-10-09-ssh-git-dual %}), [SSH y X11]({% post_url 2017-02-11-x11-desde-root %}) y [SSH en Linux]({% post_url 2009-02-01-ssh %}) por si lo necesitas.
+Aquí tienes más apuntes donde trato el tema de SSH alrededor del desarrollo de software: [SSH y X11]({% post_url 2017-02-11-x11-desde-root %}), [SSH en Linux]({% post_url 2009-02-01-ssh %}), [Git multicuenta]({% post_url 2024-09-21-git-multicuenta %}).
 
 #### WSL 2 - Servidor SSH
 

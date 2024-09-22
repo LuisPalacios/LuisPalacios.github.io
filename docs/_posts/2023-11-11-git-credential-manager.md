@@ -6,7 +6,7 @@ tags: git ssh multicuenta github software
 excerpt_separator: <!--more-->
 ---
 
-![Logo GIT Cheatsheet](/assets/img/posts/logo-git-gcm-multi.svg){: width="150px" style="float:left; padding-right:25px" }
+![Logo GIT Cheatsheet](/assets/img/posts/logo-git-multi.svg){: width="150px" style="float:left; padding-right:25px" }
 
 En el desarrollo de software, especialmente en entornos multiplataforma (Linux, macOS y Windows), es común trabajar con múltiples repositorios que requieren diferentes cuentas y credenciales. Para gestionar estas credenciales de manera eficiente y segura, utilizamos Git Credential Manager (GCM). Este asistente de credenciales basado en .NET se ejecuta en Windows, macOS y Linux, proporcionando una solución unificada para la gestión de credenciales en GitHub, GitLab y Gitea.
 

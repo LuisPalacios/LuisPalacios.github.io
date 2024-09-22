@@ -91,7 +91,7 @@ Trabaja siempre estando **Autenticado con un usuario concreto** y todas las oper
 
 ### Configurar `ssh`
 
-Imprescindible tener SSH bien configurado, tanto si tienes una única cuenta Personal como si tienes varias. Te recomiendo el apunte [Git y SSH multicuenta]({% post_url 2021-10-09-ssh-git-dual %}) si tienes varias cuentas, es imprescindible tener perfectamente operativa tu configuración SSH para que `gh` se comporte como esperas.
+Imprescindible tener SSH bien configurado, tanto si tienes una única cuenta Personal como si tienes varias. Te recomiendo el apunte [Git multicuenta]({% post_url 2024-09-21-git-multicuenta %}) si tienes varias cuentas, es imprescindible tener perfectamente operativa tu configuración SSH para que `gh` se comporte como esperas.
 
 ### Configurar `gh` cuenta Personal
 
@@ -132,7 +132,7 @@ Terminaste, si solo tienes una única cuenta en GitHub has terminado, puedes tra
 
 ### Configurar `gh` cuenta Profesional
 
-Este es un caso también habitual entre los desarrolladores. Tienes un par de cuentas, una privada para tus repos y otra que usas trabajando para Organizaciones (empresas). Te recomiendo este apunte sobre [gh trabajando con múltiples cuentas](https://github.com/cli/cli/blob/54d56cab3a0882b43ac794df59924dc3f93bb75c/docs/multiple-accounts.md). Se añadió soporte a esta modalidad a partir de la v2.40.0. Ah!, aunque lo mencioné antes, te recomiendo tener bien configurado SSH en este tipo de entorno multicuenta, échale un ojo al apunte [Git y SSH multicuenta]({% post_url 2021-10-09-ssh-git-dual %}).
+Este es un caso también habitual entre los desarrolladores. Tienes un par de cuentas, una privada para tus repos y otra que usas trabajando para Organizaciones (empresas). Te recomiendo este apunte sobre [gh trabajando con múltiples cuentas](https://github.com/cli/cli/blob/54d56cab3a0882b43ac794df59924dc3f93bb75c/docs/multiple-accounts.md). Se añadió soporte a esta modalidad a partir de la v2.40.0. Ah!, aunque lo mencioné antes, te recomiendo tener bien configurado SSH en este tipo de entorno multicuenta, échale un ojo al apunte [Git multicuenta]({% post_url 2024-09-21-git-multicuenta %}).
 
 De nuevo, necesito dar de alta mi PAT (Personal Access Token) en mi cuenta profesional, e ir renovándolo cuando caduque. Lo creo y me lo guardo.
 

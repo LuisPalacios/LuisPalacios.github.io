@@ -199,6 +199,8 @@ Si ahora entro en "buscar" ya empiezo a ver los efectos, cada vez menos morralla
 
 Las Microsoft PowerToys son un conjunto de utilidades para que los usuarios avanzados mejoren y optimicen su experiencia con Windows a fin de aumentar la productividad. Lo instalo desde la [página oficial](https://learn.microsoft.com/es-es/windows/powertoys/install). Algunas que me gustan a mi, incluyo pegado avanzado, editar el archivo `hosts`.
 
+Un caso de uso interesante es remapear el teclado. Tengo un apunte donde describo cómo uso [Barrier para imitar la funcionalidad KVM]({% post_url 2024-06-13-kvm %}#unificar-las-teclas-de-control), al final del mismo trato el tema de remapeo.
+
 ***Visual Studio Code***: Tampoco requiere mucha presentación, un editor de código fuente que incluye un terminal integrado. Puedo abrir diferentes **terminales integrados** dentro de la misma ventana de VS Code, como CMD, PowerShell, Git Bash o WSL.
 
 Soporta una amplia variedad de lenguajes de programación y una gran cantidad de extensiones para mejorar su funcionalidad. Lo instalo desde el [sitio oficial de Visual Studio Code](https://code.visualstudio.com/).

@@ -437,6 +437,51 @@ Actualizar bundle
 
 <br/>
 
+### Resolución de problemas
+
+Tanto si he realizado un clone del repositorio desde cero como si tengo problemas, esta secuencia siempre me ha ayudado:
+
+```shell
+brew update
+brew upgrade
+
+cd $HOME
+rm -fr .gems
+gem install jekyll bundler
+
+cd 00.git/02.github-luispa/LuisPalacios.github.io/docs
+[rm Gemfile.lock] (si es que existe)
+bundle install
+[bundle update github-pages] (Esto es opcional)
+```
+
+Cuando he tenido que actualizar algo
+
+```bash
+$ e docs/Gemfile
+#gem "github-pages", "~> 214", group: :jekyll_plugins
+gem "github-pages", "~> 228", group: :jekyll_plugins
+gem uninstall liquid -v 4.0.3
+gem update --system
+```
+
+Para actualizar bundle
+
+```zsh
+gem cleanup && gem pristine --all
+bundle lock --update --bundler
+bundle update
+```
+
+A veces he tenido problemas con permisos en la instalación. Para resolverlo:
+
+```zsh
+# cd /opt/homebrew/Cellar/ruby/3.3.5/lib/ruby/gems/3.3.0/specifications
+# rm -fr *.gemspec
+```
+
+<br/>
+
 ### Enlaces interesantes
 
 Para mejorar mi sitio de apuntes, algunos enlaces interesantes:
