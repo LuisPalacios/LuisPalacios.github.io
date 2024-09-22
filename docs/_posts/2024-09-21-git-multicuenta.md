@@ -243,11 +243,13 @@ He hecho un script que funciona en MacOS, Linux y Windows (WSL2) que te permite 
 
 ## Opción 2: SSH Multicuenta
 
+Esta opción permite gestionar múltiples cuentas SSH configurando el archivo ~/.ssh/config con alias de host. En este archivo, se pueden definir diferentes identidades (pares de claves SSH) asociadas a diferentes alias, que corresponden a las distintas cuentas en un mismo servidor Git. Por ejemplo, se pueden tener dos alias para github.com, cada uno apuntando a una cuenta diferente y usando un par de claves distinto.
+
 ### Instalar SSH
 
-Los pasos son ligeramente diferentes para sistemas basados en Windows y Unix (Linux/MacOS). En Linux/MacOS openssh viene instalado (en casi todas las distros de Linux), así que lo siguiente solo aplica a Windows (lo he probado en Windows 11).
+Los pasos son ligeramente diferentes para sistemas basados en Windows y Unix (Linux/MacOS). En Linux/MacOS openssh viene pre-instalado (en casi todas las distros de Linux), así que lo siguiente solo aplica a Windows (probado en la versión 11).
 
-En windows se necesita Instalar y Configurar `ssh-agent`. Comprueba desde PowerShell o el Símbolo del sistema **como administrador** si tienes el **Cliente y el Servidor OpenSSH** instalados.
+Primero voy a instalar y configurar `ssh-agent`. Compruebo desde PowerShell o el Símbolo del sistema **como administrador** si **Cliente y el Servidor OpenSSH** están instalados.
 
 ```cmd
 C:\Users\Luis> Get-WindowsCapability -Online | Where-Object Name -like 'OpenSSH.Client*'
@@ -255,7 +257,7 @@ C:\Users\Luis> Get-WindowsCapability -Online | Where-Object Name -like 'OpenSSH.
 C:\Users\Luis> Get-WindowsCapability -Online | Where-Object Name -like 'OpenSSH.Server*'
 ```
 
-En caso contrario, instálalos y arranca el servicio `ssh-agent`
+De no estarlo, los instalo y arranco el servicio `ssh-agent`
 
 ```cmd
 C:\Users\Luis> Add-WindowsCapability -Online -Name OpenSSH.Client
@@ -269,7 +271,7 @@ C:\Users\Luis> Set-Service -Name ssh-agent -StartupType Automatic
 
 ### Generar Claves SSH
 
-Asumiendo que tengo SSH instalado, ya podemos genera claves SSH que usaré más adelante en GitHub en ambas, la personal y la profesional.
+Asumiendo que tengo SSH instalado, ya podemos genera claves SSH, la personal y la profesional.
 
 ```zsh
 # Linux/Mac
@@ -307,9 +309,9 @@ ssh-add C:\Users\TuUsuario\.ssh\id_ed25519_git_empresa_luispa
 
 El siguiente proceso recomiendo repetirlo para cada ordenador donde creas tus claves Pública/Privada, ya sean personales como profesionales.
 
-#### Claves ssh personales a GitHub
+#### Agregar la clave pública personales a GitHub
 
-En mi caso que he creado claves personales en un Linux, un Mac y un Windows, repitor el proceso tres veces, **pegando mi clave PÚBLICA tres veces en GitHub, en mi cuenta personal**. Haz **Login en GitHub con tu cuenta Personal**, entra en [Configuración de GitHub para claves SSH](https://github.com/settings/keys) y entra en “New SSH key”, proporcionando un título (por ejemplo, “Clave Personal en Windows”) y pega tu clave pública, que puedes sacar de aquí:
+En mi caso que he creado claves personales en un Linux, un Mac y un Windows, repitor el proceso tres veces, **pegando mi clave PÚBLICA tres veces en GitHub, en mi cuenta personal**. Entro en [Configuración de GitHub para claves SSH](https://github.com/settings/keys), “New SSH key”, proporcionando un título (por ejemplo, “Clave Personal en Windows”) y peggo la clave pública, que puedes sacar de aquí:
 
 ```zsh
 # Linux/MacOS
@@ -319,7 +321,7 @@ cat ~/.ssh/id_ed25519_git_personal_luispa.pub
 type C:\Users\TuUsuario\.ssh\id_ed25519_git_personal_luispa.pub
 ```
 
-#### Claves ssh profesional a GitHub
+#### Agregar la clave pública profesional a GitHub
 
 En la cuenta profesional hacemos lo mismo. En este caso se trata de un usuario de GitHub que tiene derecho sobre una Organización. El proceso es idéntico, lo primero es hacer **Login en GitHub con tu cuenta Profesional** y luego copiar las claves públicas "profesionales" generadas, entrando de nuevo en [Configuración de GitHub para claves SSH](https://github.com/settings/keys), “New SSH key”, proporcionando un título (por ejemplo, “Clave Profesional en Windows”) y pegando la clave pública correspondiente.
 
@@ -397,3 +399,9 @@ cat MiProyectoProfesional/.git/config
 ```
 
 Recuerda mantener tus claves SSH privadas seguras y no compartirlas con nadie. Si tienes algún problema, consulta la documentación de GitHub o usa `ssh -v` para obtener una salida detallada de SSH y depurar problemas de conexión.
+
+## Conclsión
+
+Cada opción tiene sus ventajas y se adapta a diferentes necesidades y entornos de trabajo. La elección entre HTTPS + GCM o SSH multicuenta dependerá del nivel de control que se desee y de la plataforma en la que se esté trabajando.
+
+Repasa en [la introducción](#introducción) las ventajas y desventajas de cada opción.
