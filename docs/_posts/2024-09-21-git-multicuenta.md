@@ -235,11 +235,14 @@ Cuando hice este documento me encontré en los alamacenes seguros credenciales a
 - Al hacer un `pull` de un repositorio privado no abre el navegador.
   - Usa la opción `git config credential.https://...`
 
-## Script de apoyo
+### Script de apoyo `git-config-repos`
 
-He hecho un script que funciona en MacOS, Linux y Windows (WSL2) que te permite tener configurados todos los repositorios en un json y que él se encargue de hacerte todas las modificaciones, incluso el clone.
+He hecho un script que funciona en MacOS, Linux y Windows (WSL2) que te permite tener configurados todos los repositorios en un json y que él se encargue de hacerte todas las modificaciones, incluso el clone. Está diseñado para trabajar con esta primera Opción 1: HTTPS + Git Credential Manager.
 
 Échale un ojo: [git-config-repos](https://github.com/LuisPalacios/git-config-repos)
+
+---
+<br/>
 
 ## Opción 2: SSH Multicuenta
 
@@ -309,9 +312,7 @@ ssh-add C:\Users\TuUsuario\.ssh\id_ed25519_git_empresa_luispa
 
 El siguiente proceso recomiendo repetirlo para cada ordenador donde creas tus claves Pública/Privada, ya sean personales como profesionales.
 
-#### Agregar la clave pública personales a GitHub
-
-En mi caso que he creado claves personales en un Linux, un Mac y un Windows, repitor el proceso tres veces, **pegando mi clave PÚBLICA tres veces en GitHub, en mi cuenta personal**. Entro en [Configuración de GitHub para claves SSH](https://github.com/settings/keys), “New SSH key”, proporcionando un título (por ejemplo, “Clave Personal en Windows”) y peggo la clave pública, que puedes sacar de aquí:
+**Agregar la clave pública personales a GitHub**: En mi caso que he creado claves personales en un Linux, un Mac y un Windows, repitor el proceso tres veces, **pegando mi clave PÚBLICA tres veces en GitHub, en mi cuenta personal**. Entro en [Configuración de GitHub para claves SSH](https://github.com/settings/keys), “New SSH key”, proporcionando un título (por ejemplo, “Clave Personal en Windows”) y peggo la clave pública, que puedes sacar de aquí:
 
 ```zsh
 # Linux/MacOS
@@ -321,9 +322,7 @@ cat ~/.ssh/id_ed25519_git_personal_luispa.pub
 type C:\Users\TuUsuario\.ssh\id_ed25519_git_personal_luispa.pub
 ```
 
-#### Agregar la clave pública profesional a GitHub
-
-En la cuenta profesional hacemos lo mismo. En este caso se trata de un usuario de GitHub que tiene derecho sobre una Organización. El proceso es idéntico, lo primero es hacer **Login en GitHub con tu cuenta Profesional** y luego copiar las claves públicas "profesionales" generadas, entrando de nuevo en [Configuración de GitHub para claves SSH](https://github.com/settings/keys), “New SSH key”, proporcionando un título (por ejemplo, “Clave Profesional en Windows”) y pegando la clave pública correspondiente.
+**Agregar la clave pública profesional a GitHub**: En la cuenta profesional hacemos lo mismo. En este caso se trata de un usuario de GitHub que tiene derecho sobre una Organización. El proceso es idéntico, lo primero es hacer **Login en GitHub con tu cuenta Profesional** y luego copiar las claves públicas "profesionales" generadas, entrando de nuevo en [Configuración de GitHub para claves SSH](https://github.com/settings/keys), “New SSH key”, proporcionando un título (por ejemplo, “Clave Profesional en Windows”) y pegando la clave pública correspondiente.
 
 ```zsh
 # Linux/MacOS
@@ -369,23 +368,21 @@ Host gh-empresa-luispa
     IdentityFile C:\Users\TuUsuario\.ssh\id_ed25519_git_empresa_luispa
 ```
 
-## Clonar Repositorios
+### Clonar Repositorios
 
 Ahora puedes clonar repositorios utilizando la configuración SSH adecuada para cada caso (personal/profesional), fíjate que **no usamos git@github.com** como nombre de host, sino que usamos los nombres de host que dimos de alta antes en [Configurar SSH con Múltiples Cuentas](#configurar-ssh-con-múltiples-cuentas).
 
-### Repositorio Personal
+**Repositorio Personal**:
 
 ```zsh
 git clone git@gh-personal-luispa:LuisPalacios/MiProyectoPersonal.git
 ```
 
-### Repositorio Profesional
+**Repositorio Profesional**:
 
 ```zsh
 git clone git@gh-empresa-luispa:EMPRESA-Luis-Palacios/MiProyectoProfesional.git
 ```
-
-## Resumen
 
 Siguiendo los pasos anteriores puedes gestionar múltiples cuentas de GitHub con claves SSH en un mismo ordenador. Esta forma de trabajar te permite cambiar sin problemas entre diferentes cuentas y repositorios sin conflictos, dado que cada repositorio tendrá el [remote "origin"] correcto.
 
@@ -400,7 +397,7 @@ cat MiProyectoProfesional/.git/config
 
 Recuerda mantener tus claves SSH privadas seguras y no compartirlas con nadie. Si tienes algún problema, consulta la documentación de GitHub o usa `ssh -v` para obtener una salida detallada de SSH y depurar problemas de conexión.
 
-## Conclsión
+## Conclusión
 
 Cada opción tiene sus ventajas y se adapta a diferentes necesidades y entornos de trabajo. La elección entre HTTPS + GCM o SSH multicuenta dependerá del nivel de control que se desee y de la plataforma en la que se esté trabajando.
 
