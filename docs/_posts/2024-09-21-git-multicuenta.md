@@ -8,28 +8,26 @@ excerpt_separator: <!--more-->
 
 ![Logo GIT multicuenta](/assets/img/posts/logo-git-multi.svg){: width="150px" style="float:left; padding-right:25px" }
 
-Este apunte te llevará a través del proceso de configurar y usar múltiples cuentas con uno o más proveedores Git (GitHub, GitLab, Gitea). Describo la dos opciones de trabajo que más utilizo: La primera es **HTTPS + Git Credential Manager** y la segunda **SSH multicuenta**.
+Este apunte te llevará a través del proceso de configurar y usar múltiples cuentas con uno o más proveedores Git (GitHub, GitLab, Gitea). Describo las dos opciones que recomiendo: **HTTPS + Git Credential Manager** y **SSH multicuenta**.
 
-La primera, HTTPS + Git Credential Manager, es la que uso por defecto, cuando trabajo en cualquier equipo con pantalla, tengo la opción del CLI y/o herramientas GUI, como VSCode o clientes GUI como Git Desktop, Gitkraken, etc. La segunda opción, SSH multicuenta, es la que empleo en equipos "headless", servidores a los que conecto en remoto vía (CLI o VSCode remote) y necesito que clonen repositorios y trabajen sobre ellos.
+La primera, HTTPS + Git Credential Manager, es la que más uso, porque es compatible con el CLI y/o herramientas GUI tipo Visual Studio, VSCode, Git Desktop, Gitkraken, etc. La segunda opción, SSH multicuenta, la delego a equipos "headless", servidores a los que conecto en remoto vía (CLI o VSCode remote) y necesito que clonen repositorios y trabajen sobre ellos.
 
 <br clear="left"/>
 <!--more-->
 
 ## Introducción
 
-Veamos las dos opciones de Trabajo con Git Multicuenta
-
 1. **HTTPS + Git Credential Manager**:
 
-   - **Descripción**: Esta opción es ideal para usuarios que prefieren gestionar múltiples cuentas Git a través de HTTPS (la opción de por defecto de toda la vida). El **Git Credential Manager (GCM)** se encarga de almacenar y gestionar de forma segura las credenciales (usuarios y contraseñas o tokens de acceso) asociadas a cada cuenta. Es compatible con Windows, MacOS y Linux, y facilita el manejo de credenciales sin necesidad de introducirlas cada vez que se realiza una operación Git. Al usar diferentes cuentas, GCM se encarga de recordar y aplicar la credencial correcta para cada repositorio.
+   - **Descripción**: Ideal para los que prefieren gestionar múltiples cuentas a través de HTTPS (la opción de por defecto de toda la vida). El **Git Credential Manager (GCM)** se encarga de almacenar y gestionar de forma segura las credenciales. Es compatible con Windows, MacOS y Linux, y facilita el manejo de credenciales sin necesidad de introducirlas cada vez que se realiza una operación Git. Se encarga de recordar y aplicar la credencial correcta para cada repositorio.
 
    - **Ventajas**:
-     - Fácil de configurar y utilizar, especialmente en sistemas Windows y MacOs, un poco más lioso en Linux.
+     - Fácil de configurar y utilizar, incluso en linux Desktop.
      - Menos configuración manual, ya que el GCM gestiona automáticamente las credenciales.
      - Compatible con plataformas populares como GitHub, Bitbucket, Gitlab, Gitea, Azure DevOps.
 
    - **Desventajas**:
-     - Un poco menos flexible para gestionar múltiples identidades para un mismo servidor Git en comparación con SSH, aunque se puede hacer sin problemas.
+     - Menos flexible para gestionar múltiples identidades para un mismo servidor Git en comparación con SSH, aunque se puede hacer sin problemas.
      - Requiere del Git Credential Manager instalado y configurado. Tampoco es para tanto !
 
 2. **SSH Multicuenta (configurando el fichero `.ssh/config` con host alias)**:
@@ -51,11 +49,9 @@ Para los ejemplos de este apunte uso una mezcla de cuentas simuladas y reales: u
 
 ## Opción 1: HTTPS + Git Credential Manager
 
-Es una opción popular para la gestión de credenciales en Git, especialmente entre desarrolladores que prefieren una configuración sencilla y directa. Se usa el protocolo HTTPS para interactuar con el Servidor (Github, Gitlab, Gitea) y se apoya en el **Git Credential Manager (GCM)** para almacenar y gestionar de forma segura las credenciales del usuario (como nombres de usuario y contraseñas, o tokens de acceso personal).
-
 ### Instalación de Git Credential Manager
 
-Es un programa que tienes que instalarte, existen versiones para Windows, Mac y Linux. Su función es hacer de intermediario entre git, el servior Git y un almacén local. Se encarga de almacenar y recuperar credenciales de manera segura, evitando la necesidad de ingresar las credenciales cada dos por tres. GCM soporta múltiples proveedores de autenticación, incluyendo GitHub, GitLab, Gitea y otros
+Hay que instalarlo, un programita del que existen versiones para Windows, Mac y Linux. Su función es hacer de intermediario entre tu cliente Git, el servior Git y un almacén local. Se encarga de almacenar y recuperar credenciales de manera segura, evitando la necesidad de ingresar las credenciales cada dos por tres.
 
 **Windows**: Instalo desde el [repositorio oficial](https://github.com/git-ecosystem/git-credential-manager/releases). En mi caso escogí `gcm-win-x86-2.5.1.exe`.
 
@@ -185,7 +181,7 @@ Si tienes problemas o quieres automatizar, es muy útil echar un ojo a lo que se
 
 - GUI: **Windows Credentials**, accede con WIN+R busca por `control` > User Accounts > Credential Manager
 
-- CLI:
+- CLI: `cmd.exe /c "cmdkey /list" | tr -d '\r'`. Con ese comando puedes ver las credenciales que están en el Windows Credential.
 
 **MacOS**:
 
