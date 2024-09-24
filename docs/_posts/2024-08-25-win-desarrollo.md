@@ -239,9 +239,15 @@ Efectivamente estamos en una máquina virtual con Ubuntu, así que puedo instala
 luis@kymeraw:~$ sudo apt update && sudo apt upgrade -y
 ```
 
-#### WSL 2 - Cambiar HOME
+#### WSL 2 - Cambiar HOME a /mnt/c/Users
 
-Quiero que al entrar en WSL2 el HOME de mi usuario sea `/mnt/c/Users/luis`, para que `cd` me lleve al mismo HOME que en Windows: `C:\Users\luis`. Voy a usar el comando `usermod` de linux, pero debo hacerlo como root:
+El único propósito por el que me gustaría cambiarlo es que al ejecutar "cd" me lleve a /mnt/c/Users/<usuario>, unificando el HOME en sesiones CMD, PowerShell y WSL2. Bueno, pues muy **IMPORTANTE, no lo recomiendo !!!**. Se puede hacer, que en vez de apuntar a `/home/<usuario>`, apunte a `/mnt/c/Users/<usuario>`, pero lo dicho, es algo que no recomiendo.
+
+¿Por qué no lo recomiendp?: Algunas aplicaciones y herramientas, como Docker Desktop, se rompen. Hay Apps que tienen *hard-coded* el que el $HOME esté en su sitio (/home/<usuario>) dentro de WSL2 y cambiarlo hará que no funcionen correctamente o incluso que tengas errores inesperados.
+
+Por lo tanto, recomiendo dejar tu WSL2 tal cual y una alternativa para ir rápido al HOME de Windows es un alias en `.bashrc` o `.zshrc`: `alias c="cd /mnt/c/Users/<usuario>`.
+
+De todas formas, si necesitas cambiarlo, se haría así:
 
 * Desde Powershell, pido que WSL arranque como `root`:
 
