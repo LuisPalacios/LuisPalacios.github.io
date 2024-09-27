@@ -439,7 +439,7 @@ Actualizar bundle
 
 ### Resolución de problemas
 
-Tanto si he realizado un clone del repositorio desde cero como si tengo problemas, esta secuencia siempre me ha ayudado:
+Tanto si he realizado un clone del repositorio desde cero, como si tengo problemas, esta secuencia siempre me ha ayudado:
 
 ```shell
 brew update
@@ -452,7 +452,10 @@ gem install jekyll bundler
 cd 00.git/02.github-luispa/LuisPalacios.github.io/docs
 [rm Gemfile.lock] (si es que existe)
 bundle install
-[bundle update github-pages] (Esto es opcional)
+
+# Ya puedo arrancar mi server local
+JEKYLL_ENV=development bundle exec jekyll serve --drafts --port 4001
+
 ```
 
 Cuando he tenido que actualizar algo
