@@ -409,18 +409,20 @@ Para poder conectar desde la Consola WSL2 a equipos remotos.
 Get-WindowsCapability -Online | ? Name -like 'OpenSSH*'
 ```
 
-* Desde WSL creo `/mnt/c/Users/luis/.ssh`, luego creo una clave pública/privada.
+* Creo el par pública/privada en el directorio HOME de windows. El motivo es que normalmente voy a usar el cliente SSH de Windows.
 
-```zsh
-⚡ luis@kymeraw:luis % cd     # Vuelvo a HOME
-⚡ luis@kymeraw:luis % pwd
-/mnt/c/Users/luis
-⚡ luis@kymeraw:luis % mkdir .ssh
-⚡ luis@kymeraw:luis % cd .ssh
-⚡ luis@kymeraw:luis % ssh-keygen -t ed25519 -a 200 -C "luis@kymeraw" -f ~/.ssh/id_ed25519
+```PS
+PowerShell 7.4.5
+C:\Users\luis> ssh-keygen.exe -t ed25519 -a 200 -C "luis@kymeraw" -f $env:USERPROFILE\.ssh\id_ed25519_luispa
+
+PowerShell 7.4.5
+C:\Users\luis> ssh-keygen.exe -t ed25519 -a 200 -C "luis@kymeraw" -f %USERPROFILE%\.ssh\id_ed25519_luispa
+
+WSL2
+C:\Users\luis> ssh-keygen -t ed25519 -a 200 -C "luis@kymeraw" -f /mnt/c/Users/luis/.ssh/id_ed25519_luispa
 ```
 
-Aquí tienes más apuntes donde trato el tema de SSH alrededor del desarrollo de software: [SSH y X11]({% post_url 2017-02-11-x11-desde-root %}), [SSH en Linux]({% post_url 2009-02-01-ssh %}), [Git multicuenta]({% post_url 2024-09-21-git-multicuenta %}).
+Te dejo un enlace a otro apunte muy interesante, [Git multicuenta]({% post_url 2024-09-21-git-multicuenta %}), donde trato el tema de SSH como alternativa.
 
 #### WSL 2 - Servidor SSH
 
@@ -489,17 +491,7 @@ New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\Wi
 
 Al trabajar en desarrollo de software, uno de los aspectos más sutiles pero cruciales que debes tener en cuenta es la diferencia entre los finales de línea en archivos de texto entre Windows y Linux.
 
-Este pequeño detalle puede generar grandes problemas si no se maneja correctamente, especialmente cuando se trabaja en entornos mixtos, **conflictos en el control de versiones** **incompatibilidades en scripts**, **problemas de compilación o ejecución**. Estas son algunas soluciones:
-
-* Que Git lo gestione ([documentación aquí](https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings)). Es decir, revisa los finales de línea antes de los commits.
-  * Puede hacerse a nivel global
-    * `git config --global core.autocrlf true`  - Recomendado cuando trabajas en Windows
-    * `git config --global core.autocrlf input` - Recomendado cuando trabajas en Linux
-  * Puede hacerse de forma más granular
-    * Usando el archivo `.gitattributes` en la raiz del repositorio.
-* Usar un editor de texto que te permita elegir el tipo de final de línea. Por ejemplo, Visual Studio Code, Sublime Text, etc
-* Conversión manual con `dos2unix` y `unix2dos` (yo los he instalado en mi WSL2 con `apt install -y dos2unix`)
-* Sobre todo **mantener el control**, yo me aseguro de que mis ediciones, herramientas, editores y scripts estén configurados correctamente para manejar y respetar el formato de finales de línea.
+En este apunte [CRLF vs LF]({% post_url 2024-09-28-crlf-vs-lf %}) puedes encontrar cómo manejo este tema.
 
 #### WSL 2 - Starship
 
@@ -684,7 +676,7 @@ El objetivo principal es tener acceso a `git.exe` desde las consolas nativas `CM
 Decisiones que he tomado durante la instalación:
 
 * Bundled `ssh` & `openssl`: Selecciono **Use the bundled OpenSSH (voids W11 issue) and bundle OpenSSL**. Cuando preparé este apunte la versión de SSH de Windows 11 tiene problemas con repositorios grandes de Git.
-* Handling of CRLF: Selecciono siempre **Checkout as-is, commit Unix-style line endings**
+* Handling of CRLF: Selecciono siempre **Checkout as-is, commit Unix-style line endings**. Ver la sección [sobre crlf](#wsl-2---crlf-vs-lf).
 * PATH (related to Git Bash): Yo no uso Git Bash, por lo que selecciono **Git from the command line and also from 3rd-party software**. Aunque luego añado dicho PATH manualmente al sistema.
 
 Usé la versión `Git-2.46.0-64-bit.exe`:
