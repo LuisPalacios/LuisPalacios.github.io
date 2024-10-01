@@ -295,32 +295,13 @@ PS C:\Users\luis> wsl --list --running
 There are no running distributions.
 ```
 
-#### WSL 2 - Permisos de ficheros
-
-Los permisos de los archivos Linux que se crean en el disco NTFS [se intepretan de una forma muy concreta](https://learn.microsoft.com/en-us/windows/wsl/file-permissions). Los archivos/directorios que se crean en el disco NTFS (debajo de `/mnt/c/Users/luis`) van con permisos 777.
+La línea `options` bajo `[automount]` sirve para establecer bien los permisos de los ficheros. Ten en cuenta que los permisos de los archivos Linux que se crean en el disco NTFS [se intepretan de una forma muy concreta](https://learn.microsoft.com/en-us/windows/wsl/file-permissions). Los archivos/directorios que se crean en el disco NTFS (debajo de `/mnt/c/Users/<usuario>`) van con permisos 777.
 
 A mi eso no me gusta. Quiero que WSL sea coherente, además hay programas a los que no les gusta tanto permiso, un ejemplo es SSH. El cliente de OpenSSH necesita que el directorio y los archivos bajo `~/.ssh` tengan unos permisos específicos.
 
 La solución es activar los ***metadatos*** en la [configuración avanzada de WSL](https://learn.microsoft.com/en-us/windows/wsl/wsl-config), en el fichero `/etc/wsl.conf` en la sección `[automount]`.
 
-```zsh
-[automount]
-options = "metadata,uid=1000,gid=1000,umask=022,fmask=11,case=off"
-```
-
-Hay que salir de la Shell, parar WSL, esperar a que nos diga que no hay nada ejecutándose.
-
-```PS
-root@kymeraw:~# exit
-logout
-luis@kymeraw:~$ exit
-logout
-PS C:\Users\luis> wsl --shutdown
-PS C:\Users\luis> wsl --list --running
-There are no running distributions.
-```
-
-Volvemos a entrar en la Shell y no está de más asegurarse de que mis archivos son míos (si has cambiado de distribución podría ocurrirte que pertenecen a otro usuario, por ejemplo `ubuntu:lxd`).
+Cuando vuelvo a entrar en la Shell me aseguro de que mis archivos son míos (si has cambiado de distribución podría ocurrirte que pertenecen a otro usuario, por ejemplo `ubuntu:lxd`).
 
 ```PS
 PS C:\Users\luis>  ubuntu2404.exe
