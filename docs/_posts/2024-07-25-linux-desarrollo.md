@@ -41,6 +41,29 @@ ssh-keygen -t ed25519 -a 200 -C "luis@kymerax" -f ~/.ssh/id_ed25519
 
 Añade el contenido de la pública al `~/.ssh/authorized_keys` de tus servidores o estaciones remotas.
 
+### Locales
+
+Por si lo necesitas. Para reconfigurar los locales. Yo trabajo con los locales en Español, aunque instale Linux en inglés, de hecho suelo configurar ambos.
+
+- `/etc/locales.gen`
+
+```conf
+en_US.UTF-8 UTF-8
+es_ES.UTF-8 UTF-8
+```
+
+- Ejecutar `locale-gen`
+
+```bash
+locale-gen
+```
+
+- La configuración más completa es con:
+
+```bash
+dpkg-reconfigure locales
+```
+
 ### Instalación de software
 
 **Actualizar** el sistema
