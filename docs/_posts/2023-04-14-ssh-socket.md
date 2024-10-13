@@ -18,13 +18,13 @@ Una de estas unidades es la `systemd.socket`, que arranca el daemon correspondie
 
 ### Introducción
 
-Por ejemplo, si creamos `apache.socket`, le pedimos a *systemd* que inicie el servidor Apache en cuanto se reciba la primera petición de conexión puerto `80` (estándar para solicitudes web). Apache solo se ejecutará cuando sea necesario, lo que puede ahorrar recursos del sistema. Podríamos hacer lo mismo creando `ssh.socket`, le pedimos a `systemd` que inicie el servicio de OpenSSH solo cuando reciba una petición de conexión a través del puerto 22. 
+Por ejemplo, si creamos `apache.socket`, le pedimos a *systemd* que inicie el servidor Apache en cuanto se reciba la primera petición de conexión puerto `80` (estándar para solicitudes web). Apache solo se ejecutará cuando sea necesario, lo que puede ahorrar recursos del sistema. Podríamos hacer lo mismo creando `ssh.socket`, le pedimos a `systemd` que inicie el servicio de OpenSSH solo cuando reciba una petición de conexión a través del puerto 22.
 
 <br/>
 
 #### SSHD por puerto no estándar
 
-Debian como Ubuntu han cambiado la forma de configurar OpenSSH y ahora utilizan `systemd socket activation`. Si queremos cambiar el puerto estándar ya no se hace en el fichero `/etc/ssh/sshd_config`. De hecho, tampoco recomiendo modificando la unidad  `/etc/systemd/system/sockets.target.wants/ssh.socket` (**no sobreviviría a un `apt update`**). Lo correcto es crear el fichero siguiente: 
+Debian como Ubuntu han cambiado la forma de configurar OpenSSH y ahora utilizan `systemd socket activation`. Si queremos cambiar el puerto estándar ya no se hace en el fichero `/etc/ssh/sshd_config`. De hecho, tampoco recomiendo modificando la unidad  `/etc/systemd/system/sockets.target.wants/ssh.socket` (**no sobreviviría a un `apt update`**). Lo correcto es crear el fichero siguiente:
 
 * `/etc/systemd/system/ssh.socket.d/ssh-override.conf`
 
@@ -41,6 +41,15 @@ systemctl restart ssh.socket
 ```
 
 La línea `ListenStream=` hace que deje de escuchar en el puerto `22` y la segunda `ListenStream=12345` es el puerto por el que va a escuchar a partir de ahora.
+
+Si quieres que escuche en dos puertos, tendrías que configurarlo así:
+
+```conf
+[Socket]
+ListenStream=
+ListenStream=22
+ListenStream=12345
+```
 
 <br/>
 
@@ -62,8 +71,8 @@ root@debian:~# systemctl status ssh.socket
 Apr 19 19:17:21 npm systemd[1]: Listening on OpenBSD Secure Shell server socket.
 
 root@debian:~# netstat -tpuln| grep  '22\|12345'
-tcp6       0      0 :::12345                 :::*                    LISTEN      1/init    
+tcp6       0      0 :::12345                 :::*                    LISTEN      1/init
 
 root@debian:~# ps -ef | grep -i "[s]shd"
-root@debian:~# 
+root@debian:~#
 ```

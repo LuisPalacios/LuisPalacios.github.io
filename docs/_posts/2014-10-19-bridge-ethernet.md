@@ -309,6 +309,7 @@ Certificate created at: /root/easy-rsa/pki/issued/norte.crt
 - Durante el proceso anterior se han creado ya los certificados que usará `norte` en su función de Access Server y de Bridge Ethernet Server, pero tenemos que colocarlos en su sitio. Copio los certificados y aprovecho para darles un nombre más significativo.
 
 ```console
+# mkdir /etc/openvpn/server/keys
 # cd /etc/openvpn/server/keys
 # cp /etc/openvpn/easy-rsa/pki/ca.crt norte.ca.crt
 # cp /etc/openvpn/easy-rsa/pki/issued/norte.crt .
