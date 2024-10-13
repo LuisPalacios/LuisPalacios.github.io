@@ -10,13 +10,12 @@ excerpt_separator: <!--more-->
 
 Pruebas de concepto para extender la red de mi casa a un sitio remoto a través de internet, desde donde consumir los servicios de IPTV de Movistar. Utilicé un par de Raspberry Pi 2, conectadas entre sí por un par de túneles IPSec.
 
-Este apunte está relacionado con [Router Linux para Movistar]({% post_url 2014-10-05-router-linux %}) y [videos bajo demanda]({% post_url 2014-10-18-movistar-bajo-demanda %}) con Fullcone NAT en linux. 
+Este apunte está relacionado con [Router Linux para Movistar]({% post_url 2014-10-05-router-linux %}) y [videos bajo demanda]({% post_url 2014-10-18-movistar-bajo-demanda %}) con Fullcone NAT en linux.
 
 <br clear="left"/>
 <!--more-->
 
 | Actualización 2023: A nivel de rendimiento recuerdo que estas pruebas debajan mucho que desear y tuve problemas de configuración. He vuelto a probar hace poco con un par de [Pi 4 con Raspberry Pi OS 64bits]({% post_url 2023-03-02-raspberry-pi-os %}) que funcionan infinitamente mejor y de paso he actualizado este apunte. |
-
 
 ## Arquitectura
 
@@ -29,8 +28,8 @@ Este es el Hardware que he utilizado:
 
 En `norte` creo dos túneles IPSec/UDP en modo Servidor (con [OpenVPN](https://openvpn.net)):
 
-- 1) **Access Server** para tráfico normal de Internet
-- 2) **Bridge Ethernet** para tráfico IPTV
+- **Access Server** para tráfico normal de Internet
+- **Bridge Ethernet** para tráfico IPTV
 
 En `sur` me conecto como cliente y creo **tres VLANs** en la LAN:
 
@@ -73,7 +72,7 @@ Limito el log a pocos días, esto va por gustos.
 # journalctl --vacuum-size=500M
 ```
 
-Verifico que el timezone es correcto y la hora se está sincronizando. 
+Verifico que el timezone es correcto y la hora se está sincronizando.
 
 ```console
 # dpkg -l | grep -i tzdata
@@ -96,7 +95,7 @@ Instalo OpenVPN, Bridge Utils y algunas herramientas importantes.
 
 ```console
 # apt install -y openvpn unzip bridge-utils \
-         dnsutils tcpdump ebtables tree bmon
+         dnsutils tcpdump ebtables tree bmon easy-rsa
 ```
 
 <br />
@@ -113,12 +112,12 @@ Instalo OpenVPN, Bridge Utils y algunas herramientas importantes.
 El servidor `norte` es el que está en mi casa con conexión directa al router de Movistar con ambas interfaces. El primer puerto (`eth0`) será el principal por donde irá todo el tráfico normal, mientras que el segundo (`eth1`) lo dedicaré exclusivamente a tráfico IPTV.
 
 {% include showImagen.html
-    src="/assets/img/posts/2014-10-19-bridge-ethernet-02.jpg"
+    src="/assets/img/posts/2014-10-19-bridge-ethernet-02.png"
     caption="Networking del servidor norte"
     width="600px"
     %}
 
-Arriba tienes el esquema de conexiones. He incluido a modo informativo cuales son los rangos que maneja un router 
+Arriba tienes el esquema de conexiones. He incluido a modo informativo cuales son los rangos que maneja un router
 de movistar por defecto.
 
 <br />
@@ -129,11 +128,11 @@ La configuración IP de `norte` es sencilla. Si consultas el `dhcpcd.conf` de m�
 
 - [/etc/dhcpcd.conf](https://gist.github.com/LuisPalacios/0513c8b1c2119da372d2f1e4fcea57d9)
 
-Aunque no activo `eth1` durante el boot, para que funcione el TP-Link Adaptador UE300 necesito crear el fichero siguiente (no se hará efectivo hasta el próximo reboot). 
+Aunque no activo `eth1` durante el boot, para que funcione el TP-Link Adaptador UE300 necesito crear el fichero siguiente (no se hará efectivo hasta el próximo reboot).
 
 - [/etc/udev/rules.d/50-usb-realtek-net.rules](https://gist.github.com/LuisPalacios/7f78efbcb6d57ff29d72209e1a5c43a6)
 
-Para evitar que **`networkd`** elimine reglas o rutas que se establecen por fuera de su control modifico el fichero `networkd.conf`. Un ejemplo es si usamos `RIP` (vía [frr](https://frrouting.org)) para recibir rutas, otro ejemplo es si usamos el comando `ip rule` para hacer policy based routing (de hecho en este apunte lo utilizo). 
+Para evitar que **`networkd`** elimine reglas o rutas que se establecen por fuera de su control modifico el fichero `networkd.conf`. Un ejemplo es si usamos `RIP` (vía [frr](https://frrouting.org)) para recibir rutas, otro ejemplo es si usamos el comando `ip rule` para hacer policy based routing (de hecho en este apunte lo utilizo).
 
 - `/etc/systemd/networkd.conf`
 
@@ -183,10 +182,10 @@ net.ipv4.ip_forward=1
 
 #### NAT y Firewall
 
-Este equipo no va a actuar como router en la LAN local, pero sí que va a conmutar tráfico entre los túneles. 
+Este equipo no va a actuar como router en la LAN local, pero sí que va a conmutar tráfico entre los túneles.
 
 Estos son los Servicios y Scripts que he creado:
-  
+
 - [/etc/systemd/system/internet_wait.service](https://gist.github.com/LuisPalacios/421b9b4c1bdda72d28fd2e12a621d8c8)
 - [/etc/systemd/system/firewall_1_pre_network.service](https://gist.github.com/LuisPalacios/caa9d72bcdc44ec1727452e9c6660074)
 - [/etc/systemd/system/firewall_2_post_network.service](https://gist.github.com/LuisPalacios/1d5865d8bd59da1d2c077014a6485c3a)
@@ -221,15 +220,15 @@ De momento no rearranco el equipo, sigo configurando.
 
 #### Certificados
 
-Lo primero que hay que hacer, y solo hay que hacerlo una vez, es configurar los certificados del equipo que hace de “servidor” (`norte`). 
- 
+Lo primero que hay que hacer, y solo hay que hacerlo una vez, es configurar los certificados del equipo que hace de “servidor” (`norte`).
+
  - Preparo el directorio de trabajo de **easy-rsa**
 
 ```console
 # cp -a /usr/share/easy-rsa /etc/openvpn/easy-rsa
 ```
 
-- Empiezo creando el fichero `vars` 
+- Empiezo creando el fichero `vars`
 
 ```console
 # cd /etc/openvpn/easy-rsa
@@ -393,7 +392,7 @@ Cambio los permisos a los ficheros `*.sh` y arranco el servicio
      Active: active (running) since Sun 2014-10-19 13:20:08 CET; 17s ago
              ======
 
-# ip a 
+# ip a
 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
     inet 192.168.1.2/24 brd 192.168.1.255 scope global noprefixroute eth0
 
@@ -444,7 +443,7 @@ Activo **Port Forwarding** en el Router de Movistar donde está ubicado `norte`.
 
 <br />
 
-### IGMP Proxy 
+### IGMP Proxy
 
 Por el interfaz del Bridge `br206` de `norte` van a llegar los `join` multicast del Deco remoto (`sur`). Llegan hasta ahí, por lo que necesito reenviarlos y hacer de intermediario. Esa es la función de `igmpproxy` en norte: escucha por el downstream (interfaz `br206`) y reenvía por su upstream (interfaz `eth1`).
 
@@ -536,7 +535,7 @@ El servidor `sur` es el que está en remoto. También cuenta con dos tarjetas de
 
 Configuro ambas interfaces, la `eth0` (puerto embebido de las Raspberry Pi) conectada al router del proveedor (IP dinámica, router por defecto y DNS Server).
 
-La `eth1` (puerto usb dongle gigabitethernet) conectada a mi switch con soporte de VLAN's e IGMP Snooping. En mi laboratorio he utilizado un Switch tp-link TL-SG108E, pero cualquiera de consumo con soporte de VLAN's e IGMP Snooping nos vale. Al final del apunte tienes capturas con la configuración del Switch. En esta interfaz uso las VLAN's: 
+La `eth1` (puerto usb dongle gigabitethernet) conectada a mi switch con soporte de VLAN's e IGMP Snooping. En mi laboratorio he utilizado un Switch tp-link TL-SG108E, pero cualquiera de consumo con soporte de VLAN's e IGMP Snooping nos vale. Al final del apunte tienes capturas con la configuración del Switch. En esta interfaz uso las VLAN's:
 
 VLAN | Función
 -------|-------------------
@@ -586,14 +585,14 @@ Edito el fichero `/etc/sysctl.conf` y modifico la lisguiente línea para que se 
 net.ipv4.ip_forward=1
 ```
 
-<br /> 
+<br />
 
 #### NAT y Firewall
 
 Este equipo actúa como router entre las diferentes interfaces y redes disponibles, así que es importante definir y configurar sus opciones de NAT y Firewall.
 
 Servicios y Scripts que necesitas crear:
-  
+
 - [/etc/systemd/system/internet_wait.service](https://gist.github.com/LuisPalacios/421b9b4c1bdda72d28fd2e12a621d8c8)
 - [/etc/systemd/system/firewall_1_pre_network.service](https://gist.github.com/LuisPalacios/ad2a727e744f323f911f1a602da5b70e)
 - [/etc/systemd/system/firewall_2_post_network.service](https://gist.github.com/LuisPalacios/9d7131feb3503d327341065e93e01f18)
@@ -741,9 +740,9 @@ PING 192.168.206.1 (192.168.206.1) 56(84) bytes of data.
 
 <br />
 
-#### DHCP Server 
+#### DHCP Server
 
-![logo pihole](/assets/img/posts/logo-pihole.svg){: width="150px" height="150px" style="float:right; padding-right:25px" } 
+![logo pihole](/assets/img/posts/logo-pihole.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
 
 En `sur` necesito instalar un servidor DHCP para servir IP's en sus interfaces LAN, en realidad en sus VLAN's, incluido el Deco y sus opciones concretas.
 
@@ -757,7 +756,7 @@ Ejecuto la instalación de Pi-hole (para más detalle consulta el enlace)
 $ curl -sSL https://install.pi-hole.net | bash
 ```
 
-Estos son los ficheros de configuración para la parte de DHCP: 
+Estos son los ficheros de configuración para la parte de DHCP:
 
 - [/etc/dhnsmasq.d/01-pihole.conf](https://gist.github.com/LuisPalacios/dd2dd41690887957215cc5d88c0750d4)
 - [/etc/dhnsmasq.d/02-pihole-dhcp.conf](https://gist.github.com/LuisPalacios/23adb47e03d7bbcfbf5602127c560d70)
@@ -807,7 +806,7 @@ Puertos | VLAN - Descripción
     width="600px"
     %}
 
-Como curiosidd, una vez que tengamos todo funcionando podemos ver en el propio switch los grupos multicast activos: 
+Como curiosidd, una vez que tengamos todo funcionando podemos ver en el propio switch los grupos multicast activos:
 
 {% include showImagen.html
     src="/assets/img/posts/2014-10-19-bridge-ethernet-09.png"
@@ -820,7 +819,7 @@ Como curiosidd, una vez que tengamos todo funcionando podemos ver en el propio s
 
 ### Salud del servicio
 
-Dejo aquí un script que verifica el estado de salud de las conexiones: 
+Dejo aquí un script que verifica el estado de salud de las conexiones:
 
 **Norte**
 
