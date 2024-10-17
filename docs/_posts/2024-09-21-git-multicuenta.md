@@ -195,6 +195,10 @@ Si tienes problemas o quieres automatizar, es muy útil echar un ojo a lo que se
 
 - CLI: `security find-generic-password -s "git:https://github.com" -a "LuisPalacios"`. Sensible a mayúsculas/minúsculas y no soporta expresiones reguales, es decir, tienes que poner lo que busca de forma exacta.
 
+Para borrar credenciales:
+
+- CLI: `security delete-generic-password -s "git:https://github.com" -a "LuisPalacios"`.
+
 **Linux**:
 
 - GUI: **`GNome Keyring`+ Seahorse**, en mi caso con Ubuntu.
