@@ -165,6 +165,16 @@ Si ahora entro en "buscar" ya empiezo a ver los efectos, cada vez menos morralla
       width="400px"
       %}
 
+***File Explorer***. Mostrar archivos y directorios ocultos, file extensions, etc.
+
+* Start > Settings > `System` > `For developers`
+  * Habilitar el modo para desarrolladores si no lo estaba ya.
+  * Entrar en > `File Explorer`
+    * `Show file extensios`: **On**
+    * `Show hidden and system files`: **On**
+    * `Show full path in title bar`: **On**
+    * `Show empty drives`: **On**
+
 ***Habilitar File Sharing***. Es algo que voy a necesitar, así que lo configuro
 
 * Start > Settings > `Network and Internet` > `Advanced network settings`
