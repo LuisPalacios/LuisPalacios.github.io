@@ -660,12 +660,11 @@ Ahora configuro el mi *servicio como cliente del Access Server de `norte`*. Creo
 - [/etc/openvpn/client/sur_cliente_access_de_norte_DOWN.sh](https://gist.github.com/LuisPalacios/b54b27d34e9f3c718eb27fc3de977559)
 - [/etc/openvpn/client/sur_cliente_access_de_norte_UP.sh](https://gist.github.com/LuisPalacios/59ed7e4df2e232689c555cf88bfdb733)
 
-
 ```console
-# systemctl start openvpn-server@sur_cliente_access_de_norte
-# systemctl enable openvpn-server@sur_cliente_access_de_norte
-# systemctl status openvpn-server@sur_cliente_access_de_norte
-● openvpn-server@sur_cliente_access_de_norte.service - OpenVPN service for sur_cliente_access_de_norte
+# systemctl start openvpn-client@sur_cliente_access_de_norte
+# systemctl enable openvpn-client@sur_cliente_access_de_norte
+# systemctl status openvpn-client@sur_cliente_access_de_norte
+● openvpn-client@sur_cliente_access_de_norte.service - OpenVPN service for sur_cliente_access_de_norte
      Loaded: loaded (/lib/systemd/system/openvpn-server@.service; enabled; vendor preset: enabled)
                                                                   =======
      Active: active (running) since Sat 2014-10-19 12:20:07 CET; 1min 14s ago
@@ -704,8 +703,8 @@ Ahora configuro el *servicio cliente del Bridge Ethernet de `norte`*. Creo el fi
 # chmod 755 sur_cliente_bridge_ethernet_de_norte*.sh
 
 # systemctl start openvpn-client@sur_cliente_bridge_ethernet_de_norte
-# systemctl enable openvpn-server@sur_cliente_bridge_ethernet_de_norte
-# systemctl status openvpn-server@sur_cliente_bridge_ethernet_de_norte
+# systemctl enable openvpn-client@sur_cliente_bridge_ethernet_de_norte
+# systemctl status openvpn-client@sur_cliente_bridge_ethernet_de_norte
 root@sur:/etc/openvpn/client# systemctl status openvpn-client@sur_cliente_bridge_ethernet_de_norte.service
 ● openvpn-client@sur_cliente_bridge_ethernet_de_norte.service - OpenVPN service for sur_cliente_bridge_ethernet_de_norte
      Loaded: loaded (/lib/systemd/system/openvpn-client@.service; enabled; vendor preset: enabled)
