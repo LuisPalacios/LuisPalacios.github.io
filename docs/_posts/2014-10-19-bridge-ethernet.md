@@ -504,6 +504,7 @@ nf_nat_rtsp
 
 Automático: `sysctl -w net.netfilter.nf_conntrack_helper=1`, solo funciona hasta el Kernel 5.x.
 Manual: `iptables -t raw -A PREROUTING -p tcp --dport 554 -j CT --helper rtsp`, funciona con cualquier versión de Kernel, incluida la 6.x.
+Check manual con: `iptables -L -n -t raw -v`
 
 | ¡Aviso! - Ahora es buen momento para hacer un reboot de `norte` |
 
