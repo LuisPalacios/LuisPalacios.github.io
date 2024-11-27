@@ -930,16 +930,28 @@ go build
 
 Hablar de `.NET` lia un poco a no ser que hayas vivido y experimentado toda su evolución. Ha fecha de hoy tenemos:
 
-* ***.NET Framework***: Solo está disponible en Windows y se mantendrá en su versión 4.8, principalmente para soportar aplicaciones que lo necesitan.
-* ***.NET (5 y versiones posteriores)***: Es multiplataforma, más moderno y la evolución natural de .NET Core, no de .NET Framework.
+* ***.NET Framework***: Solo está disponible en Windows. Su última version y donde se ha quedado es la 4.8, principalmente para garantizar compatibilidad con aplicaciones existentes que requieran que tengas instalado .NET Framework.
+  * Es exclusivo para Windows. Instala sus archivos y dependencias en directorios específicos del sistema operativo (como `C:\Windows\Microsoft.NET\Framework`). Utiliza el Global Assembly Cache (GAC) para gestionar las bibliotecas compartidas.
+
+* ***.NET 5+***: Es el futuro, unifica las plataformas .NET Core, .Net Framework y Xamarín, tiene mejor rendimiento, características nuevas y es multiplataforma: Windows, Linux y macOS
 
 ### .NET Framework
 
-El .NET Framework es una plataforma de desarrollo creada por Microsoft para construir y ejecutar aplicaciones en Windows. Incluye muchas bibliotecas de clases para hacer Apps de escritorio, servicios web, aplicaciones web, etc. Se usa mucho en todo tipo de Apps que corren en Windows.
+El .NET Framework es una plataforma de desarrollo creada por Microsoft diseñada específicamente para construir y ejecutar aplicaciones en Windows. Incluye un conjunto extenso de bibliotecas de clases y soporte para tecnologías como aplicaciones de escritorio (Windows Forms, WPF), Servicios web o aplicaciones web mediante "ASP.NET".
 
-Lo **vas a instalar sí o sí**, aunque el futuro sea .NET (core .5), me da igual si acabas teniendo el Runtime como si acabas teniendo el Developer Pack (incluye el Runtime, necesario para desarrollar). Yo no voy a necesitar el .NET 3.5 (incluye .NET 2.0) porque no creo que instale Apps antiguas que requieran dicho Framework, pero el que sí que voy a necesitar es el .NET 4.8 porque es el último y seguro que algún app me lo pide. Por ejemplo, [HTTPie](#httpie) necesita que tengas el Runtime.
+Su popularidad radica en que ha sido la base para innumerables aplicaciones empresariales y de consumo desarrolladas en las últimas dos décadas. Sin embargo, su ciclo de vida activo concluye con la versión 4.8.
 
-Puedes instalarlo desde la **Programas y características** del panel de control o desde la Web de microsoft). Si uso el primer método, verifico antes qué tengo y luego instalo.
+¿Por qué instalar .NET Framework 4.8?
+
+*Compatibilidad: Muchas aplicaciones desarrolladas para Windows aún dependen de esta versión, incluso herramientas modernas (como [HTTPie](#httpie)) requieren que el runtime esté presente.
+
+* Soporte: Aunque no planees ejecutar aplicaciones más antiguas que dependan de versiones como .NET 2.0 o 3.5, la versión 4.8 garantiza que puedas usar software actual y compatible.
+
+* Requisitos de desarrollo: Si estás desarrollando o manteniendo aplicaciones basadas en .NET Framework, necesitarás el Developer Pack (que incluye el runtime).
+
+En resumen, aunque .NET Framework ya no evolucionará más allá de la versión 4.8, sigue siendo crucial para garantizar compatibilidad con el ecosistema Windows actual.
+
+Para instalar .NET Framework 4.8, entra en **Programas y características** del panel de control o desde la Web de microsoft). Si uso el primer método, verifico antes qué tengo y luego instalo.
 
 1. Abro **Control Panel** > **Programs** > **Programs and Features** > **Turn Windows features on or off**.
 2. Aquí se puede ver la versión de .NET Framework instaladas.
@@ -947,7 +959,7 @@ Puedes instalarlo desde la **Programas y características** del panel de control
 4. Marca la casilla junto a la versión que deseas instalar.
 5. Haz clic en **Aceptar** y espera a que Windows complete la instalación.
 
-Si la versión no está en la lista, puedo ir a la Web de microsoft, ([ejemplo para la 4.8.1](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net481)
+Si la versión no está en la lista, puedo ir a la Web de microsoft, ([ejemplo para la 4.8.1](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net481))
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-25-win-desarrollo-14.png"
@@ -955,7 +967,26 @@ Si la versión no está en la lista, puedo ir a la Web de microsoft, ([ejemplo p
       width="640px"
       %}
 
-### .NET 5 / Core
+Puedes comprobar qué version tienes instalada con el comando siguietne desde PowerShell y comprobar el número que muestra en la página de [.NET Framework versions and dependencies](https://learn.microsoft.com/en-us/dotnet/framework/migration-guide/versions-and-dependencies):
+
+```PS1
+Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full' | Get-ItemPropertyValue -Name Release
+```
+
+Puedes usar la herramienta [.NET Version Detector](https://www.asoft.be/prod_netver.html), una herramienta ligera que proporciona información sobre las diferentes versiones de Microsoft .NET y .NET Core que están instaladas en una máquina.
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-25-win-desarrollo-20.png"
+      caption=".NET Version Detector"
+      width="700px"
+      %}
+
+### .NET 5+
+
+.NET 5+ es la evolución natural y unificación de las plataformas .NET Core, .NET Framework, y Xamarin, consolidándolas en una única plataforma moderna y multiplataforma. Aquí está una comparación detallada entre .NET y .NET 5+:
+
+* .NET Core: Se centraba en ser una plataforma multiplataforma moderna, pero coexistía con .NET Framework (sin incluir todas sus APIs) y Xamarin, creando cierta fragmentación en el ecosistema. ".NET" Core terminó oficialmente con su versión 3.1LTS.
+* .NET 5+: Unifica las capacidades de .NET Core, .NET Framework y Xamarin bajo un mismo nombre y modelo de desarrollo. Esto simplifica la elección para desarrolladores al proporcionar una única plataforma para construir aplicaciones de escritorio, móviles, web, servicios en la nube, IoT, y más. El nombre “Core” desaparece para reflejar su posición como la plataforma única .NET. La numeración salta del 3.1 al 5 para evitar confusiones con .NET Framework y marcar un nuevo comienzo.
 
 Pendiente de documentar
 
