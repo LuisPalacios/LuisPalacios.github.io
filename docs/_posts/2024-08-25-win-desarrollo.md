@@ -617,6 +617,16 @@ Empiezo a trabajar de manera más eficiente y organizada. Tengo la posibilidad d
 
 Aquí tienes el [mi fichero de configuración settings.json](https://gist.github.com/LuisPalacios/ba989c7d8f2f65cd49308402754df82e) que utilizo en mi ordenador. Nota: los `uuid` del mismo serán distintos en tu caso. No lo copies/pegues tal cual o no te funcionará.
 
+***Configurar Ctrl-D para salir***: Dado que soy un usuario Linux, estoy acostumbrado a salir del terminal pulsando Ctrl-D, por lo que tener que escribir `exit [Intro]` da muhca pereza. La solucion es sencilla, basta con ejecutar `Set-PSReadlineKeyHandler -Key ctrl+d -Function ViExit` en mi Powershell. Para hacerlo permanente, edito mi fichero $Profile.
+
+```PS1
+luis@kymeraw:~ ❯ Echo $Profile
+C:\Users\luis\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
+
+Añado
+Set-PSReadlineKeyHandler -Key ctrl+d -Function ViExit
+```
+
 <br/>
 
 ---
