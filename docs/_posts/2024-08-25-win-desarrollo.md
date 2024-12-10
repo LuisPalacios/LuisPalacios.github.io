@@ -938,12 +938,12 @@ go build
 
 ## .NET
 
-Hablar de `.NET` lia un poco a no ser que hayas vivido y experimentado toda su evolución. Ha fecha de hoy tenemos:
+Hablar de `.NET` lia un poco a no ser que hayas vivido y experimentado toda su evolución. A fecha de hoy tenemos:
 
 * ***.NET Framework***: Solo está disponible en Windows. Su última version y donde se ha quedado es la 4.8, principalmente para garantizar compatibilidad con aplicaciones existentes que requieran que tengas instalado .NET Framework.
   * Es exclusivo para Windows. Instala sus archivos y dependencias en directorios específicos del sistema operativo (como `C:\Windows\Microsoft.NET\Framework`). Utiliza el Global Assembly Cache (GAC) para gestionar las bibliotecas compartidas.
 
-* ***.NET 5+***: Es el futuro, unifica las plataformas .NET Core, .Net Framework y Xamarín, tiene mejor rendimiento, características nuevas y es multiplataforma: Windows, Linux y macOS
+* ***.NET 5+***: Es el futuro, unifica las plataformas .NET Core, .Net Framework y Xamarín, tiene mejor rendimiento, características nuevas y es multiplataforma: Windows, Linux y macOS. ***En Noviembre de 2024 se liberó la version 9 !!!***
 
 ### .NET Framework
 
@@ -988,23 +988,113 @@ Puedes usar la herramienta [.NET Version Detector](https://www.asoft.be/prod_net
 {% include showImagen.html
       src="/assets/img/posts/2024-08-25-win-desarrollo-20.png"
       caption=".NET Version Detector"
-      width="700px"
+      width="500px"
       %}
 
 ### .NET 5+
 
-.NET 5+ es la evolución natural y unificación de las plataformas .NET Core, .NET Framework, y Xamarin, consolidándolas en una única plataforma moderna y multiplataforma. Aquí está una comparación detallada entre .NET y .NET 5+:
+La evolución natural y unificación de .NET Core, .NET Framework, y Xamarin, consolidándolas en una única plataforma moderna y multiplataforma. Aquí está una comparación detallada entre .NET y .NET 5+:
 
 * .NET Core: Se centraba en ser una plataforma multiplataforma moderna, pero coexistía con .NET Framework (sin incluir todas sus APIs) y Xamarin, creando cierta fragmentación en el ecosistema. ".NET" Core terminó oficialmente con su versión 3.1LTS.
 * .NET 5+: Unifica las capacidades de .NET Core, .NET Framework y Xamarin bajo un mismo nombre y modelo de desarrollo. Esto simplifica la elección para desarrolladores al proporcionar una única plataforma para construir aplicaciones de escritorio, móviles, web, servicios en la nube, IoT, y más. El nombre “Core” desaparece para reflejar su posición como la plataforma única .NET. La numeración salta del 3.1 al 5 para evitar confusiones con .NET Framework y marcar un nuevo comienzo.
 
+Para instalar la última version .NET 5+ (en Nov de 2024 la 9.0) en Windows,
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-25-win-desarrollo-21.png"
+      caption="Instalacion de .NET 5+"
+      width="350px"
+      %}
+
+**Atención!!**, ojito porque recopila datos de uso. Aqui tienes más información y cómo [optar por no participar](https://aka.ms/dotnet-cli-telemetry). Para desactivar esta telemetría (incluso antes de instalarlo):
+
+* Entro en el editor de variables de entorno
+  * `Start` > `Settings > System > About > Advance System Settings`
+  * o bien `Search` > "`Advance System Settings`" o "`Environment Variables`"
+* Modificar en ***`System variables`*** añadiendo la variable `DOTNET_CLI_TELEMETRY_OPTOUT` con valor `1` o `true`
+
+1. **Desde la página oficial de descargas**:
+   - [dotnet.microsoft.com/download](https://dotnet.microsoft.com/download).
+   - Selecciona la versión de .NET que deseas instalar (Runtime o SDK). En mi caso SDK porque voy a desarrollar aplicaciones.
+2. **Descarga el instalador**:
+   - Elige la opción correspondiente a tu sistema operativo (Windows x64 para la mayoría de los usuarios).
+3. **Ejecuta el instalador**:
+   - Sigue las instrucciones en pantalla para completar la instalación. En mi caso se instalaron los siguientes productos:
+     - SDK de .NET 9.0.100
+     - .NET Runtime 9.0.0
+     - ASP.NET Core Runtime 9.0.0
+     - .NET Windows Desktop Runtime 9.0.0
+4. Enlaces a Recursos
+   - Documentación de .NET [https://aka.ms/dotnet-docs](https://aka.ms/dotnet-docs)
+   - Documentación de SDK [https://aka.ms/dotnet-sdk-docs](https://aka.ms/dotnet-sdk-docs)
+   - Notas de la versión [https://aka.ms/dotnet9-release-notes](https://aka.ms/dotnet9-release-notes)
+   - Tutoriales [https://aka.ms/dotnet-tutorials](https://aka.ms/dotnet-tutorials)
+
+Verifico la instalación, que por defecto, .NET 5+ y versiones posteriores, se instalan en `C:\Program Files\dotnet`
+
+```PS1
+luis@kymeraw:~ ❯ dotnet --version
+9.0.100
+```
+
+Con .NET instalado, puedes crear tu primer programa en C# fácilmente utilizando la CLI de .NET.
+
+1. Abre terminal (CMD, PowerShell o terminal en tu editor de código).
+2. Navega al directorio donde quieres crear el proyecto:
+
+```PS1
+luis@kymeraw:tmp ❯ dotnet new console -n HolaMundo
+The template "Console App" was created successfully.
+
+Processing post-creation actions...
+Restoring C:\Users\luis\tmp\HolaMundo\HolaMundo.csproj:
+Restore succeeded.
+luis@kymeraw:tmp ❯ cd .\HolaMundo\
+```
+
+Este es el programa que genera
+
+```csharp
+// See https://aka.ms/new-console-template for more information
+Console.WriteLine("Hello, World!");
+```
+
+```PS1
+luis@kymeraw:HolaMundo ❯ dotnet run
+Hello, World!
+```
+
+Para crear un ejecutable
+
+```PS1
+luis@kymeraw:HolaMundo ❯ dotnet build
+Restore complete (0,1s)
+  HolaMundo succeeded (0,1s) → bin\Debug\net9.0\HolaMundo.dll
+
+Build succeeded in 0,5s
+luis@kymeraw:HolaMundo ❯ .\bin\Debug\net9.0\HolaMundo.exe
+Hello, World!
+```
+
+<br/>
+
+---
+
+## Visual Studio
+
 Pendiente de documentar
 
-## Work in Progress
+## Node.js
 
-Esta sección la marco como "Trabajo en curso (WiP en inglés)", porque hay decenas de apps, utilidades, comandos, entornos de desarrollo y es imposible documentarlos todos. Mi objetivo realmente era romper el hielo. Realmente estos apuntes vienen bien para tener una bitácora de mi instalación, por si tengo que repetirla, pero sobre todo porque espero que te venga bien a ti como ejemplo.
+Pendiente de documentar
 
-Iré documentado/añadiendo lo nuevo que vaya instalando, cosas que tengo en la cabeza: Compilador de C/C++, Node.js, JDK de Java, BBDD locales (Si lo hago será con Docker).
+## JDK de Java
+
+Pendiente de documentar
+
+## BBDD locales
+
+Pendiente de documentar
 
 <br/>
 
