@@ -1,5 +1,5 @@
 ---
-title: "HA y TPLink SG108PE"
+title: "HA y TPLink"
 date: "2024-12-21"
 categories: domótica
 tags: ha hass gome assitant iot switch poe
