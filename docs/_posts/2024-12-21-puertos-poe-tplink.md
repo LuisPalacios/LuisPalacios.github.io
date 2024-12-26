@@ -8,16 +8,24 @@ excerpt_separator: <!--more-->
 
 ![Logo CRLF](/assets/img/posts/logo-hass-switch.svg){: width="150px" style="float:left; padding-right:25px" }
 
-Este documento describe cómo controlar un puerto PoE en un switch TP-Link TL-SG108PE desde la red local. Este switch no soporta `SNMP` por lo que voy a usar `curl` para autenticarme y activar o desactivar un puerto específico. En este caso, se detalla el control de una cámara PoE ReoLink conectada al puerto 1. Mi objetivo final es poder integrarlo con Home Assistant.
+Este documento describe cómo controlar un puerto PoE en un switch TP-Link desde la red local. Este switch no soporta `SNMP` por lo que voy a usar `curl` para autenticarme y activar o desactivar un puerto específico. El caso de uso es poder encender/apagar una cámara PoE ReoLink conectada a uno de los puertos e integrarlo con Home Assistant.
 
 <br clear="left"/>
 <!--more-->
 
 ## Introducción
 
-El switch está configurado con el nombre de host `sw-despacho-mesa.parchis.org`. Para poder actuar con `curl` primero tengo que autenticarme y después ya puedo pedir acciones al puerto (encendido o apagado) o Consulta sobre su estado.
+El switch es un `TPLink TL-SG108PE` y lo tengo configurado con el nombre de host `sw-despacho-mesa.parchis.org`. Para poder "atacarlo" vía `curl` primero hay que autenticarse y después pedir acciones como encender, apagar o consultar el estado de un puerto. Este equipo utiliza autenticación basada en **Sesión del Servidor** (en vez de basada en basada en Cookies). Al autenticarse con el primer `curl`, el servidor vincula la dirección IP del cliente o algún identificador único (como un token) a una sesión activa y si las solicitudes posteriores provienen del mismo cliente en un tiempo razonable, el servidor las considera parte de la misma sesión, razón por la que el segundo comando `curl` funciona.
 
-**Autenticación**: Este comando autentica el cliente en el switch. Es necesario ejecutarlo siempre antes de intentar controlar o consultar los puertos, ya que las solicitudes de control requieren una sesión autenticada. Si ya se encuentra autenticado, este comando puede ejecutarse de nuevo sin problemas.
+| Nota: si el switch usase sesiones basadas en Cookies el truco consiste en salvar salvar la cookie (opcion `-c`) en la primera ejecución de `curl` y en la segunda enviarla con la opción `-b`. |
+
+```mermaid
+graph TD
+    HA[Home Assistant] --> |LAN| TPLink[Switch TP-Link TL-SG108PE]
+    TPLink --> |Puerto 1 - PoE| Camera[ReoLink Cámara PoE]
+```
+
+**Autenticación**: Este es el comando que autentica al cliente (ordenador desde donde se ejecuta) en el switch. Es necesario ejecutarlo antes de intentar controlar o consultar los puertos, ya que las solicitudes de control requieren una sesión autenticada. Si ya se encuentra autenticado, este comando puede ejecutarse de nuevo sin problemas.
 
 ```bash
 curl -X POST "http://sw-despacho-mesa.parchis.org/logon.cgi" \
