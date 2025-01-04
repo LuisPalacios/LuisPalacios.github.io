@@ -82,7 +82,7 @@ El ejecutable queda en: `/usr/local/bin/git-credential-manager`
 
 Una vez instalado GCM, es necesario configurarlo para que gestione las credenciales de nuestros repositorios. Antes de nada repaso el fichero `~/.gitconfig` para quitar la entrada [user] (el usuario/email lo configuro por repositorio), elimino entradas de tipo "insteadOf" que suelen usarse con SSH.
 
-El parámetro más importante es el `credential.helper`. Con él se le dice a Git que use CGM. De hecho, al terminar la instalación, en MacOS y en Windows, se configura automáticamente el path a `git-credentail-manager`, excepto en linux.
+El parámetro más importante es el `credential.helper`. Con él se le dice a Git que use CGM. Podemos comprobar con los comandos siguientes que en MacOS y en Windows, se configura automáticamente el path, excepto en linux.
 
 - Windows:
   - `git config credential.helper` devuelve `C:/Program\ Files\ \(x86\)/Git\ Credential\ Manager/git-credential-manager.exe`
@@ -90,8 +90,8 @@ El parámetro más importante es el `credential.helper`. Con él se le dice a Gi
 - MacOS:
   - `git config credential.helper` devuelve `/usr/local/share/gcm-core/git-credential-manager`
   - `git config --list --show-origin` indica que se configura en `/Users/luis/.gitconfig`
-- Linux:
-  - `git config credential.helper` no devuelve nada. No lo configura.
+- Linux: Aquí vemos que no devuelve nada, y eso es porque no lo configura.
+  - `git config credential.helper`
 
 Configuro el mismo **credential.helper** para todos los sistemas operativos (al poner `manager` buscará `git-credential-manager.exe` o `git-credential-manager` en el PATH.
 
