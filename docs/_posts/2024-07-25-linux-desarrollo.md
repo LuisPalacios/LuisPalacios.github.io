@@ -148,7 +148,12 @@ https://localhost:9443   (Asigno contraseña al administrador)
 **`tmux`** desde los fuentes
 
 ```zsh
-cd ~/ && git clone https://github.com/tmux/tmux.git && cd tmux && ./autogen && ./configure
+# Preparo el entorno, módulos adicionales
+sudo apt-get update
+sudo apt install pkg-config autoconf-archive build-essential autoconf libtool libssl-dev python3-pkgconfig libcurl4-gnutls-dev
+
+# Descargo y compilo tmux
+cd ~/ && git clone https://github.com/tmux/tmux.git && cd tmux && ./autogen.sh && ./configure
 make && sudo make install
 ```
 
