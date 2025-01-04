@@ -202,8 +202,9 @@ No necesita mucha presentación. En Ubuntu lo instalo desde la página de [Googl
 Visual Studio Code es un editor de código fuente para Windows, Linux, macOS y Web con un soporte increible de extensioens, características, plugins y lenguajes soportados. Sigo las indicaciones de [Visual Studio Code on Linux](https://code.visualstudio.com/docs/setup/linux), **descargo el .deb** y al instalo (también añade el repositorio apt para luego hacer los updates automáticos mediante el gestor de paquetes del sistema).
 
 ```zsh
-apt update && apt upgrade -y && apt full-upgrade -y
-apt install ./code_1.91.1-1720564633_amd64.deb
+sudo apt update && sudo apt upgrade -y && sudo apt full-upgrade -y
+echo "code code/add-microsoft-repo boolean true" | sudo debconf-set-selections
+sudo apt install ./<file>.deb
 ```
 
 ### Consejos sobre VSCode
