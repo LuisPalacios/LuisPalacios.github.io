@@ -169,12 +169,6 @@ La shell que viene por defecto en Ubuntu es `bash` pero tal como cuento en [¡Ad
 
 Además de `Zsh`, opcionalmente Oh My Zsh (aunque yo he dejado de usarlo), te recomiendo que le eches un ojo a ["Terminales con tmux"]({% post_url 2024-04-25-tmux %}), un multiplexor de terminales opcional potentísimo.
 
-Aquí las referencias a mis ficheros, importante que las revises y adaptes a tu caso.
-
-- **[~/.zshrc](https://gist.github.com/LuisPalacios/7507ce0b84adcad067320e9631648fd7)**. Mi fichero de configuración de `zsh`
-- **[~/.tmux.conf](https://gist.github.com/LuisPalacios/065f4f0491d472d65ef62f67f1f418a1)**. Mi fichero de configuración de `tmux`.
-- **[t](https://gist.github.com/LuisPalacios/860b689687bc239ab9f3549be67df499)**. Script para lanar `tmux`
-
 ## Git
 
 Ya realicé la instalación arriba, en cualquier caso, lo repito:
@@ -212,16 +206,9 @@ apt update && apt upgrade -y && apt full-upgrade -y
 apt install ./code_1.91.1-1720564633_amd64.deb
 ```
 
-Un tip: para poder arrancarlo cómodamente desde el terminal he añadido el alias **`e`** a mi `.zshrc`
-
-```text
-# Alias para llamar a VSCode desde CLI con "e"
-echo 'alias e="code"' >> ~/.zshrc
-source ~/.zshrc
-```
-
 ### Consejos sobre VSCode
 
+- Consulta mi apunte sobre [Personalizar VSCode]({% post_url 2023-06-20-vscode %}).
 - [Settings Sync](https://code.visualstudio.com/docs/editor/settings-sync) - sincroniza settings, snippets, temas, iconos, extensiones, usando tu cuenta de GitHub o Microsoft
 - Con VSCode puedes hacerlo todo desde el teclado. Ya trae un subconjunto de comandos mapeado a [Atajos de teclado](https://code.visualstudio.com/docs/getstarted/keybindings). Si quieres aprender estos atajos por defecto, imprime el PDF para [Windows](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf), [macOS](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-macos.pdf) o [Linux](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-linux.pdf) y déjalo cerca.
 
