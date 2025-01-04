@@ -45,7 +45,7 @@ Añade el contenido de la pública al `~/.ssh/authorized_keys` de tus servidores
 
 Por si lo necesitas. Para reconfigurar los locales. Yo trabajo con los locales en Español, aunque instale Linux en inglés, de hecho suelo configurar ambos.
 
-- `/etc/locales.gen`
+- `/etc/locale.gen`
 
 ```conf
 en_US.UTF-8 UTF-8
