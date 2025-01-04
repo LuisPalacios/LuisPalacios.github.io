@@ -70,7 +70,7 @@ dpkg-reconfigure locales
 
 ```zsh
 sudo apt update && sudo apt upgrade -y && sudo apt full-upgrade -y
-sudo flatpak udpate
+sudo flatpak update
 sudo snap refresh
 ```
 
@@ -133,7 +133,7 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plug
 # Añado mi usuario al grupo de Docker (salir y volver a hacer login tras este comando)
 sudo usermod -aG docker $USER
 
-# Compruebo que funciona
+# Compruebo que funciona. Si recibes un error de permisos, haz un reboot del equipo
 docker run hello-world
 ```
 
