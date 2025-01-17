@@ -192,7 +192,7 @@ Selecciono redimensionar / resize.
       width="500px"
       %}
 
-Introduzco en nuevo valor (la mitad del disco)
+Introduzco en nuevo valor (la mitad del disco), pulso en Resize, pulso en Autenticar (no pide password)
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-23-dual-linux-win-12.png"
@@ -200,7 +200,7 @@ Introduzco en nuevo valor (la mitad del disco)
       width="500px"
       %}
 
-Cuando termina (tarda un buen rato) queda como esperaba
+Inicia el proceso de redimensionamiento (tarda un buen rato) y cuando termina queda como esperaba
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-23-dual-linux-win-13.png"
