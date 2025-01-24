@@ -785,7 +785,7 @@ Necesitas instalar [Chocolatey](https://chocolatey.org/), un gestor de paquetes 
 
 ## Lenguajes de programación
 
-### Python, Pip y PipEnv
+### Python, Pip y venv
 
 ![logo python](/assets/img/posts/logo-python.svg){: width="150px" height="150px" style="float:left; padding-right:25px" }
 
@@ -793,9 +793,9 @@ Necesitas instalar [Chocolatey](https://chocolatey.org/), un gestor de paquetes 
 
 **[Pip](https://pypi.org/project/pip/)** es una herramienta fundamental para gestionar paquetes de Python. Es el sistema utilizado para instalar y manejar librerías de terceros desde el [Python Package Index (PyPI)](https://pypi.org), el repositorio oficial de Python.
 
-**[PipEnv](https://pipenv.pypa.io/en/latest/)** es otra herramienta imprescindible para gestionar entornos virtuales. Cuando se desarrollan aplicaciones en Python, es necesario utilizar varias librerías externas que pueden entrar en conflicto entre proyectos. Con **`PipEnv`**, podemos gestionar un entorno virtual donde todos los paquetes se instalan sin afectar al sistema principal. Existen alternativas como [Virtualenv](https://virtualenv.pypa.io/en/latest/) y [Conda](https://docs.conda.io/projects/conda/en/latest/index.html), pero en mi caso siempre uso **`PipEnv`**.
+**[venv](https://docs.python.org/3/library/venv.html)** venv es un módulo incluido en Python que permite crear entornos virtuales. Un entorno virtual es un espacio aislado en el sistema donde puedes instalar paquetes y bibliotecas de Python de manera independiente, sin que afecten ni sean afectados por otras instalaciones de Python en el sistema.
 
-1. **Instalar Python** desde [python.org](https://www.python.org/downloads/windows/). Descargo la última versión.
+**Instalar o Actualizar Python** desde [python.org](https://www.python.org/downloads/windows/). Descargo la última versión.
 
 Antes de ejecutar el instalador: **Importante quitar los alias que Windows 11 trae por defecto a `python.exe` o `python3.exe`**. Ejecuta desde `Search` > "`Manage app execution aliases`". Desactiva los dos alias "python" and "python3".
 
@@ -820,35 +820,50 @@ Además creo un ***alias*** a `python3`, creo el script `c:\windows\python3.cmd`
 "C:\Program Files\Python312\python.exe" %*
 ```
 
-1. **Instalar PipEnv**. Una vez tengas Python y Pip instalados, abre una terminal de Windows (cmd o PowerShell) y ejecuta:
+**venv** nos permite crear un entorno virtual. ¿Para qué sirve?
 
-```powershell
-pip install --user pipenv
+* Aislamiento de dependencias: Evita conflictos entre paquetes instalados para diferentes proyectos. Por ejemplo, un proyecto puede requerir Django 3.2, mientras que otro necesita Django 4.0.
+* Gestión de proyectos: Cada proyecto puede tener su propio entorno con las versiones específicas de los paquetes que necesita.
+* Evita problemas con el sistema global: No modifica ni depende de la instalación global de Python o sus paquetes.
+
+Preparar el entorno para Python
+
+* Crear el entorno `python -m venv myenv`
+* Activar el entorno:
+  * Windows: `.\myenv\Scripts\Activate.ps1` o `.\myenv\Scripts\Activate.bat`
+  * macOS/Linux: `source myenv/Scripts/activate`
+* Instalar paquetes: `pip install idna`
+* Crear requirements.txt: `pip freeze > requirements.txt`
+* Instalaciones futuras desde requirements.txt: `pip install -r requirements.txt`
+* Desactivar el entorno:
+  * Windows: `.\myenv\Scripts\deactivate.bat`
+  * macOS/Linux: `myenv/Scripts/deactivate`
+
+Un ejemplo de la primera vez en Windows:
+
+```bash
+python -m venv myenv
+.\myenv\Scripts\Activate.ps1
+pip install requests idna
+pip freeze > requirements.txt
 ```
 
-{% include showImagen.html
-      src="/assets/img/posts/2024-08-25-win-desarrollo-17.png"
-      caption="Log de la instalación de pipenv"
-      width="650px"
-      %}
+**VSCode**: Entro en el directorio de un proyecto, activo el entorno, arranco VSCode y selecciono el intérprete
 
-{% include showImagen.html
-      src="/assets/img/posts/2024-08-25-win-desarrollo-18.png"
-      caption="Versiones de python, pip y pipenv"
-      width="600px"
-      %}
+```bash
+.\myenv\Scripts\Activate.ps1
+code .
+```
 
-**Importante**, añadir el directorio de los scripts al PATH, tal como se recomienda durante la instalación de `pipenv`:
+Seleccionar el interprete correcto. Command Palette (Ctrl+Shift+P) > Python: Select Interpreter. Selecciono el Global `C:\Program Files\Python312\python.exe`
 
-  `C:\Users\<usuario>\AppData\Roaming\Python\Python312\Scripts`
-
-Siempre que instalo hago una **prueba de concepto**, con un mini proyecto, un único fuente llamado `main.py` bajo el entorno virtual `pipenv`, con una única librería `requests`.
+**Prueba de concepto**: Veamos un mini proyecto, un único fuente llamado `main.py` bajo el entorno virtual `pipenv`, con una única librería `requests`.
 
 ```cmd
-mkdir tmp
-cd tmp
-pipenv install requests
-pipenv lock
+luis@kymeraw:tmp ❯ cd prueba
+luis@kymeraw:prueba ❯ python -m venv myenv
+luis@kymeraw:prueba ❯ .\myenv\Scripts\Activate.ps1
+luis@kymeraw:prueba via 🐍 v3.12.8 (myenv) ❯
 ```
 
 Creo el fuente con `notepad main.py`
@@ -859,13 +874,28 @@ response = requests.get('https://httpbin.org/ip')
 print('Tu dirección IP es: {0}'.format(response.json()['origin']))
 ```
 
-Ejecuto la prueba de concepto con `pipenv run python main.py`
+Instalo las dependencias
 
-{% include showImagen.html
-      src="/assets/img/posts/2024-08-25-win-desarrollo-19.png"
-      caption="Ejecuto desde el entorno seguro `pipenv` y funciona."
-      width="500px"
-      %}
+```PS1
+luis@kymeraw:prueba via 🐍 v3.12.8 (myenv) ❯ notepad main.py
+luis@kymeraw:prueba via 🐍 v3.12.8 (myenv) ❯ cat .\main.py
+import requests
+response = requests.get('https://httpbin.org/ip')
+print('Tu dirección IP es: {0}'.format(response.json()['origin']))
+
+luis@kymeraw:prueba via 🐍 v3.12.8 (myenv) ❯ pip install requests
+Collecting requests
+:
+Successfully installed certifi-2024.12.14 charset-normalizer-3.4.1 idna-3.10 requests-2.32.3 urllib3-2.3.0
+luis@kymeraw:prueba via 🐍 v3.12.8 (myenv) ❯
+```
+
+Ejecuto la prueba de concepto con `python main.py`
+
+```PS1
+luis@kymeraw:prueba via 🐍 v3.12.8 (myenv) ❯ python.exe .\main.py
+Tu dirección IP es: 12.138.199.230
+```
 
 ### C/C++
 
