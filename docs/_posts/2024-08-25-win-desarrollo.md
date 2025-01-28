@@ -74,7 +74,7 @@ Es lo que es, no necesita mucha explicación, bastante austero; pero si realment
 
 Ahora es buen momento para instalarla,
 
-* Instalo [PowerShell 7](https://github.com/PowerShell/PowerShell/tags) > "Downloads".
+* Desde este enlace a [PowerShell 7](https://github.com/PowerShell/PowerShell/tags) > "Downloads" puedes instalar la última versión. En el futuro te avisará, al abrir sesión, si existe una actualización  con su enlace, que te lleva al mismo sitio, descargas el `.msi` y lo instalas para actualizar.
 
 ```PS
 PS C:\> $PSVersionTable
