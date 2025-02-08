@@ -158,6 +158,22 @@ C:\Users\luis>notepad C:\Users\luis\AppData\Local\clink\prompt_filters.lua
 
 Yo lo he instalado para probarlo, pero si soy sincero no lo estoy usando, me parecen ya demasiadasa opciones.
 
+### fzf
+
+**[Fuzzy Finder](https://github.com/junegunn/fzf?tab=readme-ov-file)**, el buscador "relajado" por excelencia para la línea de comandos. No tiene despercicio, y si lo combinas con herramientas como [BAT], [fd], [ripgrep], te vas a otro nivel. Así es como lo he instalado en Windows. Es tan parametrizable que da para un apunte entero, entra en el link y estúdialo, merece la pena.
+
+```PS1
+luis@kymeraw:~ ❯ winget install fzf
+Found fzf [junegunn.fzf] Version 0.59.0
+This application is licensed to you by its owner.
+Microsoft is not responsible for, nor does it grant any licenses to, third-party packages.
+Downloading https://github.com/junegunn/fzf/releases/download/v0.59.0/fzf-0.59.0-windows_amd64.zip
+  ██████████████████████████████  1.73 MB / 1.73 MB
+:
+Command line alias added: "fzf"
+Successfully installed
+```
+
 ### WSL 2
 
 WSL2 utiliza una máquina virtual ligera con un **kernel real completo de Linux**, tiene un **rendimiento** altísimo, está super **integrado con Windows**, permite que los archivos y scripts de Linux se ejecuten desde el explorador de Windows, y viceversa; y muy importante, tiene **compatibilidad con Docker**, de hecho WSL2 es el backend preferido para [Docker Desktop en Windows](https://www.docker.com/products/docker-desktop/) (que instalaré más adelante).
