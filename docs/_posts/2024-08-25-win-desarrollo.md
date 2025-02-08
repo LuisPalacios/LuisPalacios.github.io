@@ -633,7 +633,7 @@ Set-PSReadlineKeyHandler -Key ctrl+d -Function ViExit
 
 <br/>
 
-A partir de aquí empieza la segunda parte del apunte, la instalación de las herramientas y lenguajes de programación. Las instalo todas en Windows 11 (lo digo porque quizá alguna merecería la pena instalarlas dentro del WSL2, por ejemplo `Ruby`).
+A partir de aquí empieza la segunda parte del apunte, la instalación de las herramientas y lenguajes de programación.
 
 Un aviso respecto a **.NET**, lo dejo para el final, empiezo por las herramientas multiplataforma, porque considero hay que instalarlas en todo equipo de desarrollo (tanto en Windows como Linux o Mac), continúo con los lenguajes que he elegido para mi Windows y dejo para el final .NET y Visual Studio.
 
@@ -1020,6 +1020,14 @@ Puedes usar la herramienta [.NET Version Detector](https://www.asoft.be/prod_net
       caption=".NET Version Detector"
       width="500px"
       %}
+
+### Ruby
+
+![logo ruby](/assets/img/posts/logo-ruby.svg){: width="150px" height="150px" style="float:right; padding-right:25px" }
+
+Windows no trae Ruby, así que lo voy a instalar. No es que programe con él, pero lo necesito para ejecutar `Bundler` y `Jekyll` para trabajar en mi blog en local (más info [aquí]({% post_url 2021-04-19-nuevo-blog %})). **Ruby** es un lenguaje de programación interpretado, reflexivo y orientado a objetos, creado por el programador japonés Yukihiro "Matz" Matsumoto, quien comenzó a trabajar en Ruby en 1993, y lo presentó públicamente en 1995.
+
+Instalación: Sigo la [documentación desde Jekyll](https://jekyllrb.com/docs/installation/windows/)
 
 ### .NET 5+
 
