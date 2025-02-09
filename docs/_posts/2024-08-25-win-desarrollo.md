@@ -1031,6 +1031,10 @@ Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full' | Get-I
 
 Puedes usar la herramienta [.NET Version Detector](https://www.asoft.be/prod_netver.html), una herramienta ligera que proporciona información sobre las diferentes versiones de Microsoft .NET y .NET Core que están instaladas en una máquina.
 
+```PS1
+dotnetver.exe
+```
+
 {% include showImagen.html
       src="/assets/img/posts/2024-08-25-win-desarrollo-20.png"
       caption=".NET Version Detector"
