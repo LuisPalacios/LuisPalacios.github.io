@@ -1015,7 +1015,7 @@ Para instalar .NET Framework 4.8, entra en **Programas y características** del 
 4. Marca la casilla junto a la versión que deseas instalar.
 5. Haz clic en **Aceptar** y espera a que Windows complete la instalación.
 
-Si la versión no está en la lista, puedo ir a la Web de microsoft, ([ejemplo para la 4.8.1](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net481))
+Si la versión no está en la lista, puedo ir a la Web de microsoft, ([ejemplo para la 4.8.1](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net481)). Si vas a hacer desarrollos instala el Developer Pack.
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-25-win-desarrollo-14.png"
@@ -1023,7 +1023,7 @@ Si la versión no está en la lista, puedo ir a la Web de microsoft, ([ejemplo p
       width="640px"
       %}
 
-Puedes comprobar qué version tienes instalada con el comando siguietne desde PowerShell y comprobar el número que muestra en la página de [.NET Framework versions and dependencies](https://learn.microsoft.com/en-us/dotnet/framework/migration-guide/versions-and-dependencies):
+Puedes comprobar qué version tienes instalada y el número que muestra en la página de [.NET Framework versions and dependencies](https://learn.microsoft.com/en-us/dotnet/framework/migration-guide/versions-and-dependencies):
 
 ```PS1
 Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full' | Get-ItemPropertyValue -Name Release
