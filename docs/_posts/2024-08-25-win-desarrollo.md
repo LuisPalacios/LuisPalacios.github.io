@@ -999,7 +999,7 @@ Su popularidad radica en que ha sido la base para innumerables aplicaciones empr
 
 ¿Por qué instalar .NET Framework 4.8?
 
-*Compatibilidad: Muchas aplicaciones desarrolladas para Windows aún dependen de esta versión, incluso herramientas modernas (como [HTTPie](#httpie)) requieren que el runtime esté presente.
+* Compatibilidad: Muchas aplicaciones desarrolladas para Windows aún dependen de esta versión, incluso herramientas modernas (como [HTTPie](#httpie)) requieren que el runtime esté presente.
 
 * Soporte: Aunque no planees ejecutar aplicaciones más antiguas que dependan de versiones como .NET 2.0 o 3.5, la versión 4.8 garantiza que puedas usar software actual y compatible.
 
