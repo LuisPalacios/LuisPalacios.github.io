@@ -53,3 +53,4 @@ gem "webrick", "~> 1.7"
 
 # Necesito el racc para que no de error
 gem "racc", "~> 1.7.3"
+gem 'csv', '~> 3.3.2'
