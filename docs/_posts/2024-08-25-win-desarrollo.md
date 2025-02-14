@@ -1158,6 +1158,27 @@ Pendiente de documentar
 
 ---
 
+## Actualizaciones
+
+Las actualizaciones en Windows siguen dejando que desear. La actualización del sistema operativo funciona relativamente bien. De vez en cuando:
+
+* Sistema operativo
+  * `Start` > `Settings > Windows Update > Check for updates`
+
+Pero la actualización de las aplicaciones es otro mundo, depende de cada desarrollador/propietario de la aplicación. Aunque ha mejorado, es un rollo porque hay que estar muy pendiente.
+
+* Aplicaciones
+  * Manual: Entras en cada una de tus aplicaciones, compruebas la versión y sus opciones de actualización.
+  * Semi-automática: Ejecutas `winget` a ver qué detecta y lo usas para actualizar (o para saber que tienes que actualizar Manualmente)
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-25-win-desarrollo-22.png"
+      caption="Ejemplo de uso de winget"
+      width="500px"
+      %}
+
+---
+
 ## Aprendizaje continuo
 
 Para terminar, voy a insistir un poco más sobre ***Shell y Linux***. Si vienes de Windows, te recomiendo aprender a utilizar la Shell; es una habilidad fundamental para cualquier desarrollador de software. La Shell permite automatizar tareas, ejecutar comandos, y manejar el sistema de una manera más eficiente y rápida que a través de interfaces gráficas. Existen muchos recursos disponibles para aprender a utilizar la Shell, tanto en `bash` como en `zsh`, te dejo algunas referencias
