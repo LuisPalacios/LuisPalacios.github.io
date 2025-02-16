@@ -35,6 +35,17 @@ Desde el [sitio](https://www.vmware.com/products/workstation-pro.html) de VMWare
 
 En mi caso usé `VMware-workstation-full-17.6.2-24409262.exe`, lo ejecutas, aceptas los términos de licencia y personaliza la instalación si lo deseas (ubicación, accesos directos, etc.).
 
+Aunque no viene al caso, la Instalación en Linux es también muy sencilla, simplemente ejecuté lo siguiente:
+
+```bash
+⚡ luis@kymerax:VMWare % sudo ./VMware-Workstation-Full-17.6.2-24409262.x86_64.bundle
+Extracting VMware Installer...done.
+Installing VMware Workstation 17.6.2
+    Configuring...
+[######################################################################] 100%
+Installation was successful.
+```
+
 ## VM con Windows 11 Pro
 
 Partiendo de estos requisitos:
@@ -117,3 +128,25 @@ A partir de este momento ya tengo otro Windows dentro de Windows, aislado, muy �
       caption="Un nuevo entorno de desarrollo aislado"
       width="730px"
       %}
+
+### Crear una plantilla
+
+Este es el proceso que sigo para guardarme una imagen para su uso futuro.
+
+Primero habilito la opción del modo plantilla.
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-26-vmware-06.jpg"
+      caption="Primero habilito la opción de modo plantilla"
+      width="800px"
+      %}
+
+Después hago un snapshot (instantánea) y un clone de la imagen.
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-26-vmware-07.jpg"
+      caption="Proceso para clonar una VM"
+      width="800px"
+      %}
+
+Esta plantilla puedo usarla para clonar una nueva VM, recuperarla en otro ordenador. En mi caso lo he usado en un Host Linux Ubuntu 24.04 con VMWare Workstation Pro y ha funcionado perfectamente.
