@@ -21,7 +21,7 @@ table {
 </style>
 <!--more-->
 
-| Este apunte pertenece a una serie:<br><br>• Preparo PC para [Dualboot Linux Windows]({% post_url 2024-08-23-dual-linux-win %}) e instalo Windows 11 Pro.<br>• Configuro [un Windows 11 decente]({% post_url 2024-08-24-win-decente %}), en su esencia, le quito morralla.<br>• Preparo el [Windows para desarrollo]({% post_url 2024-08-25-win-desarrollo %}) de software, CLI, WSL2 y herramientas. |
+| Este apunte pertenece a la serie de desarrollo de software con Windows:<br>• Preparar un PC para [Dualboot Linux / Windows]({% post_url 2024-08-23-dual-linux-win %}) e instalar Windows 11 Pro.<br>• Configurar [un Windows 11 decente]({% post_url 2024-08-24-win-decente %}), dejarlo en su esencia minima, quitando la morralla.<br>• Preparar [Windows para desarrollo de software]({% post_url 2024-08-25-win-desarrollo %}) de software, CLI, WSL2 y herramientas.<br>• Instalación de [VMWare en Windows]({% post_url 2024-08-26-win-vmware %}) para tener una VM con Windows 11 Pro. |
 
 ## Primeros pasos
 
