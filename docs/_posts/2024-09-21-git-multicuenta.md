@@ -78,6 +78,8 @@ sudo dpkg -i gcm-linux_amd64.2.5.1.deb
 
 El ejecutable queda en: `/usr/local/bin/git-credential-manager`
 
+Para gestionar gráficamente las credenciales en el UI usaré GNome Keyring+ Seahorse, que vienen ya pre instalados con Ubuntu
+
 ### Configuración de `~/.gitconfig`
 
 Una vez instalado GCM, es necesario configurarlo para que gestione las credenciales de nuestros repositorios. Antes de nada repaso el fichero `~/.gitconfig` para quitar la entrada [user] (el usuario/email lo configuro por repositorio), elimino entradas de tipo "insteadOf" que suelen usarse con SSH.
