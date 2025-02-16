@@ -204,7 +204,7 @@ Para borrar credenciales:
 - GUI: **`GNome Keyring`+ Seahorse**, en mi caso con Ubuntu.
 
 {% include showImagen.html
-      src="/assets/img/posts/2024-09-21-gcm-03.png"
+      src="/assets/img/posts/2024-09-21-gcm-03.jpg"
       caption="App Seahorse para acceder al GNOME Keyring"
       width="800px"
       %}

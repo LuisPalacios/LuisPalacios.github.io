@@ -280,7 +280,7 @@ Al seguir los pasos anteriores obtengo un Windows 11 mucho más limpio, rápido 
 Con estas recomendaciones adicionales, el sistema estará preparado para ofrecer una experiencia de usuario más directa, sin distracciones ni interrupciones innecesarias.
 
 {% include showImagen.html
-      src="/assets/img/posts/2024-08-24-win-decente-03.png"
+      src="/assets/img/posts/2024-08-24-win-decente-03.jpg"
       caption="Versión minimalista del escritorio"
       width="800px"
       %}

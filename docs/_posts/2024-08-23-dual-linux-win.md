@@ -163,7 +163,7 @@ Expulso ambas particiones (`Ventoy, VTOYEFI`), ya hemos terminado, tenemos lista
 Hago boot con ***la USB Live de ubuntu***. Le pido a la BIOS hacer boot desde ella. Todos los ordenadores ofrecen mostrar un menú de boot pulsando alguna tecla, del tipo F2/F7/F10/F12/ESC, depende tu BIOS.
 
 {% include showImagen.html
-      src="/assets/img/posts/2024-08-23-dual-linux-win-08.png"
+      src="/assets/img/posts/2024-08-23-dual-linux-win-08.jpg"
       caption="Selecciono la USB con Ubuntu"
       width="500px"
       %}
