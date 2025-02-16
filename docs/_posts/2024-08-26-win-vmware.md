@@ -48,7 +48,7 @@ Descargo Windows 11 desde [descargas](https://www.microsoft.com/software-downloa
 
 Ahora toca crear la Máquina Virtual. Quiero evitar los requisitos de TPM y Secure Boot de Windows 11. A continuación explico el método que sigo para hacerlo. Es ideal para probar o ejecutar Windows 11 en hardware no compatible o en máquinas virtuales, desaconsejado en producción.
 
-* Desde VMWare Workstation Pro, crear una Nueva Máquina Virtual, de forma manual, indicando que es un Windows 10 (aunque voy a instalar Windows 11, lo vi recomendado por el tema de TPM, ante la duda hago caso).
+- Desde VMWare Workstation Pro, crear una Nueva Máquina Virtual, de forma manual, indicando que es un Windows 10 (aunque voy a instalar Windows 11, lo vi recomendado por el tema de TPM, ante la duda hago caso).
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-26-vmware-01.png"
@@ -64,7 +64,7 @@ Utilizo 4 vCPU's, 16 GB, un disco máximo de 120 GB
       width="800px"
       %}
 
-Una vez que tengo la VM, conecto el ISO oficial al CD/DVD, hago boot, pulso una tecla/ESC para que arranque del DVD y cuando llego a la pregunta del tipo de teclado, hago una pausa para cambiar entradas del registro y desactivar el tema TPM 2.0.
+Una vez que tengo la VM, conecto el ISO oficial al CD/DVD (ajustes de la VM), hago boot, pulso una tecla/ESC para que arranque del DVD y cuando llego a la pregunta del tipo de teclado, hago una pausa para cambiar entradas del registro y desactivar el tema TPM 2.0.
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-26-vmware-03.png"
@@ -74,22 +74,27 @@ Una vez que tengo la VM, conecto el ISO oficial al CD/DVD, hago boot, pulso una 
 
 Presionamos **Shift + F10, aparece la caja de DOS y arranco regedit**.
 
-* Navego a `HKEY_LOCAL_MACHINE\SYSTEM\Setup`
-* Botón derecho sobre `Setup` y selecciono `New > Key` y la llamo `LabConfig`
-* En *LabConfig*
-  * Botón derecho en panel derecho: `New > DWORD (32-bit)`: `BypassTPMCheck`
-    * Doble click sobre *BypassTPMCheck* y pongo valor a `1`
-  * Botón derecho en panel derecho: `New > DWORD (32-bit)`: `BypassSecureBootCheck`
-    * Doble click sobre *BypassSecureBootCheck* y pongo valor a `1`
-
+- Navego a `HKEY_LOCAL_MACHINE\SYSTEM\Setup`
+- Botón derecho sobre `Setup` y selecciono `New > Key` y la llamo `LabConfig`
+- En *LabConfig*
+  - Botón derecho en panel derecho: `New > DWORD (32-bit)`: `BypassTPMCheck`
+    - Doble click sobre *BypassTPMCheck- y pongo valor a `1`
+  - Botón derecho en panel derecho: `New > DWORD (32-bit)`: `BypassSecureBootCheck`
+    - Doble click sobre *BypassSecureBootCheck- y pongo valor a `1`
 
 Cierro el editor del registry y cierro el command prompt. Vuelve a donde estábamos. Sigo con la instalación, teclado, updates, ponerle mote/nombre al equipo, pide cómo usarlo (personal o trabajo), selecciono "Personal", hago login con mi cuenta de microsoft y continúo configurando como equipo nuevo. Creo PIN y le digo que no a localización, no a buscar dispositivo, diagnósticos, inking, typing, tailored experiences, ads ID, etc. Me salto lo del teléfono, pido que no haga backups, que no importe nada de otro navegador y tras algún que otro reboot termina. Ya lo tienes !!
 
 ### Personalización
 
-* Instalo las VMWare Tools
-  * Menú de VMWare Workstation `VM` -> `Install VMWare Tools`
-    * **Win+R `D:\setup.exe`**
+- Instalo las VMWare Tools
+  - Menú de VMWare Workstation `VM` -> `Install VMWare Tools`
+    - **Win+R `D:\setup.exe`**
+- Apago la VM
+- Deshabilito el CD/DVD durante el power on.
+- VM -> Options
+  - Enable Shared Folders (para acceder al disco del Host)
+  - Sincronizo la hora del guest con la del host.
+- Enciendo la VM, vuelvo a Settings -> Options -> Autologin: Lo activo.
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-26-vmware-04.png"
@@ -97,13 +102,13 @@ Cierro el editor del registry y cierro el command prompt. Vuelve a donde estába
       width="730px"
       %}
 
-* Personalizo esta máquina virtual. Dejar un Windows "decente" sin morralla es un proceso tedioso, pero merece la pena.
-  * Aplico el apunte: [Un Windows 11 decente]({% post_url 2024-08-24-win-decente %})
-  * Apago la VM y me guardo la imagen tal cual por si quiero crear otra en el futuro.
+- Personalizo esta máquina virtual. Dejar un Windows "decente" sin morralla es un proceso tedioso, pero merece la pena.
+  - Aplico el apunte: [Un Windows 11 decente]({% post_url 2024-08-24-win-decente %})
+  - Apago la VM y me guardo la imagen tal cual por si quiero crear otra en el futuro.
 
-* VM para desarrollo de software. Este era el propósito inicial.
-  * Aplico el apunte: [Windows para desarrollo]({% post_url 2024-08-25-win-desarrollo %}) de software.
-  * Apago la VM y guardo una copia de seguridad.
+- VM para desarrollo de software. Este era el propósito inicial.
+  - Aplico el apunte: [Windows para desarrollo]({% post_url 2024-08-25-win-desarrollo %}) de software.
+  - Apago la VM y guardo una copia de seguridad.
 
 A partir de este momento ya tengo otro Windows dentro de Windows, aislado, muy útil para entornos de desarrollo.
 

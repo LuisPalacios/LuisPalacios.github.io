@@ -25,7 +25,7 @@ table {
 
 ## Primeros pasos
 
-Parto de un equipo donde acabo de instalar Windows 11 desde cero. Lo he documentado en el apunte [Dualboot Linux Windows]({% post_url 2024-08-23-dual-linux-win %}). En él solo me ocupaba del dualboot, así que no llegué a configurar nada de Windows. Así es como empiezo, con un sistema recién instalado.
+Aunque este apunte probablemente te pueda valer en tu Windows 11 con el que llevas tiempo trabajando, está documentado partiendo desde una instalación nueva de Windows 11 desde cero. En mi caso lo hice después de instalar [Dualboot Linux Windows]({% post_url 2024-08-23-dual-linux-win %}) o [VMWare en Windows]({% post_url 2024-08-26-win-vmware %}), es decir recién instalado en bare metal o en una VM.
 
 Lo ***básico***
 
@@ -57,14 +57,31 @@ Cambios en la ***seguridad***
     * Activity, `Search permissions, Searching Windows`: **todo off**
   * Security > `App Permissions`: **Location Off**, el **resto a valor por defecto**
 * Start > Settings > Apps
-  * `Startup` > **Quito todas, sobre todo Edge, excepto Security notification icon**.
+  * `Startup` > **Quito todas, sobre todo Edge**
+    * Excepción: dejo *Security notification icon*
+    * Excepción: dejo *VMWare Tools Core Service* si estoy instalando en una VM Windows.
   * `Default apps` > Microsoft Edge : **Reviso que todo sea Chrome**
   * `Apps for Websites` > **todo a off**
 
 ***Activación*** de Windows 11
 
-* Compro una copia digital de Windows 11 Pro retail a un minorista autorizado. Mucho más barato y asequible. Me llega un correo con la clave de producto.
+Aqui hay dos opciones, en mi Windows bare metal he comprado una licencia, pero para VM's o equipo de laboratorio existe el famoso Microsoft Activation Script (MAS)
+
+* Opción 1: Comprar una copia digital de Windows 11 Pro retail a un minorista autorizado. Es barato y asequible, te llega un correo con la clave de producto.
   * `Start > Settings > Sytem Activation > Change product key`, añado la clave recibida y queda activado.
+* Opción 2: [Microsoft Activation Script (MAS)](https://github.com/massgravel/Microsoft-Activation-Scripts), se trata de una activador de código abierto para Windows y Office que incluye los métodos de activación HWID, Ohook, TSforge, KMS38 y Online KMS.
+  * Seguir la documentación del enlace, un ejemplo para licenciar una [VM Windows 11 Pro]({% post_url 2024-08-26-win-vmware %})
+    * Click derecho sobre el menú start -> `Terminal (admin)`
+    * Ejecuto el comando siguiente: `irm https://get.activated.win | iex`
+    * Entre las opciones de activación, seleccionas `(1) HWID for Windows activation` y queda activado.
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-24-win-decente-05.png"
+      caption="Método MAS"
+      width="600px"
+      %}
+
+* Para comprobar el estado de activación: `Start > Settings > Activation`
 
 Configuro que ***no pregunte*** cada vez que quiero arrancar un App
 
@@ -73,13 +90,13 @@ Configuro que ***no pregunte*** cada vez que quiero arrancar un App
 ***Eliminar el PIN***, no lo quiero. Esto me va a obligar (durante un rato) a hacer login con mi cuenta de microsoft pero inmediatemente también voy a cambiar eso.
 
 * Start > Settings > Accounts > `Sign-in options`
-  * Desactivo Only allow Windows Hello sign-in.
-  * **Quito PIN**.
-  * Cambio a "**Never**" que solicite login cuando despierta.
+  * Desactivo `For improved security, only allow Windows Hello sign-in...`
+  * **Quito PIN** > Remove. Me pide contraseña de mi usuario Microsoft.
+  * En `If you've been away, when should Windows ...` lo pongo en "**Never**", que no me pida login cuando despierta.
 
 Cambio el ***Home*** de mi usuario y cambio a ***login con Usuario local***. Durante la instalación me obligó a 2 cosas que no me gustan: 1) usar una cuenta de Microsoft usando un mail registrado. 2) creó el nombre corto del usuario con los 5 primeros caracteres de dicho mail, por lo que quedó comoo `luisp` y el HOME de mi usuario en `C:\Users\luisp\`.
 
-* Primero cambio el nombre del directorio HOME ([guía](https://www.elevenforum.com/t/change-name-of-user-profile-folder-in-windows-11.2133/))
+* [Opcional] Cambiar el nombre del directorio HOME ([guía](https://www.elevenforum.com/t/change-name-of-user-profile-folder-in-windows-11.2133/))
   * Habilito al Administrador
     * `net user Administrator /active:yes`
   * Rearranco el ordenador, hago login con Administrador sin contraseña
@@ -87,16 +104,24 @@ Cambio el ***Home*** de mi usuario y cambio a ***login con Usuario local***. Dur
     * ***`regedit`*** -> `HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\S-1* -> ProfileImagePath`
     * Explorer -> **Renombro el HOME**
     * CMD `mklink /d "C:\Users\luisp" "C:\Users\luis"`
-* Luego cambio a Cuenta Local, en vez de usar una Microsoft Account con mi mail
-  * `Start > Settings > Account > Your Info`
-  * ***Cambio a cuenta local***, usuario `luis`, le pongo una contraseña
+
+Cambio a cuenta local
+
+* Cambio a Cuenta Local, en vez de usar una Microsoft Account para hacer login en el equipo
+  * `Start > Settings > Account > Account Settings > Your Info`
+  * ***Cambio a cuenta local***, `Microsoft Account` > `Sign in with local account`: Creo un usuario `luis`, le pongo una contraseña.
+* Si estoy en una Máquina Virtual con VMWare Workstation, puedo aprovechar para activar Autologin en la VM
+  * Teniendo la VM arrancada: VMWare Worksation Pro > botón derecho sobre la VM > `Settings` > `Options` > `Autologin`.
+  * Una vez que me pide el usuario/contraseña (mismo que puse para la cuenta local), rearranco la VM y observo que hace autologin!!
 
 ***Powershell 7***.
 
 * Por defecto el equipo trae `CMD` y `PowerShell 5` (para ver la versión de PS usé el comando: `$PSVersionTable`)
 * Desde [PowerShell Tags](https://github.com/PowerShell/PowerShell/tags) descargo desde el link "Downloads" la última versión (`PowerShell-7.4.5-win-x64.msi`) y la instalo.
 
-***Eliminar anuncios***
+***Eliminar anuncios y varios***
+
+Algunos los he marcado como [Opcional] porque en instalaciones sucesivas de Windows he dejado de hacerlo
 
 * Quitar Ads del Lock Screen
   * Start > Settings > Personalization
@@ -113,28 +138,28 @@ Cambio el ***Home*** de mi usuario y cambio a ***login con Usuario local***. Dur
   * Pulso la tecla Windows+W, abre los Widgets
   * Clic en el icono de Profile Icon (arriba a la dcha.), **Sign-out button**.
   * Ejecuto Local Group Policy Editor **`gpedit.msc`**
-    * `Computer Configuration\Administrative Templates\Windows Components\Widgets​` > **disabled**.
-    * Hago **reboot**.
+    * `Computer Configuration\Administrative Templates\Windows Components\Widgets​` > `Allow Widgets` **disabled**.
+    * Hago **reboot**. Al arrancar verás que Windows+W ha dejado de funcionar !!
 * Quitar Ads del Explorer
-  * Window + E > tres puntos horizontales > Options > View > **Quito "Show sync provider notifications" > Apply**
+  * Window + E > tres puntos horizontales > Options > View > **Quito "Show sync provider notifications" > Apply** y **Ok**.
 * Quitar Notification Ads
   * Start > Settings > System > Notifications > Additional Settings > **Quito las tres opciones** que aparecen
-* Quitar "Device Usage Settings"
+* Quitar "Device Usage Settings" (ya lo hice, me aseguro)
   * Start > Settings > Personalization > Device Usage > **Quito todas**.
-* Quitar contenido sugerido
+* Quitar contenido sugerido  (ya lo hice, me aseguro)
   * Start > Settings > Privacy and Security > General > Me aseguro de que **"Show me notifications in the Settings app" esté desactivado**
-* Quitar Ads de Diagnostic Data
+* Quitar Ads de Diagnostic Data (ya lo hice, me aseguro)
   * Start > Settings > Privacy and Security > Diagnostics & feedback > Tailored experiences > Let Microsoft use your diagnostic data - **Off**
   * De hecho **tengo en Off todas las opciones bajo Diagnostics & feedback**
-* Quito la papelera de reciclaje del Escritorio/Desktop
+* [Opcional] Quitar la papelera de reciclaje del Escritorio/Desktop
   * Start > Settings > Personalization > Themes > Desktop icon settings > **Quito el checkbox de Recycle Bin**
-* Añado la papelera de reciclaje al Explorer (para que aparezca en "Este equipo / This PC")
-  * ***`regedit`*** ->
-    * `HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace`
-    * Nueva clave/Key: `{645FF040-5081-101B-9F08-00AA002F954E}`
-    * **Reboot**
+  * Añado la papelera de reciclaje al Explorer (para que aparezca en "Este equipo / This PC")
+    * ***`regedit`*** ->
+      * `HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace`
+      * Nueva clave/Key: `{645FF040-5081-101B-9F08-00AA002F954E}`
+      * **Reboot**
 * Personalizo el Taskbar
-  * Botón derecho sobre taskbar, **quito iconos que no uso**.
+  * Botón derecho iconos que están en el taskbar y uno a uno **quito iconos que no uso**.
   * Start > tecleo "Start settings" >
     * Layout > More pins
     * Show recently added apps > **Off**
@@ -142,17 +167,19 @@ Cambio el ***Home*** de mi usuario y cambio a ***login con Usuario local***. Dur
     * Show account notifications > **Off**
     * Show recently opened > **Off**
 * Elimino el teclado US que me instaló por defecto.
-  * Start > Settings > Time & Language > Language & Region > Options > Keyboards > **Quito US** (dejo solo el de Spanish)
-* Añado ""Turn off display" al menú de contexto del escritorio
+  * Start > Settings > Time & Language > Language & Region > Preferred Languages > "..." > Options > Keyboards > **Quito US** (dejo solo el de Spanish)
+* [Opcional] Añado "Turn off display" al menú de contexto del escritorio
   * Sigo este apunte de [aquí](https://www.elevenforum.com/t/add-turn-off-display-context-menu-in-windows-11.8267/)
 
 ***Actualización*** del sistema operativo
 
 * Ya va siendo hora, Start > escribo "Update " > Check for Updates > Hago todas las **actualizaciones/reboots** que me pide.
 
-***Desinstalar Edge*** (En Europa es posible desde el propio Sistema)
+***Desinstalar Apps***
 
-* Sin comentarios. Start > Settings > Apps
+Que en Europa se regulen tantas cosas tiene sus beneficios :-), en Europa es posible desinstalar Edge y otras aplicaciones desde el propio Sistema Operativo.
+
+* Sin comentarios. Start > Settings > Apps > Installed Apss
   * Microsoft Edge > ***Uninstall, rearranco el equipo***
   * Microsoft Edge Update > No me deja hacer un Uninstall
   * Microsoft Edge WEbView2 > No me deja hacer un Uninstall
@@ -164,6 +191,10 @@ Si ahora entro en "buscar" ya empiezo a ver los efectos, cada vez menos morralla
       caption="Versión minimalista de Buscar"
       width="400px"
       %}
+
+* [Opcional] Cuando instalo windows en una Virtual Manchine, en este paso aprovecho y elimino aplicaciones que no voy a usar nunca
+  * Microsoft News, Microsoft Bing, Microsoft To Do, Microsoft Outlook,
+  * Weather, Xbox, Xvox Live Live, Microsoft Teams, Microsoft 365 Office.
 
 ***File Explorer***. Mostrar archivos y directorios ocultos, file extensions, etc.
 
@@ -191,13 +222,14 @@ Si ahora entro en "buscar" ya empiezo a ver los efectos, cada vez menos morralla
 
 ***Firewall de Windows***
 
-* Lo configuro para minimizar alertas y notificaciones. El ordenador está conectado a una red privada pero por defecto la instalación lo puso en red Pública (error).
+* Lo configuro para minimizar alertas y notificaciones. En mi caso el ordenador está conectado a una red privada pero por defecto la instalación lo puso en red Pública
   * Start > Settings > Network & Internet > Ethernet (y también WiFi)
     * **Cambio ambas a `Private Network`**
 * Configuro el Firewall de Windows para minimizar alertas y notificaciones
   * Start > busco "Control Panel" > System & Security > Windows Defender Firewall > Advanced Settings”
-  * Reviso reglas de entrada y salida para bloquear o permitir aplicaciones específicas según lo necesite.
-  * Desactivo las notificaciones del firewall en “System and Security > Windows Defender Firewall > Change notification settings”, y **desmarco las casillas de “Notify me when Windows Defender Firewall blocks a new app”**
+    * Reviso reglas de entrada y salida para bloquear o permitir aplicaciones específicas según lo necesite.
+  * Start > busco "Control Panel" > System & Security > Windows Defender Firewall > Change notification settings"
+    * Desactivo las notificaciones, **desmarco las casillas de “Notify me when Windows Defender Firewall blocks a new app”**
 
 {% include showImagen.html
       src="/assets/img/posts/2024-08-24-win-decente-02.png"
@@ -253,15 +285,30 @@ Con estas recomendaciones adicionales, el sistema estará preparado para ofrecer
       width="800px"
       %}
 
+Paso las pruebas de evaluación del sistema de Windows (WinSAT) se usan para analizar el rendimiento de varios componentes del sistema, como CPU, memoria, disco y gráficos.
+
+```PS1
+C:\Users\luis> winsat formal
+C:\Users\luis> Get-CimInstance Win32_WinSat
+```
+
 {% include showImagen.html
       src="/assets/img/posts/2024-08-24-win-decente-04.png"
       caption="Idoneo para trabajar"
       width="600px"
       %}
 
+Seguí los pasos anteriores para optimizar también un [máquina virtual windows]({% post_url 2024-08-26-win-vmware %}) corriendo en un windows optimizado, como puedes observar el rendimiento de la máquina virtual es muy decente.
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-24-win-decente-06.png"
+      caption="Otro windows 11 optimizado, esta vez como Guest de VMWare Workstation"
+      width="600px"
+      %}
+
 ***Instalación de Barrier para KVM por software***
 
-Trabajo con dos ordenadores (mac mini y PC con dualboot Windows y Linux), cada uno con su monitor. Mi objetivo es poder tener un KVM por software para poder compartir el Teclado y el Ratón.
+Esto que describo ahora ya no tiene que ver con un Windows "decente", así que puedes saltártelo. Es para acordarme yo mismo de cómo resolví una necesidad. Trabajo con dos ordenadores (mac mini y PC con dualboot Windows / Linux), cada uno con su monitor. Mi objetivo es poder tener un KVM por software para poder compartir el Teclado y el Ratón.
 
 * Instalo [Barrier](https://github.com/debauchee/barrier).
   * Al instalar me pregunta `Enable autoconfig and install Bonjour`, le digo que Sí.
@@ -272,7 +319,7 @@ La mejor opción que he encontrado es **usar el PC como Server** (Windows o Linu
 
 ***Drivers para Magic Trackpad 2***
 
-Tal como comenté en el punto anterior lo necesito. Tuve que pasar un pequeño calvario para que me funcionase. Hay múltiples posts en múltiples sitios en internet. Lo que ha mi me ha funcionado es lo siguiente, que saqué de [aquí](https://www.reddit.com/r/bootcamp/comments/ygv1mh/any_way_to_get_magic_trackpad_2_working_on/?tl=es&onetap_auto=true&one_tap=true):
+De nuevo, otra necesidad que he aprovechado para documentar, porque pasé un pequeño calvario para que me funcionase. Hay múltiples artículos en internet sobre cómo usar el Magic Trackpad 2 de Apple en un PC con windows. Lo que ha mi me ha funcionado es lo siguiente, que saqué de [aquí](https://www.reddit.com/r/bootcamp/comments/ygv1mh/any_way_to_get_magic_trackpad_2_working_on/?tl=es&onetap_auto=true&one_tap=true):
 
 * Descargo específiciamente la versión de Apple 6.1.8000.6 de 07/4/22 desde [el sitio oficial de Apple](https://swcdn.apple.com/content/downloads/03/60/041-96205/61hhcnj7q5dxosc171ytixty20vuqg0r0n/AppleBcUpdate.exe)
 * Extraigo con 7-Zip a subdirectorio `AppleBcUpdate`
@@ -303,7 +350,7 @@ oem19.inf      | applewtp64.inf     | No    | HIDClass          | Apple Inc.    
 
 ***Herramientas útiles***
 
-Las que siempre instalo
+Para terminar el apunte, dejo aquí algunas herramientas útiles que siempre suelo instalar:
 
 * ***[7-Zip.org](https://7-zip.org)***: Ya la comenté, es un básico para mi
 * ***[Clink](https://github.com/chrisant996/)***: Enriquece muchísimo el CMD (`command.com`) con una readline como el de Linux, añade múltiples funcionalidades, colores, history.
@@ -317,4 +364,5 @@ Los ejecuto desde CMD como administrador
 
 * `chkdsk`: Comprueba el estado del disco duro y nos muestra un informe con la información necesaria. Además, se encarga de corregir problemas e incluso recuperar información perdida.
 * `dism /online /cleanup-image /restorehealth`: Se conecta con el **Windows Update service** para bajarse y reemplazar cualquier archivo importante que falte o esté corrupto.
-* `sfc`. Analizar la integridad de todos los archivos de sistema y solucionar problemas en los mismos. ***AVISO!!***: Microsoft tiene un problema conocido que lleva años sin resolverse. De hecho a mi me ha pasado. Al ejecutarlo por primera vez (`sfc /SCANNOW` encuentra un problema en el archivo `bthmodem.sys` y lo elimina. La solución pasa por ejecutar el comando anterior.  Cuando lo ejecutes indicará que ha encontrado corrupción y lo podrás encontrar en el log `\Windows\Logs\CBS\CBS.log` un `Corrupt File: bthmodem.sys`. Ejecuto el `dism /online /cleanup-image /restorehealth` que resuelve el entuerto.
+* `sfc`. Analizar la integridad de todos los archivos de sistema y solucionar problemas en los mismos. ***AVISO!!***: Microsoft tiene un problema conocido que lleva años sin resolverse. De hecho a mi me ha pasado. Al ejecutarlo por primera vez (`sfc /SCANNOW` encuentra un problema en el archivo `bthmodem.sys` y lo elimina.
+  * Cuando lo ejecutes indicará que ha encontrado corrupción y si miras su log `\Windows\Logs\CBS\CBS.log` verás que se refiere a `Corrupt File: bthmodem.sys`. Así que ejecuto el `dism /online /cleanup-image /restorehealth` que resuelve el entuerto.
