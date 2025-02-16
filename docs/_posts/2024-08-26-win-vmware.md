@@ -150,3 +150,9 @@ Después hago un snapshot (instantánea) y un clone de la imagen.
       %}
 
 Esta plantilla puedo usarla para clonar una nueva VM, recuperarla en otro ordenador. En mi caso lo he usado en un Host Linux Ubuntu 24.04 con VMWare Workstation Pro y ha funcionado perfectamente.
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-26-vmware-08.jpg"
+      caption="Misma VM corriendo en un Linux Ubuntu 24.04"
+      width="800px"
+      %}
