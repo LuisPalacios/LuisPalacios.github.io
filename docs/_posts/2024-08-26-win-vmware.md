@@ -51,7 +51,7 @@ Ahora toca crear la Máquina Virtual. Quiero evitar los requisitos de TPM y Secu
 - Desde VMWare Workstation Pro, crear una Nueva Máquina Virtual, de forma manual, indicando que es un Windows 10 (aunque voy a instalar Windows 11, lo vi recomendado por el tema de TPM, ante la duda hago caso).
 
 {% include showImagen.html
-      src="/assets/img/posts/2024-08-26-vmware-01.png"
+      src="/assets/img/posts/2024-08-26-vmware-01.jpg"
       caption="Creo una VM de forma manual"
       width="800px"
       %}
@@ -59,7 +59,7 @@ Ahora toca crear la Máquina Virtual. Quiero evitar los requisitos de TPM y Secu
 Utilizo 4 vCPU's, 16 GB, un disco máximo de 120 GB
 
 {% include showImagen.html
-      src="/assets/img/posts/2024-08-26-vmware-02.png"
+      src="/assets/img/posts/2024-08-26-vmware-02.jpg"
       caption="Termino con la creación de la VM"
       width="800px"
       %}
@@ -67,7 +67,7 @@ Utilizo 4 vCPU's, 16 GB, un disco máximo de 120 GB
 Una vez que tengo la VM, conecto el ISO oficial al CD/DVD (ajustes de la VM), hago boot, pulso una tecla/ESC para que arranque del DVD y cuando llego a la pregunta del tipo de teclado, hago una pausa para cambiar entradas del registro y desactivar el tema TPM 2.0.
 
 {% include showImagen.html
-      src="/assets/img/posts/2024-08-26-vmware-03.png"
+      src="/assets/img/posts/2024-08-26-vmware-03.jpg"
       caption="Durante el boot pulso Shift-F10 para evitar TPM"
       width="800px"
       %}
@@ -97,7 +97,7 @@ Cierro el editor del registry y cierro el command prompt. Vuelve a donde estába
 - Enciendo la VM, vuelvo a Settings -> Options -> Autologin: Lo activo.
 
 {% include showImagen.html
-      src="/assets/img/posts/2024-08-26-vmware-04.png"
+      src="/assets/img/posts/2024-08-26-vmware-04.jpg"
       caption="Ya tengo mi VM con Windows 11"
       width="730px"
       %}
@@ -113,7 +113,7 @@ Cierro el editor del registry y cierro el command prompt. Vuelve a donde estába
 A partir de este momento ya tengo otro Windows dentro de Windows, aislado, muy útil para entornos de desarrollo.
 
 {% include showImagen.html
-      src="/assets/img/posts/2024-08-26-vmware-05.png"
+      src="/assets/img/posts/2024-08-26-vmware-05.jpg"
       caption="Un nuevo entorno de desarrollo aislado"
       width="730px"
       %}
