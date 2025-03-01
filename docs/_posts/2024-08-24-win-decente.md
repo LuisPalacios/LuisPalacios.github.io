@@ -44,26 +44,7 @@ Lo ***básico***
   * `Start > Settings > Bluetooth & devices > Add device > Bluetooth`
 * Al final del apunte explico porqué y cómo instalo un Magic Trackpad 2 de Apple
 
-## Parametrización
-
-Cambios en la ***seguridad***
-
-* Start > Settings > **Privacy & Security**
-  * Security > Windows Security > `Open Windows Security`: **Todo en On**
-  * Security > `Location`: **Todo en Off**
-  * Security > `Windows Permissions`: **Todas en Off**
-    * `General, Speech, Inking`, **todo en Off**
-    * `Diagnostics`: **todo a off y Feedback frequency: Never**.
-    * Activity, `Search permissions, Searching Windows`: **todo off**
-  * Security > `App Permissions`: **Location Off**, el **resto a valor por defecto**
-* Start > Settings > Apps
-  * `Startup` > **Quito todas, sobre todo Edge**
-    * Excepción: dejo *Security notification icon*
-    * Excepción: dejo *VMWare Tools Core Service* si estoy instalando en una VM Windows.
-  * `Default apps` > Microsoft Edge : **Reviso que todo sea Chrome**
-  * `Apps for Websites` > **todo a off**
-
-***Activación*** de Windows 11
+## Activación de Windows
 
 Aqui hay dos opciones, en mi Windows bare metal he comprado una licencia, pero para VM's o equipo de laboratorio existe el famoso Microsoft Activation Script (MAS)
 
@@ -82,6 +63,25 @@ Aqui hay dos opciones, en mi Windows bare metal he comprado una licencia, pero p
       %}
 
 * Para comprobar el estado de activación: `Start > Settings > Activation`
+
+## Parametrización
+
+Cambios en la ***seguridad***
+
+* Start > Settings > **Privacy & Security**
+  * Security > Windows Security > `Open Windows Security`: **Todo en On**
+  * Security > `Location`: **Todo en Off**
+  * Security > `Windows Permissions`: **Todas en Off**
+    * `General, Speech, Inking`, **todo en Off**
+    * `Diagnostics`: **todo a off y Feedback frequency: Never**.
+    * Activity, `Search permissions, Searching Windows`: **todo off**
+  * Security > `App Permissions`: **Location Off**, el **resto a valor por defecto**
+* Start > Settings > Apps
+  * `Startup` > **Quito todas, sobre todo Edge**
+    * Excepción: dejo *Security notification icon*
+    * Excepción: dejo *VMWare Tools Core Service* si estoy instalando en una VM Windows.
+  * `Default apps` > Microsoft Edge : **Reviso que todo sea Chrome**
+  * `Apps for Websites` > **todo a off**
 
 Configuro que ***no pregunte*** cada vez que quiero arrancar un App
 
