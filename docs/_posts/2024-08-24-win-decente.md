@@ -23,30 +23,57 @@ table {
 
 | Este apunte pertenece a la serie de desarrollo de software con Windows:<br>• Preparar un PC para [Dualboot Linux / Windows]({% post_url 2024-08-23-dual-linux-win %}) e instalar Windows 11 Pro.<br>• Configurar [un Windows 11 decente]({% post_url 2024-08-24-win-decente %}), dejarlo en su esencia minima, quitando la morralla.<br>• Preparar [Windows para desarrollo de software]({% post_url 2024-08-25-win-desarrollo %}) de software, CLI, WSL2 y herramientas.<br>• Instalación de [VMWare en Windows]({% post_url 2024-08-26-win-vmware %}) para tener una VM con Windows 11 Pro. |
 
+## Introducción
+
+**¿Qué es el debloat o eliminación del bloatware?**. El **bloatware** se refiere a las aplicaciones y servicios preinstalados en un sistema operativo que, aunque no esenciales, consumen recursos y pueden afectar al rendimiento del equipo.
+
+Esas aplicaciones o servicios suelen incluirse por acuerdos/intereses comerciales o para promocionar ciertos servicios, pero en muchos casos resultan innecesarios para el usuario. El bloatware en Windows es como la morralla en el mar: una mezcla de elementos innecesarios que solo estorban, ocupan espacio y ralentizan todo. El proceso de **debloat** consiste en identificar y eliminarlo, liberando recursos y optimizando el funcionamiento del sistema. En este apunte encontrarás todo un proceso manual para hacerlo.
+
+{% include showImagen.html
+      src="/assets/img/posts/2024-08-24-win-decente-07.png"
+      caption="Evitar la morralla (fuente dall-e)"
+      width="400px"
+      %}
+
+Existen herramientas que permiten automatizar todo este proceso mediante scripts, facilitando la tarea y asegurando una limpieza más profunda. Te dejo algunos de los proyectos más reconocidos en la comunidad técnica, no recomiendo ninguno porque sinceramente todavía no los he usado.
+
+- **[Chris Titus debloater](https://christitus.com/windows-tool/)**: Utilidad integral para Windows que simplifica la instalación de programas, la eliminación de bloatware, la aplicación de ajustes personalizados y la gestión de actualizaciones del sistema. Ejecutable desde PowerShell con privilegios de administrador
+- **[Tiny 11 Builder](https://github.com/ntdevlabs/tiny11builder)**. Automatiza la creación de una imagen optimizada de Windows 11, eliminando componentes innecesarios para mejorar el rendimiento y reducir el uso de recursos. La versión más reciente ha sido completamente renovada, permitiendo su uso en cualquier versión, idioma o
+- **[Win11Debloat](https://github.com/Raphire/Win11Debloat)**: Otro que parece diseñado específicamente para Windows 11. Facilita la eliminación de aplicaciones innecesarias, deshabilita la telemetría y realiza otros ajustes para mejorar el rendimiento del sistema.
+- **[Windows10Debloater](https://github.com/Sycnex/Windows10Debloater)**: Este conjunto de scripts en PowerShell permite desactivar funciones, mejorar la privacidad y eliminar aplicaciones preinstaladas en Windows 10 y 11. Parece que es ampliamente utilizado y reconocido por su eficacia.
+arquitectura de Windows 11, gracias a la implementación en PowerShell.
+- **[Debloat Windows 10/11 de Andrew Taylor](https://andrewstaylor.com/2022/08/09/removing-bloatware-from-windows-10-11-via-script/)**: Este script automatiza la eliminación de aplicaciones innecesarias, desactiva servicios no esenciales y realiza ajustes para optimizar el rendimiento de Windows 10 y 11.
+
+Como decía, todavía no he usado ninguno, pero el día que lo haga me los estudiaré a fondo, incluidos los fuentes, seguiré las instrucciones y haré backup antes de ejecutar cualquier cosa de por ahí... (algunas modificaciones pueden ser irreversibles y afectar la estabilidad del equipo). Te invito a hacer lo mismo.
+
+
 ## Primeros pasos
 
-Aunque este apunte probablemente te pueda valer en tu Windows 11 con el que llevas tiempo trabajando, está documentado partiendo desde una instalación nueva de Windows 11 desde cero. En mi caso lo hice después de instalar [Dualboot Linux Windows]({% post_url 2024-08-23-dual-linux-win %}) o [VMWare en Windows]({% post_url 2024-08-26-win-vmware %}), es decir recién instalado en bare metal o en una VM.
+A partir de aqui me centro en mi proceso manual. Tiene menos riesgo porque vas viendo lo que hago, pero es mucho más largo. Parto de un windows 11 desde cero. Puede que sirva para uno con el que llevas tiempo trabajando, pero no lo he probado. En mi caso lo hice después de instalar [Dualboot Linux Windows]({% post_url 2024-08-23-dual-linux-win %}) o [VMWare en Windows]({% post_url 2024-08-26-win-vmware %}), es decir recién instalado en bare metal o en una VM.
 
-Lo ***básico***
+Lo ***básico*** antes de meterle mano al bloatware.
 
-* Instalo [Chrome para Windows](https://www.google.com/intl/es_es/chrome).
+* Me instalo [Chrome para Windows](https://www.google.com/intl/es_es/chrome)
   * Lo descargué desde *Edge* (diciendole que no a todo lo que propone por cierto)
   * Durante la instalación me ofrece cambiar el navegador por defecto.
   * `Settings > Apps > Default apps` > Google Chrome.
     * Pongo Chrome como el valor por defecto
     * Aprovecho y cambio todas las extensiones (las que me deja) a Chrome.
+
+| Nota: ¿Porqué no uso Edge?. Se que Edge utiliza WebView2, que está basado en Chromium (poyecto open source), que usa Blink como motor de renderizado y V8 como motor de JavaScript. Hasta ahí bien, parece la mejor opción para Windows. Pero ese es su problema, muy endogámico. Prefiero una plataforma única de navegación multiplataforma, que funcione en Windows, Linux, MacOS de forma excelente. Ahí es donde entran otros proyectos que usan Chromium como Google Chrome, Brave, Vivaldi, Opera. De momento estoy con Google Chrome, pero echando un ojo a Vivaldi, que es sinceramente un trabajo impresionante. |
+
 * Instalo 7-Zip desde [7-Zip.org](https://7-zip.org), es un clásico.
 
 ***Teclado y Ratón***
 
-* Durante la [instalación dualboot]({% post_url 2024-08-23-dual-linux-win %}) usé Ratón/Teclado USB's por cable.
-* Al terminar añadí un Ratón Logitech (con un plugin USB) y el teclado Logitech K380 vía bluetooth
+* Esto es muy particular en mi caso, así que sáltalo si no te aplica.
+* Durante la [instalación dualboot]({% post_url 2024-08-23-dual-linux-win %}) usé Ratón/Teclado USB's por cable y al terminar añadí un Ratón Logitech (con un plugin USB) y el teclado Logitech K380 vía bluetooth
   * `Start > Settings > Bluetooth & devices > Add device > Bluetooth`
 * Al final del apunte explico porqué y cómo instalo un Magic Trackpad 2 de Apple
 
 ## Activación de Windows
 
-Aqui hay dos opciones, en mi Windows bare metal he comprado una licencia, pero para VM's o equipo de laboratorio existe el famoso Microsoft Activation Script (MAS)
+En mi Windows bare metal compré una licencia, pero para VM's o equipo de laboratorio existe el famoso Microsoft Activation Script (MAS). No es que lo recomiende, es que está ahí, accesible y es público. Solo comparto lo que ya está por internet.
 
 * Opción 1: Comprar una copia digital de Windows 11 Pro retail a un minorista autorizado. Es barato y asequible, te llega un correo con la clave de producto.
   * `Start > Settings > Sytem Activation > Change product key`, añado la clave recibida y queda activado.
@@ -62,11 +89,11 @@ Aqui hay dos opciones, en mi Windows bare metal he comprado una licencia, pero p
       width="600px"
       %}
 
-* Para comprobar el estado de activación: `Start > Settings > Activation`
+Para comprobar el estado de activación: `Start > Settings > Activation`
 
-## Parametrización
+## Debloat manual
 
-Cambios en la ***seguridad***
+Empiezo con cambios en la ***seguridad***
 
 * Start > Settings > **Privacy & Security**
   * Security > Windows Security > `Open Windows Security`: **Todo en On**
@@ -247,7 +274,7 @@ Un caso de uso interesante es remapear el teclado. Tengo un apunte donde describ
 
 Soporta una amplia variedad de lenguajes de programación y una gran cantidad de extensiones para mejorar su funcionalidad. Lo instalo desde el [sitio oficial de Visual Studio Code](https://code.visualstudio.com/).
 
-## Extras
+## Una vuelta de tuerca
 
 Al seguir los pasos anteriores obtengo un Windows 11 mucho más limpio, rápido y libre de distracciones, ideal para su uso en entornos específicos como pruebas o demostraciones. Además de las optimizaciones mencionadas, dejo aquí algunas cosillas adicionales, que pueden llevar la personalización un paso más allá, ten en cuenta que a partir de aquí ya es decisión personal.
 
@@ -257,7 +284,7 @@ Al seguir los pasos anteriores obtengo un Windows 11 mucho más limpio, rápido 
   * Navego a “Computer Configuration > Administrative Templates > Windows Components > Search”.
   * Hago doble clic en “Allow Cortana” y selecciono “Disabled”. Aplico los cambios para desactivar Cortana.
 
-***Quitar bloatware/crapware***
+***Quito más aplicaciones preinstaladas***
 
 * Eliminar aplicaciones preinstaladas (bloatware o crapware) mediante PowerShell.
 * ¿Qué desinstalar? pues depende del fabricante de tu PC puedes echarle un ojo a [Should I Remove It?](http://www.shouldiremoveit.com) que no está mal y te da indicaciones.
@@ -306,6 +333,19 @@ Seguí los pasos anteriores para optimizar también un [máquina virtual windows
       width="600px"
       %}
 
+***Mantenimiento: Comandos útiles***
+
+Antes de terminar el apunte, dejo aqui algunos comandos útiles, que ejecuto desde como administrador
+
+* `chkdsk`: Comprueba el estado del disco duro y nos muestra un informe con la información necesaria. Además, se encarga de corregir problemas e incluso recuperar información perdida.
+* `dism /online /cleanup-image /restorehealth`: Se conecta con el **Windows Update service** para bajarse y reemplazar cualquier archivo importante que falte o esté corrupto.
+* `sfc`. Analizar la integridad de todos los archivos de sistema y solucionar problemas en los mismos. ***AVISO!!***: Microsoft tiene un problema conocido que lleva años sin resolverse. De hecho a mi me ha pasado. Al ejecutarlo por primera vez (`sfc /SCANNOW` encuentra un problema en el archivo `bthmodem.sys` y lo elimina.
+  * Cuando lo ejecutes indicará que ha encontrado corrupción y si miras su log `\Windows\Logs\CBS\CBS.log` verás que se refiere a `Corrupt File: bthmodem.sys`. Así que ejecuto el `dism /online /cleanup-image /restorehealth` que resuelve el entuerto.
+
+## Personalizaciones
+
+Doy por terminado el apunte, lo que viene ahora son algunas cosas que hice en mi caso y que quiero tener documentadas.
+
 ***Instalación de Barrier para KVM por software***
 
 Esto que describo ahora ya no tiene que ver con un Windows "decente", así que puedes saltártelo. Es para acordarme yo mismo de cómo resolví una necesidad. Trabajo con dos ordenadores (mac mini y PC con dualboot Windows / Linux), cada uno con su monitor. Mi objetivo es poder tener un KVM por software para poder compartir el Teclado y el Ratón.
@@ -350,7 +390,7 @@ oem19.inf      | applewtp64.inf     | No    | HIDClass          | Apple Inc.    
 
 ***Herramientas útiles***
 
-Para terminar el apunte, dejo aquí algunas herramientas útiles que siempre suelo instalar:
+Para terminar, herramientas útiles que siempre suelo instalar:
 
 * ***[7-Zip.org](https://7-zip.org)***: Ya la comenté, es un básico para mi
 * ***[Clink](https://github.com/chrisant996/)***: Enriquece muchísimo el CMD (`command.com`) con una readline como el de Linux, añade múltiples funcionalidades, colores, history.
@@ -358,11 +398,3 @@ Para terminar el apunte, dejo aquí algunas herramientas útiles que siempre sue
 * ***[BleachBit](https://www.bleachbit.org/)*** Una alternativa Open Source a CCleaner, que tiene una pinta buenísima. Le falta la parte del Registry y la Optimización de rendimiento.
   * Antes de instalar la última versión, hay que bajarse el **[Visual Studio 2919 (VC++ 10.0) redistributable SP1 x86](https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe)**, es la versión x86. Aunque mi sistema es de 64-bit da igual porque va a usar la dll de la versión x86.
 
-***Mantenimiento: Comandos útiles***
-
-Los ejecuto desde CMD como administrador
-
-* `chkdsk`: Comprueba el estado del disco duro y nos muestra un informe con la información necesaria. Además, se encarga de corregir problemas e incluso recuperar información perdida.
-* `dism /online /cleanup-image /restorehealth`: Se conecta con el **Windows Update service** para bajarse y reemplazar cualquier archivo importante que falte o esté corrupto.
-* `sfc`. Analizar la integridad de todos los archivos de sistema y solucionar problemas en los mismos. ***AVISO!!***: Microsoft tiene un problema conocido que lleva años sin resolverse. De hecho a mi me ha pasado. Al ejecutarlo por primera vez (`sfc /SCANNOW` encuentra un problema en el archivo `bthmodem.sys` y lo elimina.
-  * Cuando lo ejecutes indicará que ha encontrado corrupción y si miras su log `\Windows\Logs\CBS\CBS.log` verás que se refiere a `Corrupt File: bthmodem.sys`. Así que ejecuto el `dism /online /cleanup-image /restorehealth` que resuelve el entuerto.
