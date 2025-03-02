@@ -170,7 +170,7 @@ Al final, como se puede observar, de recursos la Raspberry Pi5 (8GB) va sobradí
 
 
 {% include showImagen.html
-      src="/assets/img/posts/2025-03-02-bitwarden-06.png"
+      src="/assets/img/posts/2025-03-02-bitwarden-07.png"
       caption="Pi5 ejecutando NextCloud y Vaultwarden"
       width="400px"
       %}
