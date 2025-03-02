@@ -1,6 +1,6 @@
 ---
-title: "Bitwarden"
-date: "2024-12-26"
+title: "Bitwarden casero"
+date: "2025-03-02"
 categories: administración
 tags: seguridad password manager claves authenticator linux pve proxmox lxc
 excerpt_separator: <!--more-->
@@ -33,7 +33,7 @@ Estas son las dos opciones que tengo.
 
 En ambos casos es obligatorio tener en tu casa un [Nginx Proxy Manager](https://nginxproxymanager.com). Yo ya lo tenía, y lo documenté en mi apunte sobre [Domótica y Networking]({% post_url 2023-04-08-networking-avanzado %}), busca la sección *Proxy Inverso*.
 
-**Bitwarden en Pi5**
+**Vaultwarden en Pi5**
 
 Decido ir por la Pi5, donde lo primero es instalar Docker. Primero como root actualizo a la última:
 
@@ -165,3 +165,12 @@ A continuación conecto con mi servicio local, hago login y click en `Import Dat
       %}
 
 Una vez que termina la instalación ya puedo ver los datos y reconfigurar los clientes con la dirección local del servidor.
+
+Al final, como se puede observar, de recursos la Raspberry Pi5 (8GB) va sobradísima, ejecutando NextCloud y Vaultwarden.
+
+
+{% include showImagen.html
+      src="/assets/img/posts/2025-03-02-bitwarden-06.png"
+      caption="Pi5 ejecutando NextCloud y Vaultwarden"
+      width="400px"
+      %}
