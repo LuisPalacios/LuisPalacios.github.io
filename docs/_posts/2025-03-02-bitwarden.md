@@ -98,7 +98,7 @@ services:
     container_name: vaultwarden
     restart: unless-stopped
     environment:
-      DOMAIN: "https://cloud.parchis.org"
+      DOMAIN: "https://bitwarden.tld.com"
     volumes:
       - ./vw-data/:/data/
     ports:
@@ -120,7 +120,7 @@ luis@cloud:~/vaultwarden $ docker compose up -d
 luis@cloud:~/vaultwarden $ docker compose logs
 ```
 
-Configuro mi DNS, doy de alta una nueva entrada en el NGNIX y conecto con mi nuevo servidor en `https://bitwarden.tudominio.com`
+Configuro mi DNS, doy de alta una nueva entrada en el NGNIX y conecto con mi nuevo servidor en `https://bitwarden.tld.com` (usa tu dominio)
 
 {% include showImagen.html
       src="/assets/img/posts/2025-03-02-bitwarden-02.png"
@@ -148,7 +148,11 @@ Vuelvo a hacer login y ya tengo acceso a mi servidor Vaultwarden (Bitwarden).
       width="400px"
       %}
 
-A partir de aquí tan sencillo como ir a la web de [Bitwarden](https://bitwarden.), login con mi usuario, `Vault > export`, pido que exporte en formato JSON encriptado con una contraseña. Crea un fichero del tipo `bitwarden_encrypted_export_20250302162516.json` y lo descargo en mi ordenador.
+Una vez que termina la instalación ya puedo ver los datos y reconfigurar los clientes con la dirección local del servidor.
+
+### Exportar
+
+Lo siguiente que hice fue irme a mi cuenta de [Bitwarden](https://vault.bitwarden.com/#/login), en la nube, login con mi usuario de siempre y entré en `Vault > export`. Exporté en formato JSON encriptado con una contraseña. Creó un fichero del tipo `bitwarden_encrypted_export_20250302162516.json` y lo descargo en mi ordenador.
 
 {% include showImagen.html
       src="/assets/img/posts/2025-03-02-bitwarden-05.png"
@@ -156,7 +160,9 @@ A partir de aquí tan sencillo como ir a la web de [Bitwarden](https://bitwarden
       width="400px"
       %}
 
-A continuación conecto con mi servicio local, hago login y click en `Import Data`.
+### Importar
+
+A continuación conecto desde el navegador con mi servidor local, hago login y click en `Import Data`.
 
 {% include showImagen.html
       src="/assets/img/posts/2025-03-02-bitwarden-06.png"
@@ -164,10 +170,7 @@ A continuación conecto con mi servicio local, hago login y click en `Import Dat
       width="400px"
       %}
 
-Una vez que termina la instalación ya puedo ver los datos y reconfigurar los clientes con la dirección local del servidor.
-
-Al final, como se puede observar, de recursos la Raspberry Pi5 (8GB) va sobradísima, ejecutando NextCloud y Vaultwarden.
-
+Una vez importados los datos he cambiado todos los clientes para que apunten al servidor local y me fui a mi cuenta en la nube de Bitwarden para borrarla. De momento tiene muy buena pinta, como se puede observar, de recursos la Raspberry Pi5 (8GB) va sobradísima, ejecutando NextCloud y Vaultwarden simultáneamente.
 
 {% include showImagen.html
       src="/assets/img/posts/2025-03-02-bitwarden-07.png"
