@@ -76,7 +76,7 @@ Personal technical blog at **[https://www.luispa.com](https://www.luispa.com)** 
 
 | Item | Value |
 | --- | --- |
-| Branch | `gh-pages` (sources), `master` (PRs target) |
+| Branch | `gh-pages` (rama única: fuentes + deploy via GitHub Actions) |
 | Hugo root | `src/` |
 | Posts | `src/content/posts/YYYY-MM-DD-slug.md` |
 | Images | `src/static/img/posts/` |
@@ -159,7 +159,6 @@ Push to `gh-pages` → GitHub Actions builds → deploys to GitHub Pages.
 
 ## Constraints
 
-- **Never** push directly to `master`
 - **Never** edit theme submodule
 - **Always** use existing CSS/JS patterns
 - **Prefer** SVG for logos

@@ -1,10 +1,16 @@
 ## LuisPalacios.github.io
 
-Estás en la branch `gh-pages`, donde están los fuentes de mi "blog" [https://www.luispa.com](https://www.luispa.com) hecho con Hugo + PaperMod.
+Este repositorio contiene mi *blog* usando el generador de páginas [Hugo](https://gohugo.io/) y hospedado en [GitHub Pages](https://pages.github.com).
+
+* Enlace al blog: [https://www.luispa.com](https://www.luispa.com)
 
 ---
 
-### Puesta en marcha local (paso a paso)
+### Trabajo en local
+
+Esta documentación la dejo a modo informativo y referencia para aquellos que quieran montarse un sitio usando [GitHub Pages](pages.github.com)
+
+Una vez que has pasado por la documentación oficial y tienes tu repo 100% preparado, para clonarlo en local y trabajar con él, sigo estos pasos:
 
 ```shell
 # 1. Clonar el repositorio
