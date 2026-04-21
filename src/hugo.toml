@@ -1,0 +1,116 @@
+baseURL = "https://luispa.com/"
+theme = "PaperMod"
+defaultContentLanguage = "es"
+defaultContentLanguageInSubdir = false
+
+[pagination]
+  pagerSize = 6
+
+[params]
+  ShowReadingTime = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  defaultTheme = "auto"
+  ShowImageInList = true
+  ShowImageInSingle = true
+  mainSections = ["posts"]
+  env = "production"
+  hideAuthor = true
+  author = "Luis Palacios"
+
+  # Configuración de búsqueda
+  [params.fuseOpts]
+    isCaseSensitive = false
+    shouldSort = true
+    location = 0
+    distance = 1000
+    threshold = 0.4
+    minMatchCharLength = 1
+    limit = 10
+    keys = [ "title", "permalink", "summary", "content" ]
+
+  [params.label]
+    icon = "img/posts/drjal.svg"
+    iconHeight = 48
+
+[outputs]
+  home = [ "HTML", "RSS", "JSON" ]
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+  [markup.highlight]
+    guessSyntax = true
+    lineNos = false
+    lineNumbersInTable = true
+    noClasses = false
+    style = "github"
+
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'
+
+# ──────────────────────────────────────────────
+# Languages
+# ──────────────────────────────────────────────
+
+[languages]
+  [languages.es]
+    locale = "es-ES"
+    label = "Español"
+    weight = 1
+    title = "Apuntes técnicos"
+    [languages.es.params]
+      description = "Apuntes técnicos sobre desarrollo, redes, sistemas y automatización por Luis Palacios"
+      keywords = ["Luis Palacios", "tecnología", "sistemas", "redes", "hacker", "desarrollo", "windows", "Linux", "macOS"]
+
+  [languages.en]
+    locale = "en-US"
+    label = "English"
+    weight = 2
+    title = "Technical Notes"
+    [languages.en.params]
+      description = "Technical notes on development, networking, systems, and automation by Luis Palacios"
+      keywords = ["Luis Palacios", "technology", "systems", "networking", "development", "windows", "Linux", "macOS"]
+
+# ──────────────────────────────────────────────
+# Menus
+# ──────────────────────────────────────────────
+
+[[languages.es.menu.main]]
+  identifier = "apuntes"
+  name = "Apuntes"
+  url = "/apuntes/"
+  weight = 3
+
+[[languages.es.menu.main]]
+  identifier = "search"
+  name = "Búsqueda"
+  url = "/search/"
+  weight = 5
+
+[[languages.es.menu.main]]
+  identifier = "about"
+  name = "Acerca de"
+  url = "/about/"
+  weight = 10
+
+[[languages.en.menu.main]]
+  identifier = "apuntes"
+  name = "Notes"
+  url = "/apuntes/"
+  weight = 3
+
+[[languages.en.menu.main]]
+  identifier = "search"
+  name = "Search"
+  url = "/search/"
+  weight = 5
+
+[[languages.en.menu.main]]
+  identifier = "about"
+  name = "About"
+  url = "/about/"
+  weight = 10

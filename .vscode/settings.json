@@ -1,0 +1,71 @@
+{
+  // --- 1. CONFIGURACIÓN GLOBAL Y EDITOR ---
+  "editor.wordWrap": "on",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false,
+  "editor.formatOnType": false,
+  "editor.inlineSuggest.enabled": true,
+
+  // --- 2. MANEJO DE ARCHIVOS Y LIMPIEZA ---
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true, // Sustituye nativamente a la extensión trailing-spaces
+  "files.associations": {
+    "*.json": "jsonc",
+    "**/layouts/**/*.json": "hugo"
+  },
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/.git": true,
+    "**/.hugo_build.lock": true,
+    "**/public/**": true,
+    "**/resources/**": true,
+    "**/build/**": false // He puesto false por si quieres ver la carpeta build de CMake
+  },
+
+  // --- 3. STACK C++ / LLVM (Tus reglas de oro) ---
+  "C_Cpp.intelliSenseEngine": "disabled",
+  "C_Cpp.formatting": "disabled",
+  "cmake.exportCompileCommandsFile": true, // Vital para que Clangd funcione
+  "cmake.configureOnOpen": true,
+
+  // --- 4. ASIGNACIÓN DE FORMATEADORES (El "Juez") ---
+
+  "[cpp]": {
+    "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+  },
+  "[c]": {
+    "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python"
+  },
+  "[go]": {
+    "editor.defaultFormatter": "golang.go"
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+  },
+
+  // --- 5. OTROS AJUSTES DE INTERFAZ ---
+  "json.validate.enable": true, // Lo he vuelto a activar porque ahora Prettier/VSCode lo gestionan bien
+  "workbench.iconTheme": "material-icon-theme",
+  "explorer.confirmDelete": false,
+  "projectManager.sortList": "Recent"
+}

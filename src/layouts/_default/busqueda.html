@@ -1,0 +1,6 @@
+{{ define "main" }}
+<section class="search" data-search-index="{{ "index.json" | absLangURL }}">
+  <input type="text" id="searchInput" placeholder="{{ if eq .Lang "en" }}Search...{{ else }}Buscar...{{ end }}" autofocus>
+  <ul id="customSearchResults" class="search-results-list"></ul>
+</section>
+{{ end }}

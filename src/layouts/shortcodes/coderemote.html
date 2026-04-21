@@ -1,0 +1,63 @@
+{{/*
+Shortcode: coderemote
+Descarga un raw remoto en build-time y lo muestra plegado.
+- url     (req): URL raw (Gist, Git, etc.)
+- lang    (opt): lenguaje. Default: text
+- title   (opt): summary; si no se pasa, usa path.Base(url)
+- linenos (opt): "table" | "inline" | "false". Default: false
+- engine  (opt): "highlight" | "plain". Default: highlight (inline styles)
+- open    (opt): "1" para abrir por defecto
+- from/to (opt): rango de líneas (1-based, inclusivo)
+- debug   (opt): "1" muestra tamaño leído
+*/}}
+
+{{- $url     := .Get "url" -}}
+{{- $lang    := .Get "lang" | default "text" -}}
+{{- $title   := .Get "title" | default (path.Base $url) -}}
+{{- $linenos := .Get "linenos" | default "false" -}}
+{{- $engine  := .Get "engine"  | default "highlight" -}}
+{{- $open    := eq (.Get "open") "1" -}}
+{{- $debug   := eq (.Get "debug") "1" -}}
+
+{{- with resources.GetRemote $url }}
+  {{- $content := .Content -}}
+  <details class="codefold" {{ if $open }}open{{ end }}>
+    <summary>
+      <code>{{ $title }}</code>
+      <button class="copyicon" type="button" aria-label="Copy code" title="Copy"
+        onclick="event.preventDefault();event.stopPropagation();(function(btn){
+          var d=btn.closest('details'); if(!d) return;
+          var ta=d.querySelector('.codefold-clipboard'); var txt=ta?ta.value:'';
+          function flash(ok){ var old=btn.textContent; btn.textContent=ok?'✅':'❌'; setTimeout(function(){ btn.textContent='📋'; }, 900); }
+          function execTemp(text){
+            var t=document.createElement('textarea'); t.value=text; t.setAttribute('readonly','');
+            t.style.position='fixed'; t.style.left='-9999px'; t.style.opacity='0';
+            document.body.appendChild(t); t.focus(); t.select(); t.setSelectionRange(0, t.value.length);
+            var ok=false; try{ ok=document.execCommand('copy'); }catch(e){ ok=false; }
+            document.body.removeChild(t); return ok;
+          }
+          if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(txt).then(function(){ flash(true); }, function(){ flash(execTemp(txt)); });
+          } else {
+            flash(execTemp(txt));
+          }
+        })(this);">📋</button>
+    </summary>
+    <div class="codefold-body">
+
+      {{- if $debug -}}
+        <div class="codefold-debug">debug: {{ len $content }} bytes</div>
+      {{- end -}}
+
+      {{- if eq $engine "plain" -}}
+        <pre class="codefold-pre"><code>{{ $content | htmlEscape }}</code></pre>
+      {{- else -}}
+        {{- highlight $content $lang (dict "linenos" $linenos "anchorLineNos" true "noClasses" true) -}}
+      {{- end -}}
+
+      <textarea class="codefold-clipboard" readonly>{{ $content | htmlEscape }}</textarea>
+    </div>
+  </details>
+{{- else -}}
+  <blockquote>⚠️ No se pudo cargar: {{ $url }}</blockquote>
+{{- end -}}

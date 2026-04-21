@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="15" height="15"/>
+  </defs>
+  <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: #ffffff; pointer-events: none; visibility: hidden;" x="15" y="15"/>
+  <ellipse style="fill: none; stroke: rgb(0, 0, 0);" cx="75" cy="75" rx="60" ry="60"/>
+  <path d="M 44.666 68.453 C 43.315 64.069 44.135 59.538 44.28 58.077 C 45.294 49.845 46.693 46.044 51.374 40.053 C 56.634 33.331 65.176 27.533 74.201 27.533 C 83.177 27.533 91.719 33.331 96.98 40.053 C 101.662 46.045 103.061 49.845 104.075 58.077 C 104.22 59.538 105.04 64.069 103.737 68.453" style="stroke-width: 1.164; stroke: rgb(0, 0, 0);" stroke-linecap="round" stroke-width="1" fill="none" fill-rule="evenodd"/>
+  <path d="M 45.772 63.542 C 45.624 68.066 43.803 68.601 42.77 71.374 C 42.278 72.785 42.179 74.147 42.327 75.46 C 42.819 78.719 45.034 81.541 46.559 83.73 C 48.724 86.892 49.315 93.167 50.397 98.225 C 53.35 111.894 57.041 124.104 74.166 124.104 C 91.341 124.104 94.983 111.894 97.935 98.225 C 99.018 93.167 99.657 86.892 101.822 83.73 C 103.299 81.541 105.513 78.719 106.005 75.46 C 106.203 74.147 106.104 72.785 105.563 71.374 C 104.579 68.601 102.758 68.066 102.561 63.542" style="stroke-width: 1.164; stroke: rgb(0, 0, 0);" stroke-linecap="round" stroke-width="1" fill="none" fill-rule="evenodd"/>
+  <path d="M 61.906 65.179 C 62.977 63.429 64.147 62.053 65.706 61.928 C 67.654 61.74 69.018 62.741 70.09 64.742" style="stroke-width: 1.164; stroke: rgb(0, 0, 0);" stroke-linecap="round" stroke-width="1" fill="none" fill-rule="evenodd"/>
+  <path d="M 86.458 65.179 C 85.385 63.429 84.216 62.053 82.658 61.928 C 80.709 61.74 79.345 62.741 78.274 64.742" style="stroke-width: 1.164; stroke: rgb(0, 0, 0);" stroke-linecap="round" stroke-width="1" fill="none" fill-rule="evenodd"/>
+  <path d="M 78.274 78.274 C 77.215 80.354 75.915 81.617 74.085 81.544 C 72.256 81.47 71.149 80.577 70.09 78.274" style="stroke-width: 1.164; stroke: rgb(0, 0, 0);" stroke-linecap="round" stroke-width="1" fill="none" fill-rule="evenodd"/>
+  <path d="M 97.915 78.274 C 97.273 77.008 96.903 76.038 96.192 75.327 C 95.051 74.211 93.762 73.791 93.005 73.363" style="stroke-width: 1.164; stroke: rgb(0, 0, 0);" stroke-linecap="round" stroke-width="1" fill="none" fill-rule="evenodd"/>
+  <path d="M 50.448 78.274 C 51.057 77.085 51.361 76.103 52.186 75.327 C 53.316 74.191 54.62 73.777 55.358 73.363" style="stroke-width: 1.164; stroke: rgb(0, 0, 0);" stroke-linecap="round" stroke-width="1" fill="none" fill-rule="evenodd"/>
+  <path d="M 96.278 75.05 C 94.798 78.268 93.467 80.781 92.924 84.299 C 89.126 107.67 84.144 112.646 74.181 112.646 C 64.218 112.646 59.286 107.67 55.488 84.299 C 54.896 80.781 53.614 78.268 52.085 75 C 57.855 83.796 63.824 87.315 73.639 87.515 C 83.504 87.666 90.556 82.992 96.278 75.05 Z" style="stroke-width: 1.164; stroke: rgb(0, 0, 0);" stroke-linecap="round" stroke-width="1" fill="none" fill-rule="evenodd"/>
+</svg>

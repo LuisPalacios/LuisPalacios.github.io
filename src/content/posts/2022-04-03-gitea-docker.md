@@ -1,0 +1,628 @@
+---
+title: "Gitea y Traefik en Docker"
+date: "2022-04-03"
+categories: ["desarrollo"]
+tags: ["linux","git","servidor","gitea","gitlab","github","traefik","smtp"]
+draft: false
+cover:
+  image: "/img/posts/logo-gitea-docker.svg"
+  hidden: true
+---
+
+<img src="/img/posts/logo-gitea-docker.svg" alt="Logo gitea traefik docker" width="150px" style="float:left; padding-right:25px"  />
+
+En este apunte describo la instalación de [Gitea](http://gitea.io) (servidor GIT) y [Traefik](https://doc.traefik.io/traefik/) (terminar certificados SSL de LetsEncrypt), junto con [Redis](https://redis.io) (cache) y [MySQL](https://www.mysql.com) (DB). Instalo todas las aplicaciones como contenedores Docker en un Linux Alpine que se ejecuta como máquina virtual en mi servidor KVM. En el apunte anterior expliqué qué es Gitea y cómo [montarlo sobre una máquina virtual]({{< relref "2022-03-26-gitea-vm.md" >}}) directamente (sin docker).
+
+<br clear="left"/>
+<!--more-->
+
+En esta ocasión he añadido Traefik y Redis a la foto. Todo son **contenedores Docker** sobre un Linux ligero (Alpine Linux), ejecutándose, a su vez, como máquina virtual sobre mi Hypervisor QEMU/KVM. Este apunte refleja mi instalación en producción en mi red casera. Crédito va para el autor de esta buena guía, [setup a self-hosted git service with gitea](https://dev.to/ruanbekker/setup-a-self-hosted-git-service-with-gitea-11ce).
+
+<div class="image-box">
+  <img src="/img/posts/2022-04-03-gitea-docker-04.jpg" alt="Arquitectura de los microservicios" width="450px" />
+  <div class="image-caption">Arquitectura de los microservicios</div>
+</div>
+
+<br/>
+
+### Networking
+
+Antes de entrar en harina ahí va la configuración de networking de mi instalación casera:
+
+<div class="image-box">
+  <img src="/img/posts/2022-04-03-gitea-docker-05.jpg" alt="Configuración del networking" width="600px" />
+  <div class="image-caption">Configuración del networking</div>
+</div>
+
+Este tipo de instalación permitirá conectar con el servidor en mi red privada (LAN) pero también desde Internet (obligatorio para recibir el certificado SSL de Letsencrypt). Aunque casi siempre lo uso en local, así es como abro los puertos de internet bajo demanda, para renovar el certificado o usar el servicio desde internet puntualmente:
+
+```shell
+export GITIP=192.168.1.200
+iptables -t nat -I PREROUTING -i ppp0 -p tcp -m multiport --dports 22,80,443 -j DNAT --to-destination ${GITIP}
+iptables -I FORWARD -p tcp -m multiport --dports 22,80,443 -d ${GITIP} -j ACCEPT
+```
+
+En mi proveedor DNS tengo `git.tudominio.com` apuntando a mi dirección ip pública (dinámica) y en el Servidor DNS local en mi instalación casera está así:
+
+- `traefik.tudominio.com --> 192.168.1.200`
+- `git.tudominio.com       --> 192.168.1.200`
+
+He configurado el Servicio `openssh` del Alpine Linux para que escuche por otro puerto (22222), de modo que dejo libre el puerto `22` para git sobre SSH en el contenedor de `gitea`, y el acceso a la web de Gitea se realizara vía `HTTPS` por el puerto `443`.
+
+<br/>
+
+### Máquina virtual con Alpine Linux
+
+El primer paso es la creación de **VM basada en Alpine Linux con todo lo necesario para ejecutar Docker**. Sigo la documentación y el ejemplo descrito en el apunte [Alpine para ejecutar contenedores]({{< relref "2022-03-20-alpine-docker.md" >}}). Llamo al equipo `git.tudominio.com`.
+
+- Una vez que termino la instalación del Alpine Linux modifico su `/etc/hosts`
+
+```shell
+127.0.0.1 git.tudominio.com git traefik traefik.tudominio.com localhost.localdomain localhost
+::1  localhost localhost.localdomain
+```
+
+- Entro en la VM con mi usuario y creo el directorio `gitea` donde colocaré todos los ficheros de trabajo para los contenedores.
+
+```shell
+git:~$ id
+uid=1000(luis) gid=1000(luis) groups=10(wheel),101(docker),1000(luis),1000(luis)
+git:~$ pwd
+/home/luis
+git:~$ mkdir gitea
+```
+
+<br/>
+
+### Contenedor Traefik
+
+Primero voy a crear solo la parte de Traefik, para asegurarme que funciona correctamente.
+
+- Creo el fichero donde se guardará el certificado de `letsencrypt`.
+
+```shell
+git:~/gitea$ mkdir data_traefik
+git:~/gitea$ touch data_traefik/acme.json
+git:~/gitea$ chmod 600 data_traefik/acme.json
+```
+
+- Creo `compose.yml`, de momento solo pongo el primer serivicio `gitea-traefik`. Cambia tu `HOST` y `TUCORREO@TUDOMINIO.com` por el adecuado.
+
+```yml
+version: '3.9'
+services:
+  gitea-traefik:
+    image: traefik:2.7
+    container_name: gitea-traefik
+    restart: unless-stopped
+    volumes:
+      - ./data_traefik/acme.json:/acme.json
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - public
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.api.rule=Host(`git.tudominio.com`)'
+      - 'traefik.http.routers.api.entrypoints=https'
+      - 'traefik.http.routers.api.service=api@internal'
+      - 'traefik.http.routers.api.tls=true'
+      - 'traefik.http.routers.api.tls.certresolver=letsencrypt'
+    ports:
+      - 80:80
+      - 443:443
+    command:
+      - '--api'
+      - '--providers.docker=true'
+      - '--providers.docker.exposedByDefault=false'
+      - '--entrypoints.http=true'
+      - '--entrypoints.http.address=:80'
+      - '--entrypoints.http.http.redirections.entrypoint.to=https'
+      - '--entrypoints.http.http.redirections.entrypoint.scheme=https'
+      - '--entrypoints.https=true'
+      - '--entrypoints.https.address=:443'
+      - '--certificatesResolvers.letsencrypt.acme.email=TUCORREO@TUDOMINIO.com'
+      - '--certificatesResolvers.letsencrypt.acme.storage=acme.json'
+      - '--certificatesResolvers.letsencrypt.acme.httpChallenge.entryPoint=http'
+      - '--log=true'
+      - '--log.level=INFO'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+networks:
+  public:
+    name: public
+```
+
+- Arranco el servicio
+
+```shell
+git:~/gitea$ docker compose up -d
+WARNING: Network public not found.
+Creating network "public" with the default driver
+Creating gitea-traefik ... done
+
+git:~/gitea$ docker compose logs -f --since 1h gitea-traefik
+time="2022-03-27T08:33:57Z" level=info msg="Configuration loaded from flags."
+time="2022-03-27T08:33:57Z" level=info msg="Starting provider aggregator aggregator.ProviderAggregator"
+time="2022-03-27T08:33:57Z" level=info msg="Starting provider *traefik.Provider"
+time="2022-03-27T08:33:57Z" level=info msg="Starting provider *docker.Provider"
+time="2022-03-27T08:33:57Z" level=info msg="Starting provider *acme.ChallengeTLSALPN"
+time="2022-03-27T08:33:57Z" level=info msg="Starting provider *acme.Provider"
+time="2022-03-27T08:33:57Z" level=info msg="Testing certificate renew..." providerName=letsencrypt.acme ACME CA="https://acme-v02.api.letsencrypt.org/directory"
+```
+
+- Cuando funciona todo puedo seguir con el resto de servicios
+
+<br/>
+
+### Contenedores Gitea, Redis y MySQL
+
+- Preparo los directorios donde dejaré los datos.
+
+```shell
+git:~/gitea$ mkdir -p data/gitea      # Directorio para los datos de Gitea
+git:~/gitea$ mkdir -p mysql           # Directorio para los datos de MySQL
+```
+
+- Añado los tres servicios a `compose.yml`. Lo adapto a mis necesidades:
+  - DOMAIN y SSH_DOMAIN (urls para hacer clone con git)
+  - ROOT_URL (Configurado para usar HTTPS, incluyendo mi dominio)
+  - SSH_LISTEN_PORT (este es el puerto de escucha para SSH dentro del contenedor)
+  - SSH_PORT (Puerto que expongo hacia el exterior y se usará para el clone)
+  - DB_TYPE (Tipo de Base de Datos)
+  - traefik.http.routers.gitea.rule=Host() (cabecera para llegar a gitea vía web)
+  - ./data/gitea (Ruta para la persistencia de los datos. En mi caso utilizo dejo los datos dentro de la máquina virtual)
+- Así es como queda el fichero final:
+
+```yml
+#
+# compose.yaml para gitea,traefik,redis y mysql
+#
+version: '3.9'
+#
+# Servicios
+#
+services:
+
+  #
+  gitea-traefik:
+    image: traefik:2.8.7
+    container_name: gitea-traefik
+    restart: unless-stopped
+    depends_on:
+      gitea:
+        condition: service_healthy
+#         condition: service_started
+    volumes:
+      - ./data_traefik/acme.json:/acme.json
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - public
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.api.rule=Host(`git.tudominio.com`)'
+      - 'traefik.http.routers.api.entrypoints=https'
+      - 'traefik.http.routers.api.service=api@internal'
+      - 'traefik.http.routers.api.tls=true'
+      - 'traefik.http.routers.api.tls.certresolver=letsencrypt'
+    ports:
+      - 80:80
+      - 443:443
+    command:
+      - '--api'
+      - '--providers.docker=true'
+      - '--providers.docker.exposedByDefault=false'
+      - '--entrypoints.http=true'
+      - '--entrypoints.http.address=:80'
+      - '--entrypoints.http.http.redirections.entrypoint.to=https'
+      - '--entrypoints.http.http.redirections.entrypoint.scheme=https'
+      - '--entrypoints.https=true'
+      - '--entrypoints.https.address=:443'
+      - '--certificatesResolvers.letsencrypt.acme.email=TUCORREO@TUDOMINIO.com'
+      - '--certificatesResolvers.letsencrypt.acme.storage=acme.json'
+      - '--certificatesResolvers.letsencrypt.acme.httpChallenge.entryPoint=http'
+      - '--log=true'
+      - '--log.level=INFO'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+
+  #  Gitea
+  gitea:
+    container_name: gitea
+    image: gitea/gitea:1.17.3
+    restart: unless-stopped
+    #  Nota: Pendiente de estudiar:
+    #  https://docs.docker.com/compose/startup-order/
+    depends_on:
+      gitea-cache:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+    environment:
+      - APP_NAME="Gitea"
+      - USER_UID=1000
+      - USER_GID=1000
+      - USER=git
+      - RUN_MODE=prod
+      - DOMAIN=git.tudominio.com
+      - SSH_DOMAIN=git.tudominio.com
+      - HTTP_PORT=3000
+      - ROOT_URL=https://git.tudominio.com
+      - SSH_PORT=22
+      - SSH_LISTEN_PORT=22
+      - DB_TYPE=mysql
+      - GITEA__database__DB_TYPE=mysql
+      - GITEA__database__HOST=db:3306
+      - GITEA__database__NAME=gitea
+      - GITEA__database__USER=gitea
+      - GITEA__database__PASSWD=gitea
+      - GITEA__cache__ENABLED=true
+      - GITEA__cache__ADAPTER=redis
+      - GITEA__cache__HOST=redis://gitea-cache:6379/0?pool_size=100&idle_timeout=180s
+      - GITEA__cache__ITEM_TTL=24h
+      - GITEA__mailer__ENABLED=true
+      - GITEA__mailer__FROM="TUCORREO@TUDOMINIO.com"
+      - GITEA__mailer__MAILER_TYPE=smtp
+      - GITEA__mailer__HOST="smtp.gmail.com:465"
+      - GITEA__mailer__IS_TLS_ENABLED=true
+      - GITEA__mailer__USER="TUCORREO@TUDOMINIO.com"
+      - GITEA__mailer__PASSWD="TUCONTRASEÑA"
+      - GITEA__mailer__HELO_HOSTNAME="git.tudominio.com"
+    ports:
+      - "22:22"
+    networks:
+      - public
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --no-verbose --tries=1 --spider localhost:3000/explore/repos || exit 1"]
+      interval: 5s
+      start_period: 2s
+      timeout: 3s
+      retries: 55
+    volumes:
+      - ./data_gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.gitea.rule=Host(`git.tudominio.com`)"
+      - "traefik.http.routers.gitea.entrypoints=https"
+      - "traefik.http.routers.gitea.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.gitea.service=gitea-service"
+      - "traefik.http.services.gitea-service.loadbalancer.server.port=3000"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+
+  # Redis
+  gitea-cache:
+    container_name: gitea-cache
+    image: redis:6-alpine
+    restart: unless-stopped
+    networks:
+      - public
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 15s
+      timeout: 3s
+      retries: 30
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+
+  # MySQL
+  db:
+    image: mysql:8
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=gitea
+      - MYSQL_USER=gitea
+      - MYSQL_PASSWORD=gitea
+      - MYSQL_DATABASE=gitea
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      start_period: 2s
+      interval: 10s
+      timeout: 2s
+      retries: 55
+    networks:
+      - public
+    volumes:
+      - ./data_mysql:/var/lib/mysql
+#
+# Networking
+networks:
+  public:
+    name: public
+```
+
+<br/>
+
+#### Arrancar todos los servicios
+
+- Paro Traefik (opcional)
+
+```shell
+git:~/gitea$ docker compose stop
+```
+
+- Arranco todos los microservicios (contenedores)
+
+```shell
+git:~/gitea$ docker compose up -d
+Creating network "public" with the default driver
+Starting gitea-traefik ... done
+Starting gitea-cache   ... done
+Starting gitea_db_1    ... done
+Starting gitea         ... done:
+git:~/gitea$ docker compose ps
+    Name                   Command                  State                                       Ports
+--------------------------------------------------------------------------------------------------------------------------------------
+gitea           /usr/bin/entrypoint /bin/s ...   Up             0.0.0.0:22->22/tcp,:::22->22/tcp, 3000/tcp
+gitea-cache     docker-entrypoint.sh redis ...   Up (healthy)   6379/tcp
+gitea-traefik   /entrypoint.sh --api --pro ...   Up             0.0.0.0:443->443/tcp,:::443->443/tcp, 0.0.0.0:80->80/tcp,:::80->80/tcp
+gitea_db_1      docker-entrypoint.sh mysqld      Up             3306/tcp, 33060/tcp
+```
+
+- Cotilleo los `logs` con:
+
+```shell
+git:~/gitea$ docker compose logs
+:
+```
+
+<br/>
+
+### Parametrizar Gitea
+
+Me dirijo a mi `ROOT_URL`, `https://git.tudominio.com` y entro en la configuración inicial.
+
+<div class="image-box">
+  <img src="/img/posts/2022-04-03-gitea-docker-06.png" alt="Conecto con https://git.tudominio.com" width="600px" />
+  <div class="image-caption">Conecto con https://git.tudominio.com</div>
+</div>
+
+- Sección de correo. Uso mi cuenta de GMail con contraseña de aplicación.
+
+<div class="image-box">
+  <img src="/img/posts/2022-04-03-gitea-docker-07.png" alt="Configuración del correo" width="600px" />
+  <div class="image-caption">Configuración del correo</div>
+</div>
+
+| Si más adelante quieres retocar la configuración puedes hacerlo modificando `/home/luis/gitea/data/gitea/gitea/conf/app.ini`. Recuerda que antes es conveniente parar el contenedor. |
+
+```shell
+git:~/gitea$ docker compose stop gitea
+git:~/gitea$ nano data/gitea/gitea/conf/app.ini
+:
+[mailer]
+ENABLED        = true
+HOST           = smtp.gmail.com:465
+FROM           = tucorreo@gmail.com
+USER           = tucorreo@gmail.com
+PASSWD         = tucontraseñadeaplicación
+MAILER_TYPE    = smtp
+IS_TLS_ENABLED = true
+HELO_HOSTNAME  = git.tudominio.com
+:
+git:~/gitea$ docker compose start gitea
+```
+
+- Configuro el usuario administrador
+
+<div class="image-box">
+  <img src="/img/posts/2022-04-03-gitea-docker-08.png" alt="Configuración de la cuenta de administrador" width="600px" />
+  <div class="image-caption">Configuración de la cuenta de administrador</div>
+</div>
+
+- Hacemos click en "Instalar Gitea". Cuando termina vuelvo a escribir la `ROOT_URL` y deberías ver lo siguiente al estar ya autenticado.
+
+<div class="image-box">
+  <img src="/img/posts/2022-04-03-gitea-docker-09.png" alt="Conecto con https://git.tudominio.com" width="600px" />
+  <div class="image-caption">Conecto con https://git.tudominio.com</div>
+</div>
+
+- Si intento conectar desde INTERNET con `http://git.tudominio.com` me redirige a `https://git.tudominio.com` y veré lo siguiente
+
+<div class="image-box">
+  <img src="/img/posts/2022-04-03-gitea-docker-10.png" alt="Página al conectar desde Internet con https://git.tudominio.com" width="600px" />
+  <div class="image-caption">Página al conectar desde Internet con https://git.tudominio.com</div>
+</div>
+
+<br/>
+
+### Configuración de la clave SSH
+
+Creo una clave SSH para poder autorizar a mi cliente git a hacer push/pull/commit a/desde Gitea. Aquí un ejemplo sin contraseña. Copio la clave pública para añadirla a gitea.
+
+```shell
+$ ssh-keygen -f ~/.ssh/id_gitea -t rsa -C "Gitea" -q -N ""
+$ cat .ssh/id_gitea.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDjQxGLslvGHPty3i+NbsY7krjcY/e/JDJ7B+Svpc1DaY8PGCMTegy95PDZf91yoSe39nEq3MVVP8YpMop/gH0WbC8UQO9vI9BTLy1sv+vlGnf+do3h2hsqPrJCuhyPWWLKYzaieXmWHT06Bbwfl9pqOGKxKrqU9+uzn+pGu+cXqSngDBX4Gd4yaJERL/7lprXybT19+lMKKoYddlomv5nNcT3f4r+OW9YYvgQs8UL8a2JwVk++RCL2cIXSG//D25RN/0HVX0twJZoOwg+apWx9nEYNeazVCJlJwhQZOLE2VH1WClWy5YNwXz04wmzjGmtKMf8gtqduiSJV1Xuh6zcgmJ9iv/Qayu18JqUPTHA0CErdWcDC68kaoTQlOht9ZTHyoy4wXNyB1hQnv+kT1IQUvM9mJQIDbgrqUdlZXSRL3CLHC9IImRaHG9mp0eGxb7ZtgEeuumMFhI0NNJwX6YCbbRcfAQgS8DBiyxPLKyjMnV1SLDnMbZJth0gjj9eXKUM= Gitea
+```
+
+<div class="image-box">
+  <img src="/img/posts/2022-04-03-gitea-docker-11.png" alt="En la sección de preferencias del usuario" width="600px" />
+  <div class="image-caption">En la sección de preferencias del usuario</div>
+</div>
+
+<div class="image-box">
+  <img src="/img/posts/2022-04-03-gitea-docker-12.png" alt="Añado la clave pública" width="600px" />
+  <div class="image-caption">Añado la clave pública</div>
+</div>
+
+<br/>
+
+### Crear un repositorio público
+
+Vuelvo a la página web y creo el repositorio `hola-mundo`
+
+<div class="image-box">
+  <img src="/img/posts/2022-04-03-gitea-docker-01.png" alt="Añadir repositorio" width="600px" />
+  <div class="image-caption">Añadir repositorio</div>
+</div>
+<div class="image-box">
+  <img src="/img/posts/2022-04-03-gitea-docker-02.png" alt="Creo el repositorio hola-mundo" width="600px" />
+  <div class="image-caption">Creo el repositorio hola-mundo</div>
+</div>
+
+Antes de poder trabajar con él, configuro mi cliente (`$HOME/.ssh/config`) y añado lo siguiente:
+
+```config
+# Gitea
+Host git.tudominio.com
+  IdentityFile ~/.ssh/id_gitea
+  User git
+  Port 22
+```
+
+A partir de ahora ya puedo hacer clone, push, pull, etc...
+
+```shell
+$ git clone git@git.tudominio.com:luis/hola-mundo.git
+Cloning into 'hola-mundo'...
+X11 forwarding request failed
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (3/3), done.
+```
+
+<br/>
+
+### Swagger API
+
+Gitea viene con Swagger por defecto y el endpoint es `/api/swagger`
+
+<div class="image-box">
+  <img src="/img/posts/2022-04-03-gitea-docker-03.png" alt="Conecto con Swagger" width="600px" />
+  <div class="image-caption">Conecto con Swagger</div>
+</div>
+
+<br/>
+
+## Actualizaciones
+
+Tenemos que decidir qué estrategia seguimos y cómo hacerlas. La estrategia te la dejo a tí, cada cual es muy particular con este tema. En mi caso actualizo de vez en cuando `gitea`, mientras que el resto de los servicios cuando vea que merece la pena o hace falta.
+
+Siempre importante hacer un backup completo, suelo parar la VM, hago un backup de la imagen del disco y luego la arranco y hago el update.
+
+| ❗❗ Ah! Los datos siempre en un volumen externo fuera de los contenedores Docker ❗❗ |
+
+En mi caso los tengo así, todos los datos en directorios externos:
+
+```config
+/home
+└── luis
+    └── gitea
+        ├── data_gitea
+        ├── data_mysql
+        └── data_traefik
+```
+
+<br/>
+
+### Actualización de Gitea
+
+- Averiguo versiones disponibles en el [Hub de Docker -> Gitea (tags)](https://hub.docker.com/r/gitea/gitea/tags)
+- Modifico el fichero `docker compose.yml` y cambio el número de versión, de `1.16.5` a `1.16.6`
+
+```yaml
+  :
+  #  Gitea
+  gitea:
+    container_name: gitea
+    image: gitea/gitea:1.16.6
+  :
+```
+
+- Al hacer un pull se baja la versión
+
+```shell
+git:~/gitea$ docker compose pull gitea
+```
+
+- Paro los servicios, elimino los contenedores y vuelvo a arrancarlos.
+
+```shell
+git:~/gitea$ docker compose down
+git:~/gitea$ docker compose up -d
+
+# Para ver el log
+git:~/gitea$ docker compose logs -f
+```
+
+- Al conectar con el navegador deberías ver que hizo correctamente la actualización.
+
+<div class="image-box">
+  <img src="/img/posts/2022-04-03-gitea-docker-13.png" alt="Versión de gitea" width="250px" />
+  <div class="image-caption">Versión de gitea</div>
+</div>
+
+<br/>
+
+#### Actualización del resto: Traefik, redis, mysql
+
+- Con el resto de servicios es igual, busca las últimas versiones:
+  - Última versión en Docker de [Traefik](https://hub.docker.com/_/traefik)
+  - Última versión en Docker de [Redis](https://hub.docker.com/_/redis)
+  - Última versión en Docker de [Mysql](https://hub.docker.com/_/mysql)
+- El proceso es el mismo que el de Gitea, editas el  `compose.yml`, cambias la versión en `image: ...`, y se hace un `pull`, `down`, `up -d`) todo de nuevo.
+
+<br/>
+
+### Arranque de los servicios
+
+*Arranque durante el boot*: No necesito crear un script para que durante el boot se arranque los servicios.
+
+En el fichero `compose.yml`tengo la orden `restart: unless-stopped` en todos los servicios. Una vez que ejecute  `docker compose up -d` el daemon volverá a arrancarlos tras el boot.
+
+*Orden de los servicios*: A pesar de haber configurado el fichero `compose.yml` para que se ejecuten en orden, he detectado que tras el boot algunas veces traefik no se comparta y lo he resuelto programando un rearranque del mismo.
+
+- Creo un script de rearranque `/home/luis/gitea/restart-traefik.sh`
+
+```shell
+#!/bin/ash
+#
+cd /home/luis/gitea
+while true; do
+    sleep 30
+    wget -q --no-verbose --tries=1 --spider https://git.tudominio.com/explore/repos 2> /dev/null
+    if [ "${?}" -ne "0" ]; then
+        docker compose restart gitea-traefik
+    fi
+done
+```
+
+- Creo el ejecutable `/etc/local.d/0-restart-traefik.sh`
+
+```shell
+#!/bin/ash
+#
+sleep 10
+sudo -H -u luis ash -c /home/luis/gitea/restart-traefik.sh
+```
+
+- Activo el servicio local
+
+```shell
+rc-update add local
+```
+
+<br/>
+
+### Instalar qemu-guest-agent
+
+Para poder controlar bien el apagado y encendido de esta VM desde KVM/QEMU o Proxmox VE necesito instalar el paquete `qemu-guest-agent`
+
+```shell
+git:~# apk add qemu-guest-agent
+git:~# rc-update add qemu-guest-agent default
+ * service qemu-guest-agent added to runlevel default
+```
+
+---

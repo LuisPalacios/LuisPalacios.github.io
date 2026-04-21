@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="15" height="15"/>
+  </defs>
+  <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: rgb(84, 84, 84); pointer-events: none; visibility: hidden;" x="15" y="15"/>
+  <clipPath id="clip">
+    <path d="M.2.2h512v512H.2z"/>
+  </clipPath>
+  <radialGradient id="logo-bottom-left" cx="0" cy="0" gradientTransform="matrix(-59 -225 150 -39 161.4 470)" gradientUnits="userSpaceOnUse" r="1">
+    <stop offset="0" stop-color="#fff" stop-opacity=".4"/>
+    <stop offset="1" stop-opacity=".1"/>
+  </radialGradient>
+  <radialGradient id="logo-top-right" cx="0" cy="0" gradientTransform="matrix(50 -379 280 37 360 374.2)" gradientUnits="userSpaceOnUse" r="1">
+    <stop offset="0" stop-color="#fff" stop-opacity=".6"/>
+    <stop offset="1" stop-color="#fff" stop-opacity=".1"/>
+  </radialGradient>
+  <radialGradient id="logo-top-left" cx="0" cy="0" gradientTransform="matrix(69 -319 218 47 175.4 307)" gradientUnits="userSpaceOnUse" r="1">
+    <stop offset="0" stop-color="#fff" stop-opacity=".8"/>
+    <stop offset="1" stop-color="#fff" stop-opacity=".4"/>
+  </radialGradient>
+  <radialGradient id="logo-bottom-right" cx="0" cy="0" gradientTransform="matrix(-96 -163 187 -111 335.3 512.2)" gradientUnits="userSpaceOnUse" r="1">
+    <stop offset="0" stop-color="#fff" stop-opacity=".3"/>
+    <stop offset="1" stop-opacity=".3"/>
+  </radialGradient>
+  <radialGradient id="logo-top-edge" cx="0" cy="0" gradientTransform="matrix(-36 166 -112 -24 310 128.2)" gradientUnits="userSpaceOnUse" r="1">
+    <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+    <stop offset="1" stop-color="#fff" stop-opacity=".2"/>
+  </radialGradient>
+  <radialGradient id="logo-left-edge" cx="0" cy="0" gradientTransform="matrix(88 89 -190 187 111 220.2)" gradientUnits="userSpaceOnUse" r="1">
+    <stop offset="0" stop-color="#fff" stop-opacity=".2"/>
+    <stop offset="1" stop-color="#fff" stop-opacity=".4"/>
+  </radialGradient>
+  <radialGradient id="logo-bottom-edge" cx="0" cy="0" gradientTransform="matrix(9 130 -276 20 215 284)" gradientUnits="userSpaceOnUse" r="1">
+    <stop offset="0" stop-color="#fff" stop-opacity=".2"/>
+    <stop offset="1" stop-color="#fff" stop-opacity=".3"/>
+  </radialGradient>
+  <radialGradient id="logo-middle-edge" cx="0" cy="0" gradientTransform="matrix(-198 -104 327 -623 400 399.2)" gradientUnits="userSpaceOnUse" r="1">
+    <stop offset="0" stop-color="#fff" stop-opacity=".2"/>
+    <stop offset="0.5" stop-color="#fff" stop-opacity=".2"/>
+    <stop offset="1" stop-color="#fff" stop-opacity=".3"/>
+  </radialGradient>
+  <g transform="matrix(1.044264, 0, 0, 1.044264, 5.042627, 4.665688)" style="">
+    <g fill="#6c31e3" transform="matrix(1, 0, 0, 1, -8.00796, -5.77355)"/>
+    <path d="M 53.948 123.238 L 53.948 126.385 L 51.891 126.385 L 51.891 117.25 L 55.114 117.25 C 57.416 117.25 58.567 118.221 58.567 120.161 C 58.567 121.079 58.237 121.821 57.576 122.388 C 56.916 122.955 56.033 123.238 54.929 123.238 L 53.948 123.238 Z M 53.948 118.83 L 53.948 121.677 L 54.758 121.677 C 55.854 121.677 56.401 121.197 56.401 120.238 C 56.401 119.299 55.854 118.83 54.758 118.83 L 53.948 118.83 Z M 68.972 126.385 L 66.373 126.385 L 63.71 122.416 C 63.659 122.34 63.578 122.172 63.468 121.913 L 63.436 121.913 L 63.436 126.385 L 61.378 126.385 L 61.378 117.25 L 63.436 117.25 L 63.436 121.569 L 63.468 121.569 C 63.519 121.45 63.604 121.281 63.723 121.059 L 66.245 117.25 L 68.698 117.25 L 65.513 121.607 L 68.972 126.385 Z M 81.728 126.385 L 79.696 126.385 L 79.696 120.919 C 79.696 120.329 79.722 119.677 79.772 118.963 L 79.722 118.963 C 79.615 119.524 79.52 119.927 79.435 120.173 L 77.294 126.385 L 75.612 126.385 L 73.433 120.238 C 73.374 120.072 73.279 119.647 73.147 118.963 L 73.09 118.963 C 73.145 119.864 73.173 120.654 73.173 121.333 L 73.173 126.385 L 71.319 126.385 L 71.319 117.25 L 74.332 117.25 L 76.198 122.665 C 76.347 123.098 76.456 123.533 76.523 123.97 L 76.562 123.97 C 76.676 123.465 76.798 123.026 76.925 122.652 L 78.791 117.25 L 81.728 117.25 L 81.728 126.385 Z" style="text-wrap-mode: nowrap; stroke-width: 1;"/>
+    <g clip-path="url(#clip)" transform="matrix(0.136135, 0, 0, 0.136135, 32.445196, 39.56169)" style="">
+      <title>Obsidian</title>
+      <path d="M382.3 475.6c-3.1 23.4-26 41.6-48.7 35.3-32.4-8.9-69.9-22.8-103.6-25.4l-51.7-4a34 34 0 0 1-22-10.2l-89-91.7a34 34 0 0 1-6.7-37.7s55-121 57.1-127.3c2-6.3 9.6-61.2 14-90.6 1.2-7.9 5-15 11-20.3L248 8.9a34.1 34.1 0 0 1 49.6 4.3L386 125.6a37 37 0 0 1 7.6 22.4c0 21.3 1.8 65 13.6 93.2 11.5 27.3 32.5 57 43.5 71.5a17.3 17.3 0 0 1 1.3 19.2 1494 1494 0 0 1-44.8 70.6c-15 22.3-21.9 49.9-25 73.1z" fill="#6c31e3" style=""/>
+      <path d="M165.9 478.3c41.4-84 40.2-144.2 22.6-187-16.2-39.6-46.3-64.5-70-80-.6 2.3-1.3 4.4-2.2 6.5L60.6 342a34 34 0 0 0 6.6 37.7l89.1 91.7a34 34 0 0 0 9.6 7z" fill="url(#logo-bottom-left)" style=""/>
+      <path d="M278.4 307.8c11.2 1.2 22.2 3.6 32.8 7.6 34 12.7 65 41.2 90.5 96.3 1.8-3.1 3.6-6.2 5.6-9.2a1536 1536 0 0 0 44.8-70.6 17 17 0 0 0-1.3-19.2c-11-14.6-32-44.2-43.5-71.5-11.8-28.2-13.5-72-13.6-93.2 0-8.1-2.6-16-7.6-22.4L297.6 13.2a34 34 0 0 0-1.5-1.7 96 96 0 0 1 2 54 198.3 198.3 0 0 1-17.6 41.3l-7.2 14.2a171 171 0 0 0-19.4 71c-1.2 29.4 4.8 66.4 24.5 115.8z" fill="url(#logo-top-right)" style=""/>
+      <path d="M278.4 307.8c-19.7-49.4-25.8-86.4-24.5-115.9a171 171 0 0 1 19.4-71c2.3-4.8 4.8-9.5 7.2-14.1 7.1-13.9 14-27 17.6-41.4a96 96 0 0 0-2-54A34.1 34.1 0 0 0 248 9l-105.4 94.8a34.1 34.1 0 0 0-10.9 20.3l-12.8 85-.5 2.3c23.8 15.5 54 40.4 70.1 80a147 147 0 0 1 7.8 24.8c28-6.8 55.7-11 82.1-8.3z" fill="url(#logo-top-left)" style=""/>
+      <path d="M333.6 511c22.7 6.2 45.6-12 48.7-35.4a187 187 0 0 1 19.4-63.9c-25.6-55-56.5-83.6-90.4-96.3-36-13.4-75.2-9-115 .7 8.9 40.4 3.6 93.3-30.4 162.2 4 1.8 8.1 3 12.5 3.3 0 0 24.4 2 53.6 4.1 29 2 72.4 17.1 101.6 25.2z" fill="url(#logo-bottom-right)" style=""/>
+      <g clip-rule="evenodd" fill-rule="evenodd">
+        <path d="M254.1 190c-1.3 29.2 2.4 62.8 22.1 112.1l-6.2-.5c-17.7-51.5-21.5-78-20.2-107.6a174.7 174.7 0 0 1 20.4-72c2.4-4.9 8-14.1 10.5-18.8 7.1-13.7 11.9-21 16-33.6 5.7-17.5 4.5-25.9 3.8-34.1 4.6 29.9-12.7 56-25.7 82.4a177.1 177.1 0 0 0-20.7 72z" fill="url(#logo-top-edge)" style=""/>
+        <path d="M194.3 293.4c2.4 5.4 4.6 9.8 6 16.5L195 311c-2.1-7.8-3.8-13.4-6.8-20-17.8-42-46.3-63.6-69.7-79.5 28.2 15.2 57.2 39 75.7 81.9z" fill="url(#logo-left-edge)" style=""/>
+        <path d="M200.6 315.1c9.8 46-1.2 104.2-33.6 160.9 27.1-56.2 40.2-110.1 29.3-160z" fill="url(#logo-bottom-edge)" style=""/>
+        <path d="M312.5 311c53.1 19.9 73.6 63.6 88.9 100-19-38.1-45.2-80.3-90.8-96-34.8-11.8-64.1-10.4-114.3 1l-1.1-5c53.2-12.1 81-13.5 117.3 0z" fill="url(#logo-middle-edge)" style=""/>
+      </g>
+    </g>
+    <path d="M 67.344 10.789 C 61.881 10.789 57.286 14.537 55.885 19.569 C 54.664 16.877 51.965 14.963 48.833 14.963 C 44.556 14.989 41.088 18.457 41.071 22.734 C 41.088 27.011 44.554 30.478 48.833 30.504 C 51.966 30.504 54.655 28.592 55.885 25.893 C 57.286 30.929 61.878 34.679 67.344 34.679 C 72.774 34.679 77.342 30.975 78.774 25.979 C 80.013 28.626 82.668 30.504 85.758 30.504 C 90.044 30.478 93.511 27.011 93.528 22.734 C 93.511 18.457 90.044 14.989 85.758 14.963 C 82.668 14.963 80.013 16.845 78.766 19.489 C 77.342 14.494 72.774 10.789 67.344 10.789 Z M 67.344 15.349 C 71.442 15.349 74.72 18.627 74.72 22.734 C 74.72 26.841 71.442 30.118 67.344 30.118 C 63.253 30.136 59.941 26.814 59.959 22.734 C 59.959 18.627 63.236 15.349 67.344 15.349 Z M 48.833 19.522 C 50.634 19.522 52.044 20.933 52.044 22.734 C 52.044 24.535 50.634 25.945 48.833 25.945 C 47.056 25.963 45.605 24.51 45.633 22.734 C 45.633 20.933 47.04 19.522 48.833 19.522 Z M 85.758 19.522 C 87.561 19.522 88.969 20.933 88.969 22.734 C 88.969 24.535 87.561 25.945 85.758 25.945 C 83.982 25.963 82.539 24.51 82.558 22.734 C 82.558 20.933 83.966 19.522 85.758 19.522 Z" style="stroke-width: 23.152;">
+      <title>Nextcloud</title>
+    </path>
+  </g>
+</svg>

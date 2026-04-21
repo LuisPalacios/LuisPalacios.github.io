@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="15" height="15"/>
+  </defs>
+  <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: rgb(84, 84, 84); pointer-events: none; visibility: hidden;" x="15" y="15"/>
+  <path id="path851" class="cls-1" d="M 15 24.849 L 44.446 120.818 C 44.738 124.431 48.834 126.369 51.815 124.311 C 52.975 123.507 53.717 122.224 53.831 120.818 L 83.123 24.849" style="fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"/>
+  <path id="path853" class="cls-1" d="M 95.4 67.711 L 95.4 44.911 C 95.4 36.141 104.631 27.68 114.815 27.68 C 125 27.68 134.6 36.911 134.6 44.911 L 134.6 67.711" style="fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"/>
+  <path id="path859" class="cls-1" d="M 135 124.849 L 112.138 124.849 C 103.369 124.849 94.908 115.618 94.908 105.434 C 94.908 95.249 104.138 85.649 112.138 85.649 L 134.938 85.649" style="fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round;"/>
+</svg>

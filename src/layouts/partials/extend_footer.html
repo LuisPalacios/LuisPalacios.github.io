@@ -1,0 +1,108 @@
+<script>
+    /*
+      Añade botón 📋 a <details class="codefold"> nativos y copia el texto sin duplicar líneas.
+      No toca los shortcodes (si el <summary> ya tiene .copyicon, se respeta).
+    */
+    (function () {
+      function normalizeNewlines(s) {
+        if (!s) return '';
+        // Normaliza CRLF/CR -> LF; no colapsamos LF dobles para respetar líneas en blanco reales
+        return s.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+      }
+
+      function getText(details) {
+        // Prioriza un textarea raw si existiera (shortcodes). En nativos no lo hay.
+        const ta = details.querySelector('.codefold-clipboard');
+        if (ta && ta.value) return normalizeNewlines(ta.value);
+
+        // Preferimos PRE -> textContent (no innerText) para evitar saltos "de layout"
+        const pre = details.querySelector('pre');
+        if (pre) return normalizeNewlines(pre.textContent);
+
+        const code = details.querySelector('code');
+        if (code) return normalizeNewlines(code.textContent);
+
+        // Fallback: texto plano del body
+        return normalizeNewlines(details.textContent || '');
+      }
+
+      function copyViaTemp(text) {
+        if (!text) return false;
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly','');
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.focus(); ta.select(); ta.setSelectionRange(0, ta.value.length);
+        let ok = false; try { ok = document.execCommand('copy'); } catch { ok = false; }
+        document.body.removeChild(ta);
+        return ok;
+      }
+
+      function injectFor(details) {
+        const summary = details.querySelector(':scope > summary');
+        if (!summary) return;
+        if (summary.querySelector('.copyicon')) return; // ya hay botón (shortcodes)
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'copyicon';
+        btn.title = 'Copy';
+        btn.setAttribute('aria-label', 'Copy code');
+        btn.textContent = '📋';
+        summary.appendChild(btn);
+
+        // mousedown: preserva user-activation y no colapsa el <details>
+        btn.addEventListener('mousedown', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+
+          const text = getText(details);
+          const ok = copyViaTemp(text);
+
+          btn.textContent = ok ? '✅' : '❌';
+          setTimeout(() => { btn.textContent = '📋'; }, 900);
+        });
+      }
+
+      function init() {
+        document.querySelectorAll('details.codefold').forEach(injectFor);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init, { once: true });
+      } else {
+        init();
+      }
+    })();
+    </script>
+
+
+<script>
+/* Codefold: persistir estado open/closed por página y título */
+(function () {
+  function keyOf(d) {
+    const t = (d.querySelector(':scope > summary code') || {}).textContent || '__';
+    return 'codefold:' + location.pathname + ':' + t.trim();
+  }
+  function apply(d) {
+    const k = keyOf(d);
+    // Restaura estado si existe
+    try {
+      const v = localStorage.getItem(k);
+      if (v === '1') d.setAttribute('open', '');
+      else if (v === '0') d.removeAttribute('open');
+    } catch (_) {}
+    // Guarda cambios al togglear
+    d.addEventListener('toggle', () => {
+      try { localStorage.setItem(k, d.open ? '1' : '0'); } catch(_) {}
+    });
+  }
+  function init() { document.querySelectorAll('details.codefold').forEach(apply); }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else { init(); }
+})();
+</script>

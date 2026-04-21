@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="15" height="15"/>
+  </defs>
+  <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: rgb(84, 84, 84); pointer-events: none; visibility: hidden;" x="15" y="15"/>
+  <g transform="matrix(2.46169, 0, 0, 2.46169, -126.525009, -265.019684)" style="">
+    <title>Win11</title>
+    <rect x="57.491" y="113.751" width="23.105" height="23.105" style="fill: rgb(0, 120, 212);"/>
+    <rect x="83.131" y="113.751" width="23.105" height="23.105" style="fill: rgb(0, 120, 212);"/>
+    <rect x="57.491" y="139.393" width="23.105" height="23.105" style="fill: rgb(0, 120, 212);"/>
+    <rect x="83.131" y="139.393" width="23.105" height="23.105" style="fill: rgb(0, 120, 212);"/>
+  </g>
+</svg>

@@ -1,0 +1,18 @@
+# Configuración de Exo para cluster doméstico
+# Ubicación: ~/.exo/exo.yaml
+
+server:
+  host: "0.0.0.0"  # Escuchar en todas las interfaces
+  port: 52415      # Puerto por defecto
+
+models:
+  cache_dir: "~/.exo/models"  # Donde guardar modelos descargados
+  default_format: "mlx"       # Formato preferido para Apple Silicon
+
+cluster:
+  discovery: "auto"            # Descubrimiento automático de nodos
+  network_interface: "10.0.0.1"  # Usar Thunderbolt Bridge
+
+logging:
+  level: "INFO"                # Nivel de logging
+

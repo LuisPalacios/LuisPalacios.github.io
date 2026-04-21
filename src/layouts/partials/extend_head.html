@@ -1,0 +1,58 @@
+{{- $custom := resources.Get "css/extended/custom.css" -}}
+{{- if $custom -}}
+  {{- $custom := $custom | resources.Minify -}}
+  <link rel="stylesheet" href="{{ $custom.RelPermalink }}" />
+{{- end -}}
+
+{{- $imageZoomJS := resources.Get "js/image-zoom.js" -}}
+{{- if $imageZoomJS -}}
+  {{- $imageZoomJS := $imageZoomJS | resources.Minify -}}
+  <script src="{{ $imageZoomJS.RelPermalink }}"></script>
+{{- end -}}
+
+{{- $svgThemeSwitcher := resources.Get "js/svg-theme-switcher.js" -}}
+{{- if $svgThemeSwitcher -}}
+  {{- $svgThemeSwitcher := $svgThemeSwitcher | resources.Minify -}}
+  <script src="{{ $svgThemeSwitcher.RelPermalink }}"></script>
+{{- end -}}
+
+{{- if (eq .Layout `busqueda`) -}}
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+{{ $js := resources.Get "js/search.js" | resources.Minify | resources.Fingerprint }}
+<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+{{- end -}}
+
+{{ if .Page.Store.Get "hasMermaid" }}
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+    let mermaidTheme = "default";
+    if (localStorage.getItem("pref-theme") === "dark") {
+      mermaidTheme = "dark";
+    }
+    mermaid.initialize({ startOnLoad: true, theme: mermaidTheme, });
+
+
+  </script>
+{{ end }}
+
+<!-- Primary favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="shortcut icon" href="/favicon.ico">
+
+<!-- Apple Touch -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+<!-- Safari Pinned Tab -->
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#18355e">
+
+<!-- Manifest -->
+<link rel="manifest" href="/site.webmanifest">
+
+<!-- Microsoft Tiles -->
+<meta name="msapplication-TileColor" content="#18355e">
+<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+
+{{/* Carga y enlaza el CSS del plegado */}}
+{{- $codefold := resources.Get "css/extended/codefold.css" | resources.Minify | resources.Fingerprint -}}
+<link rel="stylesheet" href="{{ $codefold.RelPermalink }}" integrity="{{ $codefold.Data.Integrity }}">

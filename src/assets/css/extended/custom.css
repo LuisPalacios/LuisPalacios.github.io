@@ -1,0 +1,638 @@
+/* Estilo global: hacer que todos los elementos de texto tengan peso normal (400) */
+h1, h2, h3, h4, h5, h6,
+.post-header h1,
+.entry-header h2,
+.entry-hint-parent {
+  font-weight: 400 !important;
+}
+
+/* Título del sitio con peso de fuente más suave */
+.logo a {
+  font-weight: 400 !important;
+}
+
+/* Aumentar ancho del contenido principal */
+:root {
+  --main-width: 850px !important; /* 720px → 850px */
+  --nav-width: 850px !important; /* 1024px → 1200px */
+}
+
+/* Reducir tamaños de fuente en posts */
+body {
+  font-size: 16px !important; /* base: 18px → 16px */
+}
+
+.post-title {
+  font-size: 34px !important; /* 40px → 34px */
+}
+
+.md-content h1 {
+  font-size: 34px !important; /* 40px → 34px */
+}
+
+.md-content h2 {
+  font-size: 28px !important; /* 32px → 28px */
+}
+
+.md-content h3 {
+  font-size: 21px !important; /* 24px → 21px */
+}
+
+.md-content h4 {
+  font-size: 16px !important; /* 16px → 14px */
+}
+
+.md-content h5 {
+  font-size: 14px !important; /* 14px → 13px */
+}
+
+.md-content h6 {
+  font-size: 12px !important; /* 12px → 11px */
+}
+
+/* Estilo para los posts con imagen lateral */
+.entry-with-image {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Imagen alineada lateralmente */
+.entry-inline-image {
+  flex-shrink: 0;
+  flex-basis: 140px;
+  width: 140px;
+  min-width: 140px;
+  max-width: 140px;
+  display: block;
+}
+
+.entry-inline-image img.post-thumb {
+  width: 140px;
+  height: auto;
+  max-height: 140px;
+  object-fit: cover;
+  display: block;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Asegura que el texto quede alineado con la imagen */
+.entry-inline-text {
+  flex: 1;
+  min-width: 0;
+  display: block;
+}
+
+/* Título en azul bonito para posts con imagen */
+.entry-with-image .entry-header h2 {
+  color: #0066cc;
+  margin-bottom: 0.8rem;
+}
+
+/* También para posts sin imagen en la lista de paginación */
+.post-entry .entry-header h2 {
+  color: #0066cc;
+}
+
+/* Modo oscuro: títulos blancos en las tarjetas de paginación y búsqueda */
+body.dark .entry-with-image .entry-header h2,
+body.dark .post-entry .entry-header h2,
+body.dark .search-item-title {
+  color: #ffffff;
+}
+
+/* Modo oscuro: ajustar fondo de elementos de búsqueda */
+body.dark .search-item {
+  background: var(--entry);
+  color: var(--primary);
+}
+
+/* Responsive: en pantallas pequeñas, cambiar a layout vertical */
+@media (max-width: 768px) {
+  .entry-with-image {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .entry-inline-image {
+    margin-bottom: 1rem;
+    height: auto;
+  }
+
+  .entry-inline-image img.post-thumb {
+    height: auto;
+    max-height: 140px;
+  }
+}
+
+/* Clase para imágenes con caja gris, sombra y caption */
+.image-box {
+  display: block;
+  margin: 20px auto;
+  max-width: fit-content;
+  background-color: #f0f6fa;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.image-box img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.image-box img:hover {
+  transform: scale(1.02);
+}
+
+/* Espaciado entre imágenes cuando hay múltiples en el mismo image-box */
+.image-box img + img {
+  margin-top: 5px;
+}
+
+.image-caption {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #666;
+  font-style: italic;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* Modal para zoom de imágenes */
+.image-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-modal.show {
+  opacity: 1;
+}
+
+.image-modal img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  cursor: default;
+  transform: scale(0.8);
+  transition: transform 0.3s ease;
+}
+
+.image-modal.show img {
+  transform: scale(1);
+}
+
+/* Botón de cerrar */
+.image-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  line-height: 1;
+  user-select: none;
+}
+
+.image-modal-close:hover {
+  color: #ccc;
+}
+
+/* Desactivar scroll del body cuando el modal está abierto */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Responsive: ajustar modal en pantallas pequeñas */
+@media (max-width: 768px) {
+  .image-modal img {
+    max-width: 95%;
+    max-height: 95%;
+  }
+
+  .image-modal-close {
+    top: 10px;
+    right: 15px;
+    font-size: 30px;
+  }
+}
+
+/* Estilos para la página de búsqueda */
+#searchbox {
+  position: relative;
+  max-width: 100%;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 15px 20px;
+  font-size: 16px;
+  border: 2px solid var(--tertiary);
+  border-radius: 12px;
+  background-color: var(--entry);
+  color: var(--primary);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  outline: none;
+  box-sizing: border-box;
+}
+
+#searchInput:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px rgba(108, 108, 108, 0.1);
+}
+
+#searchResults {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0 0;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+#searchResults li {
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: var(--entry);
+  border-radius: 8px;
+  border: 1px solid var(--tertiary);
+  transition: all 0.3s ease;
+}
+
+#searchResults li:hover {
+  background-color: var(--theme);
+  border-color: var(--secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#searchResults li a {
+  text-decoration: none;
+  color: var(--primary);
+  display: block;
+}
+
+#searchResults li a:hover {
+  color: var(--secondary);
+}
+
+.search-item-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0066cc;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.search-item-summary {
+  font-size: 14px;
+  color: var(--secondary);
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.search-item-url {
+  font-size: 12px;
+  color: var(--tertiary);
+  font-style: italic;
+}
+
+/* Responsive para búsqueda */
+@media (max-width: 768px) {
+  #searchInput {
+    padding: 12px 16px;
+    font-size: 16px;
+  }
+
+  .search-item-title {
+    font-size: 16px;
+  }
+
+  .search-item-summary {
+    font-size: 13px;
+  }
+}
+
+/* Search results */
+.search-item {
+  list-style: none;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-card-layout {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.search-thumb {
+  width: 72px;
+  height: auto;
+  max-height: 100px;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.search-card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-item-title {
+  font-weight: bold;
+  color: #0077cc;
+  margin-bottom: 0.25rem;
+}
+
+.search-item-url {
+  font-size: 0.85rem;
+  color: gray;
+  margin-bottom: 0.5rem;
+  font-style: italic;
+}
+
+.search-item-summary {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* Estilos para botones de compartir personalizados con iconos */
+.share-buttons {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: var(--entry);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.share-icons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.share-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  border-radius: 50%;
+  background-color: var(--entry);
+  border: 1px solid var(--border);
+  color: var(--secondary);
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.share-icon:hover {
+  transform: translateY(-2px);
+  background-color: var(--primary);
+  color: var(--theme);
+  border-color: var(--primary);
+}
+
+.share-icon svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  stroke: none;
+}
+
+/* Modo claro - colores más suaves */
+body:not(.dark) .share-icon {
+  background-color: #f8f9fa;
+  border-color: #f1f3f4;
+  color: #8590a6;
+}
+
+body:not(.dark) .share-icon:hover {
+  background-color: #6c757d;
+  color: white;
+  border-color: #6c757d;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Modo oscuro - conservar el diseño original */
+.dark .share-icon:hover {
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive para iconos de compartir */
+@media (max-width: 768px) {
+  .share-buttons {
+    margin-top: 1.5rem;
+    padding: 0.75rem;
+  }
+
+  .share-icons {
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .share-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .share-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Admonition */
+.admonition {
+  border-left: 4px solid;
+  border-radius: 6px;
+  margin: 1.5em 0;
+  overflow: hidden;
+}
+
+.admonition-title {
+  margin: 0;
+  padding: 0.5em 1em;
+  font-weight: bold;
+  font-size: 1em;
+  background: var(--admonition-bg);
+  color: var(--admonition-fg);
+  border-bottom: none;
+}
+
+.admonition-content {
+  padding: 0.75em 1em;
+  background-color: var(--admonition-bg-light);
+}
+
+/* 💡 Elimina línea en blanco entre título y contenido */
+.admonition-content > *:first-child {
+  margin-top: 0 !important;
+}
+
+/* Mejora general */
+.admonition-content p {
+  margin-bottom: 0.5em;
+}
+
+/* Tipos - colores más suaves y sutiles */
+.admonition.tip    { --admonition-bg: #a8d5c4; --admonition-fg: #2d5a45; --admonition-bg-light: #f8fcfa; }
+.admonition.note   { --admonition-bg: #b3d1f5; --admonition-fg: #1e3a5f; --admonition-bg-light: #f8fbfe; }
+.admonition.warn   { --admonition-bg: #f5e99e; --admonition-fg: #6b4e1a; --admonition-bg-light: #fffdf8; }
+.admonition.error  { --admonition-bg: #f4b3aa; --admonition-fg: #6b2518; --admonition-bg-light: #fefcfb; }
+
+/* Modo oscuro: colores más suaves y sutiles */
+body.dark .admonition.tip    { --admonition-bg: #4a6b5a; --admonition-fg: #b8e5cc; --admonition-bg-light: #1a1f1c; }
+body.dark .admonition.note   { --admonition-bg: #4a5b7a; --admonition-fg: #b8d4f0; --admonition-bg-light: #1a1c1f; }
+body.dark .admonition.warn   { --admonition-bg: #7a704a; --admonition-fg: #f0e4b8; --admonition-bg-light: #1f1d1a; }
+body.dark .admonition.error  { --admonition-bg: #7a4a4a; --admonition-fg: #f0b8b8; --admonition-bg-light: #1f1a1a; }
+
+/* ================================================ */
+/* Mermaid */
+/* ================================================ */
+
+pre.mermaid {
+  background-color: #f9fbfc; /* Claro para tema claro */
+  border: 2px solid #8ac6e7;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: background-color 0.3s ease;
+}
+
+
+.mermaid {
+  margin-top: 1em;
+  margin-bottom: 2em;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* Tema oscuro (cuando el body tiene clase oscura) */
+body.dark pre.mermaid {
+  background-color: #191b1d; /* gris oscuro azulado */
+  border-color: #47505f;
+  box-shadow: 0 0 12px rgba(116, 116, 116, 0.4);
+}
+
+/* ================================================ */
+/* Página Apuntes - Grid de 2 columnas */
+/* ================================================ */
+
+.apuntes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.apuntes-grid .search-item {
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+}
+
+.apuntes-grid .search-item-title {
+  font-size: 0.9rem;
+  margin-bottom: 0.15rem;
+}
+
+.apuntes-grid .search-item-url {
+  font-size: 0.7rem;
+  margin-bottom: 0.25rem;
+}
+
+.apuntes-grid .search-item-summary {
+  font-size: 0.8rem;
+  line-height: 1.25;
+}
+
+@media (max-width: 768px) {
+  .apuntes-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ================================================ */
+/* GitHub Gists - tipografía reducida */
+/* ================================================ */
+
+.gist .blob-code,
+.gist .blob-num {
+  font-size: 12px !important;
+}
+
+.gist .gist-meta {
+  font-size: 11px !important;
+}
+
+/* ================================================ */
+/* Collapsible details/summary */
+/* ================================================ */
+
+.md-content details {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin: 1.5em 0;
+  overflow: hidden;
+}
+
+.md-content details summary {
+  padding: 0.6em 1em;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--entry);
+  user-select: none;
+  list-style: none;
+}
+
+.md-content details summary::before {
+  content: "▶ ";
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.md-content details[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.md-content details summary::-webkit-details-marker {
+  display: none;
+}
+
+.md-content details[open] summary {
+  border-bottom: 1px solid var(--border);
+}

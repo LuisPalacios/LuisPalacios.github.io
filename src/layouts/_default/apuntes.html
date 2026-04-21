@@ -1,0 +1,22 @@
+{{ define "main" }}
+<section class="apuntes">
+  <ul class="apuntes-grid">
+    {{- range where .Site.RegularPages "Section" "posts" }}
+    <li class="search-item">
+      <a href="{{ .Permalink }}">
+        <div class="search-card-layout">
+          {{- with .Params.cover.image }}
+          <img src="{{ . }}" class="search-thumb" alt="">
+          {{- end }}
+          <div class="search-card-body">
+            <div class="search-item-title">{{ .Title }}</div>
+            <div class="search-item-url"><i>{{ .Date.Format "2 Jan 2006" }}</i></div>
+            <div class="search-item-summary">{{ .Summary | plainify | truncate 120 }}</div>
+          </div>
+        </div>
+      </a>
+    </li>
+    {{- end }}
+  </ul>
+</section>
+{{ end }}

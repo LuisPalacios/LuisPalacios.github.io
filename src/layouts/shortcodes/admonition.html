@@ -1,0 +1,19 @@
+{{/*
+Shortcode: admonition
+Purpose:
+  Renderiza un bloque de admonición/callout con título y contenido (Markdown).
+Params posicionales:
+  0: tipo/clase CSS (p.ej. "note", "warning", "tip", "info")
+  1: título a mostrar
+Uso en Markdown:
+  {{< admonition "note" "Nota" >}}
+  Texto en **Markdown** dentro del bloque.
+  {{< /admonition >}}
+*/}}
+
+<div class="admonition {{ .Get 0 }}">
+  <p class="admonition-title">{{ .Get 1 }}</p>
+  <div class="admonition-content" style="margin-top:-1em;">
+    {{ .Inner | markdownify }}
+  </div>
+</div>

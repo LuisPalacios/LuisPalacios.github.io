@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="15" height="15"/>
+  </defs>
+  <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: rgb(84, 84, 84); pointer-events: none; visibility: hidden;" x="15" y="15"/>
+  <g id="g2" transform="matrix(0.053812, 0, 0, 0.053812, -29.72628, -43.13102)" style="">
+    <radialGradient id="radialGradient8" cx="1965.93625" cy="2366.037917" r="972.644583" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.077977, 0, 0, 1.077977, -173.077322, -288.779213)">
+      <stop offset="0" stop-color="#666666" style=""/>
+      <stop offset="1" stop-color="#ffffff" style="stop-opacity: 0;"/>
+    </radialGradient>
+    <path id="path8" fill="url(#radialGradient8)" stroke="none" style="mix-blend-mode: multiply;" d="M 2994.63 2261.75 C 2994.63 2840.81 2525.21 3310.25 1946.15 3310.25 C 1367.09 3310.25 897.672 2840.81 897.672 2261.75 C 897.672 1682.69 1367.09 1213.26 1946.15 1213.26 C 2525.21 1213.26 2994.63 1682.69 2994.63 2261.75 Z"/>
+    <path id="path9" fill="#ffffff" stroke="none" d="M 1498.217529 1174.283203 L 1501.610474 2584.658691 L 1836.335938 2186.117188 L 2120.871338 2796.307617 L 2340.525146 2693.880859 L 2055.989258 2083.689941 L 2576.446777 2083.452148 L 1498.217529 1174.283203 Z"/>
+    <path id="path10" fill="#000000" stroke="none" d="M 2099.761719 2854.28418 L 1825.713379 2266.597656 L 1458.27417 2704.098145 L 1454.362549 1080.258301 L 2695.795898 2127.01123 L 2124.449463 2127.294922 L 2398.498047 2714.981934 L 2099.761719 2854.28418 Z M 1846.935425 2105.646484 L 2141.983154 2738.320313 L 2282.53418 2672.762695 L 1987.531616 2040.093262 L 2457.092529 2039.885254 L 1542.084961 1268.318359 L 1544.944092 2465.225098 L 1846.935425 2105.646484 Z"/>
+  </g>
+</svg>

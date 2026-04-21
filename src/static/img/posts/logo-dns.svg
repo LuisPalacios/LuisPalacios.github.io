@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" width="100%" version="1.1" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="15" height="15"/>
+  </defs>
+  <rect width="120" height="120" style="fill: none; stroke-width: 0.2px; stroke: rgb(84, 84, 84); pointer-events: none; visibility: hidden;" x="15" y="15"/>
+  <g transform="matrix(1.866159, 0, 0, 1.866159, -4.123271, -116.93145)" style="">
+    <g transform="matrix(1.417334, 0, 0, 1.417334, -110.743736, -49.291866)">
+      <ellipse style="stroke: rgb(0, 0, 0); fill: none;" cx="107.982" cy="96.676" rx="12.018" ry="12.018"/>
+      <ellipse style="stroke: rgb(0, 0, 0); fill: none;" cx="107.982" cy="96.676" rx="6.515" ry="12.018"/>
+      <path d="M 118.643 91.175 C 116.638 92.593 112.616 93.561 107.982 93.561 C 103.348 93.561 99.326 92.593 97.321 91.175" style="stroke: rgb(0, 0, 0); fill: none;"/>
+      <line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0); transform-box: fill-box; transform-origin: 50% 50%;" x1="107.719" y1="108.694" x2="107.843" y2="84.691" transform="matrix(-1, 0, 0, -1, -0.000014, -0.000009)"/>
+    </g>
+    <rect x="20.686" y="86.006" width="42.52" height="40.069" rx="5" ry="5" style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);"/>
+    <ellipse style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 0.7px;" cx="27.302" cy="95.044" rx="2.302" ry="2.302"/>
+    <ellipse style="stroke: rgb(0, 0, 0); fill: none; stroke-width: 0.7px;" cx="33.592" cy="95.044" rx="2.302" ry="2.302"/>
+    <line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" x1="54.931" y1="92.255" x2="54.756" y2="97.346"/>
+    <line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" x1="59.336" y1="92.255" x2="59.161" y2="97.346"/>
+    <text style="fill: rgb(51, 51, 51); font-family: &quot;Baloo Bhaijaan&quot;; font-size: 15.3px; white-space: pre;" x="27.609" y="119.202">DNS</text>
+    <line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" x1="21.016" y1="102.508" x2="62.117" y2="102.771"/>
+    <line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" x1="42.136" y1="126.52" x2="41.946" y2="132.829"/>
+    <line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" x1="19.264" y1="132.479" x2="65.534" y2="132.829"/>
+    <ellipse style="stroke: rgb(0, 0, 0); stroke-width: 0.7px; fill: rgb(255, 255, 255);" cx="41.961" cy="132.085" rx="2.915" ry="2.915"/>
+  </g>
+</svg>

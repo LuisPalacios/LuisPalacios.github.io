@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg height="100%" width="100%" version="1.1" viewBox="0 0 150 150"
+     xmlns="http://www.w3.org/2000/svg">
+  <!-- Down arrow with speed lines - bandwidth throttle concept -->
+  <!-- Large down arrow representing download -->
+  <path d="M75 25 L75 95" stroke="#e67e22" stroke-width="10" stroke-linecap="round" fill="none"/>
+  <path d="M50 75 L75 105 L100 75" stroke="#e67e22" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Throttle bar / constriction -->
+  <rect x="30" y="108" width="90" height="6" rx="3" fill="#555"/>
+  <!-- Speed limit lines below the bar -->
+  <line x1="40" y1="122" x2="65" y2="122" stroke="#999" stroke-width="3" stroke-linecap="round"/>
+  <line x1="45" y1="130" x2="60" y2="130" stroke="#bbb" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="85" y1="122" x2="110" y2="122" stroke="#999" stroke-width="3" stroke-linecap="round"/>
+  <line x1="90" y1="130" x2="105" y2="130" stroke="#bbb" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

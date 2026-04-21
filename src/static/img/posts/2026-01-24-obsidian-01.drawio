@@ -1,0 +1,263 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/27.0.9 Chrome/134.0.6998.205 Electron/35.4.0 Safari/537.36" version="27.0.9" pages="2">
+  <diagram name="Notas Nextcloud + Obsidian" id="Q9n2DGzQXWxHn3f7N2A5">
+    <mxGraphModel dx="1619" dy="995" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Dk9aBiDP9yYafZWqcL6b-52" value="NextCloud/priv/Notas&lt;br&gt;(servidor)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=7;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" parent="1" vertex="1">
+          <mxGeometry x="463.06061792062826" y="559.8163859454978" width="208.66759105002063" height="73.6471143529729" as="geometry" />
+        </mxCell>
+        <mxCell id="Dk9aBiDP9yYafZWqcL6b-51" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;startArrow=block;startFill=1;endArrow=block;endFill=1;strokeWidth=1.9685;entryPerimeter=0;fontSize=14;" parent="1" source="2" target="Dk9aBiDP9yYafZWqcL6b-52" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="601.1494649390243" y="645.7380193572995" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2" value="NextCloud&#xa;Server" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b3e0ff;strokeColor=#333333;fontSize=14;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="456.92333583092176" y="437.07119535720966" width="220.9421552294336" height="73.6471143529729" as="geometry" />
+        </mxCell>
+        <mxCell id="g1" value="" style="swimlane;html=1;rounded=1;strokeColor=#555555;fillColor=#f8f9fa;fontSize=14;" parent="1" vertex="1">
+          <mxGeometry x="58" y="61" width="306.86410448532445" height="331.4120145883781" as="geometry" />
+        </mxCell>
+        <mxCell id="4" value="NextCloud&#xa;Client" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b3e0ff;strokeColor=#333333;fontSize=14;" parent="g1" vertex="1">
+          <mxGeometry x="141.15748806324925" y="245.49038117657634" width="122.74564179412978" height="49.09807623531527" as="geometry" />
+        </mxCell>
+        <mxCell id="5" value="NextCloud/priv/Notas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" parent="g1" vertex="1">
+          <mxGeometry x="12.274564179412979" y="171.84326682360344" width="208.66759105002063" height="49.09807623531527" as="geometry" />
+        </mxCell>
+        <mxCell id="6" value="Obsidian&lt;div&gt;(Vault Folder)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e7d4ff;strokeColor=#333333;fontSize=14;" parent="g1" vertex="1">
+          <mxGeometry x="159.56933433236873" y="61.372595294144084" width="122.74564179412978" height="49.09807623531527" as="geometry" />
+        </mxCell>
+        <mxCell id="7" value="Otros...&lt;div&gt;VSCode/Typora&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3399FF;strokeColor=#23445d;fontColor=#FFFFFF;fontSize=14;" parent="g1" vertex="1">
+          <mxGeometry x="18.41184626911947" y="61.372595294144084" width="122.74564179412978" height="49.09807623531527" as="geometry" />
+        </mxCell>
+        <mxCell id="8" value="Desktop (Mac/Win/Linux)" style="text;html=1;strokeColor=none;fillColor=none;fontStyle=1;fontSize=14;" parent="g1" vertex="1">
+          <mxGeometry x="12.274564179412979" width="208.66759105002063" height="36.82355717648645" as="geometry" />
+        </mxCell>
+        <mxCell id="19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#555555;endArrow=block;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;fontSize=14;" parent="g1" source="4" target="5" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="g3" value="" style="swimlane;html=1;rounded=1;strokeColor=#555555;fillColor=#f8f9fa;fontSize=14;" parent="1" vertex="1">
+          <mxGeometry x="772.0677966101695" y="72.9011496577998" width="333.23163841807906" height="268.96598226627555" as="geometry" />
+        </mxCell>
+        <mxCell id="Dk9aBiDP9yYafZWqcL6b-54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=14;" parent="g3" source="13" target="14" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="13" value="Obsidian&amp;nbsp;&lt;div&gt;(Vault local)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e7d4ff;strokeColor=#333333;fontSize=14;" parent="g3" vertex="1">
+          <mxGeometry x="19.410742937853108" y="45.52189744108425" width="124.40251129943502" height="49.092242338424185" as="geometry" />
+        </mxCell>
+        <mxCell id="Dk9aBiDP9yYafZWqcL6b-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" parent="g3" source="14" target="15" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="14" value="Notas&#xa;(Vault local)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F9F1FB;strokeColor=#9673a6;fontSize=14;" parent="g3" vertex="1">
+          <mxGeometry x="110.88732689127738" y="134.47972415087878" width="122.74564179412978" height="49.09807623531526" as="geometry" />
+        </mxCell>
+        <mxCell id="15" value="Remotely Save&lt;div&gt;(WebDAV)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3399FF;strokeColor=#006EAF;fontColor=#ffffff;fontSize=14;" parent="g3" vertex="1">
+          <mxGeometry x="104.74663411189195" y="205.88942236818528" width="135.02020597354277" height="49.09807623531526" as="geometry" />
+        </mxCell>
+        <mxCell id="16" value="iPhone / iPad" style="text;html=1;strokeColor=none;fillColor=none;fontStyle=1;fontSize=14;" parent="g3" vertex="1">
+          <mxGeometry x="12.274564179412979" width="147.29477015295575" height="36.82355717648645" as="geometry" />
+        </mxCell>
+        <mxCell id="xitYeJ7MFeG9IAfWbEao-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=14;" parent="g3" source="xitYeJ7MFeG9IAfWbEao-30" target="14" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xitYeJ7MFeG9IAfWbEao-30" value="NextCloud&#xa;Client" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b3e0ff;strokeColor=#333333;fontSize=14;" parent="g3" vertex="1">
+          <mxGeometry x="194.19073728813555" y="45.52189744108425" width="124.40251129943502" height="49.092242338424185" as="geometry" />
+        </mxCell>
+        <mxCell id="20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#999999;endArrow=block;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=14;" parent="1" source="4" target="2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#999999;endArrow=block;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=14;" parent="1" source="Dk9aBiDP9yYafZWqcL6b-32" target="2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#555555;endArrow=block;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" parent="1" source="6" target="5" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#555555;endArrow=block;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.44;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;fontSize=14;" parent="1" source="7" target="5" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#999999;endArrow=block;dashed=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fontSize=14;" parent="1" source="qRKG7TAUxBT3m_6M2MbP-31" target="2" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="601.1494649390243" y="601.078838588468" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Dk9aBiDP9yYafZWqcL6b-31" value="" style="swimlane;html=1;rounded=1;strokeColor=#555555;fillColor=#f8f9fa;fontSize=14;" parent="1" vertex="1">
+          <mxGeometry x="58" y="484.68606164693716" width="306.86410448532445" height="282.31393835306284" as="geometry" />
+        </mxCell>
+        <mxCell id="Dk9aBiDP9yYafZWqcL6b-32" value="NextCloud&#xa;Client" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b3e0ff;strokeColor=#333333;fontSize=14;" parent="Dk9aBiDP9yYafZWqcL6b-31" vertex="1">
+          <mxGeometry x="141.15748806324925" y="208.6668240000899" width="122.74564179412978" height="49.09807623531527" as="geometry" />
+        </mxCell>
+        <mxCell id="Dk9aBiDP9yYafZWqcL6b-33" value="NextCloud/priv/Notas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" parent="Dk9aBiDP9yYafZWqcL6b-31" vertex="1">
+          <mxGeometry x="12.274564179412979" y="122.74519058828817" width="208.66759105002063" height="49.09807623531527" as="geometry" />
+        </mxCell>
+        <mxCell id="Dk9aBiDP9yYafZWqcL6b-34" value="Obsidian&lt;div&gt;(Vault Folder)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e7d4ff;strokeColor=#333333;fontSize=14;" parent="Dk9aBiDP9yYafZWqcL6b-31" vertex="1">
+          <mxGeometry x="141.15748806324925" y="49.09807623531527" width="122.74564179412978" height="49.09807623531527" as="geometry" />
+        </mxCell>
+        <mxCell id="Dk9aBiDP9yYafZWqcL6b-36" value="Smartphone (Android)" style="text;html=1;strokeColor=none;fillColor=none;fontStyle=1;fontSize=14;" parent="Dk9aBiDP9yYafZWqcL6b-31" vertex="1">
+          <mxGeometry x="12.274564179412979" width="208.66759105002063" height="36.82355717648645" as="geometry" />
+        </mxCell>
+        <mxCell id="Dk9aBiDP9yYafZWqcL6b-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#555555;endArrow=block;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;fontSize=14;" parent="Dk9aBiDP9yYafZWqcL6b-31" source="Dk9aBiDP9yYafZWqcL6b-32" target="Dk9aBiDP9yYafZWqcL6b-33" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Dk9aBiDP9yYafZWqcL6b-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#555555;endArrow=block;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" parent="1" source="Dk9aBiDP9yYafZWqcL6b-34" target="Dk9aBiDP9yYafZWqcL6b-33" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Dk9aBiDP9yYafZWqcL6b-41" value="" style="swimlane;html=1;rounded=1;strokeColor=#555555;fillColor=#f8f9fa;fontSize=14;" parent="1" vertex="1">
+          <mxGeometry x="413.9623612029763" y="163.34988705707832" width="306.86410448532445" height="122.74519058828817" as="geometry" />
+        </mxCell>
+        <mxCell id="Dk9aBiDP9yYafZWqcL6b-42" value="NextCloud Web" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b3e0ff;strokeColor=#333333;fontSize=14;" parent="Dk9aBiDP9yYafZWqcL6b-41" vertex="1">
+          <mxGeometry x="92.05923134559734" y="49.09807623531526" width="122.74564179412978" height="49.09807623531526" as="geometry" />
+        </mxCell>
+        <mxCell id="Dk9aBiDP9yYafZWqcL6b-46" value="Web Browser" style="text;html=1;strokeColor=none;fillColor=none;fontStyle=1;fontSize=14;" parent="Dk9aBiDP9yYafZWqcL6b-41" vertex="1">
+          <mxGeometry x="12.274564179412979" width="208.66759105002063" height="36.82355717648645" as="geometry" />
+        </mxCell>
+        <mxCell id="Dk9aBiDP9yYafZWqcL6b-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#999999;endArrow=block;dashed=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" parent="1" source="Dk9aBiDP9yYafZWqcL6b-42" target="2" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="831.2975433030175" y="220.56874776477463" as="sourcePoint" />
+            <mxPoint x="966.3177492765603" y="269.66682400008995" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qRKG7TAUxBT3m_6M2MbP-33" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#999999;endArrow=block;dashed=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fontSize=14;" parent="1" source="15" target="qRKG7TAUxBT3m_6M2MbP-31" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="670.9081920903955" y="379.9508108290347" as="targetPoint" />
+            <mxPoint x="944.6341807909604" y="315.6846026769158" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qRKG7TAUxBT3m_6M2MbP-31" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Obsidian iOS no accede directamente a carpetas NextCloud, necesita vault local + Remotely Save&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="778.0183615819209" y="389.4717305552746" width="333.23163841807906" height="35.70344897339941" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="English" id="_10PavB6uUGIbJ1I_a66">
+    <mxGraphModel dx="1619" dy="995" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-0" />
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-1" parent="_t33GkjEl9s_4UJYVyfS-0" />
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-2" value="NextCloud/priv/Notes&lt;br&gt;(NC server directory)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=7;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-1" vertex="1">
+          <mxGeometry x="474.0120102205379" y="568.0779375571408" width="220.4910355681559" height="77.81975539280141" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;startArrow=block;startFill=1;endArrow=block;endFill=1;strokeWidth=1.9685;entryPerimeter=0;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-1" source="_t33GkjEl9s_4UJYVyfS-4" target="_t33GkjEl9s_4UJYVyfS-2" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="619.9251955229939" y="658.8676521820759" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-4" value="NextCloud&#xa;Server" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b3e0ff;strokeColor=#333333;fontSize=15;fontStyle=1;" parent="_t33GkjEl9s_4UJYVyfS-1" vertex="1">
+          <mxGeometry x="467.5269797626509" y="438.3783452358051" width="233.46109648392977" height="77.81975539280141" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-5" value="" style="swimlane;html=1;rounded=1;strokeColor=#555555;fillColor=#f8f9fa;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-1" vertex="1">
+          <mxGeometry x="46" y="41" width="324.2515228943469" height="350.18889926760636" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-6" value="NextCloud&#xa;Client" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b3e0ff;strokeColor=#333333;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-5" vertex="1">
+          <mxGeometry x="149.15570053139956" y="259.39918464267134" width="129.70060915773877" height="51.879836928534274" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-7" value="NextCloud/priv/Notes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-5" vertex="1">
+          <mxGeometry x="12.970060915773876" y="181.57942924986995" width="220.4910355681559" height="51.879836928534274" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-8" value="Obsidian&lt;div&gt;(NextCloud Folder)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e7d4ff;strokeColor=#333333;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-5" vertex="1">
+          <mxGeometry x="159.80903831775703" y="64.85152220086984" width="145.7748168224299" height="51.87367249924143" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-9" value="Other...&lt;div&gt;VSCode/Typora&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3399FF;strokeColor=#23445d;fontColor=#FFFFFF;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-5" vertex="1">
+          <mxGeometry x="19.455091373660814" y="64.84979616066784" width="129.70060915773877" height="51.879836928534274" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-10" value="Desktop (Mac/Win/Linux)" style="text;html=1;strokeColor=none;fillColor=none;fontStyle=1;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-5" vertex="1">
+          <mxGeometry x="12.970060915773876" width="220.4910355681559" height="38.909877696400706" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#555555;endArrow=block;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-5" source="_t33GkjEl9s_4UJYVyfS-6" target="_t33GkjEl9s_4UJYVyfS-7" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-12" value="" style="swimlane;html=1;rounded=1;strokeColor=#555555;fillColor=#f8f9fa;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-1" vertex="1">
+          <mxGeometry x="800.5280373831775" y="53.57543575739186" width="321.93196261682243" height="284.2048481170561" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-12" source="_t33GkjEl9s_4UJYVyfS-14" target="_t33GkjEl9s_4UJYVyfS-16" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-14" value="Obsidian&amp;nbsp;&lt;div&gt;(Local Vault)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e7d4ff;strokeColor=#333333;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-12" vertex="1">
+          <mxGeometry x="20.510587149532714" y="48.10104177202387" width="131.45135957943924" height="51.87367249924143" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-12" source="_t33GkjEl9s_4UJYVyfS-16" target="_t33GkjEl9s_4UJYVyfS-17" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-16" value="Notes&lt;br&gt;(Local Vault)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F9F1FB;strokeColor=#9673a6;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-12" vertex="1">
+          <mxGeometry x="20.51534128960565" y="133.29616694794976" width="129.70060915773877" height="51.87983692853426" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-17" value="Remotely Save&lt;div&gt;(WebDAV)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3399FF;strokeColor=#006EAF;fontColor=#ffffff;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-12" vertex="1">
+          <mxGeometry x="12.970367634488241" y="217.55454544853575" width="142.67067007351264" height="51.87983692853426" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-18" value="iPhone / iPad" style="text;html=1;strokeColor=none;fillColor=none;fontStyle=1;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-12" vertex="1">
+          <mxGeometry x="12.970060915773876" width="155.6407309892865" height="38.9098776964007" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-12" source="_t33GkjEl9s_4UJYVyfS-20" target="Sg0d4fAAXOW3SqmEU6gq-0" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-20" value="NextCloud&#xa;Client" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b3e0ff;strokeColor=#333333;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-12" vertex="1">
+          <mxGeometry x="197.62346845794394" y="48.10104177202387" width="110.28684813084112" height="51.87367249924143" as="geometry" />
+        </mxCell>
+        <mxCell id="Sg0d4fAAXOW3SqmEU6gq-0" value="NextCloud&amp;nbsp;&lt;div&gt;files&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-12" vertex="1">
+          <mxGeometry x="194.7311109813084" y="133.29961902835373" width="113.17920560747663" height="51.87367249924143" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#999999;endArrow=block;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-1" source="_t33GkjEl9s_4UJYVyfS-6" target="_t33GkjEl9s_4UJYVyfS-4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#999999;endArrow=block;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-1" source="_t33GkjEl9s_4UJYVyfS-27" target="_t33GkjEl9s_4UJYVyfS-4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#555555;endArrow=block;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-1" source="_t33GkjEl9s_4UJYVyfS-8" target="_t33GkjEl9s_4UJYVyfS-7" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#555555;endArrow=block;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.44;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-1" source="_t33GkjEl9s_4UJYVyfS-9" target="_t33GkjEl9s_4UJYVyfS-7" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#999999;endArrow=block;dashed=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-1" source="_t33GkjEl9s_4UJYVyfS-38" target="_t33GkjEl9s_4UJYVyfS-4" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="619.9251955229939" y="611.678206213877" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-26" value="" style="swimlane;html=1;rounded=1;strokeColor=#555555;fillColor=#f8f9fa;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-1" vertex="1">
+          <mxGeometry x="46" y="488.690937660928" width="324.2515228943469" height="298.3090623390721" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-27" value="NextCloud&#xa;Client" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b3e0ff;strokeColor=#333333;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-26" vertex="1">
+          <mxGeometry x="149.15570053139956" y="220.4893069462707" width="129.70060915773877" height="51.87983692853428" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-28" value="NextCloud/priv/Notes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-26" vertex="1">
+          <mxGeometry x="12.970060915773876" y="129.6995923213357" width="220.4910355681559" height="51.87983692853428" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-29" value="Obsidian&lt;div&gt;(NextCloud Folder)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e7d4ff;strokeColor=#333333;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-26" vertex="1">
+          <mxGeometry x="149.15761752336448" y="51.87367249924144" width="152.65359742990654" height="51.87367249924144" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-30" value="Smartphone (Android)" style="text;html=1;strokeColor=none;fillColor=none;fontStyle=1;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-26" vertex="1">
+          <mxGeometry x="12.970060915773876" width="220.4910355681559" height="38.90987769640071" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#555555;endArrow=block;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-26" source="_t33GkjEl9s_4UJYVyfS-27" target="_t33GkjEl9s_4UJYVyfS-28" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#555555;endArrow=block;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-1" source="_t33GkjEl9s_4UJYVyfS-29" target="_t33GkjEl9s_4UJYVyfS-28" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-33" value="" style="swimlane;html=1;rounded=1;strokeColor=#555555;fillColor=#f8f9fa;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-1" vertex="1">
+          <mxGeometry x="422.13176655744235" y="149.14874751357002" width="324.2515228943469" height="129.69959232133567" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-34" value="NextCloud Web" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b3e0ff;strokeColor=#333333;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-33" vertex="1">
+          <mxGeometry x="97.27545686830408" y="51.87983692853426" width="129.70060915773877" height="51.87983692853426" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-35" value="Web Browser" style="text;html=1;strokeColor=none;fillColor=none;fontStyle=1;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-33" vertex="1">
+          <mxGeometry x="12.970060915773876" width="220.4910355681559" height="38.9098776964007" as="geometry" />
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#999999;endArrow=block;dashed=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-1" source="_t33GkjEl9s_4UJYVyfS-34" target="_t33GkjEl9s_4UJYVyfS-4" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="863.1138376937541" y="209.60947001773638" as="sourcePoint" />
+            <mxPoint x="1005.7845077672669" y="261.4893069462707" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-37" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#999999;endArrow=block;dashed=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontSize=15;" parent="_t33GkjEl9s_4UJYVyfS-1" source="_t33GkjEl9s_4UJYVyfS-17" target="_t33GkjEl9s_4UJYVyfS-38" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="693.6365654205607" y="378.0216782981019" as="targetPoint" />
+            <mxPoint x="982.8723130841122" y="310.11432520818585" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_t33GkjEl9s_4UJYVyfS-38" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Obsidian iOS can&#39;t access local NextCloud client folder, it needs a Local Vault + Remotely Save&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;" parent="_t33GkjEl9s_4UJYVyfS-1" vertex="1">
+          <mxGeometry x="848.3148130841122" y="388.0820269040154" width="269.115" height="37.72630727217559" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

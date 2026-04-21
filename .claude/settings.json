@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(node:*)",
+      "Bash(markdownlint-cli2:*)",
+      "Bash(prettier:*)",
+      "Bash(.claude/_tooling/.venv/Scripts/python.exe:*)",
+      "Bash(.claude/_tooling/.venv/bin/python:*)",
+      "Skill(fixing-markdown)",
+      "Skill(removing-notebooklm)",
+      "Read(/tmp/**)",
+      "Read(//c/tmp/**)"
+    ]
+  }
+}

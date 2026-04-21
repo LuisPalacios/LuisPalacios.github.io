@@ -1,0 +1,40 @@
+details.codefold { margin: 1.25rem 0 1.5rem; border: 1px solid var(--border,#ddd); border-radius: .5rem; }
+details.codefold > summary { position: relative; cursor: pointer; padding: .6rem 2.2rem .6rem .9rem; font-weight: 600; }
+details.codefold[open] > summary { border-bottom: 1px solid var(--border,#ddd); }
+details.codefold .copyicon {
+  position: absolute; top: 50%; right: .6rem; transform: translateY(-50%);
+  display: none; /* oculto cuando está colapsado */
+  border: 0; background: transparent; cursor: pointer; font-size: 1rem; line-height: 1;
+  opacity: .7;
+}
+details.codefold[open] .copyicon { display: inline; }
+details.codefold .copyicon:hover { opacity: 1; }
+details.codefold .codefold-body { padding: .75rem .9rem .9rem; }
+details.codefold .codefold-debug { font-size:.8em; opacity:.7; margin:.2rem 0 .6rem; }
+details.codefold .codefold-dl { margin-top:.5rem; }
+details.codefold pre { display:block; padding:.9rem 1rem; border-radius:.35rem; background:#0f172a0d; overflow:auto; max-height:70vh; line-height:1.4; }
+details.codefold code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+details.codefold summary::marker { content: "▶ "; }
+details.codefold[open] summary::marker { content: "▼ "; }
+/* Textarea oculto para copiar */
+details.codefold .codefold-clipboard {
+  position: fixed; left: -9999px; top: auto; width: 1px; height: 1px;
+  opacity: 0; pointer-events: none; border: 0; padding: 0; margin: 0;
+}
+/* Scrollbar discreta */
+details.codefold pre,
+details.codefold .chroma,
+details.codefold .lntable { scrollbar-width: thin; scrollbar-color: rgba(120,120,120,.35) transparent; }
+details.codefold pre::-webkit-scrollbar,
+details.codefold .chroma::-webkit-scrollbar,
+details.codefold .lntable::-webkit-scrollbar { width:8px; height:8px; }
+details.codefold pre::-webkit-scrollbar-track,
+details.codefold .chroma::-webkit-scrollbar-track,
+details.codefold .lntable::-webkit-scrollbar-track { background:transparent; }
+details.codefold pre::-webkit-scrollbar-thumb,
+details.codefold .chroma::-webkit-scrollbar-thumb,
+details.codefold .lntable::-webkit-scrollbar-thumb {
+  background: rgba(120,120,120,.35);
+  border-radius: 8px; border: 2px solid transparent; background-clip: padding-box;
+}
+details.codefold pre:hover::-webkit-scrollbar

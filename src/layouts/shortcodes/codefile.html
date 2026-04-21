@@ -1,0 +1,76 @@
+{{/*
+Shortcode: codefile
+Lee un fichero desde assets/ (recomendado) o ruta física y lo muestra plegado.
+- path    (req): ruta relativa a assets/ (ej: "snippets/hello.cpp"). Fallback: ruta física.
+- lang    (opt): lenguaje (cpp, bash, yaml...). Default: text
+- title   (opt): texto del summary. Default: path
+- linenos (opt): "table" | "inline" | "false". Default: false
+- engine  (opt): "highlight" | "plain". Default: highlight (Chroma con clases CSS)
+- open    (opt): "1" para abrir el <details> por defecto
+- from    (opt): línea inicial (1-based). Requiere también "to"
+- to      (opt): línea final (inclusive)
+- download(opt): "1" para mostrar enlace de descarga si viene de assets/
+- debug   (opt): "1" muestra tamaño leído
+
+Uso:
+  {{< codefile path="snippets/hello.cpp" lang="cpp" title="hello.cpp" open="1" linenos="inline" >}}
+  {{< codefile path="snippets/hello.cpp" lang="cpp" from="5" to="18" >}}
+*/}}
+{{- $path    := .Get "path" -}}
+{{- $lang    := .Get "lang" | default "text" -}}
+{{- $title   := .Get "title" | default $path -}}
+{{- $linenos := .Get "linenos" | default "false" -}}
+{{- $engine  := .Get "engine"  | default "highlight" -}}
+{{- $open    := eq (.Get "open") "1" -}}
+{{- $showDl  := eq (.Get "download") "1" -}}
+{{- $debug   := eq (.Get "debug") "1" -}}
+
+{{- $res := resources.Get $path -}}
+{{- $code := "" -}}
+{{- if $res }}{{- $code = $res.Content -}}
+{{- else if fileExists $path }}{{- $code = readFile $path -}}
+{{- else if fileExists (printf "src/%s" $path) }}{{- $code = readFile (printf "src/%s" $path) -}}
+{{- end -}}
+
+<details class="codefold" {{ if $open }}open{{ end }}>
+    <summary>
+        <code>{{ $title }}</code>
+        <button class="copyicon" type="button" aria-label="Copy code" title="Copy"
+          onclick="event.preventDefault();event.stopPropagation();(function(btn){
+            var d=btn.closest('details'); if(!d) return;
+            var ta=d.querySelector('.codefold-clipboard'); var txt=ta?ta.value:'';
+            function flash(ok){ var old=btn.textContent; btn.textContent=ok?'✅':'❌'; setTimeout(function(){btn.textContent='📋';}, 900); }
+            function execTemp(text){
+              var t=document.createElement('textarea'); t.value=text; t.setAttribute('readonly','');
+              t.style.position='fixed'; t.style.left='-9999px'; t.style.opacity='0';
+              document.body.appendChild(t); t.focus(); t.select(); t.setSelectionRange(0, t.value.length);
+              var ok=false; try{ ok=document.execCommand('copy'); }catch(e){ ok=false; }
+              document.body.removeChild(t); return ok;
+            }
+            if (navigator.clipboard && window.isSecureContext) {
+              navigator.clipboard.writeText(txt).then(function(){ flash(true); }, function(){ flash(execTemp(txt)); });
+            } else {
+              flash(execTemp(txt));
+            }
+          })(this);">📋</button>
+      </summary>
+  <div class="codefold-body">
+
+    {{- if $debug -}}
+      <div class="codefold-debug">debug: {{ len $code }} bytes</div>
+    {{- end -}}
+
+    {{- if eq $engine "plain" -}}
+      <pre class="codefold-pre"><code>{{ $code | htmlEscape }}</code></pre>
+    {{- else -}}
+      {{- highlight $code $lang (dict "linenos" $linenos "anchorLineNos" true "noClasses" false) -}}
+    {{- end -}}
+
+    <textarea class="codefold-clipboard" readonly>{{ $code | htmlEscape }}</textarea>
+
+    {{- if and $showDl $res -}}
+      {{- $fp := $res | resources.Fingerprint "sha256" -}}
+      <div class="codefold-dl"><a href="{{ $fp.RelPermalink }}" download>Download</a></div>
+    {{- end -}}
+  </div>
+</details>

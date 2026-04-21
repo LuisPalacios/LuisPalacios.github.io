@@ -1,0 +1,91 @@
+---
+alwaysApply: true
+---
+
+# Proyecto: Apuntes técnicos
+
+## Introducción
+
+Este repositorio aloja una colección exhaustiva de documentos técnicos destinados a la publicación de un blog. El objetivo es mantener un registro organizado, versionado y accesible de conocimientos técnicos. Lo llamo "Apuntes técnicos" y trato diferentes temas sobre sistemas operativos, domótica, redes y desarrollo de software. Aprender a través de la escritura es una de mis grandes pasiones y desde hace años me encanta poder devolver a la comunidad (que tanto me ha dado).
+
+## Contexto del Proyecto
+
+Este **blog técnico personal** está creado con [Hugo](https://gohugo.io). Hugo es uno de los generadores de sitios estáticos de código abierto más populares del mundo. Su increíble velocidad y flexibilidad hacen que la construcción de sitios web sea fluida. Referencia: Para profundizar en su funcionamiento, instalación o configuración avanzada, consulta la [Documentación Oficial de Hugo](https://gohugo.io/documentation/). El blog está alojado en **GitHub Pages**.
+
+El **propósito del blog** es tener una bitácora personal de aprendizaje y documentación técnica. Los posts son "apuntes" que documentan procesos, configuraciones, instalaciones y soluciones técnicas. El objetivo es consolidar conocimiento, ayudar a la comunidad y servir como referencia futura.
+
+**Idioma**: Todo el contenido está escrito en **Español**. Cursor debe trabajar exclusivamente en español cuando edite o cree contenido.
+
+**URL del sitio**: [https://www.luispa.com](https://www.luispa.com)
+
+## Experiencia Requerida
+
+Cuando trabajes en este repositorio, debes actuar como:
+
+1. **Experto en Hugo**: Conocimiento profundo de la estructura, convenciones, shortcodes, templates, y mejores prácticas de Hugo.
+2. **Experto en documentación técnica**: Capacidad para crear contenido técnico claro, bien estructurado y didáctico.
+3. **Experto en blogs técnicos**: Entendimiento del estilo, formato y propósito de documentación técnica en formato blog.
+4. **Hablante nativo de español**: Todo el contenido debe estar en español, con un tono natural y técnico apropiado.
+
+## Estructura del Proyecto
+
+A diferencia de la estructura predeterminada, la raíz del sitio Hugo en este repositorio se encuentra contenida dentro del directorio `src`. Esto permite mantener separados los archivos fuente del sitio de otros archivos de gestión del repositorio (como licencias o configuraciones de despliegue).
+
+```bash
+.
+├── src/                 # Raíz del proyecto Hugo
+│   ├── archetypes/      # Plantillas para la creación de nuevo contenido
+│   ├── assets/          # Recursos procesados por Hugo (SASS, imágenes, JS)
+│   ├── content/         # Documentos técnicos (posts) en formato Markdown
+│   ├── layouts/         # Plantillas HTML que definen la estructura visual
+│   ├── public/          # Carpeta de salida donde Hugo genera el sitio estático
+│   ├── static/          # Archivos estáticos (imágenes, favicons)
+│   ├── themes/          # Temas de Hugo instalados
+│   └── hugo.toml        # Archivo principal de configuración del sitio
+├── .cursor/             # Configuración y reglas de Cursor
+│   ├── commands/        # Comandos personalizados de Cursor
+│   ├── rules/           # Reglas detalladas del proyecto
+│   └── templates/       # Plantillas para crear contenido
+├── LICENSE              # Licencia del repositorio
+└── README.md            # Readme principal
+```
+
+## Estructura de Git
+
+- La **rama del blog** está en `gh-pages`, es donde siempre trabajo.
+- El **tema de Hugo que utilizo es un submódulo git**: `src/themes/PaperMod`
+- Al hacer la primera clonación ejecutar: `git submodule update --init --recursive`
+- Para actualizar el tema de vez en cuando ejecutar: `git submodule update --remote --merge`
+
+## Referencias a Reglas Detalladas
+
+Para información detallada sobre cómo trabajar en este proyecto, consulta los archivos en `.cursor/rules/`:
+
+- **`.cursor/rules/estructura-hugo.md`**: Estructura de carpetas, convenciones de archivos y configuración de Hugo
+- **`.cursor/rules/formato-post.md`**: Formato, estilo y estructura de los posts
+- **`.cursor/rules/shortcodes.md`**: Uso de shortcodes de Hugo (CRÍTICO)
+- **`.cursor/rules/mejores-practicas.md`**: Mejores prácticas y recordatorios críticos
+
+## Comandos Disponibles
+
+Consulta los comandos personalizados en `.cursor/commands/`:
+
+- **`.cursor/commands/crear-post.md`**: Crear un nuevo post desde un documento de descripción
+- **`.cursor/commands/revisar-post.md`**: Revisar un post existente
+
+## Recordatorios Críticos
+
+1. ✅ **SIEMPRE usar shortcodes en lugar de HTML puro** cuando sea posible
+2. ✅ **Todo el contenido en español** - Cursor debe trabajar en español
+3. ✅ **Usar `relref` para enlaces internos** - Nunca URLs absolutas para posts internos
+4. ✅ **Estructura `image-box` para imágenes con caption** - No usar HTML genérico
+5. ✅ **Front matter completo y correcto** - Incluir todos los campos requeridos
+6. ✅ **Separador `<!--more-->`** - Obligatorio en todos los posts
+7. ✅ **Tono personal y didáctico** - Primera persona, estilo bitácora
+8. ✅ **Código con sintaxis highlighting** - Especificar lenguaje siempre
+9. ✅ **Imágenes optimizadas** - Comprimir antes de subir
+10. ✅ **Enlaces útiles al final** - Sección "Enlaces interesantes" cuando sea apropiado
+
+---
+
+**Última actualización**: 2025-11-30

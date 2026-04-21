@@ -1,0 +1,88 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.5.2 Chrome/142.0.7444.265 Electron/39.6.1 Safari/537.36" version="29.5.2">
+  <diagram id="bandwidth-limit" name="Limitar ancho de banda">
+    <mxGraphModel dx="1684" dy="1059" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="500" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;fontSize=18;fontStyle=1;align=center;verticalAlign=middle;fontColor=#333333;fontFamily=Helvetica;" value="Limitar ancho de banda usando docker para descargas de Hugging Face" vertex="1">
+          <mxGeometry height="30" width="820" x="80" y="15" as="geometry" />
+        </mxCell>
+        <mxCell id="hf-cloud" parent="1" style="shape=cloud;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="132" width="200" x="120" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="hf-icon" parent="1" style="text;html=1;fontSize=36;align=center;verticalAlign=middle;" value="🤗" vertex="1">
+          <mxGeometry height="50" width="80" x="170" y="95" as="geometry" />
+        </mxCell>
+        <mxCell id="hf-label" parent="1" style="text;html=1;fontSize=12;align=center;verticalAlign=top;fontColor=#7a6c00;" value="&lt;b&gt;Hugging Face&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Qwen3.5-122B (75 GB)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="150" x="135" y="142" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-full" edge="1" parent="1" style="endArrow=blockThin;html=1;strokeWidth=8;strokeColor=#cc0000;endFill=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="300" y="140" as="sourcePoint" />
+            <mxPoint x="400" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-full-label" parent="1" style="text;html=1;fontSize=12;align=center;verticalAlign=middle;" value="&lt;font color=&quot;#cc0000&quot;&gt;&lt;b&gt;1 Gbps&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="25" width="100" x="290" y="108" as="geometry" />
+        </mxCell>
+        <mxCell id="local-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="170" width="460" x="400" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="local-icon" parent="1" style="text;html=1;fontSize=28;align=center;verticalAlign=middle;" value="🖥️" vertex="1">
+          <mxGeometry height="30" width="40" x="410" y="63" as="geometry" />
+        </mxCell>
+        <mxCell id="local-label" parent="1" style="text;html=1;fontSize=13;align=left;verticalAlign=middle;fontColor=#2e7d32;" value="&lt;b&gt;Servidor local&lt;/b&gt; (host)" vertex="1">
+          <mxGeometry height="25" width="200" x="448" y="63" as="geometry" />
+        </mxCell>
+        <mxCell id="veth-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;arcSize=20;" value="" vertex="1">
+          <mxGeometry height="110" width="150" x="415" y="95" as="geometry" />
+        </mxCell>
+        <mxCell id="veth-title" parent="1" style="text;html=1;fontSize=11;align=center;verticalAlign=middle;fontColor=#b85450;" value="&lt;b&gt;veth&lt;/b&gt; (host)" vertex="1">
+          <mxGeometry height="20" width="120" x="430" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="tc-label" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#b85450;fontSize=10;fontColor=#b85450;fontFamily=Courier New;" value="tc qdisc add root tbf&lt;br&gt;rate &lt;b&gt;600mbit&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="130" x="425" y="122" as="geometry" />
+        </mxCell>
+        <mxCell id="tc-note" parent="1" style="text;html=1;fontSize=9;align=center;verticalAlign=middle;fontColor=#b85450;fontStyle=2;" value="tc aplicado desde el host&lt;br&gt;(egress → ingress contenedor)" vertex="1">
+          <mxGeometry height="30" width="140" x="420" y="165" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-veth" edge="1" parent="1" source="veth-box" style="endArrow=blockThin;html=1;strokeWidth=4;strokeColor=#2e7d32;endFill=1;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="610" y="150" as="sourcePoint" />
+            <mxPoint x="675" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-veth-label" parent="1" style="text;html=1;fontSize=10;align=center;verticalAlign=middle;fontColor=#2e7d32;" value="&lt;b&gt;600&lt;br&gt;Mbps&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="45" x="580" y="113" as="geometry" />
+        </mxCell>
+        <mxCell id="docker-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;arcSize=15;" value="" vertex="1">
+          <mxGeometry height="110" width="160" x="680" y="95" as="geometry" />
+        </mxCell>
+        <mxCell id="docker-title" parent="1" style="text;html=1;fontSize=11;align=center;verticalAlign=middle;fontColor=#6c8ebf;" value="&lt;b&gt;Docker container&lt;/b&gt;" vertex="1">
+          <mxGeometry height="20" width="140" x="690" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="docker-hf" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#6c8ebf;fontSize=10;fontColor=#333;fontFamily=Courier New;" value="hf download ..." vertex="1">
+          <mxGeometry height="28" width="130" x="695" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="docker-path" parent="1" style="text;html=1;fontSize=9;align=center;verticalAlign=middle;fontColor=#555;fontFamily=Courier New;" value="/mnt/baul/models/&lt;br&gt;Qwen3.5-122B" vertex="1">
+          <mxGeometry height="30" width="140" x="690" y="158" as="geometry" />
+        </mxCell>
+        <mxCell id="docker-eth0" parent="1" style="text;html=1;fontSize=9;align=center;verticalAlign=middle;fontColor=#6c8ebf;fontStyle=2;" value="eth0 (sin tc)" vertex="1">
+          <mxGeometry height="15" width="80" x="695" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="home-icon" parent="1" style="text;html=1;fontSize=28;align=center;verticalAlign=middle;" value="🏠" vertex="1">
+          <mxGeometry height="35" width="40" x="310" y="249" as="geometry" />
+        </mxCell>
+        <mxCell id="conn-home" edge="1" parent="1" style="endArrow=open;html=1;strokeWidth=1;strokeColor=#999;dashed=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="150" as="sourcePoint" />
+            <mxPoint x="330" y="249" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cmd-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999;strokeWidth=1;align=center;verticalAlign=middle;fontColor=#333;" value="&lt;font face=&quot;Courier New&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;El resto de la casa se queda con 400 Mbps libres&lt;/span&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="35" width="350" x="360" y="250" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

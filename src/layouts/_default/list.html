@@ -1,0 +1,64 @@
+{{- define "main" }}
+{{- if (and site.Params.profileMode.enabled .IsHome) }}
+  {{- partial "index_profile.html" . }}
+{{- else }}
+  {{- if not .IsHome | and .Title }}
+  <header class="page-header">
+    {{- partial "breadcrumbs.html" . }}
+    <h1>{{ .Title }}</h1>
+  </header>
+  {{- end }}
+  {{- $pages := union .RegularPages .Sections }}
+  {{- if .IsHome }}
+    {{- $pages = where site.RegularPages "Type" "in" site.Params.mainSections }}
+    {{- $pages = where $pages "Params.hiddenInHomeList" "!=" "true" }}
+  {{- end }}
+  {{- $paginator := .Paginate $pages }}
+  {{- range $index, $page := $paginator.Pages }}
+    <article class="post-entry">
+      {{- $img := $page.Params.cover.image | default "" }}
+      {{- $isHidden := $page.Params.cover.hiddenInList | default false }}
+      {{- if and (ne $img "") (not $isHidden) }}
+        <div class="entry-with-image">
+          <div class="entry-inline-image">
+            <img class="post-thumb" src="{{ $img | relURL }}" alt="{{ $page.Title | plainify }}" />
+          </div>
+          <div class="entry-inline-text">
+      {{- end }}
+      <header class="entry-header">
+        <h2 class="entry-hint-parent">
+          {{ $page.Title }}
+          {{- if $page.Draft }}<span class="entry-hint" title="Draft">📝</span>{{- end }}
+        </h2>
+      </header>
+      {{- if not ($page.Params.hideSummary) }}
+      <div class="entry-content">
+        <p>{{ $page.Summary | plainify | htmlUnescape }}{{ if $page.Truncated }}…{{ end }}</p>
+      </div>
+      {{- end }}
+      {{- if not ($page.Params.hideMeta) }}
+      <footer class="entry-footer">
+        {{- partial "post_meta.html" $page }}
+      </footer>
+      {{- end }}
+      {{- if and (ne $img "") (not $isHidden) }}
+          </div>
+        </div>
+      {{- end }}
+      <a class="entry-link" aria-label="post link to {{ $page.Title | plainify }}" href="{{ $page.Permalink }}"></a>
+    </article>
+  {{- end }}
+  {{- if gt $paginator.TotalPages 1 }}
+  <footer class="page-footer">
+    <nav class="pagination">
+      {{- if $paginator.HasPrev }}
+        <a class="prev" href="{{ $paginator.Prev.URL | absURL }}">« Prev</a>
+      {{- end }}
+      {{- if $paginator.HasNext }}
+        <a class="next" href="{{ $paginator.Next.URL | absURL }}">Next »</a>
+      {{- end }}
+    </nav>
+  </footer>
+  {{- end }}
+{{- end }}
+{{- end }}

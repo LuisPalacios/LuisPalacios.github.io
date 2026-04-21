@@ -1,0 +1,13 @@
+{{- $pages := where .Site.RegularPages "Type" "in" site.Params.mainSections -}}
+[
+{{- range $index, $page := $pages }}
+  {
+    "title": {{ $page.Title | jsonify }},
+    "summary": {{ $page.Summary | plainify | jsonify }},
+    "permalink": {{ $page.Permalink | jsonify }},
+    "tags": {{ $page.Params.tags | jsonify }},
+    "categories": {{ $page.Params.categories | jsonify }},
+    "cover": {{ with $page.Params.cover.image }}{"image": {{ . | relURL | jsonify }}}{{ end }}
+  }{{ if ne (add $index 1) (len $pages) }},{{ end }}
+{{- end }}
+]

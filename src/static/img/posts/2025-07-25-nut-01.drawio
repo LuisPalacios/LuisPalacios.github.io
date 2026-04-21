@@ -1,0 +1,56 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
+  <diagram name="Topología NUT" id="nut-topology">
+    <mxGraphModel dx="1890" dy="850" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ups" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=13;" value="&lt;font&gt;UPS&lt;/font&gt;&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;Fry&#39;s Electrónics&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;MEC0003&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="103.6" x="140" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="proxmox" parent="1" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1;fontSize=13;fillColor=#fff2cc;strokeColor=#d6b656;container=0;collapsible=0;spacingTop=10;" value="" vertex="1">
+          <mxGeometry height="160" width="490" x="100" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="edge1" edge="1" parent="1" source="ups" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;endArrow=none;endFill=0;" target="nut">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UAzFJBKvEKGQep7LMwzJ-1" connectable="0" parent="edge1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;span style=&quot;font-size: 13px; font-weight: 700; text-wrap-mode: wrap; background-color: rgb(236, 236, 236);&quot;&gt;USB&lt;/span&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.436" y="-1" as="geometry">
+            <mxPoint x="1" y="25" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="59FVK4A9sSLY9oqta9io-3" parent="1" style="text;whiteSpace=wrap;align=center;fontFamily=Courier New;textShadow=0;fontStyle=1" value="Host Proxmox &#xa;192.168.1.254" vertex="1">
+          <mxGeometry height="40" width="200" x="256.07" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="nut" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="LXC nut&#xa;192.168.1.3" vertex="1">
+          <mxGeometry height="36.36363636363637" width="128.52459016393442" x="127.54098360655738" y="186.36363636363637" as="geometry" />
+        </mxCell>
+        <mxCell id="pihole" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="VM pihole&#xa;192.168.1.2" vertex="1">
+          <mxGeometry height="36.36363636363637" width="128.52459016393442" x="283.60655737704917" y="186.36363636363637" as="geometry" />
+        </mxCell>
+        <mxCell id="router" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="VM router&#xa;192.168.1.1" vertex="1">
+          <mxGeometry height="36.36363636363637" width="128.52459016393442" x="430.4918032786885" y="186.36363636363637" as="geometry" />
+        </mxCell>
+        <mxCell id="hass" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="VM Home Assistant&lt;div&gt;192.168.1.4&lt;/div&gt;" vertex="1">
+          <mxGeometry height="36.36363636363637" width="128.52459016393442" x="283.60655737704917" y="237.27272727272725" as="geometry" />
+        </mxCell>
+        <mxCell id="wlc" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="VM wlc&lt;div&gt;192.168.1.5&lt;/div&gt;" vertex="1">
+          <mxGeometry height="36.36363636363637" width="128.52459016393442" x="430.4918032786885" y="237.27272727272725" as="geometry" />
+        </mxCell>
+        <mxCell id="59FVK4A9sSLY9oqta9io-1" edge="1" parent="1" source="hass" style="endArrow=none;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;html=1;" target="nut" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="191.80327868852459" y="255.45454545454544" />
+            </Array>
+            <mxPoint x="522.2950819672132" y="171.8181818181818" as="sourcePoint" />
+            <mxPoint x="568.1967213114754" y="135.45454545454547" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="59FVK4A9sSLY9oqta9io-2" connectable="0" parent="59FVK4A9sSLY9oqta9io-1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;span&gt;TCP/IP&lt;/span&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.4" as="geometry">
+            <mxPoint x="33" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
