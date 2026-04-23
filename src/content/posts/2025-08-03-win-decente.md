@@ -12,9 +12,7 @@ cover:
 
 <img src="/img/posts/logo-win-decente.svg" alt="logo linux desarrollo" width="150px" height="150px" style="float:left; padding-right:25px"  />
 
-Según la RAE, *Deshinchar: tr. Deshacer o reducir lo hinchado*. De eso va este apunte, de desinflamar, de quitar lo que personalmente creo que le sobra a Windows 11. En inglés lo llaman *debloat* o eliminación del *bloatware*. En este apunte explico como hacerlo en un Windows nuevo pero tambien vale para uno instalado.
-
-Lo dicho, va de borrar aplicaciones, servicios y morralla preinstalada que no son esenciales, que consumen recursos y lo que es peor, afectan al rendimiento y el UX.
+Según la RAE, *Deshinchar: tr. Deshacer o reducir lo hinchado*. De eso va este apunte: quitar a Windows 11 las apps, servicios y opciones que sobran — *bloatware* en inglés — que consumen recursos y ensucian la experiencia. Vale igual para un Windows recién instalado que para uno ya en uso.
 
 <br clear="left"/>
 <style>
@@ -27,279 +25,282 @@ table {
 {{< admonition note "Serie de apuntes sobre Windows">}}
 
 - Preparar un PC para [Dualboot Linux / Windows]({{< relref "2024-08-23-dual-linux-win.md" >}}) e instalar Windows 11 Pro.
-- Configurar [un Windows 11 decente]({{< relref 2025-08-03-win-decente.md >}}) quitando la morralla.
-- Preparar [Windows para desarrollo de software]({{< relref 2024-08-25-win-desarrollo.md >}}), CLI, WSL2 y herramientas.
-- Instalación de [VMWare Workstation Pro en Windows 11]({{< relref 2024-08-26-win-vmware.md >}}) con una VM de Windows 11 Pro.
-- Instalación de [VM Windows 11 sobre Proxmox]({{< relref 2025-08-04-proxmox-win.md >}}) para tener un Windows 11 Pro sobre Host Proxmox.
+- Configurar [un Windows 11 decente]({{< relref "2025-08-03-win-decente.md" >}}) quitando la morralla.
+- Preparar [Windows para desarrollo de software]({{< relref "2024-08-25-win-desarrollo.md" >}}), CLI, WSL2 y herramientas.
+- Instalación de [VMWare Workstation Pro en Windows 11]({{< relref "2024-08-26-win-vmware.md" >}}) con una VM de Windows 11 Pro.
+- Instalación de [VM Windows 11 sobre Proxmox]({{< relref "2025-08-04-proxmox-win.md" >}}) para tener un Windows 11 Pro sobre Host Proxmox.
 
 {{< /admonition >}}
 
-> Tengo una versión antigua de este apunte [aquí]({{< relref 2024-08-24-win-decente-obsoleto.md >}}), que dejo solo a modo de referencia.
-
----
-
-## Introducción
-
-El **bloatware** en Windows es como la morralla en el mar: una mezcla de pececillos innecesarios que estorban, ocupan espacio y te distrae de lo importante.
+## Estrategia
 
 <div class="image-box">
   <img src="/img/posts/2024-08-24-win-decente-07.png" alt="Evitar la morralla (fuente dall-e)" width="400px" />
   <div class="image-caption">Evitar la morralla (fuente dall-e)</div>
 </div>
 
-Mi estrategia, una solución híbrida:
+El plan, en orden:
 
-- Opcional: Instalo Windows [de forma desatendida pre-deshinchado](#instalar-de-forma-desatendida).
-- Actualizo e instalo algunos imprescindibles (con un script propio)
-- Activo usando MAS
-- Deshincho mucho con [Win11Debloat](https://github.com/Raphire/Win11Debloat)
-  - Alternativas:
-  - [Winhance - Windows Enhancement Utility](https://github.com/memstechtips/Winhance)
-  - [Debloat Windows 10/11 de Andrew Taylor](https://andrewstaylor.com/2022/08/09/removing-bloatware-from-windows-10-11-via-script/)
-  - [Tiny 11 Builder](https://github.com/ntdevlabs/tiny11builder)) pero me decanté por el primero.
-- Termino de deshinchar manualmente algunas cosillas.
-- Opcional: Instalo mi [herramienta `devcli`](#herramienta-devcli)
+1. Preparar el SO: actualizaciones e imprescindibles (con un script propio).
+2. Activar Windows con [MAS](https://github.com/massgravel/Microsoft-Activation-Scripts).
+3. Deshinchar con [Win11Debloat](https://github.com/Raphire/Win11Debloat). Alternativas: [Winhance](https://github.com/memstechtips/Winhance), [Debloat 10/11 de Andrew Taylor](https://andrewstaylor.com/2022/08/09/removing-bloatware-from-windows-10-11-via-script/), [Tiny11 Builder](https://github.com/ntdevlabs/tiny11builder).
+4. Rematar manualmente lo que no cubre el script.
+5. Opcional: [instalación desatendida pre-deshinchada](#instalación-desatendida) para repetir el proceso en más equipos.
 
----
+## Paso 1 — Preparar el SO
 
-## Paso 1 - Preparo el SO
+Con Windows 11 ya instalado (instalación normal desde la ISO oficial, o la [desatendida](#instalación-desatendida)):
 
-Lo primero es tener un Windows 11 instalado. No lo explico aquí, pero puedes usar el proceso de instalación normal, desde la imagen oficial de Microsoft o podrías [Instalar de forma desatendida](#instalar-de-forma-desatendida) que te añade un extra (de sencillez).
+### Actualiza el sistema
 
-Una vez que tengo Windows 11 instalado, empiezo por actuailizarlo,
+Start > "Update" > **Check for Updates** > aplica todas las actualizaciones pendientes y reinicia cuando toque.
 
-**Actualización del sistema operativo:**
+### Ejecuta el script de imprescindibles
 
-- Start > "Update " > Check for Updates > Hago todas las **actualizaciones** que me pide (con el o los correspondientes reboots).
+Este apunte va de quitar, pero hay algunos básicos que necesito sí o sí: Chrome, 7-Zip, VSCode, PowerShell 7 y PowerToys. Los instalo desde PowerShell 5 como administrador, ejecutando un script propio en mi repositorio.
 
-**Instalalación de mi script:**
+1. Abre PowerShell como Administrador: Start > busca "PowerShell" > botón derecho > **Abrir como Administrador**.
+2. Habilita System Restore y permite ejecutar scripts:
 
-Ya se que este apunte va de quitar, pero hay algunos básicos que necesito: Chrome, 7-Zip, VSCode, PowerShell 7, PowerToys. Desde PowerShell 5 como administrador, preparo el entorno y ejecuto un script desde mi repositorio en GitHub
+    ```PS1
+    Enable-ComputerRestore -Drive "C:\"
+    vssadmin resize shadowstorage /for=C: /on=C: /maxsize=10GB
+    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+    ```
 
-- Start/Search > "PowerShell" > botón derecho > Abrir como Administrador. Abre un terminal PS5.
-- Habilito System Restore y permito la ejecución de scripts
+3. Verifica que `winget` está presente (en Win11 actualizado suele estarlo) y acepta su acuerdo:
 
-```PS1
-Enable-ComputerRestore -Drive "C:\"
-vssadmin resize shadowstorage /for=C: /on=C: /maxsize=10GB
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-```
+    ```PS1
+    winget list
+    ```
 
-- Ejecuto **`winget`** y acepto el acuerdo. Simplemente para doble confirmar que lo tengo instalado, algo normal en un Windows 11 actualizado.
+4. Reinicia.
+5. Ejecuta el script, que instala Chrome, 7-Zip, VSCode, PowerShell 7, PowerToys y descarga Win11Debloat. Si prefieres otro navegador, instálalo a mano:
 
-```PS1
-winget list
-```
-
-- Hago un reboot.
-
-- Ejecuto mi script para instalar: **Google Chrome, 7-Zip, Visual Studio Code, PowerShell 7 y PowerToys** y bajarme **Win11Debloat**. Si quieres instalarte otro navegador, hazlo manualmente.
-
-- De nuevo: Start/Search > "PowerShell" > botón derecho > Abrir como Administrador. Abre un terminal PS5.
-
-```PS1
-iex (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/LuisPalacios/devcli/main/addons/windecente-inicio.ps1" -UseBasicParsing).Content
-```
+    ```PS1
+    iex (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/LuisPalacios/devcli/main/addons/windecente-inicio.ps1" -UseBasicParsing).Content
+    ```
 
 <div class="image-box">
   <img src="/img/posts/2025-08-03-win-decente-01.png" alt="Ejecución del primer script automático" width="800px" />
   <div class="image-caption">Ejecución del primer script automático</div>
 </div>
 
-> Nota: Mi script se baja **Win11Debloat** que lo usaremos mas tarde.
+> El script deja Win11Debloat descargado listo para el Paso 3.
 
-### Activación de Windows
+## Paso 2 — Activar Windows
 
-Descubrí en internet que para VM's o laboratorio hay un proyecto por ahí (libre en internet) llamado Microsoft Activation Script (MAS). En cualquier caso, tienes dos opciones:
+Dos opciones:
 
-Si quieres puedes comprar una copia digital de Windows 11 Pro retail a un minorista autorizado. Es barato y asequible, te llega un correo con la clave de producto. `Start > Settings > Sytem Activation > Change product key`, añado la clave recibida y queda activado.
+**Clave retail.** Compra una copia digital de Windows 11 Pro a un minorista autorizado (barato y rápido, te llega la clave por correo). Luego: `Start > Settings > System > Activation > Change product key` y añades la clave.
 
-Otra opción es MAS, [Microsoft Activation Script](https://github.com/massgravel/Microsoft-Activation-Scripts), se trata de una activador de código abierto para Windows y Office 365, 2024, etc... que incluye los métodos de activación HWID, Ohook, TSforge, KMS38 y Online KMS. Recomendado [leerese la documentación](https://massgrave.dev/). El atajo rápido sería así, con PowerShell 7 que se instaló en el paso anterior.
+**MAS — [Microsoft Activation Script](https://github.com/massgravel/Microsoft-Activation-Scripts).** Activador de código abierto para Windows y Office. Incluye HWID, Ohook, TSforge, KMS38 y Online KMS. Recomendable leerse [la documentación](https://massgrave.dev/). Lo uso para VMs y laboratorio:
 
-- Start/Search > **PowerShell 7** > botón derecho > **Abrir como Administrador**.
+1. Abre **PowerShell 7** como Administrador (el que instaló el script del Paso 1).
+2. Ejecuta:
 
-```PS1
-irm https://get.activated.win | iex
-```
+    ```PS1
+    irm https://get.activated.win | iex
+    ```
 
-- Entre las opciones de activación, seleccionas `(1) HWID for Windows activation` y queda activado.
-- Cuando termine podrás comprobar el estado de activación: `Start > Settings > System > Activation`
+3. Elige `(1) HWID for Windows activation`.
+4. Verifica en `Start > Settings > System > Activation`.
 
 <div class="image-box">
   <img src="/img/posts/2024-08-24-win-decente-05.png" alt="Método MAS" width="600px" />
   <div class="image-caption">Método MAS</div>
 </div>
 
-- Si quieres descargar y/o activar la Office 265 entra en la opción `(2) Ohook`. Echa un ojo a [la documentación](https://massgrave.dev/).
+> Para activar Office usa `(2) Ohook` desde el mismo script. Ver [la documentación](https://massgrave.dev/).
 
----
+## Paso 3 — Deshinchar con Win11Debloat
 
-## Paso 2 - Win11Debloat para deshinchar
+[Win11Debloat](https://github.com/Raphire/Win11Debloat) es ligero y directo. Merece la pena leerse su [wiki](https://github.com/Raphire/Win11Debloat/wiki/) y la [configuración por defecto](https://github.com/Raphire/Win11Debloat/wiki/Default-Settings).
 
-Ya estamos listos para [Win11Debloat](https://github.com/Raphire/Win11Debloat), fácil de usar y ligero. Recomendable leerse su [wiki](https://github.com/Raphire/Win11Debloat/wiki/) y su ejecución [por defecto](https://github.com/Raphire/Win11Debloat/wiki/Default-Settings).
+El script del Paso 1 ya lo dejó en `C:\Users\[usuario]\Desktop\Win11Debloat\`.
 
-Mi script ya se bajó Win11Debloat (`C:\Users\[usuario]\Desktop\Win11Debloat\`).
+1. Edita `Appslist.txt` con las apps a desinstalar:
 
-Antes de ejecutarlo, modifico el fichero `Appslist.txt` con la lista de aplicaciones a desinstalar.
+    ```PS1
+    cd Desktop\Win11Debloat\Raphire-Win11Debloat-70ebe29
+    notepad.exe Appslist.txt
+    ```
+
+    Puedes partir de [este Appslist.txt](https://gist.githubusercontent.com/LuisPalacios/919d1150ad31bb0a19d1528a38e6da81/raw/Appslist.txt) — marca unas cuantas más que las de por defecto, excepto **Edge**: el propio Win11Debloat recomienda no tocarlo automáticamente. Lo haremos a mano en el Paso 4.
+
+2. Ejecuta el script y elige la opción 1:
+
+    ```PS1
+    .\Win11Debloat.ps1
+    ```
+
+    <div class="image-box">
+      <img src="/img/posts/2025-08-03-win-decente-02.png" alt="Win11Debloat" width="600px" />
+      <div class="image-caption">Win11Debloat - opción 1</div>
+    </div>
+
+3. Reinicia.
+
+## Paso 4 — Deshinchar manualmente
+
+Aquí queda rematar lo que Win11Debloat no cubre.
+
+{{< admonition tip "Si instalaste de forma desatendida" >}}
+Varios apartados siguientes (registro, privacidad, renombrar Home, apps preinstaladas, taskbar) ya vienen aplicados en el ISO generado con [UnattendedWinstall](#instalación-desatendida). Los marco como **`[desatendida ✓]`** en cada apartado — puedes saltártelos.
+{{< /admonition >}}
+
+### Ajustes de registro `[desatendida ✓]`
+
+Abre PowerShell como administrador y ejecuta:
+
+Desactivar "Let websites show me locally relevant content by accessing my language list":
 
 ```PS1
-PS C:\Users\luisp> cd Desktop\Win 11Debloat\Raphire-Win11Debloat-70ebe29>
-PS C:\Users\luisp\Desktop\Win11Debloat\Raphire-Win11Debloat-70ebe29> notepad.exe Appslist.txt
-```
-
-Yo uso este [Appslist.txt](https://gist.githubusercontent.com/LuisPalacios/919d1150ad31bb0a19d1528a38e6da81/raw/Appslist.txt). He desmarcado unas cuantas más de las de por defecto, excepto `Edge` porque recomienda no hacerlo automáticamente, así que lo dejo para más tarde (lo de quitar Edge).
-
-Ejecuto el script y selecciono la opción 1.
-
-```PS1
-.\Win11Debloat.ps1
-```
-
-<div class="image-box">
-  <img src="/img/posts/2025-08-03-win-decente-02.png" alt="Win11Debloat" width="600px" />
-  <div class="image-caption">Win11Debloat - opción 1</div>
-</div>
-
-Una vez que termina hago un reboot del equipo.
-
----
-
-## Paso 3 - Deshinchar manualmente
-
-A partir de aquí voy a terminar de *deshinchar* manualmente.
-
-***Acciones directas en el registry:***. Nota: si hiciste [instalación desatendida](#instalar-de-forma-desatendida) ya está hecho.
-
-Desactivo una opcion de Private & Security > General, "Let websites show me locally relevant content by accessing my language list"
-
-```ps1
 reg add "HKEY_CURRENT_USER\Control Panel\International\User Profile" /v "HttpAcceptLanguageOptOut" /t REG_DWORD /d 1 /f
 ```
 
-Cambio "User Account Control settings" a Never notify.
+Poner UAC en "Never notify":
 
-```ps1
+```PS1
 reg.exe add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /t REG_DWORD /d 1 /f
 reg.exe add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v ConsentPromptBehaviorAdmin /t REG_DWORD /d 0 /f
 reg.exe add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v PromptOnSecureDesktop /t REG_DWORD /d 0 /f
 ```
 
-***Desinstalar Edge y poner Chrome por defecto:***
+### Eliminar Edge y poner Chrome por defecto
 
-- **Start > Settings > Apps**
-  - > Installed Apps: Elimino **Edge** (Sí, me cargo Edge como navegador del equipo. No es multiplataforma !!)
-    - Arranco Google Chrome. Lo marco como browser por defecto y me aseguro de revisar:
-  - > Default apps > Google Chrome > **Reviso que todo sea Chrome**
-  - > Apps for Websites > **todo a off**
+Edge no es multiplataforma, así que lo quito del equipo.
 
-***Cambios en Privacidad:***
+- **Start > Settings > Apps**:
+  - **Installed Apps**: elimina **Edge**.
+  - Arranca Google Chrome y márcalo como navegador por defecto.
+  - **Default apps > Google Chrome**: revisa que todo queda asignado a Chrome.
+  - **Apps for Websites**: todo a **off**.
 
-- **Privacy & Security**. Nota: si hiciste [instalación desatendida](#instalar-de-forma-desatendida) ya está hecho.
-  - Security > Windows Security > `Open Windows Security`: **Todo en On**
-  - Windows Permissions > **todo a off** en todas las opciones: General, Speech, etc...
-  - App permissions > `Location`: **Todo en Off**, el **resto a valor por defecto**
+### Privacidad `[desatendida ✓]`
 
-***Cambio del Home de mi usuario:***. Nota: si hiciste [instalación desatendida](#instalar-de-forma-desatendida) ya está hecho.
+- **Privacy & Security**:
+  - Security > Windows Security > `Open Windows Security`: todo **On**.
+  - Windows Permissions: **todo off** (General, Speech, etc.).
+  - App permissions > `Location`: **off**. El resto a valores por defecto.
 
-Durante la instalación creó el nombre corto del usuario con los 5 primeros caracteres de dicho mail, por lo que quedó como `luisp` y el HOME de mi usuario en `C:\Users\luisp\`.
+### Renombrar la carpeta del usuario `[desatendida ✓]`
 
-- Cambiar el nombre del directorio HOME ([guía](https://www.elevenforum.com/t/change-name-of-user-profile-folder-in-windows-11.2133/))
-  - Habilito al Administrador
-    - `net user Administrator /active:yes`
-  - REBOOT y hago login con Administrador sin contraseña
-    - Busca mi usuario (luisp) en la lista y anoto el SID correspondiente (S-1-5-21-.....).
-    - PowerShell: `Get-LocalUser | Select-Object Name, SID`
-    - ***`regedit`*** -> `HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\S-1* -> ProfileImagePath`
-    - Explorer -> **Renombro el HOME**
-    - PowerShell: `New-Item -ItemType SymbolicLink -Path "C:\Users\luisp" -Target "C:\Users\luis"`
+Durante la instalación Windows crea el nombre corto del usuario con los 5 primeros caracteres del email (en mi caso `luisp`, con HOME en `C:\Users\luisp\`). Para renombrarlo ([guía completa](https://www.elevenforum.com/t/change-name-of-user-profile-folder-in-windows-11.2133/)):
 
-- Compatibilidad: Durante el tiempo que estuvo la carpeta antigua, puede que se hayan instalado o registrado programas con ella, y quedarán "fantasmas" por todos sitios.
-  - Si por lo que sea creaste un enlace simbólico problemático o se te ha recreado (por algún fantas la carpeta), pues la borro: `rmdir C:\Users\luisp`
-  - Creo un Junction: `mklink /J C:\Users\luisp C:\Users\luis`
+1. Habilita la cuenta Administrator:
 
-***Elimino Apps menos improtantes:***. Nota: si hiciste [instalación desatendida](#instalar-de-forma-desatendida) ya está hecho.
+    ```PS1
+    net user Administrator /active:yes
+    ```
 
-- Start > Botón derecho sobre los iconos que quiera hacer Unpin o "Uninstall"
-  - Por ejemplo en mi caso **quité LinkedIn**, ...
+2. Reinicia e inicia sesión como Administrator (sin contraseña).
+3. Localiza el SID de tu usuario:
 
-***Personalizo el Taskbar:***. Nota: si hiciste [instalación desatendida](#instalar-de-forma-desatendida) ya está hecho.
+    ```PS1
+    Get-LocalUser | Select-Object Name, SID
+    ```
 
-- Botón derecho iconos que están en el taskbar y uno a uno **quito iconos que no uso**.
-- Start > tecleo "Start settings" >
-  - Layout > More pins
-  - Show recently added apps > **Off**
-  - Show recommmended files... > **Off**
-  - Show account notifications > **Off**
-  - Show recently opened > **Off**
+4. En `regedit`, edita `HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\S-1-5-21-...\ProfileImagePath` con la ruta nueva.
+5. En Explorer, renombra la carpeta de `C:\Users\luisp` a `C:\Users\luis`.
+6. Crea un enlace simbólico para compatibilidad con programas que apuntaban a la carpeta vieja:
 
-***Elimino el teclado en inglés:***
+    ```PS1
+    New-Item -ItemType SymbolicLink -Path "C:\Users\luisp" -Target "C:\Users\luis"
+    ```
 
-- Elimino el teclado US que me instaló por defecto.
-  - Start > Settings > Time & Language > Language & Region
-    - > Preferred Languages > "..." > Options > Keyboards > **Quito US** (dejo solo el de Spanish)
+Si el enlace da problemas o se recrea la carpeta vieja, bórrala y usa un Junction:
 
-***File Explorer***. Mostrar archivos y directorios ocultos, file extensions, etc.
+```PS1
+rmdir C:\Users\luisp
+mklink /J C:\Users\luisp C:\Users\luis
+```
 
-- Start > Settings > `System` > `For developers`
-  - Habilitar el modo para desarrolladores si no lo estaba ya.
-  - Entrar en > `File Explorer`
-    - `Show file extensios`: **On**
-    - `Show hidden and system files`: **On**
-    - `Show full path in title bar`: **On**
-    - `Show empty drives`: **On**
+### Quitar apps preinstaladas `[desatendida ✓]`
 
-***Habilitar File Sharing***. Es algo que voy a necesitar, así que lo configuro
+Start > botón derecho sobre los iconos que no uses > **Unpin** o **Uninstall** (en mi caso quité LinkedIn y similares).
 
-- Start > Settings > `Network and Internet` > `Advanced network settings`
-  - `Advance Sharing Settings`
-  - `File & Printer sharing`: **On**
-  - `Public folder sharing`: **On**
-- Start > Settings > System > About
-  - `Advance System Settings` > Computer Name > Change > "Me aseguro que está en **WORKGROUP**"
-- Habilito SMB1.0
-  - Start > busco "Control Panel"
-  - `Programs` > `Programs and features`
-  - `Turn Windows features on or off`
-  - **Activo SMB 1.0/CIFS** File Sharing Support.
+### Personalizar el Taskbar `[desatendida ✓]`
 
-***Firewall de Windows***
+- Botón derecho sobre los iconos del taskbar y quita los que no uses.
+- Start > busca "Start settings":
+  - Layout > **More pins**.
+  - Show recently added apps: **off**.
+  - Show recommended files...: **off**.
+  - Show account notifications: **off**.
+  - Show recently opened: **off**.
 
-- Lo configuro para minimizar alertas y notificaciones. En mi caso el ordenador está conectado a una red privada pero por defecto la instalación lo puso en red Pública
-  - Start > Settings > Network & Internet > Ethernet (y también WiFi)
-    - **Cambio ambas a `Private Network`**
-- Configuro el Firewall de Windows para minimizar alertas y notificaciones
-  - Start > busco "Control Panel" > System & Security > Windows Defender Firewall > Advanced Settings”
-    - Reviso reglas de entrada y salida para bloquear o permitir aplicaciones específicas según lo necesite.
-  - Start > busco "Control Panel" > System & Security > Windows Defender Firewall > Change notification settings"
-    - Desactivo las notificaciones, **desmarco las casillas de “Notify me when Windows Defender Firewall blocks a new app”**
+### Eliminar el teclado en inglés
 
-***Desactivar Cortana***
+Start > Settings > Time & Language > Language & Region > Preferred Languages > "..." > Options > Keyboards > **quita US** (deja solo Spanish).
 
-- Busco “gpedit.msc” en el menú de inicio y abro el Editor de directivas
-  - Navego a “Computer Configuration > Administrative Templates > Windows Components > Search”.
-  - Hago doble clic en “Allow Cortana” y selecciono “Disabled”. Aplico los cambios para desactivar Cortana.
+### File Explorer
 
-***Quito más aplicaciones preinstaladas***
+Mostrar archivos ocultos, extensiones y ruta completa:
 
-- Eliminar aplicaciones preinstaladas (bloatware o crapware) mediante PowerShell.
-- ¿Qué desinstalar? pues depende del fabricante de tu PC puedes echarle un ojo a [Should I Remove It?](http://www.shouldiremoveit.com) que no está mal y te da indicaciones.
-- Puede usarse PowerShell como administrador. Comando para listar todas las aplicaciones instaladas
-  - `Get-AppxPackage | Select Name, PackageFullName`
-- Luego, uso este comando para desinstalar las aplicaciones que no necesito
-  - `Get-AppxPackage *NombreDeLaApp* | Remove-AppxPackage`
+- Start > Settings > `System` > `For developers`:
+  - Habilita el modo desarrollador si no lo estaba.
+  - Entra en `File Explorer`:
+    - `Show file extensions`: **On**.
+    - `Show hidden and system files`: **On**.
+    - `Show full path in title bar`: **On**.
+    - `Show empty drives`: **On**.
 
-***Deshabilitar servicios innecesarios***
+### File Sharing (SMB)
 
-- Abro `services.msc` desde el menú de inicio.
-  - Identifico los servicios que no necesito (por ejemplo, "xbox*", etc.). Hago doble clic en el servicio, cambio el “Startup type” a “Disabled” y aplico los cambios.
+- Start > Settings > `Network and Internet` > `Advanced network settings > Advanced Sharing Settings`:
+  - `File & Printer sharing`: **On**.
+  - `Public folder sharing`: **On**.
+- Start > Settings > System > About > `Advanced System Settings` > Computer Name > **Change**: verifica que está en **WORKGROUP**.
+- Habilita SMB 1.0 solo si necesitas compatibilidad con equipos antiguos:
+  - Start > "Control Panel" > `Programs` > `Programs and features` > `Turn Windows features on or off`.
+  - Activa **SMB 1.0/CIFS File Sharing Support**.
 
-Con estas recomendaciones adicionales, el sistema estará preparado para ofrecer una experiencia de usuario más directa, sin distracciones ni interrupciones innecesarias.
+### Firewall
 
-Paso las pruebas de evaluación del sistema de Windows (WinSAT) se usan para analizar el rendimiento de varios componentes del sistema, como CPU, memoria, disco y gráficos.
+La instalación por defecto pone la red en **Pública**. Si es una red privada, cámbialo:
+
+Start > Settings > Network & Internet > Ethernet (y WiFi) > **Private Network**.
+
+Para minimizar alertas del Firewall:
+
+- Start > "Control Panel" > System & Security > Windows Defender Firewall:
+  - `Advanced Settings`: revisa reglas de entrada y salida.
+  - `Change notification settings`: desmarca "Notify me when Windows Defender Firewall blocks a new app".
+
+### Desactivar Cortana
+
+- Start > busca `gpedit.msc` y abre el Editor de directivas.
+  - Navega a `Computer Configuration > Administrative Templates > Windows Components > Search`.
+  - Doble click en **Allow Cortana** > **Disabled** > Aplicar.
+
+### Más apps preinstaladas
+
+Desinstalar crapware del fabricante mediante PowerShell. Qué desinstalar depende del OEM; [Should I Remove It?](http://www.shouldiremoveit.com) ayuda a decidir.
+
+Listar todas las aplicaciones:
+
+```PS1
+Get-AppxPackage | Select Name, PackageFullName
+```
+
+Desinstalar una concreta:
+
+```PS1
+Get-AppxPackage *NombreDeLaApp* | Remove-AppxPackage
+```
+
+### Servicios innecesarios
+
+Abre `services.msc`, identifica servicios que no uses (por ejemplo, los `xbox*`), doble click > **Startup type: Disabled** > Aplicar.
+
+### Rendimiento: WinSAT
+
+Para comprobar CPU, memoria, disco y gráficos:
 
 ```PowerShell
-C:\Users\luis> winsat formal
-C:\Users\luis> Get-CimInstance Win32_WinSat
+winsat formal
+Get-CimInstance Win32_WinSat
 ```
 
 <div class="image-box">
@@ -307,117 +308,101 @@ C:\Users\luis> Get-CimInstance Win32_WinSat
   <div class="image-caption">Idoneo para trabajar</div>
 </div>
 
-Seguí los pasos anteriores para optimizar también un [máquina virtual windows]({{< relref "2024-08-26-win-vmware.md" >}}) corriendo en un windows optimizado, como puedes observar el rendimiento de la máquina virtual es muy decente.
+Los mismos pasos aplican a [máquinas virtuales Windows]({{< relref "2024-08-26-win-vmware.md" >}}), con muy buen rendimiento.
 
 <div class="image-box">
   <img src="/img/posts/2024-08-24-win-decente-06.png" alt="Otro windows 11 optimizado, esta vez como Guest de VMWare Workstation" width="600px" />
-  <div class="image-caption">Otro windows 11 optimizado, esta vez como Guest de VMWare Workstation</div>
+  <div class="image-caption">Otro Windows 11 optimizado, esta vez como Guest de VMWare Workstation</div>
 </div>
 
-***Mantenimiento: Comandos útiles***
+### Mantenimiento
 
-Comandos útiles, que ejecuto como administrador
+Comandos útiles como administrador:
 
-- `chkdsk`: Comprueba el estado del disco duro y nos muestra un informe con la información necesaria. Además, se encarga de corregir problemas e incluso recuperar información perdida.
-- `sfc /SCANNOW`. Analizar la integridad de todos los archivos de sistema y solucionar problemas en los mismos. ***AVISO!!***: Microsoft tenía un problema conocido que llevaba años sin resolverse y hasta hace poco seguía por ahi danzando. Si te pasa y encuentra un problema en el archivo `bthmodem.sys` y lo elimina, verás que se refiere a `Corrupt File: bthmodem.sys`. Se resuelve ejecutando el comando siguiente.
-- `dism /online /cleanup-image /restorehealth` para resolver el entuerto. Se conecta con el *Windows Update service* para bajarse y reemplazar cualquier archivo importante que falte o esté corrupto.
+- `chkdsk`: comprueba el disco y corrige problemas.
+- `sfc /SCANNOW`: analiza la integridad de archivos de sistema.
+- `dism /online /cleanup-image /restorehealth`: descarga y reemplaza archivos corruptos desde Windows Update.
 
-Ya hemos terminado, nos quedamos con un Windows 11 mucho más limpio, rápido y libre de distracciones.
+> **Aviso**: `sfc` tuvo durante años un falso positivo con `bthmodem.sys` (lo eliminaba como corrupto). Si te pasa, ejecuta `dism ... /restorehealth` para recuperarlo.
 
 <div class="image-box">
   <img src="/img/posts/2024-08-24-win-decente-02.png" alt="Versión minimalista de Start" width="450px" />
   <div class="image-caption">Versión minimalista de Start</div>
 </div>
 
----
-
 ## Herramienta devcli
 
-Si te gusta trabajar en el CLI, échale un ojo al apunte [Windows para desarrollo de software]({{< relref 2024-08-25-win-desarrollo.md >}}) donde hablo del CLI, el Terminal, WSL2 y herramientas adicionales.
+Si trabajas mucho en el CLI, complementa este apunte con [Windows para desarrollo]({{< relref "2024-08-25-win-desarrollo.md" >}}), donde cubro CLI, Terminal, WSL2 y herramientas.
 
 <div class="image-box">
   <img src="/img/posts/2024-08-25-win-desarrollo-05.png" alt="Por opciones que no sea" width="2560px" />
   <div class="image-caption">Por opciones que no sea</div>
 </div>
 
-En él menciono el proyecto **[devcli](https://github.com/LuisPalacios/devcli)** que tengo en GitHub, te permite configurar el entorno CLI en Linux, macOS, WSL2 y **Windows**. Después de *deshinchar* Windows, no viene mal preparar el CLI, sobre todo si eres adicto al CLI o desarrollador.
+Allí menciono **[devcli](https://github.com/LuisPalacios/devcli)**, un proyecto propio para configurar el entorno CLI en Linux, macOS, WSL2 y Windows. Después de *deshinchar*, viene bien preparar el CLI:
 
-- Instala herramientas como: git, curl, wget, nano, htop, tmux, fzf, bat, fd-find, ripgrep, tree, jq, lsd, zoxide
-- Instala Oh-My-Posh, para cualquier Shell, dicen que es el mejor prompt.
-- Establece la variable LANG (por defecto a s_ES.UTF-8) en linux, macOS y WSL2
-- Copia ficheros importanttes de configuración (ver el subdirectorio dotfiles)
-- Copia mi caja de herramientas para git desde [gitbox](https://github.com/LuisPalacios/gitbox).
-- Crea unos cuantos scripts en ~/bin que uso con frecuencia: e, s, confcat
-- Instala automáticamente FiraCode Nerd Font para soportar iconos en herramientas como lsd.
+- Instala herramientas: git, curl, wget, nano, htop, tmux, fzf, bat, fd-find, ripgrep, tree, jq, lsd, zoxide.
+- Instala Oh-My-Posh para cualquier shell.
+- Establece `LANG` (por defecto `es_ES.UTF-8`) en Linux, macOS y WSL2.
+- Copia ficheros de configuración (ver el subdirectorio `dotfiles`).
+- Copia mi caja de herramientas Git desde [gitbox](https://github.com/LuisPalacios/gitbox).
+- Crea scripts útiles en `~/bin`: `e`, `s`, `confcat`.
+- Instala FiraCode Nerd Font para iconos en herramientas como `lsd`.
 
----
+## Instalación desatendida
 
-## Instalar de forma desatendida
+Para repetir el proceso en más equipos conviene automatizar la propia instalación de Windows. Probé [UnattendedWinstall](https://github.com/memstechtips/UnattendedWinstall) y [WIMUtil](https://github.com/memstechtips/WIMUtil).
 
-Si quieres probar a instalar de otra forma, estudié un par de proyectos y los he probado: [UnattendedWinstall](https://github.com/memstechtips/UnattendedWinstall) y [WIMUtil](https://github.com/memstechtips/WIMUtil), para poder hacer una instalación desatendida. Estos son los pasos que dí:
+**1. Instala Windows ADK** (para obtener [oscdimg.exe](https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/oscdimg-command-line-options), que se usa después):
 
-**Instalo ADK**:
+- Descarga [Windows ADK](https://learn.microsoft.com/en-us/windows-hardware/get-started/adk-install?source=recommendations), instálalo y marca solo **Deployment Tools**.
+- Copia el contenido de `C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\amd64\Oscdimg\` a un directorio en tu PATH.
 
-- En un windows 11 instalé la herramienta oficial de Microsoft para personalizar imágenes (WindowsADK), para conseguir [oscdimg.exe](https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/oscdimg-command-line-options) que se usa mas tarde.
-  - Me bajo [Windows ADK](https://learn.microsoft.com/en-us/windows-hardware/get-started/adk-install?source=recommendations), lo instalo y solo elijo las **Deployment Tools**.
-  - Copio el contenido de `cd 'C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\amd64\Oscdimg\'` a un directorio que tengo en el PATH.
-
-**Ejecuto WIMUtil**:
-
-- Arranco PowerShell como administrador y ejecuto lo siguiente.
+**2. Ejecuta WIMUtil** desde PowerShell como administrador:
 
 ```PowerShell
 irm "https://github.com/memstechtips/WIMUtil/raw/main/src/WIMUtil.ps1" | iex
 ```
 
-- Este proceso crea un ISO Custom (usando el `autounattend.xml` del proyecto [UnattendedWinstall](https://github.com/memstechtips/UnattendedWinstall))
-  - Selecciono ISO, directorio temporal, START.
-  - Next, personalizo windows > Download UW (automaticamente descarga el de UnattendedWinstall). No añado un answer file.
-  - Next, opcionalmente "Add Drivers" del propio Windows donde estás ejecutándolo.
-  - Next, Select Location > `win11-custom.iso`
-  - Create ISO
+Esto genera un ISO custom usando el `autounattend.xml` de [UnattendedWinstall](https://github.com/memstechtips/UnattendedWinstall):
+
+- Selecciona ISO, directorio temporal, **START**.
+- Next > personalizar Windows > **Download UW** (descarga el de UnattendedWinstall). Sin answer file.
+- Next > opcionalmente "Add Drivers" del Windows donde estás ejecutándolo.
+- Next > Select Location > `win11-custom.iso`.
+- **Create ISO**.
 
 <div class="image-box">
   <img src="/img/posts/2025-08-03-win-decente-08.png" alt="Crear un ISO desatendido" width="800px" />
   <div class="image-caption">Crear un ISO desatendido</div>
 </div>
 
-Creo una VM para probarla. Más sobre una máquina virtual con windows 11 -> [VMWare en Windows]({{< relref "2024-08-26-win-vmware.md" >}}).
+**3. Prueba el ISO en una VM** (ver [VMWare en Windows]({{< relref "2024-08-26-win-vmware.md" >}})):
 
-- W11 VMWare Workstation > New virtual Machine > Typical > Installer disc > `win11-custom.iso`. Las "pocas" cosas que me pide son:
-  - VMWare me pide: Nombre, tipo de de encriptación ("Only the files needed..."), resto por defecto.
-  - El proceso de instalación: Lenguaje, hora y moneda, teclado, No tengo product key, Windows 11 Pro, Formato del disco; Region y teclado, usuario y contraseña, preguntas de seguridad.
-  - IMPORTANTE: Cuando termina, está deshabilitado el Defender y el UAC. Puedes activarlos de nuevo
-    - En mi caso Habilito solo el Defender.
-  - Click en Restart, Instalo las *VMWare Tools*.
+- VMware Workstation > New virtual Machine > Typical > Installer disc > `win11-custom.iso`.
+- La instalación solo pide lenguaje, hora, teclado, tipo de disco, usuario y preguntas de seguridad. Rapidísima.
+
+> **Importante**: al terminar la instalación desatendida, **Defender y UAC quedan deshabilitados**. Reactiva al menos Defender.
 
 <div class="image-box">
   <img src="/img/posts/2025-08-03-win-decente-09.png" alt="Parametrización final" width="650px" />
   <div class="image-caption">Parametrización final</div>
 </div>
 
-Ya está, rápido y sencillo. Sigo con el [Paso 1: Preparo el SO](#paso-1---preparo-el-so) para desincharlo aún más.
+Tras reiniciar, instala las VMware Tools y vuelve al **Paso 1** para rematar.
 
----
+## Enlaces útiles
 
-## Enlaces interesantes
-
-Te dejo algunos enlaces que estudié y me precieron útiles:
-
-- ***[Clink](https://github.com/chrisant996/)***: Enriquece muchísimo el CMD (`command.com`) con una readline como el de Linux, añade múltiples funcionalidades, colores, history.
-- ***[Ccleaner](https://www.ccleaner.com/)*** Muy buena pinta, aunque para tener acceso a lo "chulo" hay que comprar la licencia Profesinoal.
-- ***[BleachBit](https://www.bleachbit.org/)*** Una alternativa Open Source a CCleaner, que tiene una pinta buenísima. Le falta la parte del Registry y la Optimización de rendimiento.
-  - Antes de instalar la última versión, hay que bajarse el **[Visual Studio 2919 (VC++ 10.0) redistributable SP1 x86](https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe)**, es la versión x86. Aunque mi sistema es de 64-bit da igual porque va a usar la dll de la versión x86.
-- ***[TCPView](https://learn.microsoft.com/en-us/sysinternals/downloads/tcpview)*** Herramienta gratuita de Microsoft (de la suite Sysinternals) que te permite ver en tiempo real todas las conexiones de red activas en tu sistema Windows.
-- ***[Autoruns](https://learn.microsoft.com/en-us/sysinternals/downloads/autoruns)*** Herramienta gratuita de Microsoft Sysinternals que te muestra todo lo que se ejecuta automáticamente cuando inicias Windows. Es mucho más poderosa y completa que el Administrador de tareas o MSConfig.
-- ***[Sysinternals Suite](https://learn.microsoft.com/en-us/sysinternals/downloads/)*** Si con las dos anteriores no tienes suficiente, puedes instalarte el hermano mayor, la Sysinternals Suite, que las incluye. Son el conjunto de herramientas avanzadas creadas originalmente por Mark Russinovich y Bryce Cogswell, y ahora mantenidas por Microsoft. Están diseñadas para diagnosticar, monitorizar, depurar y entender en profundidad cómo funciona Windows.
-- ***[Instalación desatendida](https://schneegans.de/windows/unattend-generator/)***: - Generar `autounattend.xml` para Windows 10/11
-
-Por último, echa un ojo a [Winhance - Windows Enhancement Utility](https://github.com/memstechtips/Winhance), después de toda la limpieza, al final me la instalé y aún quedaban cosas por ahi que pude limpiar.
+- **[Clink](https://github.com/chrisant996/)**: enriquece el CMD (`cmd.exe`) con readline al estilo Linux — colores, historial, autocompletado.
+- **[CCleaner](https://www.ccleaner.com/)**: limpieza general, aunque lo interesante requiere licencia Pro.
+- **[BleachBit](https://www.bleachbit.org/)**: alternativa Open Source a CCleaner (sin Registry ni Optimización de rendimiento). Antes de instalar la última versión, baja el [Visual Studio 2019 (VC++ 10.0) redistributable SP1 x86](https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe).
+- **[TCPView](https://learn.microsoft.com/en-us/sysinternals/downloads/tcpview)**: conexiones de red en tiempo real (Sysinternals).
+- **[Autoruns](https://learn.microsoft.com/en-us/sysinternals/downloads/autoruns)**: todo lo que arranca automáticamente con Windows (más completo que Task Manager o MSConfig).
+- **[Sysinternals Suite](https://learn.microsoft.com/en-us/sysinternals/downloads/)**: la suite completa de herramientas avanzadas (Russinovich/Cogswell, mantenida por Microsoft).
+- **[Generador de autounattend.xml](https://schneegans.de/windows/unattend-generator/)** para Windows 10/11.
+- **[Winhance](https://github.com/memstechtips/Winhance)**: tras toda la limpieza, aún quedaban cosas que pude pulir con Winhance.
 
 <div class="image-box">
   <img src="/img/posts/2025-08-03-win-decente-03.png" alt="Winhance - Windows Enhancement Utility" width="650px" />
   <div class="image-caption">Winhance - Windows Enhancement Utility</div>
 </div>
-
----

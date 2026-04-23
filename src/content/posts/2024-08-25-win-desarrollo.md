@@ -11,9 +11,7 @@ cover:
 
 <img src="/img/posts/logo-win-desarrollo.svg" alt="logo win desarrollo" width="150px" height="150px" style="float:left; padding-right:25px"  />
 
-En este apunte describo los pasos para preparar un Windows 11 como equipo de desarrollo para un entorno multiplataforma, Linux, MacOS y Windows, es decir que no estará orientado a desarrollo de software *solo-microsoft/windows*, sino a los que les gusta desarrollar en y para múltiples plataformas y/o entornos.
-
-Parto de una instalación de Windows (en inglés), sin nada instalado, aproveché que necesitaba hacer [dualboot]({{< relref "2024-08-23-dual-linux-win.md" >}}) y parametricé el sistema operativo de forma [ligera]({{< relref "2024-08-24-win-decente-obsoleto.md" >}}). El apunte empieza por el CLI y WSL2 y en la segunda parte entro en las herramientas y los lenguajes de programación.
+Preparo un Windows 11 como equipo de desarrollo multiplataforma (Linux, macOS y Windows), no *solo-microsoft*. Parto de una instalación limpia en inglés, parametrizada de forma [ligera]({{< relref "2025-08-03-win-decente.md" >}}) (opcionalmente tras un [dualboot]({{< relref "2024-08-23-dual-linux-win.md" >}})). El apunte empieza por el CLI y WSL2 y termina con las herramientas y lenguajes de programación.
 
 <br clear="left"/>
 <style>
@@ -33,23 +31,19 @@ table {
 
 {{< /admonition >}}
 
-> Nota: Mis apuntes para preparar cada S.O. para desarrollo de software: [macOS]({{< relref "2023-04-15-mac-desarrollo.md" >}}), [linux]({{< relref "2024-07-25-linux-desarrollo.md" >}}) y [Windows]({{< relref "2024-08-25-win-desarrollo.md" >}}).
+> Nota: apuntes hermanos para preparar cada S.O. para desarrollo: [macOS]({{< relref "2023-04-15-mac-desarrollo.md" >}}) y [Linux]({{< relref "2024-07-25-linux-desarrollo.md" >}}).
 
-## Primeros pasos
+## Nota sobre el PATH
 
-Como todos mis apuntes, esta es mi bitácora de instalación, voy ejecutando y documentando para tener una referencia en el futuro.
+En Linux y macOS modificar el PATH es directo. En Windows hay dos: el de **Usuario** y el de **Sistema**, que se combinan. Durante el apunte toca modificarlo varias veces — esta es la vía:
 
-**PATH**: En Linux y MacOS es inmediato, pero en Windows modificar el PATH es distinto, hay un PATH de Usuario y uno de Sistema, que combinados nos dan el PATH completo. Durante el apunte verás que indico que hay que modificar el PATH. Dejo aquí el cómo:
-
-- Para modificar ambos
-  - `Start` > `Settings > System > About > Advance System Settings`
-  - o bien `Search` > "`Advance System Settings`" o "`Environment Variables`"
-- Modificar en ***`System variables`*** y/o ***`User variables`***
-- Dejo un ejemplo [de mi PATH final en un Gist](https://gist.github.com/LuisPalacios/d38dd10a92fa1ab6bbaec799e8afe2f3).
+- `Start > Settings > System > About > Advanced System Settings` (o busca "Environment Variables" en `Search`).
+- Modificar en `System variables` y/o `User variables`.
+- Ejemplo de mi PATH final: [Gist](https://gist.github.com/LuisPalacios/d38dd10a92fa1ab6bbaec799e8afe2f3).
 
 ## CLI
 
-Es imprescindible hablar del trabajo desde la línea de comandos, estes o no acostumbrado, los *desarrolladores multiplataforma* lo valoramos mucho. Yo instalo de todo:
+Para desarrollo multiplataforma la línea de comandos es fundamental. Instalo estos CLIs:
 
 - **CMD (`cmd.exe`)**: La línea de comandos tradicional de Windows, sus scripts son los famosos ***`*.BAT, *.CMD`***.
 - **PowerShell**: Entorno de scripting y línea de comandos avanzada desarrollada por Microsoft.
@@ -227,9 +221,7 @@ clink set ohmyposh.theme c:\Users\luis\.oh-my-posh.yaml
 
 ### LSDeluxe
 
-**[LSDeluxe](https://github.com/lsd-rs/lsd)** es una versión moderna y estilizada del clásico comando `ls` de Unix/Linux. Reescrito en Rust, `lsd` ofrece una experiencia mucho más rica y visual, con soporte para colores, íconos, vista en árbol, y múltiples opciones de formato. Está diseñado para ser un reemplazo directo de `ls`, pero con un enfoque moderno que mejora significativamente la legibilidad de los listados de archivos.
-
-El proyecto se inspira en herramientas como `colorls`, pero va más allá al aprovechar el rendimiento y la seguridad de Rust. Ofrece integración con Nerd Fonts para mostrar íconos representativos de archivos y directorios, soporte para temas personalizados, y compatibilidad con múltiples plataformas (Linux, macOS y Windows). Ideal para usuarios que trabajan frecuentemente en la terminal y valoran tanto la estética como la claridad en sus flujos de trabajo.
+**[LSDeluxe](https://github.com/lsd-rs/lsd)** (`lsd`) es un reemplazo moderno de `ls`, escrito en Rust, con colores, iconos (via Nerd Fonts) y vista en árbol. Multiplataforma. Lo instalo en todos mis sistemas (Windows, macOS, Linux y WSL2).
 
 - Instalación: `winget install lsd`
 
@@ -255,15 +247,11 @@ REM Fichero C:\Users\Luis\cmd_aliases.cmd
 doskey ls=lsd --group-directories-first $
 ```
 
-Colores: Para personalizar los colores de `lsd` en Windows se hace a través de la variable `LS_COLORS`. me costó encontrarlo, resulta que se hace con el comando `setx`. Esto es lo que hice en mi caso (mis colores).
+**Colores**: en Windows se configuran con la variable `LS_COLORS` vía `setx` (y requiere reboot — sí, reboot). Ejemplo:
 
 ```PowerShell
 setx LS_COLORS "fi=00:mi=00:mh=00:ln=01;94:or=01;31:di=01;36:ow=04;01;34:st=34:tw=04;34:pi=01;33:so=01;33:do=01;33:bd=01;33:cd=01;33:su=01;35:sg=01;35:ca=01;35:ex=01;32:*.cmd=00;32:*.exe=01;32:*.com=01;32:*.bat=01;32:*.btm=01;32:*.dll=01;32:*.tar=00;31:*.tbz=00;31:*.tgz=00;31:*.rpm=00;31:*.deb=00;31:*.arj=00;31:*.taz=00;31:*.lzh=00;31:*.lzma=00;31:*.zip=00;31:*.zoo=00;31:*.z=00;31:*.Z=00;31:*.gz=00;31:*.bz2=00;31:*.tb2=00;31:*.tz2=00;31:*.tbz2=00;31:*.avi=01;35:*.bmp=01;35:*.fli=01;35:*.gif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mng=01;35:*.mov=01;35:*.mpg=01;35:*.pcx=01;35:*.pbm=01;35:*.pgm=01;35:*.png=01;35:*.ppm=01;35:*.tga=01;35:*.tif=01;35:*.xbm=01;35:*.xpm=01;35:*.dl=01;35:*.gl=01;35:*.wmv=01;35"
 ```
-
-Después hay que hacer un reboot de Windows (sí, como lo oyes).
-
-Yo instalo `lsd` en **todos** los sistemas operativos Windows, Mac y Linux, incluido WSL2. En el caso de Windows sigo
 
 ---
 
@@ -277,20 +265,20 @@ El objetivo principal es tener acceso a `git.exe` desde las consolas nativas `CM
 
 > Nota: incluye el ejecutable `C:\Program Files\Git\bin\bash.exe` pero verás que hay otro en el sistema `C:\Windows\System32\bash.exe`, así que tenlo MUY en cuenta en el orden en el PATH. El segundo  es el que trae WSL2 para arrancar una shell dentro del linux que hayas instalado.
 
-Decisiones que he tomado durante la instalación:
+Decisiones que tomo durante la instalación:
 
-- Bundled `ssh` & `openssl`: Selecciono **Use the bundled OpenSSH (voids W11 issue) and bundle OpenSSL**. Cuando preparé este apunte la versión de SSH de Windows 11 tiene problemas con repositorios grandes de Git.
-- Handling of CRLF: Selecciono siempre **Checkout as-is, commit Unix-style line endings**. Ver la sección [sobre crlf](#wsl-2---crlf-vs-lf).
-- PATH (related to Git Bash): Selecciono **Git from the command line and also from 3rd-party software** y luego añado dicho PATH manualmente al sistema.
+- **Bundled OpenSSH & OpenSSL**: selecciono *Use the bundled OpenSSH and bundle OpenSSL* para aislar Git de la versión de SSH del sistema.
+- **Handling of CRLF**: selecciono *Checkout as-is, commit Unix-style line endings*. Ver la sección [CRLF vs LF](#crlf-vs-lf).
+- **PATH (Git Bash)**: selecciono *Git from the command line and also from 3rd-party software* y añado manualmente las rutas al PATH del sistema (más abajo).
 
-Usé la versión `Git-2.46.0-64-bit.exe`:
+Ejemplo con `Git-2.46.0-64-bit.exe`:
 
 <div class="image-box">
   <img src="/img/posts/2024-08-25-win-desarrollo-09.png" alt="Proceso de instalaicón de Git for Windows" width="1024px" />
   <div class="image-caption">Proceso de instalaicón de Git for Windows</div>
 </div>
 
-Decía que no Git Bash, pero si que me aprovecho de todo lo que trae, es una pasada, tengo a mi disposición un montón de ejecutables "estilo linux" pero en CMD/PowerShell, por lo tanto añado manualmente al PATH un par de directorios, `C:\Program Files\Git\mingw64\bin` y `C:\Program Files\Git\usr\bin`, al PATH del sistema para tener acceso a estos regalos:
+Aunque no uso Git Bash como shell, sí me aprovecho de sus ejecutables "estilo Linux" desde CMD/PowerShell. Añado al PATH del sistema `C:\Program Files\Git\mingw64\bin` y `C:\Program Files\Git\usr\bin`:
 
 <div class="image-box">
   <img src="/img/posts/2024-08-25-win-desarrollo-10.png" alt="Aprovecho los ejecutables que trae Git for Windows" width="1024px" />
@@ -315,23 +303,14 @@ Por cierto, cuando no sepas dónde está el ejecutable...
 
 ### Otras herramientas
 
-**[Cmder](https://cmder.app/)**: A modo referencia, una consola muy potente que incluye el emulador *[ConEmu](https://conemu.github.io/)* (emulador de terminal) y de paso *Clink* (que lo mencioné antes). Si has instalado Git for Windows, se integra perfecto, con acceso en el PATH a todas las herramientas.
+**[Cmder](https://cmder.app/)**: consola basada en [ConEmu](https://conemu.github.io/) + Clink. Alternativa razonable si prefieres un emulador todo-en-uno en lugar de Windows Terminal.
 
-Yo lo he instalado para probarlo, pero si soy sincero no lo estoy usando, demasiadas opciones.
+**[Starship](https://starship.rs/)**: prompt multiplataforma, rápido y minimalista, alternativa a Oh-My-Posh. Requiere una Nerd Font. Instalación: `winget install starship`. Luego añades el init a tu shell:
 
-**[startship.rs](https://starship.rs/)**: Otra alternativa, me gustó mucho al probarlo, pero al final me quedo con  **Oh My Posh**. *`starship`* Se vende como "un Prompt para cualquier Shell, mínimo, super-rápido, y altamente personalizable". Starship aprovecha símbolos y caracteres especiales que no están presentes en las fuentes predeterminadas. Para que el prompt se vea correctamente, es necesario instalar una **Nerd Font**.
+- PowerShell: `Invoke-Expression (&starship init powershell)` en `$PROFILE`.
+- CMD (con Clink): crea `C:\Users\<usuario>\AppData\Local\clink\starship.lua` con `load(io.popen('starship init cmd'):read("*a"))()` y elimina el `prompt_filters.lua` si existía.
 
-- El siguiente paso es instalar la última versión con: `winget install starship`
-
-- Añado el script de inicio a la Shell
-  - Powershell: Añado lo siguiente al final de `C:\Program Files\PowerShell\7\Microsoft.PowerShell_profile.ps1` (PS7)
-    - `Invoke-Expression (&starship init powershell)`
-  - CMD: Necesito tener Clink instalado y operativo
-    - Creo el archivo `C:\Users\luis\AppData\Local\clink\starship.lua` con este contenido
-    - `load(io.popen('starship init cmd'):read("*a"))()`
-    - Elimino el fichero que creé en el paso anterior (Clink): `C:\Users\luis\AppData\Local\clink\prompt_filters.lua`
-
-**[Fuzzy Finder](https://github.com/junegunn/fzf?tab=readme-ov-file)**: Es el buscador "relajado" por excelencia para la línea de comandos. No tiene despercicio, y si lo combinas con herramientas como [BAT](https://github.com/sharkdp/bat), [fd](https://github.com/sharkdp/fd), [ripgrep](https://github.com/BurntSushi/ripgrep), te vas a otro nivel. Así es como lo he instalado en Windows. Es tan parametrizable que da para un apunte entero, entra en el link y estúdialo, merece la pena.
+**[fzf — Fuzzy Finder](https://github.com/junegunn/fzf)**: buscador interactivo imprescindible para CLI. Combinado con [bat](https://github.com/sharkdp/bat), [fd](https://github.com/sharkdp/fd) y [ripgrep](https://github.com/BurntSushi/ripgrep), subes otro nivel. Instalación en Windows:
 
 ```PowerShell
 luis@kymeraw:~ ❯ winget install fzf
@@ -461,7 +440,7 @@ root@kymeraw:~# usermod --home /mnt/c/Users/luis/ luis
 PS C:\Users\luis> ubuntu2404.exe config --default-user luis
 ```
 
-### WSL 2 - Fichero /etc/wsl.conf
+### Configuración: /etc/wsl.conf
 
 Lo menciono en varias partes de este apunte, dejo aquí la copia final que utilizo en mi ordenador, hay que editarla en WSL2 como root.
 
@@ -504,7 +483,7 @@ luis@kymeraw:~$ sudo chown -R luis:luis /mnt/c/Users/luis
 [sudo] password for luis:
 ```
 
-### WSL 2 - Fichero `USERPROFILE/.wslconfig`
+### Configuración: .wslconfig
 
 Esto es opcional, pero yo lo hago siempre. Me da mucha pereza el tema de NAT en el WSL2. Optimizo la pila de red de WSL 2 activando el modo Mirrored, lo que elimina la arquitectura NAT tradicional para que la instancia de Linux comparta directamente la interfaz de red e identidad IP del host Windows, permitiendo así que las aplicaciones que ejecute en el WSL sean accesibles desde la LAN sin necesidad de reenvío de puertos. Adicionalmente, habilita dnsTunneling para mejorar la estabilidad de la resolución de nombres (especialmente útil bajo VPNs) y activa la sincronización del firewall, asegurando que las reglas de seguridad del Firewall de Windows se apliquen automáticamente al tráfico de la instancia de Linux para una protección integrada.
 
@@ -529,7 +508,7 @@ PS C:\Users\luis> net start wslservice
 
 Si te da algún error al volver a abrir la sesión WSL2, haz un reboot del equipo, suele resolverlo.
 
-#### WSL 2 - Cambio a ZSH
+### ZSH y tmux
 
 La shell que viene por defecto en Ubuntu para WSL2 es `bash` pero como expliqué en [¡Adiós Bash, hola Zsh!]({{< relref "2024-04-23-zsh.md" >}}), me paso a `zsh` ([un apunte interesante]({{< relref "2024-07-25-linux-desarrollo.md" >}})). También me instalo ["tmux"]({{< relref "2024-04-25-tmux.md" >}}), un multiplexor de terminales opcional potentísimo.
 
@@ -566,119 +545,27 @@ sudo apt install tmux
 
 Aquí tengo un **[~/.tmux.conf](https://gist.github.com/LuisPalacios/065f4f0491d472d65ef62f67f1f418a1)**, que también copio al HOME (`/mnt/c/Users/luis`).
 
-#### WSL 2 - Scripts
+### Scripts útiles
 
-Me instalo mis scripts que suelo usar en todos los Linux/MacOS,
+Me instalo los scripts que suelo usar en todos mis Linux/macOS:
 
-- Script [/usr/bin/e](https://gist.githubusercontent.com/LuisPalacios/14b0198abc35c26ab081df531a856971/raw/8b6e278b4e89f105b2d573ebc79c67e915e6ab47/e)
-- Fichero [/etc/nanorc](https://gist.githubusercontent.com/LuisPalacios/4e07adf45ec1ba074939317b59d616a4/raw/b50efd22130a0129e408bca10fc7b8dbab7e03ff/nanorc) personalizado para `nano`
-  - *Creo los directorios de backup (`sudo mkdir /root/.nano` y `mkdir ~/.nano`
-- Script [/usr/bin/confcat](https://gist.githubusercontent.com/LuisPalacios/d646638f7571d6e74c20502b3033cf07/raw/f0f015d9b1d806919ec0295a22f3710b4f3096e0/confcat), un cat sin las líneas de comentarios
-- Script [/usr/bin/s](https://gist.githubusercontent.com/LuisPalacios/8e334583ad28e681326c65b665457eaa/raw/201a2ace950dcbb14b341b31ae70c9fffde29540/s) para cambiar a root mucho más rápido
-  - *Añado mi usuario a sudoers
-  - *`echo 'luis ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/90-mi-usuario`
-- Cambiar los permisos:
-  - *`sudo chmod 755 /usr/bin/e /usr/bin/confcat /usr/bin/s`
-- Crear el directorio `mkdir ~/.nano` tanto para root como para mi usuario
+- Script [/usr/bin/e](https://gist.githubusercontent.com/LuisPalacios/14b0198abc35c26ab081df531a856971/raw/8b6e278b4e89f105b2d573ebc79c67e915e6ab47/e).
+- Fichero [/etc/nanorc](https://gist.githubusercontent.com/LuisPalacios/4e07adf45ec1ba074939317b59d616a4/raw/b50efd22130a0129e408bca10fc7b8dbab7e03ff/nanorc) personalizado para `nano`. Crea los directorios de backup: `sudo mkdir /root/.nano` y `mkdir ~/.nano`.
+- Script [/usr/bin/confcat](https://gist.githubusercontent.com/LuisPalacios/d646638f7571d6e74c20502b3033cf07/raw/f0f015d9b1d806919ec0295a22f3710b4f3096e0/confcat): un `cat` sin líneas de comentarios.
+- Script [/usr/bin/s](https://gist.githubusercontent.com/LuisPalacios/8e334583ad28e681326c65b665457eaa/raw/201a2ace950dcbb14b341b31ae70c9fffde29540/s) para cambiar a root rápido. Añade tu usuario a sudoers: `echo 'luis ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/90-mi-usuario`.
+- Permisos: `sudo chmod 755 /usr/bin/e /usr/bin/confcat /usr/bin/s`.
 
-#### WSL 2 - Cliente SSH
-
-Para poder conectar desde la Consola WSL2 a equipos remotos.
-
-- Verifico que el cliente de OpenSSH está instalado (Esta sesión de Powershell como Administrador)
-
-```powershell
-Get-WindowsCapability -Online | ? Name -like 'OpenSSH*'
-```
-
-- Creo el par pública/privada en el directorio HOME de windows. El motivo es que normalmente voy a usar el cliente SSH de Windows.
-
-```PowerShell
-PowerShell 7.4.5
-C:\Users\luis> ssh-keygen.exe -t ed25519 -a 200 -C "luis@kymeraw" -f $env:USERPROFILE\.ssh\id_ed25519_luispa
-
-PowerShell 7.4.5
-C:\Users\luis> ssh-keygen.exe -t ed25519 -a 200 -C "luis@kymeraw" -f %USERPROFILE%\.ssh\id_ed25519_luispa
-
-WSL2
-C:\Users\luis> ssh-keygen -t ed25519 -a 200 -C "luis@kymeraw" -f /mnt/c/Users/luis/.ssh/id_ed25519_luispa
-```
-
-Te dejo un enlace a otro apunte muy interesante, [Git multicuenta]({{< relref "2024-09-21-git-multicuenta.md" >}}), donde trato el tema de SSH como alternativa.
-
-#### WSL 2 - Servidor SSH
-
-Veamos el proceso de activación del servidor SSH. Lo primero es verifico si OpenSSH está instalado. A continuación agrego el Servidor OpenSSH:
-
-```powershell
-Get-WindowsCapability -Online | ? Name -like 'OpenSSH*'
-:
-Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
-```
-
-Inicio el Servicio, compruebo y configuro que arranque siempre al hacer boot
-
-```powershell
-Start-Service sshd
-Get-Service sshd
-Set-Service -Name sshd -StartupType 'Automatic'
-```
-
-El Servidor SSH se ejecuta en Windows (no en WSL2/Ubuntu), por lo tanto los ***Credenciales*** son los de windows, mi usuaario LOCAL `luis` (no uso Microsoft Account) y su contraseña es la de Windows. El fichero **sshd_config** se encuentra en `C:\ProgramData\ssh\sshd_config`.
-
-En mi caso desactivo usar el fichero `administrators_authorized_keys` porque prefiero que use el del HOME de mi usuario `luis` que está en `C:\Users\luis\.ssh\authorized_keys`
-
-```config
-AuthorizedKeysFile .ssh/authorized_keys
-AcceptEnv LANG LC_*
-Subsystem sftp sftp-server.exe
-#Match Group administrators
-# AuthorizedKeysFile __PROGRAMDATA__/ssh/administrators_authorized_keys
-```
-
-Lo edito y rearranco el servicio
-
-```powershell
-notepad C:\ProgramData\ssh\sshd_config
-Restart-Service sshd
-```
-
-Edito las claves que acepto en `authorized_keys`
-
-```powershell
-notepad C:\ProgramData\ssh\administrators_authorized_keys
-```
-
-Compruebo si el puerto 22 está abierto. Si necesitas comprobarlo aquí tienes un script [VerificarPuertoFirewall.ps1](https://gist.github.com/LuisPalacios/f1013d3a0cc0d540b94df2d7d42c2f40). En mi caso estaba ya abierto; si necesitas abrir el puerto en el firewall usa el comando siguietne.
-
-```powershell
-New-NetFirewallRule -DisplayName "Allow SSH Port 22" -Direction Inbound -Protocol TCP -LocalPort 22 -Action Allow
-```
-
-A partir de ahora me puedo conectar perfectamente con mi Windows desde cualquier otro equipo de la red. Si te fijas me conectó directamente con WSL2, sigue leyendo...
-
-<div class="image-box">
-  <img src="/img/posts/2024-08-25-win-desarrollo-04.png" alt="Conexión vía SSH desde un Mac" width="550px" />
-  <div class="image-caption">Conexión vía SSH desde un Mac</div>
-</div>
-
-***Opcional***: Por defecto, si activamos el Servidor SSH en Windows, cuando conectemos con él nos redirigirá a una sesión de `cmd.exe`, pero puedes cambiarlo para que los clientes **accedan directamente a la shell de WSL2**. Importante, nunca usar los ejecutables de wsl que también están bajo `C:\Users\luis\AppData\Local\Microsoft\WindowsApps` o tardará muchos segundos en mostrarte el prompt. Ejecuto desde Powershell como administrador.
-
-```powershell
-New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\Windows\System32\wsl.exe" -PropertyType String -Force
-```
-
-#### WSL 2 - CRLF vs LF
+### CRLF vs LF
 
 Al trabajar en desarrollo de software, uno de los aspectos más sutiles pero cruciales que debes tener en cuenta es la diferencia entre los finales de línea en archivos de texto entre Windows y Linux.
 
 En este apunte [CRLF vs LF]({{< relref "2024-09-28-crlf-vs-lf.md" >}}) puedes encontrar cómo manejo este tema.
 
-#### WSL 2 - Oh-My-Posh
+### Oh-My-Posh en WSL
 
-Hablé de **Oh-My-Posh** en la sección del Terminal Mejorado. Consulta la sección.
+Ver la sección [Oh My Posh](#oh-my-posh) en Terminal mejorado más arriba. Para WSL2 uso mi herramienta [devcli](https://github.com/LuisPalacios/devcli).
 
-#### WSL 2 - Cambiar UID/GID
+### Cambiar UID/GID
 
 Durante la instalación tube un problema, la primera vez me instaló Ubuntu22.04 y puso a mi usuario `luis` el UID/GID 1000:1000, activé metada como mencionaba antes para la gestión de permisos y todo bajo `/mnt/c` pasó a ser propiedad de 1000:1000. Hasta ahí todo bien.
 
@@ -706,7 +593,7 @@ chown -R luis:luis luis
 chown -R ubuntu:ubuntu ubuntu
 ```
 
-Reviso el fichero de configuración. Aquí tienes una copia: [/etc/wsl.conf](#wsl-2---fichero-etcwslconf).
+Reviso el fichero de configuración. Aquí tienes una copia: [/etc/wsl.conf](#configuración-etcwslconf).
 
 ```Powershell
 PS > ubuntu2404.exe config --default-user luis
@@ -721,7 +608,7 @@ cd /
 find . -not \( -path "./mnt*" -type d -prune \) -user ubuntu
 ```
 
-#### Modificar el PATH
+### Modificar el PATH
 
 **PATH de Windows (para `CMD`, `PowerShell`)**:
 
@@ -736,7 +623,7 @@ En mi caso prefiero que WSL2 no me añada todos las entradas del PATH de Windows
 appendWindowsPath=false
 ```
 
-Aquí tienes una copia: [/etc/wsl.conf](#wsl-2---fichero-etcwslconf).
+Aquí tienes una copia: [/etc/wsl.conf](#configuración-etcwslconf).
 
 - Salgo de WSL, lo apago (`wsl --shutdown`), vuelvo a entrar y edito `~/.bashrc` o `.zshrc`. Este es un ejemplo de cómo queda (soy selectivo en qué quiero del PATH de windows en mi sesión WSL2).
 
@@ -747,19 +634,140 @@ Aquí tienes una copia: [/etc/wsl.conf](#wsl-2---fichero-etcwslconf).
 
 <br/>
 
-A partir de aquí empieza la segunda parte del apunte, la instalación de las herramientas y lenguajes de programación.
+## SSH en Windows 11
 
-Un aviso respecto a **.NET**, lo dejo para el final, empiezo por las herramientas multiplataforma, porque considero hay que instalarlas en todo equipo de desarrollo (tanto en Windows como Linux o Mac), continúo con los lenguajes que he elegido para mi Windows y dejo para el final .NET y Visual Studio.
+OpenSSH en Windows 11 es una característica **nativa del sistema operativo**, no tiene nada que ver con WSL2. El servicio `sshd` se ejecuta en Windows, usa tus credenciales de Windows y su configuración vive en `C:\ProgramData\ssh\`. La única integración opcional con WSL (o con Git Bash) es decidir **qué shell recibe** las conexiones entrantes, y lo dejo para el final.
 
-## Herramientas multiplataforma
+### Cliente SSH
+
+Para poder conectar desde `CMD`, `PowerShell`, `Git Bash` o WSL2 a equipos remotos.
+
+- Verifico que el cliente de OpenSSH está instalado (PowerShell como Administrador):
+
+```powershell
+Get-WindowsCapability -Online | ? Name -like 'OpenSSH*'
+```
+
+- Creo el par pública/privada en el HOME de Windows (normalmente uso el cliente SSH de Windows):
+
+```powershell
+# PowerShell
+ssh-keygen.exe -t ed25519 -a 200 -C "luis@kymeraw" -f $env:USERPROFILE\.ssh\id_ed25519_luispa
+
+# CMD
+ssh-keygen.exe -t ed25519 -a 200 -C "luis@kymeraw" -f %USERPROFILE%\.ssh\id_ed25519_luispa
+
+# WSL2 (apuntando a la misma ruta de Windows)
+ssh-keygen -t ed25519 -a 200 -C "luis@kymeraw" -f /mnt/c/Users/luis/.ssh/id_ed25519_luispa
+```
+
+Te dejo un enlace a otro apunte muy interesante, [Git multicuenta]({{< relref "2024-09-21-git-multicuenta.md" >}}), donde trato el tema de SSH como alternativa.
+
+### Servidor SSH
+
+Agrego el Servidor OpenSSH (si no estuviera ya):
+
+```powershell
+Get-WindowsCapability -Online | ? Name -like 'OpenSSH*'
+:
+Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+```
+
+Arranco el servicio, compruebo y lo dejo en arranque automático:
+
+```powershell
+Start-Service sshd
+Get-Service sshd
+Set-Service -Name sshd -StartupType 'Automatic'
+```
+
+El Servidor SSH se ejecuta en Windows (no en WSL2/Ubuntu), así que los ***credenciales*** son los de Windows — mi usuario LOCAL `luis` (no uso Microsoft Account) y su contraseña de Windows. El fichero **sshd_config** se encuentra en `C:\ProgramData\ssh\sshd_config`.
+
+Desactivo `administrators_authorized_keys` porque prefiero que use el del HOME de mi usuario en `C:\Users\luis\.ssh\authorized_keys`:
+
+```config
+AuthorizedKeysFile .ssh/authorized_keys
+AcceptEnv LANG LC_*
+Subsystem sftp sftp-server.exe
+#Match Group administrators
+# AuthorizedKeysFile __PROGRAMDATA__/ssh/administrators_authorized_keys
+```
+
+Lo edito y rearranco el servicio:
+
+```powershell
+notepad C:\ProgramData\ssh\sshd_config
+Restart-Service sshd
+```
+
+Edito las claves que acepto en `authorized_keys`:
+
+```powershell
+notepad C:\Users\luis\.ssh\authorized_keys
+```
+
+Compruebo si el puerto 22 está abierto. Aquí tienes un script de ayuda: [VerificarPuertoFirewall.ps1](https://gist.github.com/LuisPalacios/f1013d3a0cc0d540b94df2d7d42c2f40). Si necesitas abrir el puerto en el firewall:
+
+```powershell
+New-NetFirewallRule -DisplayName "Allow SSH Port 22" -Direction Inbound -Protocol TCP -LocalPort 22 -Action Allow
+```
+
+A partir de aquí ya puedo entrar por SSH desde cualquier equipo de la red. Por defecto me recibirá una `cmd.exe`.
+
+<div class="image-box">
+  <img src="/img/posts/2024-08-25-win-desarrollo-04.png" alt="Conexión vía SSH desde un Mac" width="550px" />
+  <div class="image-caption">Conexión vía SSH desde un Mac</div>
+</div>
+
+#### Shell por defecto al conectar (opcional)
+
+Por defecto OpenSSH entrega al cliente una sesión de `cmd.exe`. Puedo cambiar la shell que reciben las conexiones SSH entrantes escribiendo el valor `DefaultShell` en el registro `HKLM:\SOFTWARE\OpenSSH`. Hay un detalle importante: **esa clave del registro no siempre existe** tras instalar OpenSSH (me ha pasado con instalaciones vía `winget` de Git), así que la creo primero con `New-Item -Force`, que es idempotente — si ya existe no pasa nada.
+
+Paso previo común (PowerShell como Administrador):
+
+```powershell
+# Creo la clave del registro si no existe (idempotente)
+New-Item -Path "HKLM:\SOFTWARE\OpenSSH" -Force | Out-Null
+```
+
+A partir de aquí elijo **una** de las dos opciones según qué shell quiero recibir.
+
+**Opción A — WSL 2 como shell por defecto**:
+
+Las conexiones entrantes aterrizan directamente en mi distro de WSL2. Importante usar `C:\Windows\System32\wsl.exe` y **no** el de `C:\Users\luis\AppData\Local\Microsoft\WindowsApps\wsl.exe` (ese tarda varios segundos en dar prompt).
+
+```powershell
+New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell `
+  -Value "C:\Windows\System32\wsl.exe" -PropertyType String -Force | Out-Null
+```
+
+**Opción B — Git Bash como shell por defecto**:
+
+Las conexiones entrantes aterrizan en `bash.exe` de Git for Windows (nativo Windows, sin WSL). Útil para que los scripts remotos aterricen en Bash en vez de `cmd.exe`:
+
+```powershell
+New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell `
+  -Value "C:\Program Files\Git\bin\bash.exe" -PropertyType String -Force | Out-Null
+```
+
+Paso final común — recargo el PATH en esta sesión y reinicio `sshd` para que los cambios apliquen a las **nuevas** conexiones SSH:
+
+```powershell
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+Restart-Service sshd
+```
+
+<br/>
+
+## Herramientas de desarrollo
+
+Cubierta la shell y WSL2, paso a las herramientas multiplataforma (las instalo en todo equipo, sea Windows, Linux o macOS), luego los lenguajes de programación, y dejo `.NET` y Visual Studio para el final.
 
 ### VSCode
 
 <img src="/img/posts/logo-vscode.svg" alt="VSCode" width="150px" height="150px" style="float:left; padding-right:25px"  />
 
-Lo ***instalo*** desde el [sitio oficial de Visual Studio Code](https://code.visualstudio.com/). Diría que es el editor de código fuente más potente que he visto nunca, con soporte de cientos de extensiones muy útiles, la posibilidad de abrir diferentes **terminales integrados** dentro de la misma ventana de VS Code, como CMD, PowerShell, [Git Bash](https://git-scm.com/install/windows) o WSL.
-
-Además, soporta una amplia variedad de lenguajes de programación y la posibilidad de trabajar con equipos remotos.
+Lo ***instalo*** desde el [sitio oficial de Visual Studio Code](https://code.visualstudio.com/). Editor potente, con cientos de extensiones útiles, terminales integrados (CMD, PowerShell, [Git Bash](https://git-scm.com/install/windows), WSL), soporte para múltiples lenguajes y desarrollo remoto.
 
 ***Settigs y Sincronización***: Echa un ojo al apunte [VSCode settings y extensiones]({{< relref "2023-06-20-vscode.md" >}}) donde mantengo cómo lo gestiono y mi configuración.
 
@@ -778,9 +786,7 @@ Creo una especie de ***alias***, en linux y en Mac me gusta crear un alias que l
 
 <img src="/img/posts/logo-docker.svg" alt="Docker Desktop" width="150px" height="150px" style="float:left; padding-right:25px"  />
 
-Permite la creación y gestión de contenedores, lo que es esencial para el desarrollo y despliegue de aplicaciones en entornos aislados. Muy útil cuando estás desarrollando Servicios (por ejemplo en `Go`, `NodeJS`).
-
-Mis casos de uso son varios, poder ejecutar procesos contenerizados (por ejemplo una base de datos), dockerizar Servicios desarrollados (por ejemplo en Go o NodeJS), hacer pruebas de CI para DevOps, laboratorios de Microservicios, etc. ***Instalo*** desde el [sitio oficial de Docker](https://www.docker.com/products/docker-desktop). Su integración con WSL2 es fundamental y el haberlo preparado antes nos ayuda a tener una instalación fluída.
+Imprescindible para desarrollo en entornos aislados: procesos contenerizados (bases de datos, etc.), dockerizar servicios propios (Go, Node.js), pruebas de CI, laboratorios de microservicios. ***Instalo*** desde el [sitio oficial de Docker](https://www.docker.com/products/docker-desktop). La integración con WSL2 es la pieza clave, y por eso WSL2 se preparó antes.
 
 Durante el proceso de instalación selecciono usar WSL2 en vez de Hyper-V
 
@@ -836,10 +842,7 @@ CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 :
 ```
 
-|                                                                                                                                                                                                                                                                                                     |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **CUIDADO!!** si has cambiado el HOME de WSL 2 a `/mnt/c/Users/<usuario>` cada vez que arranques Docker sobreescribe el fichero `C:\Users\<usuario>\.docker\config.json` por lo que es inútil editarlo. La solución consiste en eñadir `docker context use default` al final de tu `.bashrc/.zshrc` |
-|                                                                                                                                                                                                                                                                                                     |
+> **Cuidado**: si has cambiado el HOME de WSL2 a `/mnt/c/Users/<usuario>`, Docker sobrescribe `.docker\config.json` al arrancar, así que editarlo es inútil. Solución: añade `docker context use default` al final de tu `.bashrc`/`.zshrc`.
 
 <br/>
 
@@ -857,9 +860,9 @@ Puedes instalar desde el [sitio oficial de Postman](https://www.postman.com/). E
 
 <img src="/img/posts/logo-httpie.svg" alt="Docker HTTPie" width="150px" height="150px" style="float:left; padding-right:25px"  />
 
-Muy en la línea de Postman, hace poco encontré esta otra herramienta, soporta trabajar tanto en la línea de comandos o GUI para realizar solicitudes HTTP, diseñada para ser simple y fácil de usar, ideal para probar y depurar APIs de manera rápida y eficiente. Me gusta más que Postman, sobre todo por la parte de la línea de comandos. La ***instalo*** desde el [sitio oficial de HTTPie](https://httpie.io/).
+Alternativa a Postman para probar y depurar APIs, con CLI y GUI. Prefiero HTTPie por su línea de comandos. La ***instalo*** desde el [sitio oficial de HTTPie](https://httpie.io/).
 
-Necesitas instalar [Chocolatey](https://chocolatey.org/), un gestor de paquetes potentísimo para Windows. Yo lo he [instalado](https://chocolatey.org/install) para instalarme `httpie`, pero de momento no lo estoy usando para nada más, reconozco que tengo que investigarlo.
+En Windows, el instalador oficial pasa por [Chocolatey](https://chocolatey.org/install).
 
 <br/>
 
@@ -953,18 +956,18 @@ Esto es lo normal que querrás hacer siempre, como desarrollador es mejor tener 
 - Gestión de proyectos: Cada proyecto puede tener su propio entorno con las versiones específicas de los paquetes que necesita.
 - Evita problemas con el sistema global: No modifica ni depende de la instalación global de Python o sus paquetes.
 
-Preparar el entorno para Python
+Preparar el entorno para Python:
 
-- Crear el entorno `python -m venv myenv`
-- Activar el entorno:
-  - *Windows: `.\myenv\Scripts\Activate.ps1` o `.\myenv\Scripts\Activate.bat`
-  - *macOS/Linux: `source myenv/Scripts/activate`
-- Instalar paquetes: `pip install idna`
-- Crear requirements.txt: `pip freeze > requirements.txt`
-- Instalaciones futuras desde requirements.txt: `pip install -r requirements.txt`
-- Desactivar el entorno:
-  - *Windows: `.\myenv\Scripts\deactivate.bat`
-  - *macOS/Linux: `myenv/Scripts/deactivate`
+- Crear el entorno: `python -m venv myenv`.
+- Activar:
+  - Windows: `.\myenv\Scripts\Activate.ps1` (o `.bat`).
+  - macOS/Linux: `source myenv/Scripts/activate`.
+- Instalar paquetes: `pip install idna`.
+- Crear `requirements.txt`: `pip freeze > requirements.txt`.
+- Instalaciones futuras: `pip install -r requirements.txt`.
+- Desactivar:
+  - Windows: `.\myenv\Scripts\deactivate.bat`.
+  - macOS/Linux: `deactivate`.
 
 Un ejemplo de la primera vez en Windows:
 
@@ -1124,30 +1127,19 @@ go build
 
 ## .NET
 
-Hablar de `.NET` lia un poco a no ser que hayas vivido y experimentado toda su evolución. A fecha de hoy tenemos:
+Hoy conviven dos líneas:
 
-- ***.NET Framework***: Solo está disponible en Windows. Su última version y donde se ha quedado es la 4.8, principalmente para garantizar compatibilidad con aplicaciones existentes que requieran que tengas instalado .NET Framework.
-  - *Es exclusivo para Windows. Instala sus archivos y dependencias en directorios específicos del sistema operativo (como `C:\Windows\Microsoft.NET\Framework`). Utiliza el Global Assembly Cache (GAC) para gestionar las bibliotecas compartidas.
-
-- ***.NET 5+***: Es el futuro, unifica las plataformas .NET Core, .Net Framework y Xamarín, tiene mejor rendimiento, características nuevas y es multiplataforma: Windows, Linux y macOS. ***En Noviembre de 2024 se liberó la version 9 !!!***
+- **.NET Framework 4.8** (Windows-only, ya sin evolución): necesario por compatibilidad con aplicaciones existentes y herramientas que aún requieren el runtime clásico.
+- **.NET 5+** (multiplataforma: Windows, Linux, macOS): unifica .NET Core, .NET Framework y Xamarin. La versión 9 salió en noviembre de 2024.
 
 ### .NET Framework
 
-El .NET Framework es una plataforma de desarrollo creada por Microsoft diseñada específicamente para construir y ejecutar aplicaciones en Windows. Incluye un conjunto extenso de bibliotecas de clases y soporte para tecnologías como aplicaciones de escritorio (Windows Forms, WPF), Servicios web o aplicaciones web mediante "ASP.NET".
+Windows-only, última versión 4.8. Útil hoy para:
 
-Su popularidad radica en que ha sido la base para innumerables aplicaciones empresariales y de consumo desarrolladas en las últimas dos décadas. Sin embargo, su ciclo de vida activo concluye con la versión 4.8.
+- **Compatibilidad**: apps antiguas y herramientas modernas que aún requieren el runtime.
+- **Desarrollo legacy**: mantenimiento de aplicaciones basadas en .NET Framework (instala además el Developer Pack).
 
-¿Por qué instalar .NET Framework 4.8?
-
-- Compatibilidad: Muchas aplicaciones desarrolladas para Windows aún dependen de esta versión, incluso herramientas modernas (como [HTTPie](#httpie)) requieren que el runtime esté presente.
-
-- Soporte: Aunque no planees ejecutar aplicaciones más antiguas que dependan de versiones como .NET 2.0 o 3.5, la versión 4.8 garantiza que puedas usar software actual y compatible.
-
-- Requisitos de desarrollo: Si estás desarrollando o manteniendo aplicaciones basadas en .NET Framework, necesitarás el Developer Pack (que incluye el runtime).
-
-En resumen, aunque .NET Framework ya no evolucionará más allá de la versión 4.8, sigue siendo crucial para garantizar compatibilidad con el ecosistema Windows actual.
-
-Para instalar .NET Framework 4.8, entra en **Programas y características** del panel de control o desde la Web de microsoft). Si uso el primer método, verifico antes qué tengo y luego instalo.
+Para instalar .NET Framework 4.8, entra en **Programas y características** del panel de control o desde la Web de Microsoft. Por el primer método, verifico antes qué tengo y luego instalo.
 
 1. Abro **Control Panel** > **Programs** > **Programs and Features** > **Turn Windows features on or off**.
 2. Aquí se puede ver la versión de .NET Framework instaladas.
@@ -1181,20 +1173,9 @@ dotnetver.exe
 
 ### .NET 5+
 
-La evolución natural y unificación de .NET Core, .NET Framework, y Xamarin, consolidándolas en una única plataforma moderna y multiplataforma.
+Plataforma moderna y multiplataforma (Windows, Linux, macOS) que unifica .NET Core, .NET Framework y Xamarin en un único modelo. El nombre *Core* desaparece y la numeración salta de 3.1 al 5 para marcar el nuevo ciclo.
 
-- .NET Core: Se centraba en ser una plataforma multiplataforma moderna, pero coexistía con .NET Framework (sin incluir todas sus APIs) y Xamarin, creando cierta fragmentación en el ecosistema. ".NET" Core terminó oficialmente con su versión 3.1LTS.
-- .NET Framework: Ya lo hemos visto en el punto anterior.
-- Xamarin: Permite crear aplicaciones nativas para Android, iOS y macOS mediante lenguaje C# y las interfaces de usuario específicas de plataforma
-
-**.NET 5+** unifica las capacidades de .NET Core, .NET Framework y Xamarin bajo un mismo nombre y modelo de desarrollo. Simplifica la vida a los desarrolladores al proporcionar una única plataforma para construir aplicaciones de escritorio, móviles, web, servicios en la nube, IoT, y más. El nombre *Core* desaparece y la numeración salta de 3.1 al 5 para evitar confusiones con .NET Framework y marcar un nuevo comienzo.
-
-Estos son los pasos para instalar la última version .NET en Windows (versiones 5+, que en Abril de 2025 ya iba por la 9.0.4). Antes de empezar, ojito porque recopila datos de uso. Más info aquí sobre como [optar por no participar](https://aka.ms/dotnet-cli-telemetry).
-
-- Mi primer paso es Para esa telemetría (incluso antes de instalarlo):
-  - *`Start` > `Settings > System > About > Advance System Settings`
-  - *o bien `Search` > "`Advance System Settings`" o "`Environment Variables`"
-- Modificar en ***`System variables`*** añadiendo la variable `DOTNET_CLI_TELEMETRY_OPTOUT` con valor `1` o `true`
+Antes de instalar, desactivo la telemetría ([opt-out](https://aka.ms/dotnet-cli-telemetry)): añado la variable de entorno `DOTNET_CLI_TELEMETRY_OPTOUT=1` en **System variables** (ver [Nota sobre el PATH](#nota-sobre-el-path) para cómo abrir el editor de variables).
 
 Me bajo la última version y empiezo la instalación:
 
@@ -1496,22 +1477,17 @@ VSCode tiene extensiones para navegar por fichero `.db`
 
 ## Actualizaciones
 
-Las del sistema operativo funciona relativamente bien.
+**Sistema operativo**: `Start > Settings > Windows Update > Check for updates`.
 
-- Sistema operativo
-  - *`Start` > `Settings > Windows Update > Check for updates`
+**Aplicaciones** (depende del propietario de cada app, sigue siendo un rollo tener que estar pendiente):
 
-Las actualizaciones de las aplicaciones es otro mundo, depende de cada desarrollador/propietario de la aplicación. Aunque ha mejorado, es un rollo porque hay que estar muy pendiente.
-
-- Aplicaciones
-
-  - *Manual: Entras en cada una de tus aplicaciones, compruebas la versión y sus opciones de actualización.
-  - *Instaladas con winget*
-    - *`winget update <Id>` para actualizar uno concreto
-    - *`winget update --all` para actualizar todo. Al principio no me fiaba, pero ahora lo uso habitualmente y funciona.
-  - *Instaladas con scoop*
-    - *`scoop update` se actualiza a si mismo
-    - *`scoop update *` actualiza todas las apps instaladas con scoop
+- Manual: entrar en cada aplicación y mirar versión + opciones de actualización.
+- Instaladas con `winget`:
+  - `winget update <Id>` para actualizar una concreta.
+  - `winget update --all` para actualizar todo.
+- Instaladas con `scoop`:
+  - `scoop update` se actualiza a sí mismo.
+  - `scoop update *` actualiza todas las apps instaladas con scoop.
 
 <div class="image-box">
   <img src="/img/posts/2024-08-25-win-desarrollo-19.png" alt="Ejemplo de uso de winget" width="500px" />

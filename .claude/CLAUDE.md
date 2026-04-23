@@ -101,11 +101,29 @@ hugo new posts/2025-12-25-slug.md     # New post from archetype
 
 ## Writing Posts
 
-1. Spanish language (English technical terms OK)
+1. **Spanish-first**: always edit `YYYY-MM-DD-slug.md`. English technical terms are OK inside Spanish prose.
 2. Structure: Problem → Solution → Examples
 3. Float-left SVG logo (150px) at start
 4. `<!--more-->` separates intro from body
 5. Use `{{< relref >}}` for internal links
+
+## Bilingual Posts (ES + EN)
+
+Most posts have a Spanish source (`YYYY-MM-DD-slug.md`) and an English translation (`YYYY-MM-DD-slug.en.md`). **The Spanish file is the source of truth**; the English file is a derivative translation.
+
+### Rules
+
+- **Edit only the Spanish version** during iteration. Do **NOT** touch `*.en.md` — the user may make several commits/pushes to the Spanish file before deciding to re-sync English.
+- The English counterpart is updated **on demand**, not per commit. The user explicitly signals "finalized" / "actualiza el inglés" / "translate now" when it's time.
+- Use `/translating-apunte <slug>` to re-sync the English file from the Spanish source.
+
+### Pre-push reminder (IMPORTANT)
+
+**Before every `git push` that touches a Spanish post**, remind the user:
+
+> "El `.en.md` de `<slug>` está ahora desincronizado con el español. ¿Quieres que lo actualice con `/translating-apunte <slug>` antes de hacer push, o prefieres dejarlo para más adelante?"
+
+The user will answer "yes, translate now" (run the skill, commit, then push) or "no, later" (push as-is). Either answer is valid — the reminder exists so the decision is explicit, not forgotten.
 
 ## Available Skills
 

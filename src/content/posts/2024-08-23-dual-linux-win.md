@@ -12,9 +12,7 @@ cover:
 
 <img src="/img/posts/logo-dual-boot.svg" alt="logo linux desarrollo" width="150px" height="150px" style="float:left; padding-right:25px"  />
 
-Dualboot consiste en tener dos sistemas operativos en el mismo ordenador y elegir con cuál arrancar durante la fase de boot. Mi objetivo es preparar mi PC para dualboot e instalar Windows 11 Pro. Normalmente se instala primero Windows y Luego Linux, pero en mi caso parto de tener ya Linux (Ubuntu) funcionando perfectamente y ocupando el disco de 4TB por completo.
-
-Voy a "añadir" Windows para poder hacer dualboot. Describo todo el proceso, cómo lo he hecho, cómo he redimensionado el disco duro, añadido windows y personalizado el menú de arranque.
+**Dualboot**: dos sistemas operativos en la misma máquina, eligiendo en cada arranque. Lo habitual es instalar primero Windows y luego Linux, pero aquí parto del caso opuesto — Ubuntu 24.04 ya funcionando y ocupando entero un disco de 4 TB — y describo cómo **añadir** Windows 11 Pro: redimensionar la partición, instalar Windows y personalizar el menú de arranque de GRUB.
 
 <br clear="left"/>
 <style>
@@ -53,22 +51,10 @@ Detalles del disco *principal*, de momento solo con linux:
 
 ## Requisitos
 
-Estos son los requisitos que establezco para hacer bien todo el proceso.
-
-- USB para Ubuntu Live (mín. 8GB)
-- USB para Windows 11 (mín. 8GB)
-- Que el HW cuente con soporte UEFI
-- Que la tabla de particiones sea GPT, no MBR
-- Conexión a internet para instalar Windows (preferible)
-- Backup de Linux (opcional recomendado)
-
-Podría usar una única USB, pero es más cómodo tener dos. Si solo tienes una, primero creas la Live de Ubuntu, arrancas con ella, preparas las particiones, rearrancas con Linux, quemas Windows en tu USB y haces boot con ella para instalarlo.
-
-## Copia de seguridad
-
-Si te equivocas trasteando con las particiones, perderás los datos. Tener una copia de seguridad en un disco externo es casi obligatorio. Que no se diga que no te he avisado.
-
-Usa el sistema que quieras. En mi caso, cuando hago cosas de estas suelo usar [clonezilla](https://clonezilla.org/) y hago una copia completa del disco principal. En este caso es tan grande (4TB) que no tenía otro por ahí de ese tamaño, así que he salvado los archivos principales a un disco externo
+- Dos USB de 8 GB mínimo (una para Ubuntu Live, otra para Windows 11). Con una sola también se puede, reutilizándola entre pasos — es más engorroso.
+- Hardware con soporte **UEFI** y tabla de particiones **GPT** (no MBR).
+- Conexión a internet durante la instalación de Windows (preferible).
+- **Backup del disco**. Trastear particiones = riesgo real de perder datos. Uso [Clonezilla](https://clonezilla.org/) para clonar. Si tu disco es demasiado grande para clonar, salva al menos los archivos importantes a un disco externo.
 
 ## Crear USB con Ubuntu Live
 
@@ -84,7 +70,7 @@ sudo chmod 4755 chrome-sandbox
 ./balena-etcher.sh
 ```
 
-***Importante***, saber el nombre del device de tu USB. En mi caso `/dev/sdc`.
+**Importante**: identifica con precisión el device de la USB (aquí `/dev/sdc`). Confundirlo con otro disco borra datos reales.
 
 ```shell
 # lsblk -p -o NAME,VENDOR,MODEL,SIZE,TYPE,SERIAL
@@ -104,8 +90,6 @@ NAME             VENDOR   MODEL                    SIZE TYPE SERIAL
 ├─/dev/nvme0n1p1                                   300M part
 └─/dev/nvme0n1p2                                   3,6T part
 ```
-
-Importante: asegúrate de elegir el device correcto, el de la USB y no otro.
 
 <div class="image-box">
   <img src="/img/posts/2024-08-23-dual-linux-win-02.png" alt="Quemo la imagen Ubuntu" width="500px" />
@@ -164,7 +148,7 @@ Expulso ambas particiones (`Ventoy, VTOYEFI`), ya hemos terminado, tenemos lista
 
 ## Liberar espacio en el disco
 
-Hago boot con ***la USB Live de ubuntu***. Le pido a la BIOS hacer boot desde ella. Todos los ordenadores ofrecen mostrar un menú de boot pulsando alguna tecla, del tipo F2/F7/F10/F12/ESC, depende tu BIOS.
+Hago boot con la **USB Live de Ubuntu**. Para que la BIOS arranque desde la USB, pulsa la tecla de boot-menu (F2/F7/F10/F12/ESC según tu BIOS).
 
 <div class="image-box">
   <img src="/img/posts/2024-08-23-dual-linux-win-08.jpg" alt="Selecciono la USB con Ubuntu" width="500px" />
@@ -210,24 +194,33 @@ Rearranco el equipo, quito la USB de Ubuntu y por asegurar, compruebo que puede 
 
 ## Instalar Windows
 
-Ahora toca instalar Windows, ten paciencia, tarda bastante, por lo que veo no ha cambiado nada en 25 años. Introduzco la USB con Ventoy + el ISO de Windows 11. Repito el proceso, rearranco el ordenador, pulso mi tecla para que la BIOS muestre las opciones de Boot, selecciono la USB.
+Ahora toca instalar Windows — ten paciencia, tarda bastante. Introduzco la USB con Ventoy + ISO, rearranco y selecciono la USB desde el boot-menu de la BIOS.
 
 <div class="image-box">
   <img src="/img/posts/2024-08-23-dual-linux-win-14.jpg" alt="Arranque con Ventoy" width="500px" />
   <div class="image-caption">Arranque con Ventoy</div>
 </div>
 
-Pulso Enter sobre la ISO, selecciono `Boot in normal mode`, veo el logo de Windows. Elijo `idioma y el teclado`, `Instalar ahora`, omito el tema licencia, lo activaré luego. Elijo Windowss 11 Pro, `Install Windows Custom`, me ofrece instalar en la única partición que está vacía `Unalloated Space`. A partir de aquí copia los ficheros y al terminar hace boot, continúa instalando. Nota: en el pasado no siempre hacía esto bien (volvía a hacer boot desde la USB lo cual es incorrecto), tenía que entrar en la BIOS a seleccionando el disco duro.
+Enter sobre la ISO, `Boot in normal mode`. En el asistente de Windows: idioma y teclado, `Instalar ahora`, omito la licencia (se activa después), elijo **Windows 11 Pro**, `Install Windows Custom` y selecciono la única partición libre (`Unallocated Space`). Windows copia ficheros y reinicia. Nota: en hardware antiguo a veces volvía a arrancar desde la USB — si te pasa, entra en la BIOS y selecciona el disco duro como fuente de boot.
 
-Como decía, con este ordenador va todo bien, muestra `Getting ready`, reboot, acaba pidiendo país, teclado, updates y otro reboot. Le pongo mote/nombre a mi equipo, reboot, pide cómo lo voy a usar (personal o trabajo). Me gustaría saltarme esta parte pero es imposible (hay un truco pero no lo he seguido). Selecciono "Personal", hago login con mi cuenta de microsoft y continúo configurándolo como equipo nuevo. Creo PIN y le digo que no a localización, buscar dispositivo, diagnósticos, inking, typing, tailored experiences, ads ID, etc. Me salto lo del teléfono, pido que no haga backups, que no importe nada de otro navegador. Hace un útimo update que tarda lo suyo, más reboots, acaba terminando y podemos entrar en Windows.
+### Windows 11 OOBE (setup inicial)
 
-Aparco el Windows 11 y vuelvo al linux para terminar con el dualboot. Nota: puedes ver en el apunte [Un Windows decente]({{< relref "2024-08-24-win-decente-obsoleto.md" >}}) como lo configuro y personalizo.
+Esta secuencia de preguntas del primer arranque de Windows 11 es la misma en todas las instalaciones del blog (VMware, Proxmox, dualboot). La dejo aquí como referencia:
 
-## Vamos a por el dual boot
+- País, teclado, actualizaciones, reinicio.
+- Nombre del equipo, reinicio.
+- Uso personal vs. trabajo → **Personal**.
+- Login con cuenta Microsoft (o local — más abajo).
+- Crear PIN.
+- **Diagnóstico y privacidad**: decir **no** a localización, buscar dispositivo, diagnósticos, inking/typing, tailored experiences y ads ID.
+- Saltarse teléfono, backups y migración desde otros navegadores.
+- Último update y entramos.
 
-Ya tengo Windows. En la BIOS queda como primer Sistema del que hacer boot. Esto no me interesa. Voy a reconfigurar la BIOS para que haga boot con ***Linux*** y configuraré ***grub*** para que sea él el que me muestre un menú de selección (no me gusta el boot manager de Windows).
+## Configurar el arranque dual con GRUB
 
-Reinicio el sistema entro en ***Setup de la BIOS***, cambio la secuencia de arranque, así es como lo tenía, subí Ubuntu hacia arriba para ponerlo el primero.
+Windows ha dejado su Boot Manager como primera entrada en la BIOS. Lo cambio para que arranque Linux primero, y configuro **GRUB** para que presente el menú de selección entre los dos sistemas.
+
+Entro en el **Setup de la BIOS** y cambio la secuencia de arranque para poner Ubuntu el primero.
 
 <div class="image-box">
   <img src="/img/posts/2024-08-23-dual-linux-win-15.jpg" alt="Posibilidad de cambiar el orden de Boot en la BIOS" width="650px" />
@@ -346,30 +339,24 @@ reboot -f
   <div class="image-caption">Nuevo look & feel de mi menú de arranque</div>
 </div>
 
-Listo, ya tengo dualboot. Continúo con mi siguiente apunte, sobre cómo configurar y dejar mi Windows 11 [lo más decente]({{< relref "2024-08-24-win-decente-obsoleto.md" >}}) posible.
+Listo, ya tengo dualboot. Continúo con el siguiente apunte, sobre cómo dejar Windows 11 [lo más decente]({{< relref "2025-08-03-win-decente.md" >}}) posible.
 
-## Sobre dualboot y la hora
+## Gotcha: la hora en dualboot
 
-Antes de terminar, te dejo aquí algo que puede que necesites. Cuando se hace **Dual Boot entre Windows y Linux te puedes encontrar un problema antiguo y conocido, que uno de los dos muestre mal la hora**.
+Problema clásico en dualboot Windows/Linux: uno de los dos muestra la hora mal. El motivo es que Windows por defecto interpreta que el **RTC** (reloj hardware) está en **hora local**, mientras que Linux lo interpreta en **UTC** — que es lo correcto.
 
-El motivo es que, por defecto, Windows tiende a interpretar que el reloj Hardware del PC (el RTC) tiene puesta tu hora LOCAL, mientras que Linux tiende a interpretar que el reloj Hardware del PC tiene puesta la hora UTC (que es como debería ser).
+- RTC en local → Windows feliz, Linux desorientado (salvo NTP bien configurado).
+- RTC en UTC → Linux feliz, Windows desorientado (salvo NTP bien configurado).
 
-- Si la BIOS tiene LOCAL - Windows feliz, pero Linux se confunde, muestra mal la hora, a no ser que tenga bien configurado NTP (coger la hora de internet).
-- Si la BIOS tiene UTC - Linux feliz, pero Windows se confunde, muestra mal la hora, a no ser que NTP esté bien (ojo! no siempre ocurre)
+Si te fías solo de NTP puede parecer que todo va bien, pero la incoherencia interna acaba apareciendo. Guías externas: [itsfoss](https://itsfoss.com/wrong-time-dual-boot/), [howtogeek](https://www.howtogeek.com/323390/how-to-fix-windows-and-linux-showing-different-times-when-dual-booting/).
 
-Si no haces nada y te fías de NTP y te funciona, aparentemente todo estará bien, pero la realidad es que está mal, no hay coherencia. De hecho esto te puede despistar en el futuro.
+Mi solución: poner **UTC** en la BIOS y decirle a Windows que el RTC es UTC.
 
-¿Qué debería hacer?, hay varias opciones y varios artículos por ahí (ejemplo [aquí](https://itsfoss.com/wrong-time-dual-boot/) y [aquí](https://www.howtogeek.com/323390/how-to-fix-windows-and-linux-showing-different-times-when-dual-booting/))
-
-Lo que hago en mi caso es ser coherente: Pongo UTC en la BIOS y hago un cambio en Windows.
-
-1. **Pongo la hora UTC en el Hardware del PC en la BIOS**. Es lo recomendado, todos los Sistemas Operativos usan internamente UTC **siempre**, las fechas de los archivos en el File System siempre son UTC. Otra cosa es lo que te enseña, que depende del Timezone configurado.
-   Por lo tanto, en mi PC, entro en la BIOS, y como estoy en Madrid en verano, pues pongo 2 horas menos. Puedes ver cual es la hora UTC [aquí](https://www.timeanddate.com/worldclock/timezone/utc)
-2. **Linux**: **No hago nada**, es lo que espera y se adapta correctamente, tanto si tiene NTP bien como mal configurado.
-3. **Windows**: **Le digo que el Hardware del PC tiene la hora universal (UTC)**, no LOCAl.
-   - `regedit`
-   - `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation`
-   - Añado una cadena/string `RealTimeIsUniversal` con valor `1`
-   - Rearranco el equipo
-4. En ambos, configuro NTP Client, que sincronice sus relojes con servidores NTP de internet
-5. En ambos configuro mi Zona Horaria (timezone), en mi caso a `Europe/Madrid` con soporte de horario de verano.
+1. **BIOS**: pongo la hora en UTC. En Madrid en verano son 2 horas menos. [Hora UTC actual](https://www.timeanddate.com/worldclock/timezone/utc).
+2. **Linux**: nada, ya espera UTC.
+3. **Windows**: le digo que el RTC es UTC vía registro:
+   - `regedit` → `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation`.
+   - Añado un valor **string** `RealTimeIsUniversal` = `1`.
+   - Reinicio.
+4. En ambos SO, configuro NTP client.
+5. En ambos SO, configuro mi timezone (`Europe/Madrid` en mi caso, con horario de verano).

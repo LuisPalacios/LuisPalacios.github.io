@@ -12,9 +12,7 @@ cover:
 
 <img src="/img/posts/logo-proxmox-vm-win.svg" alt="logo vm win en proxmox" width="150px" height="150px" style="float:left; padding-right:25px"  />
 
-Guía completa, con todos los pasos detallados para instalar, configurar y acceder a una Máquina Virtual (VM) Windows 11 Pro corriendo encima de [Proxmox VE](https://www.proxmox.com/en/proxmox-ve).
-
-Esta plataforma de virtualización permite el despliegue y la gestión de **máquinas virtuales** Windows Server/10/11 usando [KVM](https://www.linux-kvm.org/page/Main_Page)/[QEMU](https://www.qemu.org). Mediante integración avanzada a través del agente QEMU Guest, drivers VirtIO drivers, incluso UEFI Secure Boot con emulación TPM para Windows 11.
+Instalación, configuración y acceso a una VM Windows 11 Pro sobre [Proxmox VE](https://www.proxmox.com/en/proxmox-ve). Proxmox permite desplegar VMs Windows con [KVM](https://www.linux-kvm.org/page/Main_Page)/[QEMU](https://www.qemu.org), integración vía QEMU Guest Agent y drivers VirtIO, incluyendo UEFI + TPM 2.0 emulado (obligatorio para Win11).
 
 <br clear="left"/>
 <style>
@@ -27,36 +25,25 @@ table {
 {{< admonition note "Serie de apuntes sobre Windows">}}
 
 - Preparar un PC para [Dualboot Linux / Windows]({{< relref "2024-08-23-dual-linux-win.md" >}}) e instalar Windows 11 Pro.
-- Configurar [un Windows 11 decente]({{< relref 2025-08-03-win-decente.md >}}) quitando la morralla.
-- Preparar [Windows para desarrollo de software]({{< relref 2024-08-25-win-desarrollo.md >}}), CLI, WSL2 y herramientas.
-- Instalación de [VMWare Workstation Pro en Windows 11]({{< relref 2024-08-26-win-vmware.md >}}) con una VM de Windows 11 Pro.
-- Instalación de [VM Windows 11 sobre Proxmox]({{< relref 2025-08-04-proxmox-win.md >}}) para tener un Windows 11 Pro sobre Host Proxmox.
+- Configurar [un Windows 11 decente]({{< relref "2025-08-03-win-decente.md" >}}) quitando la morralla.
+- Preparar [Windows para desarrollo de software]({{< relref "2024-08-25-win-desarrollo.md" >}}), CLI, WSL2 y herramientas.
+- Instalación de [VMWare Workstation Pro en Windows 11]({{< relref "2024-08-26-win-vmware.md" >}}) con una VM de Windows 11 Pro.
+- Instalación de [VM Windows 11 sobre Proxmox]({{< relref "2025-08-04-proxmox-win.md" >}}) para tener un Windows 11 Pro sobre Host Proxmox.
 
 {{< /admonition >}}
 
----
-
-## Introducción
-
-Veamos paso a paso cómo instalar una **máquina virtual (VM)** con **Windows 11** en **Proxmox VE**, utilizando el **QEMU Guest Agent**, controladores **VirtIO**, y habilitando acceso gráfico (durante y después de la instalación).
-
----
-
-## 🧩 Requisitos previos
+## Requisitos previos
 
 - **Proxmox VE 8.x** o superior.
-- Imagen ISO oficial de **Windows 11** (`Win11_XXXX_64.iso`).
-- Imagen ISO de **VirtIO Drivers** (controladores paravirtualizados):
-  - Descarga [oficial](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/)
-  - Archivo: `virtio-win.iso`
-- Al menos **4 GB RAM**, **2 vCPU**, **64 GB disco**.
-- Conexión a red con **DHCP** disponible.
+- ISO oficial de **Windows 11** (`Win11_XXXX_64.iso`).
+- ISO de **VirtIO Drivers** ([descarga oficial](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/), archivo `virtio-win.iso`).
+- **Mínimo**: 4 GB RAM, 2 vCPU, 64 GB disco.
+- **Recomendado para trabajar cómodo**: 8 GB RAM, 4 vCPU, 64+ GB disco.
+- Red con DHCP disponible.
 
----
+## Crear la VM
 
-## ⚙️ 1. Creación de la VM
-
-Desde el **nodo Proxmox** o mediante la interfaz web.
+Desde la GUI web de Proxmox, o vía CLI. Estos son los parámetros que uso:
 
 | Parámetro | Valor |
 |------------|-------|
@@ -65,89 +52,72 @@ Desde el **nodo Proxmox** o mediante la interfaz web.
 | Sistema operativo | Windows 11 (64-bit) |
 | BIOS | `OVMF (UEFI)` |
 | Máquina | `q35` |
-| TPM | `TPM 2.0` (requerido por Windows 11) |
+| TPM | `TPM 2.0` (obligatorio en Win11) |
 | Almacenamiento | `local-lvm` o `zfs` (según entorno) |
 | Red | `virtio (paravirtualized)` |
 
-**Creación vía CLI**:
+Si prefieres la línea de comandos en lugar de la GUI web, el equivalente es:
 
 ```bash
-qm create 400   --name vm-win11   --memory 8192   --cores 4   --cpu host   --machine q35   --bios ovmf   --efidisk0 local-lvm:1,format=raw,efitype=4m,pre-enrolled-keys=1   --tpmstate0 local-lvm:1,version=v2.0   --scsihw virtio-scsi-pci   --scsi0 local-lvm:64,format=qcow2   --net0 virtio,bridge=vmbr0   --cdrom local:iso/Win11.iso   --boot order=scsi0;ide2;net0
+qm create 400 --name vm-win11 --memory 8192 --cores 4 --cpu host --machine q35 --bios ovmf --efidisk0 local-lvm:1,format=raw,efitype=4m,pre-enrolled-keys=1 --tpmstate0 local-lvm:1,version=v2.0 --scsihw virtio-scsi-pci --scsi0 local-lvm:64,format=qcow2 --net0 virtio,bridge=vmbr0 --cdrom local:iso/Win11.iso --boot order=scsi0;ide2;net0
 ```
 
-Agregar el ISO de controladores VirtIO:
+Agrega el ISO de VirtIO como segundo CD/DVD:
 
 ```bash
 qm set 400 --ide2 local:iso/virtio-win.iso
 ```
 
----
+## Instalar Windows 11
 
-## 🪟 2. Instalación de Windows 11
-
-### Iniciar la VM
-
-Desde la interfaz web de Proxmox o CLI:
+Arranca la VM desde la GUI o con:
 
 ```bash
 qm start 400
 ```
 
-Abrir la **consola gráfica**:
-
-- En la GUI de Proxmox → seleccionar la VM → pestaña **Consola**.
-- O vía CLI usando SPICE:
+Accede a la consola gráfica desde la pestaña **Consola** de la VM (noVNC en navegador). Para SPICE con mejor rendimiento y portapapeles:
 
 ```bash
 qm spiceproxy 400
 ```
 
-> Nota: Durante la instalación, se usa la consola de Proxmox (basada en noVNC o SPICE) para acceso gráfico.
+### Cargar los drivers VirtIO
 
-### Cargar controladores VirtIO
+En el asistente de Windows, al llegar a "¿Dónde desea instalar Windows?" no aparece ningún disco (Windows no trae drivers VirtIO de serie):
 
-En el asistente de instalación de Windows:
+1. Clic en **Load driver**.
+2. Selecciona el CD de VirtIO (`virtio-win.iso`).
+3. Ruta: `vioscsi/w11/amd64` → aceptar. Aparece el disco.
+4. Continúa la instalación normalmente.
 
-1. En el paso “¿Dónde desea instalar Windows?”, no aparecerán discos.
-2. Clic en **Cargar controlador (Load driver)**.
-3. Seleccionar **Buscar en el CD de VirtIO** (`virtio-win.iso`).
-4. Ruta: `vioscsi/w11/amd64` → aceptar → aparecerá el disco virtual.
-5. Continuar la instalación normalmente.
+### Red DHCP durante la instalación
 
-### Configuración de red (DHCP)
+Si Windows no detecta red, desde la consola:
 
-Durante la instalación, si Windows no detecta red:
-
-1. Abrir consola (Shift+F10).
-2. Ejecutar:
+1. Pulsa `Shift + F10`.
+2. Carga el driver VirtIO de red:
 
    ```cmd
    drvload e:\NetKVM\w11\amd64\netkvm.inf
    ```
 
-3. Cerrar consola, continuar instalación.
+3. Cierra la consola y sigue. El adaptador recibirá IP vía DHCP.
 
-El adaptador VirtIO recibirá IP vía DHCP automáticamente.
+### OOBE de Windows 11
 
----
+Los pasos del primer arranque (teclado, región, cuenta local, PIN, "no" a diagnósticos/localización) son los mismos que en el resto de la serie: ver [Windows 11 OOBE]({{< relref "2024-08-23-dual-linux-win.md" >}}#windows-11-oobe-setup-inicial).
 
-## 🧠 3. Post-instalación y optimización
+## Post-instalación
 
-### Instalar herramientas VirtIO
+### Instalar las herramientas VirtIO
 
-Una vez dentro del sistema:
+1. Abre el CD de VirtIO en el explorador.
+2. Ejecuta `virtio-win-guest-tools.exe`.
+3. Instala todos los componentes (drivers VirtIO: almacenamiento/red/balloon, y QEMU Guest Agent).
+4. Reinicia.
 
-1. Abrir el **CD de VirtIO** en el explorador.
-2. Ejecutar `virtio-win-guest-tools.exe`.
-3. Instalar todos los componentes:
-   - Controladores VirtIO (almacenamiento, red, balloon).
-   - QEMU Guest Agent.
-
-Reiniciar el sistema.
-
----
-
-## 💡 4. Activar QEMU Guest Agent
+### Activar QEMU Guest Agent
 
 En el host Proxmox:
 
@@ -155,78 +125,70 @@ En el host Proxmox:
 qm set 400 --agent enabled=1,fstrim_cloned_disks=1
 ```
 
-Verificar desde la VM (PowerShell con privilegios):
+Verifica dentro de la VM (PowerShell como admin):
 
 ```powershell
 Get-Service QEMU-GA
 ```
 
-Si no está en ejecución:
+Si no está corriendo:
 
 ```powershell
 Set-Service QEMU-GA -StartupType Automatic
 Start-Service QEMU-GA
 ```
 
-Ahora Proxmox podrá ejecutar:
+A partir de aquí Proxmox puede ejecutar comandos en el guest:
 
 ```bash
 qm guest ping 400
 qm guest exec 400 -- cmd /c ipconfig
 ```
 
-Durante backups verás:
+> Mantén actualizadas las ISOs de VirtIO y las herramientas de QEMU Guest Agent dentro de Windows — mejoran estabilidad y compatibilidad con futuras versiones de Proxmox.
+
+## Acceso gráfico
+
+Tres opciones, según uso:
+
+**RDP (uso habitual tras la instalación)**. Panel de control → Sistema → Configuración remota → activar *Permitir conexiones remotas*. Desde otro equipo:
+
+```bash
+rdesktop <IP-DHCP>        # Linux
+mstsc /v:<IP>             # Windows
+```
+
+**SPICE (consola remota con mejor rendimiento)**. En la VM: Hardware → Add → Display → `SPICE`. En el cliente:
+
+```bash
+# Linux
+sudo apt install virt-viewer
+
+# Windows: https://virt-manager.org/download/
+```
+
+Desde Proxmox, pulsa **Consola (SPICE)**.
+
+**VNC interno**. Proxmox ofrece consola VNC vía navegador en la pestaña *Consola* de la VM — útil durante la instalación y para acceso de emergencia.
+
+## Backup y snapshots
+
+Con QEMU Guest Agent activo, los backups se hacen consistentes (fs-freeze/fs-thaw) sin parar la VM:
+
+```bash
+vzdump 400 --mode snapshot --compress zstd --storage vault-backup
+```
+
+En la salida verás:
 
 ```bash
 INFO: issuing guest-agent 'fs-freeze'
 INFO: issuing guest-agent 'fs-thaw'
 ```
 
----
+## Fichero de configuración de referencia
 
-## 🖥️ 5. Acceso gráfico
-
-### Durante instalación
-
-- Usar la **Consola Proxmox (noVNC o SPICE)**.
-- SPICE ofrece mejor rendimiento y soporte de portapapeles.
-
-### Una vez instalado (GUI remota)
-
-Opciones:
-
-#### a) **RDP (Remote Desktop Protocol)**
-
-1. Dentro de Windows → Panel de control → Sistema → Configuración remota.
-2. Activar *Permitir conexiones remotas*.
-3. Desde otra máquina Windows o Linux:
-
-```bash
-rdesktop <IP-DHCP>
-# o desde Windows: mstsc /v:<IP>
-```
-
-#### b) **SPICE (Proxmox GUI)**
-
-- En la VM → Hardware → Agregar → Dispositivo de visualización → `SPICE`.
-- Instalar en cliente local el **Virt-Viewer**:
-
-```bash
-# Linux
-sudo apt install virt-viewer
-
-# Windows: Descargar desde https://virt-manager.org/download/
-```
-
-- Clic en **Consola (SPICE)** desde Proxmox.
-
-**VNC interno**: Proxmox ofrece una consola VNC accesible vía navegador → pestaña *Consola*.
-
----
-
-## 🧾 6. Configuración completa (ejemplo)
-
-Archivo `/etc/pve/qemu-server/400.conf`:
+Ejemplo de `/etc/pve/qemu-server/400.conf` con todo lo anterior aplicado:
 
 ```ini
 boot: order=scsi0;ide2;net0
@@ -245,39 +207,3 @@ machine: q35
 tpmstate0: local-lvm:vm-400-disk-2,version=v2.0
 agent: enabled=1,fstrim_cloned_disks=1
 ```
-
----
-
-## 🔄 7. Backup y snapshots
-
-Windows 11 soporta backups en modo **snapshot**:
-
-```bash
-vzdump 400 --mode snapshot --compress zstd --storage vault-backup
-```
-
-Proxmox ejecutará:
-
-```bash
-INFO: issuing guest-agent 'fs-freeze'
-INFO: issuing guest-agent 'fs-thaw'
-```
-
-La VM seguirá funcionando sin interrupción.
-
----
-
-## 🧩 8. Conclusión
-
-Proxmox VE permite ejecutar Windows 10/11 con excelente rendimiento, soporte de UEFI + TPM 2.0, y backups consistentes gracias al QEMU Guest Agent. El uso de controladores VirtIO es clave para un rendimiento óptimo.
-
-**Ventajas principales:**
-
-- Copias snapshot sin detener la VM.
-- Integración total con agente invitado (shutdown, IP, fs-freeze/thaw).
-- Acceso gráfico completo (noVNC, SPICE, RDP).
-- Total compatibilidad con redes DHCP y almacenamiento moderno.
-
----
-
-> 📘 **Recomendación:** Mantén actualizadas las imágenes ISO de VirtIO y las herramientas de QEMU Guest Agent dentro de Windows. Esto mejora la estabilidad y el soporte de futuras versiones de Proxmox.
