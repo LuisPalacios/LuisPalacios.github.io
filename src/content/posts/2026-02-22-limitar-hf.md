@@ -37,7 +37,7 @@ La solución que funciona es aplicar `tc` **desde el host** en la interfaz `veth
 
 He creado un script que automatiza todo el proceso:
 
-{{< codefile path="snippets/2026-02-27-limitar-ancho-de-banda-hugging-face/hf-download-limited.sh" lang="bash" title="hf-download-limited.sh" >}}
+{{< codefile path="snippets/2026-02-22-limitar-hf/hf-download-limited.sh" lang="bash" title="hf-download-limited.sh" >}}
 
 Ejecútalo pasándole el modelo y el directorio de destino:
 

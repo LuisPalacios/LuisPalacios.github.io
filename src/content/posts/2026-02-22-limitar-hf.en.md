@@ -37,7 +37,7 @@ The solution that works is applying `tc` **from the host** on the `veth` interfa
 
 I've created a script that automates the entire process:
 
-{{< codefile path="snippets/2026-02-27-limitar-ancho-de-banda-hugging-face/hf-download-limited.sh" lang="bash" title="hf-download-limited.sh" >}}
+{{< codefile path="snippets/2026-02-22-limitar-hf/hf-download-limited.sh" lang="bash" title="hf-download-limited.sh" >}}
 
 Run it passing the model and destination directory:
 
