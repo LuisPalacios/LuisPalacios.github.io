@@ -13,7 +13,7 @@ cover:
 
 Cuando trabajas con un harnes de IA (Claude Code, Gemini CLI, Codex, ...) acabas arrancando varias instancias una y otra vez. Queríá tener un atajo de teclado para que me abriese mi configuración más típica usando paneles en una ventana.
 
-Lo he llamado el terminal en "modo IA". Arranco cuatro paneles, tres con `claude` (cada uno con un modelo distinto) y el cuarto con una shell limpia para comandos auxiliares.
+Lo he llamado el terminal "modo IA" y lo he configurado en mi MacOS con la aplicación iTerm. Arranco cuatro paneles, tres con `claude` (cada uno con un modelo distinto) y el cuarto con una shell limpia para comandos auxiliares.
 
 El requisito _no negociable_ es que los cuatro paneles arrancasen en el directorio desde el que uso el atajo y que no tenga pasos manuales.
 

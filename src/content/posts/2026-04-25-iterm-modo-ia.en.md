@@ -13,7 +13,7 @@ cover:
 
 When you work with an AI harness (Claude Code, Gemini CLI, Codex, ...) you end up launching multiple instances over and over. I wanted a keyboard shortcut that would open my typical configuration using panels within a single window.
 
-I call it the terminal in "AI Mode". I launch four panels: three with `claude` (each running a different model) and a fourth with a clean shell for auxiliary commands.
+I call it the terminal in "AI Mode" and I've configured it in my MacOS with iTerm. I launch four panels: three with `claude` (each running a different model) and a fourth with a clean shell for auxiliary commands.
 
 The _non-negotiable_ requirement is that all four panels start in the directory where I used the shortcut and that there are no manual steps.
 

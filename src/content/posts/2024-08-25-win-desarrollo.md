@@ -1486,8 +1486,11 @@ VSCode tiene extensiones para navegar por fichero `.db`
   - `winget update <Id>` para actualizar una concreta.
   - `winget update --all` para actualizar todo.
 - Instaladas con `scoop`:
+  - `scoop status` verificar que se debe actualizar.
   - `scoop update` se actualiza a sí mismo.
-  - `scoop update *` actualiza todas las apps instaladas con scoop.
+  - `scoop update -a` actualiza todas las apps instaladas con scoop.
+  - `scoop cleanup -a` borrar versiones obsoletas.
+  - `scoop cache rm -a` borrar cache de descargas.
 
 <div class="image-box">
   <img src="/img/posts/2024-08-25-win-desarrollo-19.png" alt="Ejemplo de uso de winget" width="500px" />
