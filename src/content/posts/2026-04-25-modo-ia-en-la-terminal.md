@@ -33,7 +33,7 @@ Instintivamente empecé buscando una forma "simple" que aprovechara lo que el te
 
 **tmux o Zellij.** Hiperconfigurables, layouts declarativos preciosos, y soporte nativo para "abrir en `$PWD`". Pero introducen una capa entre el terminal y la shell: prefijo de teclado propio, copy/paste con sus particularidades, integraciones con shell que hay que mantener. Para mi flujo —donde el terminal ya hace el trabajo del multiplexor— era cambiar un problema pequeño por otro mediano.
 
-**Solución que me funcionó.** Empotrar el layout en la propia configuración del terminal y bindearlo a un atajo. La receta cambia según el terminal: en WezTerm es Lua, en iTerm2 es Python sobre su Python API.
+**Solución que me funcionó.** Empotrar el layout en la propia configuración del terminal y asociarlo a un atajo de teclado. La receta cambia según el terminal: en WezTerm se hace en Lua en su fichero de configuración `wezterm.lua`, en iTerm2 es un poco más complicado, hay que hacer un script en Python e instalar y usar su *Python API*.
 
 ## WezTerm o iTerm2
 
@@ -169,7 +169,7 @@ Una vez tienes la base, puedes crearte tus propios layouts. Algunas ideas:
 
 Como cada layout es un script Python en `AutoLaunch` y cada uno se registra como su propia RPC, puedes tener varios atajos —`⌃⌥⌘A`, `⌃⌥⌘P`, `⌃⌥⌘R`— invocando layouts distintos sin que se pisen.
 
-En WezTerm el paralelo es duplicar el bloque §4 con `AI.MODELS` distintos y bindear más atajos (por ejemplo `CTRL+ALT+P`, `CTRL+ALT+R`) sobre las mismas funciones — todo sin tocar Python ni la API de iTerm.
+En WezTerm el paralelo es duplicar el bloque §4 con `AI.MODELS` distintos y asociar más atajos de teclado (por ejemplo `CTRL+ALT+P`, `CTRL+ALT+R`) sobre las mismas funciones — todo sin tocar Python ni la API de iTerm.
 
 ## Enlaces interesantes
 
