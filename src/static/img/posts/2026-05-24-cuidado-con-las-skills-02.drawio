@@ -1,0 +1,40 @@
+<mxfile host="Electron">
+  <diagram name="Metodo CREAR" id="metodo-crear">
+    <mxGraphModel dx="951" dy="607" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="700" pageHeight="580" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="boxC" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=40;fontStyle=1;fontColor=#333333;" value="C" vertex="1">
+          <mxGeometry height="80" width="80" x="190" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="boxR1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=40;fontStyle=1;fontColor=#333333;" value="R" vertex="1">
+          <mxGeometry height="80" width="80" x="190" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="boxE" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=40;fontStyle=1;fontColor=#333333;" value="E" vertex="1">
+          <mxGeometry height="80" width="80" x="190" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="boxA" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=40;fontStyle=1;fontColor=#333333;" value="A" vertex="1">
+          <mxGeometry height="80" width="80" x="190" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="boxR2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=40;fontStyle=1;fontColor=#333333;" value="R" vertex="1">
+          <mxGeometry height="80" width="80" x="190" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="txtC" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=17;whiteSpace=wrap;spacingLeft=6;" value="&lt;b&gt;Confianza cero&lt;/b&gt; por defecto: verifica al editor y desconfía de la fuente." vertex="1">
+          <mxGeometry height="80" width="219.99999999999997" x="290" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="txtR1" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=17;whiteSpace=wrap;spacingLeft=6;" value="&lt;b&gt;Reputación&lt;/b&gt;: busca avisos y auditorías de la comunidad." vertex="1">
+          <mxGeometry height="80" width="219.99999999999997" x="290" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="txtE" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=17;whiteSpace=wrap;spacingLeft=6;" value="&lt;b&gt;Externos&lt;/b&gt;: ojo con las dependencias off-platform." vertex="1">
+          <mxGeometry height="80" width="219.99999999999997" x="290" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="txtA" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=17;whiteSpace=wrap;spacingLeft=6;" value="&lt;b&gt;Aísla&lt;/b&gt; lo no verificado: sandbox y sin salida de red." vertex="1">
+          <mxGeometry height="80" width="219.99999999999997" x="290" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="txtR2" parent="1" style="text;html=1;align=left;verticalAlign=middle;fontSize=17;whiteSpace=wrap;spacingLeft=6;" value="&lt;b&gt;Revisa&lt;/b&gt; el código en local antes de ejecutarlo." vertex="1">
+          <mxGeometry height="80" width="219.99999999999997" x="290" y="410" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,34 @@
+<mxfile host="Electron">
+  <diagram name="Trifecta letal" id="trifecta-letal">
+    <mxGraphModel dx="951" dy="607" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;opacity=45;" value="" vertex="1">
+          <mxGeometry height="179.20000000000002" width="179.20000000000002" x="335.4" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;opacity=45;" value="" vertex="1">
+          <mxGeometry height="179.20000000000002" width="179.20000000000002" x="271" y="280.8" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;opacity=45;" value="" vertex="1">
+          <mxGeometry height="179.20000000000002" width="179.20000000000002" x="399.8" y="280.8" as="geometry" />
+        </mxCell>
+        <mxCell id="title" parent="1" style="text;html=1;align=center;fontSize=20;fontStyle=1;" value="La trifecta letal" vertex="1">
+          <mxGeometry height="30" width="240" x="305" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="l1" parent="1" style="text;html=1;align=center;fontSize=14;fontStyle=1;" value="Acceso a&#xa;datos privados" vertex="1">
+          <mxGeometry height="50" width="180" x="335.40000000000003" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="l2" parent="1" style="text;html=1;align=center;fontSize=14;fontStyle=1;" value="Contenido&#xa;no confiable" vertex="1">
+          <mxGeometry height="50" width="170" x="255" y="359.2" as="geometry" />
+        </mxCell>
+        <mxCell id="l3" parent="1" style="text;html=1;align=center;fontSize=14;fontStyle=1;" value="Comunicación&#xa;externa" vertex="1">
+          <mxGeometry height="50" width="170" x="425" y="359.2" as="geometry" />
+        </mxCell>
+        <mxCell id="danger" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" value="Skill comprometida&lt;br&gt;&lt;div&gt;= fuga de datos&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="140" x="355" y="290" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
