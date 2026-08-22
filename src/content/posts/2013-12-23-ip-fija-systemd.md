@@ -28,14 +28,14 @@ link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
 2: eno16777736: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT qlen 1000
 link/ether 00:0c:29:85:24:22 brd ff:ff:ff:ff:ff:ff
 :
-``` 
+```
 
 A continuación vamos a **parar el cliente dhcp** Nota que en mi caso el interfaz se llama "eno16777736". Vamos a ello... el primer paso es parar el servicio "DHCP Cliente" si lo tenías funcionando.
 
 ```shell 
 # systemctl stop dhcpcd.service
 # systemctl disable dhcpcd.service
-``` 
+```
 
 Ya podemos asignar la **dirección IP fija**, preparamos el fichero `/etc/resolv.conf`
 
