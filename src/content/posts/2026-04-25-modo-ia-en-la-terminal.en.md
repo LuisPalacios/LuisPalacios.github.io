@@ -33,7 +33,7 @@ My first instinct was to look for a "simple" approach that leveraged what the te
 
 **tmux or Zellij.** Hyper-configurable, beautiful declarative layouts, and native support for "open in `$PWD`". But they introduce a layer between the terminal and the shell: their own keyboard prefix, copy/paste with its own quirks, shell integrations to maintain. For my flow — where the terminal already does the multiplexer's job — that meant trading a small problem for a medium one.
 
-**The solution that worked for me.** Embed the layout directly in the terminal's own configuration and bind it to a shortcut. The recipe changes per terminal: in WezTerm it's Lua, in iTerm2 it's Python on top of its Python API.
+**The solution that worked for me.** Embed the layout directly in the terminal's own configuration and attach it to a keyboard shortcut. The recipe changes per terminal: in WezTerm you do it in Lua in its configuration file `wezterm.lua`; in iTerm2 it's a bit more involved — you have to write a Python script and install and use its *Python API*.
 
 ## WezTerm or iTerm2
 
@@ -169,7 +169,7 @@ Once you have the base, you can build your own layouts. Some ideas:
 
 Since each layout is a Python script in `AutoLaunch` and each one registers as its own RPC, you can have several shortcuts — `⌃⌥⌘A`, `⌃⌥⌘P`, `⌃⌥⌘R` — invoking different layouts without stepping on each other.
 
-In WezTerm the parallel is to duplicate the §4 block with different `AI.MODELS` and bind more shortcuts (e.g. `CTRL+ALT+P`, `CTRL+ALT+R`) on the same functions — all without touching Python or the iTerm API.
+In WezTerm the parallel is to duplicate the §4 block with different `AI.MODELS` and attach more keyboard shortcuts (e.g. `CTRL+ALT+P`, `CTRL+ALT+R`) to the same functions — all without touching Python or the iTerm API.
 
 ## Useful links
 

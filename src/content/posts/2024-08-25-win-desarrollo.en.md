@@ -1483,11 +1483,15 @@ VSCode has extensions for browsing `.db` files.
 
 - Manual: open each app and check version + update options.
 - Installed with `winget`:
-  - `winget update <Id>` to update a specific one.
-  - `winget update --all` to update everything.
+  - `winget upgrade` - lists upgradable applications.
+  - `winget upgrade <Id>` - to update a specific one.
+  - `winget upgrade --all` - update everything.
 - Installed with `scoop`:
-  - `scoop update` updates scoop itself.
-  - `scoop update *` updates all apps installed with scoop.
+  - `scoop status` - check what needs updating.
+  - `scoop update` - updates scoop itself.
+  - `scoop update -a` - updates all apps installed with scoop.
+  - `scoop cleanup -a` - delete obsolete versions.
+  - `scoop cache rm -a` - clear the download cache.
 
 <div class="image-box">
   <img src="/img/posts/2024-08-25-win-desarrollo-19.png" alt="winget usage example" width="500px" />

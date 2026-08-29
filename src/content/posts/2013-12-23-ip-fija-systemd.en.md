@@ -28,14 +28,14 @@ link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
 2: eno16777736: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT qlen 1000
 link/ether 00:0c:29:85:24:22 brd ff:ff:ff:ff:ff:ff
 :
-``` 
+```
 
 Next we're going to **stop the DHCP client**. Note that in my case the interface is called "eno16777736". Let's get to it... the first step is to stop the "DHCP Client" service if you had it running.
 
 ```shell 
 # systemctl stop dhcpcd.service
 # systemctl disable dhcpcd.service
-``` 
+```
 
 Now we can assign the **static IP address**. We prepare the `/etc/resolv.conf` file
 
