@@ -202,22 +202,40 @@ Si editas desde varios editores, estandariza la indentación. Yo uso 4 espacios:
 
 ### Linting con markdownlint
 
-Para mantener el Markdown limpio:
+Para mantener el Markdown limpio uso `markdownlint-cli2` y `prettier`, pero **sin instalar nada
+globalmente**. Con `pnpm dlx` se descargan al vuelo y quedan cacheados:
 
 ```bash
-npm install -g markdownlint-cli2
+pnpm dlx markdownlint-cli2@0.23.2 "**/*.md"          # revisa
+pnpm dlx markdownlint-cli2@0.23.2 --fix "**/*.md"    # corrige
 ```
 
-Crea `.markdownlint.jsonc` en la raíz:
+Crea `.markdownlint-cli2.jsonc` en la raíz:
 
-```json
+```jsonc
 {
-  "MD007": { "indent": 4, "start_indented": false },
-  "MD012": { "maximum": 1 }
+  "ignores": [".obsidian/**", "Templates/**"],
+  "config": {
+    "MD007": { "indent": 4, "start_indented": false },
+    "MD012": { "maximum": 1 },
+    "MD013": false
+  }
 }
 ```
 
-Ejecuta: `markdownlint-cli2-fix "**/*.md"`
+{{< admonition "warn" "Dos trampas que me costaron tiempo" >}}
+**No pongas `"fix": true` en el config.** Ese fichero se descubre solo en cada ejecución y
+además tiene prioridad sobre `--config`, así que `true` hace que *cualquier* comprobación
+reescriba ficheros, y `false` hace que `--fix` no funcione nunca. Omite la clave: sin `--fix`
+informa, con `--fix` corrige.
+
+**Fija la versión.** `pnpm dlx markdownlint-cli2` sin versión resuelve a *latest*, así que la
+misma orden acaba ejecutando versiones distintas en cada ordenador.
+
+**Si añades `prettier`, `tabWidth` debe coincidir con `MD007.indent`**, o las dos herramientas
+se deshacen mutuamente en cada pasada. Y activa `embeddedLanguageFormatting: "off"`, o prettier
+te reindenta también el frontmatter YAML.
+{{< /admonition >}}
 
 ## Uso de la IA
 
@@ -242,28 +260,55 @@ Una vez dentro:
 - "*Busca notas huérfanas sin enlaces entrantes*"
 - "*Mejora la redacción de esta nota*"
 
-### CLAUDE.md + Skills
+### CLAUDE.md + rules + skills
 
-Lo potente es **enseñarle tu sistema**. Yo tengo un `CLAUDE.md` en la raíz que describe mi estructura, convenciones y reglas. Claude lo lee automáticamente y actúa en consecuencia.
+Lo potente es **enseñarle tu sistema**. Todo vive en `.claude/`, que es lo único que edito a mano:
 
 ```text
 Notas/
-├── CLAUDE.md              # Instrucciones para la IA
 ├── .claude/
-│   ├── scripts/           # Scripts auxiliares
+│   ├── CLAUDE.md          # Instrucciones principales (~100 líneas)
+│   ├── rules/             # Reglas que se cargan SOLAS al tocar ciertos ficheros
+│   │   ├── doc-coding.md      # cómo se escribe una nota
+│   │   └── doc-frontmatter.md # esquema del frontmatter
+│   ├── context/           # Documentación que se lee bajo demanda
+│   ├── scripts/           # Librería compartida
 │   └── skills/            # Comandos personalizados
-│       ├── formatear/     # /formatear - validar markdown
-│       └── huerfanas/     # /huerfanas - encontrar huérfanas
+│       ├── creating-note/
+│       ├── fixing-markdown/
+│       └── finding-orphans/
+├── .codex/  AGENTS.md     # generados desde .claude/
+└── .gemini/ GEMINI.md     # generados desde .claude/
 ```
 
-Los skills son comandos que defines en ficheros `SKILL.md`. Ejemplo:
+Tres capas, y la distinción importa:
+
+- **`CLAUDE.md`** se carga siempre. Conviene que sea corto.
+- **`rules/`** se cargan *solas* cuando la IA abre un fichero que encaja con su patrón. Así las
+  reglas de formato solo ocupan contexto cuando toca una nota.
+- **`context/`** solo se lee cuando la tarea lo pide.
+
+Los skills son comandos definidos en ficheros `SKILL.md`. Como sus descripciones incluyen las
+frases que uso de verdad, basta con pedirlo en español:
 
 ```text
-/crear "Git Rebase Strategies" trabajo
-→ Crea: Priv/Trabajo/2026/Git Rebase Strategies.md
+"créame una nota sobre Git worktrees en Developer"
+→ Priv/Luis/Developer/2026/Git worktrees.md
+  con parent, tags y fecha ya correctos
 ```
 
-La IA agéntica entiende el contexto y puede hacer operaciones tediosas: revisar frontmatter, corregir tags, reorganizar, mejorar redacción, validar formato. Le das el **objetivo**, no las instrucciones paso a paso.
+Lo que mejor me ha funcionado: que los skills **llamen a scripts** en vez de describir el
+algoritmo en prosa. Un script que recorre la jerarquía y devuelve JSON es determinista; pedirle
+a la IA que la recorra cada vez, no. Y que **fallen en vez de adivinar**: si el subdominio no
+existe o el nombre de fichero no vale en Windows, error explicando por qué. Una nota mal
+archivada en silencio es peor que un error.
+
+### Un solo `.claude/`, varios asistentes
+
+Codex y Gemini no leen `CLAUDE.md`, sino `AGENTS.md` y `GEMINI.md`. En vez de mantener tres
+copias, `.claude/` es la fuente única y un script genera el resto. No es copiar y pegar: Claude
+Code carga `.claude/rules/` automáticamente y los demás no, así que la tabla de reglas se
+regenera como *«antes de editar X, lee Y»*. Copiarla tal cual sería mentirles.
 
 ## Conclusión
 
@@ -272,7 +317,20 @@ Mi stack actual:
 - **Formato**: Markdown en ficheros locales
 - **Editor**: Obsidian (+ VSCode cuando me apetece)
 - **Sync**: Nextcloud casero (pero Obsidian Sync es igual de válido)
-- **IA**: Claude Code para automatización y mejora
+- **Historial**: git contra un Forgejo en casa, desde un único ordenador
+- **IA**: Claude Code, con la misma configuración replicada a Codex y Gemini
+
+Sobre lo de git: no sustituye a Nextcloud, hace algo que Nextcloud no sabe hacer. Nextcloud
+recupera ficheros de uno en uno; git te devuelve **el estado anterior a una operación completa**.
+Cuando le pides a una IA que reescriba 30 notas de golpe, esa diferencia importa.
+
+Dos avisos por experiencia propia:
+
+- **Excluye `.git` de la sincronización de Nextcloud.** Si no, Nextcloud sincroniza el propio
+  repositorio mientras git escribe en él. En el cliente de escritorio: Ajustes → tu cuenta →
+  ⋯ → Editor de ficheros ignorados.
+- **Que solo un ordenador lleve git.** Con el árbol de trabajo ya sincronizado por Nextcloud,
+  dos máquinas haciendo commits sobre los mismos ficheros es buscarse problemas.
 
 Lo importante es que **mis notas son mías**. Ficheros de texto en mi disco, que puedo abrir con cualquier herramienta, mover a cualquier sitio, y que seguirán siendo legibles dentro de 50 años. Notion no puede decir lo mismo.
 
