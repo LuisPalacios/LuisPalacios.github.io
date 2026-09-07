@@ -1,0 +1,95 @@
+<mxfile host="Electron" agent="movi-relay">
+  <diagram name="Por que el router lo tira" id="portero">
+    <mxGraphModel dx="2170" dy="1158" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#1F2933;" value="Por qué el router tira el vídeo (y cómo se arregla)" vertex="1">
+          <mxGeometry height="36" width="1000" x="50" y="15" as="geometry" />
+        </mxCell>
+        <mxCell id="panelA" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF5F5;strokeColor=#C62828;dashed=1;" value="" vertex="1">
+          <mxGeometry height="360" width="1000" x="50" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="titA" parent="1" style="text;html=1;align=left;fontSize=15;fontStyle=1;fontColor=#C62828;" value="SIN ayudante:  el portero no se ha enterado de nada" vertex="1">
+          <mxGeometry height="26" width="600" x="75" y="82" as="geometry" />
+        </mxCell>
+        <mxCell id="decoA" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=13;fontStyle=1;" value="Tu deco" vertex="1">
+          <mxGeometry height="70" width="130" x="90" y="185" as="geometry" />
+        </mxCell>
+        <mxCell id="portA" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#F9A825;fontSize=12;fontStyle=1;" value="EL PORTERO&#xa;(tu router)&#xa;&#xa;&quot;solo dejo entrar a quien&#xa;responde a algo que salió&quot;" vertex="1">
+          <mxGeometry height="115" width="200" x="420" y="165" as="geometry" />
+        </mxCell>
+        <mxCell id="srvA" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECEFF1;strokeColor=#455A64;fontSize=13;fontStyle=1;" value="Servidor&#xa;de Movistar" vertex="1">
+          <mxGeometry height="70" width="150" x="840" y="185" as="geometry" />
+        </mxCell>
+        <mxCell id="eA1" edge="1" parent="1" source="decoA" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#1565C0;endArrow=classic;fontSize=11;verticalAlign=bottom;" target="srvA" value="1. &quot;Mándamelo al portal 27392&quot;&#xa;(se dice HABLANDO, dentro de la conversación)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="155" y="149.69" />
+              <mxPoint x="520.03" y="149.69" />
+              <mxPoint x="520.03" y="224.17" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="repA" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;fontSize=12;" value="El vídeo&#xa;llega al portal 27392" vertex="1">
+          <mxGeometry height="60" width="180" x="700" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="eA2" edge="1" parent="1" source="srvA" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=3;strokeColor=#C62828;endArrow=classic;" target="repA">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eA3" edge="1" parent="1" source="repA" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=3;strokeColor=#C62828;endArrow=none;dashed=1;" target="portA" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="stop" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C62828;strokeColor=none;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" value="✖  DESCARTADO&#xa;&quot;yo no he visto salir nada&#xa;hacia ahí&quot;" vertex="1">
+          <mxGeometry height="65" width="180" x="440" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="resA" parent="1" style="text;html=1;align=left;fontSize=13;fontStyle=2;fontColor=#C62828;" value="En la tele:  &quot;no se puede reproducir&quot;" vertex="1">
+          <mxGeometry height="26" width="330" x="90" y="335" as="geometry" />
+        </mxCell>
+        <mxCell id="panelB" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F8E9;strokeColor=#2E7D32;dashed=1;" value="" vertex="1">
+          <mxGeometry height="380" width="1000" x="50" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="titB" parent="1" style="text;html=1;align=left;fontSize=15;fontStyle=1;fontColor=#2E7D32;" value="CON ayudante:  el portero escucha la conversación" vertex="1">
+          <mxGeometry height="26" width="600" x="75" y="472" as="geometry" />
+        </mxCell>
+        <mxCell id="decoB" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=13;fontStyle=1;" value="Tu deco" vertex="1">
+          <mxGeometry height="70" width="130" x="90" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="portB" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=12;fontStyle=1;" value="EL PORTERO + AYUDANTE&#xa;(módulos del kernel)&#xa;&#xa;lee la conversación y apunta:&#xa;&quot;va a venir alguien al 27392&#xa;— déjale pasar&quot;" vertex="1">
+          <mxGeometry height="130" width="240" x="400" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="srvB" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECEFF1;strokeColor=#455A64;fontSize=13;fontStyle=1;" value="Servidor&#xa;de Movistar" vertex="1">
+          <mxGeometry height="70" width="150" x="840" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="eB1" edge="1" parent="1" source="decoB" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#1565C0;endArrow=classic;fontSize=11;verticalAlign=bottom;" target="srvB" value="1. &quot;Mándamelo al portal 27392&quot;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="155" y="536.45" />
+              <mxPoint x="520.03" y="536.45" />
+              <mxPoint x="520.03" y="625" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="note2" parent="1" style="text;html=1;align=center;fontSize=11;fontColor=#2E7D32;fontStyle=1;" value="2. El ayudante lo oye al pasar&#xa;y deja la puerta preparada" vertex="1">
+          <mxGeometry height="36" width="240" x="400" y="697" as="geometry" />
+        </mxCell>
+        <mxCell id="repB" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=12;" value="El vídeo&#xa;llega al portal 27392" vertex="1">
+          <mxGeometry height="55" width="180" x="700" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="eB2" edge="1" parent="1" source="srvB" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=3;strokeColor=#2E7D32;endArrow=classic;" target="repB">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eB3" edge="1" parent="1" source="repB" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=3;strokeColor=#2E7D32;endArrow=classic;" target="decoB">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="155" y="777" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="resB" parent="1" style="text;html=1;align=left;fontSize=13;fontStyle=1;fontColor=#2E7D32;" value="3. Pasa, y el portero lo lleva hasta el deco.   En la tele:  se ve la imagen ✔" vertex="1">
+          <mxGeometry height="24" width="520" x="175" y="810" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

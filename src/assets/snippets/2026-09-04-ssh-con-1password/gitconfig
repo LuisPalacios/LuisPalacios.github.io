@@ -1,0 +1,24 @@
+# ~/.gitconfig — parte COMÚN a las tres máquinas.
+# Lo que depende del sistema operativo (ruta de op-ssh-sign y, en
+# Windows, el ssh.exe de Microsoft) vive en ~/.gitconfig.local.
+
+[user]
+    name = Luis Palacios
+    email = luis@luispa.com
+    # Clave PÚBLICA completa del item "SSH Git" de 1Password.
+    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+[gpg]
+    format = ssh
+
+[gpg "ssh"]
+    allowedSignersFile = ~/.ssh/allowed_signers
+
+[commit]
+    gpgsign = true
+
+[tag]
+    gpgsign = true
+
+[include]
+    path = ~/.gitconfig.local

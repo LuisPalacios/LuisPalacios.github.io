@@ -1,0 +1,100 @@
+<mxfile host="Electron" agent="movi-relay">
+  <diagram name="La conversacion paso a paso" id="secuencia">
+    <mxGraphModel dx="2178" dy="1158" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="880" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;align=center;fontSize=20;fontStyle=1;fontColor=#1F2933;" value="Del &quot;Ver&quot; a la imagen: la conversación completa" vertex="1">
+          <mxGeometry height="34" width="1000" x="50" y="15" as="geometry" />
+        </mxCell>
+        <mxCell id="hDeco" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1565C0;strokeColor=none;fontColor=#FFFFFF;fontSize=13;fontStyle=1;" value="TU DECO" vertex="1">
+          <mxGeometry height="42" width="170" x="90" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="hRouter" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F9A825;strokeColor=none;fontColor=#FFFFFF;fontSize=13;fontStyle=1;" value="TU ROUTER LINUX&#xa;(con el ayudante)" vertex="1">
+          <mxGeometry height="42" width="190" x="455" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="hSrv" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#455A64;strokeColor=none;fontColor=#FFFFFF;fontSize=13;fontStyle=1;" value="SERVIDOR DE MOVISTAR" vertex="1">
+          <mxGeometry height="42" width="190" x="830" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="lDeco" edge="1" parent="1" style="endArrow=none;html=1;strokeWidth=2;strokeColor=#90A4AE;dashed=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="112" as="sourcePoint" />
+            <mxPoint x="175" y="810" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lRouter" edge="1" parent="1" style="endArrow=none;html=1;strokeWidth=2;strokeColor=#90A4AE;dashed=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="550" y="112" as="sourcePoint" />
+            <mxPoint x="550" y="810" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lSrv" edge="1" parent="1" style="endArrow=none;html=1;strokeWidth=2;strokeColor=#90A4AE;dashed=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="925" y="112" as="sourcePoint" />
+            <mxPoint x="925" y="810" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s1" edge="1" parent="1" style="html=1;endArrow=classic;strokeWidth=2;strokeColor=#607D8B;fontSize=12;verticalAlign=bottom;align=center;" value="1.  &quot;¿Quién sirve esto?&quot;  (consulta al DNS)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="165" as="sourcePoint" />
+            <mxPoint x="925" y="165" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s2" edge="1" parent="1" style="html=1;endArrow=classic;strokeWidth=2.5;strokeColor=#1565C0;fontSize=12;fontStyle=1;verticalAlign=bottom;" value="2.  SETUP:  &quot;mándame el vídeo al puerto 27392&quot;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="245" as="sourcePoint" />
+            <mxPoint x="925" y="245" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#F9A825;fontSize=11;fontStyle=2;" value="El ayudante lee esta línea al pasar" vertex="1">
+          <mxGeometry height="30" width="220" x="440" y="255" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=12;fontStyle=1;" value="3.  APUNTA:  &quot;va a llegar un vídeo al 27392 desde ESTE OTRO servidor — déjalo pasar&quot;" vertex="1">
+          <mxGeometry height="52" width="380" x="360" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="n3" parent="1" style="text;html=1;align=left;fontSize=11;fontColor=#2E7D32;" value="Esto es la &quot;expectativa&quot;.&#xa;Dura 5 minutos y sirve UNA sola vez." vertex="1">
+          <mxGeometry height="44" width="260" x="755" y="313" as="geometry" />
+        </mxCell>
+        <mxCell id="s4" edge="1" parent="1" style="html=1;endArrow=classic;strokeWidth=2.5;strokeColor=#455A64;fontSize=12;verticalAlign=bottom;" value="4.  Respuesta:  &quot;de acuerdo — y yo emito desde el puerto 49980&quot;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="925" y="410" as="sourcePoint" />
+            <mxPoint x="175" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s5" edge="1" parent="1" style="html=1;endArrow=classic;strokeWidth=5;strokeColor=#E65100;fontSize=13;fontStyle=1;verticalAlign=bottom;" value="5.  EL VÍDEO  (MPEG-TS por UDP, sin parar)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="925" y="500" as="sourcePoint" />
+            <mxPoint x="175" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;" value="El ayudante lo reconoce, gasta la anotación&#xa;y lo encamina hasta el deco.   Se ve la imagen." vertex="1">
+          <mxGeometry height="42" width="320" x="390" y="513" as="geometry" />
+        </mxCell>
+        <mxCell id="s6" edge="1" parent="1" style="html=1;endArrow=classic;strokeWidth=1.5;strokeColor=#78909C;dashed=1;fontSize=12;verticalAlign=bottom;" value="6.  &quot;sigo aquí&quot;  (GET_PARAMETER, de vez en cuando)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="600" as="sourcePoint" />
+            <mxPoint x="925" y="600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s7" edge="1" parent="1" style="html=1;endArrow=classic;strokeWidth=2;strokeColor=#6A1B9A;fontSize=12;fontStyle=1;verticalAlign=bottom;" value="7.  Si PAUSAS:  un paquetito de 3 bytes cada 60 segundos">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="670" as="sourcePoint" />
+            <mxPoint x="925" y="670" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#6A1B9A;fontSize=11;" value="Mantiene la puerta abierta mientras no llega vídeo.&#xa;Por eso puedes pausar lo que quieras." vertex="1">
+          <mxGeometry height="40" width="380" x="360" y="683" as="geometry" />
+        </mxCell>
+        <mxCell id="s8" edge="1" parent="1" style="html=1;endArrow=classic;strokeWidth=2;strokeColor=#607D8B;fontSize=12;verticalAlign=bottom;" value="8.  TEARDOWN:  &quot;he terminado&quot;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="175" y="775" as="sourcePoint" />
+            <mxPoint x="925" y="775" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="key" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFDE7;strokeColor=#F9A825;dashed=1;fontSize=12;align=left;spacingLeft=12;" value="Lo importante: en el paso 2 el puerto se dice HABLANDO. Sin el ayudante, en el paso 5 nadie sabría qué hacer con ese vídeo." vertex="1">
+          <mxGeometry height="40" width="930" x="90" y="825" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

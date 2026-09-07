@@ -1,0 +1,37 @@
+# Fichero de configuración del agente SSH de 1Password.
+#
+#   Linux y macOS: ~/.config/1Password/ssh/agent.toml
+#                  (o $XDG_CONFIG_HOME/1Password/ssh/agent.toml)
+#   Windows:       %LOCALAPPDATA%\1Password\config\ssh\agent.toml
+#
+# Cada bloque [[ssh-keys]] es un filtro (item AND vault AND account).
+# El ORDEN de los bloques es el orden en que el agente ofrece las claves
+# a los servidores: las de uso más frecuente, primero.
+#
+# Ojo: en cuanto este fichero existe, deja de aplicarse la regla por
+# defecto ("todas las claves SSH del vault Personal"). Solo se ofrecen
+# las que listes aquí. Un error de sintaxis para el agente y lo verás
+# en Settings > Developer.
+#
+# El campo vault es opcional; si el nombre no coincide exactamente, el agente
+# se queda sin claves. Con el título del item basta. Fichero POR MÁQUINA.
+
+[[ssh-keys]]
+item = "SSH Homelab"
+
+[[ssh-keys]]
+item = "SSH Git"
+
+[[ssh-keys]]
+item = "SSH VPS"
+
+[[ssh-keys]]
+item = "SSH Network"
+
+[[ssh-keys]]
+item = "SSH Network Legacy"
+
+# Clave para casas de familiares y clientes que sí permiten usar la mía. Los que me obligan a
+# usar la suya van por fichero con "IdentityAgent none" en ~/.ssh/config.
+[[ssh-keys]]
+item = "SSH Clientes"

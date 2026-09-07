@@ -1,0 +1,136 @@
+# ~/.ssh/config — fichero BASE, idéntico en Linux, Windows 11 y macOS.
+#
+# Regla de oro de ssh_config: para cada opción gana el PRIMER valor que
+# encuentra. Por eso lo específico va arriba y lo general (Host * y el
+# Include con el IdentityAgent de cada plataforma) va al final.
+#
+# Las claves privadas viven en 1Password. Aquí solo hay ficheros .pub
+# descargados de la app, en ~/.ssh/keys/, para que IdentitiesOnly sepa
+# qué clave pedirle al agente en cada destino.
+
+# ------------------------------------------------------------------
+# Homelab: clave "Homelab" (ed25519)
+# ------------------------------------------------------------------
+Host pve
+    HostName 192.168.1.10
+    User root
+
+Host router
+    HostName 192.168.1.1
+    User luis
+
+Host dockervm
+    HostName 192.168.1.20
+    User luis
+
+Host npm
+    HostName 192.168.1.21
+    User root
+
+Host haos
+    HostName 192.168.1.30
+    User root
+
+Host pve router dockervm npm haos
+    IdentityFile ~/.ssh/keys/homelab.pub
+    IdentitiesOnly yes
+
+# ------------------------------------------------------------------
+# Equipos de red: "Network" (ed25519) para el controlador y lo moderno;
+# "Network Legacy" (RSA) solo para el switch antiguo que exige ssh-rsa.
+# ------------------------------------------------------------------
+Host wlc
+    HostName 192.168.1.5
+    User admin
+    IdentityFile ~/.ssh/keys/network.pub
+    IdentitiesOnly yes
+
+Host sw-core
+    HostName 192.168.1.2
+
+Host sw-planta1
+    HostName 192.168.1.3
+
+Host sw-planta2
+    HostName 192.168.1.4
+
+Host ap-salon
+    HostName 192.168.1.41
+
+# Firmware antiguo: solo firma ssh-rsa (SHA-1) y KEX antiguos.
+# OpenSSH >= 8.8 los desactiva por defecto; aquí los reactivo SOLO
+# para estos hosts.
+Host sw-core sw-planta* ap-*
+    User admin
+    IdentityFile ~/.ssh/keys/network-legacy.pub
+    IdentitiesOnly yes
+    HostKeyAlgorithms +ssh-rsa
+    PubkeyAcceptedAlgorithms +ssh-rsa
+    KexAlgorithms +diffie-hellman-group14-sha1
+
+# ------------------------------------------------------------------
+# VPS en la nube (AWS, GCP, OVHcloud...): clave "VPS" (ed25519)
+# ------------------------------------------------------------------
+Host vps
+    HostName vps.midominio.com
+    User debian
+    IdentityFile ~/.ssh/keys/vps.pub
+    IdentitiesOnly yes
+
+# ------------------------------------------------------------------
+# Familiares y clientes que aceptan mi clave: clave "Clientes" (ed25519)
+# ------------------------------------------------------------------
+# Casa de un familiar, detrás de un túnel OpenVPN y con puerto no estándar.
+Host casa-padres
+    HostName 10.8.0.50
+    Port 1443
+    User luis
+    IdentityFile ~/.ssh/keys/clientes.pub
+    IdentitiesOnly yes
+
+# Salto a través del VPS sin reenviar el agente al intermedio.
+Host casa-hermano
+    HostName 10.8.0.60
+    Port 1443
+    User luis
+    ProxyJump vps
+    IdentityFile ~/.ssh/keys/clientes.pub
+    IdentitiesOnly yes
+
+# ------------------------------------------------------------------
+# Clientes que imponen su clave: fichero, fuera de 1Password
+# ------------------------------------------------------------------
+Host cliente-acme
+    HostName bastion.acme.example
+    User invitado
+    IdentityAgent none
+    IdentityFile ~/.ssh/clientes/acme_ed25519
+    IdentitiesOnly yes
+
+# ------------------------------------------------------------------
+# Git: clave "Git" (ed25519, también firma commits)
+# ------------------------------------------------------------------
+Host github.com
+    User git
+    IdentityFile ~/.ssh/keys/git.pub
+    IdentitiesOnly yes
+
+Host forgejo.midominio.com
+    User git
+    Port 22
+    IdentityFile ~/.ssh/keys/git.pub
+    IdentitiesOnly yes
+
+# ------------------------------------------------------------------
+# Valores por defecto para todo lo demás
+# ------------------------------------------------------------------
+Host *
+    ForwardAgent no
+    AddKeysToAgent no
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+    HashKnownHosts yes
+
+# Lo que cambia por plataforma (el IdentityAgent) vive en config.d/.
+# Va al FINAL para que un "IdentityAgent none" de arriba gane.
+Include config.d/*.conf

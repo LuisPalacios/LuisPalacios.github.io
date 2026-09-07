@@ -162,6 +162,8 @@ For long config files or code that users should copy, use snippets:
 
 Use snippets when: config files, scripts > 20 lines, or templates.
 
+**Always write the shortcode on a single line.** The multi-line form (closing `>}}` alone on its line) gets rewritten by prettier in `/fixing-markdown` into a blockquote (`> }}`) and breaks the Hugo build.
+
 ## Reference Files
 
 | File | Content |

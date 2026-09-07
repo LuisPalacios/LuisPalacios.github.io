@@ -1,0 +1,106 @@
+<mxfile host="Electron" agent="movi-relay">
+  <diagram name="La pausa y el keepalive" id="pausa">
+    <mxGraphModel dx="1508" dy="799" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1150" pageHeight="760" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;align=center;fontSize=20;fontStyle=1;fontColor=#1F2933;" value="¿Y si pauso media hora?  El deco mete el pie en la puerta" vertex="1">
+          <mxGeometry height="34" width="1050" x="50" y="15" as="geometry" />
+        </mxCell>
+        <mxCell id="sub" parent="1" style="text;html=1;align=center;fontSize=13;fontColor=#616E7C;" value="El router anota &quot;este vídeo va para el deco&quot;, pero esa anotación caduca si no pasa nada por ella" vertex="1">
+          <mxGeometry height="22" width="1050" x="50" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="miedo" parent="1" style="text;html=1;align=left;fontSize=15;fontStyle=1;fontColor=#C62828;" value="LO QUE DABA MIEDO" vertex="1">
+          <mxGeometry height="24" width="400" x="70" y="95" as="geometry" />
+        </mxCell>
+        <mxCell id="pm" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF5F5;strokeColor=#C62828;dashed=1;" value="" vertex="1">
+          <mxGeometry height="185" width="1030" x="60" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="m1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C62828;fontSize=12;" value="Pausas.&#xa;Deja de llegar vídeo." vertex="1">
+          <mxGeometry height="70" width="175" x="85" y="185" as="geometry" />
+        </mxCell>
+        <mxCell id="m2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C62828;fontSize=12;" value="A los 30 segundos&#xa;la anotación CADUCA." vertex="1">
+          <mxGeometry height="70" width="175" x="315" y="185" as="geometry" />
+        </mxCell>
+        <mxCell id="m3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C62828;fontSize=12;" value="Das al play.&#xa;El deco NO vuelve a pedir&#xa;permiso, solo dice &quot;sigue&quot;." vertex="1">
+          <mxGeometry height="70" width="195" x="545" y="185" as="geometry" />
+        </mxCell>
+        <mxCell id="m4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C62828;strokeColor=none;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" value="El vídeo llega a una&#xa;puerta cerrada.&#xa;NO SE VE NADA." vertex="1">
+          <mxGeometry height="70" width="195" x="795" y="185" as="geometry" />
+        </mxCell>
+        <mxCell id="me1" edge="1" parent="1" source="m1" style="html=1;endArrow=classic;strokeWidth=2;strokeColor=#C62828;" target="m2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="me2" edge="1" parent="1" source="m2" style="html=1;endArrow=classic;strokeWidth=2;strokeColor=#C62828;" target="m3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="me3" edge="1" parent="1" source="m3" style="html=1;endArrow=classic;strokeWidth=2;strokeColor=#C62828;" target="m4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mnota" parent="1" style="text;html=1;align=left;fontSize=13;fontStyle=2;fontColor=#C62828;" value="Razonamiento impecable... pero NO es lo que pasa." vertex="1">
+          <mxGeometry height="24" width="600" x="85" y="268" as="geometry" />
+        </mxCell>
+        <mxCell id="real" parent="1" style="text;html=1;align=left;fontSize=15;fontStyle=1;fontColor=#2E7D32;" value="LO QUE PASA DE VERDAD  (medido con la tele puesta)" vertex="1">
+          <mxGeometry height="24" width="600" x="70" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="pr" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F8E9;strokeColor=#2E7D32;dashed=1;" value="" vertex="1">
+          <mxGeometry height="300" width="1030" x="60" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="tl" edge="1" parent="1" style="endArrow=classic;html=1;strokeWidth=3;strokeColor=#455A64;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="110" y="470" as="sourcePoint" />
+            <mxPoint x="1040" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tlab" parent="1" style="text;html=1;align=left;fontSize=11;fontColor=#455A64;" value="tiempo con la reproducción pausada  →" vertex="1">
+          <mxGeometry height="20" width="230" x="832" y="492" as="geometry" />
+        </mxCell>
+        <mxCell id="k1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#6A1B9A;strokeColor=none;fontColor=#FFFFFF;fontSize=10;fontStyle=1;" value="pie" vertex="1">
+          <mxGeometry height="42" width="42" x="185" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="k2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#6A1B9A;strokeColor=none;fontColor=#FFFFFF;fontSize=10;fontStyle=1;" value="pie" vertex="1">
+          <mxGeometry height="42" width="42" x="365" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="k3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#6A1B9A;strokeColor=none;fontColor=#FFFFFF;fontSize=10;fontStyle=1;" value="pie" vertex="1">
+          <mxGeometry height="42" width="42" x="545" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="k4" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#6A1B9A;strokeColor=none;fontColor=#FFFFFF;fontSize=10;fontStyle=1;" value="pie" vertex="1">
+          <mxGeometry height="42" width="42" x="725" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="k5" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#6A1B9A;strokeColor=none;fontColor=#FFFFFF;fontSize=10;fontStyle=1;" value="pie" vertex="1">
+          <mxGeometry height="42" width="42" x="905" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="kd1" parent="1" style="text;html=1;align=center;fontSize=11;fontColor=#6A1B9A;fontStyle=1;" value="60 s" vertex="1">
+          <mxGeometry height="20" width="100" x="245" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="kd2" parent="1" style="text;html=1;align=center;fontSize=11;fontColor=#6A1B9A;fontStyle=1;" value="60 s" vertex="1">
+          <mxGeometry height="20" width="100" x="425" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="kd3" parent="1" style="text;html=1;align=center;fontSize=11;fontColor=#6A1B9A;fontStyle=1;" value="60 s" vertex="1">
+          <mxGeometry height="20" width="100" x="605" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="kd4" parent="1" style="text;html=1;align=center;fontSize=11;fontColor=#6A1B9A;fontStyle=1;" value="60 s" vertex="1">
+          <mxGeometry height="20" width="100" x="785" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="expl" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#6A1B9A;fontSize=12;fontStyle=1;" value="Cada 60 segundos el deco manda un paquetito de 3 bytes al servidor." vertex="1">
+          <mxGeometry height="30" width="500" x="110" y="385" as="geometry" />
+        </mxCell>
+        <mxCell id="bar" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#2E7D32;" value="" vertex="1">
+          <mxGeometry height="34" width="930" x="110" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="barlab" parent="1" style="text;html=1;align=center;fontSize=12;fontStyle=1;fontColor=#1B5E20;" value="La anotación del router nunca llega a caducar:  se renueva antes de agotarse" vertex="1">
+          <mxGeometry height="20" width="930" x="110" y="538" as="geometry" />
+        </mxCell>
+        <mxCell id="plazo" parent="1" style="text;html=1;align=center;fontSize=12;fontColor=#2E7D32;" value="tiene 120 segundos de plazo   ·   se renueva cada 60   →   siempre le sobra la mitad" vertex="1">
+          <mxGeometry height="20" width="930" x="110" y="572" as="geometry" />
+        </mxCell>
+        <mxCell id="fin" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E7D32;strokeColor=none;fontColor=#FFFFFF;fontSize=13;fontStyle=1;" value="Resultado:  pausé 6 minutos una vez y 8 minutos otra.   En las dos, la imagen volvió INSTANTÁNEA." vertex="1">
+          <mxGeometry height="40" width="930" x="110" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="pero" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFDE7;strokeColor=#F9A825;dashed=1;fontSize=12;align=left;spacingLeft=12;" value="Pero ojo: quien te salva es el DECO, no tu router.  Si lo que se corta es la VPN más de 2 minutos, el que mete el pie en la puerta está al otro lado del corte, y ahí sí se pierde el vídeo." vertex="1">
+          <mxGeometry height="46" width="1030" x="60" y="690" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
