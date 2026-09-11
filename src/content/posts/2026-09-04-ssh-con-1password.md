@@ -15,7 +15,7 @@ tags:
     "macos",
     "linux",
   ]
-draft: true
+draft: false
 cover:
   image: "/img/posts/logo-1password-ssh.svg"
   hidden: true

@@ -1,9 +1,9 @@
 ---
-title: "Vídeo bajo demanda de Movistar: cómo funciona hoy"
+title: "Vídeo bajo demanda"
 date: "2026-09-05"
 categories: ["linux"]
 tags: ["movistar", "router", "cone", "nat", "iptables", "rtsp", "television"]
-draft: true
+draft: false
 cover:
   image: "/img/posts/logo-linux-rtsp.svg"
   hidden: true
@@ -20,12 +20,12 @@ que se vea. Hay una sorpresa: ya no todo usa `RTSP`.
 Hace más de una década escribí [Video bajo demanda para Movistar]({{< relref "2014-10-18-movistar-bajo-demanda.md" >}}),
 la primera vez que me peleé con esto en mi [router Linux]({{< relref "2014-10-05-router-linux.md" >}}).
 Recientemente me dio por verificar si `igmpproxy` y el helper `RTSP` del kernel seguían haciendo
-falta, le di una vuelta al asunto, y de ahí sale este apunte: la puesta al día de aquel.
+falta, le di una vuelta al asunto, y de ahí sale este apunte. Sí, me aburría y me dió por hacer un estudio académico.
 
 <br clear="left"/>
 <!--more-->
 
-## Lo primero: no hay un «vídeo bajo demanda», hay tres
+## No hay un «vídeo bajo demanda», hay tres
 
 Durante años todo lo que no era un canal en directo funcionaba igual: el deco pedía el vídeo
 por `RTSP` y le llegaba un `MPEG-TS` crudo por `UDP`. Hoy **eso ya no es cierto**, y conviene
