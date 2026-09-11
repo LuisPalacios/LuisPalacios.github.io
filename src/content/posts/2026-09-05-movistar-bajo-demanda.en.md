@@ -1,5 +1,5 @@
 ---
-title: "Movistar Video on Demand: How It Works Today"
+title: "Movistar Video on Demand"
 date: "2026-09-05"
 categories: ["linux"]
 tags: ["movistar", "router", "cone", "nat", "iptables", "rtsp", "television"]
