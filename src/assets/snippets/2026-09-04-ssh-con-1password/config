@@ -81,15 +81,15 @@ Host vps
 # Familiares y clientes que aceptan mi clave: clave "Clientes" (ed25519)
 # ------------------------------------------------------------------
 # Casa de un familiar, detrás de un túnel OpenVPN y con puerto no estándar.
-Host casa-padres
+Host casa-familiar-1
     HostName 10.8.0.50
     Port 2222
     User luis
     IdentityFile ~/.ssh/keys/clientes.pub
     IdentitiesOnly yes
 
-# Salto a través del VPS sin reenviar el agente al intermedio.
-Host casa-hermano
+# Otro familiar, saltando a través del VPS sin reenviar el agente al intermedio.
+Host casa-familiar-2
     HostName 10.8.0.60
     Port 2222
     User luis

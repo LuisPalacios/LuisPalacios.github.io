@@ -146,8 +146,10 @@ existir en cuanto actualizas el kernel, y te quedas sin grabaciones **en silenci
 sigue yendo, así que no te enteras hasta que alguien intenta ver algo.
 
 Los fuentes están en [mi repositorio rtsp-linux en GitHub](https://github.com/LuisPalacios/rtsp-linux),
-el mismo de 2014 puesto al día. La forma correcta de instalarlos es **DKMS**, que los recompila
-solo cada vez que entra un kernel nuevo, durante el propio `apt`:
+el mismo de 2014. Tengo pendiente subir la versión nueva, con las mejoras de estas pruebas y la
+configuración de DKMS, junto con un `igmpproxy` también mejorado. La forma correcta de
+instalarlos es **DKMS**, que los recompila solo cada vez que entra un kernel nuevo, durante el
+propio `apt`:
 
 ```shell
 # Se registra el paquete y se construye para el kernel actual
@@ -295,5 +297,5 @@ Tres cosas, y ninguna depende de ti:
 
 ## Referencias
 
-- Mi repositorio [rtsp-linux](https://github.com/LuisPalacios/rtsp-linux) con los módulos `nf_conntrack_rtsp` y `nf_nat_rtsp`.
+- Mi repositorio [rtsp-linux](https://github.com/LuisPalacios/rtsp-linux) con los módulos `nf_conntrack_rtsp` y `nf_nat_rtsp`. Pendiente de subir la versión con DKMS y el `igmpproxy` mejorado.
 - El apunte original de 2014: [Video bajo demanda para Movistar]({{< relref "2014-10-18-movistar-bajo-demanda.md" >}}).
