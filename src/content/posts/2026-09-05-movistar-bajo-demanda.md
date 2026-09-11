@@ -2,8 +2,8 @@
 title: "Vídeo bajo demanda de Movistar: cómo funciona hoy"
 date: "2026-09-05"
 categories: ["linux"]
-tags: ["movistar","router","cone","nat","iptables","rtsp","television"]
-draft: false
+tags: ["movistar", "router", "cone", "nat", "iptables", "rtsp", "television"]
+draft: true
 cover:
   image: "/img/posts/logo-linux-rtsp.svg"
   hidden: true
@@ -16,6 +16,11 @@ Los canales normales de Movistar TV viajan en **Multicast/UDP**, pero todo lo qu
 **Unicast**, y ahí es donde un router Linux casero se atraganta. En este apunte cuento cómo
 funciona ese tráfico **hoy**, medido con la tele puesta, y qué hay que poner en el router para
 que se vea. Hay una sorpresa: ya no todo usa `RTSP`.
+
+Hace más de una década escribí [Video bajo demanda para Movistar]({{< relref "2014-10-18-movistar-bajo-demanda.md" >}}),
+la primera vez que me peleé con esto en mi [router Linux]({{< relref "2014-10-05-router-linux.md" >}}).
+Recientemente me dio por verificar si `igmpproxy` y el helper `RTSP` del kernel seguían haciendo
+falta, le di una vuelta al asunto, y de ahí sale este apunte: la puesta al día de aquel.
 
 <br clear="left"/>
 <!--more-->
@@ -30,13 +35,13 @@ del kernel «no hace nada».
 Lo medí camino por camino, poniendo a cero el contador de la regla del firewall antes de cada
 prueba y lanzando cada cosa desde el mando:
 
-| Lo que pides desde el mando | Cómo viaja hoy | ¿Necesita ayuda en el router? |
-| --------------------------- | -------------- | ----------------------------- |
-| **Una peli del videoclub** | **HTTP sobre TCP 80**, en trocitos | **No** |
-| **Rebobinar el canal en directo** | **RTSP + MPEG-TS por UDP** | **Sí** |
-| **Una grabación de la nube** | **RTSP + MPEG-TS por UDP** | **Sí** |
+| Lo que pides desde el mando       | Cómo viaja hoy                     | ¿Necesita ayuda en el router? |
+| --------------------------------- | ---------------------------------- | ----------------------------- |
+| **Una peli del videoclub**        | **HTTP sobre TCP 80**, en trocitos | **No**                        |
+| **Rebobinar el canal en directo** | **RTSP + MPEG-TS por UDP**         | **Sí**                        |
+| **Una grabación de la nube**      | **RTSP + MPEG-TS por UDP**         | **Sí**                        |
 
-El videoclub se ha pasado a la entrega tipo *OTT*: el deco abre un montón de conexiones HTTP
+El videoclub se ha pasado a la entrega tipo _OTT_: el deco abre un montón de conexiones HTTP
 cortas y va pidiendo el vídeo a trozos, igual que hace Netflix o YouTube. Eso atraviesa
 cualquier router sin ayuda, porque es tráfico normal: sale una petición, vuelve una respuesta.
 
@@ -53,7 +58,7 @@ tele encendida y cero paquetes**. No significaba que sobrara, significaba que en
 nadie había rebobinado ni abierto una grabación. En cuanto rebobiné, el contador empezó a
 subir.
 
-## El problema, contado sin tecnicismos
+## El problema
 
 Imagina que llamas por teléfono a una empresa para pedir un paquete. Durante la llamada les
 dices: «mándenmelo al portal número 27392». Cuelgas, y al rato llega el repartidor a ese
@@ -112,26 +117,27 @@ Cuando le das a «Ver» en una grabación, esto es lo que pasa:
 
 Durante años, la explicación de por qué esto era difícil decía: «el deco habla con un servidor
 de control, pero **el vídeo lo manda otra máquina distinta, con una IP que tu router no
-conoce**». De ahí venía la fama de que hacía falta *full cone NAT*, que es abrir la puerta de
+conoce**». De ahí venía la fama de que hacía falta _full cone NAT_, que es abrir la puerta de
 par en par.
 
 **Hoy ya no es así.** Lo he comprobado en tres sesiones distintas, comparando quién atiende el
 554 con quién manda el `UDP`:
 
-| Sesión | Servidor RTSP | Quién manda el vídeo | ¿El mismo? |
-| ------ | ------------- | -------------------- | ---------- |
-| Rebobinado, 1.ª | `172.26.83.a` | `172.26.83.a` | sí |
-| Rebobinado, 2.ª | `172.26.83.b` | `172.26.83.b` | sí |
-| Grabación | `172.26.83.c` | `172.26.83.c` | sí |
+| Sesión          | Servidor RTSP | Quién manda el vídeo | ¿El mismo? |
+| --------------- | ------------- | -------------------- | ---------- |
+| Rebobinado, 1.ª | `172.26.83.a` | `172.26.83.a`        | sí         |
+| Rebobinado, 2.ª | `172.26.83.b` | `172.26.83.b`        | sí         |
+| Grabación       | `172.26.83.c` | `172.26.83.c`        | sí         |
 
 Movistar ha juntado las dos cosas en la misma máquina, y encima lo anuncia en `server_port=`.
 Eso hace el problema **más fácil** de lo que era… y también más frágil, como cuento al final.
 
 ## Cómo se implementa en Linux
 
-Se hace con dos módulos de kernel, `nf_conntrack_rtsp` y `nf_nat_rtsp`. El primero escucha la
-conversación y apunta «va a llegar un UDP al portal 27392, déjalo pasar»; el segundo se encarga
-de la traducción cuando hay NAT por medio.
+Se hace con dos módulos de kernel, `nf_conntrack_rtsp` y `nf_nat_rtsp`, que son el «portero que
+escucha». El primero sigue la conversación y apunta «va a llegar un UDP al portal 27392, déjalo
+pasar»; el segundo se encarga de la traducción cuando hay NAT por medio. Son los mismos de
+aquel apunte de 2014, solo que hoy se instalan y se activan de otra manera.
 
 ### Compilar e instalar
 
@@ -139,8 +145,9 @@ Lo importante hoy es **no instalarlos a mano**. Un módulo de kernel compilado a
 existir en cuanto actualizas el kernel, y te quedas sin grabaciones **en silencio**: el directo
 sigue yendo, así que no te enteras hasta que alguien intenta ver algo.
 
-La forma correcta es **DKMS**, que los recompila solo cada vez que entra un kernel nuevo,
-durante el propio `apt`:
+Los fuentes están en [mi repositorio rtsp-linux en GitHub](https://github.com/LuisPalacios/rtsp-linux),
+el mismo de 2014 puesto al día. La forma correcta de instalarlos es **DKMS**, que los recompila
+solo cada vez que entra un kernel nuevo, durante el propio `apt`:
 
 ```shell
 # Se registra el paquete y se construye para el kernel actual
@@ -167,10 +174,11 @@ nf_nat_rtsp
 
 Con poner ése basta: arrastra al otro como dependencia.
 
-### Decirle a conntrack que los use
+### Decirle al kernel que los use
 
-Este paso se olvida siempre y es el que más ratos de depuración cuesta. Hay dos formas, según
-la versión del kernel:
+Tener los módulos cargados no basta: hay que decirle al kernel que aplique el helper a las
+conversaciones `RTSP`. Este paso se olvida siempre y es el que más ratos de depuración cuesta.
+Hay dos formas, según la versión del kernel:
 
 ```shell
 # Kernel < 6 (ya en desuso)
@@ -238,38 +246,30 @@ porque entonces el que mete el pie en la puerta está al otro lado del corte.
 
 ## Monitorizar: qué mirar y en qué orden
 
-```shell
-# 1. ¿Están los módulos cargados, y son los tuyos?
-lsmod | grep rtsp
-cat /sys/module/nf_conntrack_rtsp/version
+Cuando algo no se ve, sigue siempre el mismo orden, de lo más básico a lo más fino, y con una
+grabación puesta en la tele:
 
-# 2. ¿Está la regla, y ha visto pasar algo?
+```shell
+# 1. ¿Están los módulos cargados?
+lsmod | grep rtsp
+
+# 2. ¿Está la regla, y ha visto pasar algo? (mira el contador)
 iptables -t raw -L PREROUTING -v -n | grep 'CT helper'
 
-# 3. ¿Hay conversación RTSP abierta? (con una grabación puesta)
+# 3. ¿Hay conversación RTSP abierta, y llega el vídeo?
 conntrack -L -p tcp --dport 554
-
-# 4. ¿Y el vídeo llegando?
 conntrack -L -p udp | grep 'src=172\.26\.'
-
-# 5. Ver la conversación entera
-tcpdump -ni <interfaz de IPTV> -A 'tcp port 554'
 ```
 
-Si quieres ver qué está pensando el módulo por dentro, no hace falta recompilarlo en modo
-debug: en un kernel con `CONFIG_DYNAMIC_DEBUG=y` se enciende en caliente.
-
-```shell
-echo 'module nf_conntrack_rtsp +p' > /sys/kernel/debug/dynamic_debug/control
-dmesg -w
-# ... y para apagarlo, lo mismo con -p
-```
+Si con eso no lo ves claro, `tcpdump` sobre el puerto 554 te enseña la conversación entera, y
+el módulo puede contarte lo que piensa por `dmesg` sin recompilarlo: en un kernel con
+`CONFIG_DYNAMIC_DEBUG=y` el debug del módulo se enciende y se apaga en caliente.
 
 ## Lo que puede romperse el día de mañana
 
 Tres cosas, y ninguna depende de ti:
 
-1. **El permiso que abre la puerta es más estrecho de lo que parece.** No es un *full cone*
+1. **El permiso que abre la puerta es más estrecho de lo que parece.** No es un _full cone_
    de verdad: acepta que el vídeo venga desde cualquier puerto, pero **exige que venga
    exactamente de la IP del servidor con el que hablaste por RTSP**. Hoy funciona porque son
    la misma máquina. Si Movistar volviera a separarlas, dejaría de verse **aunque todo lo
@@ -292,3 +292,8 @@ Tres cosas, y ninguna depende de ti:
   silencio.
 - En kernel ≥ 6, la regla `iptables -t raw ... -j CT --helper rtsp` **no es opcional**.
 - Pausar no rompe nada, y el mérito es del deco.
+
+## Referencias
+
+- Mi repositorio [rtsp-linux](https://github.com/LuisPalacios/rtsp-linux) con los módulos `nf_conntrack_rtsp` y `nf_nat_rtsp`.
+- El apunte original de 2014: [Video bajo demanda para Movistar]({{< relref "2014-10-18-movistar-bajo-demanda.md" >}}).

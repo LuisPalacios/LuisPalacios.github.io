@@ -83,7 +83,7 @@ Host vps
 # Casa de un familiar, detrás de un túnel OpenVPN y con puerto no estándar.
 Host casa-padres
     HostName 10.8.0.50
-    Port 1443
+    Port 2222
     User luis
     IdentityFile ~/.ssh/keys/clientes.pub
     IdentitiesOnly yes
@@ -91,7 +91,7 @@ Host casa-padres
 # Salto a través del VPS sin reenviar el agente al intermedio.
 Host casa-hermano
     HostName 10.8.0.60
-    Port 1443
+    Port 2222
     User luis
     ProxyJump vps
     IdentityFile ~/.ssh/keys/clientes.pub

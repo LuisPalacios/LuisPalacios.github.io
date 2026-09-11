@@ -4,7 +4,7 @@
 
 [user]
     name = Luis Palacios
-    email = luis@luispa.com
+    email = tu@correo.com
     # Clave PÚBLICA completa del item "SSH Git" de 1Password.
     signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
