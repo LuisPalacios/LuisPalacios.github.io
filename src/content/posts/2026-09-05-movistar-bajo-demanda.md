@@ -243,8 +243,7 @@ deja de tratarlo como «conversación a medias» y le sube el plazo **de 30 a 12
 sea que el margen todavía es mayor.
 
 Conclusión práctica: **puedes pausar lo que quieras**. Pero conviene saber que quien te salva
-es el deco, no tu router. Un corte de la VPN de más de dos minutos sí que cortaría el vídeo,
-porque entonces el que mete el pie en la puerta está al otro lado del corte.
+es el deco, no tu router.
 
 ## Monitorizar: qué mirar y en qué orden
 
