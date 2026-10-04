@@ -2,7 +2,7 @@
 title: "Windows for development"
 date: "2024-08-25"
 categories: ["development"]
-tags: ["windows","wsl","wsl2","linux","ubuntu","development","visual","studio","python","git","cli","vscode","compiler"]
+tags: ["windows","wsl","wsl2","linux","ubuntu","development","visual","studio","python","git","CLI","vscode","compiler"]
 draft: false
 cover:
   image: "/img/posts/logo-win-desarrollo.svg"

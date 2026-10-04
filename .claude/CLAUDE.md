@@ -183,6 +183,14 @@ cd src && hugo --logLevel debug 2>&1 | grep -i deprecated
 
 Push to `gh-pages` → GitHub Actions builds → deploys to GitHub Pages.
 
+### Push only with explicit authorization (MANDATORY)
+
+**Never run `git push` unless the user explicitly authorizes that push in the current conversation turn** (e.g. "haz push", "sube", "push"). Every push publishes the site, so:
+
+- Asking for a commit ("haz commit", "en un solo commit", "cuando esté terminado") is **not** authorization to push. Commit, then stop and ask.
+- Authorization is per push: a previous "sí, push" does not cover later pushes.
+- When work is ready, finish with the commit and ask: "¿Hago push?"
+
 ## Constraints
 
 - **Never** edit theme submodule

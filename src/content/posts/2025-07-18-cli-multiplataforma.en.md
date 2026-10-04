@@ -1,7 +1,7 @@
 ---
 title: "Cross-platform CLI Tools"
 date: 2025-07-19
-tags: ["cli", "cross-platform", "linux", "macos", "windows", "powershell", "zsh", "bash"]
+tags: ["CLI", "cross-platform", "linux", "macos", "windows", "powershell", "zsh", "bash"]
 categories: ["terminal", "tools", "productivity"]
 cover:
   image: "/img/posts/logo-cli-multi.svg"

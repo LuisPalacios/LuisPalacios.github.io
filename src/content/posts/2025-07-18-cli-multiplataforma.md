@@ -1,7 +1,7 @@
 ---
 title: "Herramientas CLI multiplataforma"
 date: 2025-07-19
-tags: ["cli", "multiplataforma", "linux", "macos", "windows", "powershell", "zsh", "bash"]
+tags: ["CLI", "multiplataforma", "linux", "macos", "windows", "powershell", "zsh", "bash"]
 categories: ["terminal", "herramientas", "productividad"]
 cover:
   image: "/img/posts/logo-cli-multi.svg"
