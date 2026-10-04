@@ -141,7 +141,7 @@ Skills use `uv run` (Python) and `pnpm dlx` (JS CLI tools). See guidelines above
 ## PaperMod Template Overrides (pendiente de limpieza)
 
 Hugo v0.158.0 deprecó `.Language.LanguageDirection`, `.Language.LanguageName` y `.Language.LanguageCode`.
-PaperMod (commit 1cf5327, oct 2025) aún usa esas APIs, así que se crearon **overrides locales** con los reemplazos:
+PaperMod (commit d376885, ago 2026, comprobado 2026-10-04) aún usa esas APIs, así que se crearon **overrides locales** con los reemplazos:
 
 | Override local | Qué se cambió |
 | --- | --- |
@@ -151,7 +151,13 @@ PaperMod (commit 1cf5327, oct 2025) aún usa esas APIs, así que se crearon **ov
 | `src/layouts/partials/templates/opengraph.html` | `.Language.LanguageCode` → `.Language.Locale` |
 | `src/layouts/partials/translation_list.html` | `.Language.LanguageName` → `.Language.Label` |
 
-También se migró `hugo.toml`: `languageCode` → `locale`, `languageName` → `label`, y se añadió `[params.author]`.
+También se migró `hugo.toml`: `languageCode` → `locale`, `languageName` → `label`.
+
+PaperMod usa ya el nuevo sistema de plantillas de Hugo (`layouts/_partials/`, `layouts/single.html`). Estos overrides siguen en las rutas antiguas (`_default/`, `partials/`), que Hugo sigue respetando; cuando se borren, revisar que no quede ninguno huérfano.
+
+Los botones de compartir **no** son un override: viven en `src/layouts/partials/extend_post_content.html`, el hook que PaperMod inserta tras el contenido del post.
+
+La versión de Hugo de CI (`HUGO_VERSION` en `.github/workflows/hugo.yaml`) debe coincidir con la local (`hugo version`).
 
 ### Cómo comprobar si ya se pueden borrar
 
