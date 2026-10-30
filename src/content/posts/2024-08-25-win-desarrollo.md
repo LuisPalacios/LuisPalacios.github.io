@@ -98,15 +98,15 @@ PowerShell carga hasta **cuatro archivos de perfil** en este orden, si no se uti
 
 | Orden | Alcance        | Tipo de host    | Ruta                                                                                                                      |
 | ----- | -------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| 1     | Global         | Todos los hosts | `$PSHOME\Microsoft.PowerShell_profile.ps1`                                                                                |
-| 2     | Usuario actual | Todos los hosts | `$HOME\Documents\PowerShell\profile.ps1`                                                                                  |
-| 3     | Usuario actual | Host específico | `$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1` *(o `VSCode_profile.ps1`, `ConsoleHost_profile.ps1`, etc.)* |
-| 4     | Global         | Host específico | `$PSHOME\Microsoft.PowerShell_profile.ps1`<br>*(host-specific variant)*                                                   |
+| 1     | Global         | Todos los hosts | `$PSHOME\Profile.ps1`                                                                                                     |
+| 2     | Global         | Host específico | `$PSHOME\Microsoft.PowerShell_profile.ps1`                                                                                |
+| 3     | Usuario actual | Todos los hosts | `$HOME\Documents\PowerShell\Profile.ps1`                                                                                  |
+| 4     | Usuario actual | Host específico | `$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1` *(o `VSCode_profile.ps1`, `ConsoleHost_profile.ps1`, etc.)* |
 
 > `$PROFILE` es una variable automática que apunta al perfil actual del usuario y del host (`$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1`). Puedes ver todas las rutas con:
 >
 > ```powershell
-> $PROFILE | Format-List *
+> $PROFILE | Format-List * -Force
 > ```
 
 Yo utilizo un único fichero, que siempre dejo en `$PROFILE`. Dejo aquí un enlace al proyecto [`devcli`](https://github.com/LuisPalacios/devcli) que tengo en GitHub donde podrás encontrar mi última versión de este fichero y editar el tuyo con **`code $PROFILE`**:
@@ -761,7 +761,7 @@ Restart-Service sshd
 
 ## Herramientas de desarrollo
 
-Cubierta la shell y WSL2, paso a las herramientas multiplataforma (las instalo en todo equipo, sea Windows, Linux o macOS), luego los lenguajes de programación, y dejo `.NET` y Visual Studio para el final.
+Cubierta la shell y WSL2, paso a las herramientas multiplataforma (las instalo en todo equipo, sea Windows, Linux o macOS) y luego a los lenguajes de programación y `.NET`.
 
 ### VSCode
 
@@ -911,7 +911,14 @@ Además creo un ***alias*** a `python3`, creo el script `c:\windows\python3.cmd`
 C:> py get-pip.py
 ```
 
-**Instala `pipx`**:
+**Instala `pipx`**: lo hago con [Scoop](https://scoop.sh/), un gestor de paquetes para Windows. Si aún no lo tienes, se instala desde PowerShell **sin elevar**:
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+```
+
+Y después:
 
 ```cmd
 scoop install pipx
@@ -961,7 +968,7 @@ Preparar el entorno para Python:
 - Crear el entorno: `python -m venv myenv`.
 - Activar:
   - Windows: `.\myenv\Scripts\Activate.ps1` (o `.bat`).
-  - macOS/Linux: `source myenv/Scripts/activate`.
+  - macOS/Linux: `source myenv/bin/activate`.
 - Instalar paquetes: `pip install idna`.
 - Crear `requirements.txt`: `pip freeze > requirements.txt`.
 - Instalaciones futuras: `pip install -r requirements.txt`.
@@ -1305,9 +1312,9 @@ Successfully uninstalled
 
 <img src="/img/posts/logo-ruby.svg" alt="logo ruby" width="150px" height="150px" style="float:right; padding-right:25px"  />
 
-Windows no trae Ruby, así que lo voy a instalar. No es que programe con él, pero lo necesito para ejecutar `Bundler` y `Jekyll` para trabajar en mi blog en local (más info [aquí]({{< relref "2021-04-19-nuevo-blog.md" >}})). **Ruby** es un lenguaje de programación interpretado, reflexivo y orientado a objetos, creado por el programador japonés Yukihiro "Matz" Matsumoto, quien comenzó a trabajar en Ruby en 1993, y lo presentó públicamente en 1995.
+Windows no trae Ruby, y solo lo instalo si algún proyecto lo necesita: no programo con él y mi blog, que antes usaba `Bundler` y `Jekyll`, hoy se genera con Hugo. **Ruby** es un lenguaje de programación interpretado, reflexivo y orientado a objetos, creado por el programador japonés Yukihiro "Matz" Matsumoto, quien comenzó a trabajar en Ruby en 1993, y lo presentó públicamente en 1995.
 
-Instalación: Sigo la [documentación desde Jekyll](https://jekyllrb.com/docs/installation/windows/)
+Instalación: desde [RubyInstaller](https://rubyinstaller.org/).
 
 <br/>
 
@@ -1518,7 +1525,7 @@ Además te recomiendo que eches un ojo a algún curso sobre la filosofía de tra
 - **Curso en Inglés**: [Linux Command Line Basics - Learn the Shell, Philosophy, and More (Udemy)](https://www.udemy.com/course/linux-command-line-basics/), un curso que cubre tanto los comandos esenciales como los principios filosóficos de Unix/Linux.
 - **Curso en Inglés**: [Understanding the Unix Philosophy (LinkedIn Learning)](https://www.linkedin.com/learning/understanding-the-unix-philosophy), un curso corto que ofrece una visión general sobre la filosofía de Unix y su aplicación práctica.
 
-Por último, he seleccionado 50 comandos (hay muchos más) que deberías conocer como desarrollador de software multiplataforma. Son esenciales para la navegación del sistema de archivos, gestión de procesos, manipulación de texto, y otras tareas comunes en el desarrollo de software. Cada comando incluye un enlace a su respectiva manpage en Ubuntu 24.04.
+Por último, he seleccionado 60 comandos (hay muchos más) que deberías conocer como desarrollador de software multiplataforma. Son esenciales para la navegación del sistema de archivos, gestión de procesos, manipulación de texto, y otras tareas comunes en el desarrollo de software. Cada comando incluye un enlace a su respectiva manpage en Ubuntu 24.04.
 
 | Comando                                                                   | Descripción                                                       | Comando                                                                       | Descripción                                                               |
 | ------------------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
@@ -1542,13 +1549,13 @@ Por último, he seleccionado 50 comandos (hay muchos más) que deberías conocer
 | **[top](https://manpages.ubuntu.com/manpages/noble/man1/top.1.html)**     | Muestra los procesos en ejecución y el uso de recursos.           | **[jobs](https://manpages.ubuntu.com/manpages/noble/man1/jobs.1.html)**       | Muestra el estado de los trabajos en segundo plano.                       |
 | **[df](https://manpages.ubuntu.com/manpages/noble/man1/df.1.html)**       | Muestra el uso del espacio en disco de los sistemas de archivos.  | **[bg](https://manpages.ubuntu.com/manpages/noble/man1/bg.1.html)**           | Reanuda un trabajo suspendido en segundo plano.                           |
 | **[du](https://manpages.ubuntu.com/manpages/noble/man1/du.1.html)**       | Estima el uso del espacio en disco por archivos y directorios.    | **[fg](https://manpages.ubuntu.com/manpages/noble/man1/fg.1.html)**           | Trae un trabajo suspendido al primer plano.                               |
-| **[tar](https://manpages.ubuntu.com/manpages/noble/man1/tar.1.html)**     | Manipula archivos tar.                                            | **[alias](https://manpages.ubuntu.com/manpages/noble/man1/alias.1.html)**     | Crea un alias para un comando o una serie de comandos.                    |
-| **[zip](https://manpages.ubuntu.com/manpages/noble/man1/zip.1.html)**     | Comprime archivos en formato ZIP.                                 | **[unalias](https://manpages.ubuntu.com/manpages/noble/man1/unalias.1.html)** | Elimina un alias previamente definido.                                    |
-| **[unzip](https://manpages.ubuntu.com/manpages/noble/man1/unzip.1.html)** | Descomprime archivos en formato ZIP.                              | **[history](https://manpages.ubuntu.com/manpages/noble/man1/history.1.html)** | Muestra el historial de comandos utilizados.                              |
-| **[ssh](https://manpages.ubuntu.com/manpages/noble/man1/ssh.1.html)**     | Se conecta a servidores remotos de forma segura a través de SSH.  | **[env](https://manpages.ubuntu.com/manpages/noble/man1/env.1.html)**         | Muestra o modifica las variables de entorno.                              |
-| **[scp](https://manpages.ubuntu.com/manpages/noble/man1/scp.1.html)**     | Copia archivos entre servidores de forma segura.                  | **[export](https://manpages.ubuntu.com/manpages/noble/man1/export.1.html)**   | Define variables de entorno para los procesos secundarios.                |
-| **[wget](https://manpages.ubuntu.com/manpages/noble/man1/wget.1.html)**   | Descarga archivos desde la web.                                   | **[source](https://manpages.ubuntu.com/manpages/noble/man1/source.1.html)**   | Ejecuta comandos desde un archivo en el contexto de la Shell actual.      |
-| **[curl](https://manpages.ubuntu.com/manpages/noble/man1/curl.1.html)**   | Transfiere datos desde o hacia un servidor.                       | **[uname](https://manpages.ubuntu.com/manpages/noble/man1/uname.1.html)**     | Muestra información sobre el sistema operativo.                           |
-| **[nano](https://manpages.ubuntu.com/manpages/noble/man1/nano.1.html)**   | Editor de texto simple para la terminal.                          | **[uptime](https://manpages.ubuntu.com/manpages/noble/man1/uptime.1.html)**   | Muestra el tiempo que lleva encendido el sistema.                         |
-| **[vim](https://manpages.ubuntu.com/manpages/noble/man1/vim.1.html)**     | Editor de texto avanzado en la terminal.                          | **[whoami](https://manpages.ubuntu.com/manpages/noble/man1/whoami.1.html)**   | Muestra el nombre del usuario actual.                                     |
-| **[man](https://manpages.ubuntu.com/manpages/noble/man1/man.1.html)**     | Muestra el manual de usuario de cualquier comando.                | **[which](https://manpages.ubuntu.com/manpages/noble/man1/which.1.html)**     | Localiza un comando y muestra su ruta completa.                           |
+| **[tar](https://manpages.ubuntu.com/manpages/noble/man1/tar.1.html)**     | Manipula archivos tar.                                            | **[less](https://manpages.ubuntu.com/manpages/noble/man1/less.1.html)**       | Muestra un archivo página a página.                                       |
+| **[zip](https://manpages.ubuntu.com/manpages/noble/man1/zip.1.html)**     | Comprime archivos en formato ZIP.                                 | **[sed](https://manpages.ubuntu.com/manpages/noble/man1/sed.1.html)**         | Edita texto en flujo: sustituciones y filtros.                            |
+| **[unzip](https://manpages.ubuntu.com/manpages/noble/man1/unzip.1.html)** | Descomprime archivos en formato ZIP.                              | **[wc](https://manpages.ubuntu.com/manpages/noble/man1/wc.1.html)**           | Cuenta líneas, palabras y bytes.                                          |
+| **[ssh](https://manpages.ubuntu.com/manpages/noble/man1/ssh.1.html)**     | Se conecta a servidores remotos de forma segura a través de SSH.  | **[cut](https://manpages.ubuntu.com/manpages/noble/man1/cut.1.html)**         | Extrae columnas o campos de cada línea.                                   |
+| **[scp](https://manpages.ubuntu.com/manpages/noble/man1/scp.1.html)**     | Copia archivos entre servidores de forma segura.                  | **[tr](https://manpages.ubuntu.com/manpages/noble/man1/tr.1.html)**           | Traduce o elimina caracteres.                                             |
+| **[wget](https://manpages.ubuntu.com/manpages/noble/man1/wget.1.html)**   | Descarga archivos desde la web.                                   | **[ln](https://manpages.ubuntu.com/manpages/noble/man1/ln.1.html)**           | Crea enlaces duros y simbólicos.                                          |
+| **[curl](https://manpages.ubuntu.com/manpages/noble/man1/curl.1.html)**   | Transfiere datos desde o hacia un servidor.                       | **[date](https://manpages.ubuntu.com/manpages/noble/man1/date.1.html)**       | Muestra o da formato a la fecha y la hora.                                |
+| **[nano](https://manpages.ubuntu.com/manpages/noble/man1/nano.1.html)**   | Editor de texto simple para la terminal.                          | **[file](https://manpages.ubuntu.com/manpages/noble/man1/file.1.html)**       | Identifica el tipo de un archivo.                                         |
+| **[vim](https://manpages.ubuntu.com/manpages/noble/man1/vim.1.html)**     | Editor de texto avanzado en la terminal.                          | **[stat](https://manpages.ubuntu.com/manpages/noble/man1/stat.1.html)**       | Muestra los metadatos de un archivo.                                      |
+| **[man](https://manpages.ubuntu.com/manpages/noble/man1/man.1.html)**     | Muestra el manual de usuario de cualquier comando.                | **[basename](https://manpages.ubuntu.com/manpages/noble/man1/basename.1.html)** | Quita la ruta y el sufijo de un nombre de archivo.                        |

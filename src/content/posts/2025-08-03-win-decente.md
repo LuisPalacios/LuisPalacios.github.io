@@ -188,7 +188,7 @@ Edge no es multiplataforma, así que lo quito del equipo.
 
 Durante la instalación Windows crea el nombre corto del usuario con los 5 primeros caracteres del email (en mi caso `luisp`, con HOME en `C:\Users\luisp\`). Para renombrarlo ([guía completa](https://www.elevenforum.com/t/change-name-of-user-profile-folder-in-windows-11.2133/)):
 
-1. Habilita la cuenta Administrator:
+1. Habilita la cuenta Administrator (en una instalación en español se llama `Administrador`):
 
     ```PS1
     net user Administrator /active:yes
@@ -242,7 +242,7 @@ Mostrar archivos ocultos, extensiones y ruta completa:
   - Habilita el modo desarrollador si no lo estaba.
   - Entra en `File Explorer`:
     - `Show file extensions`: **On**.
-    - `Show hidden and system files`: **On**.
+    - `Show hidden and system files`: opcional. Me gusta verlos al preparar el equipo y al cabo de un tiempo los vuelvo a ocultar.
     - `Show full path in title bar`: **On**.
     - `Show empty drives`: **On**.
 
