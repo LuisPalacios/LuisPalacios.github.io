@@ -35,7 +35,15 @@ table {
 
 ## Nota sobre el PATH
 
-En Linux y macOS modificar el PATH es directo. En Windows hay dos: el de **Usuario** y el de **Sistema**, que se combinan. Durante el apunte toca modificarlo varias veces — esta es la vía:
+En Linux y macOS modificar el PATH es directo. En Windows hay dos: el de **Usuario** y el de **Sistema**, que se combinan. Durante el apunte toca modificarlo varias veces. Yo uso `pathdoctor`, de [devcli](https://github.com/LuisPalacios/devcli): lo exporta a un fichero de texto, lo edito y lo vuelvo a importar, con copia de seguridad, y me sirve también para llevarlo de un equipo a otro:
+
+```powershell
+pathdoctor -Export path.txt        # exporta ambos PATH: líneas "S <ruta>" y "U <ruta>"
+pathdoctor -Import path.txt        # ensayo: enseña las diferencias sin escribir
+pathdoctor -Import path.txt -Apply # aplica (el PATH de sistema requiere administrador)
+```
+
+La vía gráfica, por si no lo tienes:
 
 - `Start > Settings > System > About > Advanced System Settings` (o busca "Environment Variables" en `Search`).
 - Modificar en `System variables` y/o `User variables`.
@@ -263,13 +271,13 @@ setx LS_COLORS "fi=00:mi=00:mh=00:ln=01;94:or=01;31:di=01;36:ow=04;01;34:st=34:t
 
 El objetivo principal es tener acceso a `git.exe` desde las consolas nativas `CMD`, `PowerShell` y aplicaciones de terceros. Queda instalado rn `C:\Program Files\Git`.
 
-> Nota: incluye el ejecutable `C:\Program Files\Git\bin\bash.exe` pero verás que hay otro en el sistema `C:\Windows\System32\bash.exe`, así que tenlo MUY en cuenta en el orden en el PATH. El segundo  es el que trae WSL2 para arrancar una shell dentro del linux que hayas instalado.
+> Nota: incluye el ejecutable `C:\Program Files\Git\bin\bash.exe` pero verás que hay otro en el sistema `C:\Windows\System32\bash.exe`, así que tenlo MUY en cuenta en el orden en el PATH. El segundo es el lanzador de WSL2, que arranca una shell dentro del Linux que hayas instalado. Como `System32` va antes en el PATH, escribir `bash` abre WSL, no Git Bash: en un equipo sin WSL2 instalado te responde `Windows Subsystem for Linux must be updated`, y no significa que falte Git Bash. Para Git Bash, abre su perfil en el terminal o usa la ruta completa.
 
 Decisiones que tomo durante la instalación:
 
 - **Bundled OpenSSH & OpenSSL**: selecciono *Use the bundled OpenSSH and bundle OpenSSL* para aislar Git de la versión de SSH del sistema.
 - **Handling of CRLF**: selecciono *Checkout as-is, commit Unix-style line endings*. Ver la sección [CRLF vs LF](#crlf-vs-lf).
-- **PATH (Git Bash)**: selecciono *Git from the command line and also from 3rd-party software* y añado manualmente las rutas al PATH del sistema (más abajo).
+- **PATH (Git Bash)**: selecciono *Git from the command line and also from 3rd-party software*, que añade `C:\Program Files\Git\cmd` al PATH.
 
 Ejemplo con `Git-2.46.0-64-bit.exe`:
 
@@ -278,7 +286,7 @@ Ejemplo con `Git-2.46.0-64-bit.exe`:
   <div class="image-caption">Proceso de instalaicón de Git for Windows</div>
 </div>
 
-Aunque no uso Git Bash como shell, sí me aprovecho de sus ejecutables "estilo Linux" desde CMD/PowerShell. Añado al PATH del sistema `C:\Program Files\Git\mingw64\bin` y `C:\Program Files\Git\usr\bin`:
+**Opcional:** para usar sus ejecutables "estilo Linux" desde CMD/PowerShell, puedes añadir al PATH del sistema `C:\Program Files\Git\mingw64\bin` y `C:\Program Files\Git\usr\bin`. Yo ya no lo hago: esas rutas meten muchos ejecutables que pueden tapar a otros, y [devcli](https://github.com/LuisPalacios/devcli) ya me da las herramientas de CLI que necesito.
 
 <div class="image-box">
   <img src="/img/posts/2024-08-25-win-desarrollo-10.png" alt="Aprovecho los ejecutables que trae Git for Windows" width="1024px" />
